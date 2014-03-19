@@ -40,6 +40,7 @@ import com.glaf.core.el.ExpressionTools;
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.util.PropertiesUtils;
 import com.glaf.core.util.StringTools;
+import com.glaf.core.util.threads.ThreadFactory;
 
 public class MultiDBStartup implements Bootstrap {
 
@@ -70,7 +71,7 @@ public class MultiDBStartup implements Bootstrap {
 						conn = DataSourceConfig.getDefaultConnection();
 						if (conn != null) {
 							DBUpdateThread t = new DBUpdateThread(defaultProps);
-							t.start();
+							ThreadFactory.run(t);
 							stmt = conn.prepareStatement(sql);
 							rs = stmt.executeQuery();
 							while (rs.next()) {
@@ -141,7 +142,7 @@ public class MultiDBStartup implements Bootstrap {
 									logger.debug("准备执行更新SQL......");
 									DBUpdateThread thread = new DBUpdateThread(
 											props);
-									thread.start();
+									ThreadFactory.run(thread);
 								}
 							}
 						}

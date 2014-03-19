@@ -38,6 +38,7 @@ import com.glaf.core.config.Environment;
 import com.glaf.core.el.ExpressionTools;
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.util.StringTools;
+import com.glaf.core.util.threads.ThreadFactory;
 
 public class MultiDBNativeCmdStartup implements Bootstrap {
 
@@ -70,9 +71,9 @@ public class MultiDBNativeCmdStartup implements Bootstrap {
 					try {
 						conn = DataSourceConfig.getDefaultConnection();
 						if (conn != null) {
-							DBNativeCmdThread t = new DBNativeCmdThread(
-									cmd, defaultProps);
-							t.start();
+							DBNativeCmdThread t = new DBNativeCmdThread(cmd,
+									defaultProps);
+							ThreadFactory.run(t);
 							stmt = conn.prepareStatement(sql);
 							rs = stmt.executeQuery();
 							while (rs.next()) {
@@ -141,7 +142,7 @@ public class MultiDBNativeCmdStartup implements Bootstrap {
 									logger.debug("准备执行更新脚本......");
 									DBNativeCmdThread thread = new DBNativeCmdThread(
 											cmd, props);
-									thread.start();
+									ThreadFactory.run(thread);
 								}
 							}
 						}
