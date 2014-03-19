@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="GBK"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <project basedir="." default="run">
 	<property name="build.home" location="." />
@@ -13,7 +13,7 @@
 	</path>
 
 	<target name="build">
-		<echo message="编译应用程序......" />
+		<echo message="build app......" />
 		<mkdir dir="bin" />
 		<javac srcdir="${build.home}/src" destdir="${build.dest}" 
 			source="1.6" target="1.6" nowarn="false"
@@ -59,7 +59,7 @@
 
 
 	<target name="run" depends="build">
-		<echo message="运行应用程序......" />
+		<echo message="build app......" />
 
 		<copy todir="bin">
 			<fileset dir="src" includes="**/*.properties,**/*.xsd, **/*.xml" />
