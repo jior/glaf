@@ -18,50 +18,40 @@
 
 package com.glaf.core.context;
 
-import java.util.Enumeration;
-import java.util.Properties;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.glaf.core.config.DataSourceConfig;
-import com.glaf.core.startup.Bootstrap;
-import com.glaf.core.startup.BootstrapProperties;
-import com.glaf.core.util.ClassUtils;
+import com.glaf.core.startup.BootstrapManager;
 import com.glaf.core.util.QuartzUtils;
 
 public class StartupListener extends ContextLoaderListener implements
 		ServletContextListener {
 
+	private static class SchedulerRunner extends Thread {
+		public void run() {
+			try {
+				Thread.sleep(60000);// 60秒后执行
+				QuartzUtils.startup();
+				logger.info("系统调度已经成功启动。");
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				logger.error(ex);
+			}
+		}
+	}
+
 	private static final Log logger = LogFactory.getLog(StartupListener.class);
 
 	public void beforeContextInitialized(ServletContext context) {
-		Properties props = BootstrapProperties.getProperties();
-		if (props != null && props.keys().hasMoreElements()) {
-			Enumeration<?> e = props.keys();
-			while (e.hasMoreElements()) {
-				String className = (String) e.nextElement();
-				String value = props.getProperty(className);
-				try {
-					Object obj = ClassUtils.instantiateObject(className);
-					if (obj instanceof Bootstrap) {
-						Bootstrap bootstrap = (Bootstrap) obj;
-						bootstrap.startup(context, value);
-					}
-				} catch (Exception ex) {
-					ex.printStackTrace();
-					logger.error(ex);
-				}
-			}
-		}
+		BootstrapManager.getInstance().startup(context);
 	}
 
 	public void contextInitialized(ServletContextEvent event) {
@@ -90,19 +80,6 @@ public class StartupListener extends ContextLoaderListener implements
 			if (ContextFactory.hasBean("scheduler")) {
 				SchedulerRunner runner = new SchedulerRunner();
 				runner.start();
-			}
-		}
-	}
-
-	private static class SchedulerRunner extends Thread {
-		public void run() {
-			try {
-				Thread.sleep(60000);// 60秒后执行
-				QuartzUtils.startup();
-				logger.info("系统调度已经成功启动。");
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				logger.error(ex);
 			}
 		}
 	}
