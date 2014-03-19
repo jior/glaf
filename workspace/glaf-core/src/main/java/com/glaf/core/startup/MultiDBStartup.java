@@ -69,6 +69,8 @@ public class MultiDBStartup implements Bootstrap {
 					try {
 						conn = DataSourceConfig.getDefaultConnection();
 						if (conn != null) {
+							DBUpdateThread t = new DBUpdateThread(defaultProps);
+							t.start();
 							stmt = conn.prepareStatement(sql);
 							rs = stmt.executeQuery();
 							while (rs.next()) {
