@@ -35,24 +35,25 @@ import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.config.DataSourceConfig;
 import com.glaf.core.config.Environment;
-import com.glaf.core.config.SystemProperties;
 import com.glaf.core.el.ExpressionTools;
 import com.glaf.core.jdbc.DBConnectionFactory;
-import com.glaf.core.util.PropertiesUtils;
 import com.glaf.core.util.StringTools;
 
-public class MultiDBStartup implements Bootstrap {
+public class MultiDBNativeCmdStartup implements Bootstrap {
 
-	protected final static Log logger = LogFactory.getLog(MultiDBStartup.class);
+	protected final static Log logger = LogFactory
+			.getLog(MultiDBNativeCmdStartup.class);
 
 	public void startup(ServletContext context, String text) {
-		logger.debug("-----------------MultiDBStartup.startup----------------");
+		logger.debug("-----------------MultiDBNativeCmdStartup.startup----------------");
 		if (StringUtils.isNotEmpty(text)) {
 			JSONObject json = JSON.parseObject(text);
 			logger.debug(json.toJSONString());
 			String sql = json.getString("sql");
 			String dbName = json.getString("dbName");
-			if (StringUtils.isNotEmpty(sql) && StringUtils.isNotEmpty(dbName)) {
+			String cmd = json.getString("cmd");
+			if (StringUtils.isNotEmpty(sql) && StringUtils.isNotEmpty(dbName)
+					&& StringUtils.isNotEmpty(cmd)) {
 				Properties defaultProps = DBConfiguration
 						.getTemplateProperties(Environment.DEFAULT_SYSTEM_NAME);
 				Properties props = DBConfiguration
@@ -69,7 +70,8 @@ public class MultiDBStartup implements Bootstrap {
 					try {
 						conn = DataSourceConfig.getDefaultConnection();
 						if (conn != null) {
-							DBUpdateThread t = new DBUpdateThread(defaultProps);
+							DBNativeCmdThread t = new DBNativeCmdThread(
+									cmd, defaultProps);
 							t.start();
 							stmt = conn.prepareStatement(sql);
 							rs = stmt.executeQuery();
@@ -83,6 +85,8 @@ public class MultiDBStartup implements Bootstrap {
 								}
 								String host = rs.getString(1);
 								String databaseName = rs.getString(2);
+								String user = rs.getString(3);
+								String password = rs.getString(4);
 								String name = rs.getString(5);
 								if (databaseName.indexOf("$") != -1) {
 									String url_xy = defaultProps
@@ -117,6 +121,11 @@ public class MultiDBStartup implements Bootstrap {
 										rs.getString(3));
 								props.put(DBConfiguration.JDBC_PASSWORD,
 										rs.getString(4));
+								props.put(DBConfiguration.HOST, host);
+								props.put(DBConfiguration.DATABASE_NAME,
+										databaseName);
+								props.put(DBConfiguration.USER, user);
+								props.put(DBConfiguration.PASSWORD, password);
 
 								logger.debug(dataMap);
 								String url = ExpressionTools.evaluate(old_url,
@@ -129,18 +138,9 @@ public class MultiDBStartup implements Bootstrap {
 								 * 检查连接信息，如果正确，保存配置
 								 */
 								if (DBConnectionFactory.checkConnection(props)) {
-									String filename = SystemProperties
-											.getConfigRootPath()
-											+ "/conf/jdbc/"
-											+ host
-											+ "_"
-											+ name
-											+ ".properties";
-									PropertiesUtils.save(filename, props);
-									logger.info("成功保存数据库配置文件:" + filename);
-									logger.debug("准备执行更新SQL......");
-									DBUpdateThread thread = new DBUpdateThread(
-											props);
+									logger.debug("准备执行更新脚本......");
+									DBNativeCmdThread thread = new DBNativeCmdThread(
+											cmd, props);
 									thread.start();
 								}
 							}

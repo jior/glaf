@@ -60,10 +60,6 @@ public class DBConfiguration {
 
 	public static final String JDBC_DATASOURCE = "jdbc.datasource";
 
-	public static final String HOST = "host";
-
-	public static final String DATABASE_NAME = "databaseName";
-
 	public static final String JDBC_URL = "jdbc.url";
 
 	public static final String JDBC_USER = "jdbc.user";
@@ -94,6 +90,14 @@ public class DBConfiguration {
 	 * 连接池类型，支持druid,C3P0,DBCP,TomcatJdbc,默认是druid
 	 */
 	public static final String JDBC_POOL_TYPE = "jdbc.pool_type";
+
+	public static final String HOST = "host";
+
+	public static final String USER = "user";
+
+	public static final String PASSWORD = "password";
+
+	public static final String DATABASE_NAME = "databaseName";
 
 	private static boolean REQUIRE_RELOAD_JDBC_RESOURCE = false;
 
