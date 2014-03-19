@@ -60,8 +60,8 @@ public class DBUpdateThread extends Thread {
 								conn.setAutoCommit(false);
 								String ddlStatements = FileUtils
 										.readFile(contents[i].getAbsolutePath());
-								DBUtils.executeSchemaResource(conn,
-										ddlStatements);
+								DBUtils.executeSchemaResourceIgnoreException(
+										conn, ddlStatements);
 								conn.commit();
 							} catch (Exception ex) {
 								ex.printStackTrace();

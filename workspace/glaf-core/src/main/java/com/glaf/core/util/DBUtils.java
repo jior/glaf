@@ -481,23 +481,29 @@ public class DBUtils {
 	public static void executeSchemaResource(Connection conn,
 			String ddlStatements) {
 		Exception exception = null;
+		Statement statement = null;
 		String sqlStatement = null;
 		try {
 			StringTokenizer tokenizer = new StringTokenizer(ddlStatements, ";");
 			while (tokenizer.hasMoreTokens()) {
 				sqlStatement = tokenizer.nextToken().trim();
 				if (!sqlStatement.startsWith("#") && !"".equals(sqlStatement)) {
-					System.out.println(sqlStatement);
-					Statement statement = conn.createStatement();
+					logger.debug(sqlStatement);
+					statement = conn.createStatement();
 					try {
 						statement.executeUpdate(sqlStatement);
 						statement.close();
+						statement = null;
 					} catch (Exception ex) {
 						if (exception == null) {
 							exception = ex;
 						}
-						logger.debug(
-								" execute statement error " + sqlStatement, ex);
+						logger.debug(" execute statement error: "
+								+ sqlStatement, ex);
+					} finally {
+						if (statement != null) {
+							statement.close();
+						}
 					}
 				}
 			}
@@ -509,6 +515,37 @@ public class DBUtils {
 
 			logger.info("execute db schema successful");
 
+		} catch (Exception ex) {
+			throw new RuntimeException("couldn't execute db schema: "
+					+ sqlStatement, ex);
+		}
+	}
+
+	public static void executeSchemaResourceIgnoreException(Connection conn,
+			String ddlStatements) {
+		Statement statement = null;
+		String sqlStatement = null;
+		try {
+			StringTokenizer tokenizer = new StringTokenizer(ddlStatements, ";");
+			while (tokenizer.hasMoreTokens()) {
+				sqlStatement = tokenizer.nextToken().trim();
+				if (!sqlStatement.startsWith("#") && !"".equals(sqlStatement)) {
+					logger.debug(sqlStatement);
+					statement = conn.createStatement();
+					try {
+						statement.executeUpdate(sqlStatement);
+						statement.close();
+						statement = null;
+					} catch (Exception ex) {
+						logger.error(" execute statement error: "
+								+ sqlStatement, ex);
+					} finally {
+						if (statement != null) {
+							statement.close();
+						}
+					}
+				}
+			}
 		} catch (Exception ex) {
 			throw new RuntimeException("couldn't execute db schema: "
 					+ sqlStatement, ex);
@@ -1035,7 +1072,8 @@ public class DBUtils {
 			TableDefinition tableDefinition) {
 		StringBuffer buffer = new StringBuffer();
 		Collection<ColumnDefinition> columns = tableDefinition.getColumns();
-		buffer.append(" create table ").append(tableDefinition.getTableName().toUpperCase());
+		buffer.append(" create table ").append(
+				tableDefinition.getTableName().toUpperCase());
 		buffer.append(" ( ");
 		Collection<String> cols = new HashSet<String>();
 		ColumnDefinition idField = tableDefinition.getIdColumn();
@@ -1344,8 +1382,8 @@ public class DBUtils {
 		if (idField != null) {
 			buffer.append(",");
 			buffer.append(newline);
-			buffer.append("    primary key (").append(idField.getColumnName().toUpperCase())
-					.append(") ");
+			buffer.append("    primary key (")
+					.append(idField.getColumnName().toUpperCase()).append(") ");
 		}
 		buffer.append(newline);
 		buffer.append(");");
@@ -1357,7 +1395,8 @@ public class DBUtils {
 			TableDefinition classDefinition) {
 		StringBuffer buffer = new StringBuffer();
 		Collection<ColumnDefinition> fields = classDefinition.getColumns();
-		buffer.append(" create table ").append(classDefinition.getTableName().toUpperCase());
+		buffer.append(" create table ").append(
+				classDefinition.getTableName().toUpperCase());
 		buffer.append(" ( ");
 		Collection<String> cols = new HashSet<String>();
 		ColumnDefinition idField = classDefinition.getIdColumn();
