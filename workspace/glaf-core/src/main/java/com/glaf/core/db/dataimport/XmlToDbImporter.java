@@ -55,7 +55,7 @@ public class XmlToDbImporter {
 		XmlToDbImporter imp = new XmlToDbImporter();
 		Connection conn = null;
 		try {
-			conn = DBConnectionFactory.getConnection("src");
+			conn = DBConnectionFactory.getConnection("default");
 			imp.importToDB(new File("./data/sys"), conn);
 		} catch (Exception ex) {
 			ex.printStackTrace();

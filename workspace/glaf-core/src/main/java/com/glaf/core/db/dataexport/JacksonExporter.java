@@ -248,7 +248,7 @@ public class JacksonExporter {
 			String prefix, int perFileSize) {
 		String sql = " select * from " + tableName;
 		this.exportJson(systemName, rootDir, sql,
-				new java.util.concurrent.ConcurrentHashMap<String, Object>(), prefix, perFileSize);
+				new java.util.HashMap<String, Object>(), prefix, perFileSize);
 	}
 
 	public static void main(String[] args) throws Exception {

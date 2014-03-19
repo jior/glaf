@@ -27,6 +27,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.alibaba.druid.util.JdbcUtils;
 import com.glaf.core.config.SystemProperties;
+import com.glaf.core.db.dataimport.XmlToDbImporter;
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.FileUtils;
@@ -62,6 +63,18 @@ public class DBUpdateThread extends Thread {
 										.readFile(contents[i].getAbsolutePath());
 								DBUtils.executeSchemaResourceIgnoreException(
 										conn, ddlStatements);
+								conn.commit();
+							} catch (Exception ex) {
+								ex.printStackTrace();
+								logger.error(ex);
+							}
+						} else if (contents[i].isFile()
+								&& StringUtils.endsWith(contents[i].getName(),
+										".xml")) {
+							XmlToDbImporter imp = new XmlToDbImporter();
+							try {
+								conn.setAutoCommit(false);
+								imp.doImport(contents[i], conn);
 								conn.commit();
 							} catch (Exception ex) {
 								ex.printStackTrace();

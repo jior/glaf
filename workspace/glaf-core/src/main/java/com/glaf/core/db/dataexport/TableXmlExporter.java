@@ -27,7 +27,6 @@ import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -37,7 +36,6 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
 import com.glaf.core.domain.ColumnDefinition;
-import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.DateUtils;
@@ -46,8 +44,9 @@ import com.glaf.core.util.FieldType;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.JdbcUtils;
 
-public class XmlExporter {
-	protected final static Log logger = LogFactory.getLog(XmlExporter.class);
+public class TableXmlExporter {
+	protected final static Log logger = LogFactory
+			.getLog(TableXmlExporter.class);
 
 	public void exportXml(String rootDir, String systemName, int pageSize) {
 		Connection conn = null;
@@ -65,7 +64,7 @@ public class XmlExporter {
 				if ("filedot".equalsIgnoreCase(tableName)) {
 					continue;
 				}
-				this.exportXml(rootDir, systemName, tableName.toLowerCase(),
+				this.exportXml(systemName, rootDir, tableName.toLowerCase(),
 						tableName.toLowerCase(), pageSize);
 			}
 		} catch (Exception ex) {
@@ -77,21 +76,15 @@ public class XmlExporter {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public void exportXml(String rootDir, String systemName, String sql,
-			Map<String, Object> paramMap, String prefix, int perFileSize) {
+	public void exportXml(String systemName, String rootDir, String tableName,
+			String prefix, int perFileSize) {
 		long start = System.currentTimeMillis();
 
-		List<Object> values = null;
-		if (paramMap != null) {
-			SqlExecutor sqlExecutor = DBUtils.replaceSQL(sql, paramMap);
-			sql = sqlExecutor.getSql();
-			values = (List<Object>) sqlExecutor.getParameter();
-		}
+		String sql = " select * from " + tableName;
 
 		Document doc = DocumentHelper.createDocument();
 		Element root = doc.addElement("Repository");
-
+		root.addAttribute("TableName", tableName);
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSetMetaData rsmd = null;
@@ -99,11 +92,8 @@ public class XmlExporter {
 
 		try {
 			conn = DBConnectionFactory.getConnection(systemName);
+			List<String> primaryKeys = DBUtils.getPrimaryKeys(conn, tableName);
 			stmt = conn.prepareStatement(sql);
-
-			if (values != null && !values.isEmpty()) {
-				JdbcUtils.fillStatement(stmt, values);
-			}
 
 			rs = stmt.executeQuery();
 
@@ -125,6 +115,15 @@ public class XmlExporter {
 				if (column.getScale() == 0 && sqlType == Types.NUMERIC) {
 					column.setJavaType("Long");
 				}
+				if (primaryKeys != null) {
+					if (primaryKeys.contains(column.getColumnName())
+							|| primaryKeys.contains(column.getColumnName()
+									.toLowerCase())
+							|| primaryKeys.contains(column.getColumnName()
+									.toLowerCase())) {
+						column.setPrimaryKey(true);
+					}
+				}
 				columns.add(column);
 				Element e = meta.addElement("Column");
 				e.addAttribute("Name", column.getColumnLabel());
@@ -138,6 +137,9 @@ public class XmlExporter {
 						e.addAttribute("Scale",
 								String.valueOf(column.getScale()));
 					}
+				}
+				if (column.isPrimaryKey()) {
+					e.addAttribute("PrimaryKey", "true");
 				}
 			}
 
@@ -264,15 +266,8 @@ public class XmlExporter {
 		}
 	}
 
-	public void exportXml(String systemName, String rootDir, String tableName,
-			String prefix, int perFileSize) {
-		String sql = " select * from " + tableName;
-		this.exportXml(rootDir, systemName, sql,
-				new java.util.HashMap<String, Object>(), prefix, perFileSize);
-	}
-
 	public static void main(String[] args) throws Exception {
-		XmlExporter exp = new XmlExporter();
+		TableXmlExporter exp = new TableXmlExporter();
 		exp.exportXml("default", "data", "sys_tree", "tree", 50000);
 	}
 
