@@ -20,15 +20,17 @@ package com.glaf.core.config;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.glaf.core.util.Constants;
+import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.PropertiesUtils;
 
 public class MailProperties {
-	private static volatile Properties conf = new Properties();
+	private static volatile Properties properties = new Properties();
 
 	protected static AtomicBoolean loading = new AtomicBoolean(false);
 
@@ -38,7 +40,7 @@ public class MailProperties {
 
 	public static boolean getBoolean(String key) {
 		if (hasObject(key)) {
-			String value = conf.getProperty(key);
+			String value = properties.getProperty(key);
 			return Boolean.valueOf(value).booleanValue();
 		}
 		return false;
@@ -46,7 +48,7 @@ public class MailProperties {
 
 	public static boolean getBoolean(String key, boolean defaultValue) {
 		if (hasObject(key)) {
-			String value = conf.getProperty(key);
+			String value = properties.getProperty(key);
 			return Boolean.valueOf(value).booleanValue();
 		}
 		return defaultValue;
@@ -54,7 +56,7 @@ public class MailProperties {
 
 	public static double getDouble(String key) {
 		if (hasObject(key)) {
-			String value = conf.getProperty(key);
+			String value = properties.getProperty(key);
 			return Double.parseDouble(value);
 		}
 		return 0;
@@ -62,7 +64,7 @@ public class MailProperties {
 
 	public static int getInt(String key) {
 		if (hasObject(key)) {
-			String value = conf.getProperty(key);
+			String value = properties.getProperty(key);
 			return Integer.parseInt(value);
 		}
 		return 0;
@@ -70,15 +72,26 @@ public class MailProperties {
 
 	public static long getLong(String key) {
 		if (hasObject(key)) {
-			String value = conf.getProperty(key);
+			String value = properties.getProperty(key);
 			return Long.parseLong(value);
 		}
 		return 0;
 	}
 
+	public static Properties getProperties() {
+		Properties p = new Properties();
+		Enumeration<?> e = properties.keys();
+		while (e.hasMoreElements()) {
+			String key = (String) e.nextElement();
+			String value = properties.getProperty(key);
+			p.put(key, value);
+		}
+		return p;
+	}
+
 	public static String getString(String key) {
 		if (hasObject(key)) {
-			String value = conf.getProperty(key);
+			String value = properties.getProperty(key);
 			return value;
 		}
 		return null;
@@ -86,14 +99,14 @@ public class MailProperties {
 
 	public static String getString(String key, String defaultValue) {
 		if (hasObject(key)) {
-			String value = conf.getProperty(key);
+			String value = properties.getProperty(key);
 			return value;
 		}
 		return defaultValue;
 	}
 
 	public static boolean hasObject(String key) {
-		String value = conf.getProperty(key);
+		String value = properties.getProperty(key);
 		if (value != null) {
 			return true;
 		}
@@ -102,21 +115,22 @@ public class MailProperties {
 
 	public static void reload() {
 		if (!loading.get()) {
+			InputStream inputStream = null;
 			try {
 				loading.set(true);
 				String filename = SystemProperties.getConfigRootPath()
 						+ Constants.MAIL_CONFIG;
-				java.io.FileInputStream fis = new FileInputStream(filename);
+				inputStream = new FileInputStream(filename);
 				System.out.println("load mail config:" + filename);
-				Properties p = PropertiesUtils.loadProperties(fis);
+				Properties p = PropertiesUtils.loadProperties(inputStream);
 				if (p != null) {
 					Enumeration<?> e = p.keys();
 					while (e.hasMoreElements()) {
 						String key = (String) e.nextElement();
 						String value = p.getProperty(key);
-						conf.setProperty(key, value);
-						conf.setProperty(key.toLowerCase(), value);
-						conf.setProperty(key.toUpperCase(), value);
+						properties.setProperty(key, value);
+						properties.setProperty(key.toLowerCase(), value);
+						properties.setProperty(key.toUpperCase(), value);
 					}
 				}
 			} catch (IOException ex) {
@@ -124,6 +138,7 @@ public class MailProperties {
 				throw new RuntimeException(ex);
 			} finally {
 				loading.set(false);
+				IOUtils.closeStream(inputStream);
 			}
 		}
 	}

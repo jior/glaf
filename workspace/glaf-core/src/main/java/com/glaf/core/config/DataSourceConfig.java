@@ -31,7 +31,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
-import org.apache.commons.io.IOUtils;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
@@ -41,6 +41,7 @@ import com.glaf.core.config.SystemProperties;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.util.Constants;
 import com.glaf.core.util.DBUtils;
+import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.PropertiesUtils;
 
 public class DataSourceConfig {
@@ -285,7 +286,7 @@ public class DataSourceConfig {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
-			IOUtils.closeQuietly(inputStream);
+			IOUtils.closeStream(inputStream);
 		}
 	}
 
@@ -371,7 +372,14 @@ public class DataSourceConfig {
 	}
 
 	public static Properties getProperties() {
-		return properties;
+		Properties p = new Properties();
+		Enumeration<?> e = properties.keys();
+		while (e.hasMoreElements()) {
+			String key = (String) e.nextElement();
+			String value = properties.getProperty(key);
+			p.put(key, value);
+		}
+		return p;
 	}
 
 	public static String getString(String key) {
@@ -554,8 +562,7 @@ public class DataSourceConfig {
 						properties.setProperty(key, value);
 					}
 				}
-				inputStream.close();
-				inputStream = null;
+				IOUtils.closeStream(inputStream);
 
 				if (StringUtils.isNotEmpty(getJdbcConnectionURL())) {
 					if (StringUtils
@@ -587,7 +594,7 @@ public class DataSourceConfig {
 				loadJdbcProperties = false;
 			} finally {
 				loading.set(true);
-				IOUtils.closeQuietly(inputStream);
+				IOUtils.closeStream(inputStream);
 			}
 		}
 	}

@@ -120,6 +120,7 @@ public class MultiDBStartup implements Bootstrap {
 										rs.getString(4));
 
 								logger.debug(dataMap);
+								logger.debug("url:" + old_url);
 								String url = ExpressionTools.evaluate(old_url,
 										dataMap);
 								props.put(DBConfiguration.JDBC_URL, url);

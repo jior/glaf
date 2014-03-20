@@ -18,7 +18,7 @@
 
 package com.glaf.core.config;
 
- 
+import java.util.Enumeration;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
@@ -83,7 +83,15 @@ public class Environment {
 	}
 
 	public static Properties getSystemPropertiesByName(String name) {
-		return systemProperties.get(name);
+		Properties props = systemProperties.get(name);
+		Properties p = new Properties();
+		Enumeration<?> e = props.keys();
+		while (e.hasMoreElements()) {
+			String key = (String) e.nextElement();
+			String value = props.getProperty(key);
+			p.put(key, value);
+		}
+		return p;
 	}
 
 	public static String getThreadLocalProperty(String key) {

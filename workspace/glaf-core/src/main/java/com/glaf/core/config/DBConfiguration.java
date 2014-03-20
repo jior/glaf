@@ -158,7 +158,15 @@ public class DBConfiguration {
 
 	public static Properties getCurrentDataSourceProperties() {
 		String dsName = Environment.getCurrentSystemName();
-		return dataMap.get(dsName);
+		Properties props = dataMap.get(dsName);
+		Properties p = new Properties();
+		Enumeration<?> e = props.keys();
+		while (e.hasMoreElements()) {
+			String key = (String) e.nextElement();
+			String value = props.getProperty(key);
+			p.put(key, value);
+		}
+		return p;
 	}
 
 	public static Dialect getCurrentDialect() {
@@ -202,11 +210,27 @@ public class DBConfiguration {
 	}
 
 	public static Properties getDataSourcePropertiesByName(String name) {
-		return dataMap.get(name);
+		Properties props = dataMap.get(name);
+		Properties p = new Properties();
+		Enumeration<?> e = props.keys();
+		while (e.hasMoreElements()) {
+			String key = (String) e.nextElement();
+			String value = props.getProperty(key);
+			p.put(key, value);
+		}
+		return p;
 	}
 
 	public static Properties getDefaultDataSourceProperties() {
-		return dataMap.get(Environment.DEFAULT_SYSTEM_NAME);
+		Properties props = dataMap.get(Environment.DEFAULT_SYSTEM_NAME);
+		Properties p = new Properties();
+		Enumeration<?> e = props.keys();
+		while (e.hasMoreElements()) {
+			String key = (String) e.nextElement();
+			String value = props.getProperty(key);
+			p.put(key, value);
+		}
+		return p;
 	}
 
 	public static String getDefaultHibernateDialect() {
@@ -270,57 +294,81 @@ public class DBConfiguration {
 		if (dataMap.isEmpty()) {
 			reloadDS();
 		}
-		return dataMap.get(name);
+		Properties props = dataMap.get(name);
+		Properties p = new Properties();
+		Enumeration<?> e = props.keys();
+		while (e.hasMoreElements()) {
+			String key = (String) e.nextElement();
+			String value = props.getProperty(key);
+			p.put(key, value);
+		}
+		return p;
 	}
 
 	public static Properties getTemplateProperties(String name) {
 		if (templateDataMap.isEmpty()) {
 			init();
 		}
-		return templateDataMap.get(name);
+		Properties props = templateDataMap.get(name);
+		Properties p = new Properties();
+		Enumeration<?> e = props.keys();
+		while (e.hasMoreElements()) {
+			String key = (String) e.nextElement();
+			String value = props.getProperty(key);
+			p.put(key, value);
+		}
+		return p;
 	}
 
 	public static void init() {
-		try {
-			String config = SystemProperties.getConfigRootPath()
-					+ "/conf/templates/jdbc";
-			File directory = new File(config);
-			if (directory.exists() && directory.isDirectory()) {
-				String[] filelist = directory.list();
-				for (int i = 0; i < filelist.length; i++) {
-					String filename = config + "/" + filelist[i];
-					File file = new File(filename);
-					if (file.isFile() && file.getName().endsWith(".properties")) {
-						InputStream inputStream = new FileInputStream(file);
-						Properties props = PropertiesUtils
-								.loadProperties(inputStream);
-						if (props != null) {
+		if (!loading.get()) {
+			try {
+				loading.set(true);
+				String config = SystemProperties.getConfigRootPath()
+						+ "/conf/templates/jdbc";
+				File directory = new File(config);
+				if (directory.exists() && directory.isDirectory()) {
+					String[] filelist = directory.list();
+					for (int i = 0; i < filelist.length; i++) {
+						String filename = config + "/" + filelist[i];
+						File file = new File(filename);
+						if (file.isFile()
+								&& file.getName().endsWith(".properties")) {
+							InputStream inputStream = new FileInputStream(file);
+							Properties props = PropertiesUtils
+									.loadProperties(inputStream);
+							if (props != null) {
+								templateDataMap.put(
+										props.getProperty(JDBC_NAME), props);
+							}
+						}
+					}
+				}
+
+				String glabal_config = SystemProperties.getConfigRootPath()
+						+ Constants.DEFAULT_JDBC_CONFIG;
+				File file = new File(glabal_config);
+				if (file.isFile() && file.getName().endsWith(".properties")) {
+					InputStream inputStream = new FileInputStream(file);
+					Properties props = PropertiesUtils
+							.loadProperties(inputStream);
+					if (props != null) {
+						dataMap.put(Environment.DEFAULT_SYSTEM_NAME, props);
+						templateDataMap.put(Environment.DEFAULT_SYSTEM_NAME,
+								props);
+						if (props.getProperty(JDBC_NAME) != null) {
+							dataMap.put(props.getProperty(JDBC_NAME), props);
 							templateDataMap.put(props.getProperty(JDBC_NAME),
 									props);
 						}
 					}
 				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				logger.error(ex);
+			} finally {
+				loading.set(false);
 			}
-
-			String glabal_config = SystemProperties.getConfigRootPath()
-					+ Constants.DEFAULT_JDBC_CONFIG;
-			File file = new File(glabal_config);
-			if (file.isFile() && file.getName().endsWith(".properties")) {
-				InputStream inputStream = new FileInputStream(file);
-				Properties props = PropertiesUtils.loadProperties(inputStream);
-				if (props != null) {
-					dataMap.put(Environment.DEFAULT_SYSTEM_NAME, props);
-					templateDataMap.put(Environment.DEFAULT_SYSTEM_NAME, props);
-					if (props.getProperty(JDBC_NAME) != null) {
-						dataMap.put(props.getProperty(JDBC_NAME), props);
-						templateDataMap
-								.put(props.getProperty(JDBC_NAME), props);
-					}
-				}
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ex);
 		}
 	}
 

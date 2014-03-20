@@ -27,6 +27,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.PropertiesUtils;
 
 public class ViewProperties {
@@ -85,7 +86,14 @@ public class ViewProperties {
 	}
 
 	public static Properties getProperties() {
-		return properties;
+		Properties p = new Properties();
+		Enumeration<?> e = properties.keys();
+		while (e.hasMoreElements()) {
+			String key = (String) e.nextElement();
+			String value = properties.getProperty(key);
+			p.put(key, value);
+		}
+		return p;
 	}
 
 	public static String getString(String key) {
@@ -112,6 +120,7 @@ public class ViewProperties {
 
 	public static void reload() {
 		if (!loading.get()) {
+			InputStream inputStream = null;
 			try {
 				loading.set(true);
 				String config = SystemConfig.getConfigRootPath()
@@ -124,7 +133,7 @@ public class ViewProperties {
 						File file = new File(filename);
 						if (file.isFile()
 								&& file.getName().endsWith(".properties")) {
-							InputStream inputStream = new FileInputStream(file);
+							inputStream = new FileInputStream(file);
 							Properties p = PropertiesUtils
 									.loadProperties(inputStream);
 							if (p != null) {
@@ -139,8 +148,7 @@ public class ViewProperties {
 											value);
 								}
 							}
-							inputStream.close();
-							inputStream = null;
+							IOUtils.closeStream(inputStream);
 						}
 					}
 				}
@@ -148,6 +156,7 @@ public class ViewProperties {
 				throw new RuntimeException(ex);
 			} finally {
 				loading.set(false);
+				IOUtils.closeStream(inputStream);
 			}
 		}
 	}

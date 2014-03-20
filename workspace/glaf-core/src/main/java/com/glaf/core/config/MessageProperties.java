@@ -31,6 +31,7 @@ import org.apache.commons.lang.StringUtils;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.domain.SystemProperty;
 import com.glaf.core.service.ISystemPropertyService;
+import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.PropertiesUtils;
 
 public class MessageProperties {
@@ -89,7 +90,14 @@ public class MessageProperties {
 	}
 
 	public static Properties getProperties() {
-		return properties;
+		Properties p = new Properties();
+		Enumeration<?> e = properties.keys();
+		while (e.hasMoreElements()) {
+			String key = (String) e.nextElement();
+			String value = properties.getProperty(key);
+			p.put(key, value);
+		}
+		return p;
 	}
 
 	public static String getString(String key) {
@@ -116,6 +124,7 @@ public class MessageProperties {
 
 	public static void reload() {
 		if (!loading.get()) {
+			InputStream inputStream = null;
 			try {
 				loading.set(true);
 				String config = SystemConfig.getConfigRootPath()
@@ -128,7 +137,7 @@ public class MessageProperties {
 						File file = new File(filename);
 						if (file.isFile()
 								&& file.getName().endsWith(".properties")) {
-							InputStream inputStream = new FileInputStream(file);
+							inputStream = new FileInputStream(file);
 							Properties p = PropertiesUtils
 									.loadProperties(inputStream);
 							if (p != null) {
@@ -143,8 +152,7 @@ public class MessageProperties {
 											value);
 								}
 							}
-							inputStream.close();
-							inputStream = null;
+							IOUtils.closeStream(inputStream);
 						}
 					}
 				}
@@ -163,6 +171,7 @@ public class MessageProperties {
 				throw new RuntimeException(ex);
 			} finally {
 				loading.set(false);
+				IOUtils.closeStream(inputStream);
 			}
 		}
 	}

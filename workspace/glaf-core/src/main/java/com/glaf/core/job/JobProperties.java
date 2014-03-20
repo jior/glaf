@@ -71,7 +71,14 @@ public class JobProperties {
 	}
 
 	public static Properties getProperties() {
-		return properties;
+		Properties p = new Properties();
+		Enumeration<?> e = properties.keys();
+		while (e.hasMoreElements()) {
+			String key = (String) e.nextElement();
+			String value = properties.getProperty(key);
+			p.put(key, value);
+		}
+		return p;
 	}
 
 	public static String getString(String key) {
@@ -95,6 +102,7 @@ public class JobProperties {
 
 	public static void reload() {
 		if (!loading.get()) {
+			InputStream inputStream = null;
 			try {
 				loading.set(true);
 				String config = SystemConfig.getConfigRootPath()
@@ -107,7 +115,7 @@ public class JobProperties {
 						File file = new File(filename);
 						if (file.isFile()
 								&& file.getName().endsWith(".properties")) {
-							InputStream inputStream = new FileInputStream(file);
+							inputStream = new FileInputStream(file);
 							Properties p = PropertiesUtils
 									.loadProperties(inputStream);
 							if (p != null) {
@@ -118,8 +126,7 @@ public class JobProperties {
 									properties.setProperty(key, value);
 								}
 							}
-							inputStream.close();
-							inputStream = null;
+							IOUtils.closeStream(inputStream);
 						}
 					}
 				}
@@ -127,6 +134,7 @@ public class JobProperties {
 				throw new RuntimeException(ex);
 			} finally {
 				loading.set(false);
+				IOUtils.closeStream(inputStream);
 			}
 		}
 	}

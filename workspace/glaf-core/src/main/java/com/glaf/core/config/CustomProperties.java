@@ -29,6 +29,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.PropertiesUtils;
 
 public class CustomProperties {
@@ -91,7 +92,14 @@ public class CustomProperties {
 	}
 
 	public static Properties getProperties() {
-		return properties;
+		Properties p = new Properties();
+		Enumeration<?> e = properties.keys();
+		while (e.hasMoreElements()) {
+			String key = (String) e.nextElement();
+			String value = properties.getProperty(key);
+			p.put(key, value);
+		}
+		return p;
 	}
 
 	public static String getString(String key) {
@@ -118,6 +126,7 @@ public class CustomProperties {
 
 	public static void reload() {
 		if (!loading.get()) {
+			InputStream inputStream = null;
 			try {
 				loading.set(true);
 				String config = SystemProperties.getConfigRootPath()
@@ -134,7 +143,7 @@ public class CustomProperties {
 								&& file.getName().endsWith(".properties")) {
 							logger.info("load properties:"
 									+ file.getAbsolutePath());
-							InputStream inputStream = new FileInputStream(file);
+							inputStream = new FileInputStream(file);
 							Properties p = PropertiesUtils
 									.loadProperties(inputStream);
 							if (p != null) {
@@ -149,8 +158,7 @@ public class CustomProperties {
 											value);
 								}
 							}
-							inputStream.close();
-							inputStream = null;
+							IOUtils.closeStream(inputStream);
 						}
 					}
 				}
@@ -158,6 +166,7 @@ public class CustomProperties {
 				throw new RuntimeException(ex);
 			} finally {
 				loading.set(false);
+				IOUtils.closeStream(inputStream);
 			}
 		}
 	}
