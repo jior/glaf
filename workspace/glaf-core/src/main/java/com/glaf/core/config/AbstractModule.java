@@ -18,38 +18,115 @@
 
 package com.glaf.core.config;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 
+import com.glaf.core.util.FileUtils;
+import com.glaf.core.util.PropertiesUtils;
+
+import java.io.File;
+import java.util.Enumeration;
 import java.util.Properties;
 
 public abstract class AbstractModule implements Module {
+	protected static final Log logger = LogFactory.getLog(AbstractModule.class);
 
 	protected Properties properties;
 
 	protected AbstractModule() {
 		properties = new Properties();
 		try {
-			properties = PropertiesLoaderUtils
-					.loadProperties(new ClassPathResource(
-							getPropertiesFileName(), getClass()));
+			String filename = SystemProperties.getConfigRootPath() + "/conf/"
+					+ getPropertiesFileName();
+			File file = new File(filename);
+			if (file.exists() && file.isFile()) {
+				logger.info("load config:" + filename);
+				properties = PropertiesUtils.loadProperties(FileUtils
+						.getInputStream(filename));
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		try {
+			if (properties.isEmpty()) {
+				logger.info("load classpath config:" + getPropertiesFileName());
+				properties = PropertiesLoaderUtils
+						.loadProperties(new ClassPathResource(
+								getPropertiesFileName(), getClass()));
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 
-	protected String getPropertiesFileName() {
-		return getClass().getSimpleName() + ".properties";
+	@Override
+	public int compareTo(Module o) {
+		return Integer.valueOf(getOrdinal()).compareTo(o.getOrdinal());
 	}
 
-	@Override
-	public String getVersion() {
-		return properties.getProperty("application.version");
+	public boolean eq(String key, String value) {
+		if (key != null && value != null) {
+			String x = properties.getProperty(key);
+			if (StringUtils.equals(value, x)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean getBoolean(String key) {
+		if (hasObject(key)) {
+			String value = properties.getProperty(key);
+			return Boolean.valueOf(value).booleanValue();
+		}
+		return false;
+	}
+
+	public double getDouble(String key) {
+		if (hasObject(key)) {
+			String value = properties.getProperty(key);
+			return Double.parseDouble(value);
+		}
+		return 0;
 	}
 
 	@Override
 	public String getFileName() {
 		return properties.getProperty("application.fileName");
+	}
+
+	public int getInt(String key) {
+		if (hasObject(key)) {
+			String value = properties.getProperty(key);
+			return Integer.parseInt(value);
+		}
+		return 0;
+	}
+
+	@Override
+	public String getLicenseName() {
+		return properties.getProperty("application.license.name");
+	}
+
+	@Override
+	public String getLicenseUrl() {
+		return properties.getProperty("application.license.url");
+	}
+
+	public long getLong(String key) {
+		if (hasObject(key)) {
+			String value = properties.getProperty(key);
+			return Long.parseLong(value);
+		}
+		return 0;
+	}
+
+	@Override
+	public String getName() {
+		return properties.getProperty("application.name");
 	}
 
 	@Override
@@ -63,23 +140,34 @@ public abstract class AbstractModule implements Module {
 	}
 
 	@Override
-	public String getLicenseName() {
-		return properties.getProperty("application.license.name");
-	}
-
-	@Override
-	public String getLicenseUrl() {
-		return properties.getProperty("application.license.url");
-	}
-
-	@Override
-	public String getName() {
-		return properties.getProperty("application.name");
-	}
-
-	@Override
 	public String getProjectUrl() {
 		return properties.getProperty("application.url");
+	}
+
+	public Properties getProperties() {
+		Properties props = new Properties();
+		Enumeration<?> e = properties.keys();
+		while (e.hasMoreElements()) {
+			String key = (String) e.nextElement();
+			String value = properties.getProperty(key);
+			props.put(key, value);
+		}
+		return props;
+	}
+
+	protected String getPropertiesFileName() {
+		return getClass().getSimpleName() + ".properties";
+	}
+
+	public String getString(String key) {
+		if (hasObject(key)) {
+			String value = properties.getProperty(key);
+			if (value == null) {
+				value = properties.getProperty(key.toUpperCase());
+			}
+			return value;
+		}
+		return null;
 	}
 
 	@Override
@@ -89,13 +177,24 @@ public abstract class AbstractModule implements Module {
 	}
 
 	@Override
-	public String toString() {
-		return getFileName();
+	public String getVersion() {
+		return properties.getProperty("application.version");
+	}
+
+	public boolean hasObject(String key) {
+		if (properties == null || key == null) {
+			return false;
+		}
+		String value = properties.getProperty(key);
+		if (value != null) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override
-	public int compareTo(Module o) {
-		return Integer.valueOf(getOrdinal()).compareTo(o.getOrdinal());
+	public String toString() {
+		return getFileName();
 	}
 
 }

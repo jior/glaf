@@ -18,29 +18,46 @@
 
 package com.glaf.core.config;
 
+import java.util.Properties;
+
 /**
  * <p>
  * Defines the api of valid glaf modules.
  * </p>
  */
 public interface Module extends Comparable<Module> {
-	public String getName();
 
-	public String getVersion();
+	boolean getBoolean(String key);
 
-	public String getFileName();
+	double getDouble(String key);
 
-	public String getOrganizationName();
+	String getFileName();
 
-	public String getOrganizationUrl();
+	int getInt(String key);
 
-	public String getLicenseName();
+	String getLicenseName();
 
-	public String getLicenseUrl();
+	String getLicenseUrl();
 
-	public String getProjectUrl();
+	long getLong(String key);
 
-	public int getOrdinal();
+	String getName();
 
-	public ModuleType getType();
+	int getOrdinal();
+
+	String getOrganizationName();
+
+	String getOrganizationUrl();
+
+	String getProjectUrl();
+
+	Properties getProperties();
+
+	String getString(String key);
+
+	ModuleType getType();
+
+	String getVersion();
+
+	boolean hasObject(String key);
 }
