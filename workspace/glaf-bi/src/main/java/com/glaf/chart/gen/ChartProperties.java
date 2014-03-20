@@ -29,8 +29,8 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -38,13 +38,16 @@ import org.springframework.core.io.Resource;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.config.SystemProperties;
+import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.PropertiesUtils;
 
 public class ChartProperties {
 
-	private final static String DEFAULT_CONFIG = "/conf/chart.properties";
+	protected final static String DEFAULT_CONFIG = "/conf/chart.properties";
 
-	private static Properties properties = new Properties();
+	protected static volatile Properties properties = new Properties();
+
+	protected static AtomicBoolean loading = new AtomicBoolean(false);
 
 	protected static List<ChartType> types = new java.util.concurrent.CopyOnWriteArrayList<ChartType>();
 
@@ -52,15 +55,8 @@ public class ChartProperties {
 
 	static {
 		try {
-			Properties p = reload();
-			if (p != null) {
-				Enumeration<?> e = p.keys();
-				while (e.hasMoreElements()) {
-					String key = (String) e.nextElement();
-					String value = p.getProperty(key);
-					properties.setProperty(key, value);
-				}
-			}
+			reload();
+
 		} catch (Exception ex) {
 		}
 	}
@@ -106,7 +102,14 @@ public class ChartProperties {
 	}
 
 	public static Properties getProperties() {
-		return properties;
+		Properties p = new Properties();
+		Enumeration<?> e = properties.keys();
+		while (e.hasMoreElements()) {
+			String key = (String) e.nextElement();
+			String value = properties.getProperty(key);
+			p.put(key, value);
+		}
+		return p;
 	}
 
 	public static String getString(String key) {
@@ -128,10 +131,11 @@ public class ChartProperties {
 		return false;
 	}
 
-	public static Properties reload() {
-		synchronized (ChartProperties.class) {
+	public static void reload() {
+		if (!loading.get()) {
 			InputStream inputStream = null;
 			try {
+				loading.set(true);
 				String filename = SystemProperties.getConfigRootPath()
 						+ DEFAULT_CONFIG;
 				Resource resource = new FileSystemResource(filename);
@@ -141,12 +145,13 @@ public class ChartProperties {
 					inputStream = new FileInputStream(resource.getFile()
 							.getAbsolutePath());
 					properties.clear();
-					Properties p = PropertiesUtils.loadProperties(inputStream);
-					if (p != null) {
-						Enumeration<?> e = p.keys();
+					Properties props = PropertiesUtils
+							.loadProperties(inputStream);
+					if (props != null) {
+						Enumeration<?> e = props.keys();
 						while (e.hasMoreElements()) {
 							String key = (String) e.nextElement();
-							String value = p.getProperty(key);
+							String value = props.getProperty(key);
 							properties.setProperty(key, value);
 						}
 					}
@@ -184,15 +189,13 @@ public class ChartProperties {
 							}
 						}
 					}
-
-					return p;
 				}
-				return properties;
 			} catch (IOException ex) {
 				ex.printStackTrace();
 				throw new RuntimeException(ex);
 			} finally {
-				IOUtils.closeQuietly(inputStream);
+				loading.set(false);
+				IOUtils.closeStream(inputStream);
 			}
 		}
 	}
