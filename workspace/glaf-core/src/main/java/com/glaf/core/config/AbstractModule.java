@@ -37,29 +37,7 @@ public abstract class AbstractModule implements Module {
 	protected Properties properties;
 
 	protected AbstractModule() {
-		properties = new Properties();
-		try {
-			String filename = SystemProperties.getConfigRootPath() + "/conf/"
-					+ getPropertiesFileName();
-			File file = new File(filename);
-			if (file.exists() && file.isFile()) {
-				logger.info("load config:" + filename);
-				properties = PropertiesUtils.loadProperties(FileUtils
-						.getInputStream(filename));
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		try {
-			if (properties.isEmpty()) {
-				logger.info("load classpath config:" + getPropertiesFileName());
-				properties = PropertiesLoaderUtils
-						.loadProperties(new ClassPathResource(
-								getPropertiesFileName(), getClass()));
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
+		reload();
 	}
 
 	@Override
@@ -190,6 +168,32 @@ public abstract class AbstractModule implements Module {
 			return true;
 		}
 		return false;
+	}
+
+	public void reload() {
+		properties = new Properties();
+		try {
+			String filename = SystemProperties.getConfigRootPath() + "/conf/"
+					+ getPropertiesFileName();
+			File file = new File(filename);
+			if (file.exists() && file.isFile()) {
+				logger.info("load config:" + filename);
+				properties = PropertiesUtils.loadProperties(FileUtils
+						.getInputStream(filename));
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		try {
+			if (properties.isEmpty()) {
+				logger.info("load classpath config:" + getPropertiesFileName());
+				properties = PropertiesLoaderUtils
+						.loadProperties(new ClassPathResource(
+								getPropertiesFileName(), getClass()));
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	@Override
