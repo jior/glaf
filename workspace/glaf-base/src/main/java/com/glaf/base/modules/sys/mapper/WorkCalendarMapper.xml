@@ -63,7 +63,7 @@
 	</update>
 
  
-	<delete id="deleteWorkCalendarById" parameterType="string"> 
+	<delete id="deleteWorkCalendarById" parameterType="long"> 
         delete from SYS_WORKCALENDAR
         where ID =	#{id}
 	</delete>
