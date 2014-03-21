@@ -1,6 +1,8 @@
 package com.glaf.core.web.springmvc;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -8,6 +10,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +34,8 @@ import com.glaf.core.base.TableModel;
 import com.glaf.core.config.BaseConfiguration;
 import com.glaf.core.config.Configuration;
 import com.glaf.core.config.ViewProperties;
+import com.glaf.core.db.dataexport.DbToH2Exporter;
+import com.glaf.core.db.dataexport.DbToSqliteExporter;
 import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.domain.SystemParam;
 import com.glaf.core.domain.TableDefinition;
@@ -45,6 +50,7 @@ import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.Dom4jUtils;
 import com.glaf.core.util.FileUtils;
+import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.JdbcUtils;
 import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.QueryUtils;
@@ -57,11 +63,12 @@ import com.glaf.core.xml.XmlWriter;
 @Controller("/sys/table")
 @RequestMapping("/sys/table")
 public class MxSystemDbTableController {
+	protected static final Log logger = LogFactory
+			.getLog(MxSystemDbTableController.class);
 
 	protected static Configuration conf = BaseConfiguration.create();
 
-	protected static final Log logger = LogFactory
-			.getLog(MxSystemDbTableController.class);
+	protected static AtomicBoolean running = new AtomicBoolean(false);
 
 	protected ITableDataService tableDataService;
 
@@ -145,6 +152,7 @@ public class MxSystemDbTableController {
 		return new ModelAndView("/modules/sys/table/edit", modelMap);
 	}
 
+	@ResponseBody
 	@RequestMapping("/exportData")
 	public void exportData(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
@@ -255,6 +263,61 @@ public class MxSystemDbTableController {
 		}
 	}
 
+	@ResponseBody
+	@RequestMapping("/exportDB")
+	public void exportDB(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		String systemName = request.getParameter("systemName");
+		if (systemName == null) {
+			systemName = "default";
+		}
+		String dataPath = null;
+		String filename = null;
+		String dbType = request.getParameter("dbType");
+		logger.debug("dbType:" + dbType);
+		if (StringUtils.isNotEmpty(dbType)) {
+			if (!running.get()) {
+				InputStream inputStream = null;
+				try {
+					running.set(true);
+					if (StringUtils.equals(dbType, "h2")) {
+						dataPath = "/data/" + DateUtils.getNowYearMonthDay()
+								+ "/glafdb";
+						filename = "/data/" + DateUtils.getNowYearMonthDay()
+								+ "/glafdb.h2.db";
+						FileUtils.mkdirs("/data/"
+								+ DateUtils.getNowYearMonthDay());
+						DbToH2Exporter exp = new DbToH2Exporter();
+						exp.exportTables(systemName, dataPath);
+					} else if (StringUtils.equals(dbType, "sqlite")) {
+						dataPath = "/data/" + DateUtils.getNowYearMonthDay()
+								+ "/glafdb.db";
+						filename = dataPath;
+						FileUtils.mkdirs("/data/"
+								+ DateUtils.getNowYearMonthDay());
+						DbToSqliteExporter exp = new DbToSqliteExporter();
+						exp.exportTables(systemName, dataPath);
+					}
+					if (dataPath != null) {
+						File file = new File(filename);
+						File[] files = { file };
+						ZipUtils.compressFile(files, filename + ".zip");
+						inputStream = FileUtils.getInputStream(filename
+								+ ".zip");
+						ResponseUtils.download(request, response, inputStream,
+								"glafdb.zip");
+					}
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				} finally {
+					running.set(false);
+					IOUtils.closeStream(inputStream);
+				}
+			}
+		}
+	}
+
+	@ResponseBody
 	@RequestMapping("/exportSysTables")
 	public void exportSysTables(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
@@ -370,6 +433,7 @@ public class MxSystemDbTableController {
 		}
 	}
 
+	@ResponseBody
 	@RequestMapping("/genCreateScripts")
 	public void genCreateScripts(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {

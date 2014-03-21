@@ -28,6 +28,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -37,6 +38,12 @@ import java.util.jar.JarOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.apache.commons.compress.archivers.ArchiveEntry;
+import org.apache.commons.compress.archivers.zip.Zip64Mode;
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
+import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
+
 public class ZipUtils {
 	private static JarOutputStream jos;
 
@@ -44,9 +51,65 @@ public class ZipUtils {
 
 	private static int len;
 
-	private static int BUFFER = 65536;
+	private static int BUFFER = 8192;
 
 	private static String sp = System.getProperty("file.separator");
+
+	/**
+	 * 
+	 * 把文件压缩成zip格式
+	 * 
+	 * @param files
+	 *            需要压缩的文件
+	 * 
+	 * @param zipFilePath
+	 *            压缩后的zip文件路径 ,如"/var/data/aa.zip";
+	 */
+	public static void compressFile(File[] files, String zipFilePath) {
+		if (files != null && files.length > 0) {
+			if (isEndsWithZip(zipFilePath)) {
+				ZipArchiveOutputStream zaos = null;
+				try {
+					File zipFile = new File(zipFilePath);
+					zaos = new ZipArchiveOutputStream(zipFile);
+
+					// Use Zip64 extensions for all entries where they are
+					// required
+					zaos.setUseZip64(Zip64Mode.AsNeeded);
+
+					for (File file : files) {
+						if (file != null) {
+							ZipArchiveEntry zipArchiveEntry = new ZipArchiveEntry(
+									file, file.getName());
+							zaos.putArchiveEntry(zipArchiveEntry);
+							InputStream is = null;
+							try {
+								is = new BufferedInputStream(
+										new FileInputStream(file));
+								byte[] buffer = new byte[BUFFER];
+								int len = -1;
+								while ((len = is.read(buffer)) != -1) {
+									zaos.write(buffer, 0, len);
+								}
+
+								// Writes all necessary data for this entry.
+								zaos.closeArchiveEntry();
+							} catch (Exception e) {
+								throw new RuntimeException(e);
+							} finally {
+								IOUtils.closeStream(is);
+							}
+						}
+					}
+					zaos.finish();
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				} finally {
+					IOUtils.closeStream(zaos);
+				}
+			}
+		}
+	}
 
 	public static String convertEncoding(String s) {
 		String s1 = s;
@@ -55,6 +118,53 @@ public class ZipUtils {
 		} catch (Exception exception) {
 		}
 		return s1;
+	}
+
+	/**
+	 * 
+	 * 把zip文件解压到指定的文件夹
+	 * 
+	 * @param zipFilePath
+	 *            zip文件路径, 如 "/var/data/aa.zip"
+	 * 
+	 * @param saveFileDir
+	 *            解压后的文件存放路径, 如"/var/test/"
+	 */
+	public static void decompressZip(String zipFilePath, String saveFileDir) {
+		if (isEndsWithZip(zipFilePath)) {
+			File file = new File(zipFilePath);
+			if (file.exists() && file.isFile()) {
+				InputStream inputStream = null;
+				ZipArchiveInputStream zais = null;
+				try {
+					inputStream = new FileInputStream(file);
+					zais = new ZipArchiveInputStream(inputStream);
+					ArchiveEntry archiveEntry = null;
+					while ((archiveEntry = zais.getNextEntry()) != null) {
+						String entryFileName = archiveEntry.getName();
+						String entryFilePath = saveFileDir + entryFileName;
+						byte[] content = new byte[(int) archiveEntry.getSize()];
+						zais.read(content);
+						OutputStream os = null;
+						try {
+							File entryFile = new File(entryFilePath);
+							os = new BufferedOutputStream(new FileOutputStream(
+									entryFile));
+							os.write(content);
+						} catch (IOException e) {
+							throw new IOException(e);
+						} finally {
+							IOUtils.closeStream(os);
+						}
+					}
+				} catch (Exception e) {
+					throw new RuntimeException(e);
+				} finally {
+					IOUtils.closeStream(zais);
+					IOUtils.closeStream(inputStream);
+				}
+			}
+		}
 	}
 
 	public static byte[] getBytes(byte[] bytes, String name) {
@@ -221,6 +331,26 @@ public class ZipUtils {
 			IOUtils.closeStream(baos);
 		}
 		return zipMap;
+	}
+
+	/**
+	 * 
+	 * 判断文件名是否以.zip为后缀
+	 * 
+	 * @param fileName
+	 *            需要判断的文件名
+	 * 
+	 * @return
+	 */
+	public static boolean isEndsWithZip(String fileName) {
+		boolean flag = false;
+		if (fileName != null && !"".equals(fileName.trim())) {
+			if (fileName.toLowerCase().endsWith(".zip")) {
+				flag = true;
+			}
+		}
+
+		return flag;
 	}
 
 	public static void makeZip(File dir, File zipFile) throws IOException,

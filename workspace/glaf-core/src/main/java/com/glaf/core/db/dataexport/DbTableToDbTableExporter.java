@@ -159,8 +159,8 @@ public class DbTableToDbTableExporter {
 							int i = 1;
 							for (ColumnDefinition c : columns) {
 								String name = c.getColumnName();
-								Object obj = ParamUtils.get(dataMap, name);
-								if (obj != null) {
+								Object object = ParamUtils.get(dataMap, name);
+								if (object != null) {
 									String javaType = c.getJavaType();
 									if ("Integer".equals(javaType)) {
 										psmt02.setInt(i++, ParamUtils.getInt(
@@ -181,10 +181,16 @@ public class DbTableToDbTableExporter {
 										psmt02.setString(i++, ParamUtils
 												.getString(dataMap, name));
 									} else if ("Blob".equals(javaType)) {
-										psmt02.setBytes(i++, (byte[]) obj);
+										if (object instanceof java.sql.Blob) {
+											psmt02.setBlob(i++,
+													(java.sql.Blob) object);
+										} else if (object instanceof byte[]) {
+											psmt02.setBytes(i++,
+													(byte[]) object);
+										}
 									} else if ("Boolean".equals(javaType)) {
-										if (obj instanceof Boolean) {
-											Boolean b = (Boolean) obj;
+										if (object instanceof Boolean) {
+											Boolean b = (Boolean) object;
 											if (b) {
 												psmt02.setInt(i++, 1);
 											} else {

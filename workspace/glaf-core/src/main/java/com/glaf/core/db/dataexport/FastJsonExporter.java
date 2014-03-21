@@ -252,7 +252,7 @@ public class FastJsonExporter {
 		this.exportJson(systemName, rootDir, sql,
 				new java.util.HashMap<String, Object>(), prefix, perFileSize);
 	}
-	
+
 	public static void main(String[] args) throws Exception {
 		FastJsonExporter exp = new FastJsonExporter();
 		exp.exportJson("default", "data", "sys_tree", "tree", 50000);

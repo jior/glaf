@@ -257,6 +257,8 @@ public class DBUtils {
 							sql += " clob ";
 						} else if ("Blob".equals(javaType)) {
 							sql += " longvarbinary ";
+						} else if ("Boolean".equals(javaType)) {
+							sql += " BOOLEAN ";
 						}
 					} else if ("sqlite".equalsIgnoreCase(dbType)) {
 						if ("String".equals(javaType)) {
@@ -1345,6 +1347,8 @@ public class DBUtils {
 					buffer.append(" double ");
 				} else if ("Date".equals(column.getJavaType())) {
 					buffer.append(" timestamp ");
+				} else if ("Boolean".equals(column.getJavaType())) {
+					buffer.append(" boolean   ");
 				} else if ("Clob".equals(column.getJavaType())) {
 					buffer.append(" clob   ");
 				} else if ("Blob".equals(column.getJavaType())) {
@@ -1534,6 +1538,8 @@ public class DBUtils {
 					buffer.append(" double ");
 				} else if ("Date".equals(field.getJavaType())) {
 					buffer.append(" timestamp ");
+				} else if ("Boolean".equals(field.getJavaType())) {
+					buffer.append(" boolean   ");
 				} else if ("Clob".equals(field.getJavaType())) {
 					buffer.append(" clob ");
 				} else if ("Blob".equals(field.getJavaType())) {
@@ -1781,6 +1787,8 @@ public class DBUtils {
 				buffer.append(" double ");
 			} else if ("Date".equals(field.getJavaType())) {
 				buffer.append(" timestamp ");
+			} else if ("Boolean".equals(field.getJavaType())) {
+				buffer.append(" boolean   ");
 			} else if ("Clob".equals(field.getJavaType())) {
 				buffer.append(" clob ");
 			} else if ("Blob".equals(field.getJavaType())) {
