@@ -179,8 +179,13 @@ public class DbToH2Exporter {
 										psmt02.setString(i++, ParamUtils
 												.getString(dataMap, name));
 									} else if ("Clob".equals(javaType)) {
-										psmt02.setString(i++, ParamUtils
-												.getString(dataMap, name));
+										if (object instanceof java.sql.Clob) {
+											psmt02.setClob(i++,
+													(java.sql.Clob) object);
+										} else if (object instanceof String) {
+											psmt02.setString(i++,
+													(String) object);
+										}
 									} else if ("Blob".equals(javaType)) {
 										if (object instanceof java.sql.Blob) {
 											psmt02.setBlob(i++,
