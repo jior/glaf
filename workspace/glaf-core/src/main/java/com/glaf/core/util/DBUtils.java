@@ -463,7 +463,8 @@ public class DBUtils {
 			 */
 			String dbType = DBConnectionFactory.getDatabaseType(connection);
 			if (System.getProperty("devMode") != null
-					|| StringUtils.equalsIgnoreCase(dbType, "sqlite")) {
+					|| StringUtils.equalsIgnoreCase(dbType, "sqlite")
+					|| StringUtils.equalsIgnoreCase(dbType, "h2")) {
 				try {
 					Statement statement = connection.createStatement();
 					logger.info("drop table " + tableName);

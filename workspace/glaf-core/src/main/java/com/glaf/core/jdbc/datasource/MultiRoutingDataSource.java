@@ -18,7 +18,6 @@
 
 package com.glaf.core.jdbc.datasource;
 
- 
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
@@ -40,11 +39,11 @@ public class MultiRoutingDataSource extends AbstractRoutingDataSource {
 	protected final static Log logger = LogFactory
 			.getLog(MultiRoutingDataSource.class);
 
-	private static ConcurrentMap<Object, Object> targetDataSources = new ConcurrentHashMap<Object, Object>();
+	private static volatile ConcurrentMap<Object, Object> targetDataSources = new ConcurrentHashMap<Object, Object>();
 
-	private static Object defaultTargetDataSource;
+	private static volatile Object defaultTargetDataSource;
 
-	private static boolean LOAD_DATASOURCE_OK = false;
+	private static volatile boolean LOAD_DATASOURCE_OK = false;
 
 	static {
 		reloadDS();
@@ -57,7 +56,7 @@ public class MultiRoutingDataSource extends AbstractRoutingDataSource {
 	private static void reloadDS() {
 		if (!LOAD_DATASOURCE_OK) {
 			logger.info("--------------MultiRoutingDataSource reloadDS()------------");
-			Map<Object, Object> dataSourceMap = new java.util.concurrent.ConcurrentHashMap<Object, Object>();
+			Map<Object, Object> dataSourceMap = new java.util.HashMap<Object, Object>();
 			Map<String, Properties> dataSourceProperties = DBConfiguration
 					.getDataSourceProperties();
 			Set<Entry<String, Properties>> entrySet = dataSourceProperties
@@ -117,6 +116,7 @@ public class MultiRoutingDataSource extends AbstractRoutingDataSource {
 		if (DBConfiguration.requireReloadDataSource()) {
 			reloadDS();
 		}
+		logger.debug("currentSystemName:" + Environment.getCurrentSystemName());
 		return Environment.getCurrentSystemName();
 	}
 

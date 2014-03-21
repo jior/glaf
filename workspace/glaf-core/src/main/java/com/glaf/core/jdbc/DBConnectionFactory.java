@@ -177,6 +177,7 @@ public class DBConnectionFactory {
 		databaseTypeMappings.setProperty("Oracle", "oracle");
 		databaseTypeMappings.setProperty("PostgreSQL", "postgresql");
 		databaseTypeMappings.setProperty("Microsoft SQL Server", "sqlserver");
+		databaseTypeMappings.setProperty("SQLite", "sqlite");
 		databaseTypeMappings.setProperty("DB2", "db2");
 		databaseTypeMappings.setProperty("DB2/NT", "db2");
 		databaseTypeMappings.setProperty("DB2/NT64", "db2");
