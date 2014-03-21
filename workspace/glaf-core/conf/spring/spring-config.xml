@@ -39,7 +39,30 @@
 
 	<context:component-scan base-package="com.glaf" />
 
-	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSourceC3P0Adapter"
+
+	<!-- <bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>classpath:/conf/jdbc.properties</value>
+		</property>
+	</bean> -->
+
+
+	<!-- <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSourceC3P0Adapter"
+		destroy-method="close">
+		<property name="driverClass" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.user}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="minPoolSize" value="20" />
+		<property name="maxPoolSize" value="120" />
+		<property name="maxIdleTime" value="5000" />
+		<property name="acquireIncrement" value="2" />
+		<property name="maxStatements" value="100" />
+		<property name="idleConnectionTestPeriod" value="3000" />
+	</bean> -->
+
+	<!-- <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSourceC3P0Adapter"
 		destroy-method="close">
 		<property name="driverClass" value="org.h2.Driver" />
 		<property name="jdbcUrl" value="jdbc:h2:tcp://localhost/glafdb" />
@@ -51,7 +74,35 @@
 		<property name="acquireIncrement" value="2" />
 		<property name="maxStatements" value="100" />
 		<property name="idleConnectionTestPeriod" value="3000" />
-	</bean>
+	</bean> -->
+
+	<!-- <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSourceC3P0Adapter"
+		destroy-method="close">
+		<property name="driverClass" value="org.postgresql.Driver" />
+		<property name="jdbcUrl" value="jdbc:postgresql://127.0.0.1:5432/wechat2014" />
+		<property name="user" value="root" />
+		<property name="password" value="root" />
+		<property name="minPoolSize" value="5" />
+		<property name="maxPoolSize" value="50" />
+		<property name="maxIdleTime" value="5000" />
+		<property name="acquireIncrement" value="2" />
+		<property name="maxStatements" value="100" />
+		<property name="idleConnectionTestPeriod" value="3000" />
+	</bean> -->
+
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSourceC3P0Adapter"
+		destroy-method="close">
+		<property name="driverClass" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+		<property name="jdbcUrl" value="jdbc:sqlserver://127.0.0.1:1433;databaseName=yz" />
+		<property name="user" value="sa" />
+		<property name="password" value="654321" />
+		<property name="minPoolSize" value="5" />
+		<property name="maxPoolSize" value="50" />
+		<property name="maxIdleTime" value="5000" />
+		<property name="acquireIncrement" value="2" />
+		<property name="maxStatements" value="100" />
+		<property name="idleConnectionTestPeriod" value="3000" />
+	</bean> 
 
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
