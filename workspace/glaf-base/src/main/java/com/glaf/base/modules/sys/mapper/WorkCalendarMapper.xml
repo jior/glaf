@@ -79,7 +79,7 @@
 		)
 	</delete>
 
-	<select id="getWorkCalendarById" parameterType="string" resultMap="workCalendarResultMap">
+	<select id="getWorkCalendarById" parameterType="long" resultMap="workCalendarResultMap">
 		select * from SYS_WORKCALENDAR where ID = #{id}
 	</select>
 
