@@ -127,14 +127,14 @@ public class DbToH2Exporter {
 
 				logger.debug("insert sql=" + sb2.toString());
 
-				ITablePageService tablePageService = null;
+				ITablePageService tablePageService = ContextFactory
+						.getBean("tablePageService");
 				TablePageQuery query = new TablePageQuery();
 				query.tableName(tableName);
 				List<Map<String, Object>> rows = new java.util.ArrayList<Map<String, Object>>();
 				for (int index = 0; index < (total / pageSize + 1); index++) {
 					Environment.setCurrentSystemName(systemName);
-					tablePageService = ContextFactory
-							.getBean("tablePageService");
+					
 					int firstResult = index * pageSize;
 					rows.clear();
 					logger.debug("firstResult=" + firstResult);
