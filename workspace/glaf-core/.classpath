@@ -152,5 +152,6 @@
 	<classpathentry kind="lib" path="conf"/>
 	<classpathentry kind="lib" path="jar-conf"/>
 	<classpathentry kind="lib" path="lib/sqlite-jdbc.jar"/>
+	<classpathentry kind="lib" path="lib/mchange-commons-java.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -35,6 +35,12 @@
 						<when test="column.javaType == 'Date'">
 							#{column.value, jdbcType=TIMESTAMP},
 						</when>
+						<when test="column.javaType == 'Clob'">
+							#{column.value, jdbcType=CLOB},
+						</when>
+						<when test="column.javaType == 'Blob'">
+							#{column.value, jdbcType=BLOB},
+						</when>
 						<otherwise>
 							#{column.value, jdbcType=VARCHAR},
 						</otherwise>
@@ -66,6 +72,12 @@
 						</when>
 						<when test="column.javaType == 'Date'">
 							,#{column.value, jdbcType=TIMESTAMP}
+						</when>
+						<when test="column.javaType == 'Clob'">
+							,#{column.value, jdbcType=CLOB}
+						</when>
+						<when test="column.javaType == 'Blob'">
+							,#{column.value, jdbcType=BLOB}
 						</when>
 						<otherwise>
 							,#{column.value, jdbcType=VARCHAR}
@@ -99,6 +111,14 @@
 						<when test="column.javaType == 'Date'">
 							${column.columnName} = #{column.value,
 							jdbcType=TIMESTAMP},
+						</when>
+						<when test="column.javaType == 'Clob'">
+							${column.columnName} = #{column.value,
+							jdbcType=CLOB},
+						</when>
+						<when test="column.javaType == 'Blob'">
+							${column.columnName} = #{column.value,
+							jdbcType=BLOB},
 						</when>
 						<otherwise>
 							${column.columnName} = #{column.value,
@@ -140,6 +160,14 @@
 							<when test="column.javaType == 'Date'">
 								${column.columnName} = #{column.value,
 								jdbcType=TIMESTAMP},
+							</when>
+							<when test="column.javaType == 'Clob'">
+								${column.columnName} = #{column.value,
+								jdbcType=CLOB},
+							</when>
+							<when test="column.javaType == 'Blob'">
+								${column.columnName} = #{column.value,
+								jdbcType=BLOB},
 							</when>
 							<otherwise>
 								${column.columnName} = #{column.value,

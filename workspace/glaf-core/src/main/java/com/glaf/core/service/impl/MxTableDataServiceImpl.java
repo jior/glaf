@@ -36,6 +36,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.ColumnModel;
 import com.glaf.core.base.TableModel;
+import com.glaf.core.config.Environment;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.domain.TableDefinition;
@@ -392,6 +393,17 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			model.setTableName(model.getTableName().toUpperCase());
 		}
 		tableDataMapper.insertTableData(model);
+	}
+
+	@Transactional
+	public void insertAllTableData(List<TableModel> rows) {
+		logger.debug("#currentSystemName:"+Environment.getCurrentSystemName());
+		for (TableModel model : rows) {
+			if (model.getTableName() != null) {
+				model.setTableName(model.getTableName().toUpperCase());
+			}
+			tableDataMapper.insertTableData(model);
+		}
 	}
 
 	@Transactional

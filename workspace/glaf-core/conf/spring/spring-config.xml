@@ -40,6 +40,9 @@
 	<context:component-scan base-package="com.glaf" />
 
 
+	<bean id="dataSource" class="com.glaf.core.jdbc.datasource.MultiRoutingDataSource"/>
+
+
 	<!-- <bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">
@@ -90,7 +93,7 @@
 		<property name="idleConnectionTestPeriod" value="3000" />
 	</bean> -->
 
-	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSourceC3P0Adapter"
+	<!-- <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSourceC3P0Adapter"
 		destroy-method="close">
 		<property name="driverClass" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 		<property name="jdbcUrl" value="jdbc:sqlserver://127.0.0.1:1433;databaseName=yz" />
@@ -102,7 +105,7 @@
 		<property name="acquireIncrement" value="2" />
 		<property name="maxStatements" value="100" />
 		<property name="idleConnectionTestPeriod" value="3000" />
-	</bean> 
+	</bean> --> 
 
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

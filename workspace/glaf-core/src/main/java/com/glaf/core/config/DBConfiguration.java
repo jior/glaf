@@ -125,6 +125,19 @@ public class DBConfiguration {
 		reloadDS();
 	}
 
+	public static void addDataSourceProperties(String name, Properties props) {
+		if (!dataMap.containsKey(name)) {
+			Properties p = new Properties();
+			Enumeration<?> e = props.keys();
+			while (e.hasMoreElements()) {
+				String key = (String) e.nextElement();
+				String value = props.getProperty(key);
+				p.put(key, value);
+			}
+			dataMap.put(name, p);
+		}
+	}
+
 	public static List<ConnectionDefinition> getConnectionDefinitions() {
 		List<ConnectionDefinition> rows = new java.util.concurrent.CopyOnWriteArrayList<ConnectionDefinition>();
 		Collection<Properties> list = dataMap.values();

@@ -79,6 +79,14 @@ public interface ITableDataService {
 	 */
 	@Transactional
 	void insertTableData(TableModel model);
+	
+	/**
+	 * 插入一条记录
+	 * 
+	 * @param model
+	 */
+	@Transactional
+	void insertAllTableData(List<TableModel> rows);
 
 	/**
 	 * 批量保存记录
