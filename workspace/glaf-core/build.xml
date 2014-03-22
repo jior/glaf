@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project basedir="." default="run">
+<project basedir="." default="build">
 	<property name="build.home" location="." />
 	<property name="build.dest" location="bin" />
 	<property name="build.src" location="src" />
