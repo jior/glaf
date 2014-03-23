@@ -103,11 +103,21 @@ public class DbToDBMyBatisExporter {
 			if (total > 0) {
 				List<ColumnDefinition> columns = DBUtils.getColumnDefinitions(
 						conn, tableName);
+				List<String> primaryKeys = DBUtils.getPrimaryKeys(conn,
+						tableName);
 				JdbcUtils.close(conn);
 
 				TableDefinition tableDefinition = new TableDefinition();
 				tableDefinition.setTableName(tableName);
 				tableDefinition.setColumns(columns);
+				if (primaryKeys != null && primaryKeys.size() == 1) {
+					for (ColumnDefinition c : columns) {
+						if (c.isPrimaryKey()) {
+							tableDefinition.setIdColumn(c);
+							break;
+						}
+					}
+				}
 
 				conn2 = DBConnectionFactory.getConnection(jdbc_name);
 				DBUtils.dropAndCreateTable(conn2, tableDefinition);
