@@ -19,8 +19,8 @@
 package com.glaf.core.db.dataexport;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,18 +43,25 @@ import com.glaf.core.query.TablePageQuery;
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.service.ITablePageService;
 import com.glaf.core.util.DBUtils;
+import com.glaf.core.util.FieldType;
 import com.glaf.core.util.JdbcUtils;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.QueryUtils;
+import com.glaf.core.util.StringTools;
 
-public class DbToDBMyBatisExporter {
+public class QueryToDBMyBatisExporter {
 
 	protected static final Log logger = LogFactory
-			.getLog(DbToDBMyBatisExporter.class);
+			.getLog(QueryToDBMyBatisExporter.class);
 
 	public static void main(String[] args) {
-		DbToDBMyBatisExporter exp = new DbToDBMyBatisExporter();
-		exp.exportTables("default", "sqlite", "/data/glafdb.db");
+		QueryToDBMyBatisExporter exp = new QueryToDBMyBatisExporter();
+		exp.exportTable("default", "sqlite", "/data/glafdb2.db", "sys_tree",
+				"select * from sys_tree");
+		exp.exportTable("default", "sqlite", "/data/glafdb2.db",
+				"sys_department", "select * from sys_department");
+		exp.exportTable("default", "sqlite", "/data/glafdb2.db",
+				"sys_application", "select * from sys_application");
 		// exp.exportTable("default", "/data/glafdb", "sys_tree");
 		// ITablePageService tablePageService = ContextFactory
 		// .getBean("tablePageService");
@@ -70,11 +77,13 @@ public class DbToDBMyBatisExporter {
 	 * @param dbPath
 	 *            导出数据库路径
 	 * @param tableName
-	 *            导出表名称
+	 *            目标表名称
+	 * @param querySQL
+	 *            查询SQL
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void exportTable(String systemName, String dbtype, String dbPath,
-			String tableName) {
+			String tableName, String querySQL) {
 		Environment.setCurrentSystemName(systemName);
 		tableName = tableName.toLowerCase();
 		Properties props = new Properties();
@@ -107,29 +116,47 @@ public class DbToDBMyBatisExporter {
 
 			conn = DBConnectionFactory.getConnection(systemName);
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery(" select count(*) from " + tableName);
+			rs = stmt.executeQuery(querySQL);
 			if (rs.next()) {
-				total = rs.getInt(1);
-			}
+				ResultSetMetaData rsmd = rs.getMetaData();
+				int columnCount = rsmd.getColumnCount();
+				List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
+				for (int i = 0; i < columnCount; i++) {
+					// 取得每列的列名，列标签作为列名
+					String columnName = rsmd.getColumnLabel(i + 1);
+					// 取得每列的类型
+					int typeCode = rsmd.getColumnType(i + 1);
+					ColumnDefinition column = new ColumnDefinition();
+					column.setName(StringTools.lower(StringTools
+							.camelStyle(columnName)));
+					column.setColumnName(columnName.toLowerCase());
+					column.setTitle(column.getName());
+					column.setJavaType(FieldType.getJavaType(typeCode));
+					column.setPrecision(rsmd.getPrecision(i + 1));
+					column.setScale(rsmd.getScale(i + 1));
+					column.setLength(rsmd.getColumnDisplaySize(i + 1));
+					column.setColumnLabel(rsmd.getColumnLabel(i + 1));
 
-			if (total > 0) {
-				List<ColumnDefinition> columns = DBUtils.getColumnDefinitions(
-						conn, tableName);
-				List<String> primaryKeys = DBUtils.getPrimaryKeys(conn,
-						tableName);
+					if ("String".equals(column.getJavaType())) {
+						if (column.getLength() > 8000) {
+							column.setJavaType("Clob");
+						}
+					}
+
+					if ("Double".equals(column.getJavaType())) {
+						if (column.getLength() == 19) {
+							column.setJavaType("Long");
+						}
+					}
+
+					columns.add(column);
+				}
+
 				JdbcUtils.close(conn);
 
 				TableDefinition tableDefinition = new TableDefinition();
 				tableDefinition.setTableName(tableName);
 				tableDefinition.setColumns(columns);
-				if (primaryKeys != null && primaryKeys.size() == 1) {
-					for (ColumnDefinition c : columns) {
-						if (c.isPrimaryKey()) {
-							tableDefinition.setIdColumn(c);
-							break;
-						}
-					}
-				}
 
 				conn2 = DBConnectionFactory.getConnection(jdbc_name);
 				DBUtils.dropAndCreateTable(conn2, tableDefinition);
@@ -211,108 +238,6 @@ public class DbToDBMyBatisExporter {
 			JdbcUtils.close(rs);
 			JdbcUtils.close(conn);
 			JdbcUtils.close(conn2);
-		}
-	}
-
-	/**
-	 * 导出表数据
-	 * 
-	 * @param systemName
-	 *            系统名称
-	 * @param dbtype
-	 *            导出数据库类型
-	 * @param dbPath
-	 *            导出数据库路径
-	 */
-	public void exportTables(String systemName, String dbtype, String dbPath) {
-		List<String> tables = new java.util.ArrayList<String>();
-		Connection conn = null;
-		DatabaseMetaData dbmd = null;
-		ResultSet rs = null;
-		try {
-			conn = DBConnectionFactory.getConnection(systemName);
-			dbmd = conn.getMetaData();
-			rs = dbmd.getTables(null, null, null, new String[] { "TABLE" });
-			while (rs.next()) {
-				String tableName = rs.getString("TABLE_NAME");
-				tableName = tableName.toLowerCase();
-				if (tableName.startsWith("batch_")) {
-					continue;
-				}
-				if (tableName.startsWith("qrtz_")) {
-					continue;
-				}
-				if (tableName.startsWith("fileatt")) {
-					continue;
-				}
-				if (tableName.startsWith("filedot")) {
-					continue;
-				}
-				if (tableName.startsWith("s_folder")) {
-					continue;
-				}
-				if (tableName.startsWith("cell_useradd")) {
-					continue;
-				}
-				if (tableName.startsWith("sys_log")) {
-					continue;
-				}
-				tables.add(tableName);
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			throw new RuntimeException(ex);
-		} finally {
-			JdbcUtils.close(rs);
-			JdbcUtils.close(conn);
-		}
-
-		if (!tables.isEmpty()) {
-			for (String tableName : tables) {
-				boolean success = false;
-				int retry = 0;
-				while (retry < 3 && !success) {
-					try {
-						retry++;
-						this.exportTable(systemName, dbtype, dbPath, tableName);
-						success = true;
-					} catch (Exception ex) {
-						ex.printStackTrace();
-					}
-				}
-			}
-		}
-
-	}
-
-	/**
-	 * 导出表数据
-	 * 
-	 * @param systemName
-	 *            系统名称
-	 * @param dbtype
-	 *            导出数据库类型
-	 * @param dbPath
-	 *            导出数据库路径
-	 * @param tables
-	 *            导出表集合
-	 */
-	public void exportTables(String systemName, String dbtype, String dbPath,
-			List<String> tables) {
-		if (tables != null && !tables.isEmpty()) {
-			for (String tableName : tables) {
-				boolean success = false;
-				int retry = 0;
-				while (retry < 3 && !success) {
-					try {
-						retry++;
-						this.exportTable(systemName, dbtype, dbPath, tableName);
-						success = true;
-					} catch (Exception ex) {
-						ex.printStackTrace();
-					}
-				}
-			}
 		}
 	}
 
