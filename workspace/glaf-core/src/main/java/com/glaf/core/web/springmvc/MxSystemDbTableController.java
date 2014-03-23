@@ -34,8 +34,7 @@ import com.glaf.core.base.TableModel;
 import com.glaf.core.config.BaseConfiguration;
 import com.glaf.core.config.Configuration;
 import com.glaf.core.config.ViewProperties;
-import com.glaf.core.db.dataexport.DbToH2Exporter;
-import com.glaf.core.db.dataexport.DbToSqliteExporter;
+import com.glaf.core.db.dataexport.DbToDBMyBatisExporter;
 import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.domain.SystemParam;
 import com.glaf.core.domain.TableDefinition;
@@ -287,16 +286,16 @@ public class MxSystemDbTableController {
 								+ "/glafdb.h2.db";
 						FileUtils.mkdirs("/data/"
 								+ DateUtils.getNowYearMonthDay());
-						DbToH2Exporter exp = new DbToH2Exporter();
-						exp.exportTables(systemName, dataPath);
+						DbToDBMyBatisExporter exp = new DbToDBMyBatisExporter();
+						exp.exportTables(systemName, "h2", dataPath);
 					} else if (StringUtils.equals(dbType, "sqlite")) {
 						dataPath = "/data/" + DateUtils.getNowYearMonthDay()
 								+ "/glafdb.db";
 						filename = dataPath;
 						FileUtils.mkdirs("/data/"
 								+ DateUtils.getNowYearMonthDay());
-						DbToSqliteExporter exp = new DbToSqliteExporter();
-						exp.exportTables(systemName, dataPath);
+						DbToDBMyBatisExporter exp = new DbToDBMyBatisExporter();
+						exp.exportTables(systemName, "sqlite", dataPath);
 					}
 					if (dataPath != null) {
 						File file = new File(filename);
@@ -305,7 +304,7 @@ public class MxSystemDbTableController {
 						inputStream = FileUtils.getInputStream(filename
 								+ ".zip");
 						ResponseUtils.download(request, response, inputStream,
-								"glafdb.zip");
+								"glafdb_" + dbType + ".zip");
 					}
 				} catch (Exception ex) {
 					ex.printStackTrace();
