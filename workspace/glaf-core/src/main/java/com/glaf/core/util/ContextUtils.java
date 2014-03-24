@@ -52,8 +52,8 @@ public class ContextUtils {
 		if (key != null && value != null) {
 			String cacheKey = sys_name + "_" + key;
 			dataMap.put(cacheKey, value);
+			dataMap.put(key, value);
 		}
-		dataMap.put(key, value);
 	}
 
 	public static void setContextPath(String contextPath) {

@@ -50,6 +50,7 @@ public class BootstrapManager {
 		if (!running.get()) {
 			try {
 				running.set(true);
+				BootstrapProperties.reload();
 				Properties props = BootstrapProperties.getProperties();
 				if (props != null && props.keys().hasMoreElements()) {
 					Enumeration<?> e = props.keys();

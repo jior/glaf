@@ -22,7 +22,7 @@ import java.sql.SQLException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.glaf.core.config.DataSourceConfig;
+import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.dialect.Dialect;
 import com.glaf.core.util.ClassUtils;
 import com.glaf.core.util.LogUtils;
@@ -56,7 +56,7 @@ public class MyBatis2LimitSqlExecutor extends DefaultSqlExecutor {
 	public void setDialectClass(String dialectClass) {
 		this.dialectClass = dialectClass;
 		if (dialectClass == null) {
-			dialectClass = DataSourceConfig.getDatabaseDialect();
+			dialectClass = DBConfiguration.getCurrentDialectClass();
 		}
 		if (dialectClass != null) {
 			Object object = ClassUtils.instantiateObject(dialectClass);

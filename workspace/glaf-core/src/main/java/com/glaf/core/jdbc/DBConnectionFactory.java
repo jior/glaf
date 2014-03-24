@@ -31,7 +31,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.glaf.core.config.DBConfiguration;
-import com.glaf.core.config.DataSourceConfig;
 import com.glaf.core.config.Environment;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.jdbc.connection.ConnectionProvider;
@@ -43,33 +42,29 @@ public class DBConnectionFactory {
 	protected final static Log logger = LogFactory
 			.getLog(DBConnectionFactory.class);
 
-	protected static Properties databaseTypeMappings = getDefaultDatabaseTypeMappings();
+	protected static Properties databaseTypeMappings = getDatabaseTypeMappings();
 
-	public static Connection getConnection() {
-		return getConnection(Environment.DEFAULT_SYSTEM_NAME);
-	}
-
-	public static Connection getConnection(java.util.Properties props) {
+	public static boolean checkConnection() {
 		Connection connection = null;
+		DataSource ds = null;
 		try {
+			Properties props = DBConfiguration.getDefaultDataSourceProperties();
 			if (props != null) {
-				if (StringUtils.isNotEmpty(props
-						.getProperty(DBConfiguration.JDBC_DATASOURCE))) {
-					InitialContext ctx = new InitialContext();
-					DataSource ds = (DataSource) ctx.lookup(props
-							.getProperty(DBConfiguration.JDBC_DATASOURCE));
-					connection = ds.getConnection();
-				} else {
-					ConnectionProvider provider = ConnectionProviderFactory
-							.createProvider(props);
-					connection = provider.getConnection();
-				}
+				connection = getConnection(props);
+			} else {
+				ds = ContextFactory.getBean("dataSource");
+				connection = ds.getConnection();
 			}
-			return connection;
+
+			if (connection != null) {
+				return true;
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			throw new RuntimeException(ex);
+		} finally {
+			JdbcUtils.close(connection);
 		}
+		return false;
 	}
 
 	public static boolean checkConnection(java.util.Properties props) {
@@ -95,6 +90,41 @@ public class DBConnectionFactory {
 			throw new RuntimeException(ex);
 		} finally {
 			JdbcUtils.close(connection);
+		}
+	}
+
+	public static Connection getConnection() {
+		return getConnection(Environment.DEFAULT_SYSTEM_NAME);
+	}
+
+	public static Connection getConnection(java.util.Properties props) {
+		Connection connection = null;
+		try {
+			if (props != null) {
+				if (StringUtils.isNotEmpty(props
+						.getProperty(DBConfiguration.JDBC_DATASOURCE))) {
+					InitialContext ctx = new InitialContext();
+					DataSource ds = (DataSource) ctx.lookup(props
+							.getProperty(DBConfiguration.JDBC_DATASOURCE));
+					connection = ds.getConnection();
+				} else {
+					String systemName = props
+							.getProperty(DBConfiguration.JDBC_NAME);
+					if (StringUtils.isNotEmpty(systemName)) {
+						ConnectionProvider provider = ConnectionProviderFactory
+								.createProvider(systemName);
+						connection = provider.getConnection();
+					} else {
+						ConnectionProvider provider = ConnectionProviderFactory
+								.createProvider(props);
+						connection = provider.getConnection();
+					}
+				}
+			}
+			return connection;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
 		}
 	}
 
@@ -131,7 +161,8 @@ public class DBConnectionFactory {
 	}
 
 	public static String getDatabaseType() {
-		return DataSourceConfig.getDatabaseType();
+		String systemName = Environment.getCurrentSystemName();
+		return DBConfiguration.getDatabaseTypeByName(systemName);
 	}
 
 	public static String getDatabaseType(Connection connection) {
@@ -170,7 +201,7 @@ public class DBConnectionFactory {
 		return dbType;
 	}
 
-	protected static Properties getDefaultDatabaseTypeMappings() {
+	public static Properties getDatabaseTypeMappings() {
 		Properties databaseTypeMappings = new Properties();
 		databaseTypeMappings.setProperty("H2", "h2");
 		databaseTypeMappings.setProperty("MySQL", "mysql");

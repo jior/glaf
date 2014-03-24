@@ -39,6 +39,7 @@ import com.glaf.core.dialect.MySQLDialect;
 import com.glaf.core.dialect.OracleDialect;
 import com.glaf.core.dialect.PostgreSQLDialect;
 import com.glaf.core.dialect.SQLiteDialect;
+import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.util.Constants;
 import com.glaf.core.util.PropertiesUtils;
 
@@ -99,15 +100,15 @@ public class DBConfiguration {
 
 	public static final String DATABASE_NAME = "databaseName";
 
-	private static boolean REQUIRE_RELOAD_JDBC_RESOURCE = false;
-
 	protected static AtomicBoolean loading = new AtomicBoolean(false);
 
 	protected static ConcurrentMap<String, Properties> dataMap = new ConcurrentHashMap<String, Properties>();
 
-	protected static ConcurrentMap<String, Properties> templateDataMap = new ConcurrentHashMap<String, Properties>();
+	protected static ConcurrentMap<String, Properties> jdbcTemplateProperties = new ConcurrentHashMap<String, Properties>();
 
 	protected static ConcurrentMap<Integer, String> ISOLATION_LEVELS = new ConcurrentHashMap<Integer, String>();
+
+	protected static ConcurrentMap<String, String> dbTypes = new ConcurrentHashMap<String, String>();
 
 	static {
 		ISOLATION_LEVELS.put(new Integer(Connection.TRANSACTION_NONE), "NONE");
@@ -134,7 +135,16 @@ public class DBConfiguration {
 				String value = props.getProperty(key);
 				p.put(key, value);
 			}
-			dataMap.put(name, p);
+			try {
+				if (DBConnectionFactory.checkConnection(p)) {
+					String url = p.getProperty(DBConfiguration.JDBC_URL);
+					String dbType = getDatabaseType(url);
+					dataMap.put(name, p);
+					dbTypes.put(name, dbType);
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		}
 	}
 
@@ -188,10 +198,38 @@ public class DBConfiguration {
 		if (props != null) {
 			String dbType = props.getProperty(JDBC_TYPE);
 			if (dbType == null) {
-				dbType = DataSourceConfig.getDatabaseType();
+				dbType = getCurrentDatabaseType();
 			}
 			logger.debug("databaseType:" + dbType);
 			return dialects.get(dbType);
+		}
+		return null;
+	}
+
+	public static String getCurrentDialectClass() {
+		Properties dialects = getDialectMappings();
+		Properties props = getDefaultDataSourceProperties();
+		if (props != null) {
+			String dbType = props.getProperty(JDBC_TYPE);
+			if (dbType == null) {
+				dbType = getCurrentDatabaseType();
+			}
+			logger.debug("databaseType:" + dbType);
+			return dialects.getProperty(dbType);
+		}
+		return null;
+	}
+
+	public static String getCurrentHibernateDialect() {
+		Properties dialects = getHibernateDialectMappings();
+		Properties props = getDefaultDataSourceProperties();
+		if (props != null) {
+			String dbType = props.getProperty(JDBC_TYPE);
+			if (dbType == null) {
+				dbType = getCurrentDatabaseType();
+			}
+			logger.debug("databaseType:" + dbType);
+			return dialects.getProperty(dbType);
 		}
 		return null;
 	}
@@ -216,6 +254,10 @@ public class DBConfiguration {
 			dbType = "sqlite";
 		}
 		return dbType;
+	}
+
+	public static String getDatabaseTypeByName(String systemName) {
+		return dbTypes.get(systemName);
 	}
 
 	public static Map<String, Properties> getDataSourceProperties() {
@@ -251,9 +293,6 @@ public class DBConfiguration {
 		Properties props = getDefaultDataSourceProperties();
 		if (props != null) {
 			String dbType = props.getProperty(JDBC_TYPE);
-			if (dbType == null) {
-				dbType = DataSourceConfig.getDatabaseType();
-			}
 			logger.debug("databaseType:" + dbType);
 			return dialects.getProperty(dbType);
 		}
@@ -319,10 +358,11 @@ public class DBConfiguration {
 	}
 
 	public static Properties getTemplateProperties(String name) {
-		if (templateDataMap.isEmpty()) {
+		if (jdbcTemplateProperties.isEmpty()) {
 			init();
 		}
-		Properties props = templateDataMap.get(name);
+		logger.debug("name:" + name);
+		Properties props = jdbcTemplateProperties.get(name);
 		Properties p = new Properties();
 		Enumeration<?> e = props.keys();
 		while (e.hasMoreElements()) {
@@ -351,28 +391,9 @@ public class DBConfiguration {
 							Properties props = PropertiesUtils
 									.loadProperties(inputStream);
 							if (props != null) {
-								templateDataMap.put(
+								jdbcTemplateProperties.put(
 										props.getProperty(JDBC_NAME), props);
 							}
-						}
-					}
-				}
-
-				String glabal_config = SystemProperties.getConfigRootPath()
-						+ Constants.DEFAULT_JDBC_CONFIG;
-				File file = new File(glabal_config);
-				if (file.isFile() && file.getName().endsWith(".properties")) {
-					InputStream inputStream = new FileInputStream(file);
-					Properties props = PropertiesUtils
-							.loadProperties(inputStream);
-					if (props != null) {
-						dataMap.put(Environment.DEFAULT_SYSTEM_NAME, props);
-						templateDataMap.put(Environment.DEFAULT_SYSTEM_NAME,
-								props);
-						if (props.getProperty(JDBC_NAME) != null) {
-							dataMap.put(props.getProperty(JDBC_NAME), props);
-							templateDataMap.put(props.getProperty(JDBC_NAME),
-									props);
 						}
 					}
 				}
@@ -399,13 +420,12 @@ public class DBConfiguration {
 	}
 
 	protected static void reloadDS() {
-		Map<String, Properties> dataSourceMap = new java.util.concurrent.ConcurrentHashMap<String, Properties>();
 		if (!loading.get()) {
 			try {
 				loading.set(true);
 				String path = SystemProperties.getConfigRootPath()
 						+ Constants.JDBC_CONFIG;
-				logger.info("path:" + path);
+				logger.info("datasource path:" + path);
 				File dir = new File(path);
 				if (dir.exists() && dir.isDirectory()) {
 					File[] entries = dir.listFiles();
@@ -419,20 +439,21 @@ public class DBConfiguration {
 										.loadProperties(new FileInputStream(
 												file));
 								if (props != null) {
-									if (DataSourceConfig.getConnection(props) != null) {
+									if (DBConnectionFactory
+											.checkConnection(props)) {
 										String name = props
 												.getProperty(JDBC_NAME);
 										if (StringUtils.isNotEmpty(name)) {
 											String dbType = props
 													.getProperty(JDBC_TYPE);
 											if (StringUtils.isEmpty(dbType)) {
-												dbType = DBConfiguration
-														.getDatabaseType(props
-																.getProperty(JDBC_URL));
+												dbType = getDatabaseType(props
+														.getProperty(JDBC_URL));
 												props.setProperty(JDBC_TYPE,
 														dbType);
 											}
-											dataSourceMap.put(name, props);
+											dbTypes.put(name, dbType);
+											dataMap.put(name, props);
 										}
 									}
 								}
@@ -455,35 +476,29 @@ public class DBConfiguration {
 					+ Constants.DEFAULT_JDBC_CONFIG;
 			File file = new File(filename);
 			if (file.exists() && file.isFile()) {
-				Properties p = PropertiesUtils.loadFilePathResource(filename);
-				String dbType = p.getProperty(JDBC_TYPE);
+				Properties props = PropertiesUtils
+						.loadFilePathResource(filename);
+				String dbType = props.getProperty(JDBC_TYPE);
 				if (StringUtils.isEmpty(dbType)) {
 					try {
-						dbType = DBConfiguration.getDatabaseType(p
-								.getProperty(JDBC_URL));
+						dbType = getDatabaseType(props.getProperty(JDBC_URL));
 						if (dbType != null) {
-							p.setProperty(JDBC_TYPE, dbType);
+							props.setProperty(JDBC_TYPE, dbType);
 						}
 					} catch (Exception ex) {
 						ex.printStackTrace();
 						logger.error(ex);
 					}
 				}
-				dataSourceMap.put(Environment.DEFAULT_SYSTEM_NAME, p);
+				dataMap.put(Environment.DEFAULT_SYSTEM_NAME, props);
+				if (dbType != null) {
+					dbTypes.put(Environment.DEFAULT_SYSTEM_NAME, dbType);
+				}
+				jdbcTemplateProperties.put(Environment.DEFAULT_SYSTEM_NAME,
+						props);
 			}
-			logger.info("#datasources:" + dataSourceMap.keySet());
-			dataMap.clear();
-			dataMap.putAll(dataSourceMap);
-			REQUIRE_RELOAD_JDBC_RESOURCE = true;
+			logger.info("#datasources:" + dataMap.keySet());
 		}
-	}
-
-	public static boolean requireReloadDataSource() {
-		return REQUIRE_RELOAD_JDBC_RESOURCE;
-	}
-
-	public static void successReloadDataSource() {
-		REQUIRE_RELOAD_JDBC_RESOURCE = false;
 	}
 
 	private DBConfiguration() {

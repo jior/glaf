@@ -96,7 +96,6 @@ public class MultiRoutingDataSource extends AbstractRoutingDataSource {
 			targetDataSources.clear();
 			targetDataSources.putAll(dataSourceMap);
 			LOAD_DATASOURCE_OK = true;
-			DBConfiguration.successReloadDataSource();
 
 			logger.info("##datasources:" + targetDataSources.keySet());
 
@@ -113,9 +112,6 @@ public class MultiRoutingDataSource extends AbstractRoutingDataSource {
 
 	@Override
 	protected synchronized Object determineCurrentLookupKey() {
-		if (DBConfiguration.requireReloadDataSource()) {
-			reloadDS();
-		}
 		logger.debug("currentSystemName:" + Environment.getCurrentSystemName());
 		return Environment.getCurrentSystemName();
 	}

@@ -27,6 +27,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -59,6 +62,8 @@ import com.glaf.core.business.DbTableChecker;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.service.EntityService;
 import com.glaf.core.service.ITableDefinitionService;
+import com.glaf.core.startup.BootstrapManager;
+import com.glaf.core.util.ThreadContextHolder;
 import com.glaf.core.util.Tools;
 
 public class BaseDataManager {
@@ -1001,6 +1006,12 @@ public class BaseDataManager {
 			try {
 				loading.set(true);
 				initBaseData();
+				HttpServletRequest request = ThreadContextHolder
+						.getHttpRequest();
+				if (request != null) {
+					ServletContext context = request.getServletContext();
+					BootstrapManager.getInstance().startup(context);
+				}
 			} finally {
 				loading.set(false);
 			}

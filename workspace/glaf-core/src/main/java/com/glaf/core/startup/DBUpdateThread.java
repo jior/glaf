@@ -26,6 +26,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.alibaba.druid.util.JdbcUtils;
+import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.db.dataimport.XmlToDbImporter;
 import com.glaf.core.jdbc.DBConnectionFactory;
@@ -43,6 +44,8 @@ public class DBUpdateThread extends Thread {
 	}
 
 	public void run() {
+		logger.debug("->jdbc url:"
+				+ props.getProperty(DBConfiguration.JDBC_URL));
 		Connection conn = null;
 		Statement stmt = null;
 		try {

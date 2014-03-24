@@ -21,7 +21,7 @@ package com.glaf.core.entity;
 import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
 
-import com.glaf.core.config.DataSourceConfig;
+import com.glaf.core.config.DBConfiguration;
 
 public class HibernateAnnotationSessionFactoryBean extends
 		AnnotationSessionFactoryBean {
@@ -33,9 +33,9 @@ public class HibernateAnnotationSessionFactoryBean extends
 	@Override
 	protected SessionFactory buildSessionFactory() throws Exception {
 		System.out.println("-----------------buildSessionFactory------------");
-		String hibernateDialet = DataSourceConfig.getHibernateDialect();
+		String hibernateDialet = DBConfiguration.getCurrentHibernateDialect();
 		java.util.Properties props = super.getHibernateProperties();
-		if(props==null){
+		if (props == null) {
 			props = new java.util.Properties();
 		}
 		props.put("hibernate.dialect", hibernateDialet);

@@ -33,7 +33,6 @@ import com.alibaba.druid.util.JdbcUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.config.DBConfiguration;
-import com.glaf.core.config.DataSourceConfig;
 import com.glaf.core.config.Environment;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.el.ExpressionTools;
@@ -68,7 +67,7 @@ public class MultiDBStartup implements Bootstrap {
 					PreparedStatement stmt = null;
 					ResultSet rs = null;
 					try {
-						conn = DataSourceConfig.getDefaultConnection();
+						conn = DBConnectionFactory.getConnection();
 						if (conn != null) {
 							DBUpdateThread t = new DBUpdateThread(defaultProps);
 							ThreadFactory.run(t);
@@ -126,6 +125,9 @@ public class MultiDBStartup implements Bootstrap {
 								props.put(DBConfiguration.JDBC_URL, url);
 								host = StringTools.replace(host, ".", "_");
 								props.put(DBConfiguration.JDBC_NAME, name);
+
+								logger.debug("jdbc url:"
+										+ props.getProperty(DBConfiguration.JDBC_URL));
 
 								/**
 								 * 检查连接信息，如果正确，保存配置

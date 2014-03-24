@@ -32,6 +32,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,7 +84,14 @@ public final class ConnectionProviderFactory {
 	}
 
 	public static ConnectionProvider createProvider(Properties properties) {
-		return createProvider(properties, null);
+		String jdbcUrl = properties.getProperty(DBConfiguration.JDBC_URL);
+		String cacheKey = DigestUtils.md5Hex(jdbcUrl);
+		if (providerCache.get(cacheKey) != null) {
+			return providerCache.get(cacheKey);
+		}
+		ConnectionProvider provider = createProvider(properties, null);
+		providerCache.put(cacheKey, provider);
+		return provider;
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -144,12 +152,13 @@ public final class ConnectionProviderFactory {
 	}
 
 	public static ConnectionProvider createProvider(String systemName) {
-		if (providerCache.get(systemName) != null) {
-			return providerCache.get(systemName);
+		String cacheKey = DigestUtils.md5Hex(systemName);
+		if (providerCache.get(cacheKey) != null) {
+			return providerCache.get(cacheKey);
 		}
 		ConnectionProvider model = createProvider(DBConfiguration
 				.getDataSourcePropertiesByName(systemName));
-		providerCache.put(systemName, model);
+		providerCache.put(cacheKey, model);
 		return model;
 	}
 

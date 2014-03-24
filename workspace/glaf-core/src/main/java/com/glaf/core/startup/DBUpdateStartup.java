@@ -38,6 +38,10 @@ public class DBUpdateStartup implements Bootstrap {
 		logger.debug("-----------------DBUpdateStartup.startup----------------");
 		Properties props = DBConfiguration.getDefaultDataSourceProperties();
 		if (props != null) {
+			logger.debug("->jdbc driver:"
+					+ props.getProperty(DBConfiguration.JDBC_DRIVER));
+			logger.debug("->jdbc url:"
+					+ props.getProperty(DBConfiguration.JDBC_URL));
 			try {
 				/**
 				 * 检查连接信息，如果正确，执行更新
