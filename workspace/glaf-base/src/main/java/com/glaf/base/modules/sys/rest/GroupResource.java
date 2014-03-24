@@ -171,7 +171,9 @@ public class GroupResource {
 								treeModel.setCode(user.getAccount());
 								treeModel.setName(user.getAccount() + " "
 										+ user.getName());
-								treeModel.setIconCls("user");
+								treeModel.setIconCls("icon-user");
+								treeModel.setIcon(request.getContextPath()
+										+ "/icons/icons/user.gif");
 								if (userIds != null
 										&& userIds.contains(user.getAccount())) {
 									treeModel.setChecked(true);
@@ -231,7 +233,9 @@ public class GroupResource {
 								treeModel.setCode(user.getAccount());
 								treeModel.setName(user.getAccount() + " "
 										+ user.getName());
-								treeModel.setIconCls("user");
+								treeModel.setIconCls("icon-user");
+								treeModel.setIcon(request.getContextPath()
+										+ "/icons/icons/user.gif");
 								if (userIds != null
 										&& userIds.contains(user.getAccount())) {
 									treeModel.setChecked(true);

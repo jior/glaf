@@ -19,6 +19,7 @@
 package com.glaf.base.modules.sys.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +28,6 @@ import com.glaf.base.modules.sys.model.SysDeptRole;
 import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.query.SysUserQuery;
-
 import com.glaf.core.util.PageResult;
 
 @Transactional(readOnly = true)
@@ -234,6 +234,12 @@ public interface SysUserService {
 	 * @return List
 	 */
 	List<SysUser> getSysUserWithDeptList();
+	
+	/**
+	 * 获取用户信息
+	 * @return
+	 */
+	Map<String, String> getUserMap();
 
 	/**
 	 * 其用户权限

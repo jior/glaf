@@ -21,6 +21,7 @@ package com.glaf.base.modules.sys.service.mybatis;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -293,6 +294,22 @@ public class SysUserServiceImpl implements SysUserService {
 	public List<SysUser> getSysUserList() {
 		SysUserQuery query = new SysUserQuery();
 		return this.list(query);
+	}
+
+	/**
+	 * 获取用户信息
+	 * 
+	 * @return
+	 */
+	public Map<String, String> getUserMap() {
+		SysUserQuery query = new SysUserQuery();
+		query.blocked(0);
+		List<SysUser> users = this.list(query);
+		Map<String, String> userMap = new LinkedHashMap<String, String>();
+		for (SysUser user : users) {
+			userMap.put(user.getActorId(), user.getName());
+		}
+		return userMap;
 	}
 
 	public List<SysUser> getSysUserList(long deptId) {

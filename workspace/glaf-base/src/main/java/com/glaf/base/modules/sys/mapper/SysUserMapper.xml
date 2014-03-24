@@ -282,7 +282,8 @@
 				ISCHANGEPASSWORD = #{isChangePassword, jdbcType=INTEGER},
 			</if>
 			<if test="lastChangePasswordDate != null">
-				LASTCHANGEPASSWORDDATE = #{lastChangePasswordDate, jdbcType=TIMESTAMP},
+				LASTCHANGEPASSWORDDATE = #{lastChangePasswordDate,
+				jdbcType=TIMESTAMP},
 			</if>
 		</trim>
 		where
@@ -292,7 +293,8 @@
 
 
 	<delete id="deleteSysUserById" parameterType="long">
-		delete from SYS_USER
+		delete from
+		SYS_USER
 		where ID = #{id}
 	</delete>
 
@@ -311,14 +313,15 @@
 	<select id="getSysUserById" parameterType="long" resultMap="sysUserResultMap">
 		select * from SYS_USER where ID = #{id}
 	</select>
-	
-	
+
+
 	<select id="getSysUserByMail" parameterType="string" resultMap="sysUserResultMap">
 		select * from SYS_USER where EMAIL = #{mail}
 	</select>
-	
-	
-	<select id="getSysUserByMobile" parameterType="string" resultMap="sysUserResultMap">
+
+
+	<select id="getSysUserByMobile" parameterType="string"
+		resultMap="sysUserResultMap">
 		select * from SYS_USER where MOBILE = #{mobile}
 	</select>
 
@@ -328,10 +331,12 @@
 		select distinct a.*
 		from SYS_USER a
 		inner join SYS_USER_ROLE b
-		on a.id = b.userId
+		on a.id =
+		b.userId
 		inner join SYS_ACCESS c
 		on b.roleId = c.roleId
-		where c.appId = #{appId}
+		where c.appId =
+		#{appId}
 
 	</select>
 
@@ -395,7 +400,8 @@
 
 		select distinct E.* from SYS_USER E
 		inner join SYS_USER_ROLE R
-		on E.ID = R.USERID
+		on E.ID =
+		R.USERID
 		where E.ACCOUNTTYPE = 0
 
 		<if test=" deptId != null  ">
@@ -433,10 +439,12 @@
 		resultMap="sysUserResultMap">
 
 		select distinct E.* from SYS_USER E
-		inner join SYS_USER_ROLE R
+		inner join SYS_USER_ROLE
+		R
 		on E.ID = R.USERID
 		where E.ACCOUNTTYPE = 0
-		and R.AUTHORIZEFROM = #{authorizeFrom}
+		and R.AUTHORIZEFROM =
+		#{authorizeFrom}
 
 	</select>
 
@@ -445,7 +453,8 @@
 
 		select distinct E.* from SYS_USER E
 		inner join SYS_USER_ROLE R
-		on E.ID = R.USERID
+		on E.ID =
+		R.USERID
 		where R.ROLEID = #{roleId}
 
 	</select>
