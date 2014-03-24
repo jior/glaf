@@ -33,7 +33,7 @@
         </tx:attributes>
     </tx:advice>
 
-    <aop:config expose-proxy="true">
+    <aop:config proxy-target-class="true" expose-proxy="true">
         <aop:pointcut id="txPointcut" expression="execution(* com.glaf..service..*.*(..))" />
         <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
     </aop:config>

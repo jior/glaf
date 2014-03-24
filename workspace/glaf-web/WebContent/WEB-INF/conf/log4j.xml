@@ -126,9 +126,9 @@
         <level value="WARN"/>
     </logger>
         
-    <logger name="org.springframework">
+    <!-- <logger name="org.springframework">
         <level value="WARN"/>
-    </logger>
+    </logger> -->
     
     <logger name="org.jbpm">
         <level value="INFO"/>
@@ -139,6 +139,10 @@
     </logger>
  
 	<logger name="com.glaf">
+        <level value="DEBUG"/>
+    </logger> 
+
+	<logger name="org.springframework.transaction">
         <level value="DEBUG"/>
     </logger> 
 	

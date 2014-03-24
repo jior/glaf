@@ -600,9 +600,6 @@ public class MxSystemDbTableController {
 				if (tableName.startsWith("jpage_")) {
 					continue;
 				}
-				if (tableName.startsWith("ex_")) {
-					continue;
-				}
 				if (tableName.startsWith("logmnrc_")) {
 					continue;
 				}
@@ -645,6 +642,7 @@ public class MxSystemDbTableController {
 				rowsJSON.add(json);
 			}
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
 			JdbcUtils.close(connection);
