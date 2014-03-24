@@ -18,11 +18,12 @@
 
 package com.glaf.base.utils;
 
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 public class ContextUtil {
 	private static ContextUtil instance = new ContextUtil();
-	private static Map<Object, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<Object, Object>();
+	private static ConcurrentMap<Object, Object> dataMap = new ConcurrentHashMap<Object, Object>();
 
 	private ContextUtil() {
 
@@ -44,7 +45,9 @@ public class ContextUtil {
 	}
 
 	public static void put(Object key, Object value) {
-		dataMap.put(key, value);
+		if (key != null && value != null) {
+			dataMap.put(key, value);
+		}
 	}
 
 	public static void setContextPath(String contextPath) {

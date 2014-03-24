@@ -27,7 +27,7 @@ import org.apache.commons.logging.LogFactory;
 public class ContextUtils {
 	protected static final Log logger = LogFactory.getLog(ContextUtils.class);
 
-	private static final ConcurrentMap<Object, Object> dataMap = new ConcurrentHashMap<Object, Object>();
+	private static ConcurrentMap<Object, Object> dataMap = new ConcurrentHashMap<Object, Object>();
 
 	public static Object get(Object key) {
 		String sys_name = Constants.SYSTEM_NAME;
@@ -49,7 +49,7 @@ public class ContextUtils {
 
 	public static void put(Object key, Object value) {
 		String sys_name = Constants.SYSTEM_NAME;
-		if (sys_name != null) {
+		if (key != null && value != null) {
 			String cacheKey = sys_name + "_" + key;
 			dataMap.put(cacheKey, value);
 		}
