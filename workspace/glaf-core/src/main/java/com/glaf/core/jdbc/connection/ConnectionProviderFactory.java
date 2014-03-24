@@ -152,13 +152,9 @@ public final class ConnectionProviderFactory {
 	}
 
 	public static ConnectionProvider createProvider(String systemName) {
-		String cacheKey = DigestUtils.md5Hex(systemName);
-		if (providerCache.get(cacheKey) != null) {
-			return providerCache.get(cacheKey);
-		}
-		ConnectionProvider model = createProvider(DBConfiguration
-				.getDataSourcePropertiesByName(systemName));
-		providerCache.put(cacheKey, model);
+		Properties props = DBConfiguration
+				.getDataSourcePropertiesByName(systemName);
+		ConnectionProvider model = createProvider(props);
 		return model;
 	}
 

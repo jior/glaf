@@ -231,4 +231,17 @@ public class Tools {
 
 	}
 
+	public static void main(String[] args) {
+		long start = System.currentTimeMillis();
+		System.out.println(org.apache.commons.codec.digest.DigestUtils
+				.md5Hex("jdbc:sqlserver://127.0.0.1:1433;databaseName=yz"));
+		for (int i = 0; i < 10000; i++) {
+			System.out.println(org.apache.commons.codec.digest.DigestUtils
+					.md5Hex("jdbc:sqlserver://127.0.0.1:1433;databaseName=yz"
+							+ i));
+		}
+		long times = System.currentTimeMillis() - start;
+		System.out.println("×Ü¹²ºÄÊ±(ºÁÃë):" + times);
+	}
+
 }
