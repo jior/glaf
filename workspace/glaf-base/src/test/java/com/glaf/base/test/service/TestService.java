@@ -16,33 +16,20 @@
  * limitations under the License.
  */
 
-package com.glaf.base.test;
+package com.glaf.base.test.service;
 
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
-import org.junit.Test;
+@Transactional(readOnly = true)
+public interface TestService {
 
-import com.glaf.base.modules.sys.service.SysRoleService;
-import com.glaf.base.security.BaseIdentityFactory;
+	@Transactional
+	void save();
 
-public class RoleTest extends AbstractTest {
-	
-	protected SysRoleService sysRoleService;
-	
-	@Test
-	public void testUserRoles(){
-		sysRoleService = getBean("sysRoleService");
-		List<String> codes = BaseIdentityFactory.getUserRoles("root");
-		logger.debug("codes:"+codes);
-	}
+	@Transactional
+	void save2();
 
-	public SysRoleService getSysRoleService() {
-		return sysRoleService;
-	}
-
-	public void setSysRoleService(SysRoleService sysRoleService) {
-		this.sysRoleService = sysRoleService;
-	}
-	
+	@Transactional
+	void save3();
 
 }

@@ -18,31 +18,39 @@
 
 package com.glaf.base.test;
 
-import java.util.List;
-
 import org.junit.Test;
 
-import com.glaf.base.modules.sys.service.SysRoleService;
-import com.glaf.base.security.BaseIdentityFactory;
+import com.glaf.base.test.service.TestService;
 
-public class RoleTest extends AbstractTest {
-	
-	protected SysRoleService sysRoleService;
-	
+public class TransactionTest extends AbstractTest {
+
+	protected TestService testService;
+
+	/**
+	 * 测试主键已经存在
+	 */
 	@Test
-	public void testUserRoles(){
-		sysRoleService = getBean("sysRoleService");
-		List<String> codes = BaseIdentityFactory.getUserRoles("root");
-		logger.debug("codes:"+codes);
+	public void testSave() {
+		testService = super.getBean("testService");
+		testService.save();
 	}
 
-	public SysRoleService getSysRoleService() {
-		return sysRoleService;
+	/**
+	 * 测试字段超长
+	 */
+	@Test
+	public void testSave2() {
+		testService = super.getBean("testService");
+		testService.save2();
 	}
 
-	public void setSysRoleService(SysRoleService sysRoleService) {
-		this.sysRoleService = sysRoleService;
+	/**
+	 * 测试字段超长并抛出运行时异常
+	 */
+	@Test
+	public void testSave3() {
+		testService = super.getBean("testService");
+		testService.save3();
 	}
-	
 
 }
