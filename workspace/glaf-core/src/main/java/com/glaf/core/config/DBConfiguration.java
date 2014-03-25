@@ -265,6 +265,7 @@ public class DBConfiguration {
 	}
 
 	public static Properties getDataSourcePropertiesByName(String name) {
+		logger.debug("->name:"+name);
 		Properties props = dataMap.get(name);
 		Properties p = new Properties();
 		Enumeration<?> e = props.keys();

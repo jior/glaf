@@ -77,5 +77,9 @@ public class BootstrapManager {
 			}
 		}
 	}
+	
+	public static void main(String[] args){
+		BootstrapManager.getInstance().startup(null);
+	}
 
 }
