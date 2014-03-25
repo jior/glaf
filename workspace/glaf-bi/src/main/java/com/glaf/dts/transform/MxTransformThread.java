@@ -163,7 +163,7 @@ public class MxTransformThread implements java.lang.Runnable {
 
 			logger.debug("--------------------------------");
 
-			List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+			List<ColumnDefinition> columns = new java.util.ArrayList<ColumnDefinition>();
 
 			rs = psmt.executeQuery();
 			rsmd = rs.getMetaData();

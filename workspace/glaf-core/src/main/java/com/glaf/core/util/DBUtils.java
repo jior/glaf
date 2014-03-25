@@ -111,15 +111,15 @@ public class DBUtils {
 
 	public static void alterTable(String systemName, String tableName,
 			List<ColumnDefinition> columns) {
-		Connection con = null;
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSetMetaData rsmd = null;
 		Statement stmt = null;
 		ResultSet rs = null;
 		List<String> columnNames = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		try {
-			con = DBConnectionFactory.getConnection();
-			pstmt = con.prepareStatement(" select * from " + tableName
+			conn = DBConnectionFactory.getConnection();
+			pstmt = conn.prepareStatement(" select * from " + tableName
 					+ " where 1=0 ");
 			rs = pstmt.executeQuery();
 			rsmd = rs.getMetaData();
@@ -129,7 +129,7 @@ public class DBUtils {
 			}
 
 			if (columns != null && !columns.isEmpty()) {
-				String dbType = DBConnectionFactory.getDatabaseType(con);
+				String dbType = DBConnectionFactory.getDatabaseType(conn);
 				for (ColumnDefinition column : columns) {
 					if (columnNames.contains(column.getColumnName()
 							.toLowerCase())) {
@@ -303,7 +303,7 @@ public class DBUtils {
 					}
 					logger.info("execute alter:" + sql);
 
-					stmt = con.createStatement();
+					stmt = conn.createStatement();
 					stmt.executeUpdate(sql);
 					stmt.close();
 					stmt = null;
@@ -316,7 +316,7 @@ public class DBUtils {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
-			JdbcUtils.close(con);
+			JdbcUtils.close(conn);
 		}
 
 	}
@@ -2346,15 +2346,15 @@ public class DBUtils {
 	 * @return
 	 */
 	public static boolean tableExists(String tableName) {
-		Connection con = null;
+		Connection conn = null;
 		try {
-			con = DBConnectionFactory.getConnection();
-			return tableExists(con, tableName);
+			conn = DBConnectionFactory.getConnection();
+			return tableExists(conn, tableName);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
-			JdbcUtils.close(con);
+			JdbcUtils.close(conn);
 		}
 	}
 

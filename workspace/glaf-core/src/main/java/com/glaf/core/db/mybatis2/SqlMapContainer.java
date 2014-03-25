@@ -17,11 +17,8 @@
 package com.glaf.core.db.mybatis2;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-
-import javax.sql.DataSource;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -29,6 +26,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.dao.EntityDAO;
+import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.util.JdbcUtils;
 import com.glaf.core.util.LogUtils;
 
@@ -72,8 +70,7 @@ public class SqlMapContainer {
 		}
 		Connection connection = null;
 		try {
-			DataSource dataSource = ContextFactory.getBean("dataSource");
-			connection = dataSource.getConnection();
+			connection = DBConnectionFactory.getConnection();
 			getEntityDAO().setConnection(connection);
 			if (StringUtils.equalsIgnoreCase("insert", operation)) {
 				getEntityDAO().insert(statementId, params);
@@ -82,7 +79,7 @@ public class SqlMapContainer {
 			} else if (StringUtils.equalsIgnoreCase("delete", operation)) {
 				getEntityDAO().delete(statementId, params);
 			}
-		} catch (SQLException ex) {
+		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		} finally {
 			JdbcUtils.close(connection);
@@ -97,8 +94,7 @@ public class SqlMapContainer {
 		}
 		Connection connection = null;
 		try {
-			DataSource dataSource = ContextFactory.getBean(dataSourceName);
-			connection = dataSource.getConnection();
+			connection = DBConnectionFactory.getConnection(dataSourceName);
 			getEntityDAO().setConnection(connection);
 			if (StringUtils.equalsIgnoreCase("insert", operation)) {
 				getEntityDAO().insert(statementId, params);
@@ -107,7 +103,7 @@ public class SqlMapContainer {
 			} else if (StringUtils.equalsIgnoreCase("delete", operation)) {
 				getEntityDAO().delete(statementId, params);
 			}
-		} catch (SQLException ex) {
+		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		} finally {
 			JdbcUtils.close(connection);
@@ -131,11 +127,10 @@ public class SqlMapContainer {
 		}
 		Connection connection = null;
 		try {
-			DataSource dataSource = ContextFactory.getBean("dataSource");
-			connection = dataSource.getConnection();
+			connection = DBConnectionFactory.getConnection();
 			getEntityDAO().setConnection(connection);
 			return getEntityDAO().getList(statementId, parameterObject);
-		} catch (SQLException ex) {
+		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		} finally {
 			JdbcUtils.close(connection);
@@ -150,11 +145,10 @@ public class SqlMapContainer {
 		}
 		Connection connection = null;
 		try {
-			DataSource dataSource = ContextFactory.getBean(dataSourceName);
-			connection = dataSource.getConnection();
+			connection = DBConnectionFactory.getConnection(dataSourceName);
 			getEntityDAO().setConnection(connection);
 			return getEntityDAO().getList(statementId, parameterObject);
-		} catch (SQLException ex) {
+		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		} finally {
 			JdbcUtils.close(connection);
@@ -185,11 +179,10 @@ public class SqlMapContainer {
 		}
 		Connection connection = null;
 		try {
-			DataSource dataSource = ContextFactory.getBean("dataSource");
-			connection = dataSource.getConnection();
+			connection = DBConnectionFactory.getConnection();
 			getEntityDAO().setConnection(connection);
 			return getEntityDAO().getSingleObject(statementId, parameterObject);
-		} catch (SQLException ex) {
+		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		} finally {
 			JdbcUtils.close(connection);
@@ -204,11 +197,10 @@ public class SqlMapContainer {
 		}
 		Connection connection = null;
 		try {
-			DataSource dataSource = ContextFactory.getBean(dataSourceName);
-			connection = dataSource.getConnection();
+			connection = DBConnectionFactory.getConnection(dataSourceName);
 			getEntityDAO().setConnection(connection);
 			return getEntityDAO().getSingleObject(statementId, parameterObject);
-		} catch (SQLException ex) {
+		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		} finally {
 			JdbcUtils.close(connection);
