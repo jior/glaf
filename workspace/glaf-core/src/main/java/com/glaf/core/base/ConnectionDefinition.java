@@ -24,6 +24,8 @@ public class ConnectionDefinition implements java.io.Serializable {
 
 	protected boolean autoCommit;
 
+	protected java.util.Properties properties;
+
 	public ConnectionDefinition() {
 
 	}
@@ -42,6 +44,10 @@ public class ConnectionDefinition implements java.io.Serializable {
 
 	public String getPassword() {
 		return password;
+	}
+
+	public java.util.Properties getProperties() {
+		return properties;
 	}
 
 	public String getProvider() {
@@ -86,6 +92,10 @@ public class ConnectionDefinition implements java.io.Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public void setProperties(java.util.Properties properties) {
+		this.properties = properties;
 	}
 
 	public void setProvider(String provider) {

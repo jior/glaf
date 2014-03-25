@@ -102,7 +102,7 @@ public class DBConfiguration {
 
 	protected static AtomicBoolean loading = new AtomicBoolean(false);
 
-	protected static ConcurrentMap<String, Properties> dataMap = new ConcurrentHashMap<String, Properties>();
+	protected static ConcurrentMap<String, Properties> dataSourceProperties = new ConcurrentHashMap<String, Properties>();
 
 	protected static ConcurrentMap<String, Properties> jdbcTemplateProperties = new ConcurrentHashMap<String, Properties>();
 
@@ -127,7 +127,7 @@ public class DBConfiguration {
 	}
 
 	public static void addDataSourceProperties(String name, Properties props) {
-		if (!dataMap.containsKey(name)) {
+		if (!dataSourceProperties.containsKey(name)) {
 			Properties p = new Properties();
 			Enumeration<?> e = props.keys();
 			while (e.hasMoreElements()) {
@@ -139,7 +139,7 @@ public class DBConfiguration {
 				if (DBConnectionFactory.checkConnection(p)) {
 					String url = p.getProperty(DBConfiguration.JDBC_URL);
 					String dbType = getDatabaseType(url);
-					dataMap.put(name, p);
+					dataSourceProperties.put(name, p);
 					dbTypes.put(name, dbType);
 				}
 			} catch (Exception ex) {
@@ -149,8 +149,8 @@ public class DBConfiguration {
 	}
 
 	public static List<ConnectionDefinition> getConnectionDefinitions() {
-		List<ConnectionDefinition> rows = new java.util.concurrent.CopyOnWriteArrayList<ConnectionDefinition>();
-		Collection<Properties> list = dataMap.values();
+		List<ConnectionDefinition> rows = new java.util.ArrayList<ConnectionDefinition>();
+		Collection<Properties> list = dataSourceProperties.values();
 		if (list != null && !list.isEmpty()) {
 			for (Properties props : list) {
 				ConnectionDefinition model = new ConnectionDefinition();
@@ -158,13 +158,25 @@ public class DBConfiguration {
 				model.setDriver(props.getProperty(JDBC_DRIVER));
 				model.setUrl(props.getProperty(JDBC_URL));
 				model.setName(props.getProperty(JDBC_NAME));
+				model.setUser(props.getProperty(JDBC_USER));
+				model.setPassword(props.getProperty(JDBC_PASSWORD));
 				model.setSubject(props.getProperty("subject"));
 				model.setProvider(props.getProperty(JDBC_PROVIDER));
 				model.setType(props.getProperty(JDBC_TYPE));
+
 				if (StringUtils.equals("true",
 						props.getProperty(JDBC_AUTOCOMMIT))) {
 					model.setAutoCommit(true);
 				}
+
+				Properties p = new Properties();
+				Enumeration<?> e = props.keys();
+				while (e.hasMoreElements()) {
+					String key = (String) e.nextElement();
+					String value = props.getProperty(key);
+					p.put(key, value);
+				}
+				model.setProperties(p);
 				rows.add(model);
 			}
 		}
@@ -181,7 +193,7 @@ public class DBConfiguration {
 
 	public static Properties getCurrentDataSourceProperties() {
 		String dsName = Environment.getCurrentSystemName();
-		Properties props = dataMap.get(dsName);
+		Properties props = dataSourceProperties.get(dsName);
 		Properties p = new Properties();
 		Enumeration<?> e = props.keys();
 		while (e.hasMoreElements()) {
@@ -261,12 +273,12 @@ public class DBConfiguration {
 	}
 
 	public static Map<String, Properties> getDataSourceProperties() {
-		return dataMap;
+		return dataSourceProperties;
 	}
 
 	public static Properties getDataSourcePropertiesByName(String name) {
-		logger.debug("->name:"+name);
-		Properties props = dataMap.get(name);
+		logger.debug("->name:" + name);
+		Properties props = dataSourceProperties.get(name);
 		Properties p = new Properties();
 		Enumeration<?> e = props.keys();
 		while (e.hasMoreElements()) {
@@ -278,7 +290,8 @@ public class DBConfiguration {
 	}
 
 	public static Properties getDefaultDataSourceProperties() {
-		Properties props = dataMap.get(Environment.DEFAULT_SYSTEM_NAME);
+		Properties props = dataSourceProperties
+				.get(Environment.DEFAULT_SYSTEM_NAME);
 		Properties p = new Properties();
 		Enumeration<?> e = props.keys();
 		while (e.hasMoreElements()) {
@@ -344,10 +357,10 @@ public class DBConfiguration {
 	}
 
 	public static Properties getProperties(String name) {
-		if (dataMap.isEmpty()) {
+		if (dataSourceProperties.isEmpty()) {
 			reloadDS();
 		}
-		Properties props = dataMap.get(name);
+		Properties props = dataSourceProperties.get(name);
 		Properties p = new Properties();
 		Enumeration<?> e = props.keys();
 		while (e.hasMoreElements()) {
@@ -454,7 +467,8 @@ public class DBConfiguration {
 														dbType);
 											}
 											dbTypes.put(name, dbType);
-											dataMap.put(name, props);
+											dataSourceProperties.put(name,
+													props);
 										}
 									}
 								}
@@ -491,14 +505,15 @@ public class DBConfiguration {
 						logger.error(ex);
 					}
 				}
-				dataMap.put(Environment.DEFAULT_SYSTEM_NAME, props);
+				dataSourceProperties
+						.put(Environment.DEFAULT_SYSTEM_NAME, props);
 				if (dbType != null) {
 					dbTypes.put(Environment.DEFAULT_SYSTEM_NAME, dbType);
 				}
 				jdbcTemplateProperties.put(Environment.DEFAULT_SYSTEM_NAME,
 						props);
 			}
-			logger.info("#datasources:" + dataMap.keySet());
+			logger.info("#datasources:" + dataSourceProperties.keySet());
 		}
 	}
 
