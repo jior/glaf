@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+	<property>
+		<name>spring-config</name>
+		<value>/conf/spring/spring-config.xml</value>
+		<description>
+		glaf-core框架的spring核心配置文件信息，applicationContext.xml是相对于WEB工程的WEB-INF的路径，
+		必须以"/"开头，如配置为/conf/applicationContext.xml,那么应当将文件复制到WEB-INF的conf目录。
+		</description>
+	</property>
+ 
+
+</configuration>

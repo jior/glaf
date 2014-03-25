@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="environment" value="default" />
+		<property name="configLocation" value="classpath:resources/mybatis/mybatis.conf.xml" />
+		<property name="mapperLocations">
+			<list>
+				<value>classpath:resources/mybatis/mapper/**/*Mapper.xml
+				</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="baseMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"
+		abstract="true" lazy-init="true">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="baseMapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="basePackage" value="com.glaf.**.mapper" />
+	</bean>
+
+	<bean id="entityDAO" class="com.glaf.core.entity.mybatis.MyBatisEntityDAOImpl">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
+	</bean>
+
+	<bean id="idGenerator" class="com.glaf.core.id.MyBatisDbIdGenerator">
+		<property name="entityDAO" ref="myBatisEntityDAO" />
+	</bean>
+
+	<bean id="myBatisEntityDAO" class="com.glaf.core.entity.mybatis.MyBatisEntityDAOImpl">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
+	</bean>
+
+	<bean id="myBatisDbIdGenerator" class="com.glaf.core.id.MyBatisDbIdGenerator">
+		<property name="entityDAO" ref="myBatisEntityDAO" />
+	</bean>
+
+	<bean id="entityService" class="com.glaf.core.service.impl.MyBatisEntityService">
+		<property name="entityDAO" ref="myBatisEntityDAO" />
+	</bean>
+
+	<bean id="myBatisEntityService" class="com.glaf.core.service.impl.MyBatisEntityService">
+		<property name="entityDAO" ref="myBatisEntityDAO" />
+	</bean>
+
+</beans>

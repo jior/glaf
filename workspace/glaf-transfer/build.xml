@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project basedir="." default="run">
+	<property name="build.home" location="." />
+	<property name="build.lib" location="lib" />
+ 
+	<path id="classpath">
+		<fileset dir="${build.lib}" includes="*.jar" />
+		<pathelement location="conf" />
+	</path>
+
+	<target name="run" >
+		<echo message="运行应用程序......" />
+        <mkdir dir="data" />
+		<java classname="com.glaf.core.db.dataexport.DbToDBMyBatisExporter" fork="true">
+			<classpath refid="classpath"/>
+			<jvmarg line="-Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m"/>
+			<arg line="default h2 ./data/glafdb"/>
+		</java>
+	</target>
+
+	<target name="run-sqlite-export" >
+		<echo message="运行应用程序......" />
+        <mkdir dir="data" />
+		<java classname="com.glaf.core.db.dataexport.DbToDBMyBatisExporter" fork="true">
+			<classpath refid="classpath"/>
+			<jvmarg line="-Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m"/>
+			<arg line="default sqlite ./data/glafdb.db"/>
+		</java>
+	</target>
+
+	<target name="run-db-export" >
+		<echo message="运行应用程序......" />
+		<java classname="com.glaf.core.db.dataexport.DbTableToDbTableExporter" fork="true">
+			<classpath refid="classpath"/>
+			<jvmarg line="-Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m"/>
+			<arg line="src dest error"/>
+		</java>
+	</target>
+
+</project>
