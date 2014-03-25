@@ -54,7 +54,7 @@ public class DbToDBMyBatisExporter {
 
 	public static void main(String[] args) {
 		DbToDBMyBatisExporter exp = new DbToDBMyBatisExporter();
-		exp.exportTables("default", "sqlite", "/data/glafdb.db");
+		exp.exportTables(args[0], args[1], args[2]);
 		// exp.exportTable("default", "/data/glafdb", "sys_tree");
 		// ITablePageService tablePageService = ContextFactory
 		// .getBean("tablePageService");
