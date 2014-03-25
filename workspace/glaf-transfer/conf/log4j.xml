@@ -13,6 +13,7 @@
   <appender name="ROLLING_FILE" class="org.apache.log4j.DailyRollingFileAppender">
 	  <param name="File" value="/logs/log.log"/>
 	  <param name="Append" value="true" />
+	  <param name="MaxFileSize" value="50000KB"/>
 	  <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
       <layout class="org.apache.log4j.PatternLayout">
         <param name="ConversionPattern" 
@@ -23,7 +24,7 @@
   <appender name="INFO" class="org.apache.log4j.RollingFileAppender">
   	  <param name="File" value="/logs/info.log"/>
 	  <param name="Append" value="true" />
-	  <param name="MaxFileSize" value="20480KB"/>
+	  <param name="MaxFileSize" value="50000KB"/>
 	  <param name="MaxBackupIndex" value="10"/>
       <layout class="org.apache.log4j.PatternLayout">
         <param name="ConversionPattern" 
@@ -34,7 +35,7 @@
   <appender name="DEBUG" class="org.apache.log4j.RollingFileAppender">
   	  <param name="File" value="/logs/debug.log"/>
 	  <param name="Append" value="true" />
-	  <param name="MaxFileSize" value="20480KB"/>
+	  <param name="MaxFileSize" value="50000KB"/>
 	  <param name="MaxBackupIndex" value="10"/>
       <layout class="org.apache.log4j.PatternLayout">
         <param name="ConversionPattern" 
@@ -45,7 +46,7 @@
   <appender name="WARN" class="org.apache.log4j.RollingFileAppender">
   	  <param name="File" value="/logs/warn.log"/>
 	  <param name="Append" value="true" />
-	  <param name="MaxFileSize" value="20480KB"/>
+	  <param name="MaxFileSize" value="50000KB"/>
 	  <param name="MaxBackupIndex" value="10"/>
       <layout class="org.apache.log4j.PatternLayout">
         <param name="ConversionPattern" 
@@ -56,7 +57,7 @@
   <appender name="ERROR" class="org.apache.log4j.RollingFileAppender">
   	  <param name="File" value="/logs/error.log"/>
 	  <param name="Append" value="true" />
-	  <param name="MaxFileSize" value="20480KB"/>
+	  <param name="MaxFileSize" value="50000KB"/>
 	  <param name="MaxBackupIndex" value="10"/>
       <layout class="org.apache.log4j.PatternLayout">
         <param name="ConversionPattern" 
@@ -67,6 +68,7 @@
   <appender name="controller" class="org.apache.log4j.DailyRollingFileAppender">
   	  <param name="File" value="/logs/controller.log"/>
 	  <param name="Append" value="true" />
+	  <param name="MaxFileSize" value="50000KB"/>
 	  <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
       <layout class="org.apache.log4j.PatternLayout">
         <param name="ConversionPattern" 
@@ -77,6 +79,7 @@
  <appender name="job" class="org.apache.log4j.DailyRollingFileAppender">
   	  <param name="File" value="/logs/job.log"/>
 	  <param name="Append" value="true" />
+	  <param name="MaxFileSize" value="50000KB"/>
 	  <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
       <layout class="org.apache.log4j.PatternLayout">
         <param name="ConversionPattern" 
