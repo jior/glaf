@@ -155,13 +155,13 @@ public class TransformTable {
 			Map<String, Object> params = SystemConfig.getContextMap();
 			List<ColumnDefinition> columns = DBUtils
 					.getColumnDefinitions(tableName);
-			Map<String, ColumnDefinition> columnMap = new java.util.concurrent.ConcurrentHashMap<String, ColumnDefinition>();
+			Map<String, ColumnDefinition> columnMap = new java.util.HashMap<String, ColumnDefinition>();
 
 			for (ColumnDefinition column : columns) {
 				columnMap.put(column.getColumnName(), column);
 				columnMap.put(column.getColumnName().toLowerCase(), column);
 			}
-			List<String> aggregationKeys = new java.util.concurrent.CopyOnWriteArrayList<String>();
+			List<String> aggregationKeys = new java.util.ArrayList<String>();
 			List<String> keys = StringTools.split(tableDefinition
 					.getAggregationKeys());
 			for (String key : keys) {
@@ -171,8 +171,8 @@ public class TransformTable {
 			logger.debug("aggregationKeys=" + aggregationKeys);
 			StringBuffer sb = new StringBuffer(1000);
 
-			List<ColumnModel> cellModelList = new java.util.concurrent.CopyOnWriteArrayList<ColumnModel>();
-			Map<String, TableModel> resultMap = new java.util.concurrent.ConcurrentHashMap<String, TableModel>();
+			List<ColumnModel> cellModelList = new java.util.ArrayList<ColumnModel>();
+			Map<String, TableModel> resultMap = new java.util.HashMap<String, TableModel>();
 
 			for (QueryDefinition q : tableDefinition.getQueries()) {
 				String sql = q.getSql();
@@ -341,7 +341,7 @@ public class TransformTable {
 			Map<String, Object> params = SystemConfig.getContextMap();
 			List<ColumnDefinition> columns = DBUtils
 					.getColumnDefinitions(tableName);
-			Map<String, ColumnDefinition> columnMap = new java.util.concurrent.ConcurrentHashMap<String, ColumnDefinition>();
+			Map<String, ColumnDefinition> columnMap = new java.util.HashMap<String, ColumnDefinition>();
 
 			for (ColumnDefinition column : columns) {
 				columnMap.put(column.getColumnName(), column);
@@ -352,8 +352,8 @@ public class TransformTable {
 					.getAggregationKeys());
 			StringBuffer sb = new StringBuffer(1000);
 
-			List<ColumnModel> cellModelList = new java.util.concurrent.CopyOnWriteArrayList<ColumnModel>();
-			Map<String, TableModel> resultMap = new java.util.concurrent.ConcurrentHashMap<String, TableModel>();
+			List<ColumnModel> cellModelList = new java.util.ArrayList<ColumnModel>();
+			Map<String, TableModel> resultMap = new java.util.HashMap<String, TableModel>();
 
 			if (queryDefinition.getSql() != null) {
 				String sql = queryDefinition.getSql();
