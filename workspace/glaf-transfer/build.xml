@@ -27,10 +27,15 @@
 		<echo message="运行应用程序......" />
         <mkdir dir="data" />
 		<mkdir dir="conf/jdbc" />
-		<java classname="com.glaf.core.db.dataexport.DbToDBMyBatisExporter" fork="true">
+		<!-- <java classname="com.glaf.core.db.dataexport.DbToDBMyBatisExporter" fork="true">
 			<classpath refid="classpath"/>
 			<jvmarg line="-Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m"/>
-			<arg line="default h2 ./data/glafdb"/>
+			<arg line="default h2 ./data/glafdb3"/>
+		</java>   -->
+		 <java classname="com.glaf.core.db.dataexport.DbToH2Exporter" fork="true">
+			<classpath refid="classpath"/>
+			<jvmarg line="-Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m"/>
+			<arg line="default ./data/glafdb4"/>
 		</java> 
 	</target>
 

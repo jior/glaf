@@ -142,7 +142,7 @@
     </logger>
  
 	<logger name="com.glaf">
-        <level value="DEBUG"/>
+        <level value="INFO"/>
     </logger> 
 
 	<logger name="org.springframework.transaction">
