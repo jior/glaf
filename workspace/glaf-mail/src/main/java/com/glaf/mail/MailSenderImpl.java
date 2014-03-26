@@ -41,14 +41,14 @@ import org.springframework.stereotype.Component;
 
 import com.glaf.core.base.DataFile;
 import com.glaf.core.config.MailProperties;
-import com.glaf.core.config.TemplateProperties;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.domain.SystemProperty;
-import com.glaf.core.freemarker.TemplateUtils;
 import com.glaf.core.service.ISystemPropertyService;
-import com.glaf.core.template.Template;
 import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.UUID32;
+import com.glaf.template.Template;
+import com.glaf.template.config.TemplateProperties;
+import com.glaf.template.util.TemplateUtils;
 import com.glaf.mail.config.JavaMailSenderConfiguration;
 import com.glaf.mail.util.MailTools;
 

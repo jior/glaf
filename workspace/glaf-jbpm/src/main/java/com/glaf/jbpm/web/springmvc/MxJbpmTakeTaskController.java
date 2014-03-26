@@ -37,10 +37,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.glaf.core.config.CustomProperties;
 import com.glaf.core.config.ViewProperties;
-import com.glaf.core.freemarker.TemplateUtils;
 import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.template.util.TemplateUtils;
 import com.glaf.jbpm.container.ProcessContainer;
 import com.glaf.jbpm.model.ActivityInstance;
 import com.glaf.jbpm.model.TaskItem;

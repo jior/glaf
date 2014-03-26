@@ -38,6 +38,11 @@
 			<fileset dir="jar-conf" includes="**/*.xml,**/*.properties"  />
 		</jar>
 
+		<jar jarfile="glaf-template.jar">
+			<fileset dir="bin" 
+			   includes="com/glaf/template/**/*.class,com/glaf/template/**/*.xml,com/glaf/template/**/*.properties"  />
+		</jar>
+
 	    <jar jarfile="glaf-test.jar">
 			<fileset dir="bin" 
 			   includes="com/glaf/test/**/*.class,com/glaf/test/**/*.xml,com/glaf/test/**/*.properties" />

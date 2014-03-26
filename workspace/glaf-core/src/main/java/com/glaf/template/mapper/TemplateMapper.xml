@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.template.mapper.TemplateMapper">
+
+	<resultMap id="templateResultMap"	type="com.glaf.template.Template">
+		<id property="templateId" column="TEMPLATEID_" jdbcType="VARCHAR"/>
+		<result property="templateType" column="TEMPLATETYPE_" jdbcType="VARCHAR"/>
+		<result property="description" column="DESCRIPTION_" jdbcType="VARCHAR"/>
+		<result property="name" column="NAME_" jdbcType="VARCHAR"/>
+		<result property="encoding" column="ENCODING_" jdbcType="VARCHAR"/>
+		<result property="title" column="TITLE_" jdbcType="VARCHAR"/>
+		<result property="nodeId" column="NODEID_" jdbcType="BIGINT"/>
+		<result property="content" column="CONTENT_" jdbcType="VARCHAR"/>
+		<result property="dataFile" column="DATAFILE_" jdbcType="VARCHAR"/>
+		<result property="fileSize" column="FILESIZE_" jdbcType="BIGINT"/>
+		<result property="fileType" column="FILETYPE_" jdbcType="INTEGER"/>
+		<result property="moduleId" column="MODULEID_" jdbcType="VARCHAR"/>
+		<result property="moduleName" column="MODULENAME_" jdbcType="VARCHAR"/>
+		<result property="locked" column="LOCKED_" jdbcType="INTEGER"/>
+		<result property="objectValue" column="OBJECTVALUE_" jdbcType="VARCHAR"/>
+		<result property="objectId" column="OBJECTID_" jdbcType="VARCHAR"/>
+		<result property="language" column="LANGUAGE_" jdbcType="VARCHAR"/>
+		<result property="callbackUrl" column="CALLBACKURL_" jdbcType="VARCHAR"/>
+		<result property="sysType" column="SYSTYPE_" jdbcType="VARCHAR"/>
+		<result property="json" column="JSON_" jdbcType="VARCHAR"/>
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR"/>
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP"/>
+		<result property="lastModified" column="LASTMODIFIED_" jdbcType="BIGINT"/>
+	</resultMap>
+
+ 
+	<insert id="insertTemplate" parameterType="com.glaf.template.Template">
+		insert into
+		SYS_TEMPLATE ( 
+        TEMPLATEID_ 
+        ,TEMPLATETYPE_ 
+        ,DESCRIPTION_ 
+        ,NAME_ 
+        ,ENCODING_ 
+        ,TITLE_ 
+        ,NODEID_ 
+        ,CONTENT_ 
+        ,DATAFILE_ 
+        ,FILESIZE_ 
+        ,FILETYPE_ 
+        ,MODULEID_ 
+        ,MODULENAME_ 
+        ,LOCKED_ 
+        ,OBJECTVALUE_ 
+        ,OBJECTID_ 
+        ,LANGUAGE_ 
+        ,CALLBACKURL_ 
+        ,SYSTYPE_
+        ,JSON_
+        ,CREATEBY_ 
+        ,CREATEDATE_ 
+        ,LASTMODIFIED_ 
+		)
+		values (#{templateId, jdbcType=VARCHAR}
+        ,#{templateType, jdbcType=VARCHAR}
+        ,#{description, jdbcType=VARCHAR}
+        ,#{name, jdbcType=VARCHAR}
+        ,#{encoding, jdbcType=VARCHAR}
+        ,#{title, jdbcType=VARCHAR}
+        ,#{nodeId, jdbcType=BIGINT}
+        ,#{content, jdbcType=VARCHAR}
+        ,#{dataFile, jdbcType=VARCHAR}
+        ,#{fileSize, jdbcType=BIGINT}
+        ,#{fileType, jdbcType=INTEGER}
+        ,#{moduleId, jdbcType=VARCHAR}
+        ,#{moduleName, jdbcType=VARCHAR}
+        ,#{locked, jdbcType=INTEGER}
+        ,#{objectValue, jdbcType=VARCHAR}
+        ,#{objectId, jdbcType=VARCHAR}
+        ,#{language, jdbcType=VARCHAR}
+        ,#{callbackUrl, jdbcType=VARCHAR}
+        ,#{sysType, jdbcType=VARCHAR}
+        ,#{json, jdbcType=VARCHAR}
+        ,#{createBy, jdbcType=VARCHAR}
+        ,#{createDate, jdbcType=TIMESTAMP}
+        ,#{lastModified, jdbcType=BIGINT}
+		)
+	</insert>
+
+ 
+	<update id="updateTemplate" parameterType="com.glaf.template.Template">
+		update SYS_TEMPLATE
+		set NAME_ = #{name, jdbcType=VARCHAR},
+		TITLE_ = #{title, jdbcType=VARCHAR},
+		CONTENT_ = #{content, jdbcType=VARCHAR},
+		DESCRIPTION_ = #{description, jdbcType=VARCHAR},
+        DATAFILE_ = #{dataFile, jdbcType=VARCHAR},
+        TEMPLATETYPE_ = #{templateType, jdbcType=VARCHAR},
+        FILETYPE_ = #{fileType, jdbcType=INTEGER},
+        FILESIZE_ = #{fileSize, jdbcType=BIGINT},
+        LOCKED_ = #{locked, jdbcType=INTEGER},
+        JSON_ = #{json, jdbcType=VARCHAR},
+        LASTMODIFIED_ = #{lastModified, jdbcType=BIGINT}
+		where TEMPLATEID_ = #{templateId, jdbcType=VARCHAR}
+	</update>
+    
+	<delete id="deleteTemplateById" parameterType="string"> 
+        delete from SYS_TEMPLATE
+        where TEMPLATEID_ =	#{templateId}
+	</delete>
+ 
+
+	<delete id="deleteTemplates" parameterType="com.glaf.template.Template">
+		delete from SYS_TEMPLATE
+		where (
+		<foreach collection="rowIds" index="index" item="rowId">
+			<if test="index != 0"> OR </if>
+			 TEMPLATEID_ = #{rowId}
+		</foreach>
+		)
+	</delete>
+
+	<select id="getTemplateById" parameterType="string" resultMap="templateResultMap">
+		select * from SYS_TEMPLATE where TEMPLATEID_ = #{templateId}
+	</select>
+ 
+
+	<select id="getTemplates" 
+		parameterType="com.glaf.template.query.TemplateQuery"
+		resultMap="templateResultMap">
+		select E.*
+		<include refid="selectTemplatesSql" />
+		<if test="orderBy != null">
+		    order by ${orderBy}
+		</if>
+	</select>
+
+	<select id="getTemplateCount" 
+		parameterType="com.glaf.template.query.TemplateQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectTemplatesSql" />
+	</select>
+
+	<sql id="selectTemplatesSql">
+
+		from SYS_TEMPLATE E
+		 
+		<where>
+		       1 = 1  
+	    
+			<if test="templateId != null">
+				and E.TEMPLATEID_ = #{templateId}
+			</if>
+
+			<if test="templateIds != null and templateIds.size != 0">
+			    and E.TEMPLATEID_ IN
+				<foreach item="x_templateId" index="index" collection="templateIds" 
+					open="(" separator="," close=")">
+                  #{x_templateId}
+				</foreach>
+			</if>
+
+			<if test="templateType != null">
+				and E.TEMPLATETYPE_ = #{templateType}
+			</if>
+ 
+			<if test="descriptionLike != null">
+				and E.DESCRIPTION_ like #{descriptionLike}
+			</if>
+ 
+			<if test="name != null">
+				and E.NAME_ = #{name}
+			</if>
+
+			<if test="nameLike != null">
+				and E.NAME_ like #{nameLike}
+			</if>
+ 
+			<if test="encoding != null">
+				and E.ENCODING_ = #{encoding}
+			</if>
+  
+			<if test="titleLike != null">
+				and E.TITLE_ like #{titleLike}
+			</if>
+
+			<if test="nodeId != null">
+				and E.NODEID_ = #{nodeId}
+			</if>
+
+			<if test="nodeIds != null and nodeIds.size != 0">
+			    and E.NODEID_ IN
+				<foreach item="x_nodeId" index="index" collection="nodeIds" 
+					open="(" separator="," close=")">
+                  #{x_nodeId}
+				</foreach>
+			</if>
+
+			<if test="contentLike != null">
+				and E.CONTENT_ like #{contentLike}
+			</if>
+
+			<if test="dataFile != null">
+				and E.DATAFILE_ = #{dataFile}
+			</if>
+
+			<if test="fileType != null">
+				and E.FILETYPE_ = #{fileType}
+			</if>
+      
+			<if test="moduleId != null">
+				and E.MODULEID_ = #{moduleId}
+			</if>
+
+			<if test="moduleIds != null and moduleIds.size != 0">
+			    and E.MODULEID_ IN
+				<foreach item="x_moduleId" index="index" collection="moduleIds" 
+					open="(" separator="," close=")">
+                  #{x_moduleId}
+				</foreach>
+			</if>
+
+			<if test="moduleNameLike != null">
+				and E.MODULENAME_ like #{moduleNameLike}
+			</if>
+
+			<if test="locked != null">
+				and E.LOCKED_ = #{locked}
+			</if>
+	        
+			<if test="objectValue != null">
+				and E.OBJECTVALUE_ = #{objectValue}
+			</if>
+
+			<if test="objectValues != null and objectValues.size != 0">
+			    and E.OBJECTVALUE_ IN
+				<foreach item="x_objectValue" index="index" collection="objectValues" 
+					open="(" separator="," close=")">
+                  #{x_objectValue}
+				</foreach>
+			</if>
+      
+			<if test="objectId != null">
+				and E.OBJECTID_ = #{objectId}
+			</if>
+
+			<if test="objectIds != null and objectIds.size != 0">
+			    and E.OBJECTID_ IN
+				<foreach item="x_objectId" index="index" collection="objectIds" 
+					open="(" separator="," close=")">
+                  #{x_objectId}
+				</foreach>
+			</if>
+	        
+			<if test="language != null">
+				and E.LANGUAGE_ = #{language}
+			</if>
+
+			<if test="callbackUrlLike != null">
+				and E.CALLBACKURL_ like #{callbackUrlLike}
+			</if>
+
+			<if test="createBy != null">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="afterCreateDate != null">
+				and E.CREATEDATE_ &gt;= #{afterCreateDate}
+			</if>
+
+			<if test="beforeCreateDate != null">
+				and E.CREATEDATE_ &lt;= #{beforeCreateDate}
+			</if>
+			 
+		</where>
+	</sql>
+
+</mapper>

@@ -39,8 +39,8 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import com.glaf.core.config.MailProperties;
-import com.glaf.core.template.Template;
 import com.glaf.core.util.FileUtils;
+import com.glaf.template.Template;
 
 public class MxMailHelper {
 

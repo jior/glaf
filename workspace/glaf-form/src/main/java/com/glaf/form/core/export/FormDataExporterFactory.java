@@ -24,7 +24,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.glaf.form.core.context.FormContext;
 import com.glaf.core.config.*;
-import com.glaf.core.template.Template;
+import com.glaf.template.Template;
 
 public class FormDataExporterFactory {
 	protected static final Log logger = LogFactory

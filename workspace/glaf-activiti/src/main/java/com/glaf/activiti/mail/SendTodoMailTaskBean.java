@@ -35,7 +35,6 @@ import com.glaf.core.config.Configuration;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.domain.SystemProperty;
-import com.glaf.core.freemarker.TemplateUtils;
 import com.glaf.core.identity.User;
 import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.service.ISystemPropertyService;
@@ -46,6 +45,7 @@ import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.FileUtils;
 import com.glaf.mail.MailMessage;
 import com.glaf.mail.MailSender;
+import com.glaf.template.util.TemplateUtils;
 
 public class SendTodoMailTaskBean {
 	protected final static Log logger = LogFactory

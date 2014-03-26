@@ -28,12 +28,12 @@ import org.apache.commons.logging.LogFactory;
 
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.domain.SystemProperty;
-import com.glaf.core.freemarker.TemplateUtils;
 import com.glaf.core.identity.User;
 import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.service.ISystemPropertyService;
 import com.glaf.core.util.ClassUtils;
 import com.glaf.core.util.DateUtils;
+import com.glaf.template.util.TemplateUtils;
 import com.glaf.mail.IMailDataManager;
 import com.glaf.mail.MailMessage;
 import com.glaf.mail.MailSender;

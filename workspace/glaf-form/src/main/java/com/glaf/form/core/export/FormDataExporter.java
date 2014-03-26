@@ -18,7 +18,8 @@
 package com.glaf.form.core.export;
 
 import com.glaf.form.core.context.FormContext;
-import com.glaf.core.template.Template;
+import com.glaf.template.Template;
+
 
 public interface FormDataExporter {
 
