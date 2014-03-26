@@ -63,7 +63,7 @@ public class DBUtils {
 
 	public static void alterTable(Connection connection,
 			TableDefinition tableDefinition) {
-		List<String> cloumns = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> cloumns = new java.util.ArrayList<String>();
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
@@ -116,7 +116,7 @@ public class DBUtils {
 		ResultSetMetaData rsmd = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		List<String> columnNames = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> columnNames = new java.util.ArrayList<String>();
 		try {
 			conn = DBConnectionFactory.getConnection();
 			pstmt = conn.prepareStatement(" select * from " + tableName
@@ -322,7 +322,7 @@ public class DBUtils {
 	}
 
 	public static void alterTable(TableDefinition tableDefinition) {
-		List<String> cloumns = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> cloumns = new java.util.ArrayList<String>();
 		Connection connection = null;
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -818,6 +818,8 @@ public class DBUtils {
 			} else if ("oracle".equals(DBConnectionFactory
 					.getDatabaseType(conn))) {
 				tableName = tableName.toUpperCase();
+			} else if ("db2".equals(DBConnectionFactory.getDatabaseType(conn))) {
+				tableName = tableName.toUpperCase();
 			} else if ("mysql"
 					.equals(DBConnectionFactory.getDatabaseType(conn))) {
 				tableName = tableName.toLowerCase();
@@ -828,7 +830,6 @@ public class DBUtils {
 			rs = metaData.getColumns(null, null, tableName, null);
 			while (rs.next()) {
 				String columnName = rs.getString("COLUMN_NAME");
-
 				int dataType = rs.getInt("DATA_TYPE");
 				int nullable = rs.getInt("NULLABLE");
 				int length = rs.getInt("COLUMN_SIZE");
@@ -891,6 +892,8 @@ public class DBUtils {
 				tableName = tableName.toUpperCase();
 			} else if ("oracle".equals(DBConnectionFactory
 					.getDatabaseType(conn))) {
+				tableName = tableName.toUpperCase();
+			} else if ("db2".equals(DBConnectionFactory.getDatabaseType(conn))) {
 				tableName = tableName.toUpperCase();
 			} else if ("mysql"
 					.equals(DBConnectionFactory.getDatabaseType(conn))) {
@@ -1719,6 +1722,8 @@ public class DBUtils {
 			} else if ("oracle".equals(DBConnectionFactory
 					.getDatabaseType(conn))) {
 				tableName = tableName.toUpperCase();
+			} else if ("db2".equals(DBConnectionFactory.getDatabaseType(conn))) {
+				tableName = tableName.toUpperCase();
 			} else if ("mysql"
 					.equals(DBConnectionFactory.getDatabaseType(conn))) {
 				tableName = tableName.toLowerCase();
@@ -1948,6 +1953,9 @@ public class DBUtils {
 			} else if ("oracle".equals(DBConnectionFactory
 					.getDatabaseType(connection))) {
 				tableName = tableName.toUpperCase();
+			} else if ("db2".equals(DBConnectionFactory
+					.getDatabaseType(connection))) {
+				tableName = tableName.toUpperCase();
 			} else if ("mysql".equals(DBConnectionFactory
 					.getDatabaseType(connection))) {
 				tableName = tableName.toLowerCase();
@@ -1979,6 +1987,9 @@ public class DBUtils {
 			} else if ("oracle".equals(DBConnectionFactory
 					.getDatabaseType(connection))) {
 				tableName = tableName.toUpperCase();
+			} else if ("db2".equals(DBConnectionFactory
+					.getDatabaseType(connection))) {
+				tableName = tableName.toUpperCase();
 			} else if ("mysql".equals(DBConnectionFactory
 					.getDatabaseType(connection))) {
 				tableName = tableName.toLowerCase();
@@ -2003,7 +2014,7 @@ public class DBUtils {
 
 	public static List<String> getPrimaryKeys(String systemName,
 			String tableName) {
-		List<String> primaryKeys = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> primaryKeys = new java.util.ArrayList<String>();
 		Connection connection = null;
 		try {
 			connection = DBConnectionFactory.getConnection(systemName);
@@ -2012,6 +2023,9 @@ public class DBUtils {
 			if ("h2".equals(DBConnectionFactory.getDatabaseType(connection))) {
 				tableName = tableName.toUpperCase();
 			} else if ("oracle".equals(DBConnectionFactory
+					.getDatabaseType(connection))) {
+				tableName = tableName.toUpperCase();
+			} else if ("db2".equals(DBConnectionFactory
 					.getDatabaseType(connection))) {
 				tableName = tableName.toUpperCase();
 			} else if ("mysql".equals(DBConnectionFactory
@@ -2076,7 +2090,7 @@ public class DBUtils {
 	}
 
 	public static List<String> getTables() {
-		List<String> tables = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> tables = new java.util.ArrayList<String>();
 		String[] types = { "TABLE" };
 		Connection connection = null;
 		try {
@@ -2095,7 +2109,7 @@ public class DBUtils {
 	}
 
 	public static List<String> getTables(Connection connection) {
-		List<String> tables = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> tables = new java.util.ArrayList<String>();
 		String[] types = { "TABLE" };
 		try {
 			DatabaseMetaData metaData = connection.getMetaData();
@@ -2172,7 +2186,7 @@ public class DBUtils {
 	}
 
 	public static void main(String[] args) {
-		List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+		List<ColumnDefinition> columns = new java.util.ArrayList<ColumnDefinition>();
 		ColumnDefinition c1 = new ColumnDefinition();
 		c1.setColumnName("choosepublishflag");
 		c1.setLength(1);
@@ -2215,7 +2229,7 @@ public class DBUtils {
 			return sqlExecutor;
 		}
 
-		List<Object> values = new java.util.concurrent.CopyOnWriteArrayList<Object>();
+		List<Object> values = new java.util.ArrayList<Object>();
 		Map<String, Object> dataMap = lowerKeyMap(params);
 		StringBuffer sb = new StringBuffer();
 		int begin = 0;

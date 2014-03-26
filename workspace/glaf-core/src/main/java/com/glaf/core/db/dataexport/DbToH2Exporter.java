@@ -48,7 +48,7 @@ public class DbToH2Exporter {
 
 	public static void main(String[] args) {
 		DbToH2Exporter exp = new DbToH2Exporter();
-		exp.exportTables("default", "/data/glafdb");
+		exp.exportTables(args[0], args[1]);
 		// exp.exportTable("default", "/data/glafdb", "sys_tree");
 		// ITablePageService tablePageService = ContextFactory
 		// .getBean("tablePageService");
@@ -81,6 +81,10 @@ public class DbToH2Exporter {
 				List<String> primaryKeys = DBUtils.getPrimaryKeys(conn,
 						tableName);
 				JdbcUtils.close(conn);
+
+				if (columns == null || columns.isEmpty()) {
+					return;
+				}
 
 				TableDefinition tableDefinition = new TableDefinition();
 				tableDefinition.setTableName(tableName);
@@ -134,7 +138,7 @@ public class DbToH2Exporter {
 				List<Map<String, Object>> rows = new java.util.ArrayList<Map<String, Object>>();
 				for (int index = 0; index < (total / pageSize + 1); index++) {
 					Environment.setCurrentSystemName(systemName);
-					
+
 					int firstResult = index * pageSize;
 					rows.clear();
 					logger.debug("firstResult=" + firstResult);
