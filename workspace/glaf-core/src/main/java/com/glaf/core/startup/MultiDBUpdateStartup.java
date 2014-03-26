@@ -29,7 +29,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.alibaba.druid.util.JdbcUtils;
+ 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.config.DBConfiguration;
@@ -39,6 +39,7 @@ import com.glaf.core.el.ExpressionTools;
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.threads.ThreadFactory;
+import com.glaf.core.util.JdbcUtils;
 
 public class MultiDBUpdateStartup implements Bootstrap {
 

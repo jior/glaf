@@ -1,3 +1,6 @@
+package com.glaf.core.execution;
+
+import java.io.File;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -16,16 +19,14 @@
  * limitations under the License.
  */
 
-package com.glaf.core.startup;
-
-import java.io.File;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Statement;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
- 
-import com.glaf.core.config.DBConfiguration;
+
+import com.glaf.core.config.Environment;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.db.dataimport.XmlToDbImporter;
 import com.glaf.core.jdbc.DBConnectionFactory;
@@ -33,23 +34,18 @@ import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.JdbcUtils;
 
-public class DBUpdateThread extends Thread {
+public class UpdateExecutionHandler implements ExecutionHandler {
 
-	protected final static Log logger = LogFactory.getLog(DBUpdateThread.class);
+	protected final static Log logger = LogFactory
+			.getLog(UpdateExecutionHandler.class);
 
-	protected java.util.Properties props;
-
-	public DBUpdateThread(java.util.Properties props) {
-		this.props = props;
-	}
-
-	public void run() {
-		logger.debug("->jdbc url:"
-				+ props.getProperty(DBConfiguration.JDBC_URL));
+	@Override
+	public void execute(String content) {
+		String currentSystemName = Environment.getCurrentSystemName();
 		Connection conn = null;
 		Statement stmt = null;
 		try {
-			conn = DBConnectionFactory.getConnection(props);
+			conn = DBConnectionFactory.getConnection(currentSystemName);
 			if (conn != null) {
 				String path = SystemProperties.getConfigRootPath()
 						+ "/conf/bootstrap/update";
