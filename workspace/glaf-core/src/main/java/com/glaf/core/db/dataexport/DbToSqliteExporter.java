@@ -49,7 +49,7 @@ public class DbToSqliteExporter {
 
 	public static void main(String[] args) {
 		DbToSqliteExporter exp = new DbToSqliteExporter();
-		exp.exportTables("default", "/data/glafdb_sqlite.db");
+		exp.exportTables(args[0], args[1]);
 		// exp.exportTable("default", "/data/glafdb", "sys_tree");
 		// ITablePageService tablePageService = ContextFactory
 		// .getBean("tablePageService");
@@ -135,7 +135,7 @@ public class DbToSqliteExporter {
 				List<Map<String, Object>> rows = new java.util.ArrayList<Map<String, Object>>();
 				for (int index = 0; index < (total / pageSize + 1); index++) {
 					Environment.setCurrentSystemName(systemName);
-	 
+
 					int firstResult = index * pageSize;
 					rows.clear();
 					logger.debug("firstResult=" + firstResult);
@@ -174,8 +174,16 @@ public class DbToSqliteExporter {
 										psmt02.setDouble(i++, ParamUtils
 												.getDouble(dataMap, name));
 									} else if ("Date".equals(javaType)) {
-										psmt02.setTimestamp(i++, ParamUtils
-												.getTimestamp(dataMap, name));
+										if (object instanceof java.sql.Date) {
+											java.sql.Date date = (java.sql.Date) object;
+											psmt02.setDate(i++, date);
+										} else if (object instanceof java.sql.Time) {
+											java.sql.Time time = (java.sql.Time) object;
+											psmt02.setTime(i++, time);
+										} else if (object instanceof java.sql.Timestamp) {
+											java.sql.Timestamp timetamp = (java.sql.Timestamp) object;
+											psmt02.setTimestamp(i++, timetamp);
+										}
 									} else if ("String".equals(javaType)) {
 										psmt02.setString(i++, ParamUtils
 												.getString(dataMap, name));
@@ -211,9 +219,12 @@ public class DbToSqliteExporter {
 										psmt02.setString(i++, ParamUtils
 												.getString(dataMap, name));
 									}
-
 								} else {
-									psmt02.setString(i++, null);
+									if ("Blob".equals(c.getJavaType())) {
+										psmt02.setBytes(i++, null);
+									} else {
+										psmt02.setObject(i++, null);
+									}
 								}
 							}
 							psmt02.addBatch();

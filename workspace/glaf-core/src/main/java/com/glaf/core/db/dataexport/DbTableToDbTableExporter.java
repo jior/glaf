@@ -54,7 +54,7 @@ public class DbTableToDbTableExporter {
 
 	public static void main(String[] args) {
 		DbTableToDbTableExporter exp = new DbTableToDbTableExporter();
-		exp.exportTables("src", "dest", "error");
+		exp.exportTables(args[0], args[1], args[2]);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -172,8 +172,16 @@ public class DbTableToDbTableExporter {
 										psmt02.setDouble(i++, ParamUtils
 												.getDouble(dataMap, name));
 									} else if ("Date".equals(javaType)) {
-										psmt02.setTimestamp(i++, ParamUtils
-												.getTimestamp(dataMap, name));
+										if (object instanceof java.sql.Date) {
+											java.sql.Date date = (java.sql.Date) object;
+											psmt02.setDate(i++, date);
+										} else if (object instanceof java.sql.Time) {
+											java.sql.Time time = (java.sql.Time) object;
+											psmt02.setTime(i++, time);
+										} else if (object instanceof java.sql.Timestamp) {
+											java.sql.Timestamp timetamp = (java.sql.Timestamp) object;
+											psmt02.setTimestamp(i++, timetamp);
+										}
 									} else if ("String".equals(javaType)) {
 										psmt02.setString(i++, ParamUtils
 												.getString(dataMap, name));

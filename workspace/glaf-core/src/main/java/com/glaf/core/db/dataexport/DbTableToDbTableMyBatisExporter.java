@@ -53,7 +53,7 @@ public class DbTableToDbTableMyBatisExporter {
 
 	public static void main(String[] args) {
 		DbTableToDbTableMyBatisExporter exp = new DbTableToDbTableMyBatisExporter();
-		exp.exportTables("src", "dest", "error");
+		exp.exportTables(args[0], args[1], args[2]);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
