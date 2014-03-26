@@ -37,6 +37,7 @@ import javax.crypto.SecretKey;
 import org.apache.commons.codec.binary.Base64;
 
 import com.glaf.core.util.StringTools;
+import com.glaf.core.util.UUID32;
 
 public class SecurityUtils {
 
@@ -78,7 +79,7 @@ public class SecurityUtils {
 	 *            待解密字符串
 	 * @param key
 	 *            解密私钥，长度不能够小于8位
-	 * @return 解密后的字节数组
+	 * @return 解密后的字符串
 	 */
 	public static String decode(String key, String data) {
 		if (data == null) {
@@ -106,7 +107,7 @@ public class SecurityUtils {
 	 *            待加密字符串
 	 * @param key
 	 *            加密私钥，长度不能够小于8位
-	 * @return 加密后的字节数组，一般结合Base64编码使用
+	 * @return 加密后的字符串
 	 */
 	public static String encode(String key, String data) {
 		if (data == null) {
@@ -380,6 +381,19 @@ public class SecurityUtils {
 
 	private SecurityUtils() {
 
+	}
+
+	public static void main(String[] args) {
+		long start = System.currentTimeMillis();
+		for (int i = 0; i < 10000; i++) {
+			String key = UUID32.getUUID();
+			String data = "glaf_product_" + i;
+			String enc_data = SecurityUtils.encode(key, data);
+			// System.out.println(enc_data);
+			System.out.println(SecurityUtils.decode(key, enc_data));
+		}
+		long times = System.currentTimeMillis() - start;
+		System.out.println("总共耗时(毫秒):" + times);
 	}
 
 }
