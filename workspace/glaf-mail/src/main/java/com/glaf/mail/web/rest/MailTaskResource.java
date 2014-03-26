@@ -57,7 +57,7 @@ import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.Tools;
 
-import com.glaf.core.config.SystemConfig;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.mail.business.MailDataFacede;
 import com.glaf.mail.domain.MailItem;
@@ -535,7 +535,7 @@ public class MailTaskResource {
 			DiskFileItemFactory factory = new DiskFileItemFactory();
 			factory.setSizeThreshold(4096);
 			// 设置临时存放目录
-			factory.setRepository(new File(SystemConfig.getConfigRootPath()
+			factory.setRepository(new File(SystemProperties.getConfigRootPath()
 					+ "/temp/"));
 			ServletFileUpload upload = new ServletFileUpload(factory);
 			// 获取文件尺寸

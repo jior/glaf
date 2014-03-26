@@ -21,7 +21,7 @@ package com.glaf.base.modules.workspace;
 import java.io.FileInputStream;
 import java.util.Map;
 import org.apache.commons.beanutils.PropertyUtils;
-import com.glaf.core.config.SystemConfig;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.freemarker.TemplateUtils;
 
 public class Messager {
@@ -35,7 +35,7 @@ public class Messager {
 		MessageTemplate msgt = new MessageTemplate();
 		try {
 
-			String filename = SystemConfig.getConfigRootPath() + CFG;
+			String filename = SystemProperties.getConfigRootPath() + CFG;
 
 			if (messages == null) {
 				messages = MessageBuilder.buildFromXML(new FileInputStream(

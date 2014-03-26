@@ -40,12 +40,12 @@ import org.jbpm.file.def.FileDefinition;
 import org.jbpm.graph.def.ProcessDefinition;
 
  
-import com.glaf.core.config.SystemConfig;
-
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.AntUtils;
 import com.glaf.core.util.Dom4jUtils;
 import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.StringTools;
+
 import com.glaf.jbpm.config.JbpmExtensionWriter;
 import com.glaf.jbpm.container.ProcessContainer;
 import com.glaf.jbpm.context.Context;
@@ -85,7 +85,7 @@ public class MxJbpmProcessExporter   {
 
 		Element jbpmCfgTemplate = root.addElement("jbpm-cfg-template");
 
-		String configPath = SystemConfig.getConfigRootPath();
+		String configPath = SystemProperties.getConfigRootPath();
 		String path = configPath + "/conf/jbpm/template";
 		java.io.File directory = new java.io.File(path);
 		String[] filelist = directory.list();

@@ -24,7 +24,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.glaf.base.modules.Constants;
-import com.glaf.core.config.SystemConfig;
+import com.glaf.core.config.SystemProperties;
 
 public class FileUtil {
 	private static Log logger = LogFactory.getLog(FileUtil.class);
@@ -71,7 +71,7 @@ public class FileUtil {
 	 * 删除系统中的upload文件夹中的temp文件目录中的所有文件 
 	 */
 	public static void delDownTempFiles() {
-		String path = SystemConfig.getConfigRootPath() + Constants.UPLOAD_DIR
+		String path = SystemProperties.getConfigRootPath() + Constants.UPLOAD_DIR
 				+ "temp";
 		delDirFlies(path, "xls");
 	}

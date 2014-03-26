@@ -27,8 +27,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jbpm.JbpmContext;
 import org.jbpm.JbpmException;
-
-import com.glaf.core.config.SystemConfig;
+ 
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.LogUtils;
 import com.glaf.jbpm.container.ProcessContainer;
@@ -54,7 +53,7 @@ public class JbpmConfigLoader {
 	 * 安装流程配置文件
 	 */
 	public synchronized void installActionsConfig() {
-		String configPath = SystemConfig.getConfigRootPath();
+		String configPath = SystemProperties.getConfigRootPath();
 		String path = configPath + "/conf/jbpm/action";
 		java.io.File directory = new java.io.File(path);
 		JbpmContext jbpmContext = null;

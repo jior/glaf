@@ -123,7 +123,7 @@ public class ViewProperties {
 			InputStream inputStream = null;
 			try {
 				loading.set(true);
-				String config = SystemConfig.getConfigRootPath()
+				String config = SystemProperties.getConfigRootPath()
 						+ "/conf/props/views";
 				File directory = new File(config);
 				if (directory.exists() && directory.isDirectory()) {

@@ -24,8 +24,8 @@ import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import com.glaf.core.config.SystemConfig;
+ 
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.*;
 
 public class JobProperties {
@@ -105,7 +105,7 @@ public class JobProperties {
 			InputStream inputStream = null;
 			try {
 				loading.set(true);
-				String config = SystemConfig.getConfigRootPath()
+				String config = SystemProperties.getConfigRootPath()
 						+ "/conf/props/jobs";
 				File directory = new File(config);
 				if (directory.exists() && directory.isDirectory()) {

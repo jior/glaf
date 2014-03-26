@@ -40,7 +40,6 @@ import org.jbpm.graph.def.ProcessDefinition;
 import org.jbpm.taskmgmt.def.Task;
 
 import com.glaf.core.config.CustomProperties;
-import com.glaf.core.config.SystemConfig;
 import com.glaf.core.config.SystemProperties;
 
 import com.glaf.core.util.Dom4jUtils;
@@ -88,7 +87,7 @@ public class MxJbpmProcessDeployer {
 						SimpleDateFormat formatter = new SimpleDateFormat(
 								"yyyyMMddHHmmss", Locale.getDefault());
 						String ret = formatter.format(new Date());
-						String filename = SystemConfig.getConfigRootPath()
+						String filename = SystemProperties.getConfigRootPath()
 								+ "/deploy/" + processName + ret + ".zip";
 						// 保存原始文件
 						FileUtils.save(filename, zipBytes);
@@ -132,7 +131,7 @@ public class MxJbpmProcessDeployer {
 						SimpleDateFormat formatter = new SimpleDateFormat(
 								"yyyyMMddHHmmss", Locale.getDefault());
 						String ret = formatter.format(new Date());
-						String filename = SystemConfig.getConfigRootPath()
+						String filename = SystemProperties.getConfigRootPath()
 								+ "/deploy/" + processName + ret
 								+ "_repack.zip";
 						// 保存修改过的流程定义文件

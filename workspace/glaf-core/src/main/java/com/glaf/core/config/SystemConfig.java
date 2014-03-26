@@ -53,15 +53,6 @@ public class SystemConfig {
 
 	private static volatile String TOKEN = null;
 
-	/**
-	 * 返回web应用的WEB-INF目录的全路径
-	 * 
-	 * @return
-	 */
-	public static String getConfigRootPath() {
-		return SystemProperties.getConfigRootPath();
-	}
-
 	public static Map<String, Object> getContextMap() {
 		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
 		dataMap.put(CURR_YYYYMMDD, getCurrentYYYYMMDD());

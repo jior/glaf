@@ -9,7 +9,7 @@ import org.springframework.core.io.*;
 
 import com.glaf.core.config.Configuration;
 import com.glaf.core.config.DBConfiguration;
-import com.glaf.core.config.SystemConfig;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.Dom4jUtils;
 import com.glaf.core.util.FileUtils;
 import com.glaf.jbpm.config.JbpmBaseConfiguration;
@@ -30,7 +30,7 @@ public class JbpmConfiguration {
 		if (conf.getBoolean("jbpm.hibernate.jdbc.sync", false)) {
 			Properties properties = DBConfiguration
 					.getDefaultDataSourceProperties();
-			String filename = SystemConfig.getConfigRootPath()
+			String filename = SystemProperties.getConfigRootPath()
 					+ "/conf/jbpm/hibernate.cfg.xml";
 			SAXReader xmlReader = new SAXReader();
 			Resource resource = null;

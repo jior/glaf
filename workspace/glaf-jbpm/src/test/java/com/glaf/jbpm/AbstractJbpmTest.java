@@ -10,7 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.glaf.core.config.SystemConfig;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.UUID32;
 import com.glaf.jbpm.container.ProcessContainer;
 import com.glaf.jbpm.context.Context;
@@ -74,7 +74,7 @@ public class AbstractJbpmTest {
 	public void setUp() throws Exception {
 		System.out.println("¿ªÊ¼²âÊÔ..................................");
 		start = System.currentTimeMillis();
-		System.out.println(SystemConfig.getConfigRootPath());
+		System.out.println(SystemProperties.getConfigRootPath());
 		// Environment.setCurrentSystemName(Environment.DEFAULT_SYSTEM_NAME);
 	}
 

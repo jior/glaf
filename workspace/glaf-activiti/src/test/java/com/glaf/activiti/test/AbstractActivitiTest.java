@@ -20,7 +20,7 @@ package com.glaf.activiti.test;
 import org.junit.After;
 import org.junit.Before;
 
-import com.glaf.core.config.SystemConfig;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.context.ContextFactory;
 
 import com.glaf.activiti.service.*;
@@ -41,7 +41,7 @@ public class AbstractActivitiTest {
 	public void setUp() throws Exception {
 		System.out.println("¿ªÊ¼²âÊÔ..................................");
 		start = System.currentTimeMillis();
-		System.out.println(SystemConfig.getConfigRootPath());
+		System.out.println(SystemProperties.getConfigRootPath());
 		// Environment.setCurrentSystemName(Environment.DEFAULT_SYSTEM_NAME);
 		activitiDeployService = ContextFactory.getBean("activitiDeployService");
 		activitiProcessService = ContextFactory

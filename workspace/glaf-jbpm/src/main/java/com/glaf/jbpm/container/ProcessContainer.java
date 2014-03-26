@@ -46,7 +46,7 @@ import org.jbpm.taskmgmt.exe.TaskInstance;
 import org.jbpm.taskmgmt.exe.TaskMgmtInstance;
 
 import com.glaf.core.config.CustomProperties;
-import com.glaf.core.config.SystemConfig;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.identity.Agent;
 import com.glaf.core.identity.User;
 import com.glaf.core.util.FileUtils;
@@ -753,7 +753,7 @@ public class ProcessContainer {
 
 	public JbpmConfiguration getJbpmConfiguration() {
 		if (jbpmConfiguration == null) {
-			String filename = SystemConfig.getConfigRootPath()
+			String filename = SystemProperties.getConfigRootPath()
 					+ "/conf/jbpm/jbpm.cfg.xml";
 			InputStream inputStream = null;
 			try {

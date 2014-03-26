@@ -27,7 +27,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
-import com.glaf.core.config.SystemConfig;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.PropertiesUtils;
 
 public class SecurityConfig {
@@ -115,7 +115,7 @@ public class SecurityConfig {
 		InputStream inputStream = null;
 		try {
 			loading.set(true);
-			String config = SystemConfig.getConfigRootPath()
+			String config = SystemProperties.getConfigRootPath()
 					+ "/conf/security/";
 			File directory = new File(config);
 			if (directory.isDirectory()) {

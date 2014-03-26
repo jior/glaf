@@ -127,7 +127,7 @@ public class MessageProperties {
 			InputStream inputStream = null;
 			try {
 				loading.set(true);
-				String config = SystemConfig.getConfigRootPath()
+				String config = SystemProperties.getConfigRootPath()
 						+ "/conf/props/messages";
 				File directory = new File(config);
 				if (directory.exists() && directory.isDirectory()) {

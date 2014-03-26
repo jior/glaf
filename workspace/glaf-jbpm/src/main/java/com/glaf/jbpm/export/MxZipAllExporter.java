@@ -25,16 +25,17 @@ import org.jbpm.db.GraphSession;
 import org.jbpm.file.def.FileDefinition;
 import org.jbpm.graph.def.ProcessDefinition;
 
-import com.glaf.core.config.SystemConfig;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.ZipUtils;
+
 import com.glaf.jbpm.container.ProcessContainer;
 import com.glaf.jbpm.context.Context;
 
 public class MxZipAllExporter {
 
 	public static void zipAll() {
-		String path = SystemConfig.getConfigRootPath() + "/deploy/jpdl";
+		String path = SystemProperties.getConfigRootPath() + "/deploy/jpdl";
 		try {
 			FileUtils.mkdirs(path);
 		} catch (IOException e) {

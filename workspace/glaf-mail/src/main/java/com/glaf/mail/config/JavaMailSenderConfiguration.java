@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
-import com.glaf.core.config.SystemConfig;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.Constants;
 import com.glaf.core.util.PropertiesUtils;
 
@@ -35,7 +35,7 @@ public class JavaMailSenderConfiguration {
 	@Bean(name = "javaMailSender")
 	public JavaMailSenderImpl buildJavaMailSender() {
 		MailConfig cfg = new MailConfig();
-		String filename = SystemConfig.getConfigRootPath()
+		String filename = SystemProperties.getConfigRootPath()
 				+ Constants.MAIL_CONFIG;
 		Properties properties = PropertiesUtils.loadFilePathResource(filename);
 		cfg.setEncoding(properties.getProperty("mail.defaultEncoding", "GBK"));
