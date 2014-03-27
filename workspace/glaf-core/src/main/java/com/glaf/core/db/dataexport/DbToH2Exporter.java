@@ -38,6 +38,7 @@ import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.query.TablePageQuery;
 import com.glaf.core.service.ITablePageService;
 import com.glaf.core.util.DBUtils;
+import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.JdbcUtils;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.QueryUtils;
@@ -191,9 +192,17 @@ public class DbToH2Exporter {
 										psmt02.setString(i++, ParamUtils
 												.getString(dataMap, name));
 									} else if ("Clob".equals(javaType)) {
-										if (object instanceof java.sql.Clob) {
-											psmt02.setClob(i++,
-													(java.sql.Clob) object);
+										if (object instanceof java.io.Reader) {
+											java.io.Reader reader = (java.io.Reader) object;
+											psmt02.setCharacterStream(i++,
+													reader);
+										} else if (object instanceof java.sql.Clob) {
+											java.sql.Clob clob = (java.sql.Clob) object;
+											java.io.Reader reader = clob
+													.getCharacterStream();
+											String content = IOUtils
+													.read(reader);
+											psmt02.setString(i++, content);
 										} else if (object instanceof String) {
 											psmt02.setString(i++,
 													(String) object);

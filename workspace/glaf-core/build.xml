@@ -34,7 +34,14 @@
 
 		<jar jarfile="glaf-core.jar">
 			<fileset dir="bin" 
-			   includes="com/glaf/core/**/*.class,com/glaf/core/**/*.xml,com/glaf/core/**/*.properties"  />
+			   includes="com/glaf/core/**/*.class,com/glaf/core/**/*.xml,com/glaf/core/**/*.properties" />
+			<fileset dir="jar-conf" includes="**/*.xml,**/*.properties"  />
+		</jar>
+
+		<jar jarfile="glaf-core-min.jar">
+			<fileset dir="bin" 
+			   includes="com/glaf/core/**/*.class,com/glaf/core/**/*.xml,com/glaf/core/**/*.properties"
+			   excludes="com/glaf/core/web/**/*.class,com/glaf/core/**/tag/*.class,com/glaf/core/**/springmvc/*.class"/>
 			<fileset dir="jar-conf" includes="**/*.xml,**/*.properties"  />
 		</jar>
 
