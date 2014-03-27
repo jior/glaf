@@ -313,8 +313,8 @@
 	<select id="getTreeList" parameterType="com.glaf.base.modules.sys.query.SysTreeQuery"
 		resultType="com.glaf.base.modules.sys.model.SysTree">
 
-		select a.name, a.url, t.id, t.parent as parentId, t.sort as
-		sortNo, t.treeid as treeId, t.code, t.locked
+		select distinct t.id as id, t.parent as parentId, a.name as name, a.url as url,
+		       t.sort as sortNo, t.treeid as treeId, t.code as code, t.locked as locked
 		from SYS_TREE t
 		inner join
 		SYS_APPLICATION a
@@ -330,10 +330,8 @@
 	<select id="getTreeListByUsers" parameterType="com.glaf.base.modules.sys.query.SysTreeQuery"
 		resultType="com.glaf.base.modules.sys.model.SysTree">
 
-		select a.name as name, a.url as url, t.id as id, t.parent as parentId,
-		t.sort as sortNo,
-		t.treeid as treeId, t.code as code, t.locked as
-		locked
+		select distinct t.id as id, t.parent as parentId, a.name as name, a.url as url,
+		       t.sort as sortNo, t.treeid as treeId, t.code as code, t.locked as locked
 		from SYS_TREE t
 		inner join SYS_APPLICATION a
 		on t.id = a.nodeid
