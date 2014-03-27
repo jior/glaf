@@ -49,8 +49,8 @@ public class DbToH2Exporter {
 
 	public static void main(String[] args) {
 		DbToH2Exporter exp = new DbToH2Exporter();
-		// exp.exportTables(args[0], args[1]);
-		exp.exportTable("default", "/data/glafdb", "sys_tree");
+		exp.exportTables(args[0], args[1]);
+		//exp.exportTable("default", "/data/glafdb", "sys_tree");
 		// ITablePageService tablePageService = ContextFactory
 		// .getBean("tablePageService");
 	}
