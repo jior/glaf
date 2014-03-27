@@ -76,7 +76,6 @@ public class DbToDBMyBatisExporter {
 	public void exportTable(String systemName, String dbtype, String dbPath,
 			String tableName) {
 		Environment.setCurrentSystemName(systemName);
-		tableName = tableName.toLowerCase();
 		Properties props = new Properties();
 		String jdbc_name = "db_exp_" + dbtype;
 		if (StringUtils.equals(dbtype, "h2")) {
@@ -235,26 +234,7 @@ public class DbToDBMyBatisExporter {
 			rs = dbmd.getTables(null, null, null, new String[] { "TABLE" });
 			while (rs.next()) {
 				String tableName = rs.getString("TABLE_NAME");
-				tableName = tableName.toLowerCase();
-				if (tableName.startsWith("batch_")) {
-					continue;
-				}
-				if (tableName.startsWith("qrtz_")) {
-					continue;
-				}
-				if (tableName.startsWith("fileatt")) {
-					continue;
-				}
-				if (tableName.startsWith("filedot")) {
-					continue;
-				}
-				if (tableName.startsWith("s_folder")) {
-					continue;
-				}
-				if (tableName.startsWith("cell_useradd")) {
-					continue;
-				}
-				if (tableName.startsWith("sys_log")) {
+				if (DBUtils.isTemoraryTable(tableName)) {
 					continue;
 				}
 				tables.add(tableName);

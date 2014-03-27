@@ -18,9 +18,7 @@
 
 package com.glaf.core.service.impl;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -184,20 +182,7 @@ public class MxTablePageServiceImpl implements ITablePageService {
 		RowBounds rowBounds = new RowBounds(begin, pageSize);
 		List<Map<String, Object>> list = sqlSession.selectList("getTableData",
 				query, rowBounds);
-		List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
-		if (list != null && !list.isEmpty()) {
-			Map<String, Object> rowMap = new HashMap<String, Object>();
-			for (Map<String, Object> dataMap : list) {
-				Set<Entry<String, Object>> entrySet = dataMap.entrySet();
-				for (Entry<String, Object> entry : entrySet) {
-					String key = entry.getKey();
-					Object value = entry.getValue();
-					rowMap.put(key, value);
-					rows.add(rowMap);
-				}
-			}
-		}
-		return rows;
+		return list;
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

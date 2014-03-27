@@ -174,7 +174,7 @@ public class QueryUtils {
 	}
 
 	public static Map<String, Object> lowerKeyMap(Map<String, Object> paramMap) {
-		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 		Set<Entry<String, Object>> entrySet = paramMap.entrySet();
 		for (Entry<String, Object> entry : entrySet) {
 			String key = entry.getKey();

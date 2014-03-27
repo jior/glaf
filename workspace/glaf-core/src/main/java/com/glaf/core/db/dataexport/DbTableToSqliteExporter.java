@@ -57,7 +57,6 @@ public class DbTableToSqliteExporter {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void exportTable(String systemName, String rootDir, String tableName) {
-		tableName = tableName.toLowerCase();
 		int total = 0;
 		Connection conn = null;
 		Connection conn2 = null;
@@ -263,17 +262,7 @@ public class DbTableToSqliteExporter {
 			rs = dbmd.getTables(null, null, null, new String[] { "TABLE" });
 			while (rs.next()) {
 				String tableName = rs.getString("TABLE_NAME");
-				tableName = tableName.toLowerCase();
-				if (tableName.startsWith("batch_")) {
-					continue;
-				}
-				if (tableName.startsWith("qrtz_")) {
-					continue;
-				}
-				if (tableName.startsWith("fileatt")) {
-					continue;
-				}
-				if (tableName.startsWith("s_folder")) {
+				if (DBUtils.isTemoraryTable(tableName)) {
 					continue;
 				}
 				tables.add(tableName);

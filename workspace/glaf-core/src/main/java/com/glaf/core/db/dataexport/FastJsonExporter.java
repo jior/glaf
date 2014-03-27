@@ -86,7 +86,7 @@ public class FastJsonExporter {
 			rsmd = rs.getMetaData();
 			int count = rsmd.getColumnCount();
 
-			List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+			List<ColumnDefinition> columns = new java.util.ArrayList<ColumnDefinition>();
 
 			JSONArray columnsJSON = new JSONArray();
 

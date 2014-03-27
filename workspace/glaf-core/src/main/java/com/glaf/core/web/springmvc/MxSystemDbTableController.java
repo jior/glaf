@@ -536,101 +536,16 @@ public class MxSystemDbTableController {
 			int startIndex = 1;
 			while (rs.next()) {
 				String tableName = rs.getObject("TABLE_NAME").toString();
-				tableName = tableName.toLowerCase();
-				if (tableName.startsWith("act_")) {
+				if (tableName.toLowerCase().startsWith("act_")) {
 					continue;
 				}
-				if (tableName.startsWith("jbpm_")) {
+				if (tableName.toLowerCase().startsWith("jbpm_")) {
 					continue;
 				}
-				if (tableName.startsWith("cell_useradd")) {
+				if (tableName.toLowerCase().startsWith("cell_useradd")) {
 					continue;
 				}
-				if (tableName.startsWith("tmp_")) {
-					continue;
-				}
-				if (tableName.startsWith("temp_")) {
-					continue;
-				}
-				if (tableName.startsWith("demo_")) {
-					continue;
-				}
-				if (tableName.startsWith("wwv_")) {
-					continue;
-				}
-				if (tableName.startsWith("aq_")) {
-					continue;
-				}
-				if (tableName.startsWith("bsln_")) {
-					continue;
-				}
-				if (tableName.startsWith("mgmt_")) {
-					continue;
-				}
-				if (tableName.startsWith("ogis_")) {
-					continue;
-				}
-				if (tableName.startsWith("ols_")) {
-					continue;
-				}
-				if (tableName.startsWith("em_")) {
-					continue;
-				}
-				if (tableName.startsWith("openls_")) {
-					continue;
-				}
-				if (tableName.startsWith("mrac_")) {
-					continue;
-				}
-				if (tableName.startsWith("orddcm_")) {
-					continue;
-				}
-				if (tableName.startsWith("x_")) {
-					continue;
-				}
-				if (tableName.startsWith("wlm_")) {
-					continue;
-				}
-				if (tableName.startsWith("olap_")) {
-					continue;
-				}
-				if (tableName.startsWith("ggs_")) {
-					continue;
-				}
-				if (tableName.startsWith("jpage_")) {
-					continue;
-				}
-				if (tableName.startsWith("logmnrc_")) {
-					continue;
-				}
-				if (tableName.startsWith("logmnrg_")) {
-					continue;
-				}
-				if (tableName.startsWith("olap_")) {
-					continue;
-				}
-				if (tableName.startsWith("sto_")) {
-					continue;
-				}
-				if (tableName.startsWith("sdo_")) {
-					continue;
-				}
-				if (tableName.startsWith("sys_iot_")) {
-					continue;
-				}
-				if (tableName.indexOf("$") != -1) {
-					continue;
-				}
-				if (tableName.indexOf("+") != -1) {
-					continue;
-				}
-				if (tableName.indexOf("-") != -1) {
-					continue;
-				}
-				if (tableName.indexOf("?") != -1) {
-					continue;
-				}
-				if (tableName.indexOf("=") != -1) {
+				if (DBUtils.isTemoraryTable(tableName)) {
 					continue;
 				}
 				JSONObject json = new JSONObject();

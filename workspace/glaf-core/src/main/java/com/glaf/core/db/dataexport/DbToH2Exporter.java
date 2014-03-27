@@ -49,8 +49,8 @@ public class DbToH2Exporter {
 
 	public static void main(String[] args) {
 		DbToH2Exporter exp = new DbToH2Exporter();
-		exp.exportTables(args[0], args[1]);
-		// exp.exportTable("default", "/data/glafdb", "sys_tree");
+		// exp.exportTables(args[0], args[1]);
+		exp.exportTable("default", "/data/glafdb", "sys_tree");
 		// ITablePageService tablePageService = ContextFactory
 		// .getBean("tablePageService");
 	}
@@ -58,7 +58,7 @@ public class DbToH2Exporter {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void exportTable(String systemName, String dataDir, String tableName) {
 		Environment.setCurrentSystemName(systemName);
-		tableName = tableName.toLowerCase();
+		logger.info("prepare transfer table:" + tableName);
 		int total = 0;
 		Connection conn = null;
 		Connection conn2 = null;
@@ -100,6 +100,8 @@ public class DbToH2Exporter {
 				}
 
 				tableDefinition.setColumns(columns);
+
+				logger.debug("columns:" + columns);
 
 				conn2 = DriverManager.getConnection("jdbc:h2:" + dataDir);
 				DBUtils.dropAndCreateTable(conn2, tableDefinition);
@@ -151,8 +153,9 @@ public class DbToH2Exporter {
 
 					if (list != null && !list.isEmpty()) {
 						for (Map dataMap : list) {
-							dataMap = QueryUtils.lowerKeyMap(dataMap);
-							rows.add(dataMap);
+							Map newDataMap = QueryUtils.lowerKeyMap(dataMap);
+							rows.add(newDataMap);
+							logger.debug(newDataMap);
 						}
 					}
 
@@ -160,9 +163,9 @@ public class DbToH2Exporter {
 					psmt02 = conn2.prepareStatement(sb2.toString());
 
 					if (rows != null && !rows.isEmpty()) {
-
 						for (Map<String, Object> dataMap : rows) {
 							int i = 1;
+							//logger.debug(dataMap);
 							for (ColumnDefinition c : columns) {
 								String name = c.getColumnName();
 								Object object = ParamUtils.get(dataMap, name);
@@ -185,7 +188,8 @@ public class DbToH2Exporter {
 											java.sql.Time time = (java.sql.Time) object;
 											psmt02.setTime(i++, time);
 										} else if (object instanceof java.sql.Timestamp) {
-											java.sql.Timestamp timetamp = (java.sql.Timestamp) object;
+											java.sql.Timestamp timetamp = ParamUtils
+													.getTimestamp(dataMap, name);
 											psmt02.setTimestamp(i++, timetamp);
 										}
 									} else if ("String".equals(javaType)) {
@@ -268,26 +272,28 @@ public class DbToH2Exporter {
 			rs = dbmd.getTables(null, null, null, new String[] { "TABLE" });
 			while (rs.next()) {
 				String tableName = rs.getString("TABLE_NAME");
-				tableName = tableName.toLowerCase();
-				if (tableName.startsWith("batch_")) {
+				if (DBUtils.isTemoraryTable(tableName)) {
 					continue;
 				}
-				if (tableName.startsWith("qrtz_")) {
+				if (tableName.toLowerCase().startsWith("batch_")) {
 					continue;
 				}
-				if (tableName.startsWith("fileatt")) {
+				if (tableName.toLowerCase().startsWith("qrtz_")) {
 					continue;
 				}
-				if (tableName.startsWith("filedot")) {
+				if (tableName.toLowerCase().startsWith("fileatt")) {
 					continue;
 				}
-				if (tableName.startsWith("s_folder")) {
+				if (tableName.toLowerCase().startsWith("filedot")) {
 					continue;
 				}
-				if (tableName.startsWith("cell_useradd")) {
+				if (tableName.toLowerCase().startsWith("s_folder")) {
 					continue;
 				}
-				if (tableName.startsWith("sys_log")) {
+				if (tableName.toLowerCase().startsWith("cell_useradd")) {
+					continue;
+				}
+				if (tableName.toLowerCase().startsWith("sys_log")) {
 					continue;
 				}
 				tables.add(tableName);

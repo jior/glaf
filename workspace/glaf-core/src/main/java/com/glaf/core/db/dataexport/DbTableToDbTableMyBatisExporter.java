@@ -60,7 +60,6 @@ public class DbTableToDbTableMyBatisExporter {
 	public void exportTable(String srcSystemName, String destSystemName,
 			String rootDir, String tableName) {
 		logger.info("prepare transfer table:" + tableName);
-		tableName = tableName.toLowerCase();
 		int total = 0;
 		Connection conn = null;
 		Connection conn2 = null;

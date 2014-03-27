@@ -62,7 +62,6 @@ public class DbTableToDbTableExporter {
 	public void exportTable(String srcSystemName, String destSystemName,
 			String rootDir, String tableName) {
 		logger.info("prepare transfer table:" + tableName);
-		tableName = tableName.toLowerCase();
 		int total = 0;
 		Connection conn = null;
 		Connection conn2 = null;
@@ -259,7 +258,7 @@ public class DbTableToDbTableExporter {
 			String rootDir) {
 		String excludes = conf.get("db.export.excludes");
 		List<String> list = StringTools.split(excludes);
-		List<String> tables = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> tables = new java.util.ArrayList<String>();
 		Connection conn = null;
 		DatabaseMetaData dbmd = null;
 		ResultSet rs = null;
@@ -269,14 +268,14 @@ public class DbTableToDbTableExporter {
 			rs = dbmd.getTables(null, null, null, new String[] { "TABLE" });
 			while (rs.next()) {
 				String tableName = rs.getString("TABLE_NAME");
-				tableName = tableName.toLowerCase();
 				if (StringUtils.isNotEmpty(excludes)
-						&& StringUtils.contains(excludes, tableName)) {
+						&& StringUtils.contains(excludes,
+								tableName.toLowerCase())) {
 					continue;
 				}
 				if (list != null && !list.isEmpty()) {
 					for (String str : list) {
-						if (StringUtils.contains(tableName, str)) {
+						if (StringUtils.contains(tableName.toLowerCase(), str)) {
 							continue;
 						}
 					}

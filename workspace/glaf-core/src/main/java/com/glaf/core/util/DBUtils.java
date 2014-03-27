@@ -60,7 +60,6 @@ public class DBUtils {
 	public static final String POSTGRESQL = "postgresql";
 
 	public static final String ORACLE = "oracle";
-	
 
 	public static void alterTable(Connection connection,
 			TableDefinition tableDefinition) {
@@ -525,37 +524,6 @@ public class DBUtils {
 		}
 	}
 
-	public static void executeSchemaResourceIgnoreException(Connection conn,
-			String ddlStatements) {
-		Statement statement = null;
-		String sqlStatement = null;
-		try {
-			StringTokenizer tokenizer = new StringTokenizer(ddlStatements, ";");
-			while (tokenizer.hasMoreTokens()) {
-				sqlStatement = tokenizer.nextToken().trim();
-				if (!sqlStatement.startsWith("#") && !"".equals(sqlStatement)) {
-					logger.debug(sqlStatement);
-					statement = conn.createStatement();
-					try {
-						statement.executeUpdate(sqlStatement);
-						statement.close();
-						statement = null;
-					} catch (Exception ex) {
-						logger.error(" execute statement error: "
-								+ sqlStatement, ex);
-					} finally {
-						if (statement != null) {
-							statement.close();
-						}
-					}
-				}
-			}
-		} catch (Exception ex) {
-			throw new RuntimeException("couldn't execute db schema: "
-					+ sqlStatement, ex);
-		}
-	}
-
 	public static void executeSchemaResource(String operation,
 			String resourceName, InputStream inputStream,
 			Map<String, Object> context) {
@@ -597,6 +565,37 @@ public class DBUtils {
 					+ sqlStatement, e);
 		} finally {
 			JdbcUtils.close(connection);
+		}
+	}
+
+	public static void executeSchemaResourceIgnoreException(Connection conn,
+			String ddlStatements) {
+		Statement statement = null;
+		String sqlStatement = null;
+		try {
+			StringTokenizer tokenizer = new StringTokenizer(ddlStatements, ";");
+			while (tokenizer.hasMoreTokens()) {
+				sqlStatement = tokenizer.nextToken().trim();
+				if (!sqlStatement.startsWith("#") && !"".equals(sqlStatement)) {
+					logger.debug(sqlStatement);
+					statement = conn.createStatement();
+					try {
+						statement.executeUpdate(sqlStatement);
+						statement.close();
+						statement = null;
+					} catch (Exception ex) {
+						logger.error(" execute statement error: "
+								+ sqlStatement, ex);
+					} finally {
+						if (statement != null) {
+							statement.close();
+						}
+					}
+				}
+			}
+		} catch (Exception ex) {
+			throw new RuntimeException("couldn't execute db schema: "
+					+ sqlStatement, ex);
 		}
 	}
 
@@ -764,7 +763,7 @@ public class DBUtils {
 
 	public static String getAlterTable(TableDefinition classDefinition) {
 		StringBuffer buffer = new StringBuffer();
-		List<String> cloumns = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> cloumns = new java.util.ArrayList<String>();
 		Connection connection = null;
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -809,7 +808,7 @@ public class DBUtils {
 
 	public static List<ColumnDefinition> getColumnDefinitions(Connection conn,
 			String tableName) {
-		List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+		List<ColumnDefinition> columns = new java.util.ArrayList<ColumnDefinition>();
 		ResultSet rs = null;
 		try {
 			List<String> primaryKeys = getPrimaryKeys(conn, tableName);
@@ -866,7 +865,10 @@ public class DBUtils {
 					column.setPrimaryKey(true);
 				}
 
-				columns.add(column);
+				if (!columns.contains(column)) {
+					logger.debug("column name:"+column.getColumnName());
+					columns.add(column);
+				}
 			}
 			rs.close();
 			rs = null;
@@ -880,7 +882,7 @@ public class DBUtils {
 	}
 
 	public static List<ColumnDefinition> getColumnDefinitions(String tableName) {
-		List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+		List<ColumnDefinition> columns = new java.util.ArrayList<ColumnDefinition>();
 		Connection conn = null;
 		ResultSet rs = null;
 		try {
@@ -939,7 +941,9 @@ public class DBUtils {
 					column.setPrimaryKey(true);
 				}
 
-				columns.add(column);
+				if (!columns.contains(column)) {
+					columns.add(column);
+				}
 			}
 			rs.close();
 			rs = null;
@@ -970,7 +974,7 @@ public class DBUtils {
 	@SuppressWarnings("unchecked")
 	public static List<ColumnDefinition> getColumns(Connection conn,
 			String sql, Map<String, Object> paramMap) {
-		List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+		List<ColumnDefinition> columns = new java.util.ArrayList<ColumnDefinition>();
 		PreparedStatement psmt = null;
 		ResultSetMetaData rsmd = null;
 		ResultSet rs = null;
@@ -1004,7 +1008,9 @@ public class DBUtils {
 				if (column.getScale() == 0 && sqlType == Types.NUMERIC) {
 					column.setJavaType("Long");
 				}
-				columns.add(column);
+				if (!columns.contains(column)) {
+					columns.add(column);
+				}
 				logger.debug(column.getColumnName() + " sqlType:" + sqlType
 						+ " precision:" + column.getPrecision() + " scale:"
 						+ column.getScale());
@@ -1711,7 +1717,7 @@ public class DBUtils {
 	}
 
 	public static List<FieldDefinition> getFieldDefinitions(String tableName) {
-		List<FieldDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<FieldDefinition>();
+		List<FieldDefinition> columns = new java.util.ArrayList<FieldDefinition>();
 		Connection conn = null;
 		ResultSet rs = null;
 		try {
@@ -1945,7 +1951,7 @@ public class DBUtils {
 
 	public static List<String> getPrimaryKeys(Connection connection,
 			String tableName) {
-		List<String> primaryKeys = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> primaryKeys = new java.util.ArrayList<String>();
 		try {
 			DatabaseMetaData metaData = connection.getMetaData();
 
@@ -1977,7 +1983,7 @@ public class DBUtils {
 	}
 
 	public static List<String> getPrimaryKeys(String tableName) {
-		List<String> primaryKeys = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> primaryKeys = new java.util.ArrayList<String>();
 		Connection connection = null;
 		try {
 			connection = DBConnectionFactory.getConnection();
@@ -2172,6 +2178,97 @@ public class DBUtils {
 			}
 		}
 		return true;
+	}
+
+	public static boolean isTemoraryTable(String tableName) {
+		tableName = tableName.toLowerCase();
+
+		if (tableName.startsWith("tmp_")) {
+			return true;
+		}
+		if (tableName.startsWith("temp_")) {
+			return true;
+		}
+		if (tableName.startsWith("demo_")) {
+			return true;
+		}
+		if (tableName.startsWith("wwv_")) {
+			return true;
+		}
+		if (tableName.startsWith("aq_")) {
+			return true;
+		}
+		if (tableName.startsWith("bsln_")) {
+			return true;
+		}
+		if (tableName.startsWith("mgmt_")) {
+			return true;
+		}
+		if (tableName.startsWith("ogis_")) {
+			return true;
+		}
+		if (tableName.startsWith("ols_")) {
+			return true;
+		}
+		if (tableName.startsWith("em_")) {
+			return true;
+		}
+		if (tableName.startsWith("openls_")) {
+			return true;
+		}
+		if (tableName.startsWith("mrac_")) {
+			return true;
+		}
+		if (tableName.startsWith("orddcm_")) {
+			return true;
+		}
+		if (tableName.startsWith("x_")) {
+			return true;
+		}
+		if (tableName.startsWith("wlm_")) {
+			return true;
+		}
+		if (tableName.startsWith("olap_")) {
+			return true;
+		}
+		if (tableName.startsWith("ggs_")) {
+			return true;
+		}
+
+		if (tableName.startsWith("logmnrc_")) {
+			return true;
+		}
+		if (tableName.startsWith("logmnrg_")) {
+			return true;
+		}
+		if (tableName.startsWith("olap_")) {
+			return true;
+		}
+		if (tableName.startsWith("sto_")) {
+			return true;
+		}
+		if (tableName.startsWith("sdo_")) {
+			return true;
+		}
+		if (tableName.startsWith("sys_iot_")) {
+			return true;
+		}
+		if (tableName.indexOf("$") != -1) {
+			return true;
+		}
+		if (tableName.indexOf("+") != -1) {
+			return true;
+		}
+		if (tableName.indexOf("-") != -1) {
+			return true;
+		}
+		if (tableName.indexOf("?") != -1) {
+			return true;
+		}
+		if (tableName.indexOf("=") != -1) {
+			return true;
+		}
+		return false;
 	}
 
 	private static Map<String, Object> lowerKeyMap(Map<String, Object> params) {

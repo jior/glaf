@@ -85,7 +85,6 @@ public class QueryToDBMyBatisExporter {
 	public void exportTable(String systemName, String dbtype, String dbPath,
 			String tableName, String querySQL) {
 		Environment.setCurrentSystemName(systemName);
-		tableName = tableName.toLowerCase();
 		Properties props = new Properties();
 		String jdbc_name = "db_exp_" + dbtype;
 		if (StringUtils.equals(dbtype, "h2")) {

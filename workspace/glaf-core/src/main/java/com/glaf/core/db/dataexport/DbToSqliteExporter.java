@@ -59,7 +59,6 @@ public class DbToSqliteExporter {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void exportTable(String systemName, String dataDir, String tableName) {
 		Environment.setCurrentSystemName(systemName);
-		tableName = tableName.toLowerCase();
 		int total = 0;
 		Connection conn = null;
 		Connection conn2 = null;
@@ -265,26 +264,28 @@ public class DbToSqliteExporter {
 			rs = dbmd.getTables(null, null, null, new String[] { "TABLE" });
 			while (rs.next()) {
 				String tableName = rs.getString("TABLE_NAME");
-				tableName = tableName.toLowerCase();
-				if (tableName.startsWith("batch_")) {
+				if (DBUtils.isTemoraryTable(tableName)) {
 					continue;
 				}
-				if (tableName.startsWith("qrtz_")) {
+				if (tableName.toLowerCase().startsWith("batch_")) {
 					continue;
 				}
-				if (tableName.startsWith("fileatt")) {
+				if (tableName.toLowerCase().startsWith("qrtz_")) {
 					continue;
 				}
-				if (tableName.startsWith("filedot")) {
+				if (tableName.toLowerCase().startsWith("fileatt")) {
 					continue;
 				}
-				if (tableName.startsWith("cell_useradd")) {
+				if (tableName.toLowerCase().startsWith("filedot")) {
 					continue;
 				}
-				if (tableName.startsWith("s_folder")) {
+				if (tableName.toLowerCase().startsWith("cell_useradd")) {
 					continue;
 				}
-				if (tableName.startsWith("sys_log")) {
+				if (tableName.toLowerCase().startsWith("s_folder")) {
+					continue;
+				}
+				if (tableName.toLowerCase().startsWith("sys_log")) {
 					continue;
 				}
 				tables.add(tableName);
