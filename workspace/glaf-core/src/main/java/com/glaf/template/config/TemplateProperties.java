@@ -27,9 +27,9 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.glaf.core.config.SystemProperties;
+import com.glaf.core.util.IOUtils;
 import com.glaf.template.Template;
 import com.glaf.template.TemplateReader;
- 
 
 public class TemplateProperties {
 	private static ConcurrentMap<String, Template> cache = new ConcurrentHashMap<String, Template>();
@@ -53,6 +53,7 @@ public class TemplateProperties {
 
 	public static void reload() {
 		if (!loading.get()) {
+			InputStream inputStream = null;
 			try {
 				loading.set(true);
 				String config = SystemProperties.getConfigRootPath()
@@ -65,7 +66,7 @@ public class TemplateProperties {
 						String filename = config + filelist[i];
 						File file = new File(filename);
 						if (file.isFile() && file.getName().endsWith(".xml")) {
-							InputStream inputStream = new FileInputStream(file);
+							inputStream = new FileInputStream(file);
 							List<Template> templates = reader
 									.readTemplates(inputStream);
 							if (templates != null) {
@@ -77,8 +78,7 @@ public class TemplateProperties {
 									}
 								}
 							}
-							inputStream.close();
-							inputStream = null;
+							IOUtils.closeStream(inputStream);
 						}
 					}
 				}
@@ -86,6 +86,7 @@ public class TemplateProperties {
 				throw new RuntimeException(ex);
 			} finally {
 				loading.set(false);
+				IOUtils.closeStream(inputStream);
 			}
 		}
 	}
