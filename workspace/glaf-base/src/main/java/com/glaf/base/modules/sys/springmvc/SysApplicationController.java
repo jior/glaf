@@ -293,6 +293,7 @@ public class SysApplicationController {
 		SysApplication bean = sysApplicationService.findById(id);
 		if (bean != null) {
 			bean.setName(ParamUtil.getParameter(request, "name"));
+			bean.setType(ParamUtil.getParameter(request, "type"));
 			bean.setCode(ParamUtil.getParameter(request, "code"));
 			bean.setDesc(ParamUtil.getParameter(request, "desc"));
 			bean.setUrl(ParamUtil.getParameter(request, "url"));
@@ -325,6 +326,7 @@ public class SysApplicationController {
 		} else {
 			bean = new SysApplication();
 			bean.setName(ParamUtil.getParameter(request, "name"));
+			bean.setType(ParamUtil.getParameter(request, "type"));
 			bean.setCode(ParamUtil.getParameter(request, "code"));
 			bean.setDesc(ParamUtil.getParameter(request, "desc"));
 			bean.setUrl(ParamUtil.getParameter(request, "url"));
@@ -374,6 +376,7 @@ public class SysApplicationController {
 	public ModelAndView saveAdd(HttpServletRequest request, ModelMap modelMap) {
 		SysApplication bean = new SysApplication();
 		bean.setName(ParamUtil.getParameter(request, "name"));
+		bean.setType(ParamUtil.getParameter(request, "type"));
 		bean.setCode(ParamUtil.getParameter(request, "code"));
 		bean.setDesc(ParamUtil.getParameter(request, "desc"));
 		bean.setUrl(ParamUtil.getParameter(request, "url"));
@@ -423,6 +426,7 @@ public class SysApplicationController {
 		SysApplication bean = sysApplicationService.findById(id);
 		if (bean != null) {
 			bean.setName(ParamUtil.getParameter(request, "name"));
+			bean.setType(ParamUtil.getParameter(request, "type"));
 			bean.setCode(ParamUtil.getParameter(request, "code"));
 			bean.setDesc(ParamUtil.getParameter(request, "desc"));
 			bean.setUrl(ParamUtil.getParameter(request, "url"));

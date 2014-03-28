@@ -84,6 +84,12 @@ public class SysApplication implements Serializable, JSONable {
 	@Column(name = "NAME", length = 250)
 	protected String name;
 
+	/**
+	 * ¿‡–Õ
+	 */
+	@Column(name = "TYPE", length = 50)
+	protected String type;
+
 	@javax.persistence.Transient
 	private SysTree node;
 
@@ -186,6 +192,10 @@ public class SysApplication implements Serializable, JSONable {
 		return sort;
 	}
 
+	public String getType() {
+		return type;
+	}
+
 	public String getUpdateBy() {
 		return updateBy;
 	}
@@ -252,6 +262,10 @@ public class SysApplication implements Serializable, JSONable {
 
 	public void setSort(int sort) {
 		this.sort = sort;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public void setUpdateBy(String updateBy) {

@@ -8,6 +8,7 @@
 		type="com.glaf.base.modules.sys.model.SysApplication">
 		<id property="id" column="ID" jdbcType="BIGINT" />
 		<result property="name" column="NAME" jdbcType="VARCHAR" />
+		<result property="type" column="TYPE" jdbcType="VARCHAR" />
 		<result property="desc" column="APPDESC" jdbcType="VARCHAR" />
 		<result property="url" column="URL" jdbcType="VARCHAR" />
 		<result property="code" column="CODE" jdbcType="VARCHAR" />
@@ -35,6 +36,9 @@
 			ID
 			<if test="name != null">
 				,NAME
+			</if>
+			<if test="type != null">
+				,TYPE
 			</if>
 			<if test="code != null">
 				,CODE
@@ -79,6 +83,9 @@
 
 			<if test="name != null">
 				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="type != null">
+				,#{type, jdbcType=VARCHAR}
 			</if>
 			<if test="code != null">
 				,#{code, jdbcType=VARCHAR}
@@ -126,6 +133,9 @@
 		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="name != null">
 				NAME = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				TYPE = #{type, jdbcType=VARCHAR},
 			</if>
 			<if test="code != null">
 				CODE = #{code, jdbcType=VARCHAR},
@@ -289,6 +299,10 @@
 					open="(" separator="," close=")">
 					#{x_name}
 				</foreach>
+			</if>
+
+			<if test="type != null and type != '' ">
+				and E.TYPE = #{type}
 			</if>
 
 			<if test="code != null and code != '' ">

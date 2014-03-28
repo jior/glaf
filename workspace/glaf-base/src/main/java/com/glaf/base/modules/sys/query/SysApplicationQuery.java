@@ -30,6 +30,7 @@ public class SysApplicationQuery extends DataQuery {
 	protected String name;
 	protected String nameLike;
 	protected List<String> names;
+	protected String type;
 	protected Long nodeId;
 	protected List<Long> nodeIds;
 	protected String openFlag;
@@ -167,6 +168,10 @@ public class SysApplicationQuery extends DataQuery {
 		return sortLessThanOrEqual;
 	}
 
+	public String getType() {
+		return type;
+	}
+
 	public String getUrlLike() {
 		if (urlLike != null && urlLike.trim().length() > 0) {
 			if (!urlLike.startsWith("%")) {
@@ -295,6 +300,10 @@ public class SysApplicationQuery extends DataQuery {
 		this.sortLessThanOrEqual = sortLessThanOrEqual;
 	}
 
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	public void setUrlLike(String urlLike) {
 		this.urlLike = urlLike;
 	}
@@ -321,6 +330,14 @@ public class SysApplicationQuery extends DataQuery {
 			throw new RuntimeException("sort is null");
 		}
 		this.sortLessThanOrEqual = sortLessThanOrEqual;
+		return this;
+	}
+
+	public SysApplicationQuery type(String type) {
+		if (type == null) {
+			throw new RuntimeException("type is null");
+		}
+		this.type = type;
 		return this;
 	}
 
