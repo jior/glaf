@@ -5,6 +5,7 @@
 <%@ page import="com.glaf.base.modules.*"%>
 <%@ page import="com.glaf.base.modules.todo.*"%>
 <%@ page import="com.glaf.base.modules.todo.model.*"%>
+<%@ page import="com.glaf.base.modules.todo.business.*"%>
 <%@ page import="com.glaf.base.modules.todo.service.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -18,7 +19,10 @@
     String context = request.getContextPath();
     String actorId = com.glaf.core.util.RequestUtils.getActorId(request);
 	//System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@"+actorId);
-	TodoJobBean bean = (TodoJobBean)BaseDataManager.getInstance().getBean("todoJobBean");
+	TodoJobBean bean = new TodoJobBean();
+	bean.setSysUserService((SysUserService) ContextFactory.getBean("sysUserService"));
+	bean.setTodoService((TodoService) ContextFactory.getBean("todoService"));
+	bean.setWorkCalendarService((WorkCalendarService) ContextFactory.getBean("workCalendarService"));
     List rows = null;
 	 try{
 		Collection agentIds = ProcessContainer.getContainer().getAgentIds(actorId);

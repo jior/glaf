@@ -3,12 +3,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.glaf.core.context.*" %>
 <%@ page import="com.glaf.core.todo.*" %>
 <%@ page import="com.glaf.base.modules.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.modules.sys.service.*"%>
 <%@ page import="com.glaf.base.modules.todo.*"%>
+<%@ page import="com.glaf.base.modules.todo.business.*"%>
 <%@ page import="com.glaf.base.modules.todo.model.*"%>
 <%@ page import="com.glaf.base.modules.todo.service.*"%>
 <%@ page import="com.glaf.base.utils.*"%>
@@ -19,7 +21,11 @@
 	
 	Map params = com.glaf.core.util.RequestUtils.getQueryParams(request);
 
-	TodoJobBean bean = (TodoJobBean)BaseDataManager.getInstance().getBean("todoJobBean");
+	TodoJobBean bean = new TodoJobBean();
+	bean.setSysUserService((SysUserService) ContextFactory.getBean("sysUserService"));
+	bean.setTodoService((TodoService) ContextFactory.getBean("todoService"));
+	bean.setWorkCalendarService((WorkCalendarService) ContextFactory.getBean("workCalendarService"));
+			
 	String id = request.getParameter("id");
     Todo todo = bean.getTodo(Long.parseLong(id));
 	pageContext.setAttribute("todo", todo);
