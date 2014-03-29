@@ -536,15 +536,6 @@ public class MxSystemDbTableController {
 			int startIndex = 1;
 			while (rs.next()) {
 				String tableName = rs.getObject("TABLE_NAME").toString();
-				if (tableName.toLowerCase().startsWith("act_")) {
-					continue;
-				}
-				if (tableName.toLowerCase().startsWith("jbpm_")) {
-					continue;
-				}
-				if (tableName.toLowerCase().startsWith("cell_useradd")) {
-					continue;
-				}
 				if (DBUtils.isTemoraryTable(tableName)) {
 					continue;
 				}
@@ -652,7 +643,7 @@ public class MxSystemDbTableController {
 			tableName = request.getParameter("tableName");
 		}
 
-		Collection<String> rejects = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		Collection<String> rejects = new java.util.ArrayList<String>();
 		rejects.add("FILEATT");
 		rejects.add("ATTACHMENT");
 		rejects.add("CMS_PUBLICINFO");
