@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.todo.service;
+package com.glaf.base.modules.todo.business;
 
 import java.util.*;
 
@@ -27,13 +27,10 @@ import org.apache.commons.logging.LogFactory;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.UUID32;
-
 import com.glaf.mail.MailMessage;
 import com.glaf.mail.MailSender;
 import com.glaf.mail.util.MailTools;
-
 import com.glaf.jbpm.container.ProcessContainer;
-
 import com.glaf.base.modules.sys.model.SysApplication;
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysDeptRole;
@@ -42,7 +39,7 @@ import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SysDeptRoleService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.modules.todo.TodoConstants;
-
+import com.glaf.base.modules.todo.service.TodoService;
 import com.glaf.core.todo.Todo;
 import com.glaf.core.todo.TodoInstance;
 import com.glaf.core.todo.query.TodoQuery;
@@ -64,7 +61,7 @@ public class SendMessageBean {
 	}
 
 	public List<TodoInstance> getTodoInstances(String actorId) {
-		List<TodoInstance> list = new java.util.concurrent.CopyOnWriteArrayList<TodoInstance>();
+		List<TodoInstance> list = new java.util.ArrayList<TodoInstance>();
 		SysUser user = sysUserService.findByAccountWithAll(actorId);
 
 		if (user == null) {
@@ -78,7 +75,7 @@ public class SendMessageBean {
 		List<String> agentIds = ProcessContainer.getContainer().getAgentIds(
 				actorId);
 
-		List<Long> appXIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
+		List<Long> appXIds = new java.util.ArrayList<Long>();
 		Collection<Long> appIds = new HashSet<Long>();
 
 		Collection<SysApplication> apps = user.getApps();
@@ -133,7 +130,7 @@ public class SendMessageBean {
 		Collection rows99 = new java.util.concurrent.CopyOnWriteArrayList();
 
 		if (appXIds.size() > 0) {
-			List actorIds = new java.util.concurrent.CopyOnWriteArrayList();
+			List actorIds = new java.util.ArrayList();
 			actorIds.add(actorId);
 			if (agentIds != null && agentIds.size() > 0) {
 				actorIds.addAll(agentIds);

@@ -16,14 +16,18 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.todo.service;
+package com.glaf.base.modules.todo.job;
 
 import java.io.*;
 import java.net.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
- 
+
+import com.glaf.base.modules.sys.service.SysUserService;
+import com.glaf.base.modules.sys.service.WorkCalendarService;
+import com.glaf.base.modules.todo.business.TodoJobBean;
+import com.glaf.base.modules.todo.service.TodoService;
 import com.glaf.core.context.ContextFactory;
 
 public class TodoQuartzJob {
@@ -42,10 +46,14 @@ public class TodoQuartzJob {
 
 	public void createTasksFromSQL() {
 		try {
-			TodoJobBean bean = ContextFactory.getBean("todoJobBean");
-			if (bean != null) {
-				bean.createTasksFromSQL();
-			}
+			TodoJobBean bean = new TodoJobBean();
+			bean.setSysUserService((SysUserService) ContextFactory
+					.getBean("sysUserService"));
+			bean.setTodoService((TodoService) ContextFactory
+					.getBean("todoService"));
+			bean.setWorkCalendarService((WorkCalendarService) ContextFactory
+					.getBean("workCalendarService"));
+			bean.createTasksFromSQL();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			logger.error(ex);
@@ -54,10 +62,14 @@ public class TodoQuartzJob {
 
 	public void sendMessageToAllUsers() {
 		try {
-			TodoJobBean bean = ContextFactory.getBean("todoJobBean");
-			if (bean != null) {
-				bean.sendMessageToAllUsers();
-			}
+			TodoJobBean bean = new TodoJobBean();
+			bean.setSysUserService((SysUserService) ContextFactory
+					.getBean("sysUserService"));
+			bean.setTodoService((TodoService) ContextFactory
+					.getBean("todoService"));
+			bean.setWorkCalendarService((WorkCalendarService) ContextFactory
+					.getBean("workCalendarService"));
+			bean.sendMessageToAllUsers();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			logger.error(ex);

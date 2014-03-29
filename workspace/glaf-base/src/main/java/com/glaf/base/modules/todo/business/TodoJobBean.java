@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.todo.service;
+package com.glaf.base.modules.todo.business;
 
 import java.util.*;
 
@@ -24,26 +24,21 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.springframework.stereotype.Component;
-
 import com.glaf.jbpm.model.TaskItem;
 import com.glaf.jbpm.container.ProcessContainer;
-
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.modules.sys.service.WorkCalendarService;
-
+import com.glaf.base.modules.todo.service.TodoService;
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.todo.Todo;
 import com.glaf.core.todo.TodoInstance;
 import com.glaf.core.todo.query.TodoQuery;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.JdbcUtils;
- 
 
-@Component("todoJobBean")
-@SuppressWarnings({"rawtypes", "unchecked"})
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class TodoJobBean {
 	private final static Log logger = LogFactory.getLog(TodoJobBean.class);
 
@@ -61,7 +56,6 @@ public class TodoJobBean {
 		todoService.create(todo);
 	}
 
-	
 	public void createTasks(List processInstanceIds) {
 		List tasks = this.getJbpmTasksByProcessInstanceIds(processInstanceIds);
 		todoService.createTasks(processInstanceIds, tasks);
@@ -264,7 +258,6 @@ public class TodoJobBean {
 		return todoService.getRoleMap();
 	}
 
-	 
 	public List getTasks() {
 		List todos = todoService.getSQLTodos();
 		List rows = new java.util.ArrayList();
@@ -537,25 +530,21 @@ public class TodoJobBean {
 
 	public void sendMessageToUser(String actorId) {
 		SendMessageBean bean = new SendMessageBean();
-		bean.setSysUserService(this.sysUserService);
+		bean.setSysUserService(sysUserService);
 		bean.setTodoService(todoService);
 		bean.sendMessageToUser(actorId);
 	}
 
-	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
 	}
 
-	@javax.annotation.Resource
 	public void setTodoService(TodoService todoService) {
 		this.todoService = todoService;
 	}
 
-	@javax.annotation.Resource
 	public void setWorkCalendarService(WorkCalendarService workCalendarService) {
 		this.workCalendarService = workCalendarService;
-		logger.info("setWorkCalendarService");
 	}
 
 	public void update(Todo todo) {
