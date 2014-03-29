@@ -53,7 +53,7 @@ public class Environment {
 
 	public static String getCurrentSystemName() {
 		if (systemNameThreadLocal.get() != null) {
-			logger.debug("threadLocal:" + systemNameThreadLocal.get());
+			logger.debug("systemName:" + systemNameThreadLocal.get());
 			return systemNameThreadLocal.get();
 		}
 		return DEFAULT_SYSTEM_NAME;
