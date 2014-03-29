@@ -15,6 +15,7 @@
 <title>${tableName}</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/${theme}/styles.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/core.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
@@ -39,9 +40,9 @@
 						 alert('操作成功完成！');
 					   }
 					   if (window.opener) {
-						window.opener.location.reload();
+						  window.opener.location.reload();
 					   } else if (window.parent) {
-						window.parent.location.reload();
+						  window.parent.location.reload();
 					   }
 				   }
 			 });
@@ -84,28 +85,30 @@
 		    <c:choose>
 			<c:when test="${column.javaType == 'Date'}">
                <input id="${column.columnName}" name="${column.columnName}" type="text" size="20"
-			          class="easyui-datebox"
+			          class="easyui-datebox x-text"
 				      value='<fmt:formatDate value="${column.value}" pattern="yyyy-MM-dd HH:mm:ss"/>'/>
 			</c:when>
 			<c:when test="${column.javaType =='Integer'}">
                <input id="${column.columnName}" name="${column.columnName}" type="text" size="20"
-			          class="easyui-numberbox"
+			          class="easyui-numberbox x-text"
 				      value="${column.value}"/>
 			</c:when>
 			<c:when test="${column.javaType =='Long'}">
                <input id="${column.columnName}" name="${column.columnName}" type="text" size="20"
-			          class="easyui-numberbox"
+			          class="easyui-numberbox x-text"
 				      value="${column.value}"/>
 			</c:when>
 			<c:when test="${column.javaType =='Double'}">
                <input id="${column.columnName}" name="${column.columnName}" type="text" size="20"
-			          class="easyui-numberbox"
+			          class="easyui-numberbox x-text"
 				      value="${column.value}"/>
 			</c:when>
+			<c:when test="${column.javaType =='String'}">
+			   <textarea id="${column.columnName}" name="${column.columnName}" rows="5" cols="40" 
+			             class="easyui-validatebox x-textarea">${column.value}</textarea>
+			</c:when>
 			<c:otherwise>
-			   <input id="${column.columnName}" name="${column.columnName}" type="text" size="60"
-			          class="easyui-validatebox"
-				      value="${column.value}"/>
+			   <pre>${column.value}</pre>
 		    </c:otherwise>
 		   </c:choose>
 		</td>
@@ -113,7 +116,9 @@
 	</c:forEach>
     </tbody>
   </table>
-  </form>
+ </form>
+ <br/>
+ <br/>
 </div>
 </div>
 </body>
