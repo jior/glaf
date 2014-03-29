@@ -536,6 +536,9 @@ public class MxSystemDbTableController {
 			int startIndex = 1;
 			while (rs.next()) {
 				String tableName = rs.getObject("TABLE_NAME").toString();
+				if (tableName.toLowerCase().startsWith("cell_useradd")) {
+					continue;
+				}
 				if (DBUtils.isTemoraryTable(tableName)) {
 					continue;
 				}
