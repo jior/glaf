@@ -719,14 +719,20 @@ public class MxSystemDbTableController {
 								&& !value.equals("null")) {
 							if ("Integer".equals(column.getJavaType())) {
 								col.setValue(Integer.parseInt(value));
+								tableModel.addColumn(col);
 							} else if ("Long".equals(column.getJavaType())) {
 								col.setValue(Long.parseLong(value));
+								tableModel.addColumn(col);
+							} else if ("Double".equals(column.getJavaType())) {
+								col.setValue(Double.parseDouble(value));
+								tableModel.addColumn(col);
 							} else if ("Date".equals(column.getJavaType())) {
 								col.setValue(DateUtils.toDate(value));
-							} else {
+								tableModel.addColumn(col);
+							} else if ("String".equals(column.getJavaType())) {
 								col.setValue(value);
+								tableModel.addColumn(col);
 							}
-							tableModel.addColumn(col);
 						}
 					}
 

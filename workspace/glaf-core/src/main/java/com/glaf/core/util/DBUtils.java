@@ -812,19 +812,17 @@ public class DBUtils {
 		ResultSet rs = null;
 		try {
 			List<String> primaryKeys = getPrimaryKeys(conn, tableName);
+			String dbType = DBConnectionFactory.getDatabaseType(conn);
 			DatabaseMetaData metaData = conn.getMetaData();
-			if ("h2".equals(DBConnectionFactory.getDatabaseType(conn))) {
+			if ("h2".equals(dbType)) {
 				tableName = tableName.toUpperCase();
-			} else if ("oracle".equals(DBConnectionFactory
-					.getDatabaseType(conn))) {
+			} else if ("oracle".equals(dbType)) {
 				tableName = tableName.toUpperCase();
-			} else if ("db2".equals(DBConnectionFactory.getDatabaseType(conn))) {
+			} else if ("db2".equals(dbType)) {
 				tableName = tableName.toUpperCase();
-			} else if ("mysql"
-					.equals(DBConnectionFactory.getDatabaseType(conn))) {
+			} else if ("mysql".equals(dbType)) {
 				tableName = tableName.toLowerCase();
-			} else if ("postgresql".equals(DBConnectionFactory
-					.getDatabaseType(conn))) {
+			} else if ("postgresql".equals(dbType)) {
 				tableName = tableName.toLowerCase();
 			}
 			rs = metaData.getColumns(null, null, tableName, null);
@@ -866,7 +864,7 @@ public class DBUtils {
 				}
 
 				if (!columns.contains(column)) {
-					logger.debug("column name:"+column.getColumnName());
+					logger.debug("column name:" + column.getColumnName());
 					columns.add(column);
 				}
 			}
@@ -889,20 +887,18 @@ public class DBUtils {
 			List<String> primaryKeys = getPrimaryKeys(tableName);
 
 			conn = DBConnectionFactory.getConnection();
+			String dbType = DBConnectionFactory.getDatabaseType(conn);
 
 			DatabaseMetaData metaData = conn.getMetaData();
-			if ("h2".equals(DBConnectionFactory.getDatabaseType(conn))) {
+			if ("h2".equals(dbType)) {
 				tableName = tableName.toUpperCase();
-			} else if ("oracle".equals(DBConnectionFactory
-					.getDatabaseType(conn))) {
+			} else if ("oracle".equals(dbType)) {
 				tableName = tableName.toUpperCase();
-			} else if ("db2".equals(DBConnectionFactory.getDatabaseType(conn))) {
+			} else if ("db2".equals(dbType)) {
 				tableName = tableName.toUpperCase();
-			} else if ("mysql"
-					.equals(DBConnectionFactory.getDatabaseType(conn))) {
+			} else if ("mysql".equals(dbType)) {
 				tableName = tableName.toLowerCase();
-			} else if ("postgresql".equals(DBConnectionFactory
-					.getDatabaseType(conn))) {
+			} else if ("postgresql".equals(dbType)) {
 				tableName = tableName.toLowerCase();
 			}
 			rs = metaData.getColumns(null, null, tableName, null);
@@ -1270,7 +1266,7 @@ public class DBUtils {
 				} else if ("Date".equals(column.getJavaType())) {
 					buffer.append(" TIMESTAMP(6) ");
 				} else if ("Clob".equals(column.getJavaType())) {
-					buffer.append(" CLOB   ");
+					buffer.append(" CLOB ");
 				} else if ("Blob".equals(column.getJavaType())) {
 					buffer.append(" BLOB ");
 				} else if ("String".equals(column.getJavaType())) {
@@ -1292,7 +1288,7 @@ public class DBUtils {
 				} else if ("Date".equals(column.getJavaType())) {
 					buffer.append(" datetime ");
 				} else if ("Clob".equals(column.getJavaType())) {
-					buffer.append(" longtext   ");
+					buffer.append(" longtext ");
 				} else if ("Blob".equals(column.getJavaType())) {
 					buffer.append(" longblob ");
 				} else if ("String".equals(column.getJavaType())) {
@@ -1314,7 +1310,7 @@ public class DBUtils {
 				} else if ("Date".equals(column.getJavaType())) {
 					buffer.append(" datetime ");
 				} else if ("Clob".equals(column.getJavaType())) {
-					buffer.append(" text   ");
+					buffer.append(" text ");
 				} else if ("Blob".equals(column.getJavaType())) {
 					buffer.append(" image ");
 				} else if ("String".equals(column.getJavaType())) {
@@ -1336,7 +1332,7 @@ public class DBUtils {
 				} else if ("Date".equals(column.getJavaType())) {
 					buffer.append(" timestamp ");
 				} else if ("Clob".equals(column.getJavaType())) {
-					buffer.append(" text   ");
+					buffer.append(" text ");
 				} else if ("Blob".equals(column.getJavaType())) {
 					buffer.append(" bytea ");
 				} else if ("String".equals(column.getJavaType())) {
@@ -1360,7 +1356,7 @@ public class DBUtils {
 				} else if ("Boolean".equals(column.getJavaType())) {
 					buffer.append(" boolean   ");
 				} else if ("Clob".equals(column.getJavaType())) {
-					buffer.append(" clob   ");
+					buffer.append(" clob ");
 				} else if ("Blob".equals(column.getJavaType())) {
 					buffer.append(" longvarbinary ");
 				} else if ("String".equals(column.getJavaType())) {
@@ -1384,7 +1380,7 @@ public class DBUtils {
 				} else if ("Date".equals(column.getJavaType())) {
 					buffer.append(" TEXT ");
 				} else if ("Clob".equals(column.getJavaType())) {
-					buffer.append(" TEXT   ");
+					buffer.append(" TEXT ");
 				} else if ("Blob".equals(column.getJavaType())) {
 					buffer.append(" BLOB ");
 				} else if ("String".equals(column.getJavaType())) {
@@ -1549,7 +1545,7 @@ public class DBUtils {
 				} else if ("Date".equals(field.getJavaType())) {
 					buffer.append(" timestamp ");
 				} else if ("Boolean".equals(field.getJavaType())) {
-					buffer.append(" boolean   ");
+					buffer.append(" boolean ");
 				} else if ("Clob".equals(field.getJavaType())) {
 					buffer.append(" clob ");
 				} else if ("Blob".equals(field.getJavaType())) {
@@ -1723,19 +1719,18 @@ public class DBUtils {
 		try {
 			conn = DBConnectionFactory.getConnection();
 			List<String> primaryKeys = getPrimaryKeys(conn, tableName);
+			String dbType = DBConnectionFactory.getDatabaseType(conn);
 			DatabaseMetaData metaData = conn.getMetaData();
-			if ("h2".equals(DBConnectionFactory.getDatabaseType(conn))) {
+
+			if ("h2".equals(dbType)) {
 				tableName = tableName.toUpperCase();
-			} else if ("oracle".equals(DBConnectionFactory
-					.getDatabaseType(conn))) {
+			} else if ("oracle".equals(dbType)) {
 				tableName = tableName.toUpperCase();
-			} else if ("db2".equals(DBConnectionFactory.getDatabaseType(conn))) {
+			} else if ("db2".equals(dbType)) {
 				tableName = tableName.toUpperCase();
-			} else if ("mysql"
-					.equals(DBConnectionFactory.getDatabaseType(conn))) {
+			} else if ("mysql".equals(dbType)) {
 				tableName = tableName.toLowerCase();
-			} else if ("postgresql".equals(DBConnectionFactory
-					.getDatabaseType(conn))) {
+			} else if ("postgresql".equals(dbType)) {
 				tableName = tableName.toLowerCase();
 			}
 			rs = metaData.getColumns(null, null, tableName, null);
@@ -1800,7 +1795,7 @@ public class DBUtils {
 			} else if ("Date".equals(field.getJavaType())) {
 				buffer.append(" timestamp ");
 			} else if ("Boolean".equals(field.getJavaType())) {
-				buffer.append(" boolean   ");
+				buffer.append(" boolean ");
 			} else if ("Clob".equals(field.getJavaType())) {
 				buffer.append(" clob ");
 			} else if ("Blob".equals(field.getJavaType())) {
@@ -1953,21 +1948,18 @@ public class DBUtils {
 			String tableName) {
 		List<String> primaryKeys = new java.util.ArrayList<String>();
 		try {
+			String dbType = DBConnectionFactory.getDatabaseType(connection);
 			DatabaseMetaData metaData = connection.getMetaData();
 
-			if ("h2".equals(DBConnectionFactory.getDatabaseType(connection))) {
+			if ("h2".equals(dbType)) {
 				tableName = tableName.toUpperCase();
-			} else if ("oracle".equals(DBConnectionFactory
-					.getDatabaseType(connection))) {
+			} else if ("oracle".equals(dbType)) {
 				tableName = tableName.toUpperCase();
-			} else if ("db2".equals(DBConnectionFactory
-					.getDatabaseType(connection))) {
+			} else if ("db2".equals(dbType)) {
 				tableName = tableName.toUpperCase();
-			} else if ("mysql".equals(DBConnectionFactory
-					.getDatabaseType(connection))) {
+			} else if ("mysql".equals(dbType)) {
 				tableName = tableName.toLowerCase();
-			} else if (POSTGRESQL.equals(DBConnectionFactory
-					.getDatabaseType(connection))) {
+			} else if (POSTGRESQL.equals(dbType)) {
 				tableName = tableName.toLowerCase();
 			}
 
@@ -1987,21 +1979,18 @@ public class DBUtils {
 		Connection connection = null;
 		try {
 			connection = DBConnectionFactory.getConnection();
+			String dbType = DBConnectionFactory.getDatabaseType(connection);
 			DatabaseMetaData metaData = connection.getMetaData();
 
-			if ("h2".equals(DBConnectionFactory.getDatabaseType(connection))) {
+			if ("h2".equals(dbType)) {
 				tableName = tableName.toUpperCase();
-			} else if ("oracle".equals(DBConnectionFactory
-					.getDatabaseType(connection))) {
+			} else if ("oracle".equals(dbType)) {
 				tableName = tableName.toUpperCase();
-			} else if ("db2".equals(DBConnectionFactory
-					.getDatabaseType(connection))) {
+			} else if ("db2".equals(dbType)) {
 				tableName = tableName.toUpperCase();
-			} else if ("mysql".equals(DBConnectionFactory
-					.getDatabaseType(connection))) {
+			} else if ("mysql".equals(dbType)) {
 				tableName = tableName.toLowerCase();
-			} else if (POSTGRESQL.equals(DBConnectionFactory
-					.getDatabaseType(connection))) {
+			} else if (POSTGRESQL.equals(dbType)) {
 				tableName = tableName.toLowerCase();
 			}
 
@@ -2025,21 +2014,18 @@ public class DBUtils {
 		Connection connection = null;
 		try {
 			connection = DBConnectionFactory.getConnection(systemName);
+			String dbType = DBConnectionFactory.getDatabaseType(connection);
 			DatabaseMetaData metaData = connection.getMetaData();
 
-			if ("h2".equals(DBConnectionFactory.getDatabaseType(connection))) {
+			if ("h2".equals(dbType)) {
 				tableName = tableName.toUpperCase();
-			} else if ("oracle".equals(DBConnectionFactory
-					.getDatabaseType(connection))) {
+			} else if ("oracle".equals(dbType)) {
 				tableName = tableName.toUpperCase();
-			} else if ("db2".equals(DBConnectionFactory
-					.getDatabaseType(connection))) {
+			} else if ("db2".equals(dbType)) {
 				tableName = tableName.toUpperCase();
-			} else if ("mysql".equals(DBConnectionFactory
-					.getDatabaseType(connection))) {
+			} else if ("mysql".equals(dbType)) {
 				tableName = tableName.toLowerCase();
-			} else if (POSTGRESQL.equals(DBConnectionFactory
-					.getDatabaseType(connection))) {
+			} else if (POSTGRESQL.equals(dbType)) {
 				tableName = tableName.toLowerCase();
 			}
 
@@ -2272,7 +2258,7 @@ public class DBUtils {
 	}
 
 	private static Map<String, Object> lowerKeyMap(Map<String, Object> params) {
-		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 		Set<Entry<String, Object>> entrySet = params.entrySet();
 		for (Entry<String, Object> entry : entrySet) {
 			String key = entry.getKey();
