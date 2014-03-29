@@ -30,8 +30,8 @@
 		<!-- <java classname="com.glaf.core.db.dataexport.DbToDBMyBatisExporter" fork="true">
 			<classpath refid="classpath"/>
 			<jvmarg line="-Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m"/>
-			<arg line="default h2 ./data/glafdb3"/>
-		</java>   -->
+			<arg line="default h2 ./data/glafdb5"/>
+		</java> -->   
 		 <java classname="com.glaf.core.db.dataexport.DbToH2Exporter" fork="true">
 			<classpath refid="classpath"/>
 			<jvmarg line="-Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m"/>
@@ -42,11 +42,16 @@
 	<target name="run-sqlite-export" >
 		<echo message="运行应用程序......" />
         <mkdir dir="data" />
-		<java classname="com.glaf.core.db.dataexport.DbToDBMyBatisExporter" fork="true">
+		<java classname="com.glaf.core.db.dataexport.DbToSqliteExporter" fork="true">
+			<classpath refid="classpath"/>
+			<jvmarg line="-Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m"/>
+			<arg line="default ./data/glafdb.db"/>
+		</java>
+		<!-- <java classname="com.glaf.core.db.dataexport.DbToDBMyBatisExporter" fork="true">
 			<classpath refid="classpath"/>
 			<jvmarg line="-Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m"/>
 			<arg line="default sqlite ./data/glafdb.db"/>
-		</java>
+		</java> -->
 	</target>
 
 	<target name="run-db-export" >
