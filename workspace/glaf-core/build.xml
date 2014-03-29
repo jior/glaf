@@ -59,7 +59,7 @@
 
 	<target name="copy">
 		<copy todir="../glaf-web/WebContent/WEB-INF/classes">
-			<fileset dir="bin" includes="com/glaf/core/**/*.class,com/glaf/core/**/*.properties,com/glaf/core/**/*.xml" />
+			<fileset dir="bin" includes="com/glaf/**/*.class,com/glaf/**/*.properties,com/glaf/**/*.xml" />
 		</copy>
 	</target>
 
