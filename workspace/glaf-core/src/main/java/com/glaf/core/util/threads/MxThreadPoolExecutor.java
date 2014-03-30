@@ -38,14 +38,16 @@ import org.apache.commons.logging.LogFactory;
  * @author fhanik
  * 
  */
-public class MxThreadPoolExecutor extends java.util.concurrent.ThreadPoolExecutor {
+public class MxThreadPoolExecutor extends
+		java.util.concurrent.ThreadPoolExecutor {
 	/**
 	 * The string manager for this package.
 	 */
 	protected static final StringManager sm = StringManager
 			.getManager("com.glaf.core.util.threads.res");
 
-	private static final Log log = LogFactory.getLog(MxThreadPoolExecutor.class);
+	private static final Log log = LogFactory
+			.getLog(MxThreadPoolExecutor.class);
 
 	/**
 	 * The number of tasks submitted but not yet finished. This includes tasks
