@@ -173,7 +173,7 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 	}
 
 	public SysDepartment findById(long id) {
-		return this.getSysDepartment(id);
+		return sysDepartmentMapper.getSysDepartmentById(id);
 	}
 
 	public SysDepartment findByName(String name) {
@@ -322,7 +322,7 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 	protected void initRoles(List<SysDeptRole> list) {
 		if (list != null && !list.isEmpty()) {
 			List<SysRole> rows = sysRoleService.getSysRoleList();
-			Map<Long, SysRole> dataMap = new java.util.concurrent.ConcurrentHashMap<Long, SysRole>();
+			Map<Long, SysRole> dataMap = new java.util.HashMap<Long, SysRole>();
 			if (rows != null && !rows.isEmpty()) {
 				for (SysRole m : rows) {
 					dataMap.put(m.getId(), m);
@@ -337,7 +337,7 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 	protected void initTrees(List<SysDepartment> list) {
 		if (list != null && !list.isEmpty()) {
 			List<SysTree> trees = sysTreeService.getAllSysTreeList();
-			Map<Long, SysTree> treeMap = new java.util.concurrent.ConcurrentHashMap<Long, SysTree>();
+			Map<Long, SysTree> treeMap = new java.util.HashMap<Long, SysTree>();
 			if (trees != null && !trees.isEmpty()) {
 				for (SysTree tree : trees) {
 					treeMap.put(tree.getId(), tree);

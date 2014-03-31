@@ -40,6 +40,33 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 	private SysDepartmentService sysDepartmentService;
 
 	private SysUserService sysUserService;
+	
+	
+
+	/**
+	 * 用户认证
+	 * 
+	 * @param account
+	 * @param pwd
+	 * @return
+	 */
+	public SysUser authorize(String account, String pwd) {
+		SysUser bean = sysUserService.findByAccount(account);
+		if (bean != null) {
+			if (bean.isDepartmentAdmin()) {
+				logger.debug(account + " is department admin");
+			}
+			if (bean.isSystemAdmin()) {
+				logger.debug(account + " is system admin");
+			}
+			if (!bean.getPassword().equals(pwd) || // 密码不匹配
+					bean.getLocked() == 1) {// 帐号禁止
+				bean = null;
+			}
+		}
+		return bean;
+	}
+
 
 	/**
 	 * 用户登陆

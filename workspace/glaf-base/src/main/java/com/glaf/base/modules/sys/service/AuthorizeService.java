@@ -26,6 +26,15 @@ import com.glaf.base.modules.sys.model.SysUser;
 public interface AuthorizeService {
 
 	/**
+	 * 用户认证
+	 * 
+	 * @param account
+	 * @param pwd
+	 * @return
+	 */
+	SysUser authorize(String account, String pwd);
+
+	/**
 	 * 用户登陆
 	 * 
 	 * @param account

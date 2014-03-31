@@ -112,15 +112,18 @@ public class LoginController {
 		logger.debug(account + " start login........................");
 
 		// 用户登陆，返回系统用户对象
-		SysUser bean = authorizeService.login(account, pwd);
+		SysUser bean = authorizeService.authorize(account, pwd);
 		if (bean == null) {
 			// 用户对象为空或失效，显示错误信息
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"authorize.login_failure"));
 			MessageUtils.addMessages(request, messages);
 			return new ModelAndView("/modules/login", modelMap);
-		} else {
+		}
+		String ipAddr = RequestUtils.getIPAddress(request);
 
+		if (!(StringUtils.equals(ipAddr, "localhost") || StringUtils.equals(
+				ipAddr, "127.0.0.1"))) {
 			SystemProperty p = systemPropertyService.getSystemProperty("SYS",
 					"login_limit");
 			SystemProperty pt = systemPropertyService.getSystemProperty("SYS",
@@ -150,9 +153,7 @@ public class LoginController {
 				logger.info("login IP:" + loginIP);
 				if (!timeout) {// 超时，说明登录已经过期，不用判断是否已经登录了
 					if (loginIP != null
-							&& !(StringUtils
-									.equals(RequestUtils.getIPAddress(request),
-											loginIP))) {// 用户已在其他机器登陆
+							&& !(StringUtils.equals(ipAddr, loginIP))) {// 用户已在其他机器登陆
 						messages.add(ViewMessages.GLOBAL_MESSAGE,
 								new ViewMessage("authorize.login_failure2"));
 						MessageUtils.addMessages(request, messages);
@@ -209,7 +210,7 @@ public class LoginController {
 			online.setName(bean.getName());
 			online.setCheckDate(new Date());
 			online.setLoginDate(new Date());
-			online.setLoginIP(RequestUtils.getIPAddress(request));
+			online.setLoginIP(ipAddr);
 			online.setSessionId(session.getId());
 			userOnlineService.login(online);
 		} catch (Exception ex) {
