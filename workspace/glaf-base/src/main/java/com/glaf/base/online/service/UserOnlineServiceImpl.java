@@ -78,13 +78,11 @@ public class UserOnlineServiceImpl implements UserOnlineService {
 	 */
 	@Transactional
 	public void deleteTimeoutUsers(int timeoutSeconds) {
-		Date now = new Date();
-		long ts = 0;
 		UserOnlineQuery query = new UserOnlineQuery();
 		List<UserOnline> list = this.list(query);
 		if (list != null && !list.isEmpty()) {
 			for (UserOnline bean : list) {
-				ts = now.getTime() - bean.getCheckDate().getTime();
+				long ts = System.currentTimeMillis() - bean.getCheckDateMs();
 				if (ts / 1000 > timeoutSeconds) {// 如果超时，从在线用户列表中删除
 					userOnlineMapper.deleteUserOnlineById(bean.getId());
 				}
@@ -124,7 +122,6 @@ public class UserOnlineServiceImpl implements UserOnlineService {
 	}
 
 	public List<UserOnline> list(UserOnlineQuery query) {
-		query.ensureInitialized();
 		List<UserOnline> list = userOnlineMapper.getUserOnlines(query);
 		return list;
 	}
@@ -158,7 +155,8 @@ public class UserOnlineServiceImpl implements UserOnlineService {
 	public void remain(String actorId) {
 		UserOnline userOnline = this.getUserOnline(actorId);
 		if (userOnline != null) {
-			userOnline.setCheckDate(new Date());
+			userOnline.setCheckDateMs(System.currentTimeMillis());
+			userOnline.setCheckDate(new Date(userOnline.getCheckDateMs()));
 			userOnlineMapper.updateUserOnline(userOnline);
 		}
 	}

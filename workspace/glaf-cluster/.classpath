@@ -28,5 +28,6 @@
 	<classpathentry kind="lib" path="lib/curator-recipes.jar"/>
 	<classpathentry kind="lib" path="lib/curator-x-discovery-server.jar"/>
 	<classpathentry kind="lib" path="lib/curator-x-discovery.jar"/>
+	<classpathentry kind="lib" path="conf"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

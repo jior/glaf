@@ -25,6 +25,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
@@ -123,6 +124,17 @@ public class SystemProperty implements Serializable, JSONable {
 		return description;
 	}
 
+	public double getDoubleValue() {
+		if (StringUtils.isNotEmpty(value) && StringUtils.isNumeric(value)) {
+			return Double.parseDouble(value);
+		}
+		if (StringUtils.isNotEmpty(initValue)
+				&& StringUtils.isNumeric(initValue)) {
+			return Double.parseDouble(initValue);
+		}
+		return -1;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -135,8 +147,30 @@ public class SystemProperty implements Serializable, JSONable {
 		return inputType;
 	}
 
+	public int getIntValue() {
+		if (StringUtils.isNotEmpty(value) && StringUtils.isNumeric(value)) {
+			return Integer.parseInt(value);
+		}
+		if (StringUtils.isNotEmpty(initValue)
+				&& StringUtils.isNumeric(initValue)) {
+			return Integer.parseInt(initValue);
+		}
+		return -1;
+	}
+
 	public int getLocked() {
 		return locked;
+	}
+
+	public long getLongValue() {
+		if (StringUtils.isNotEmpty(value) && StringUtils.isNumeric(value)) {
+			return Long.parseLong(value);
+		}
+		if (StringUtils.isNotEmpty(initValue)
+				&& StringUtils.isNumeric(initValue)) {
+			return Long.parseLong(initValue);
+		}
+		return -1;
 	}
 
 	public Double getMaxValue() {

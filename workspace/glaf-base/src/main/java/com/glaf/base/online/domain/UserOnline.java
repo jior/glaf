@@ -54,6 +54,9 @@ public class UserOnline implements Serializable, JSONable {
 	@Column(name = "CHECKDATE_")
 	protected Date checkDate;
 
+	@Column(name = "CHECKDATEMS_")
+	protected Long checkDateMs;
+
 	@Column(name = "SESSIONID_", length = 200)
 	protected String sessionId;
 
@@ -84,6 +87,10 @@ public class UserOnline implements Serializable, JSONable {
 
 	public Date getCheckDate() {
 		return checkDate;
+	}
+
+	public Long getCheckDateMs() {
+		return checkDateMs;
 	}
 
 	public Long getId() {
@@ -124,6 +131,10 @@ public class UserOnline implements Serializable, JSONable {
 
 	public void setCheckDate(Date checkDate) {
 		this.checkDate = checkDate;
+	}
+
+	public void setCheckDateMs(Long checkDateMs) {
+		this.checkDateMs = checkDateMs;
 	}
 
 	public void setId(Long id) {

@@ -11,6 +11,7 @@
 		<result property="loginDate" column="LOGINDATE_" jdbcType="TIMESTAMP" />
 		<result property="loginIP" column="LOGINIP_" jdbcType="VARCHAR" />
 		<result property="checkDate" column="CHECKDATE_" jdbcType="TIMESTAMP" />
+		<result property="checkDateMs" column="CHECKDATEMS_" jdbcType="BIGINT" />
 		<result property="sessionId" column="SESSIONID_" jdbcType="VARCHAR" />
 	</resultMap>
 
@@ -33,6 +34,9 @@
 			</if>
 			<if test="checkDate != null">
 				,CHECKDATE_
+			</if>
+			<if test="checkDateMs != null">
+				,CHECKDATEMS_
 			</if>
 			<if test="sessionId != null">
 				,SESSIONID_
@@ -57,6 +61,9 @@
 			<if test="checkDate != null">
 				,#{checkDate, jdbcType=TIMESTAMP}
 			</if>
+			<if test="checkDateMs != null">
+				,#{checkDateMs, jdbcType=BIGINT}
+			</if>
 			<if test="sessionId != null">
 				,#{sessionId, jdbcType=VARCHAR}
 			</if>
@@ -76,6 +83,9 @@
 			</if>
 			<if test="checkDate != null">
 				CHECKDATE_ = #{checkDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="checkDateMs != null">
+				CHECKDATEMS_ = #{checkDateMs, jdbcType=TIMESTAMP},
 			</if>
 		</trim>
 		where

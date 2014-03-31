@@ -14,6 +14,8 @@
 		<fileset dir="${lib.dir}">
 			<include name="*.jar" />
 		</fileset>
+		<pathelement location="bin" />
+		<pathelement location="conf" />
 	</path>
 
 	<!-- 准备任务 -->
@@ -61,6 +63,24 @@
 			<fileset dir="." includes="*.jar" />
 		</copy>
 
+	</target>
+
+	<target name="run-master" >
+		<echo message="运行应用程序......" />
+        <java classname="com.glaf.test.ParkMasterSlave" fork="true">
+			<classpath refid="compile.classpath"/>
+			<jvmarg line="-Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m"/>
+			<arg line="M"/>
+		</java>
+	</target>
+
+	<target name="run-slave" >
+		<echo message="运行应用程序......" />
+		<java classname="com.glaf.test.ParkMasterSlave" fork="true">
+			<classpath refid="compile.classpath"/>
+			<jvmarg line="-Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m"/>
+			<arg line="S"/>
+		</java>
 	</target>
 
 

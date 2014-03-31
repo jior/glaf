@@ -48,7 +48,6 @@ import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.config.Configuration;
 import com.glaf.core.config.Environment;
 import com.glaf.core.config.SystemConfig;
-import com.glaf.core.context.ContextFactory;
 import com.glaf.core.domain.SystemProperty;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
@@ -76,6 +75,8 @@ public class MxLoginController {
 	private SysUserService sysUserService;
 
 	private UserOnlineService userOnlineService;
+
+	private ISystemPropertyService systemPropertyService;
 
 	/**
 	 * 登录
@@ -126,29 +127,45 @@ public class MxLoginController {
 			MessageUtils.addMessages(request, messages);
 			return new ModelAndView("/modules/login", modelMap);
 		} else {
-			ISystemPropertyService systemPropertyService = ContextFactory
-					.getBean("systemPropertyService");
 			SystemProperty p = systemPropertyService.getSystemProperty("SYS",
 					"login_limit");
+			SystemProperty pt = systemPropertyService.getSystemProperty("SYS",
+					"login_time_check");
+
+			int time_check = 1000 * 60 * 2;
+			if (pt != null && pt.getIntValue() > 0 && pt.getIntValue() < 30) {
+				time_check = 1000 * 60 * pt.getIntValue();
+			}
+
 			/**
 			 * 检测是否限制一个用户只能在一个地方登录
 			 */
 			if (p != null && StringUtils.equals(p.getValue(), "true")) {
+				logger.debug("#################3#########################");
 				String loginIP = null;
 				UserOnline userOnline = userOnlineService
 						.getUserOnline(account);
+				boolean timeout = false;
 				if (userOnline != null) {
 					loginIP = userOnline.getLoginIP();
+					if (System.currentTimeMillis()
+							- userOnline.getCheckDateMs() > time_check) {
+						timeout = true;// 超时，说明登录已经过期
+					}
 				}
+				logger.info("timeout:" + timeout);
 				logger.info("login IP:" + loginIP);
-				if (loginIP != null
-						&& !StringUtils.equals(
-								RequestUtils.getIPAddress(request), loginIP)) {// 用户已在其他机器登陆
-					messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
-							"authorize.login_failure2"));
-					MessageUtils.addMessages(request, messages);
-					logger.debug("用户已经在其他地方登录。");
-					return new ModelAndView("/modules/login", modelMap);
+				if (!timeout) {// 超时，说明登录已经过期，不用判断是否已经登录了
+					if (loginIP != null
+							&& !(StringUtils
+									.equals(RequestUtils.getIPAddress(request),
+											loginIP))) {// 用户已在其他机器登陆
+						messages.add(ViewMessages.GLOBAL_MESSAGE,
+								new ViewMessage("authorize.login_failure2"));
+						MessageUtils.addMessages(request, messages);
+						logger.debug("用户已经在其他地方登录。");
+						return new ModelAndView("/modules/login", modelMap);
+					}
 				}
 			}
 		}
@@ -296,7 +313,12 @@ public class MxLoginController {
 	@javax.annotation.Resource
 	public void setAuthorizeService(AuthorizeService authorizeService) {
 		this.authorizeService = authorizeService;
+	}
 
+	@javax.annotation.Resource
+	public void setSystemPropertyService(
+			ISystemPropertyService systemPropertyService) {
+		this.systemPropertyService = systemPropertyService;
 	}
 
 	@javax.annotation.Resource
