@@ -41,8 +41,8 @@ import com.glaf.base.online.domain.*;
 import com.glaf.base.online.query.*;
 import com.glaf.base.online.service.*;
 
-@Controller("/sys/online")
-@RequestMapping("/sys/online")
+@Controller("/public/online")
+@RequestMapping("/public/online")
 public class UserOnlineController {
 	protected static final Log logger = LogFactory
 			.getLog(UserOnlineController.class);
@@ -53,6 +53,22 @@ public class UserOnlineController {
 
 	public UserOnlineController() {
 
+	}
+
+	@RequestMapping("/doKickOut")
+	@ResponseBody
+	public void doKickOut(HttpServletRequest request) {
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		if (loginContext.isSystemAdministrator()) {
+			String actorId = request.getParameter("actorId");
+			if (!(StringUtils.equals(actorId, "admin") || StringUtils.equals(
+					actorId, "root"))) {
+				try {
+					userOnlineService.logout(actorId);
+				} catch (Exception ex) {
+				}
+			}
+		}
 	}
 
 	@RequestMapping("/doRemain")
@@ -69,20 +85,11 @@ public class UserOnlineController {
 	@ResponseBody
 	public byte[] json(HttpServletRequest request, ModelMap modelMap)
 			throws IOException {
-		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		UserOnlineQuery query = new UserOnlineQuery();
 		Tools.populate(query, params);
 		query.deleteFlag(0);
-		query.setActorId(loginContext.getActorId());
-		query.setLoginContext(loginContext);
-		/**
-		 * 此处业务逻辑需自行调整
-		 */
-		if (!loginContext.isSystemAdministrator()) {
-			String actorId = loginContext.getActorId();
-			query.createBy(actorId);
-		}
+		query.setSearchWord(request.getParameter("searchWord"));
 
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
@@ -193,14 +200,15 @@ public class UserOnlineController {
 				&& StringUtils.isNumeric(p.getValue())) {
 			timeoutSeconds = Integer.parseInt(p.getValue());
 		}
-		if (timeoutSeconds < 300) {
-			timeoutSeconds = 300;
-		}
+
 		if (timeoutSeconds > 3600) {
 			timeoutSeconds = 3600;
 		}
-		
+
 		timeoutSeconds = timeoutSeconds - 60;
+		if (timeoutSeconds < 60) {
+			timeoutSeconds = 60;
+		}
 		request.setAttribute("timeoutSeconds", timeoutSeconds);
 
 		String view = request.getParameter("view");
@@ -212,14 +220,14 @@ public class UserOnlineController {
 	}
 
 	@javax.annotation.Resource
-	public void setUserOnlineService(UserOnlineService userOnlineService) {
-		this.userOnlineService = userOnlineService;
-	}
-
-	@javax.annotation.Resource
 	public void setSystemPropertyService(
 			ISystemPropertyService systemPropertyService) {
 		this.systemPropertyService = systemPropertyService;
+	}
+
+	@javax.annotation.Resource
+	public void setUserOnlineService(UserOnlineService userOnlineService) {
+		this.userOnlineService = userOnlineService;
 	}
 
 }

@@ -123,7 +123,7 @@ public class UserController {
 		request.setAttribute("bean", bean);
 
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
-		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
+		List<SysTree> list = new java.util.ArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
@@ -287,35 +287,74 @@ public class UserController {
 		}
 	}
 
+	/**
+	 * 显示用户信息页面
+	 * 
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(params = "method=view")
+	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String actorId = request.getParameter("actorId");
+		SysUser bean = sysUserService.findByAccount(actorId);
+		request.setAttribute("bean", bean);
+
+		if (bean != null && StringUtils.isNotEmpty(bean.getSuperiorIds())) {
+			List<String> userIds = StringTools.split(bean.getSuperiorIds());
+			StringBuffer buffer = new StringBuffer();
+			if (userIds != null && !userIds.isEmpty()) {
+				for (String userId : userIds) {
+					SysUser u = sysUserService.findByAccount(userId);
+					if (u != null) {
+						buffer.append(u.getName()).append("[")
+								.append(u.getAccount()).append("] ");
+					}
+				}
+				request.setAttribute("x_users_name", buffer.toString());
+			}
+		}
+
+		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
+		List<SysTree> list = new java.util.ArrayList<SysTree>();
+		parent.setDeep(0);
+		list.add(parent);
+		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
+		request.setAttribute("parent", list);
+
+		String x_view = ViewProperties.getString("user.view");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/modules/identity/user/user_view", modelMap);
+	}
+
 	@javax.annotation.Resource
 	public void setSysDepartmentService(
 			SysDepartmentService sysDepartmentService) {
 		this.sysDepartmentService = sysDepartmentService;
-
 	}
 
 	@javax.annotation.Resource
 	public void setSysDeptRoleService(SysDeptRoleService sysDeptRoleService) {
 		this.sysDeptRoleService = sysDeptRoleService;
-
 	}
 
 	@javax.annotation.Resource
 	public void setSysRoleService(SysRoleService sysRoleService) {
 		this.sysRoleService = sysRoleService;
-
 	}
 
 	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
-
 	}
 
 	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
-
 	}
 
 }

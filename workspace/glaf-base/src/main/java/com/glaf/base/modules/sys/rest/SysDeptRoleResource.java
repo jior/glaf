@@ -111,7 +111,7 @@ public class SysDeptRoleResource {
 		RequestUtils.setRequestParameterToAttribute(request);
 		ViewMessages messages = new ViewMessages();
 		long deptId = ParamUtil.getIntParameter(request, "deptId", 0);
-		SysDepartment dept = sysDepartmentService.findById(deptId);// 查找部门对象
+		SysDepartment dept = sysDepartmentService.getSysDepartment(deptId);// 查找部门对象
 		if (dept != null) {// 部门存在
 			long[] id = ParamUtil.getLongParameterValues(request, "id");// 获取roleId
 			if (id != null) {

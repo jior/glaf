@@ -232,8 +232,8 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		list.add(node);
 	}
 
-	public SysDepartment getSysDepartment(Long id) {
-		if (id == null) {
+	public SysDepartment getSysDepartment(long id) {
+		if (id == 0) {
 			return null;
 		}
 		SysDepartment sysDepartment = sysDepartmentMapper

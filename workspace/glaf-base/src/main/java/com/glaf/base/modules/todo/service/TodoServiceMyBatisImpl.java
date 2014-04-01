@@ -199,7 +199,8 @@ public class TodoServiceMyBatisImpl implements TodoService {
 
 	public SysDepartment getParentDepartment(long id) {
 		SysDepartment parent = null;
-		SysDepartment node = (SysDepartment) sysDepartmentService.findById(id);
+		SysDepartment node = (SysDepartment) sysDepartmentService
+				.getSysDepartment(id);
 		if (node != null) {
 			SysTree tree = node.getNode();
 			if (tree.getParentId() != 0) {
@@ -286,9 +287,9 @@ public class TodoServiceMyBatisImpl implements TodoService {
 
 				if (entity.getRoleId() == 6 || entity.getRoleId() == 1) {
 					isDeptAdmin = true;
-					List list = new java.util.concurrent.CopyOnWriteArrayList();
-					SysDepartment node = sysDepartmentService.findById(entity
-							.getDeptId());
+					List list = new java.util.ArrayList();
+					SysDepartment node = sysDepartmentService
+							.getSysDepartment(entity.getDeptId());
 					sysDepartmentService.findNestingDepartment(list, node);
 					if (list != null && list.size() > 0) {
 						Iterator iter007 = list.iterator();

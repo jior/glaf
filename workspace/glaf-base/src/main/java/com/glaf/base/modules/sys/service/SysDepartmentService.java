@@ -130,6 +130,14 @@ public interface SysDepartmentService {
 	 * @param nodeId
 	 * @return
 	 */
+	SysDepartment getSysDepartment(long id);
+	
+	/**
+	 * 通过节点编号获取部门信息
+	 * 
+	 * @param nodeId
+	 * @return
+	 */
 	SysDepartment getSysDepartmentByNodeId(long nodeId);
 
 	/**

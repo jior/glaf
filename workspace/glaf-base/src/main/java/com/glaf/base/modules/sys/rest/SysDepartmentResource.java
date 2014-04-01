@@ -233,7 +233,7 @@ public class SysDepartmentResource {
 	public ModelAndView saveModify(@Context HttpServletRequest request,
 			@Context UriInfo uriInfo) {
 		long id = ParamUtil.getIntParameter(request, "id", 0);
-		SysDepartment bean = sysDepartmentService.findById(id);
+		SysDepartment bean = sysDepartmentService.getSysDepartment(id);
 		boolean ret = false;
 		if (bean != null) {
 			bean.setUpdateBy(RequestUtils.getActorId(request));

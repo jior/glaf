@@ -24,6 +24,7 @@ import com.glaf.core.query.DataQuery;
 public class UserOnlineQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
 	protected String name;
+	protected String searchWord;
 	protected Date loginDateGreaterThanOrEqual;
 	protected Date loginDateLessThanOrEqual;
 	protected String loginIP;
@@ -34,10 +35,6 @@ public class UserOnlineQuery extends DataQuery {
 
 	public String getActorId() {
 		return actorId;
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public Date getLoginDateGreaterThanOrEqual() {
@@ -52,62 +49,8 @@ public class UserOnlineQuery extends DataQuery {
 		return loginIP;
 	}
 
-	public void setActorId(String actorId) {
-		this.actorId = actorId;
-	}
-
-	public void setActorIds(List<String> actorIds) {
-		this.actorIds = actorIds;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setLoginDateGreaterThanOrEqual(Date loginDateGreaterThanOrEqual) {
-		this.loginDateGreaterThanOrEqual = loginDateGreaterThanOrEqual;
-	}
-
-	public void setLoginDateLessThanOrEqual(Date loginDateLessThanOrEqual) {
-		this.loginDateLessThanOrEqual = loginDateLessThanOrEqual;
-	}
-
-	public void setLoginIP(String loginIP) {
-		this.loginIP = loginIP;
-	}
-
-	public UserOnlineQuery name(String name) {
-		if (name == null) {
-			throw new RuntimeException("name is null");
-		}
-		this.name = name;
-		return this;
-	}
-
-	public UserOnlineQuery loginDateGreaterThanOrEqual(
-			Date loginDateGreaterThanOrEqual) {
-		if (loginDateGreaterThanOrEqual == null) {
-			throw new RuntimeException("loginDate is null");
-		}
-		this.loginDateGreaterThanOrEqual = loginDateGreaterThanOrEqual;
-		return this;
-	}
-
-	public UserOnlineQuery loginDateLessThanOrEqual(
-			Date loginDateLessThanOrEqual) {
-		if (loginDateLessThanOrEqual == null) {
-			throw new RuntimeException("loginDate is null");
-		}
-		this.loginDateLessThanOrEqual = loginDateLessThanOrEqual;
-		return this;
-	}
-
-	public UserOnlineQuery loginIP(String loginIP) {
-		if (loginIP == null) {
-			throw new RuntimeException("loginIP is null");
-		}
-		this.loginIP = loginIP;
-		return this;
+	public String getName() {
+		return name;
 	}
 
 	public String getOrderBy() {
@@ -141,6 +84,18 @@ public class UserOnlineQuery extends DataQuery {
 		return orderBy;
 	}
 
+	public String getSearchWord() {
+		if (searchWord != null && searchWord.trim().length() > 0) {
+			if (!searchWord.startsWith("%")) {
+				searchWord = "%" + searchWord;
+			}
+			if (!searchWord.endsWith("%")) {
+				searchWord = searchWord + "%";
+			}
+		}
+		return searchWord;
+	}
+
 	@Override
 	public void initQueryColumns() {
 		super.initQueryColumns();
@@ -150,6 +105,76 @@ public class UserOnlineQuery extends DataQuery {
 		addColumn("loginDate", "LOGINDATE_");
 		addColumn("loginIP", "LOGINIP_");
 		addColumn("sessionId", "SESSIONID_");
+	}
+
+	public UserOnlineQuery loginDateGreaterThanOrEqual(
+			Date loginDateGreaterThanOrEqual) {
+		if (loginDateGreaterThanOrEqual == null) {
+			throw new RuntimeException("loginDate is null");
+		}
+		this.loginDateGreaterThanOrEqual = loginDateGreaterThanOrEqual;
+		return this;
+	}
+
+	public UserOnlineQuery loginDateLessThanOrEqual(
+			Date loginDateLessThanOrEqual) {
+		if (loginDateLessThanOrEqual == null) {
+			throw new RuntimeException("loginDate is null");
+		}
+		this.loginDateLessThanOrEqual = loginDateLessThanOrEqual;
+		return this;
+	}
+
+	public UserOnlineQuery loginIP(String loginIP) {
+		if (loginIP == null) {
+			throw new RuntimeException("loginIP is null");
+		}
+		this.loginIP = loginIP;
+		return this;
+	}
+
+	public UserOnlineQuery name(String name) {
+		if (name == null) {
+			throw new RuntimeException("name is null");
+		}
+		this.name = name;
+		return this;
+	}
+
+	public UserOnlineQuery searchWord(String searchWord) {
+		if (searchWord == null) {
+			throw new RuntimeException("searchWord is null");
+		}
+		this.searchWord = searchWord;
+		return this;
+	}
+
+	public void setActorId(String actorId) {
+		this.actorId = actorId;
+	}
+
+	public void setActorIds(List<String> actorIds) {
+		this.actorIds = actorIds;
+	}
+
+	public void setLoginDateGreaterThanOrEqual(Date loginDateGreaterThanOrEqual) {
+		this.loginDateGreaterThanOrEqual = loginDateGreaterThanOrEqual;
+	}
+
+	public void setLoginDateLessThanOrEqual(Date loginDateLessThanOrEqual) {
+		this.loginDateLessThanOrEqual = loginDateLessThanOrEqual;
+	}
+
+	public void setLoginIP(String loginIP) {
+		this.loginIP = loginIP;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setSearchWord(String searchWord) {
+		this.searchWord = searchWord;
 	}
 
 }

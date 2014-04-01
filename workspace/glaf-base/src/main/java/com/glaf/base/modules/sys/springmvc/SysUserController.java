@@ -841,7 +841,7 @@ public class SysUserController {
 		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
 		String name = ParamUtil.getParameter(request, "fullName", null);
 
-		SysDepartment sysDepartment = sysDepartmentService.findById(deptId);
+		SysDepartment sysDepartment = sysDepartmentService.getSysDepartment(deptId);
 		request.setAttribute("sysDepartment", sysDepartment);
 		PageResult pager = null;
 		if (name != null && !"".equals(name)) {
@@ -958,7 +958,7 @@ public class SysUserController {
 		// 6:
 		long deptId = ParamUtil.getLongParameter(request, "dept", 5);
 		String roleCode = ParamUtil.getParameter(request, "code", "");
-		SysDepartment node = this.sysDepartmentService.findById(deptId);
+		SysDepartment node = this.sysDepartmentService.getSysDepartment(deptId);
 		if (node != null) {
 			list.add(node);
 			this.getAllSysDepartmentList(list, (int) node.getId());
@@ -1016,10 +1016,10 @@ public class SysUserController {
 		PageResult pager = sysUserService.getSysUserList(deptId, pageNo,
 				pageSize);
 		request.setAttribute("department",
-				sysDepartmentService.findById(deptId));
+				sysDepartmentService.getSysDepartment(deptId));
 		request.setAttribute("pager", pager);
 
-		SysDepartment dept = sysDepartmentService.findById(deptId);
+		SysDepartment dept = sysDepartmentService.getSysDepartment(deptId);
 		List<SysDepartment> list = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
 		sysDepartmentService.findNestingDepartment(list, dept);
 		request.setAttribute("nav", list);
@@ -1103,8 +1103,8 @@ public class SysUserController {
 		long roleId = ParamUtil.getLongParameter(request, "roleId", 0);
 
 		// 部门信息
-		SysDepartment dept = sysDepartmentService.findById(deptId);
-		List<SysDepartment> list = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
+		SysDepartment dept = sysDepartmentService.getSysDepartment(deptId);
+		List<SysDepartment> list = new java.util.ArrayList<SysDepartment>();
 		sysDepartmentService.findNestingDepartment(list, dept);
 		request.setAttribute("nav", list);
 
@@ -1162,7 +1162,7 @@ public class SysUserController {
 		request.setAttribute("user", user);
 
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
-		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
+		List<SysTree> list = new java.util.ArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);

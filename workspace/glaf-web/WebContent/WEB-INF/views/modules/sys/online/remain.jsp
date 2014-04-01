@@ -14,7 +14,7 @@
 	function remainOnline(){
 		jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/sys/online/doRemain',
+				   url: '<%=request.getContextPath()%>/mx/public/online/doRemain',
 				   dataType:  'json',
 				   error: function(data){
 					    

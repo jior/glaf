@@ -122,16 +122,25 @@ public class LoginController {
 		}
 		String ipAddr = RequestUtils.getIPAddress(request);
 
-		if (!(StringUtils.equals(ipAddr, "localhost") || StringUtils.equals(
-				ipAddr, "127.0.0.1"))) {
+		if (!(StringUtils.equals(ipAddr, "localhost")
+				|| StringUtils.equals(ipAddr, "127.0.0.1")
+				|| StringUtils.equals(account, "root") || StringUtils.equals(
+				account, "admin"))) {
 			SystemProperty p = systemPropertyService.getSystemProperty("SYS",
 					"login_limit");
 			SystemProperty pt = systemPropertyService.getSystemProperty("SYS",
 					"login_time_check");
+			int timeoutSeconds = 300;
 
-			int time_check = 1000 * 60 * 5;
-			if (pt != null && pt.getIntValue() > 0 && pt.getIntValue() < 30) {
-				time_check = 1000 * 60 * pt.getIntValue();
+			if (pt != null && pt.getValue() != null
+					&& StringUtils.isNumeric(pt.getValue())) {
+				timeoutSeconds = Integer.parseInt(pt.getValue());
+			}
+			if (timeoutSeconds < 300) {
+				timeoutSeconds = 300;
+			}
+			if (timeoutSeconds > 3600) {
+				timeoutSeconds = 3600;
 			}
 
 			/**
@@ -146,7 +155,7 @@ public class LoginController {
 				if (userOnline != null) {
 					loginIP = userOnline.getLoginIP();
 					if (System.currentTimeMillis()
-							- userOnline.getCheckDateMs() > time_check) {
+							- userOnline.getCheckDateMs() > timeoutSeconds) {
 						timeout = true;// 超时，说明登录已经过期
 					}
 				}

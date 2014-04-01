@@ -112,7 +112,7 @@ public class SysUserResource {
 			for (int i = 0; i < userIds.length; i++) {
 				SysUser user = sysUserService.findById(userIds[i]);
 				if (user != null) {
-					logger.info(user.getName());
+					logger.debug(user.getName());
 					users.add(user);
 				}
 			}

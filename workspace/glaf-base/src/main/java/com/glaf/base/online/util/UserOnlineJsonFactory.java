@@ -41,6 +41,9 @@ public class UserOnlineJsonFactory {
 		if (jsonObject.containsKey("loginDate")) {
 			model.setLoginDate(jsonObject.getDate("loginDate"));
 		}
+		if (jsonObject.containsKey("checkDate")) {
+			model.setCheckDate(jsonObject.getDate("checkDate"));
+		}
 		if (jsonObject.containsKey("loginIP")) {
 			model.setLoginIP(jsonObject.getString("loginIP"));
 		}
@@ -62,6 +65,14 @@ public class UserOnlineJsonFactory {
 		if (model.getName() != null) {
 			jsonObject.put("name", model.getName());
 		}
+		if (model.getCheckDate() != null) {
+			jsonObject
+					.put("checkDate", DateUtils.getDate(model.getCheckDate()));
+			jsonObject.put("checkDate_date",
+					DateUtils.getDate(model.getCheckDate()));
+			jsonObject.put("checkDate_datetime",
+					DateUtils.getDateTime(model.getCheckDate()));
+		}
 		if (model.getLoginDate() != null) {
 			jsonObject
 					.put("loginDate", DateUtils.getDate(model.getLoginDate()));
@@ -73,6 +84,7 @@ public class UserOnlineJsonFactory {
 		if (model.getLoginIP() != null) {
 			jsonObject.put("loginIP", model.getLoginIP());
 		}
+
 		if (model.getSessionId() != null) {
 			jsonObject.put("sessionId", model.getSessionId());
 		}
@@ -89,6 +101,14 @@ public class UserOnlineJsonFactory {
 		}
 		if (model.getName() != null) {
 			jsonObject.put("name", model.getName());
+		}
+		if (model.getCheckDate() != null) {
+			jsonObject
+					.put("checkDate", DateUtils.getDate(model.getCheckDate()));
+			jsonObject.put("checkDate_date",
+					DateUtils.getDate(model.getCheckDate()));
+			jsonObject.put("checkDate_datetime",
+					DateUtils.getDateTime(model.getCheckDate()));
 		}
 		if (model.getLoginDate() != null) {
 			jsonObject

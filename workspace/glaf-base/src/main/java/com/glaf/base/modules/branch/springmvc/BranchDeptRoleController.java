@@ -95,7 +95,7 @@ public class BranchDeptRoleController {
 	public ModelAndView showList(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long deptId = (long) ParamUtil.getIntParameter(request, "parent", 0);
-		SysDepartment department = sysDepartmentService.findById(deptId);
+		SysDepartment department = sysDepartmentService.getSysDepartment(deptId);
 		request.setAttribute("department", department);
 
 		String actorId = RequestUtils.getActorId(request);

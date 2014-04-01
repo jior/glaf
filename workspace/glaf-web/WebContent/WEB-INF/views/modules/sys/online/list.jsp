@@ -3,13 +3,19 @@
 <%@ page import="com.glaf.core.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro"%>
+<%
+    String theme = com.glaf.core.util.RequestUtils.getTheme(request);
+    request.setAttribute("theme", theme);
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>用户在线</title>
-<%@ include file="/WEB-INF/views/inc/init_styles.jsp"%>
-<%@ include file="/WEB-INF/views/inc/init_scripts.jsp"%>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/core.css">
+<%@ include file="/WEB-INF/views/inc/init_style.jsp"%>
+<%@ include file="/WEB-INF/views/inc/init_script.jsp"%>
 <script type="text/javascript">
    var contextPath="<%=request.getContextPath()%>";
 
@@ -22,25 +28,24 @@
 				nowrap: false,
 				striped: true,
 				collapsible: true,
-				url: '<%=request.getContextPath()%>/mx/sys/online/json',
+				url: '<%=request.getContextPath()%>/mx/public/online/json',
 				remoteSort: false,
 				singleSelect: true,
 				idField: 'id',
 				columns:[[
 				        {title:'序号', field:'startIndex', width:80, sortable:false},
-						{title:'用户名',field:'actorId', width:120},
-						{title:'用户姓名',field:'name', width:120},
-						{title:'登录时间',field:'loginDate', width:120},
+						{title:'用户名',field:'actorId', width:90},
+						{title:'用户姓名',field:'name', width:90},
+						{title:'登录时间',field:'loginDate_datetime', width:120},
 						{title:'登录IP',field:'loginIP', width:120},
-						{title:'检测时间',field:'checkDate', width:120},
-					{field:'functionKey',title:'功能键',width:120}
+						{title:'最后更新时间',field:'checkDate_datetime', width:120},
+					    {title:'功能键', field:'functionKey', align:'center', width:120, formatter:formatterKeys}
 				]],
 				rownumbers: false,
 				pagination: true,
 				pageSize: <%=com.glaf.core.util.Paging.DEFAULT_PAGE_SIZE%>,
 				pageList: [10,15,20,25,30,40,50,100],
-				pagePosition: 'both',
-				onClickRow: onRowClick 
+				pagePosition: 'both'
 			});
 
 			var p = jQuery('#mydatagrid').datagrid('getPager');
@@ -51,13 +56,41 @@
 		    });
 	});
 
-		 
-	function onRowClick(rowIndex, row){
-	    var link = '<%=request.getContextPath()%>/mx/sys/online/edit?id='+row.id+'&fromUrl=${fromUrl}';
-	    //art.dialog.open(link, { height: 420, width: 680, title: "修改记录", lock: true, scrollbars:"no" }, false);
-		location.href=link;
-	}
  
+    function formatterKeys(val, row){
+		var str = "<a href='javascript:viewUser(\""+row.actorId+"\");'>查看</a>";
+		<shiro:hasPermission name="SystemAdministrator">
+            str+="&nbsp;<a href='javascript:kickOut(\""+row.actorId+"\");'>注销</a>";
+        </shiro:hasPermission>
+	    return str;
+	}
+
+	function viewUser(actorId){
+		var link = '<%=request.getContextPath()%>/identity/user.do?method=view&actorId='+actorId;
+		art.dialog.open(link, { height: 420, width: 480, title: "查看用户信息", lock: true, scrollbars:"no" }, false);
+	}
+
+    function kickOut(actorId){
+		if(confirm("在线用户可能正在进行业务办理，将影响用户正常使用，确定注销吗？")){
+			jQuery.ajax({
+				   type: "POST",
+				   url: '<%=request.getContextPath()%>/mx/public/online/doKickOut?actorId='+actorId,
+				   dataType:  'json',
+				   error: function(data){
+					   alert('服务器处理错误！');
+				   },
+				   success: function(data){
+					   if(data != null && data.message != null){
+						   alert(data.message);
+					   } else {
+						   alert('操作成功完成！');
+					   }
+					   jQuery('#mydatagrid').datagrid('reload');
+				   }
+			 });
+		}  
+	}
+
 	function resize(){
 		jQuery('#mydatagrid').datagrid('resize', {
 			width:800,
@@ -66,17 +99,13 @@
 	}
   
 
-	function deleteSelections(){
+	function doKickOut(){
 		var ids = [];
-		var rows = jQuery('#mydatagrid').datagrid('getSelections');
-		for(var i=0;i<rows.length;i++){
-			ids.push(rows[i].id);
-		}
-		if(ids.length > 0 && confirm("数据删除后不能恢复，确定删除吗？")){
-		    var str = ids.join(',');
+		var selected = jQuery('#mydatagrid').datagrid('getSelected');
+		if(selected && confirm("在线用户可能正在进行业务办理，将影响用户正常使用，确定注销吗？")){
 			jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/mx/sys/online/delete?ids='+str,
+				   url: '<%=request.getContextPath()%>/mx/public/online/doKickOut?actorId='+selected.actorId,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
@@ -126,24 +155,52 @@
             jQuery('#mydatagrid').datagrid('loadData', data);
         },'json');
 	}
-		 
+
+    function searchData(){
+		var searchWord = document.getElementById("searchWord2").value.trim();
+        document.getElementById("searchWord").value = searchWord;
+		var params = jQuery("#iForm").formSerialize();
+        jQuery.ajax({
+                    type: "POST",
+                    url: '<%=request.getContextPath()%>/mx/public/online/json',
+                    dataType:  'json',
+				    data: params,
+                    error: function(data){
+                            alert('服务器处理错误！');
+                    },
+                    success: function(data){
+                            jQuery('#mydatagrid').datagrid('loadData', data);
+                    }
+               });
+	}
+		 		 
 </script>
 </head>
-<body style="margin:1px;">  
+<body style="margin:1px;"> 
+
 <div style="margin:0;"></div>  
 <div class="easyui-layout" data-options="fit:true">  
    <div data-options="region:'north',split:true,border:true" style="height:40px"> 
     <div class="toolbar-backgroud"  > 
 	<img src="<%=request.getContextPath()%>/images/window.png">
 	&nbsp;<span class="x_content_title">用户在线列表</span>
+	<shiro:hasPermission name="SystemAdministrator">
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-remove'"
-	   onclick="javascript:deleteSelections();">删除</a> 
+	   onclick="javascript:doKickOut();">注销</a> 
+	</shiro:hasPermission>
+	<input id="searchWord2" name="searchWord2" type="text" 
+	       class="x-searchtext" size="50" maxlength="200"/>
+    
+	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
+	   onclick="javascript:searchData();">查找</a>
    </div> 
   </div> 
   <div data-options="region:'center',border:true">
 	 <table id="mydatagrid"></table>
   </div>  
 </div>
- 
+<form id="iForm" name="iForm" method="post">
+   <input type="hidden" id="searchWord" name="searchWord">
+</form> 
 </body>
 </html>

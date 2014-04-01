@@ -163,6 +163,11 @@
 			<if test="name != null and name != '' ">
 				and E.NAME_ = #{name}
 			</if>
+			
+			
+			<if test="searchWord != null and searchWord != '' ">
+				and ( E.NAME_ like #{searchWord} or E.ACTORID_ like #{searchWord} )
+			</if>
 
 			<if test="loginDateGreaterThanOrEqual != null">
 				and E.LOGINDATE_ &gt;= #{loginDateGreaterThanOrEqual}

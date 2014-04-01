@@ -253,11 +253,11 @@ public class BranchDepartmentController {
 			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		long id = ParamUtil.getIntParameter(request, "id", 0);
-		SysDepartment bean = sysDepartmentService.findById(id);
+		SysDepartment bean = sysDepartmentService.getSysDepartment(id);
 		request.setAttribute("bean", bean);
 
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
-		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
+		List<SysTree> list = new java.util.ArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
@@ -347,7 +347,7 @@ public class BranchDepartmentController {
 	public ModelAndView saveModify(HttpServletRequest request, ModelMap modelMap) {
 		long id = ParamUtil.getLongParameter(request, "id", 0);
 		long parentId = ParamUtil.getLongParameter(request, "parent", 0);
-		SysDepartment bean = sysDepartmentService.findById(id);
+		SysDepartment bean = sysDepartmentService.getSysDepartment(id);
 		boolean ret = false;
 		if (bean != null) {
 			LoginContext loginContext = RequestUtils.getLoginContext(request);

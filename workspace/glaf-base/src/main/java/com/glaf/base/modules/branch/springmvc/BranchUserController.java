@@ -108,7 +108,7 @@ public class BranchUserController {
 		List<Long> nodeIds = complexUserService
 				.getUserManageBranchNodeIds(actorId);
 
-		SysDepartment department = sysDepartmentService.findById(deptId);
+		SysDepartment department = sysDepartmentService.getSysDepartment(deptId);
 		if (department != null) {
 			SysTree tree = sysTreeService.findById(department.getNodeId());
 			if (tree != null && nodeIds.contains(tree.getId())) {
@@ -838,10 +838,10 @@ public class BranchUserController {
 		PageResult pager = sysUserService.getSysUserList(deptId, pageNo,
 				pageSize);
 		request.setAttribute("department",
-				sysDepartmentService.findById(deptId));
+				sysDepartmentService.getSysDepartment(deptId));
 		request.setAttribute("pager", pager);
 
-		SysDepartment dept = sysDepartmentService.findById(deptId);
+		SysDepartment dept = sysDepartmentService.getSysDepartment(deptId);
 		List<SysDepartment> list = new java.util.ArrayList<SysDepartment>();
 		sysDepartmentService.findNestingDepartment(list, dept);
 		request.setAttribute("nav", list);
