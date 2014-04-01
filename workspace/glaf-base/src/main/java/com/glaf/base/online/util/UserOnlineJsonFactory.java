@@ -21,8 +21,8 @@ package com.glaf.base.online.util;
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import com.glaf.core.util.DateUtils;
+import com.glaf.core.util.RequestUtils;
 import com.glaf.base.online.domain.*;
 
 public class UserOnlineJsonFactory {
@@ -61,6 +61,7 @@ public class UserOnlineJsonFactory {
 		jsonObject.put("_oid_", model.getId());
 		if (model.getActorId() != null) {
 			jsonObject.put("actorId", model.getActorId());
+			jsonObject.put("actorId_enc", RequestUtils.encodeString(model.getActorId()));
 		}
 		if (model.getName() != null) {
 			jsonObject.put("name", model.getName());
@@ -98,6 +99,7 @@ public class UserOnlineJsonFactory {
 		jsonObject.put("_oid_", model.getId());
 		if (model.getActorId() != null) {
 			jsonObject.put("actorId", model.getActorId());
+			jsonObject.put("actorId_enc", RequestUtils.encodeString(model.getActorId()));
 		}
 		if (model.getName() != null) {
 			jsonObject.put("name", model.getName());
