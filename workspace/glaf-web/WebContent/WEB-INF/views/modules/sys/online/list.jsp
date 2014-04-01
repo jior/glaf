@@ -119,9 +119,7 @@
 					   jQuery('#mydatagrid').datagrid('reload');
 				   }
 			 });
-		} else {
-			alert("请选择至少一条记录。");
-		}
+		} 
 	}
 
 	function reloadGrid(){
