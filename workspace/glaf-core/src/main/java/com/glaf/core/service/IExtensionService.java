@@ -16,34 +16,50 @@
  * limitations under the License.
  */
 
-package com.glaf.core.mapper;
+package com.glaf.core.service;
 
 import java.util.*;
 
-import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.base.TableModel;
-import com.glaf.core.domain.SysExtension;
+import com.glaf.core.domain.InputDefinition;
+import com.glaf.core.domain.SysDataTable;
 
-@Component
-public interface TableDataMapper {
+@Transactional(readOnly = true)
+public interface IExtensionService {
 
-	void deleteTableData(TableModel model);
+	/**
+	 * 获取扩展模块
+	 * 
+	 * @return
+	 */
+	List<SysDataTable> getExtensionModules();
 
-	int getTableCountByConditions(TableModel query);
+	/**
+	 * 获取扩展模块的输入字段列表
+	 * 
+	 * @param serviceKey
+	 * @return
+	 */
+	List<InputDefinition> getExtensionFields(String serviceKey);
 
-	List<Map<String, Object>> getTableDataByConditions(TableModel query);
+	/**
+	 * 
+	 * @param serviceKey
+	 * @param businessKey
+	 * @return
+	 */
+	Map<String, Object> getDataMap(String serviceKey, String businessKey);
 
-	List<SysExtension> getExtensionDataByConditions(TableModel query);
-
-	Map<String, Object> getTableDataByPrimaryKey(TableModel query);
-
-	List<Map<String, Object>> getTableKeyMap(TableModel query);
-
-	List<Map<String, Object>> getTablePrimaryKeyMap(TableModel query);
-
-	void insertTableData(TableModel model);
-
-	void updateTableDataByPrimaryKey(TableModel model);
+	/**
+	 * 保存数据
+	 * 
+	 * @param serviceKey
+	 * @param businessKey
+	 * @param rows
+	 */
+	@Transactional
+	void saveAll(String serviceKey, String businessKey,
+			Map<String, Object> dataMap);
 
 }

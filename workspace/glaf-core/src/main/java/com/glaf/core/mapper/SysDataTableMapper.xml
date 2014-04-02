@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.mapper.SysDataTableMapper">
+
+	<resultMap id="sysDataTableResultMap" type="com.glaf.core.domain.SysDataTable">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="serviceKey" column="SERVICEKEY_" jdbcType="VARCHAR" />
+		<result property="tablename" column="TABLENAME_" jdbcType="VARCHAR" />
+		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="type" column="TYPE_" jdbcType="INTEGER" />
+		<result property="maxUser" column="MAXUSER_" jdbcType="INTEGER" />
+		<result property="maxSys" column="MAXSYS_" jdbcType="INTEGER" />
+		<result property="actorId" column="ACTORID_" jdbcType="VARCHAR" />
+		<result property="createTime" column="CREATETIME_" jdbcType="TIMESTAMP" />
+		<result property="content" column="CONTENT_" jdbcType="VARCHAR" />
+		<result property="isSubTable" column="ISSUBTABLE_" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="insertSysDataTable" parameterType="com.glaf.core.domain.SysDataTable">
+		insert into SYS_DATA_TABLE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="serviceKey != null">
+				,SERVICEKEY_
+			</if>
+			<if test="tablename != null">
+				,TABLENAME_
+			</if>
+			<if test="title != null">
+				,TITLE_
+			</if>
+			<if test="type != null">
+				,TYPE_
+			</if>
+			<if test="maxUser != null">
+				,MAXUSER_
+			</if>
+			<if test="maxSys != null">
+				,MAXSYS_
+			</if>
+			<if test="actorId != null">
+				,ACTORID_
+			</if>
+			<if test="createTime != null">
+				,CREATETIME_
+			</if>
+			<if test="content != null">
+				,CONTENT_
+			</if>
+			<if test="isSubTable != null">
+				,ISSUBTABLE_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=VARCHAR}
+
+			<if test="serviceKey != null">
+				,#{serviceKey, jdbcType=VARCHAR}
+			</if>
+			<if test="tablename != null">
+				,#{tablename, jdbcType=VARCHAR}
+			</if>
+			<if test="title != null">
+				,#{title, jdbcType=VARCHAR}
+			</if>
+			<if test="type != null">
+				,#{type, jdbcType=INTEGER}
+			</if>
+			<if test="maxUser != null">
+				,#{maxUser, jdbcType=INTEGER}
+			</if>
+			<if test="maxSys != null">
+				,#{maxSys, jdbcType=INTEGER}
+			</if>
+			<if test="actorId != null">
+				,#{actorId, jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null">
+				,#{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="content != null">
+				,#{content, jdbcType=VARCHAR}
+			</if>
+			<if test="isSubTable != null">
+				,#{isSubTable, jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateSysDataTable" parameterType="com.glaf.core.domain.SysDataTable">
+		update SYS_DATA_TABLE
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="title != null">
+				TITLE_ = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				TYPE_ = #{type, jdbcType=INTEGER},
+			</if>
+			<if test="maxUser != null">
+				MAXUSER_ = #{maxUser, jdbcType=INTEGER},
+			</if>
+			<if test="maxSys != null">
+				MAXSYS_ = #{maxSys, jdbcType=INTEGER},
+			</if>
+			<if test="content != null">
+				CONTENT_ = #{content, jdbcType=VARCHAR},
+			</if>
+			<if test="isSubTable != null">
+				ISSUBTABLE_ = #{isSubTable, jdbcType=VARCHAR},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=VARCHAR}
+
+	</update>
+
+
+	<delete id="deleteSysDataTableById" parameterType="string">
+		delete from
+		SYS_DATA_TABLE
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteSysDataTables" parameterType="com.glaf.core.query.SysDataTableQuery">
+		delete from SYS_DATA_TABLE
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getSysDataTableById" parameterType="string"
+		resultMap="sysDataTableResultMap">
+		select * from SYS_DATA_TABLE where ID_ = #{id}
+	</select>
+
+
+	<select id="getSysDataTables" parameterType="com.glaf.core.query.SysDataTableQuery"
+		resultMap="sysDataTableResultMap">
+		select distinct E.*
+		<include refid="selectSysDataTablesSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.ID_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getSysDataTableCount" parameterType="com.glaf.core.query.SysDataTableQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectSysDataTablesSql" />
+	</select>
+
+
+	<sql id="selectSysDataTablesSql">
+
+		from SYS_DATA_TABLE E
+
+		<where>
+			1 = 1
+
+			<if test="serviceKey != null and serviceKey != '' ">
+				and E.SERVICEKEY_ = #{serviceKey}
+			</if>
+
+			<if test="tablename != null and tablename != '' ">
+				and E.TABLENAME_ = #{tablename}
+			</if>
+
+			<if test="tablenames != null and tablenames.size != 0">
+				and E.TABLENAME_ IN
+				<foreach item="x_tablename" index="index" collection="tablenames"
+					open="(" separator="," close=")">
+					#{x_tablename}
+				</foreach>
+			</if>
+
+			<if test="titleLike != null and titleLike != '' ">
+				and E.TITLE_ like #{titleLike}
+			</if>
+
+			<if test="type != null">
+				and E.TYPE_ = #{type}
+			</if>
+
+			<if test="types != null and types.size != 0">
+				and E.TYPE_ IN
+				<foreach item="x_type" index="index" collection="types"
+					open="(" separator="," close=")">
+					#{x_type}
+				</foreach>
+			</if>
+
+			<if test="actorId != null and actorId != '' ">
+				and E.ACTORID_ = #{actorId}
+			</if>
+
+			<if test="actorIds != null and actorIds.size != 0">
+				and E.ACTORID_ IN
+				<foreach item="x_actorId" index="index" collection="actorIds"
+					open="(" separator="," close=")">
+					#{x_actorId}
+				</foreach>
+			</if>
+
+			<if test="createTimeGreaterThanOrEqual != null">
+				and E.CREATETIME_ &gt;= #{createTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="createTimeLessThanOrEqual != null">
+				and E.CREATETIME_ &lt;= #{createTimeLessThanOrEqual}
+			</if>
+
+			<if test="contentLike != null and contentLike != '' ">
+				and E.CONTENT_ like #{contentLike}
+			</if>
+
+			<if test="isSubTable != null and isSubTable != '' ">
+				and E.ISSUBTABLE_ = #{isSubTable}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

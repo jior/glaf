@@ -19,31 +19,25 @@
 package com.glaf.core.mapper;
 
 import java.util.*;
-
 import org.springframework.stereotype.Component;
-
-import com.glaf.core.base.TableModel;
-import com.glaf.core.domain.SysExtension;
+import com.glaf.core.domain.*;
+import com.glaf.core.query.*;
 
 @Component
-public interface TableDataMapper {
+public interface SysDataTableMapper {
 
-	void deleteTableData(TableModel model);
+	void deleteSysDataTables(SysDataTableQuery query);
 
-	int getTableCountByConditions(TableModel query);
+	void deleteSysDataTableById(String id);
 
-	List<Map<String, Object>> getTableDataByConditions(TableModel query);
+	SysDataTable getSysDataTableById(String id);
 
-	List<SysExtension> getExtensionDataByConditions(TableModel query);
+	int getSysDataTableCount(SysDataTableQuery query);
 
-	Map<String, Object> getTableDataByPrimaryKey(TableModel query);
+	List<SysDataTable> getSysDataTables(SysDataTableQuery query);
 
-	List<Map<String, Object>> getTableKeyMap(TableModel query);
+	void insertSysDataTable(SysDataTable model);
 
-	List<Map<String, Object>> getTablePrimaryKeyMap(TableModel query);
-
-	void insertTableData(TableModel model);
-
-	void updateTableDataByPrimaryKey(TableModel model);
+	void updateSysDataTable(SysDataTable model);
 
 }
