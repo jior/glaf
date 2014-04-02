@@ -303,7 +303,7 @@ public class SysDepartmentResource {
 	public byte[] treeJson(@Context HttpServletRequest request) {
 		String nodeCode = request.getParameter("nodeCode");
 
-		List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
+		List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
 		if (StringUtils.isNotEmpty(nodeCode)) {
 			TreeModel treeModel = sysTreeService.getSysTreeByCode(nodeCode);
 			if (treeModel != null) {

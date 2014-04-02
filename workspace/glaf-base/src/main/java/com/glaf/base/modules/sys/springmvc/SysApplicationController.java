@@ -122,7 +122,7 @@ public class SysApplicationController {
 		}
 
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
-		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
+		List<SysTree> list = new java.util.ArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
@@ -271,7 +271,7 @@ public class SysApplicationController {
 		request.setAttribute("bean", bean);
 
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
-		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
+		List<SysTree> list = new java.util.ArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
@@ -557,7 +557,7 @@ public class SysApplicationController {
 			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		int parent = ParamUtil.getIntParameter(request, "parent", 0);
-		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
+		List<SysTree> list = new java.util.ArrayList<SysTree>();
 		sysTreeService.getSysTree(list, parent, 0);
 		request.setAttribute("list", list);
 

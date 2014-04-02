@@ -145,13 +145,13 @@ public class GroupResource {
 		if (root != null && users != null) {
 			logger.debug(root.toJsonObject().toJSONString());
 			logger.debug("users size:" + users.size());
-			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
+			List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
 			// treeModels.add(root);
 			List<SysTree> trees = sysTreeService.getAllSysTreeListForDept(
 					(int) root.getId(), 0);
 			if (trees != null && !trees.isEmpty()) {
 				logger.debug("dept tree size:" + trees.size());
-				Map<Long, SysTree> treeMap = new java.util.concurrent.ConcurrentHashMap<Long, SysTree>();
+				Map<Long, SysTree> treeMap = new java.util.HashMap<Long, SysTree>();
 				for (SysTree tree : trees) {
 					SysDepartment dept = tree.getDepartment();
 					treeMap.put(dept.getId(), tree);
@@ -207,13 +207,13 @@ public class GroupResource {
 		if (root != null && users != null) {
 			logger.debug(root.toJsonObject().toJSONString());
 			logger.debug("users size:" + users.size());
-			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
+			List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
 			// treeModels.add(root);
 			List<SysTree> trees = sysTreeService.getAllSysTreeListForDept(
 					(int) root.getId(), 0);
 			if (trees != null && !trees.isEmpty()) {
 				logger.debug("dept tree size:" + trees.size());
-				Map<Long, SysTree> treeMap = new java.util.concurrent.ConcurrentHashMap<Long, SysTree>();
+				Map<Long, SysTree> treeMap = new java.util.HashMap<Long, SysTree>();
 				for (SysTree tree : trees) {
 					SysDepartment dept = tree.getDepartment();
 					treeMap.put(dept.getId(), tree);

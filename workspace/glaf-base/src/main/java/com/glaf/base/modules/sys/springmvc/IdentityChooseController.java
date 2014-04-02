@@ -168,13 +168,13 @@ public class IdentityChooseController {
 		if (root != null) {
 			//logger.debug(root.toJsonObject().toJSONString());
 
-			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
+			List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
 			// treeModels.add(root);
 			List<SysTree> trees = sysTreeService.getAllSysTreeListForDept(
 					(int) root.getId(), 0);
 			if (trees != null && !trees.isEmpty()) {
 				logger.debug("dept tree size:" + trees.size());
-				Map<Long, SysDepartment> deptMap = new java.util.concurrent.ConcurrentHashMap<Long, SysDepartment>();
+				Map<Long, SysDepartment> deptMap = new java.util.HashMap<Long, SysDepartment>();
 				for (SysTree tree : trees) {
 					SysDepartment dept = tree.getDepartment();
 					deptMap.put(dept.getNodeId(), dept);
@@ -188,7 +188,7 @@ public class IdentityChooseController {
 						}
 						Map<String, Object> dataMap = tree.getDataMap();
 						if (dataMap == null) {
-							dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+							dataMap = new java.util.HashMap<String, Object>();
 						}
 						dataMap.put("deptId", dept.getId());
 						tree.setDataMap(dataMap);
@@ -216,13 +216,13 @@ public class IdentityChooseController {
 		if (root != null && users != null) {
 			logger.debug(root.toJsonObject().toJSONString());
 			logger.debug("users size:" + users.size());
-			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
+			List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
 			// treeModels.add(root);
 			List<SysTree> trees = sysTreeService.getAllSysTreeListForDept(
 					(int) root.getId(), 0);
 			if (trees != null && !trees.isEmpty()) {
 				logger.debug("dept tree size:" + trees.size());
-				Map<Long, SysTree> treeMap = new java.util.concurrent.ConcurrentHashMap<Long, SysTree>();
+				Map<Long, SysTree> treeMap = new java.util.HashMap<Long, SysTree>();
 				for (SysTree tree : trees) {
 					SysDepartment dept = tree.getDepartment();
 					treeMap.put(dept.getId(), tree);
@@ -294,13 +294,13 @@ public class IdentityChooseController {
 		if (root != null) {
 			logger.debug(root.toJsonObject().toJSONString());
 
-			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
+			List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
 			// treeModels.add(root);
 			List<SysTree> trees = sysTreeService.getAllSysTreeListForDept(
 					(int) root.getId(), 0);
 			if (trees != null && !trees.isEmpty()) {
 				logger.debug("dept tree size:" + trees.size());
-				Map<Long, SysTree> treeMap = new java.util.concurrent.ConcurrentHashMap<Long, SysTree>();
+				Map<Long, SysTree> treeMap = new java.util.HashMap<Long, SysTree>();
 				for (SysTree tree : trees) {
 					SysDepartment dept = tree.getDepartment();
 					treeMap.put(dept.getId(), tree);
@@ -333,13 +333,13 @@ public class IdentityChooseController {
 		if (root != null && users != null) {
 			logger.debug(root.toJsonObject().toJSONString());
 			logger.debug("users size:" + users.size());
-			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
+			List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
 			// treeModels.add(root);
 			List<SysTree> trees = sysTreeService.getAllSysTreeListForDept(
 					(int) root.getId(), 0);
 			if (trees != null && !trees.isEmpty()) {
 				logger.debug("dept tree size:" + trees.size());
-				Map<Long, SysTree> treeMap = new java.util.concurrent.ConcurrentHashMap<Long, SysTree>();
+				Map<Long, SysTree> treeMap = new java.util.HashMap<Long, SysTree>();
 				for (SysTree tree : trees) {
 					SysDepartment dept = tree.getDepartment();
 					treeMap.put(dept.getId(), tree);
@@ -354,7 +354,7 @@ public class IdentityChooseController {
 									.getDeptId()));
 							if (dept.getId() == user.getDeptId() && t != null) {
 								TreeModel treeModel = new BaseTree();
-								Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+								Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 								dataMap.put("actorId", user.getAccount());
 								treeModel.setDataMap(dataMap);
 								treeModel.setParentId(t.getId());

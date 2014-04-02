@@ -237,7 +237,7 @@ public class SysUserController {
 	 * @param parentId
 	 */
 	public void getAllSysDepartmentList(List<SysDepartment> list, int parentId) {
-		List<SysDepartment> temp = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
+		List<SysDepartment> temp = new java.util.ArrayList<SysDepartment>();
 		temp = this.sysDepartmentService.getSysDepartmentList(parentId);
 		if (temp != null && temp.size() != 0) {
 			for (int i = 0; i < temp.size(); i++) {
@@ -509,7 +509,7 @@ public class SysUserController {
 		request.setAttribute("bean", bean);
 
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_DEPT);
-		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
+		List<SysTree> list = new java.util.ArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
@@ -953,7 +953,7 @@ public class SysUserController {
 	public ModelAndView showDeptUsers(HttpServletRequest request,
 			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		List<SysDepartment> list = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
+		List<SysDepartment> list = new java.util.ArrayList<SysDepartment>();
 		Set<SysUser> set = new HashSet<SysUser>();
 		// 6:
 		long deptId = ParamUtil.getLongParameter(request, "dept", 5);
@@ -1020,7 +1020,7 @@ public class SysUserController {
 		request.setAttribute("pager", pager);
 
 		SysDepartment dept = sysDepartmentService.getSysDepartment(deptId);
-		List<SysDepartment> list = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
+		List<SysDepartment> list = new java.util.ArrayList<SysDepartment>();
 		sysDepartmentService.findNestingDepartment(list, dept);
 		request.setAttribute("nav", list);
 

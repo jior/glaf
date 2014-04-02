@@ -61,7 +61,7 @@ public class MxDictoryResource {
 	@ResponseBody
 	public byte[] json(@PathParam("category") String category) {
 		try {
-			List<JSONObject> rows = new java.util.concurrent.CopyOnWriteArrayList<JSONObject>();
+			List<JSONObject> rows = new java.util.ArrayList<JSONObject>();
 			SysTree tree = sysTreeService.getSysTreeByCode(category);
 			if (tree != null) {
 				List<Dictory> list = dictoryService

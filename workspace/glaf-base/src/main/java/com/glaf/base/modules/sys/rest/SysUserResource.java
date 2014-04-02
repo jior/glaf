@@ -207,7 +207,7 @@ public class SysUserResource {
 	 * @param parentId
 	 */
 	public void getAllSysDepartmentList(List<SysDepartment> list, int parentId) {
-		List<SysDepartment> temp = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
+		List<SysDepartment> temp = new java.util.ArrayList<SysDepartment>();
 		temp = this.sysDepartmentService.getSysDepartmentList(parentId);
 		if (temp != null && temp.size() != 0) {
 			for (int i = 0; i < temp.size(); i++) {

@@ -44,7 +44,7 @@ public class SysDictoryDefinitionController {
 		Long nodeId = ParamUtils.getLong(params, "nodeId");
 		String target = request.getParameter("target");
 		if (StringUtils.isNotEmpty(target)) {
-			Map<String, DictoryDefinition> defMap = new java.util.concurrent.ConcurrentHashMap<String, DictoryDefinition>();
+			Map<String, DictoryDefinition> defMap = new java.util.HashMap<String, DictoryDefinition>();
 			List<DictoryDefinition> list = dictoryDefinitionService
 					.getDictoryDefinitions(0L, target);
 			if (nodeId > 0) {
@@ -92,7 +92,7 @@ public class SysDictoryDefinitionController {
 		Long nodeId = ParamUtils.getLong(params, "nodeId");
 		String target = request.getParameter("target");
 		if (StringUtils.isNotEmpty(target)) {
-			Map<String, DictoryDefinition> defMap = new java.util.concurrent.ConcurrentHashMap<String, DictoryDefinition>();
+			Map<String, DictoryDefinition> defMap = new java.util.HashMap<String, DictoryDefinition>();
 			List<DictoryDefinition> list = dictoryDefinitionService
 					.getDictoryDefinitions(0L, target);
 			if (nodeId > 0) {
@@ -140,7 +140,7 @@ public class SysDictoryDefinitionController {
 			List<DictoryDefinition> list = dictoryDefinitionService
 					.getDictoryDefinitions(0L, target);
 			if (list != null && !list.isEmpty()) {
-				List<DictoryDefinition> rows = new java.util.concurrent.CopyOnWriteArrayList<DictoryDefinition>();
+				List<DictoryDefinition> rows = new java.util.ArrayList<DictoryDefinition>();
 				for (DictoryDefinition m : list) {
 					String title = request.getParameter(m.getName() + "_title");
 					String required = request.getParameter(m.getName()
@@ -180,7 +180,7 @@ public class SysDictoryDefinitionController {
 				List<DictoryDefinition> list = dictoryDefinitionService
 						.getDictoryDefinitions(0L, target);
 				if (list != null && !list.isEmpty()) {
-					List<DictoryDefinition> rows = new java.util.concurrent.CopyOnWriteArrayList<DictoryDefinition>();
+					List<DictoryDefinition> rows = new java.util.ArrayList<DictoryDefinition>();
 					for (DictoryDefinition m : list) {
 						String title = request.getParameter(m.getName()
 								+ "_title");

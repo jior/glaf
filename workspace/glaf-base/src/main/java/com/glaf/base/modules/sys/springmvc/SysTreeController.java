@@ -253,7 +253,7 @@ public class SysTreeController {
 			bean.setParent(parent);
 		}
 		request.setAttribute("bean", bean);
-		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
+		List<SysTree> list = new java.util.ArrayList<SysTree>();
 		sysTreeService.getSysTree(list, 0, 0);
 		request.setAttribute("parent", list);
 
@@ -538,7 +538,7 @@ public class SysTreeController {
 			bean.setParent(parent);
 		}
 		request.setAttribute("bean", bean);
-		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
+		List<SysTree> list = new java.util.ArrayList<SysTree>();
 		sysTreeService.getSysTree(list, 0, 0);
 		request.setAttribute("parent", list);
 

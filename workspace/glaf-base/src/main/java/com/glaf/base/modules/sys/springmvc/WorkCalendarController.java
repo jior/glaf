@@ -136,7 +136,7 @@ public class WorkCalendarController {
 		List<Integer> list = workCalendarService.getWorkDateList(year,
 				month + 1);
 		if (list == null) {
-			list = new java.util.concurrent.CopyOnWriteArrayList<Integer>();
+			list = new java.util.ArrayList<Integer>();
 		}
 
 		request.setAttribute("list", list);

@@ -281,7 +281,7 @@ public class DictoryController {
 
 		SysTree parent = sysTreeService
 				.getSysTreeByCode(Constants.TREE_DICTORY);
-		List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
+		List<SysTree> list = new java.util.ArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
 		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
