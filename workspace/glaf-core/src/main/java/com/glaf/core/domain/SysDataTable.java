@@ -75,8 +75,18 @@ public class SysDataTable implements Serializable, JSONable {
 	@Column(name = "ISSUBTABLE_", length = 1)
 	protected String isSubTable;
 
+	@javax.persistence.Transient
+	protected List<SysDataField> fields = new ArrayList<SysDataField>();
+
 	public SysDataTable() {
 
+	}
+
+	public void addField(SysDataField field) {
+		if (fields == null) {
+			fields = new ArrayList<SysDataField>();
+		}
+		fields.add(field);
 	}
 
 	@Override
@@ -106,6 +116,10 @@ public class SysDataTable implements Serializable, JSONable {
 
 	public Date getCreateTime() {
 		return this.createTime;
+	}
+
+	public List<SysDataField> getFields() {
+		return fields;
 	}
 
 	public String getId() {
@@ -162,6 +176,10 @@ public class SysDataTable implements Serializable, JSONable {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public void setFields(List<SysDataField> fields) {
+		this.fields = fields;
 	}
 
 	public void setId(String id) {

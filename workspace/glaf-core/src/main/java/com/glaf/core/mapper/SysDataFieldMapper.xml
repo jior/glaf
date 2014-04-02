@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.mapper.SysDataFieldMapper">
+
+	<resultMap id="sysDataFieldResultMap" type="com.glaf.core.domain.SysDataField">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="serviceKey" column="SERVICEKEY_" jdbcType="VARCHAR" />
+		<result property="tablename" column="TABLENAME_" jdbcType="VARCHAR" />
+		<result property="columnName" column="COLUMNNAME_" jdbcType="VARCHAR" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="frmType" column="FRMTYPE_" jdbcType="VARCHAR" />
+		<result property="dataType" column="DATATYPE_" jdbcType="VARCHAR" />
+		<result property="length" column="LENGTH_" jdbcType="INTEGER" />
+		<result property="listWeigth" column="LISTWEIGTH_" jdbcType="INTEGER" />
+		<result property="primaryKey" column="PRIMARYKEY_" jdbcType="VARCHAR" />
+		<result property="systemFlag" column="SYSTEMFLAG_" jdbcType="VARCHAR" />
+		<result property="inputType" column="INPUTTYPE_" jdbcType="VARCHAR" />
+		<result property="displayType" column="DISPLAYTYPE_" jdbcType="INTEGER" />
+		<result property="importType" column="IMPORTTYPE_" jdbcType="INTEGER" />
+		<result property="formatter" column="FORMATTER_" jdbcType="VARCHAR" />
+		<result property="searchable" column="SEARCHABLE_" jdbcType="VARCHAR" />
+		<result property="editable" column="EDITABLE_" jdbcType="VARCHAR" />
+		<result property="updatable" column="UPDATEABLE_" jdbcType="VARCHAR" />
+		<result property="formula" column="FORMULA_" jdbcType="VARCHAR" />
+		<result property="mask" column="MASK_" jdbcType="VARCHAR" />
+		<result property="queryId" column="QUERYID_" jdbcType="VARCHAR" />
+		<result property="valueField" column="VALUEFIELD_" jdbcType="VARCHAR" />
+		<result property="textField" column="TEXTFIELD_" jdbcType="VARCHAR" />
+		<result property="validType" column="VALIDTYPE_" jdbcType="VARCHAR" />
+		<result property="required" column="REQUIRED_" jdbcType="VARCHAR" />
+		<result property="initValue" column="INITVALUE_" jdbcType="VARCHAR" />
+		<result property="defaultValue" column="DEFAULTVALUE_"
+			jdbcType="VARCHAR" />
+		<result property="valueExpression" column="VALUEEXPRESSION_"
+			jdbcType="VARCHAR" />
+		<result property="sortable" column="SORTABLE_" jdbcType="VARCHAR" />
+		<result property="ordinal" column="ORDINAL_" jdbcType="INTEGER" />
+		<result property="createTime" column="CREATETIME_" jdbcType="TIMESTAMP" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="insertSysDataField" parameterType="com.glaf.core.domain.SysDataField">
+		insert into SYS_DATA_FIELD
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="serviceKey != null">
+				,SERVICEKEY_
+			</if>
+			<if test="tablename != null">
+				,TABLENAME_
+			</if>
+			<if test="columnName != null">
+				,COLUMNNAME_
+			</if>
+			<if test="name != null">
+				,NAME_
+			</if>
+			<if test="title != null">
+				,TITLE_
+			</if>
+			<if test="frmType != null">
+				,FRMTYPE_
+			</if>
+			<if test="dataType != null">
+				,DATATYPE_
+			</if>
+			<if test="length != null">
+				,LENGTH_
+			</if>
+			<if test="listWeigth != null">
+				,LISTWEIGTH_
+			</if>
+			<if test="primaryKey != null">
+				,PRIMARYKEY_
+			</if>
+			<if test="systemFlag != null">
+				,SYSTEMFLAG_
+			</if>
+			<if test="inputType != null">
+				,INPUTTYPE_
+			</if>
+			<if test="displayType != null">
+				,DISPLAYTYPE_
+			</if>
+			<if test="importType != null">
+				,IMPORTTYPE_
+			</if>
+			<if test="formatter != null">
+				,FORMATTER_
+			</if>
+			<if test="searchable != null">
+				,SEARCHABLE_
+			</if>
+			<if test="editable != null">
+				,EDITABLE_
+			</if>
+			<if test="updatable != null">
+				,UPDATEABLE_
+			</if>
+			<if test="formula != null">
+				,FORMULA_
+			</if>
+			<if test="mask != null">
+				,MASK_
+			</if>
+			<if test="queryId != null">
+				,QUERYID_
+			</if>
+			<if test="valueField != null">
+				,VALUEFIELD_
+			</if>
+			<if test="textField != null">
+				,TEXTFIELD_
+			</if>
+			<if test="validType != null">
+				,VALIDTYPE_
+			</if>
+			<if test="required != null">
+				,REQUIRED_
+			</if>
+			<if test="initValue != null">
+				,INITVALUE_
+			</if>
+			<if test="defaultValue != null">
+				,DEFAULTVALUE_
+			</if>
+			<if test="valueExpression != null">
+				,VALUEEXPRESSION_
+			</if>
+			<if test="sortable != null">
+				,SORTABLE_
+			</if>
+			<if test="ordinal != null">
+				,ORDINAL_
+			</if>
+			<if test="createTime != null">
+				,CREATETIME_
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=VARCHAR}
+
+			<if test="serviceKey != null">
+				,#{serviceKey, jdbcType=VARCHAR}
+			</if>
+			<if test="tablename != null">
+				,#{tablename, jdbcType=VARCHAR}
+			</if>
+			<if test="columnName != null">
+				,#{columnName, jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="title != null">
+				,#{title, jdbcType=VARCHAR}
+			</if>
+			<if test="frmType != null">
+				,#{frmType, jdbcType=VARCHAR}
+			</if>
+			<if test="dataType != null">
+				,#{dataType, jdbcType=VARCHAR}
+			</if>
+			<if test="length != null">
+				,#{length, jdbcType=INTEGER}
+			</if>
+			<if test="listWeigth != null">
+				,#{listWeigth, jdbcType=INTEGER}
+			</if>
+			<if test="primaryKey != null">
+				,#{primaryKey, jdbcType=VARCHAR}
+			</if>
+			<if test="systemFlag != null">
+				,#{systemFlag, jdbcType=VARCHAR}
+			</if>
+			<if test="inputType != null">
+				,#{inputType, jdbcType=VARCHAR}
+			</if>
+			<if test="displayType != null">
+				,#{displayType, jdbcType=INTEGER}
+			</if>
+			<if test="importType != null">
+				,#{importType, jdbcType=INTEGER}
+			</if>
+			<if test="formatter != null">
+				,#{formatter, jdbcType=VARCHAR}
+			</if>
+			<if test="searchable != null">
+				,#{searchable, jdbcType=VARCHAR}
+			</if>
+			<if test="editable != null">
+				,#{editable, jdbcType=VARCHAR}
+			</if>
+			<if test="updatable != null">
+				,#{updatable, jdbcType=VARCHAR}
+			</if>
+			<if test="formula != null">
+				,#{formula, jdbcType=VARCHAR}
+			</if>
+			<if test="mask != null">
+				,#{mask, jdbcType=VARCHAR}
+			</if>
+			<if test="queryId != null">
+				,#{queryId, jdbcType=VARCHAR}
+			</if>
+			<if test="valueField != null">
+				,#{valueField, jdbcType=VARCHAR}
+			</if>
+			<if test="textField != null">
+				,#{textField, jdbcType=VARCHAR}
+			</if>
+			<if test="validType != null">
+				,#{validType, jdbcType=VARCHAR}
+			</if>
+			<if test="required != null">
+				,#{required, jdbcType=VARCHAR}
+			</if>
+			<if test="initValue != null">
+				,#{initValue, jdbcType=VARCHAR}
+			</if>
+			<if test="defaultValue != null">
+				,#{defaultValue, jdbcType=VARCHAR}
+			</if>
+			<if test="valueExpression != null">
+				,#{valueExpression, jdbcType=VARCHAR}
+			</if>
+			<if test="sortable != null">
+				,#{sortable, jdbcType=VARCHAR}
+			</if>
+			<if test="ordinal != null">
+				,#{ordinal, jdbcType=INTEGER}
+			</if>
+			<if test="createTime != null">
+				,#{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateSysDataField" parameterType="com.glaf.core.domain.SysDataField">
+		update SYS_DATA_FIELD
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="name != null">
+				NAME_ = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				TITLE_ = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test="frmType != null">
+				FRMTYPE_ = #{frmType, jdbcType=VARCHAR},
+			</if>
+			<if test="length != null">
+				LENGTH_ = #{length, jdbcType=INTEGER},
+			</if>
+			<if test="listWeigth != null">
+				LISTWEIGTH_ = #{listWeigth, jdbcType=INTEGER},
+			</if>
+			<if test="primaryKey != null">
+				PRIMARYKEY_ = #{primaryKey, jdbcType=VARCHAR},
+			</if>
+			<if test="systemFlag != null">
+				SYSTEMFLAG_ = #{systemFlag, jdbcType=VARCHAR},
+			</if>
+			<if test="inputType != null">
+				INPUTTYPE_ = #{inputType, jdbcType=VARCHAR},
+			</if>
+			<if test="displayType != null">
+				DISPLAYTYPE_ = #{displayType, jdbcType=INTEGER},
+			</if>
+			<if test="importType != null">
+				IMPORTTYPE_ = #{importType, jdbcType=INTEGER},
+			</if>
+			<if test="formatter != null">
+				FORMATTER_ = #{formatter, jdbcType=VARCHAR},
+			</if>
+			<if test="searchable != null">
+				SEARCHABLE_ = #{searchable, jdbcType=VARCHAR},
+			</if>
+			<if test="editable != null">
+				EDITABLE_ = #{editable, jdbcType=VARCHAR},
+			</if>
+			<if test="updatable != null">
+				UPDATEABLE_ = #{updatable, jdbcType=VARCHAR},
+			</if>
+			<if test="formula != null">
+				FORMULA_ = #{formula, jdbcType=VARCHAR},
+			</if>
+			<if test="mask != null">
+				MASK_ = #{mask, jdbcType=VARCHAR},
+			</if>
+			<if test="queryId != null">
+				QUERYID_ = #{queryId, jdbcType=VARCHAR},
+			</if>
+			<if test="valueField != null">
+				VALUEFIELD_ = #{valueField, jdbcType=VARCHAR},
+			</if>
+			<if test="textField != null">
+				TEXTFIELD_ = #{textField, jdbcType=VARCHAR},
+			</if>
+			<if test="validType != null">
+				VALIDTYPE_ = #{validType, jdbcType=VARCHAR},
+			</if>
+			<if test="required != null">
+				REQUIRED_ = #{required, jdbcType=VARCHAR},
+			</if>
+			<if test="initValue != null">
+				INITVALUE_ = #{initValue, jdbcType=VARCHAR},
+			</if>
+			<if test="defaultValue != null">
+				DEFAULTVALUE_ = #{defaultValue, jdbcType=VARCHAR},
+			</if>
+			<if test="valueExpression != null">
+				VALUEEXPRESSION_ = #{valueExpression, jdbcType=VARCHAR},
+			</if>
+			<if test="sortable != null">
+				SORTABLE_ = #{sortable, jdbcType=VARCHAR},
+			</if>
+			<if test="ordinal != null">
+				ORDINAL_ = #{ordinal, jdbcType=INTEGER},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=VARCHAR}
+
+	</update>
+
+
+	<delete id="deleteSysDataFieldById" parameterType="string">
+		delete from
+		SYS_DATA_FIELD
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteSysDataFields" parameterType="com.glaf.core.query.SysDataFieldQuery">
+		delete from SYS_DATA_FIELD
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getSysDataFieldById" parameterType="string"
+		resultMap="sysDataFieldResultMap">
+		select * from SYS_DATA_FIELD where ID_ = #{id}
+	</select>
+
+
+	<select id="getSysDataFieldsByTablename" parameterType="string"
+		resultMap="sysDataFieldResultMap">
+		select * from SYS_DATA_FIELD where TABLENAME_ = #{tablename}
+	</select>
+
+
+	<select id="getSysDataFields" parameterType="com.glaf.core.query.SysDataFieldQuery"
+		resultMap="sysDataFieldResultMap">
+		select distinct E.*
+		<include refid="selectSysDataFieldsSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.ID_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getSysDataFieldCount" parameterType="com.glaf.core.query.SysDataFieldQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectSysDataFieldsSql" />
+	</select>
+
+
+	<sql id="selectSysDataFieldsSql">
+
+		from SYS_DATA_FIELD E
+
+		<where>
+			1 = 1
+
+			<if test="serviceKey != null and serviceKey != '' ">
+				and E.SERVICEKEY_ = #{serviceKey}
+			</if>
+
+			<if test="tablename != null and tablename != '' ">
+				and E.TABLENAME_ = #{tablename}
+			</if>
+
+			<if test="tablenames != null and tablenames.size != 0">
+				and E.TABLENAME_ IN
+				<foreach item="x_tablename" index="index" collection="tablenames"
+					open="(" separator="," close=")">
+					#{x_tablename}
+				</foreach>
+			</if>
+
+			<if test="titleLike != null and titleLike != '' ">
+				and E.TITLE_ like #{titleLike}
+			</if>
+
+			<if test="frmType != null and frmType != '' ">
+				and E.FRMTYPE_ = #{frmType}
+			</if>
+
+			<if test="systemFlag != null and systemFlag != '' ">
+				and E.SYSTEMFLAG_ = #{systemFlag}
+			</if>
+
+			<if test="createTimeGreaterThanOrEqual != null">
+				and E.CREATETIME_ &gt;= #{createTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="createTimeLessThanOrEqual != null">
+				and E.CREATETIME_ &lt;= #{createTimeLessThanOrEqual}
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

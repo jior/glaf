@@ -19,6 +19,7 @@
 package com.glaf.core.service;
 
 import java.util.*;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.domain.*;
@@ -44,11 +45,18 @@ public interface ISysDataTableService {
 	void deleteByIds(List<String> ids);
 
 	/**
-	 * 根据查询参数获取记录列表
+	 * 根据主键获取一条记录
 	 * 
 	 * @return
 	 */
-	List<SysDataTable> list(SysDataTableQuery query);
+	SysDataTable getSysDataTable(String id);
+
+	/**
+	 * 根据服务ID获取一条记录
+	 * 
+	 * @return
+	 */
+	SysDataTable getSysDataTableByServiceKey(String serviceKey);
 
 	/**
 	 * 根据查询参数获取记录总数
@@ -66,18 +74,27 @@ public interface ISysDataTableService {
 			SysDataTableQuery query);
 
 	/**
-	 * 根据主键获取一条记录
+	 * 根据查询参数获取记录列表
 	 * 
 	 * @return
 	 */
-	SysDataTable getSysDataTable(String id);
-	
+	List<SysDataTable> list(SysDataTableQuery query);
+
 	/**
-	 * 根据服务ID获取一条记录
+	 * 保存字段定义
 	 * 
-	 * @return
+	 * @param sysDataField
 	 */
-	SysDataTable getSysDataTableByServiceKey(String serviceKey);
+	@Transactional
+	void saveDataField(SysDataField sysDataField);
+
+	/**
+	 * 保存多个字段定义
+	 * 
+	 * @param fields
+	 */
+	@Transactional
+	void saveDataFields(List<SysDataField> fields);
 
 	/**
 	 * 保存一条记录
@@ -85,6 +102,6 @@ public interface ISysDataTableService {
 	 * @return
 	 */
 	@Transactional
-	void save(SysDataTable sysDataTable);
+	void saveDataTable(SysDataTable sysDataTable);
 
 }
