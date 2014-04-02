@@ -19,6 +19,7 @@
 package com.glaf.core.service.impl;
 
 import java.util.*;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -29,11 +30,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.id.*;
+import com.glaf.core.base.ColumnModel;
+import com.glaf.core.base.TableModel;
 import com.glaf.core.dao.*;
 import com.glaf.core.mapper.*;
 import com.glaf.core.domain.*;
 import com.glaf.core.query.*;
 import com.glaf.core.service.ISysDataTableService;
+import com.glaf.core.util.ParamUtils;
 
 @Service("sysDataTableService")
 @Transactional(readOnly = true)
@@ -49,6 +53,8 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 	protected SysDataTableMapper sysDataTableMapper;
 
 	protected SysDataFieldMapper sysDataFieldMapper;
+
+	protected TableDataMapper tableDataMapper;
 
 	public MxSysDataTableServiceImpl() {
 
@@ -74,15 +80,7 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 		}
 	}
 
-	public SysDataField getSysDataField(String id) {
-		if (id == null) {
-			return null;
-		}
-		SysDataField sysDataField = sysDataFieldMapper.getSysDataFieldById(id);
-		return sysDataField;
-	}
-
-	public SysDataTable getSysDataTable(String id) {
+	public SysDataTable getDataTable(String id) {
 		if (id == null) {
 			return null;
 		}
@@ -100,7 +98,7 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 	 * 
 	 * @return
 	 */
-	public SysDataTable getSysDataTableByServiceKey(String serviceKey) {
+	public SysDataTable getDataTableByServiceKey(String serviceKey) {
 		SysDataTableQuery query = new SysDataTableQuery();
 		query.serviceKey(serviceKey);
 		SysDataTable sysDataTable = null;
@@ -114,16 +112,24 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 		return sysDataTable;
 	}
 
-	public int getSysDataTableCountByQueryCriteria(SysDataTableQuery query) {
+	public int getDataTableCountByQueryCriteria(SysDataTableQuery query) {
 		return sysDataTableMapper.getSysDataTableCount(query);
 	}
 
-	public List<SysDataTable> getSysDataTablesByQueryCriteria(int start,
+	public List<SysDataTable> getDataTablesByQueryCriteria(int start,
 			int pageSize, SysDataTableQuery query) {
 		RowBounds rowBounds = new RowBounds(start, pageSize);
 		List<SysDataTable> rows = sqlSessionTemplate.selectList(
 				"getSysDataTables", query, rowBounds);
 		return rows;
+	}
+
+	public SysDataField getSysDataField(String id) {
+		if (id == null) {
+			return null;
+		}
+		SysDataField sysDataField = sysDataFieldMapper.getSysDataFieldById(id);
+		return sysDataField;
 	}
 
 	public List<SysDataTable> list(SysDataTableQuery query) {
@@ -132,54 +138,342 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 	}
 
 	@Transactional
-	public void saveDataField(SysDataField sysDataField) {
-		String id = sysDataField.getTablename() + "_"
-				+ sysDataField.getColumnName();
-		if (StringUtils.isEmpty(sysDataField.getId())) {
-			sysDataField.setId(id);
-			sysDataField.setCreateTime(new Date());
-			sysDataFieldMapper.insertSysDataField(sysDataField);
+	public void saveData(String serviceKey, Map<String, Object> dataMap) {
+		SysDataTable dataTable = this.getDataTableByServiceKey(serviceKey);
+		Map<String, Object> newData = new HashMap<String, Object>();
+		Set<Entry<String, Object>> entrySet = dataMap.entrySet();
+		for (Entry<String, Object> entry : entrySet) {
+			String key = entry.getKey();
+			Object value = entry.getValue();
+			if (value != null) {
+				newData.put(key, value);
+				newData.put(key.toLowerCase(), value);
+			}
+		}
+		SysDataField idField = null;
+		List<SysDataField> fields = dataTable.getFields();
+		if (fields != null && !fields.isEmpty()) {
+			for (SysDataField field : fields) {
+				if (StringUtils.equalsIgnoreCase("1", field.getPrimaryKey())
+						|| StringUtils.equalsIgnoreCase("y",
+								field.getPrimaryKey())
+						|| StringUtils.equalsIgnoreCase("true",
+								field.getPrimaryKey())) {
+					idField = field;
+					break;
+				}
+			}
+		}
+
+		if (idField == null) {
+			throw new java.lang.RuntimeException("primary key not found.");
+		}
+
+		Object idValue = newData.get(idField.getColumnName().toLowerCase());
+		if (idValue == null) {
+			idValue = newData.get(idField.getName().toLowerCase());
+		}
+
+		TableModel row = new TableModel();
+		row.setTableName(dataTable.getTablename());
+
+		ColumnModel col01 = new ColumnModel();
+		col01.setColumnName(idField.getColumnName());
+
+		if (idValue == null) {
+			if (StringUtils.equalsIgnoreCase(idField.getDataType(), "Integer")) {
+				col01.setJavaType("Long");
+				Long id = idGenerator.nextId();
+				col01.setIntValue(id.intValue());
+				col01.setValue(Integer.valueOf(id.intValue()));
+			} else if (StringUtils.equalsIgnoreCase(idField.getDataType(),
+					"Long")) {
+				col01.setJavaType("Long");
+				Long id = idGenerator.nextId();
+				col01.setLongValue(id);
+				col01.setValue(id);
+			} else {
+				col01.setJavaType("String");
+				String id = idGenerator.getNextId();
+				col01.setStringValue(id);
+				col01.setValue(id);
+			}
+			row.setIdColumn(col01);
+		} else {
+			if (StringUtils.equalsIgnoreCase(idField.getDataType(), "Integer")) {
+				col01.setJavaType("Long");
+				String id = idValue.toString();
+				col01.setIntValue(Integer.parseInt(id));
+				col01.setValue(col01.getIntValue());
+			} else if (StringUtils.equalsIgnoreCase(idField.getDataType(),
+					"Long")) {
+				col01.setJavaType("Long");
+				String id = idValue.toString();
+				col01.setLongValue(Long.parseLong(id));
+				col01.setValue(col01.getLongValue());
+			} else {
+				col01.setJavaType("String");
+				String id = idValue.toString();
+				col01.setStringValue(id);
+				col01.setValue(id);
+			}
+			row.setIdColumn(col01);
+		}
+
+		if (fields != null && !fields.isEmpty()) {
+			for (SysDataField field : fields) {
+				if (StringUtils.equalsIgnoreCase(idField.getColumnName(),
+						field.getColumnName())) {
+					continue;
+				}
+				String name = field.getColumnName().toLowerCase();
+				String javaType = field.getDataType();
+				ColumnModel c = new ColumnModel();
+				c.setColumnName(field.getColumnName());
+				c.setJavaType(javaType);
+				Object value = newData.get(name);
+				if (value != null) {
+					if ("Integer".equals(javaType)) {
+						value = ParamUtils.getInt(newData, name);
+					} else if ("Long".equals(javaType)) {
+						value = ParamUtils.getLong(newData, name);
+					} else if ("Double".equals(javaType)) {
+						value = ParamUtils.getDouble(newData, name);
+					} else if ("Date".equals(javaType)) {
+						value = ParamUtils.getTimestamp(newData, name);
+					} else if ("String".equals(javaType)) {
+						value = ParamUtils.getString(newData, name);
+					} else if ("Clob".equals(javaType)) {
+						value = ParamUtils.getString(newData, name);
+					}
+					c.setValue(value);
+					row.addColumn(c);
+				} else {
+					name = field.getName().toLowerCase();
+					value = newData.get(name);
+					if (value != null) {
+						if ("Integer".equals(javaType)) {
+							value = ParamUtils.getInt(newData, name);
+						} else if ("Long".equals(javaType)) {
+							value = ParamUtils.getLong(newData, name);
+						} else if ("Double".equals(javaType)) {
+							value = ParamUtils.getDouble(newData, name);
+						} else if ("Date".equals(javaType)) {
+							value = ParamUtils.getTimestamp(newData, name);
+						} else if ("String".equals(javaType)) {
+							value = ParamUtils.getString(newData, name);
+						} else if ("Clob".equals(javaType)) {
+							value = ParamUtils.getString(newData, name);
+						}
+						c.setValue(value);
+						row.addColumn(c);
+					}
+				}
+			}
+		}
+		if (idValue == null) {
+			tableDataMapper.insertTableData(row);
+		} else {
+			tableDataMapper.updateTableDataByPrimaryKey(row);
+		}
+	}
+
+	@Transactional
+	public void saveDataField(SysDataField dataField) {
+		String id = dataField.getTablename() + "_" + dataField.getColumnName();
+		if (StringUtils.isEmpty(dataField.getId())) {
+			dataField.setId(id);
+			dataField.setCreateTime(new Date());
+			sysDataFieldMapper.insertSysDataField(dataField);
 		} else {
 			if (this.getSysDataField(id) == null) {
-				sysDataField.setCreateTime(new Date());
-				sysDataFieldMapper.insertSysDataField(sysDataField);
+				dataField.setCreateTime(new Date());
+				sysDataFieldMapper.insertSysDataField(dataField);
 			} else {
-				sysDataFieldMapper.updateSysDataField(sysDataField);
+				sysDataFieldMapper.updateSysDataField(dataField);
 			}
 		}
 	}
 
 	@Transactional
 	public void saveDataFields(List<SysDataField> fields) {
-		for (SysDataField sysDataField : fields) {
-			String id = sysDataField.getTablename() + "_"
-					+ sysDataField.getColumnName();
-			if (StringUtils.isEmpty(sysDataField.getId())) {
-				sysDataField.setId(id);
-				sysDataField.setCreateTime(new Date());
-				sysDataFieldMapper.insertSysDataField(sysDataField);
+		for (SysDataField dataField : fields) {
+			String id = dataField.getTablename() + "_"
+					+ dataField.getColumnName();
+			if (StringUtils.isEmpty(dataField.getId())) {
+				dataField.setId(id);
+				dataField.setCreateTime(new Date());
+				sysDataFieldMapper.insertSysDataField(dataField);
 			} else {
 				if (this.getSysDataField(id) == null) {
-					sysDataField.setCreateTime(new Date());
-					sysDataFieldMapper.insertSysDataField(sysDataField);
+					dataField.setCreateTime(new Date());
+					sysDataFieldMapper.insertSysDataField(dataField);
 				} else {
-					sysDataFieldMapper.updateSysDataField(sysDataField);
+					sysDataFieldMapper.updateSysDataField(dataField);
 				}
 			}
 		}
 	}
 
 	@Transactional
-	public void saveDataTable(SysDataTable sysDataTable) {
-		if (StringUtils.isEmpty(sysDataTable.getId())) {
-			sysDataTable.setId(idGenerator.getNextId());
-			sysDataTableMapper.insertSysDataTable(sysDataTable);
-		} else {
-			sysDataTableMapper.updateSysDataTable(sysDataTable);
+	public void saveDataList(String serviceKey,
+			List<Map<String, Object>> dataList) {
+		SysDataTable dataTable = this.getDataTableByServiceKey(serviceKey);
+		Map<String, Object> newData = new HashMap<String, Object>();
+
+		SysDataField idField = null;
+		List<SysDataField> fields = dataTable.getFields();
+		if (fields != null && !fields.isEmpty()) {
+			for (SysDataField field : fields) {
+				if (StringUtils.equalsIgnoreCase("1", field.getPrimaryKey())
+						|| StringUtils.equalsIgnoreCase("y",
+								field.getPrimaryKey())
+						|| StringUtils.equalsIgnoreCase("true",
+								field.getPrimaryKey())) {
+					idField = field;
+					break;
+				}
+			}
 		}
-		if (sysDataTable.getFields() != null
-				&& !sysDataTable.getFields().isEmpty()) {
-			for (SysDataField field : sysDataTable.getFields()) {
+
+		if (idField == null) {
+			throw new java.lang.RuntimeException("primary key not found.");
+		}
+
+		for (Map<String, Object> dataMap : dataList) {
+			newData.clear();
+			Set<Entry<String, Object>> entrySet = dataMap.entrySet();
+			for (Entry<String, Object> entry : entrySet) {
+				String key = entry.getKey();
+				Object value = entry.getValue();
+				if (value != null) {
+					newData.put(key, value);
+					newData.put(key.toLowerCase(), value);
+				}
+			}
+
+			Object idValue = newData.get(idField.getColumnName().toLowerCase());
+			if (idValue == null) {
+				idValue = newData.get(idField.getName().toLowerCase());
+			}
+
+			TableModel row = new TableModel();
+			row.setTableName(dataTable.getTablename());
+
+			ColumnModel col01 = new ColumnModel();
+			col01.setColumnName(idField.getColumnName());
+
+			if (idValue == null) {
+				if (StringUtils.equalsIgnoreCase(idField.getDataType(),
+						"Integer")) {
+					col01.setJavaType("Long");
+					Long id = idGenerator.nextId();
+					col01.setIntValue(id.intValue());
+					col01.setValue(Integer.valueOf(id.intValue()));
+				} else if (StringUtils.equalsIgnoreCase(idField.getDataType(),
+						"Long")) {
+					col01.setJavaType("Long");
+					Long id = idGenerator.nextId();
+					col01.setLongValue(id);
+					col01.setValue(id);
+				} else {
+					col01.setJavaType("String");
+					String id = idGenerator.getNextId();
+					col01.setStringValue(id);
+					col01.setValue(id);
+				}
+				row.setIdColumn(col01);
+			} else {
+				if (StringUtils.equalsIgnoreCase(idField.getDataType(),
+						"Integer")) {
+					col01.setJavaType("Long");
+					String id = idValue.toString();
+					col01.setIntValue(Integer.parseInt(id));
+					col01.setValue(col01.getIntValue());
+				} else if (StringUtils.equalsIgnoreCase(idField.getDataType(),
+						"Long")) {
+					col01.setJavaType("Long");
+					String id = idValue.toString();
+					col01.setLongValue(Long.parseLong(id));
+					col01.setValue(col01.getLongValue());
+				} else {
+					col01.setJavaType("String");
+					String id = idValue.toString();
+					col01.setStringValue(id);
+					col01.setValue(id);
+				}
+				row.setIdColumn(col01);
+			}
+
+			if (fields != null && !fields.isEmpty()) {
+				for (SysDataField field : fields) {
+					if (StringUtils.equalsIgnoreCase(idField.getColumnName(),
+							field.getColumnName())) {
+						continue;
+					}
+					String name = field.getColumnName().toLowerCase();
+					String javaType = field.getDataType();
+					ColumnModel c = new ColumnModel();
+					c.setColumnName(field.getColumnName());
+					c.setJavaType(javaType);
+					Object value = newData.get(name);
+					if (value != null) {
+						if ("Integer".equals(javaType)) {
+							value = ParamUtils.getInt(newData, name);
+						} else if ("Long".equals(javaType)) {
+							value = ParamUtils.getLong(newData, name);
+						} else if ("Double".equals(javaType)) {
+							value = ParamUtils.getDouble(newData, name);
+						} else if ("Date".equals(javaType)) {
+							value = ParamUtils.getTimestamp(newData, name);
+						} else if ("String".equals(javaType)) {
+							value = ParamUtils.getString(newData, name);
+						} else if ("Clob".equals(javaType)) {
+							value = ParamUtils.getString(newData, name);
+						}
+						c.setValue(value);
+						row.addColumn(c);
+					} else {
+						name = field.getName().toLowerCase();
+						value = newData.get(name);
+						if (value != null) {
+							if ("Integer".equals(javaType)) {
+								value = ParamUtils.getInt(newData, name);
+							} else if ("Long".equals(javaType)) {
+								value = ParamUtils.getLong(newData, name);
+							} else if ("Double".equals(javaType)) {
+								value = ParamUtils.getDouble(newData, name);
+							} else if ("Date".equals(javaType)) {
+								value = ParamUtils.getTimestamp(newData, name);
+							} else if ("String".equals(javaType)) {
+								value = ParamUtils.getString(newData, name);
+							} else if ("Clob".equals(javaType)) {
+								value = ParamUtils.getString(newData, name);
+							}
+							c.setValue(value);
+							row.addColumn(c);
+						}
+					}
+				}
+			}
+			if (idValue == null) {
+				tableDataMapper.insertTableData(row);
+			} else {
+				tableDataMapper.updateTableDataByPrimaryKey(row);
+			}
+		}
+	}
+
+	@Transactional
+	public void saveDataTable(SysDataTable dataTable) {
+		if (StringUtils.isEmpty(dataTable.getId())) {
+			dataTable.setId(idGenerator.getNextId());
+			sysDataTableMapper.insertSysDataTable(dataTable);
+		} else {
+			sysDataTableMapper.updateSysDataTable(dataTable);
+		}
+		if (dataTable.getFields() != null && !dataTable.getFields().isEmpty()) {
+			for (SysDataField field : dataTable.getFields()) {
 				this.saveDataField(field);
 			}
 		}
@@ -208,6 +502,11 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 	@javax.annotation.Resource
 	public void setSysDataTableMapper(SysDataTableMapper sysDataTableMapper) {
 		this.sysDataTableMapper = sysDataTableMapper;
+	}
+
+	@javax.annotation.Resource
+	public void setTableDataMapper(TableDataMapper tableDataMapper) {
+		this.tableDataMapper = tableDataMapper;
 	}
 
 }

@@ -49,28 +49,28 @@ public interface ISysDataTableService {
 	 * 
 	 * @return
 	 */
-	SysDataTable getSysDataTable(String id);
+	SysDataTable getDataTable(String id);
 
 	/**
 	 * 根据服务ID获取一条记录
 	 * 
 	 * @return
 	 */
-	SysDataTable getSysDataTableByServiceKey(String serviceKey);
+	SysDataTable getDataTableByServiceKey(String serviceKey);
 
 	/**
 	 * 根据查询参数获取记录总数
 	 * 
 	 * @return
 	 */
-	int getSysDataTableCountByQueryCriteria(SysDataTableQuery query);
+	int getDataTableCountByQueryCriteria(SysDataTableQuery query);
 
 	/**
 	 * 根据查询参数获取一页的数据
 	 * 
 	 * @return
 	 */
-	List<SysDataTable> getSysDataTablesByQueryCriteria(int start, int pageSize,
+	List<SysDataTable> getDataTablesByQueryCriteria(int start, int pageSize,
 			SysDataTableQuery query);
 
 	/**
@@ -79,6 +79,9 @@ public interface ISysDataTableService {
 	 * @return
 	 */
 	List<SysDataTable> list(SysDataTableQuery query);
+
+	@Transactional
+	void saveData(String serviceKey, Map<String, Object> dataMap);
 
 	/**
 	 * 保存字段定义
@@ -95,6 +98,9 @@ public interface ISysDataTableService {
 	 */
 	@Transactional
 	void saveDataFields(List<SysDataField> fields);
+
+	@Transactional
+	void saveDataList(String serviceKey, List<Map<String, Object>> dataList);
 
 	/**
 	 * 保存一条记录
