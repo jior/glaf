@@ -10,6 +10,7 @@ CREATE TABLE SYS_ACCESS(
 CREATE TABLE SYS_APPLICATION(
         id bigint NOT NULL,
         name varchar(255),
+	type varchar(50),
 	code varchar(255),
         appdesc varchar(255),
         url varchar(255),
