@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root-container name="DemoProc" width="816" height="546">
+  <node name="启动流程" x="120" y="30" width="132" height="40">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="单签" x="121" y="130" width="132" height="39">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="判断1" x="333" y="219" width="132" height="36">
+    <edge>
+      <label x="-47" y="-16"/>
+    </edge>
+    <edge>
+      <label x="-9" y="-28"/>
+    </edge>
+  </node>
+  <node name="会签" x="121" y="216" width="132" height="40">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+  <node name="判断2" x="439" y="308" width="132" height="36">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+    <edge>
+      <label x="9" y="-19"/>
+    </edge>
+  </node>
+  <node name="重新修改" x="438" y="32" width="132" height="38">
+    <edge>
+      <label x="-34" y="-30"/>
+    </edge>
+  </node>
+  <node name="完成" x="552" y="427" width="132" height="36"/>
+  <node name="动态参与者" x="114" y="362" width="132" height="38">
+    <edge>
+      <label x="5" y="-10"/>
+    </edge>
+  </node>
+</root-container>

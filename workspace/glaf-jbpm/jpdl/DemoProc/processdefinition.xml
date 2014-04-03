@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns="urn:jbpm.org:jpdl-3.2"  name="DemoProc">
+    <description>审核流程</description>
+
+	<swimlane name="starter">
+		<assignment class="com.glaf.jbpm.assignment.GeneralAssignment">
+		</assignment>
+	</swimlane>
+
+	<swimlane name="submiter">
+		<assignment
+			class="com.glaf.jbpm.assignment.ProcessStarterAssignment">
+		</assignment>
+	</swimlane>
+
+	<action name="create_task01"
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task01</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>R_A</roleId>
+		<deptId>#P{depId01}</deptId>
+	</action>
+
+	<action name="create_task02"
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task02</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>R_B</roleId>
+		<deptId>#P{depId02}</deptId>
+	</action>
+
+	<action name="create_task03"
+		class="com.glaf.jbpm.action.DynamicTaskInstances">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task03</taskName>
+		<dynamicActors>dynamicUserVar</dynamicActors>
+	</action>
+
+	<action name="EndCounterSigningAction"
+          class="com.glaf.jbpm.action.EndCounterSigningAction">
+         <expression>#{isAgree eq 'false'}</expression>
+    </action>
+
+	<action name="xyz_1000" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
+		<sql>
+			UPDATE TEST
+			SET PROCESSNAME = 'DemoProc',
+			PROCESSINSTANCEID = ${processInstanceId}, STATUS= 10, WFSTATUS = 1000  
+			WHERE ID = ${rowId}
+		</sql>
+	</action>
+
+	<action name="xyz_1002" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
+		<sql>
+			UPDATE TEST  SET
+			STATUS = 10, RETURNFLAG = 0, WFSTATUS = 1002 
+			WHERE ID = ${rowId}
+		</sql>
+	</action>
+
+
+	<action name="xyz_1003" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
+		<sql>
+			UPDATE TEST  SET
+			STATUS = 20, RETURNFLAG = 0, WFSTATUS = 1003 
+			WHERE ID = ${rowId}
+		</sql>
+	</action>
+
+	<action name="xyz_1004" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
+		<sql>
+			UPDATE TEST  SET
+			STATUS = 40, RETURNFLAG = 0, WFSTATUS = 1004 
+			WHERE ID = ${rowId}
+		</sql>
+	</action>
+
+	<action name="xyz_5555" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
+		<sql>
+			UPDATE TEST  SET
+			STATUS = -1, RETURNFLAG = 1, WFSTATUS = 5555 
+			WHERE ID = ${rowId}
+		</sql>
+	</action>
+
+	<action name="xyz_9999" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
+		<sql>
+			UPDATE TEST SET
+			STATUS = 50, RETURNFLAG = 0, WFSTATUS = 9999 
+			WHERE ID = ${rowId}
+		</sql>
+	</action>
+
+	<start-state name="启动流程">
+	    <task name="task00" description="启动流程" swimlane="starter">
+			<event type="task-create">
+				<action ref-name="xyz_1000" />
+			</event>
+		</task>
+		<transition to="单签"></transition>
+	</start-state>
+
+	<task-node name="单签" create-tasks="false" end-tasks="true" signal="first">
+	    <event type="node-enter">
+			<action ref-name="create_task01" />
+			<action ref-name="xyz_1002" />
+		</event>
+		<task name="task01" description="系长审核" >
+		</task>
+		<transition to="会签"></transition>
+	</task-node>
+
+	<decision name="判断1">
+		<transition to="重新修改" name="不通过"></transition>
+		<transition to="动态参与者" name="通过">
+		    <condition expression="#{isAgree eq 'true'}" />
+		</transition>
+	</decision>
+
+	<task-node name="会签" create-tasks="false" end-tasks="true" signal="last">
+	    <event type="node-enter">
+			<action ref-name="create_task02" />
+			<action ref-name="xyz_1003" />
+		</event>
+	    <task name="task02" description="科长审核" >
+			<event type="task-end">
+				<action ref-name="EndCounterSigningAction" />
+			</event>
+		</task>
+		<transition to="判断1"></transition>
+	</task-node>
+
+	<decision name="判断2">
+		<transition to="重新修改" name="不通过"></transition>
+		<transition to="完成" name="通过">
+		    <condition expression="#{isAgree eq 'true'}" />
+		</transition>
+	</decision>
+
+	<task-node name="重新修改">
+	    <event type="node-enter">
+			<action ref-name="xyz_5555" />
+		</event>
+	    <task name="task555" description="重新修改" swimlane="submiter">
+		</task>
+		<transition to="单签" name="重新提交"></transition>
+	</task-node>
+
+	<task-node name="动态参与者" create-tasks="false" end-tasks="true" signal="last">
+	    <event type="node-enter">
+			<action ref-name="create_task03" />
+			<action ref-name="xyz_1004" />
+		</event>
+	    <task name="task03" description="动态参与者" >
+			<event type="task-end">
+				<action ref-name="EndCounterSigningAction" />
+			</event>
+		</task>
+		<transition to="判断2"></transition>
+	</task-node>
+
+	<end-state name="完成">
+	    <event type="node-enter">
+			<action ref-name="mq_9999" />
+		</event>
+	</end-state>
+
+</process-definition>
