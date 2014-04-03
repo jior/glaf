@@ -638,6 +638,10 @@ alter table SYS_DEPARTMENT
     add constraint SYS_UNIQ_DEPARTMENT
     unique (code);
 
+alter table SYS_TREE
+    add constraint SYS_UNIQ_TREE
+    unique (code);
+
 alter table SYS_ROLE
     add constraint SYS_UNIQ_ROLE
     unique (code);
