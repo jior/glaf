@@ -656,3 +656,19 @@ CREATE TABLE SYS_INPUT_DEF (
         add constraint FK_USERROLE_USER 
         foreign key (USERID) 
         references SYS_USER;
+
+alter table SYS_APPLICATION
+    add constraint SYS_UNIQ_APPLICATION
+    unique (CODE);
+
+alter table SYS_DEPARTMENT
+    add constraint SYS_UNIQ_DEPARTMENT
+    unique (CODE);
+
+alter table SYS_ROLE
+    add constraint SYS_UNIQ_ROLE
+    unique (CODE);
+
+alter table SYS_USER
+    add constraint SYS_UNIQ_USER
+    unique (ACCOUNT);

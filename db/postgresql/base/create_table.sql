@@ -666,3 +666,18 @@ create table SYS_INPUT_DEF (
         foreign key (userId) 
         references SYS_USER;
 
+alter table SYS_APPLICATION
+    add constraint SYS_UNIQ_APPLICATION
+    unique (code);
+
+alter table SYS_DEPARTMENT
+    add constraint SYS_UNIQ_DEPARTMENT
+    unique (code);
+
+alter table SYS_ROLE
+    add constraint SYS_UNIQ_ROLE
+    unique (code);
+
+alter table SYS_USER
+    add constraint SYS_UNIQ_USER
+    unique (account);
