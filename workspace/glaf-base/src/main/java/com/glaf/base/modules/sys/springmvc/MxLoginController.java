@@ -292,7 +292,7 @@ public class MxLoginController {
 	public ModelAndView logout(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String actorId = RequestUtils.getActorId(request);
-		// 登出系统，清除session对象
+		// 退出系统，清除session对象
 		request.getSession().removeAttribute(SysConstants.LOGIN);
 		request.getSession().removeAttribute(SysConstants.MENU);
 		try {

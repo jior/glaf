@@ -32,11 +32,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 
 import com.alibaba.fastjson.*;
+import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.domain.SystemProperty;
 import com.glaf.core.security.*;
 import com.glaf.core.service.ISystemPropertyService;
 import com.glaf.core.util.*;
-
+import com.glaf.shiro.ShiroSecurity;
+import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.online.domain.*;
 import com.glaf.base.online.query.*;
 import com.glaf.base.online.service.*;
@@ -75,8 +77,31 @@ public class UserOnlineController {
 	@ResponseBody
 	public void doRemain(HttpServletRequest request) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		String actorId = loginContext.getActorId();
 		try {
-			userOnlineService.remain(loginContext.getActorId());
+			UserOnline userOnline = userOnlineService
+					.getUserOnline(loginContext.getActorId());
+			if (userOnline != null) {
+				// 如果有在线信息，更新检查时间
+				userOnlineService.remain(loginContext.getActorId());
+			} else {
+				// 如果被踢出的用户不是系统管理员，注销用户
+				if (!loginContext.isSystemAdministrator()) {
+					// 退出系统，清除session对象
+					request.getSession().removeAttribute(SysConstants.LOGIN);
+					request.getSession().removeAttribute(SysConstants.MENU);
+					try {
+						userOnlineService.logout(actorId);
+						String cacheKey = Constants.LOGIN_USER_CACHE + actorId;
+						CacheFactory.remove(cacheKey);
+						cacheKey = Constants.USER_CACHE + actorId;
+						CacheFactory.remove(cacheKey);
+						ShiroSecurity.logout();
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+				}
+			}
 		} catch (Exception ex) {
 		}
 	}
