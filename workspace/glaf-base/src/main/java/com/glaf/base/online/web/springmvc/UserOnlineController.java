@@ -97,6 +97,7 @@ public class UserOnlineController {
 						cacheKey = Constants.USER_CACHE + actorId;
 						CacheFactory.remove(cacheKey);
 						ShiroSecurity.logout();
+						logger.info("用户"+actorId+"已经下线！");
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}
