@@ -1,92 +1,68 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 
-<project basedir="." default="build">
-	<property name="build.home" location="." />
-	<property name="build.dest" location="bin" />
-	<property name="build.src" location="src" />
-	<property name="build.lib" location="./lib" />
-  
-	<path id="classpath">
-		<fileset dir="${build.lib}" includes="*.jar" />
-		<fileset dir="lib" includes="*.jar" />
-		<pathelement location="${build.home}/bin" />
-	</path>
-
-	<target name="build">
-		<echo message="build app......" />
-		<mkdir dir="bin" />
-		<javac srcdir="${build.home}/src" destdir="${build.dest}" 
-			source="1.6" target="1.6" nowarn="false"
-			debug="true" debuglevel="lines,vars,source">
-			<include name="main/java/com/**/*.java" />
-			<classpath refid="classpath" />
-		</javac>
-		<copy todir="bin">
-			<fileset dir="src/main/java" includes="com/**/*.conf,com/**/*.sql,com/**/*.properties,com/**/*.xml" />
-		</copy>
-	</target>
-
-	<target name="jar" >
-		<jar jarfile="glaf-core-src.zip">
-			<fileset dir="." excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn"
-			    includes=".classpath, .project, .settings/**, *.bat, *.xml, *.txt, conf/**/*.*, mapping/**/*.*, sql/**/*.*, src/**/*.*,bpmn/**/*.zip,jpdl/**/*.zip"  />
-		</jar>
-
-		<jar jarfile="glaf-core.jar">
-			<fileset dir="bin" 
-			   includes="com/glaf/core/**/*.class,com/glaf/core/**/*.xml,com/glaf/core/**/*.properties" />
-			<fileset dir="jar-conf" includes="**/*.xml,**/*.properties"  />
-		</jar>
-
-		<jar jarfile="glaf-core-min.jar">
-			<fileset dir="bin" 
-			   includes="com/glaf/core/**/*.class,com/glaf/core/**/*.xml,com/glaf/core/**/*.properties"
-			   excludes="com/glaf/core/web/**/*.class,com/glaf/core/**/tag/*.class,com/glaf/core/**/springmvc/*.class"/>
-			<fileset dir="jar-conf" includes="**/*.xml,**/*.properties"  />
-		</jar>
-
-		<jar jarfile="glaf-template.jar">
-			<fileset dir="bin" 
-			   includes="com/glaf/template/**/*.class,com/glaf/template/**/*.xml,com/glaf/template/**/*.properties"  />
-		</jar>
-
-	    <jar jarfile="glaf-test.jar">
-			<fileset dir="bin" 
-			   includes="com/glaf/test/**/*.class,com/glaf/test/**/*.xml,com/glaf/test/**/*.properties" />
-		</jar>
-
-	</target>
-
-	<target name="copy">
-		<copy todir="../glaf-web/WebContent/WEB-INF/classes">
-			<fileset dir="bin" includes="com/glaf/**/*.class,com/glaf/**/*.properties,com/glaf/**/*.xml" />
-		</copy>
-	</target>
-
-	<target name="copy-jar">
-		<copy todir="../glaf-web/WebContent/WEB-INF/lib">
-			<fileset dir="." includes="glaf-core.jar"/>
-		</copy>
-	</target>
-
-
-	<target name="run" depends="build">
-		<echo message="build app......" />
-
-		<copy todir="bin">
-			<fileset dir="src" includes="**/*.properties,**/*.xsd, **/*.xml" />
-		</copy>
-
-		<!-- <java classname="com.glaf.generator.tools.JPAEntityToXmlMapping" fork="true">
+<project basedir="." default="build"> 
+  <property name="build.home" location="."/>  
+  <property name="build.dest" location="bin"/>  
+  <property name="build.src" location="src"/>  
+  <property name="build.lib" location="./lib"/>  
+  <path id="classpath"> 
+    <fileset dir="${build.lib}" includes="*.jar"/>  
+    <fileset dir="lib" includes="*.jar"/>  
+    <pathelement location="${build.home}/bin"/> 
+  </path>  
+  <target name="build"> 
+    <echo message="build app......"/>  
+    <mkdir dir="bin"/>  
+    <javac srcdir="${build.home}/src" destdir="${build.dest}" source="1.6" target="1.6" nowarn="false" debug="true" debuglevel="lines,vars,source"> 
+      <include name="main/java/com/**/*.java"/>  
+      <classpath refid="classpath"/> 
+    </javac>  
+    <copy todir="bin"> 
+      <fileset dir="src/main/java" includes="com/**/*.conf,com/**/*.sql,com/**/*.properties,com/**/*.xml"/> 
+    </copy> 
+  </target>  
+  <target name="jar"> 
+    <jar jarfile="glaf-core-src.zip"> 
+      <fileset dir="." excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn" includes=".classpath, .project, .settings/**, *.bat, *.xml, *.txt, conf/**/*.*, mapping/**/*.*, sql/**/*.*, src/**/*.*,bpmn/**/*.zip,jpdl/**/*.zip"/> 
+    </jar>  
+    <jar jarfile="glaf-core.jar"> 
+      <fileset dir="bin" includes="com/glaf/core/**/*.class,com/glaf/core/**/*.xml,com/glaf/core/**/*.properties"/>  
+      <fileset dir="jar-conf" includes="**/*.xml,**/*.properties"/> 
+    </jar>  
+    <jar jarfile="glaf-core-min.jar"> 
+      <fileset dir="bin" includes="com/glaf/core/**/*.class,com/glaf/core/**/*.xml,com/glaf/core/**/*.properties" excludes="com/glaf/core/web/**/*.class,com/glaf/core/**/tag/*.class,com/glaf/core/**/springmvc/*.class"/>  
+      <fileset dir="jar-conf" includes="**/*.xml,**/*.properties"/> 
+    </jar>  
+    <jar jarfile="glaf-template.jar"> 
+      <fileset dir="bin" includes="com/glaf/template/**/*.class,com/glaf/template/**/*.xml,com/glaf/template/**/*.properties"/> 
+    </jar>  
+    <jar jarfile="glaf-test.jar"> 
+      <fileset dir="bin" includes="com/glaf/test/**/*.class,com/glaf/test/**/*.xml,com/glaf/test/**/*.properties"/> 
+    </jar> 
+  </target>  
+  <target name="copy"> 
+    <copy todir="../glaf-web/WebContent/WEB-INF/classes"> 
+      <fileset dir="bin" includes="com/glaf/**/*.class,com/glaf/**/*.properties,com/glaf/**/*.xml"/> 
+    </copy> 
+  </target>  
+  <target name="copy-jar"> 
+    <copy todir="../glaf-web/WebContent/WEB-INF/lib"> 
+      <fileset dir="." includes="glaf-core.jar"/> 
+    </copy> 
+  </target>  
+  <target name="run" depends="build"> 
+    <echo message="build app......"/>  
+    <copy todir="bin"> 
+      <fileset dir="src" includes="**/*.properties,**/*.xsd, **/*.xml"/> 
+    </copy>  
+    <!-- <java classname="com.glaf.generator.tools.JPAEntityToXmlMapping" fork="true">
 			<classpath refid="classpath"/>
 			<arg line=" com.glaf "/>
-		</java> -->
-
-		<move todir="tmp">
-			<fileset dir="src">
-				<include name="**/.svn/**/*.*, **/*svn/**/*.*" />
-			</fileset>
-		</move>
-
-	</target>
+		</java> -->  
+    <move todir="tmp"> 
+      <fileset dir="src"> 
+        <include name="**/.svn/**/*.*, **/*svn/**/*.*"/> 
+      </fileset> 
+    </move> 
+  </target> 
 </project>
