@@ -32,8 +32,8 @@ public class TreeRepositoryBuilder {
 	public TreeRepository build(List<TreeModel> treeModels) {
 		// Collections.sort(treeModels);
 		List<TreeModel> nodes = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
-		Map<String, TreeModel> treeMap = new java.util.concurrent.ConcurrentHashMap<String, TreeModel>();
-		Map<Long, TreeModel> treeModelMap = new java.util.concurrent.ConcurrentHashMap<Long, TreeModel>();
+		Map<String, TreeModel> treeMap = new java.util.HashMap<String, TreeModel>();
+		Map<Long, TreeModel> treeModelMap = new java.util.HashMap<Long, TreeModel>();
 
 		for (int i = 0, len = treeModels.size(); i < len; i++) {
 			TreeModel treeModel = (TreeModel) treeModels.get(i);

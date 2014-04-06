@@ -101,19 +101,25 @@ public class JacksonTreeHelper {
 	}
 
 	public TreeRepository build(List<TreeModel> treeModels) {
-		Map<Long, TreeModel> treeModelMap = new java.util.concurrent.ConcurrentHashMap<Long, TreeModel>();
+		Map<Long, TreeModel> treeModelMap = new java.util.HashMap<Long, TreeModel>();
 
 		for (int i = 0, len = treeModels.size(); i < len; i++) {
 			TreeModel treeModel = (TreeModel) treeModels.get(i);
-			if (treeModel.getId() == treeModel.getParentId()) {
+			if (treeModel != null
+					&& treeModel.getId() == treeModel.getParentId()) {
 				treeModel.setParentId(-1);
 			}
-			treeModelMap.put(treeModel.getId(), treeModel);
+			if (treeModel != null && treeModel.getId() > 0) {
+				treeModelMap.put(Long.valueOf(treeModel.getId()), treeModel);
+			}
 		}
 
 		TreeRepository repository = new TreeRepository();
 		for (int i = 0, len = treeModels.size(); i < len; i++) {
 			TreeModel treeModel = treeModels.get(i);
+			if (treeModel == null) {
+				continue;
+			}
 			TreeComponent component = new TreeComponent();
 			component.setId(String.valueOf(treeModel.getId()));
 			component.setCode(String.valueOf(treeModel.getId()));
@@ -241,7 +247,7 @@ public class JacksonTreeHelper {
 			}
 		}
 
-		Map<String, TreeModel> nodeMap = new java.util.concurrent.ConcurrentHashMap<String, TreeModel>();
+		Map<String, TreeModel> nodeMap = new java.util.HashMap<String, TreeModel>();
 		if (trees != null && trees.size() > 0) {
 			for (int i = 0, len = trees.size(); i < len; i++) {
 				TreeModel treeNode = (TreeModel) trees.get(i);

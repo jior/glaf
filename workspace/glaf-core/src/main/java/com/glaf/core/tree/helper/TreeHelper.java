@@ -174,7 +174,7 @@ public class TreeHelper {
 			}
 		}
 
-		Map<String, TreeModel> nodeMap = new java.util.concurrent.ConcurrentHashMap<String, TreeModel>();
+		Map<String, TreeModel> nodeMap = new java.util.HashMap<String, TreeModel>();
 		if (treeNodes != null && treeNodes.size() > 0) {
 			for (int i = 0, len = treeNodes.size(); i < len; i++) {
 				TreeModel treeNode = (TreeModel) treeNodes.get(i);
