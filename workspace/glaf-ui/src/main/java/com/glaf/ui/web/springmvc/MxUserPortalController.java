@@ -66,11 +66,11 @@ public class MxUserPortalController {
 		UserPanel userPanel = panelService.getUserPanel(loginContext
 				.getActorId());
 		if (userPanel == null) {
-			userPanel = panelService.getUserPanel("root");
+			userPanel = panelService.getUserPanel("system");
 		}
 
-		Map<String, Integer> panelPxMap = new java.util.concurrent.ConcurrentHashMap<String, Integer>();
-		Map<String, Integer> panelMap = new java.util.concurrent.ConcurrentHashMap<String, Integer>();
+		Map<String, Integer> panelPxMap = new java.util.HashMap<String, Integer>();
+		Map<String, Integer> panelMap = new java.util.HashMap<String, Integer>();
 		if (userPanel != null && userPanel.getPanelInstances() != null) {
 			String layoutName = userPanel.getLayoutName();
 			Set<PanelInstance> set = userPanel.getPanelInstances();
@@ -107,9 +107,9 @@ public class MxUserPortalController {
 		List<UserPortal> userPortals = userPortalService
 				.getUserPortals(loginContext.getActorId());
 		if (userPortals == null || userPortals.isEmpty()) {
-			userPortals = userPortalService.getUserPortals("root");
+			userPortals = userPortalService.getUserPortals("system");
 			if (userPortals == null || userPortals.isEmpty()) {
-				List<Panel> panels = panelService.getPanels("root");
+				List<Panel> panels = panelService.getPanels("system");
 				if (panels != null && !panels.isEmpty()) {
 					int i = 100;
 					for (Panel panel : panels) {
@@ -136,16 +136,17 @@ public class MxUserPortalController {
 			}
 		}
 
-		List<UserPortal> sysPortals = userPortalService.getUserPortals("root");
+		List<UserPortal> sysPortals = userPortalService
+				.getUserPortals("system");
 
 		if (userPortals == null) {
-			userPortals = new java.util.concurrent.CopyOnWriteArrayList<UserPortal>();
+			userPortals = new java.util.ArrayList<UserPortal>();
 		}
 
 		if (sysPortals != null && !sysPortals.isEmpty()) {
 			userPortals.addAll(sysPortals);
 		}
-		
+
 		for (UserPortal p : userPortals) {
 			String panelId = p.getPanelId();
 			p.setPanel(panelService.getPanel(panelId));
@@ -165,7 +166,7 @@ public class MxUserPortalController {
 		String poss = request.getParameter("poss");
 
 		if (titles.length() > 0) {
-			List<UserPortal> rows = new java.util.concurrent.CopyOnWriteArrayList<UserPortal>();
+			List<UserPortal> rows = new java.util.ArrayList<UserPortal>();
 			String title[] = titles.split("[,]");
 			String pos[] = poss.split("[,]");
 			for (int i = 0; i < title.length; i++) {
@@ -207,7 +208,7 @@ public class MxUserPortalController {
 		String actorId = RequestUtils.getActorId(request);
 		String portals = request.getParameter("portalState");
 		logger.debug(portals);
-		List<UserPortal> rows = new java.util.concurrent.CopyOnWriteArrayList<UserPortal>();
+		List<UserPortal> rows = new java.util.ArrayList<UserPortal>();
 		if (portals != null && portals.length() > 0) {
 			int position = 0;
 			StringTokenizer st01 = new StringTokenizer(portals, ":");

@@ -23,7 +23,7 @@
     JSONArray arr = new JSONArray();
 	int columnQty = 2;
 	if(userPanel != null){
-	  layoutName = userPanel.getLayoutName();
+	    layoutName = userPanel.getLayoutName();
 	}
 	if(layoutName==null){
 		layoutName="P2";
