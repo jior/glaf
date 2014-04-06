@@ -159,5 +159,12 @@
 	<classpathentry kind="lib" path="lib/zkplus.jar"/>
 	<classpathentry kind="lib" path="lib/zul.jar"/>
 	<classpathentry kind="lib" path="lib/zweb.jar"/>
+	<classpathentry kind="lib" path="lib/zcommons-el.jar"/>
+	<classpathentry kind="lib" path="lib/zkex.jar"/>
+	<classpathentry kind="lib" path="lib/zkmax.jar"/>
+	<classpathentry kind="lib" path="lib/zkspring-core.jar"/>
+	<classpathentry kind="lib" path="lib/zkspring-security.jar"/>
+	<classpathentry kind="lib" path="lib/zml.jar"/>
+	<classpathentry kind="lib" path="lib/zuljsp.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
