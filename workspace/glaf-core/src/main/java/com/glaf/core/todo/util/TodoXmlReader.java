@@ -33,7 +33,7 @@ import com.glaf.core.util.Tools;
 public class TodoXmlReader {
 
 	public List<Todo> read(java.io.InputStream inputStream) {
-		List<Todo> todos = new java.util.concurrent.CopyOnWriteArrayList<Todo>();
+		List<Todo> todos = new java.util.ArrayList<Todo>();
 		SAXReader xmlReader = new SAXReader();
 		int sortNo = 1;
 		try {
@@ -44,7 +44,7 @@ public class TodoXmlReader {
 			while (iterator.hasNext()) {
 				Element element = (Element) iterator.next();
 				String id = element.attributeValue("id");
-				Map<String, Object> rowMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+				Map<String, Object> rowMap = new java.util.HashMap<String, Object>();
 				rowMap.put("id", id);
 				List<?> properties = element.elements("property");
 				Iterator<?> iter = properties.iterator();

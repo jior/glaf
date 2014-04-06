@@ -207,7 +207,7 @@ public class MyBatisEntityDAO {
 		}
 
 		if (totalCount == 0) {
-			page.setRows(new java.util.concurrent.CopyOnWriteArrayList<Object>());
+			page.setRows(new java.util.ArrayList<Object>());
 			page.setCurrentPage(0);
 			page.setPageSize(0);
 			page.setTotal(0);

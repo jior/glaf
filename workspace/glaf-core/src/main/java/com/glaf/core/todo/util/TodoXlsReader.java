@@ -36,7 +36,7 @@ import com.glaf.core.util.Tools;
 public class TodoXlsReader {
 
 	public List<Todo> readXls(java.io.InputStream inputStream) {
-		List<Todo> todos = new java.util.concurrent.CopyOnWriteArrayList<Todo>();
+		List<Todo> todos = new java.util.ArrayList<Todo>();
 		HSSFWorkbook wb = null;
 		try {
 			wb = new HSSFWorkbook(inputStream);
@@ -45,8 +45,8 @@ public class TodoXlsReader {
 		}
 		HSSFSheet sheet = wb.getSheetAt(0);
 		HSSFRow row = sheet.getRow(1);
-		Map<Integer, String> keyMap = new java.util.concurrent.ConcurrentHashMap<Integer, String>();
-		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<Integer, String> keyMap = new java.util.HashMap<Integer, String>();
+		Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 		int cells = row.getPhysicalNumberOfCells();
 		for (int colIndex = 0; colIndex < cells; colIndex++) {
 			HSSFCell cell = row.getCell(colIndex);
