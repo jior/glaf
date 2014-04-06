@@ -25,14 +25,19 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 
 import com.glaf.core.util.FileUtils;
+import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.PropertiesUtils;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public abstract class AbstractModule implements Module {
 	protected static final Log logger = LogFactory.getLog(AbstractModule.class);
+
+	protected static AtomicBoolean loading = new AtomicBoolean(false);
 
 	protected Properties properties;
 
@@ -172,27 +177,36 @@ public abstract class AbstractModule implements Module {
 
 	public void reload() {
 		properties = new Properties();
-		try {
-			String filename = SystemProperties.getConfigRootPath() + "/conf/"
-					+ getPropertiesFileName();
-			File file = new File(filename);
-			if (file.exists() && file.isFile()) {
-				logger.info("load config:" + filename);
-				properties = PropertiesUtils.loadProperties(FileUtils
-						.getInputStream(filename));
+		if (!loading.get()) {
+			InputStream inputStream = null;
+			try {
+				loading.set(true);
+				String filename = SystemProperties.getConfigRootPath()
+						+ "/conf/" + getPropertiesFileName();
+				File file = new File(filename);
+				if (file.exists() && file.isFile()) {
+					logger.info("load config:" + filename);
+					inputStream = FileUtils.getInputStream(filename);
+					properties = PropertiesUtils.loadProperties(inputStream);
+					IOUtils.closeStream(inputStream);
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		try {
-			if (properties.isEmpty()) {
-				logger.info("load classpath config:" + getPropertiesFileName());
-				properties = PropertiesLoaderUtils
-						.loadProperties(new ClassPathResource(
-								getPropertiesFileName(), getClass()));
+			try {
+				if (properties.isEmpty()) {
+					logger.info("load classpath config:"
+							+ getPropertiesFileName());
+					properties = PropertiesLoaderUtils
+							.loadProperties(new ClassPathResource(
+									getPropertiesFileName(), getClass()));
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			} finally {
+				loading.set(false);
+				IOUtils.closeStream(inputStream);
 			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
 		}
 	}
 
