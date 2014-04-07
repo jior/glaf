@@ -88,11 +88,18 @@ public class MxExtensionServiceImpl implements IExtensionService {
 		tableModel.setTableName(tableName);
 
 		ColumnModel keyColumn = new ColumnModel();
-		keyColumn.setColumnName("BUSINESS_KEY");
+		keyColumn.setColumnName("SERVICE_KEY");
 		keyColumn.setJavaType("String");
-		keyColumn.setValue(businessKey);
-		keyColumn.setStringValue(businessKey);
+		keyColumn.setValue(serviceKey);
+		keyColumn.setStringValue(serviceKey);
 		tableModel.addColumn(keyColumn);
+
+		ColumnModel keyColumn2 = new ColumnModel();
+		keyColumn2.setColumnName("BUSINESS_KEY");
+		keyColumn2.setJavaType("String");
+		keyColumn2.setValue(businessKey);
+		keyColumn2.setStringValue(businessKey);
+		tableModel.addColumn(keyColumn2);
 
 		List<SysExtension> list = tableDataMapper
 				.getExtensionDataByConditions(tableModel);
@@ -150,11 +157,18 @@ public class MxExtensionServiceImpl implements IExtensionService {
 		tableModel.setTableName(tableName);
 
 		ColumnModel keyColumn = new ColumnModel();
-		keyColumn.setColumnName("BUSINESS_KEY");
+		keyColumn.setColumnName("SERVICE_KEY");
 		keyColumn.setJavaType("String");
-		keyColumn.setValue(businessKey);
-		keyColumn.setStringValue(businessKey);
+		keyColumn.setValue(serviceKey);
+		keyColumn.setStringValue(serviceKey);
 		tableModel.addColumn(keyColumn);
+
+		ColumnModel keyColumn2 = new ColumnModel();
+		keyColumn2.setColumnName("BUSINESS_KEY");
+		keyColumn2.setJavaType("String");
+		keyColumn2.setValue(businessKey);
+		keyColumn2.setStringValue(businessKey);
+		tableModel.addColumn(keyColumn2);
 
 		tableDataService.deleteTableData(tableModel);
 
