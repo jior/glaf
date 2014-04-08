@@ -275,6 +275,15 @@ public class LoginController {
 	public ModelAndView prepareLogin(HttpServletRequest request,
 			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		HttpSession session = request.getSession(true);
+		java.util.Random random = new java.util.Random();
+		String rand = Math.abs(random.nextInt(9999))
+				+ com.glaf.core.util.UUID32.getUUID()
+				+ Math.abs(random.nextInt(9999));
+		session = request.getSession(true);
+		if (session != null) {
+			session.setAttribute("x_y", rand);
+		}
 		// ÏÔÊ¾µÇÂ½Ò³Ãæ
 		return new ModelAndView("/modules/login", modelMap);
 	}

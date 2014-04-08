@@ -12,12 +12,7 @@
 	if("127.0.0.1".equals(host)){
 		debug = true;
 	}
-	java.util.Random random = new java.util.Random();
-	String rand = Math.abs(random.nextInt(9999))+com.glaf.core.util.UUID32.getUUID()+Math.abs(random.nextInt(9999));
-	session = request.getSession(true);
-	if (session != null) {
-       session.setAttribute("x_y", rand);
-	}
+	
 %>
 <!DOCTYPE html >
 <html>
