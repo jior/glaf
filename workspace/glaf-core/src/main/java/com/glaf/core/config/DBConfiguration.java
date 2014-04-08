@@ -148,6 +148,28 @@ public class DBConfiguration {
 		}
 	}
 
+	public static void addDataSourceProperties(String name, String driver,
+			String url, String user, String password) {
+		if (!dataSourceProperties.containsKey(name)) {
+			Properties p = new Properties();
+			p.put(JDBC_NAME, name);
+			p.put(JDBC_DRIVER, driver);
+			p.put(JDBC_URL, url);
+			p.put(JDBC_USER, user);
+			p.put(JDBC_PASSWORD, password);
+			try {
+				if (DBConnectionFactory.checkConnection(p)) {
+					String dbType = getDatabaseType(url);
+					p.put(JDBC_TYPE, dbType);
+					dataSourceProperties.put(name, p);
+					dbTypes.put(name, dbType);
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+
 	public static List<ConnectionDefinition> getConnectionDefinitions() {
 		List<ConnectionDefinition> rows = new java.util.ArrayList<ConnectionDefinition>();
 		Collection<Properties> list = dataSourceProperties.values();
