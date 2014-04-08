@@ -155,5 +155,21 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/glaf-security"/>
 	<classpathentry kind="lib" path="conf"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/glaf-mail"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/zcommon.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/zcommons-el.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/zel.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/zhtml.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/zk.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/zkbind.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/zkcharts.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/zkex.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/zkmax.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/zkplus.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/zkspring-core.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/zkspring-security.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/zml.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/zul.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/zuljsp.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/zweb.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
