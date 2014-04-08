@@ -13,10 +13,10 @@
 		<echo message="运行应用程序......" />
         <mkdir dir="data" />
 		<mkdir dir="conf/jdbc" />
-        <java classname="com.glaf.core.startup.BootstrapManager" fork="true">
+        <!-- <java classname="com.glaf.core.startup.BootstrapManager" fork="true">
 			<classpath refid="classpath"/>
 			<jvmarg line="-Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m"/>
-		</java>
+		</java> -->
 		<java classname="com.glaf.core.execution.ExecutionManager" fork="true">
 			<classpath refid="classpath"/>
 			<jvmarg line="-Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m"/>
