@@ -46,7 +46,7 @@
 			$('#tabs').tabs('select', title);
 		} else {
 			//alert(menuId);
-			var url = "${contextPath}/my/menu.do?method=jump&id="+menuId;
+			var url = "<%=request.getContextPath()%>/my/menu.do?method=jump&id="+menuId;
 			addTab(title, url, "icon-gears");
 		}
 	}
@@ -77,9 +77,10 @@
 	}
 	
     function changeTheme(){
-		 var theme = $("#theme").val();
-		 var url = "${contextPath}/rs/theme/set?theme="+theme;
-		  jQuery.ajax({
+		//alert("changeTheme");
+		var theme = jQuery("#theme").val();
+		var url = "<%=request.getContextPath()%>/rs/theme/set?theme="+theme;
+		jQuery.ajax({
 					   type: "POST",
 					   url: url,
 					   dataType: 'json',
@@ -223,13 +224,15 @@
 							<option value="gray">灰色</option>
 							<option value="sunny">橙色</option>
 							<option value="black">黑色</option>
+							<option value="cupertino">cupertino</option>
+							<option value="pepper-grinder">pepper-grinder</option>
 							<option value="bootstrap">bootstrap</option>
 							<option value="metro">metro</option>
 							<!-- <option value="metro-blue">metro-blue</option> -->
 						</select>
 						</td>
-						<td>&nbsp;<a id="btnEp" class="easyui-linkbutton"
-							icon="icon-ok" href="javascript:changeTheme();">确定</a>
+						<td>
+						&nbsp;<button class="easyui-linkbutton" icon="icon-ok" onclick="javascript:changeTheme();">确定</button>
 						</td>
 					</tr>
 		 
