@@ -27,7 +27,7 @@ int count = 0;
 <meta http-equiv="cache-control" content="no-cache">
 <meta http-equiv="expires" content="0">
 <title>首页</title>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/site.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/<%=com.glaf.core.util.RequestUtils.getTheme(request)%>/site.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/style-custom.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/main.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/site.js"></script>

@@ -13,7 +13,7 @@ int nodeId=ParamUtil.getIntParameter(request, "nodeId", 0);
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>基础平台系统</title>
-<link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/<%=com.glaf.core.util.RequestUtils.getTheme(request)%>/site.css">
 <script language="javascript" src='<%=context%>/scripts/jquery.min.js'></script>
 <script language="javascript" src='<%=context%>/scripts/jquery.form.js'></script>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>

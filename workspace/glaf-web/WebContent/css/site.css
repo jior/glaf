@@ -209,7 +209,7 @@ a:hover {
 /* list-box */
 .list-box {
   width:85%;
-  background:#CDCBCC;
+  background:#dddddd;
   table-layout:fixed;
 }
 .list-box td {

@@ -9,7 +9,7 @@ int year =ParamUtil.getIntAttribute(request, "year", cal.get(Calendar.YEAR));
 <html> 
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
-<link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/<%=com.glaf.core.util.RequestUtils.getTheme(request)%>/site.css">
 <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/css/calendar.css">
 <script language="javascript" src='<%=request.getContextPath()%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=request.getContextPath()%>/scripts/main.js'></script>

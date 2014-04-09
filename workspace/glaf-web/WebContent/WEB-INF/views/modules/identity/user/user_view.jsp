@@ -15,7 +15,7 @@ int nodeId=ParamUtil.getIntParameter(request, "nodeId", 0);
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
-<link href="<%=context%>/css/site.css" type="text/css" rel="stylesheet"> 
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/<%=com.glaf.core.util.RequestUtils.getTheme(request)%>/site.css"> 
 </head>
 <body>
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
