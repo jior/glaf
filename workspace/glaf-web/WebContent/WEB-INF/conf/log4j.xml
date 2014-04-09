@@ -146,7 +146,7 @@
     </logger> 
 
 	<logger name="org.springframework.transaction">
-        <level value="DEBUG"/>
+        <level value="WARN"/>
     </logger> 
 	
   <root>
