@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title></title>
 <link href="../../css/site.css" type="text/css" rel="stylesheet">
-<link href="<%= request.getContextPath() %>/css/site.css" type="text/css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/<%=com.glaf.core.util.RequestUtils.getTheme(request)%>/site.css">
 <script language="javascript" src="<%= request.getContextPath() %>/scripts/css.js"></script>
 <script language="javascript" src='<%= request.getContextPath() %>/scripts/main.js'></script>
 <script type="text/JavaScript">

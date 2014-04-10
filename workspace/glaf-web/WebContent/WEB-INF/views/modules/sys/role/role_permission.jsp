@@ -15,7 +15,7 @@ ArrayList apps = (ArrayList)request.getAttribute("apps");
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
-<link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/<%=com.glaf.core.util.RequestUtils.getTheme(request)%>/site.css">
 <link type="text/css" href="<%=request.getContextPath()%>/css/style.css" rel="stylesheet">
 <SCRIPT src="<%=request.getContextPath()%>/scripts/main.js"></SCRIPT>
 <script language="JavaScript">

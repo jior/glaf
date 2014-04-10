@@ -13,7 +13,7 @@ int showCode = ParamUtil.getIntParameter(request, "showCode",0);
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link href="<%=request.getContextPath()%>/css/site.css" type="text/css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/<%=com.glaf.core.util.RequestUtils.getTheme(request)%>/site.css">
 <link href="<%=request.getContextPath()%>/scripts/dtree/dtree.css" type="text/css" rel="stylesheet">
 <script src="<%=request.getContextPath()%>/scripts/dtree/ttTree.js" type="text/javascript"></script>
 <title>树</title>

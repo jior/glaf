@@ -16,7 +16,7 @@ List list = pager.getResults();
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>我的菜单</title>
-<link href="<%= request.getContextPath() %>/css/site.css" type="text/css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/<%=com.glaf.core.util.RequestUtils.getTheme(request)%>/site.css">
 <script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/MyMenuAjaxService.js'></script>
 <script type='text/javascript' src='<%=request.getContextPath()%>/dwr/engine.js'></script>
 <script type='text/javascript' src='<%=request.getContextPath()%>/dwr/util.js'></script>
