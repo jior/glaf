@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.jbpm.xml;
 
@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -47,8 +48,59 @@ public class JpdlXmlReader {
 
 	private static int index = 1001;
 
+	public List<String> getTaskNames(InputStream inputStream) {
+		List<String> taskNames = new ArrayList<String>();
+		SAXReader xmlReader = new SAXReader();
+		Document doc = null;
+		try {
+			doc = xmlReader.read(inputStream);
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
+		Element root = doc.getRootElement();
+		List<?> rows = root.elements("task-node");
+		Iterator<?> iterator = rows.iterator();
+		while (iterator.hasNext()) {
+			Element element = (Element) iterator.next();
+			List<?> tasks = element.elements("task");
+			Iterator<?> iter = tasks.iterator();
+			while (iter.hasNext()) {
+				Element elem = (Element) iter.next();
+				String taskName = elem.attributeValue("name");
+				if (taskNames.contains(taskName)) {
+					throw new RuntimeException("task name '" + taskName
+							+ "' is exists.");
+				}
+				taskNames.add(taskName);
+			}
+		}
+
+		return taskNames;
+	}
+
+	public void checkTaskNames(Document doc) {
+		List<String> taskNames = new ArrayList<String>();
+		Element root = doc.getRootElement();
+		List<?> rows = root.elements("task-node");
+		Iterator<?> iterator = rows.iterator();
+		while (iterator.hasNext()) {
+			Element element = (Element) iterator.next();
+			List<?> tasks = element.elements("task");
+			Iterator<?> iter = tasks.iterator();
+			while (iter.hasNext()) {
+				Element elem = (Element) iter.next();
+				String taskName = elem.attributeValue("name");
+				if (taskNames.contains(taskName)) {
+					throw new RuntimeException("task name '" + taskName
+							+ "' is exists.");
+				}
+				taskNames.add(taskName);
+			}
+		}
+	}
+
 	public List<Todo> read(InputStream inputStream) {
-		List<Todo> todoList = new java.util.concurrent.CopyOnWriteArrayList<Todo>();
+		List<Todo> todoList = new java.util.ArrayList<Todo>();
 		SAXReader xmlReader = new SAXReader();
 		int sortNo = 1;
 		try {

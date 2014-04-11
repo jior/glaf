@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.jbpm.deploy;
 
@@ -41,7 +41,6 @@ import org.jbpm.taskmgmt.def.Task;
 
 import com.glaf.core.config.CustomProperties;
 import com.glaf.core.config.SystemProperties;
-
 import com.glaf.core.util.Dom4jUtils;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.LogUtils;
@@ -50,6 +49,7 @@ import com.glaf.jbpm.config.JbpmExtensionReader;
 import com.glaf.jbpm.container.ProcessContainer;
 import com.glaf.jbpm.model.Extension;
 import com.glaf.jbpm.manager.JbpmExtensionManager;
+import com.glaf.jbpm.xml.JpdlXmlReader;
 
 public class MxJbpmProcessDeployer {
 
@@ -62,6 +62,7 @@ public class MxJbpmProcessDeployer {
 
 	public ProcessDefinition deploy(JbpmContext jbpmContext, byte[] zipBytes) {
 		SAXReader xmlReader = new SAXReader();
+		JpdlXmlReader jpdlReader = new JpdlXmlReader();
 		Document doc = null;
 		InputStream inputStream = null;
 		ZipInputStream zipInputStream = null;
@@ -78,6 +79,7 @@ public class MxJbpmProcessDeployer {
 					byte[] bytes = zipMap.get("processdefinition.xml");
 					inputStream = new ByteArrayInputStream(bytes);
 					doc = xmlReader.read(inputStream);
+					jpdlReader.checkTaskNames(doc);
 					this.reconfigProcessDefinition(jbpmContext, doc);
 					Element root = doc.getRootElement();
 					String encoding = doc.getXMLEncoding();
