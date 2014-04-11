@@ -357,7 +357,7 @@ public class MxJbpmTaskController {
 				processInstance = jbpmContext.getProcessInstance(Long
 						.valueOf(processInstanceId));
 				if (processInstance != null) {
-					Map<String, Object> variables = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+					Map<String, Object> variables = new java.util.HashMap<String, Object>();
 					variables.putAll(processInstance.getContextInstance()
 							.getVariables());
 					modelMap.put("processInstance", processInstance);
@@ -419,7 +419,7 @@ public class MxJbpmTaskController {
 				jbpmContext = ProcessContainer.getContainer()
 						.createJbpmContext();
 
-				Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+				Map<String, Object> params = new java.util.HashMap<String, Object>();
 				params.put("processInstanceId", processInstanceId);
 
 				processInstance = jbpmContext.getProcessInstance(Long
@@ -430,7 +430,7 @@ public class MxJbpmTaskController {
 					logger.debug(processDefinition.getName() + "-"
 							+ processDefinition.getDescription());
 
-					Map<String, Object> variables = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+					Map<String, Object> variables = new java.util.HashMap<String, Object>();
 					String json = (String) processInstance.getContextInstance()
 							.getVariable(Constant.JSON_VARIABLE_MAP);
 					logger.debug(json);
@@ -444,7 +444,7 @@ public class MxJbpmTaskController {
 
 					TaskMgmtInstance tmi = processInstance
 							.getTaskMgmtInstance();
-					List<TaskItem> finishedTaskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
+					List<TaskItem> finishedTaskItems = new java.util.ArrayList<TaskItem>();
 					Collection<?> taskInstances = tmi.getTaskInstances();
 					if (taskInstances != null && taskInstances.size() > 0) {
 						JbpmTaskManager jbpmTaskManager = ProcessContainer

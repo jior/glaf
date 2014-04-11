@@ -145,7 +145,7 @@ public class MxJbpmTakeTaskController {
 		logger.info("templateId=" + templateId);
 		if (StringUtils.isNotEmpty(templateId)) {
 			 
-			Map<String, Object> context = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			Map<String, Object> context = new java.util.HashMap<String, Object>();
 			context.putAll(paramMap);
 			context.put("actorId", actorId);
 			context.put("contextPath", request.getContextPath());

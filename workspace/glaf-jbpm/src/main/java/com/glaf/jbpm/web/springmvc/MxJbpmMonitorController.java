@@ -139,7 +139,7 @@ public class MxJbpmMonitorController {
 			jpage = jbpmProcessManager.getPageProcessInstances(jbpmContext,
 					currPageNo, limit, query);
 			if (jpage.getRows() != null && jpage.getRows().size() > 0) {
-				Map<String, Object> variables = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+				Map<String, Object> variables = new java.util.HashMap<String, Object>();
 				Collection<Long> processInstanceIds = new HashSet<Long>();
 				Iterator<Object> iterator = jpage.getRows().iterator();
 				while (iterator.hasNext()) {

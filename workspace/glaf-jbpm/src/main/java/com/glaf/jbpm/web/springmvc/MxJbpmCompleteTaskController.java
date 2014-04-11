@@ -189,7 +189,7 @@ public class MxJbpmCompleteTaskController {
 			request.setCharacterEncoding(encoding);
 			response.setCharacterEncoding(encoding);
 			response.setContentType("text/plain;charset=" + encoding);
-			Map<String, Object> jsonMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			Map<String, Object> jsonMap = new java.util.HashMap<String, Object>();
 			if (isOK) {
 				jsonMap.put("statusCode", 200);
 				jsonMap.put("success", "true");
@@ -259,7 +259,7 @@ public class MxJbpmCompleteTaskController {
 		}
 		if (StringUtils.isNotEmpty(templateId)) {
 			 
-			Map<String, Object> context = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			Map<String, Object> context = new java.util.HashMap<String, Object>();
 			context.putAll(paramMap);
 			context.put("actorId", actorId);
 			context.put("canSubmit", canSubmit);

@@ -136,7 +136,7 @@ public class MxJbpmExtensionController {
 				&& StringUtils.isNotEmpty(taskName)) {
 			Extension model = new Extension();
 			Tools.populate(model, params);
-			List<Extension> extensions = new java.util.concurrent.CopyOnWriteArrayList<Extension>();
+			List<Extension> extensions = new java.util.ArrayList<Extension>();
 			extensions.add(model);
 			Map<String, Object> paramMap = RequestUtils.getParameterMap(
 					request, "x_property_");

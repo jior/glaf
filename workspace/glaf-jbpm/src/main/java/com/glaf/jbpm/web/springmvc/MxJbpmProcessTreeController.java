@@ -98,7 +98,7 @@ public class MxJbpmProcessTreeController {
 					Map<String, Task> tasks = pd.getTaskMgmtDefinition()
 							.getTasks();
 					if (tasks != null) {
-						List<Task> rows = new java.util.concurrent.CopyOnWriteArrayList<Task>();
+						List<Task> rows = new java.util.ArrayList<Task>();
 						Iterator<Task> iterator = tasks.values().iterator();
 						while (iterator.hasNext()) {
 							Task task = iterator.next();
@@ -143,7 +143,7 @@ public class MxJbpmProcessTreeController {
 			graphSession = jbpmContext.getGraphSession();
 			if (StringUtils.isNotEmpty(processDefinitionId)
 					&& StringUtils.isNumeric(processDefinitionId)) {
-				Collection<Long> processDefinitionIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
+				Collection<Long> processDefinitionIds = new java.util.ArrayList<Long>();
 				processDefinitionIds.add(Long.parseLong(processDefinitionId));
 				result = graphSession
 						.findProcessDefinitions(processDefinitionIds);

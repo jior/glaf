@@ -60,7 +60,7 @@ public class MxJbpmResource {
 	@ResponseBody
 	public byte[] startProcess(@Context HttpServletRequest request) {
 		Map<String, Object> paramMap = RequestUtils.getParameterMap(request);
-		Map<String, Object> jsonResultMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> jsonResultMap = new java.util.HashMap<String, Object>();
 		logger.debug(paramMap);
 		String json = RequestUtils.getStringValue(request, "json");
 		String rowId = RequestUtils.getStringValue(request, "rowId");
@@ -143,7 +143,7 @@ public class MxJbpmResource {
 	@ResponseBody
 	public byte[] completeTask(@Context HttpServletRequest request) {
 		Map<String, Object> paramMap = RequestUtils.getParameterMap(request);
-		Map<String, Object> jsonResultMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> jsonResultMap = new java.util.HashMap<String, Object>();
 		logger.debug(paramMap);
 		String json = RequestUtils.getStringValue(request, "json");
 		Long processInstanceId = ParamUtils.getLong(paramMap,

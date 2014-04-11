@@ -149,7 +149,7 @@ public class MxJbpmDeployResource {
 		byte[] bytes = null;
 		Document doc = null;
 		if (StringUtils.isNotEmpty(process_name)) {
-			Map<String, InputStream> zipMap = new java.util.concurrent.ConcurrentHashMap<String, InputStream>();
+			Map<String, InputStream> zipMap = new java.util.HashMap<String, InputStream>();
 			JbpmContext jbpmContext = null;
 			try {
 				JbpmExtensionManager jbpmExtensionManager = ProcessContainer

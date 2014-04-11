@@ -239,7 +239,7 @@ public class MxJbpmProcessViewResource {
 		Writer writer = new StringWriter();
 
 		if (tokenInstanceId > 0) {
-			List<Token> allTokens = new java.util.concurrent.CopyOnWriteArrayList<Token>();
+			List<Token> allTokens = new java.util.ArrayList<Token>();
 			walkTokens(currentToken, allTokens);
 			writer.write("<div style='position:relative; background-image:url("
 					+ imageLink + ");background-repeat:no-repeat; width: "
