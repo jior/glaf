@@ -20,7 +20,7 @@ package com.glaf.template.engine.freemarker;
 
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;

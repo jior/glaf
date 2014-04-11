@@ -2,7 +2,7 @@ package com.glaf.jbpm.db;
 
 import java.util.*;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.*;
 import org.dom4j.io.SAXReader;
 import org.springframework.core.io.*;

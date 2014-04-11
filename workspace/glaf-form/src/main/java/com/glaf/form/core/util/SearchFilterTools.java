@@ -19,7 +19,7 @@ package com.glaf.form.core.util;
 
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.glaf.core.util.FieldType;
 import com.glaf.form.core.graph.node.CheckboxNode;

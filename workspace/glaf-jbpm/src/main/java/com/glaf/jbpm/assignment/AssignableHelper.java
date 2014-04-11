@@ -23,7 +23,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jbpm.taskmgmt.exe.Assignable;
 
 import com.glaf.core.identity.User;

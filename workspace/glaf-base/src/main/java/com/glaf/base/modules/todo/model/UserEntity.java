@@ -18,8 +18,8 @@
 
 package com.glaf.base.modules.todo.model;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class UserEntity implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;

@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.domain.SystemProperty;

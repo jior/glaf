@@ -25,7 +25,7 @@ import java.util.Enumeration;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.PropertiesUtils;

@@ -20,8 +20,8 @@ package com.glaf.oa.assesssort.model;
 import java.io.Serializable;
 import java.util.List;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.glaf.oa.assesscontent.model.AssesscontentAndScore;
 

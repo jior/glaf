@@ -15,7 +15,7 @@ import org.apache.commons.logging.LogFactory;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import com.alibaba.fastjson.*;
 
 import com.glaf.core.identity.*;

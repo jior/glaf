@@ -449,27 +449,27 @@ public class DateUtils {
 		try {
 			if (dateString.length() == 4) {
 				parsePatterns[0] = YEAR_FORMAT;
-				return org.apache.commons.lang.time.DateUtils.parseDate(
+				return org.apache.commons.lang3.time.DateUtils.parseDate(
 						dateString, parsePatterns);
 			} else if (dateString.length() == 7) {
 				parsePatterns[0] = MONTH_FORMAT;
-				return org.apache.commons.lang.time.DateUtils.parseDate(
+				return org.apache.commons.lang3.time.DateUtils.parseDate(
 						dateString, parsePatterns);
 			} else if (dateString.length() == 10) {
 				parsePatterns[0] = DAY_FORMAT;
-				return org.apache.commons.lang.time.DateUtils.parseDate(
+				return org.apache.commons.lang3.time.DateUtils.parseDate(
 						dateString, parsePatterns);
 			} else if (dateString.length() == 13) {
 				parsePatterns[0] = HOUR_FORMAT;
-				return org.apache.commons.lang.time.DateUtils.parseDate(
+				return org.apache.commons.lang3.time.DateUtils.parseDate(
 						dateString, parsePatterns);
 			} else if (dateString.length() == 16) {
 				parsePatterns[0] = MINUTE_FORMAT;
-				return org.apache.commons.lang.time.DateUtils.parseDate(
+				return org.apache.commons.lang3.time.DateUtils.parseDate(
 						dateString, parsePatterns);
 			} else if (dateString.length() == 19) {
 				parsePatterns[0] = SECOND_FORMAT;
-				return org.apache.commons.lang.time.DateUtils.parseDate(
+				return org.apache.commons.lang3.time.DateUtils.parseDate(
 						dateString, parsePatterns);
 			}
 		} catch (ParseException ex) {

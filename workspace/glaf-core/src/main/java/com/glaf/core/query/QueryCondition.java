@@ -18,8 +18,8 @@
 
 package com.glaf.core.query;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class QueryCondition implements java.io.Serializable {
 

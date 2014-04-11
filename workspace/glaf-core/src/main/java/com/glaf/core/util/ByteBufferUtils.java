@@ -26,7 +26,7 @@ import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 /**
  * Utility methods to make ByteBuffers less painful The following should
@@ -124,7 +124,7 @@ public class ByteBufferUtils {
 	}
 
 	/**
-	 * ByteBuffer adaptation of org.apache.commons.lang.ArrayUtils.lastIndexOf
+	 * ByteBuffer adaptation of org.apache.commons.lang3.ArrayUtils.lastIndexOf
 	 * method
 	 * 
 	 * @param buffer

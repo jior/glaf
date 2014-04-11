@@ -21,7 +21,7 @@ package com.glaf.mail;
 import java.util.Collection;
 import java.util.Map;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.glaf.core.message.BaseMessage;
 

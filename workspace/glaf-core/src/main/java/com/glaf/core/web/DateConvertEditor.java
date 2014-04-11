@@ -21,7 +21,7 @@ import java.beans.PropertyEditorSupport;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class DateConvertEditor extends PropertyEditorSupport {
 	private SimpleDateFormat datetimeFormat = new SimpleDateFormat(

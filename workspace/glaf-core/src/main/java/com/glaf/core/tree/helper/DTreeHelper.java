@@ -21,7 +21,7 @@ package com.glaf.core.tree.helper;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.tree.component.TreeComponent;

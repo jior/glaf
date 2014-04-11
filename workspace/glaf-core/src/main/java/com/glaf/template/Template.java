@@ -32,8 +32,8 @@ import javax.persistence.Transient;
 
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.glaf.core.base.JSONable;
 import com.glaf.template.util.TemplateJsonFactory;

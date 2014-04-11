@@ -22,8 +22,8 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class ProcessContext implements Serializable {
 	private static final long serialVersionUID = 1L;

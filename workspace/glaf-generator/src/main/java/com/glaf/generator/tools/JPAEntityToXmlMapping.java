@@ -22,7 +22,7 @@ import java.util.*;
 
 import org.dom4j.Document;
 import org.dom4j.io.OutputFormat;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import javassist.*;
 

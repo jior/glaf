@@ -6,7 +6,7 @@ import java.util.*;
 import freemarker.cache.*;
 import freemarker.template.*;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.core.io.ClassPathResource;

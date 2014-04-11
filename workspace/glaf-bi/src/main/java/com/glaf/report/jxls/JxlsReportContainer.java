@@ -31,7 +31,7 @@ import java.util.Map;
 import net.sf.jxls.report.ReportManager;
 import net.sf.jxls.transformer.XLSTransformer;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.ss.usermodel.Workbook;
