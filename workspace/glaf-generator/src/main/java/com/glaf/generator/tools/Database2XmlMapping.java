@@ -2,7 +2,7 @@ package com.glaf.generator.tools;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.io.OutputFormat;
 
@@ -63,7 +63,7 @@ public class Database2XmlMapping {
 							.getName().toLowerCase())));
 					f.setTitle(f.getName());
 					if (!primaryKeys.isEmpty()) {
-						if (primaryKeys.contains(f.getColumnName())) {
+						if (primaryKeys.contains(f.getColumnName()) || primaryKeys.contains(f.getColumnName().toLowerCase()) || primaryKeys.contains(f.getColumnName().toUpperCase())) {
 							classDefinition.setIdField(f);
 						} else {
 							f.setEditable(true);
