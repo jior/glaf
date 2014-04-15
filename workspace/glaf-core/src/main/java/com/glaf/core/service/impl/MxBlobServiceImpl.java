@@ -21,6 +21,7 @@ package com.glaf.core.service.impl;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.Iterator;
@@ -28,12 +29,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.base.BlobItem;
 import com.glaf.core.base.DataFile;
+import com.glaf.core.config.SystemConfig;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.domain.BlobItemEntity;
@@ -43,12 +47,16 @@ import com.glaf.core.mapper.BlobItemMapper;
 import com.glaf.core.query.BlobItemQuery;
 import com.glaf.core.service.IBlobService;
 import com.glaf.core.util.DBUtils;
+import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.UUID32;
 
 @Service("blobService")
 @Transactional(readOnly = true)
 public class MxBlobServiceImpl implements IBlobService {
+
+	protected final static Log logger = LogFactory
+			.getLog(MxBlobServiceImpl.class);
 
 	protected EntityDAO entityDAO;
 
@@ -75,39 +83,67 @@ public class MxBlobServiceImpl implements IBlobService {
 	}
 
 	public int count(BlobItemQuery query) {
-		query.ensureInitialized();
 		return blobItemMapper.getBlobItemCount(query);
 	}
 
 	@Transactional
-	public void deleteBlobByFileId(String fileId) {
-		blobItemMapper.deleteBlobItemsByFileId(fileId);
-	}
-
-	@Transactional
 	public void deleteBlobByBusinessKey(String businessKey) {
+		BlobItemQuery query = new BlobItemQuery();
+		query.businessKey(businessKey);
+		List<BlobItem> list = blobItemMapper.getBlobItems(query);
+		if (list != null && !list.isEmpty()) {
+			try {
+				for (BlobItem blobItem : list) {
+					String path = blobItem.getPath();
+					String filename = SystemProperties.getConfigRootPath()
+							+ path;
+					FileUtils.deleteFile(filename);
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				logger.error(ex);
+			}
+
+		}
 		blobItemMapper.deleteBlobItemsByBusinessKey(businessKey);
 	}
 
 	@Transactional
-	public void deleteById(String id) {
-		blobItemMapper.deleteBlobItemById(id);
+	public void deleteBlobByFileId(String fileId) {
+		BlobItem blobItem = this.getBlobByFileId(fileId);
+		String path = blobItem.getPath();
+		try {
+			String filename = SystemProperties.getConfigRootPath() + path;
+			FileUtils.deleteFile(filename);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
+		}
+
+		blobItemMapper.deleteBlobItemsByFileId(fileId);
 	}
 
 	@Transactional
-	public void deleteByIds(List<String> rowIds) {
-		BlobItemQuery query = new BlobItemQuery();
-		query.rowIds(rowIds);
-		blobItemMapper.deleteBlobItems(query);
+	public void deleteById(String id) {
+		BlobItem blobItem = blobItemMapper.getBlobItemById(id);
+		String path = blobItem.getPath();
+		try {
+			String filename = SystemProperties.getConfigRootPath() + path;
+			FileUtils.deleteFile(filename);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		blobItemMapper.deleteBlobItemById(id);
 	}
 
 	public BlobItem getBlobByFileId(String fileId) {
-		BlobItem blob = null;
+		BlobItem blobItem = null;
 		List<BlobItem> list = blobItemMapper.getBlobItemsByFileId(fileId);
 		if (list != null && !list.isEmpty()) {
-			blob = list.get(0);
+			blobItem = list.get(0);
 		}
-		return blob;
+		return blobItem;
 	}
 
 	/**
@@ -117,24 +153,24 @@ public class MxBlobServiceImpl implements IBlobService {
 	 * @return
 	 */
 	public DataFile getBlobByFilename(String filename) {
-		BlobItem blob = null;
+		BlobItem blobItem = null;
 		List<BlobItem> list = blobItemMapper.getBlobItemsByFilename(filename);
 		if (list != null && !list.isEmpty()) {
-			blob = list.get(0);
+			blobItem = list.get(0);
 		}
-		return blob;
+		return blobItem;
 	}
 
 	public BlobItem getBlobById(String id) {
-		BlobItem blob = blobItemMapper.getBlobItemById(id);
-		return blob;
+		BlobItem blobItem = blobItemMapper.getBlobItemById(id);
+		return blobItem;
 	}
 
 	public List<DataFile> getBlobList(BlobItemQuery query) {
 		List<BlobItem> list = list(query);
-		List<DataFile> rows = new java.util.concurrent.CopyOnWriteArrayList<DataFile>();
-		for (BlobItem b : list) {
-			rows.add(b);
+		List<DataFile> rows = new java.util.ArrayList<DataFile>();
+		for (BlobItem blobItem : list) {
+			rows.add(blobItem);
 		}
 		return rows;
 	}
@@ -143,45 +179,46 @@ public class MxBlobServiceImpl implements IBlobService {
 		BlobItemQuery query = new BlobItemQuery();
 		query.businessKey(businessKey);
 		List<BlobItem> list = list(query);
-		List<DataFile> rows = new java.util.concurrent.CopyOnWriteArrayList<DataFile>();
-		for (BlobItem b : list) {
-			rows.add(b);
+		List<DataFile> rows = new java.util.ArrayList<DataFile>();
+		for (BlobItem blobItem : list) {
+			rows.add(blobItem);
 		}
 		return rows;
 	}
 
 	public BlobItem getBlobWithBytesByFileId(String fileId) {
-		BlobItem blob = this.getBlobByFileId(fileId);
-		if (blob != null) {
-			byte[] data = this.getBytesById(blob.getId());
-			blob.setData(data);
+		BlobItem blobItem = this.getBlobByFileId(fileId);
+		if (blobItem != null) {
+			byte[] data = this.getBytesById(blobItem.getId());
+			blobItem.setData(data);
 		}
-		return blob;
+		return blobItem;
 	}
 
 	public BlobItem getBlobWithBytesById(String id) {
-		BlobItem blob = blobItemMapper.getBlobItemById(id);
+		BlobItem blobItem = blobItemMapper.getBlobItemById(id);
 		byte[] data = this.getBytesById(id);
-		blob.setData(data);
-		return blob;
+		blobItem.setData(data);
+		return blobItem;
 	}
 
 	public byte[] getBytesByFileId(String fileId) {
-		BlobItem blob = null;
+		BlobItem blobItem = this.getBlobByFileId(fileId);
+
 		if (StringUtils.equals(DBUtils.POSTGRESQL,
 				DBConnectionFactory.getDatabaseType())) {
-			blob = (BlobItem) entityDAO.getSingleObject(
+			blobItem = (BlobItem) entityDAO.getSingleObject(
 					"getBlobItemFileInfoByFileId_postgres", fileId);
 		} else {
-			blob = (BlobItem) entityDAO.getSingleObject(
+			blobItem = (BlobItem) entityDAO.getSingleObject(
 					"getBlobItemFileInfoByFileId", fileId);
 		}
-		if (blob != null && blob.getData() != null) {
-			return blob.getData();
-		} else if (blob != null && blob.getPath() != null) {
+		if (blobItem != null && blobItem.getData() != null) {
+			return blobItem.getData();
+		} else if (blobItem != null && blobItem.getPath() != null) {
 			String rootDir = SystemProperties.getConfigRootPath();
-			File file = new File(rootDir + blob.getPath());
-			if (file.exists()) {
+			File file = new File(rootDir + blobItem.getPath());
+			if (file.exists() && file.isFile()) {
 				return FileUtils.getBytes(file);
 			}
 		}
@@ -189,20 +226,21 @@ public class MxBlobServiceImpl implements IBlobService {
 	}
 
 	public byte[] getBytesById(String id) {
-		BlobItem blob = null;
+		BlobItem blobItem = this.getBlobById(id);
+
 		if (StringUtils.equals(DBUtils.POSTGRESQL,
 				DBConnectionFactory.getDatabaseType())) {
-			blob = (BlobItem) entityDAO.getSingleObject(
+			blobItem = (BlobItem) entityDAO.getSingleObject(
 					"getBlobItemFileInfoById_postgres", id);
 		} else {
-			blob = (BlobItem) entityDAO.getSingleObject(
+			blobItem = (BlobItem) entityDAO.getSingleObject(
 					"getBlobItemFileInfoById", id);
 		}
-		if (blob != null && blob.getData() != null) {
-			return blob.getData();
-		} else if (blob != null && blob.getPath() != null) {
+		if (blobItem != null && blobItem.getData() != null) {
+			return blobItem.getData();
+		} else if (blobItem != null && blobItem.getPath() != null) {
 			String rootDir = SystemProperties.getConfigRootPath();
-			File file = new File(rootDir + blob.getPath());
+			File file = new File(rootDir + blobItem.getPath());
 			if (file.exists()) {
 				return FileUtils.getBytes(file);
 			}
@@ -227,77 +265,59 @@ public class MxBlobServiceImpl implements IBlobService {
 	}
 
 	public BlobItem getMaxBlob(BlobItemQuery query) {
-		BlobItem blob = null;
+		BlobItem blobItem = null;
 		List<BlobItem> list = list(query);
 		if (list != null && !list.isEmpty()) {
-			blob = list.get(0);
+			blobItem = list.get(0);
 			Iterator<BlobItem> iterator = list.iterator();
 			while (iterator.hasNext()) {
 				BlobItem model = iterator.next();
 				if (model.getLastModified() > model.getLastModified()) {
-					blob = model;
+					blobItem = model;
 				}
 			}
 		}
-		return blob;
+		return blobItem;
 	}
 
 	public BlobItem getMaxBlob(String businessKey) {
-		BlobItem blob = null;
+		BlobItem blobItem = null;
 		BlobItemQuery query = new BlobItemQuery();
 		query.businessKey(businessKey);
 		List<BlobItem> list = this.list(query);
 		if (list != null && !list.isEmpty()) {
-			blob = list.get(0);
+			blobItem = list.get(0);
 			Iterator<BlobItem> iterator = list.iterator();
 			while (iterator.hasNext()) {
 				BlobItem model = iterator.next();
-				if (model.getLastModified() > blob.getLastModified()) {
-					blob = model;
+				if (model.getLastModified() > blobItem.getLastModified()) {
+					blobItem = model;
 				}
 			}
 		}
-		return blob;
+		return blobItem;
 	}
 
 	public BlobItem getMaxBlobWithBytes(String businessKey) {
-		BlobItem blob = null;
+		BlobItem blobItem = null;
 		BlobItemQuery query = new BlobItemQuery();
 		query.businessKey(businessKey);
 		List<BlobItem> list = this.list(query);
 		if (list != null && !list.isEmpty()) {
-			blob = list.get(0);
+			blobItem = list.get(0);
 			Iterator<BlobItem> iterator = list.iterator();
 			while (iterator.hasNext()) {
 				BlobItem model = iterator.next();
 				if (model.getLastModified() > model.getLastModified()) {
-					blob = model;
+					blobItem = model;
 				}
 			}
 		}
-		if (blob != null) {
-			byte[] bytes = this.getBytesById(blob.getId());
-			blob.setData(bytes);
+		if (blobItem != null) {
+			byte[] bytes = this.getBytesById(blobItem.getId());
+			blobItem.setData(bytes);
 		}
-		return blob;
-	}
-
-	@Transactional
-	private void insertBlobItem(BlobItem blobItem) {
-		if (StringUtils.isEmpty(blobItem.getId())) {
-			blobItem.setId(idGenerator.getNextId());
-		}
-		blobItem.setCreateDate(new Date());
-		blobItem.setDeviceId("DATABASE");
-		if (blobItem.getFileId() == null) {
-			blobItem.setFileId(UUID32.getUUID());
-		}
-		if (StringUtils.equals(DBUtils.POSTGRESQL,
-				DBConnectionFactory.getDatabaseType())) {
-			blobItemMapper.insertBlobItem_postgres(blobItem);
-		} else {
-			blobItemMapper.insertBlobItem(blobItem);
-		}
+		return blobItem;
 	}
 
 	@Transactional
@@ -324,8 +344,46 @@ public class MxBlobServiceImpl implements IBlobService {
 		this.insertBlobItem(model);
 	}
 
+	@Transactional
+	private void insertBlobItem(BlobItem blobItem) {
+		if (StringUtils.isEmpty(blobItem.getId())) {
+			blobItem.setId(idGenerator.getNextId());
+		}
+		String deviceId = SystemConfig.getString("fs_storage_strategy",
+				"DATABASE");
+		blobItem.setCreateDate(new Date());
+		blobItem.setDeviceId(deviceId);
+		if (blobItem.getFileId() == null) {
+			blobItem.setFileId(UUID32.getUUID());
+		}
+		if (StringUtils.equals(deviceId, "DISK")) {
+			byte[] bytes = blobItem.getData();
+			String path = "/upload/files/" + DateUtils.getNowYearMonthDay();
+			try {
+				String filename = SystemProperties.getConfigRootPath() + path
+						+ "/" + blobItem.getFileId();
+				FileUtils.mkdirs(SystemProperties.getConfigRootPath() + path);
+				FileUtils.save(filename, bytes);
+				blobItem.setPath(path + blobItem.getFileId());
+				blobItem.setData(null);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+				logger.error(ex);
+			}
+		}
+
+		if (StringUtils.equals(DBUtils.POSTGRESQL,
+				DBConnectionFactory.getDatabaseType())) {
+			blobItem.setPath(null);
+			blobItemMapper.insertBlobItem_postgres(blobItem);
+		} else {
+			blobItem.setPath(null);
+			blobItemMapper.insertBlobItem(blobItem);
+		}
+
+	}
+
 	public List<BlobItem> list(BlobItemQuery query) {
-		query.ensureInitialized();
 		List<BlobItem> list = blobItemMapper.getBlobItems(query);
 		return list;
 	}
@@ -355,12 +413,12 @@ public class MxBlobServiceImpl implements IBlobService {
 	public void saveAll(List<DataFile> dataList) {
 		Iterator<DataFile> iterator = dataList.iterator();
 		while (iterator.hasNext()) {
-			DataFile blob = iterator.next();
-			if (blob.getData() != null) {
-				if (blob.getSize() <= 0) {
-					blob.setSize(blob.getData().length);
+			DataFile blobItem = iterator.next();
+			if (blobItem.getData() != null) {
+				if (blobItem.getSize() <= 0) {
+					blobItem.setSize(blobItem.getData().length);
 				}
-				this.insertBlob(blob);
+				this.insertBlob(blobItem);
 			}
 		}
 	}
@@ -368,37 +426,37 @@ public class MxBlobServiceImpl implements IBlobService {
 	@Transactional
 	public void saveAll(Map<String, DataFile> dataMap) {
 		BlobItemQuery query = new BlobItemQuery();
-		List<String> names = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> names = new java.util.ArrayList<String>();
 		for (String str : dataMap.keySet()) {
 			names.add(str);
 		}
 		query.names(names);
 		List<BlobItem> dataList = this.list(query);
-		Map<String, Object> exists = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> exists = new java.util.HashMap<String, Object>();
 		if (dataList != null && dataList.size() > 0) {
 			Iterator<BlobItem> iterator = dataList.iterator();
 			while (iterator.hasNext()) {
-				DataFile blob = iterator.next();
-				exists.put(blob.getName(), blob);
+				DataFile blobItem = iterator.next();
+				exists.put(blobItem.getName(), blobItem);
 			}
 		}
 		Iterator<DataFile> iterator = dataMap.values().iterator();
 		while (iterator.hasNext()) {
-			DataFile blob = iterator.next();
-			if (blob.getData() != null) {
-				if (exists.get(blob.getName()) != null) {
-					DataFile model = (DataFile) exists.get(blob.getName());
-					if (model.getSize() != blob.getData().length) {
-						model.setFilename(blob.getFilename());
-						model.setData(blob.getData());
-						model.setSize(blob.getData().length);
+			DataFile blobItem = iterator.next();
+			if (blobItem.getData() != null) {
+				if (exists.get(blobItem.getName()) != null) {
+					DataFile model = (DataFile) exists.get(blobItem.getName());
+					if (model.getSize() != blobItem.getData().length) {
+						model.setFilename(blobItem.getFilename());
+						model.setData(blobItem.getData());
+						model.setSize(blobItem.getData().length);
 						this.updateBlobFileInfo(model);
 					}
 				} else {
-					if (blob.getSize() <= 0) {
-						blob.setSize(blob.getData().length);
+					if (blobItem.getSize() <= 0) {
+						blobItem.setSize(blobItem.getData().length);
 					}
-					this.insertBlob(blob);
+					this.insertBlob(blobItem);
 				}
 			}
 		}
@@ -458,19 +516,41 @@ public class MxBlobServiceImpl implements IBlobService {
 	}
 
 	@Transactional
-	public void updateBlobFileInfo(BlobItem model) {
-		if (model.getData() == null) {
+	public void updateBlobFileInfo(BlobItem blobItem) {
+		if (blobItem.getData() == null) {
 			throw new RuntimeException("bytes is null");
 		}
-		if (model.getSize() <= 0) {
-			model.setSize(model.getData().length);
+		if (blobItem.getSize() <= 0) {
+			blobItem.setSize(blobItem.getData().length);
 		}
+
+		String deviceId = blobItem.getDeviceId();
+
+		if (StringUtils.equals(deviceId, "DISK")) {
+			byte[] bytes = blobItem.getData();
+			String path = "/upload/files/" + DateUtils.getNowYearMonthDay();
+			try {
+				String filename = SystemProperties.getConfigRootPath() + path
+						+ "/" + blobItem.getFileId();
+				FileUtils.mkdirs(SystemProperties.getConfigRootPath() + path);
+				FileUtils.save(filename, bytes);
+				blobItem.setPath(path + blobItem.getFileId());
+				blobItem.setData(null);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+				logger.error(ex);
+			}
+		}
+
 		if (StringUtils.equals(DBUtils.POSTGRESQL,
 				DBConnectionFactory.getDatabaseType())) {
-			entityDAO.update("updateBlobItemFileInfo_postgres", model);
+			blobItem.setPath(null);
+			entityDAO.update("updateBlobItemFileInfo_postgres", blobItem);
 		} else {
-			entityDAO.update("updateBlobItemFileInfo", model);
+			blobItem.setPath(null);
+			entityDAO.update("updateBlobItemFileInfo", blobItem);
 		}
+
 	}
 
 	@Transactional

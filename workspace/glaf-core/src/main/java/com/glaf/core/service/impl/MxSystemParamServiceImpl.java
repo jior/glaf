@@ -59,7 +59,6 @@ public class MxSystemParamServiceImpl implements ISystemParamService {
 	}
 
 	public int count(SystemParamQuery query) {
-		query.ensureInitialized();
 		return systemParamMapper.getSystemParamCountByQueryCriteria(query);
 	}
 
@@ -226,7 +225,6 @@ public class MxSystemParamServiceImpl implements ISystemParamService {
 	}
 
 	public List<SystemParam> list(SystemParamQuery query) {
-		query.ensureInitialized();
 		List<SystemParam> list = systemParamMapper
 				.getSystemParamsByQueryCriteria(query);
 		return list;

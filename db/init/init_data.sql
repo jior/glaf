@@ -252,6 +252,8 @@ insert into SYS_PROPERTY (id_, description_, locked_, name_, title_, type_, valu
 insert into SYS_PROPERTY (id_, category_, description_, initvalue_, locked_, name_, title_, type_, value_, inputtype_) values ('5', 'SYS', '限定每个账号只能在一处登录', '[{"name":"限制","value":"true"},{"name":"不限制","value":"false"}]', 0, 'login_limit', '系统登录账号限制', null, 'true', 'combobox');
 insert into SYS_PROPERTY (id_, description_, locked_, name_, title_, type_, value_, category_, initvalue_) values ('6', '在线用户检测时间（秒）', 0, 'login_time_check', '在线用户检测时间（秒）', null, '600', 'SYS', null);
 insert into SYS_PROPERTY (id_, description_, locked_, name_, title_, type_, value_, category_, initvalue_) values ('8', '允许接入系统的IP地址', 0, 'login.allow.ip', '允许接入系统的IP地址', null, '', 'SYS', null);
+insert into SYS_PROPERTY (id_, category_, description_, initvalue_, locked_, name_, title_, type_, value_, inputtype_) values ('9', 'SYS', '文件存储方式', '[{"name":"数据库","value":"DATABASE"},{"name":"硬盘","value":"DISK"}]', 0, 'fs_storage_strategy', '文件存储方式', null, 'DATABASE', 'combobox');
+insert into sys_property (id_, category_, description_, initvalue_, locked_, name_, title_, type_, value_, inputtype_) values ('10', 'SYS', '存储备份到Mongodb', '[{"name":"是","value":"true"},{"name":"否","value":"false"}]', 0, 'fs_storage_mongodb', '存储备份到Mongodb', null, 'false', 'combobox');
 
 
 insert into SYS_PROPERTY (id_, description_, locked_, name_, title_, type_, value_, category_, initvalue_) values ('101', '当天的6位年月格式（YYYYMM），如201312', 0, 'curr_yyyymm', '当前年月', null, '', 'RPT', '${curr_yyyymm}');

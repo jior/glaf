@@ -54,7 +54,7 @@ public class SystemConfig {
 	private static volatile String TOKEN = null;
 
 	public static Map<String, Object> getContextMap() {
-		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 		dataMap.put(CURR_YYYYMMDD, getCurrentYYYYMMDD());
 		dataMap.put(CURR_YYYYMM, getCurrentYYYYMM());
 		dataMap.put(INPUT_YYYYMMDD, getInputYYYYMMDD());
@@ -217,6 +217,22 @@ public class SystemConfig {
 			serviceUrl = property.getValue();
 		}
 		return serviceUrl;
+	}
+
+	public static boolean getBoolean(String key) {
+		boolean ret = false;
+		if (properties.isEmpty()) {
+			reload();
+		}
+		SystemProperty prop = properties.get(key);
+		if (prop != null) {
+			String value = prop.getValue();
+			if (StringUtils.isEmpty(value)) {
+				value = prop.getInitValue();
+			}
+			return Boolean.parseBoolean(value);
+		}
+		return ret;
 	}
 
 	public static String getString(String key) {
