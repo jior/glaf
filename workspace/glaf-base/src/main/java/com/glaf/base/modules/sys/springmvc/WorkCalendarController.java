@@ -37,6 +37,7 @@ import com.glaf.base.modules.sys.model.WorkCalendar;
 import com.glaf.base.modules.sys.service.WorkCalendarService;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.core.config.ViewProperties;
+import com.glaf.core.util.ResponseUtils;
 
 @Controller("/sys/workCalendar")
 @RequestMapping("/sys/workCalendar.do")
@@ -55,17 +56,24 @@ public class WorkCalendarController {
 	 */
 	@ResponseBody
 	@RequestMapping(params = "method=createData")
-	public void createData(@RequestParam(value = "year") int year,
+	public byte[] createData(@RequestParam(value = "year") int year,
 			@RequestParam(value = "month") int month,
 			@RequestParam(value = "day") int day) {
-		WorkCalendar calendar = workCalendarService.find(year, month, day);
-		if (calendar == null) {
-			calendar = new WorkCalendar();
-			calendar.setFreeYear(year);
-			calendar.setFreeMonth(month);
-			calendar.setFreeDay(day);
-			workCalendarService.create(calendar);
+		try {
+			WorkCalendar calendar = workCalendarService.find(year, month, day);
+			if (calendar == null) {
+				calendar = new WorkCalendar();
+				calendar.setFreeYear(year);
+				calendar.setFreeMonth(month);
+				calendar.setFreeDay(day);
+				workCalendarService.create(calendar);
+				return ResponseUtils.responseJsonResult(true);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
 		}
+		return ResponseUtils.responseJsonResult(false);
 	}
 
 	/**
@@ -77,13 +85,20 @@ public class WorkCalendarController {
 	 */
 	@ResponseBody
 	@RequestMapping(params = "method=deleteData")
-	public void deleteData(@RequestParam(value = "year") int year,
+	public byte[] deleteData(@RequestParam(value = "year") int year,
 			@RequestParam(value = "month") int month,
 			@RequestParam(value = "day") int day) {
-		WorkCalendar calendar = workCalendarService.find(year, month, day);
-		if (calendar != null) {
-			workCalendarService.delete(calendar.getId());
+		try {
+			WorkCalendar calendar = workCalendarService.find(year, month, day);
+			if (calendar != null) {
+				workCalendarService.delete(calendar.getId());
+				return ResponseUtils.responseJsonResult(true);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
 		}
+		return ResponseUtils.responseJsonResult(false);
 	}
 
 	@javax.annotation.Resource
