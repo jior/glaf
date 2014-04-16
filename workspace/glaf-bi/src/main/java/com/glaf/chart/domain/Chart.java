@@ -179,7 +179,7 @@ public class Chart implements Serializable, JSONable {
 	protected String createBy;
 
 	@javax.persistence.Transient
-	public List<ColumnModel> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnModel>();
+	public List<ColumnModel> columns = new java.util.ArrayList<ColumnModel>();
 
 	public Chart() {
 
@@ -187,14 +187,14 @@ public class Chart implements Serializable, JSONable {
 
 	public void addCellData(ColumnModel cell) {
 		if (columns == null) {
-			columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnModel>();
+			columns = new java.util.ArrayList<ColumnModel>();
 		}
 		columns.add(cell);
 	}
 
 	public void addColumn(ColumnModel cell) {
 		if (columns == null) {
-			columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnModel>();
+			columns = new java.util.ArrayList<ColumnModel>();
 		}
 		if (!columns.contains(cell)) {
 			columns.add(cell);
@@ -239,7 +239,7 @@ public class Chart implements Serializable, JSONable {
 
 	public List<ColumnModel> getColumns() {
 		if (columns == null) {
-			columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnModel>();
+			columns = new java.util.ArrayList<ColumnModel>();
 		}
 		return columns;
 	}
