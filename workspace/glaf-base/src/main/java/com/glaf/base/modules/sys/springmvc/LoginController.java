@@ -154,8 +154,14 @@ public class LoginController {
 				boolean timeout = false;
 				if (userOnline != null) {
 					loginIP = userOnline.getLoginIP();
-					if (System.currentTimeMillis()
-							- userOnline.getCheckDateMs() > timeoutSeconds) {
+					if (userOnline.getCheckDateMs() != null
+							&& System.currentTimeMillis()
+									- userOnline.getCheckDateMs() > timeoutSeconds * 1000) {
+						timeout = true;// 超时，说明登录已经过期
+					}
+					if (userOnline.getLoginDate() != null
+							&& System.currentTimeMillis()
+									- userOnline.getLoginDate().getTime() > timeoutSeconds * 1000) {
 						timeout = true;// 超时，说明登录已经过期
 					}
 				}
