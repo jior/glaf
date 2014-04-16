@@ -40,4 +40,6 @@ public interface UserOnlineMapper {
 
 	void updateUserOnline(UserOnline model);
 
+	void updateUserOnlineCheckDate(UserOnline model);
+
 }

@@ -94,6 +94,23 @@
 	</update>
 
 
+	<update id="updateUserOnlineCheckDate" parameterType="com.glaf.base.online.domain.UserOnline">
+		update SYS_USER_ONLINE
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="checkDate != null">
+				CHECKDATE_ = #{checkDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="checkDateMs != null">
+				CHECKDATEMS_ = #{checkDateMs, jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
 	<delete id="deleteUserOnlineById" parameterType="long">
 		delete from
 		SYS_USER_ONLINE
@@ -163,10 +180,11 @@
 			<if test="name != null and name != '' ">
 				and E.NAME_ = #{name}
 			</if>
-			
-			
+
+
 			<if test="searchWord != null and searchWord != '' ">
-				and ( E.NAME_ like #{searchWord} or E.ACTORID_ like #{searchWord} )
+				and ( E.NAME_ like #{searchWord} or E.ACTORID_ like
+				#{searchWord} )
 			</if>
 
 			<if test="loginDateGreaterThanOrEqual != null">

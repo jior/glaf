@@ -151,6 +151,7 @@ public class LoginController {
 				String loginIP = null;
 				UserOnline userOnline = userOnlineService
 						.getUserOnline(account);
+				logger.debug("userOnline:"+userOnline);
 				boolean timeout = false;
 				if (userOnline != null) {
 					loginIP = userOnline.getLoginIP();

@@ -157,7 +157,7 @@ public class UserOnlineServiceImpl implements UserOnlineService {
 		if (userOnline != null) {
 			userOnline.setCheckDateMs(System.currentTimeMillis());
 			userOnline.setCheckDate(new Date(userOnline.getCheckDateMs()));
-			userOnlineMapper.updateUserOnline(userOnline);
+			userOnlineMapper.updateUserOnlineCheckDate(userOnline);
 		}
 	}
 
