@@ -36,6 +36,7 @@ public class CacheTest {
 		System.out.println("¿ªÊ¼²âÊÔ..................................");
 		start = System.currentTimeMillis();
 		CustomProperties.reload();
+		CacheFactory.getString("xx");
 		System.out.println(SystemProperties.getConfigRootPath());
 	}
 
@@ -47,16 +48,19 @@ public class CacheTest {
 	}
 
 	@Test
-	public void testPut() {
-		for (int i = 0; i < 2000; i++) {
-			CacheFactory.put("cache_" + i,
-					"value_" + i + "#" + UUID32.getUUID());
+	public void testGet() {
+		for (int i = 10000; i < 10010; i++) {
+			System.out.println(CacheFactory.get("cache_" + i));
 		}
 	}
 
 	@Test
-	public void testGet() {
-		for (int i = 500; i < 600; i++) {
+	public void testPut() {
+		for (int i = 0; i < 200000; i++) {
+			CacheFactory.put("cache_" + i,
+					"value_" + i + "#" + UUID32.getUUID());
+		}
+		for (int i = 10000; i < 10010; i++) {
 			System.out.println(CacheFactory.get("cache_" + i));
 		}
 	}

@@ -1,5 +1,6 @@
 package com.glaf.mail.domain;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -61,6 +62,9 @@ public class MailDataFile implements Serializable, DataFile {
 	@Column(name = "topId", length = 100)
 	protected String topId;
 
+	@javax.persistence.Transient
+	protected InputStream inputStream;
+
 	public MailDataFile() {
 
 	}
@@ -110,6 +114,10 @@ public class MailDataFile implements Serializable, DataFile {
 
 	public String getId() {
 		return id;
+	}
+
+	public InputStream getInputStream() {
+		return inputStream;
 	}
 
 	public long getLastModified() {
@@ -189,6 +197,10 @@ public class MailDataFile implements Serializable, DataFile {
 
 	}
 
+	public void setContentType(String contentType) {
+
+	}
+
 	public void setCreateBy(String createBy) {
 
 	}
@@ -199,6 +211,10 @@ public class MailDataFile implements Serializable, DataFile {
 
 	public void setData(byte[] fileContent) {
 		this.fileContent = fileContent;
+	}
+
+	public void setDeleteFlag(int deleteFlag) {
+
 	}
 
 	public void setDeviceId(String deviceId) {
@@ -221,11 +237,27 @@ public class MailDataFile implements Serializable, DataFile {
 		this.id = id;
 	}
 
+	public void setInputStream(InputStream inputStream) {
+		this.inputStream = inputStream;
+	}
+
 	public void setLastModified(long lastModified) {
 
 	}
 
+	public void setLocked(int locked) {
+
+	}
+
 	public void setName(String name) {
+
+	}
+
+	public void setObjectId(String objectId) {
+
+	}
+
+	public void setObjectValue(String objectValue) {
 
 	}
 

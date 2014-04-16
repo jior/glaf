@@ -273,6 +273,7 @@ public class RedisSessionManager extends ManagerBase implements Lifecycle {
 	private void initializeConnection() throws LifecycleException {
 		try {
 			JedisPoolConfig poolConfig = new JedisPoolConfig();
+			poolConfig.setMaxTotal(Integer.valueOf(maxConn));
 			poolConfig.setMaxIdle(Integer.valueOf(maxConn));
 			poolConfig.setMinIdle(Integer.valueOf(minConn));
 			poolConfig.setMaxWaitMillis(1000L * 10L);
