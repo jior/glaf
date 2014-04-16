@@ -124,7 +124,7 @@ public class ChartController {
 			if (StringUtils.isNotEmpty(chart.getQueryIds())) {
 				StringBuffer sb01 = new StringBuffer();
 				StringBuffer sb02 = new StringBuffer();
-				List<String> selecteds = new java.util.concurrent.CopyOnWriteArrayList<String>();
+				List<String> selecteds = new java.util.ArrayList<String>();
 				for (QueryDefinition q : list) {
 					if (StringUtils.contains(chart.getQueryIds(), q.getId())) {
 						selecteds.add(q.getId());

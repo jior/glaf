@@ -82,7 +82,7 @@ public class MxTransformTaskResource {
 			query.statusNotEqual(9);
 			List<TransformTask> tasks = transformTaskService.list(query);
 			if (tasks != null && !tasks.isEmpty()) {
-				List<String> taskIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
+				List<String> taskIds = new java.util.ArrayList<String>();
 				for (TransformTask task : tasks) {
 					if (task.getStatus() != 9) {
 						if (!taskIds.contains(task.getId())) {

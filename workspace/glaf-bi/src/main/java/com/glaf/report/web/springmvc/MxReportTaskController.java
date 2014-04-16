@@ -75,7 +75,7 @@ public class MxReportTaskController {
 			if (StringUtils.isNotEmpty(reportTask.getReportIds())) {
 				StringBuffer sb01 = new StringBuffer();
 				StringBuffer sb02 = new StringBuffer();
-				List<String> selecteds = new java.util.concurrent.CopyOnWriteArrayList<String>();
+				List<String> selecteds = new java.util.ArrayList<String>();
 				for (Report r : list) {
 					if (StringUtils.contains(reportTask.getReportIds(),
 							r.getId())) {
@@ -151,7 +151,7 @@ public class MxReportTaskController {
 			if (StringUtils.isNotEmpty(reportTask.getReportIds())) {
 				StringBuffer sb01 = new StringBuffer();
 				StringBuffer sb02 = new StringBuffer();
-				List<String> selecteds = new java.util.concurrent.CopyOnWriteArrayList<String>();
+				List<String> selecteds = new java.util.ArrayList<String>();
 				ReportQuery query = new ReportQuery();
 				List<Report> list = reportService.list(query);
 				for (Report r : list) {

@@ -172,7 +172,7 @@ public class ChartProperties {
 									m.setClassName(className);
 									m.setType(name);
 									m.setTitle(jsonObject.getString("title"));
-									Map<String, String> dataMap = new java.util.concurrent.ConcurrentHashMap<String, String>();
+									Map<String, String> dataMap = new java.util.HashMap<String, String>();
 									Set<Entry<String, Object>> entrySet = jsonObject
 											.entrySet();
 									for (Entry<String, Object> entry : entrySet) {
