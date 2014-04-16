@@ -35,6 +35,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.base.config.BaseConfiguration;
 import com.glaf.base.modules.sys.SysConstants;
@@ -73,6 +74,8 @@ public class BaseDataManager {
 
 	protected static Map<String, List<BaseDataInfo>> baseDataMap = new java.util.concurrent.ConcurrentHashMap<String, List<BaseDataInfo>>();
 
+	protected static Map<String, String> jsonDataMap = new java.util.concurrent.ConcurrentHashMap<String, String>();
+
 	protected static Configuration conf = BaseConfiguration.create();
 
 	protected static Log logger = LogFactory.getLog(BaseDataManager.class);
@@ -82,6 +85,8 @@ public class BaseDataManager {
 	protected static final String CUSTOM_CONFIG = "/conf/props/base_data.properties";
 
 	protected static final String CUSTOM_HANDLER = "/conf/props/data_handler.properties";
+
+	protected static final String CUSTOM_JSON_HANDLER = "/conf/props/json_data_handler.properties";
 
 	public static BaseDataManager getInstance() {
 		return BaseDataManagerHolder.instance;
@@ -204,6 +209,27 @@ public class BaseDataManager {
 			entityService = ContextFactory.getBean("entityService");
 		}
 		return entityService;
+	}
+
+	public JSONArray getJSONArray(String key) {
+		if (jsonDataMap.containsKey(key)) {
+			String text = jsonDataMap.get(key);
+			return JSON.parseArray(text);
+		}
+		return null;
+	}
+
+	public JSONObject getJSONObject(String key, String name) {
+		JSONArray jsonArray = this.getJSONArray(key);
+		if (jsonArray != null && !jsonArray.isEmpty()) {
+			for (int i = 0, len = jsonArray.size(); i < len; i++) {
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+				if (StringUtils.equals(jsonObject.getString("name"), name)) {
+					return jsonObject;
+				}
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -655,6 +681,8 @@ public class BaseDataManager {
 		loadCustomInfo();
 		// 用户自定义数据处理程序
 		loadCustomHandler();
+		// 用户自定义JSON数据处理程序
+		loadCustomJsonData();
 		// 用户信息
 		loadUsers();
 		// 部门结构
@@ -668,47 +696,6 @@ public class BaseDataManager {
 		// 数据表定义信息
 		loadTableMeta();
 
-	}
-
-	private void loadCustomInfo() {
-		try {
-			File file = new File(SystemProperties.getConfigRootPath()
-					+ CUSTOM_CONFIG);
-			if (file.exists() && file.isFile()) {
-				Properties props = com.glaf.core.util.PropertiesUtils
-						.loadFilePathResource(file);
-				Enumeration<?> e = props.keys();
-				while (e.hasMoreElements()) {
-					String key = (String) e.nextElement();
-					String value = props.getProperty(key);
-					JSONObject json = JSON.parseObject(value);
-					String statementId = json.getString("statementId");
-					Map<String, Object> parameterObject = new java.util.concurrent.ConcurrentHashMap<String, Object>();
-
-					List<Object> list = this.getEntityService().getList(
-							statementId, parameterObject);
-					if (list != null && !list.isEmpty()) {
-						List<BaseDataInfo> dataList = new java.util.concurrent.CopyOnWriteArrayList<BaseDataInfo>();
-						for (Object object : list) {
-							if (object instanceof BaseDataInfo) {
-								BaseDataInfo bdf = (BaseDataInfo) object;
-								dataList.add(bdf);
-							} else {
-								Map<String, Object> dataMap = Tools
-										.getDataMap(object);
-								BaseDataInfo bdf = new BaseDataInfo();
-								Tools.populate(bdf, dataMap);
-								dataList.add(bdf);
-							}
-						}
-						baseDataMap.put(key, dataList);
-					}
-				}
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error("提取用户自定义数据失败！");
-		}
 	}
 
 	private void loadCustomHandler() {
@@ -734,6 +721,75 @@ public class BaseDataManager {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			logger.error("用户自定义数据处理程序出错！");
+		}
+	}
+
+	private void loadCustomInfo() {
+		try {
+			File file = new File(SystemProperties.getConfigRootPath()
+					+ CUSTOM_CONFIG);
+			if (file.exists() && file.isFile()) {
+				Properties props = com.glaf.core.util.PropertiesUtils
+						.loadFilePathResource(file);
+				Enumeration<?> e = props.keys();
+				while (e.hasMoreElements()) {
+					String key = (String) e.nextElement();
+					String value = props.getProperty(key);
+					JSONObject json = JSON.parseObject(value);
+					String statementId = json.getString("statementId");
+					Map<String, Object> parameterObject = new java.util.HashMap<String, Object>();
+
+					List<Object> list = this.getEntityService().getList(
+							statementId, parameterObject);
+					if (list != null && !list.isEmpty()) {
+						List<BaseDataInfo> dataList = new java.util.ArrayList<BaseDataInfo>();
+						for (Object object : list) {
+							if (object instanceof BaseDataInfo) {
+								BaseDataInfo bdf = (BaseDataInfo) object;
+								dataList.add(bdf);
+							} else {
+								Map<String, Object> dataMap = Tools
+										.getDataMap(object);
+								BaseDataInfo bdf = new BaseDataInfo();
+								Tools.populate(bdf, dataMap);
+								dataList.add(bdf);
+							}
+						}
+						baseDataMap.put(key, dataList);
+					}
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error("提取用户自定义数据失败！");
+		}
+	}
+
+	private void loadCustomJsonData() {
+		try {
+			File file = new File(SystemProperties.getConfigRootPath()
+					+ CUSTOM_HANDLER);
+			if (file.exists() && file.isFile()) {
+				Properties props = com.glaf.core.util.PropertiesUtils
+						.loadFilePathResource(file);
+				Enumeration<?> e = props.keys();
+				while (e.hasMoreElements()) {
+					String key = (String) e.nextElement();
+					String value = props.getProperty(key);
+					Object object = com.glaf.core.util.ReflectUtils
+							.instantiate(value);
+					if (object instanceof JsonDataHandler) {
+						JsonDataHandler handler = (JsonDataHandler) object;
+						JSONArray jsonArray = handler.loadData();
+						if (jsonArray != null) {
+							jsonDataMap.put(key, jsonArray.toJSONString());
+						}
+					}
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error("提取用户自定义数据失败！");
 		}
 	}
 
