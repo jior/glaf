@@ -21,10 +21,31 @@ package com.glaf.base.modules.sys.model;
 import java.io.Serializable;
 import java.util.Date;
 
-public class BaseDataInfo implements Serializable {
+import com.alibaba.fastjson.JSONObject;
+import com.glaf.base.modules.sys.util.BaseDataJsonFactory;
+import com.glaf.core.base.JSONable;
+
+public class BaseDataInfo implements Serializable, JSONable {
 	private static final long serialVersionUID = 4103533989257821676L;
-	private String code; // 代码
-	private int deep; // 树状结构基础信息深度
+
+	protected long id; // 基础信息内部标识号
+
+	protected String name; // 基础信息名称
+
+	protected String code; // 代码
+
+	protected String desc;
+
+	protected int deep; // 树状结构基础信息深度
+
+	protected String no; // 基础信息内容名称
+
+	protected int parentId; // 基础信息父类标识号
+
+	protected String value;// 值
+
+	protected Long nodeId;
+
 	protected String ext1;
 
 	protected Date ext10;
@@ -65,19 +86,9 @@ public class BaseDataInfo implements Serializable {
 
 	protected Date ext9;
 
-	private long id; // 基础信息内部标识号
+	protected double value1; // 相关数值，主要有汇率，单位换算等
 
-	private String name; // 基础信息名称
-
-	private String no; // 基础信息内容名称
-
-	private int parentId; // 基础信息父类标识号
-
-	private String value;// 值
-
-	private double value1; // 相关数值，主要有汇率，单位换算等
-
-	private double value2;
+	protected double value2;
 
 	public BaseDataInfo() {
 
@@ -89,6 +100,10 @@ public class BaseDataInfo implements Serializable {
 
 	public int getDeep() {
 		return deep;
+	}
+
+	public String getDesc() {
+		return desc;
 	}
 
 	public String getExt1() {
@@ -183,6 +198,10 @@ public class BaseDataInfo implements Serializable {
 		return no;
 	}
 
+	public Long getNodeId() {
+		return nodeId;
+	}
+
 	public int getParentId() {
 		return parentId;
 	}
@@ -199,12 +218,20 @@ public class BaseDataInfo implements Serializable {
 		return value2;
 	}
 
+	public Object jsonToObject(JSONObject jsonObject) {
+		return BaseDataJsonFactory.jsonToObject(jsonObject);
+	}
+
 	public void setCode(String code) {
 		this.code = code;
 	}
 
 	public void setDeep(int deep) {
 		this.deep = deep;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 
 	public void setExt1(String ext1) {
@@ -299,6 +326,10 @@ public class BaseDataInfo implements Serializable {
 		this.no = no;
 	}
 
+	public void setNodeId(Long nodeId) {
+		this.nodeId = nodeId;
+	}
+
 	public void setParentId(int parentId) {
 		this.parentId = parentId;
 	}
@@ -313,5 +344,9 @@ public class BaseDataInfo implements Serializable {
 
 	public void setValue2(double value2) {
 		this.value2 = value2;
+	}
+
+	public JSONObject toJsonObject() {
+		return BaseDataJsonFactory.toJsonObject(this);
 	}
 }
