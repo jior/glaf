@@ -22,7 +22,6 @@ import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -43,7 +42,7 @@ public class CacheFactory {
 	protected static final Log logger = LogFactory.getLog(CacheFactory.class);
 	protected static final String DEFAULT_CONFIG = "com/glaf/core/cache/guava/guavacache-context.xml";
 	protected static final ConcurrentMap<String, Cache> cacheMap = new ConcurrentHashMap<String, Cache>();
-	protected static final List<String> items = new CopyOnWriteArrayList<String>();
+	protected static final List<String> items = new ArrayList<String>();
 	protected static Configuration conf = BaseConfiguration.create();
 	protected static ExecutorService pool = Executors.newCachedThreadPool();
 

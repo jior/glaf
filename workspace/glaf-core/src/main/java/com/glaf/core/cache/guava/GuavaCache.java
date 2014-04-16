@@ -31,7 +31,7 @@ public class GuavaCache implements com.glaf.core.cache.Cache {
 
 	protected Cache<Object, Object> cache;
 
-	protected int cacheSize = 10000;
+	protected int cacheSize = 1000000;
 
 	protected int expireMinutes = 30;
 
@@ -67,7 +67,7 @@ public class GuavaCache implements com.glaf.core.cache.Cache {
 	public Object get(String key) {
 		Object value = getCache().getIfPresent(key);
 		if (value != null) {
-			//logger.debug("get object from guava cache.");
+			// logger.debug("get object from guava cache.");
 		}
 		return value;
 	}
