@@ -32,13 +32,19 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mongodb.DB;
+import com.mongodb.Mongo;
+import com.mongodb.gridfs.GridFS;
+import com.mongodb.gridfs.GridFSDBFile;
+import com.mongodb.gridfs.GridFSInputFile;
 import com.glaf.core.base.BlobItem;
 import com.glaf.core.base.DataFile;
+import com.glaf.core.config.Environment;
 import com.glaf.core.config.SystemConfig;
 import com.glaf.core.config.SystemProperties;
+import com.glaf.core.context.ContextFactory;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.domain.BlobItemEntity;
 import com.glaf.core.id.IdGenerator;
@@ -49,14 +55,14 @@ import com.glaf.core.service.IBlobService;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.FileUtils;
+import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.UUID32;
 
-@Service("blobService")
 @Transactional(readOnly = true)
-public class MxBlobServiceImpl implements IBlobService {
+public class MongodbBlobServiceImpl implements IBlobService {
 
 	protected final static Log logger = LogFactory
-			.getLog(MxBlobServiceImpl.class);
+			.getLog(MongodbBlobServiceImpl.class);
 
 	protected EntityDAO entityDAO;
 
@@ -66,7 +72,7 @@ public class MxBlobServiceImpl implements IBlobService {
 
 	protected SqlSession sqlSession;
 
-	public MxBlobServiceImpl() {
+	public MongodbBlobServiceImpl() {
 
 	}
 
@@ -103,7 +109,23 @@ public class MxBlobServiceImpl implements IBlobService {
 				ex.printStackTrace();
 				logger.error(ex);
 			}
-
+			if (SystemConfig.getBoolean("fs_storage_mongodb")
+					&& ContextFactory.hasBean("mongo")) {
+				try {
+					String dbname = "gridfs_"
+							+ Environment.getCurrentSystemName();
+					Mongo mongo = ContextFactory.getBean("mongo");
+					DB db = mongo.getDB(dbname);
+					for (BlobItem blobItem : list) {
+						GridFS gridFS = new GridFS(db, blobItem.getDeviceId());
+						gridFS.remove(blobItem.getFileId());
+						logger.debug("remove file from mongodb.");
+					}
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					logger.error(ex);
+				}
+			}
 		}
 		blobItemMapper.deleteBlobItemsByBusinessKey(businessKey);
 	}
@@ -119,7 +141,20 @@ public class MxBlobServiceImpl implements IBlobService {
 			ex.printStackTrace();
 			logger.error(ex);
 		}
-
+		if (SystemConfig.getBoolean("fs_storage_mongodb")
+				&& ContextFactory.hasBean("mongo")) {
+			try {
+				String dbname = "gridfs_" + Environment.getCurrentSystemName();
+				Mongo mongo = ContextFactory.getBean("mongo");
+				DB db = mongo.getDB(dbname);
+				GridFS gridFS = new GridFS(db, blobItem.getDeviceId());
+				gridFS.remove(blobItem.getFileId());
+				logger.debug("remove file from mongodb.");
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				logger.error(ex);
+			}
+		}
 		blobItemMapper.deleteBlobItemsByFileId(fileId);
 	}
 
@@ -133,7 +168,20 @@ public class MxBlobServiceImpl implements IBlobService {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-
+		if (SystemConfig.getBoolean("fs_storage_mongodb")
+				&& ContextFactory.hasBean("mongo")) {
+			try {
+				String dbname = "gridfs_" + Environment.getCurrentSystemName();
+				Mongo mongo = ContextFactory.getBean("mongo");
+				DB db = mongo.getDB(dbname);
+				GridFS gridFS = new GridFS(db, blobItem.getDeviceId());
+				gridFS.remove(blobItem.getFileId());
+				logger.debug("remove file from mongodb.");
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				logger.error(ex);
+			}
+		}
 		blobItemMapper.deleteBlobItemById(id);
 	}
 
@@ -204,6 +252,28 @@ public class MxBlobServiceImpl implements IBlobService {
 
 	public byte[] getBytesByFileId(String fileId) {
 		BlobItem blobItem = this.getBlobByFileId(fileId);
+		if (blobItem != null) {
+			if (SystemConfig.getBoolean("fs_storage_mongodb")
+					&& ContextFactory.hasBean("mongo")) {
+				InputStream inputStream = null;
+				try {
+					String dbname = "gridfs_"
+							+ Environment.getCurrentSystemName();
+					Mongo mongo = ContextFactory.getBean("mongo");
+					DB db = mongo.getDB(dbname);
+					GridFS gridFS = new GridFS(db, blobItem.getDeviceId());
+					GridFSDBFile file = gridFS.findOne(blobItem.getFileId());
+					inputStream = file.getInputStream();
+					logger.debug("get file from mongodb.");
+					return FileUtils.getBytes(inputStream);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					logger.error(ex);
+				} finally {
+					IOUtils.closeStream(inputStream);
+				}
+			}
+		}
 
 		if (StringUtils.equals(DBUtils.POSTGRESQL,
 				DBConnectionFactory.getDatabaseType())) {
@@ -227,6 +297,28 @@ public class MxBlobServiceImpl implements IBlobService {
 
 	public byte[] getBytesById(String id) {
 		BlobItem blobItem = this.getBlobById(id);
+		if (blobItem != null) {
+			if (SystemConfig.getBoolean("fs_storage_mongodb")
+					&& ContextFactory.hasBean("mongo")) {
+				InputStream inputStream = null;
+				try {
+					String dbname = "gridfs_"
+							+ Environment.getCurrentSystemName();
+					Mongo mongo = ContextFactory.getBean("mongo");
+					DB db = mongo.getDB(dbname);
+					GridFS gridFS = new GridFS(db, blobItem.getDeviceId());
+					GridFSDBFile file = gridFS.findOne(blobItem.getFileId());
+					inputStream = file.getInputStream();
+					logger.debug("get file from mongodb.");
+					return FileUtils.getBytes(inputStream);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					logger.error(ex);
+				} finally {
+					IOUtils.closeStream(inputStream);
+				}
+			}
+		}
 
 		if (StringUtils.equals(DBUtils.POSTGRESQL,
 				DBConnectionFactory.getDatabaseType())) {
@@ -356,16 +448,16 @@ public class MxBlobServiceImpl implements IBlobService {
 		if (blobItem.getFileId() == null) {
 			blobItem.setFileId(UUID32.getUUID());
 		}
+		byte[] bytes = blobItem.getData();
 		if (StringUtils.equals(deviceId, "DISK")) {
-			byte[] bytes = blobItem.getData();
 			String path = "/upload/files/" + DateUtils.getNowYearMonthDay();
 			try {
-				String filename = SystemProperties.getFileStorageRootPath() + path
-						+ "/" + blobItem.getFileId();
-				FileUtils.mkdirs(SystemProperties.getFileStorageRootPath() + path);
+				String filename = SystemProperties.getFileStorageRootPath()
+						+ path + "/" + blobItem.getFileId();
+				FileUtils.mkdirs(SystemProperties.getFileStorageRootPath()
+						+ path);
 				FileUtils.save(filename, bytes);
 				blobItem.setPath(path + blobItem.getFileId());
-				blobItem.setData(null);
 			} catch (IOException ex) {
 				ex.printStackTrace();
 				logger.error(ex);
@@ -375,12 +467,35 @@ public class MxBlobServiceImpl implements IBlobService {
 		if (StringUtils.equals(DBUtils.POSTGRESQL,
 				DBConnectionFactory.getDatabaseType())) {
 			blobItem.setPath(null);
+			blobItem.setData(null);
 			blobItemMapper.insertBlobItem_postgres(blobItem);
 		} else {
 			blobItem.setPath(null);
+			blobItem.setData(null);
 			blobItemMapper.insertBlobItem(blobItem);
 		}
-
+		if (SystemConfig.getBoolean("fs_storage_mongodb")
+				&& ContextFactory.hasBean("mongo")) {
+			GridFSInputFile file = null;
+			try {
+				String dbname = "gridfs_" + Environment.getCurrentSystemName();
+				Mongo mongo = ContextFactory.getBean("mongo");
+				DB db = mongo.getDB(dbname);
+				GridFS gridFS = new GridFS(db, blobItem.getDeviceId());
+				if (bytes != null) {
+					file = gridFS.createFile(bytes);
+				} else {
+					file = gridFS.createFile(blobItem.getInputStream());
+				}
+				file.setId(blobItem.getFileId());
+				file.setFilename(blobItem.getFileId());// 指定唯一文件名称
+				file.save();// 保存
+				logger.debug("save file to mongodb.");
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				logger.error(ex);
+			}
+		}
 	}
 
 	public List<BlobItem> list(BlobItemQuery query) {
@@ -525,14 +640,15 @@ public class MxBlobServiceImpl implements IBlobService {
 		}
 
 		String deviceId = blobItem.getDeviceId();
+		byte[] bytes = blobItem.getData();
 
 		if (StringUtils.equals(deviceId, "DISK")) {
-			byte[] bytes = blobItem.getData();
 			String path = "/upload/files/" + DateUtils.getNowYearMonthDay();
 			try {
-				String filename = SystemProperties.getFileStorageRootPath() + path
-						+ "/" + blobItem.getFileId();
-				FileUtils.mkdirs(SystemProperties.getFileStorageRootPath() + path);
+				String filename = SystemProperties.getFileStorageRootPath()
+						+ path + "/" + blobItem.getFileId();
+				FileUtils.mkdirs(SystemProperties.getFileStorageRootPath()
+						+ path);
 				FileUtils.save(filename, bytes);
 				blobItem.setPath(path + blobItem.getFileId());
 				blobItem.setData(null);
@@ -545,12 +661,36 @@ public class MxBlobServiceImpl implements IBlobService {
 		if (StringUtils.equals(DBUtils.POSTGRESQL,
 				DBConnectionFactory.getDatabaseType())) {
 			blobItem.setPath(null);
+			blobItem.setData(null);
 			entityDAO.update("updateBlobItemFileInfo_postgres", blobItem);
 		} else {
 			blobItem.setPath(null);
+			blobItem.setData(null);
 			entityDAO.update("updateBlobItemFileInfo", blobItem);
 		}
 
+		if (SystemConfig.getBoolean("fs_storage_mongodb")
+				&& ContextFactory.hasBean("mongo")) {
+			GridFSInputFile file = null;
+			try {
+				String dbname = "gridfs_" + Environment.getCurrentSystemName();
+				Mongo mongo = ContextFactory.getBean("mongo");
+				DB db = mongo.getDB(dbname);
+				GridFS gridFS = new GridFS(db, blobItem.getDeviceId());
+				if (bytes != null) {
+					file = gridFS.createFile(bytes);
+				} else {
+					file = gridFS.createFile(blobItem.getInputStream());
+				}
+				file.setId(blobItem.getFileId());
+				file.setFilename(blobItem.getFileId());// 指定唯一文件名称
+				file.save();// 保存
+				logger.debug("save file to mongodb.");
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				logger.error(ex);
+			}
+		}
 	}
 
 	@Transactional

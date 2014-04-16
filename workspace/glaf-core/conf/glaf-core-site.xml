@@ -10,6 +10,12 @@
 		必须以"/"开头，如配置为/conf/applicationContext.xml,那么应当将文件复制到WEB-INF的conf目录。
 		</description>
 	</property> -->
+
+	<property>
+		<name>fs_storage_path</name>
+		<value>/data</value>
+		<description>文件存储根路径</description>
+	</property>
  
 
 </configuration>

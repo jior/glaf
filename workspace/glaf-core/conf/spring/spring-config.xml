@@ -12,6 +12,8 @@
 
 	<!-- <import resource="classpath*:com/glaf/**/*-spring-context.xml" /> -->
 
+	<context:property-placeholder location="classpath:/mongodb.properties" />
+
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="save*" propagation="REQUIRED" />
@@ -38,7 +40,7 @@
         </tx:attributes>
     </tx:advice>
 
-    <aop:config expose-proxy="true">
+    <aop:config>
         <aop:pointcut id="txPointcut" expression="execution(* com.glaf..service..*.*(..))" />
         <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
     </aop:config>
@@ -64,7 +66,7 @@
 
 	<tx:annotation-driven mode="aspectj" />
 
-	<aop:aspectj-autoproxy />
+	<!-- <aop:aspectj-autoproxy /> -->
 
 	<context:annotation-config />
 
@@ -187,6 +189,18 @@
 
 	<bean id="myBatisEntityService" class="com.glaf.core.service.impl.MyBatisEntityService">
 		<property name="entityDAO" ref="myBatisEntityDAO" />
+	</bean>
+
+    <bean id="mongo" class="com.mongodb.Mongo">
+		<constructor-arg value="${db.host}" />
+		<constructor-arg value="${db.port}" />
+	</bean>
+
+	<bean id="blobService" class="com.glaf.core.service.impl.MongodbBlobServiceImpl">
+		<property name="entityDAO" ref="myBatisEntityDAO" />
+		<property name="idGenerator" ref="myBatisDbIdGenerator" />
+		<property name="blobItemMapper" ref="blobItemMapper" />
+		<property name="sqlSession" ref="sqlSession" />
 	</bean>
 
 </beans>

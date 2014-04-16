@@ -21,10 +21,12 @@ package com.glaf.core.config;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 import com.glaf.core.util.Constants;
+import com.glaf.core.util.StringTools;
 
 public class SystemProperties {
 
@@ -77,6 +79,27 @@ public class SystemProperties {
 			return Double.parseDouble(value);
 		}
 		return 0;
+	}
+
+	/**
+	 * 获取文件存储根路径
+	 * 
+	 * @return
+	 */
+	public static String getFileStorageRootPath() {
+		if (StringUtils.isNotEmpty(conf.get("fs_storage_path"))) {
+			String path = conf.get("fs_storage_path");
+			if (StringUtils.startsWith(path, "${webapp.root}")) {
+				path = StringTools.replaceIgnoreCase(path, "${webapp.root}",
+						getAppPath());
+			}
+			if (StringUtils.startsWith(path, "${webapp.root.config}")) {
+				path = StringTools.replaceIgnoreCase(path,
+						"${webapp.root.config}", getConfigRootPath());
+			}
+			return path;
+		}
+		return getConfigRootPath();
 	}
 
 	public static int getInt(String key) {

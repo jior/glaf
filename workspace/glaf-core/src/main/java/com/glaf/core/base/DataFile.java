@@ -18,6 +18,7 @@
 
 package com.glaf.core.base;
 
+import java.io.InputStream;
 import java.util.Date;
 
 public interface DataFile extends JSONable {
@@ -92,6 +93,8 @@ public interface DataFile extends JSONable {
 	 */
 	String getId();
 
+	InputStream getInputStream();
+
 	/**
 	 * 最后修改日期
 	 * 
@@ -159,6 +162,8 @@ public interface DataFile extends JSONable {
 
 	void setBusinessKey(String businessKey);
 
+	void setContentType(String contentType);
+
 	void setCreateBy(String createBy);
 
 	/**
@@ -174,6 +179,8 @@ public interface DataFile extends JSONable {
 	 * @param data
 	 */
 	void setData(byte[] data);
+
+	void setDeleteFlag(int deleteFlag);
 
 	/**
 	 * 设置设备编号
@@ -203,6 +210,8 @@ public interface DataFile extends JSONable {
 	 */
 	void setId(String id);
 
+	void setInputStream(InputStream inputStream);
+
 	/**
 	 * 获取数据最后修改时间
 	 * 
@@ -210,12 +219,18 @@ public interface DataFile extends JSONable {
 	 */
 	void setLastModified(long lastModified);
 
+	void setLocked(int locked);
+
 	/**
 	 * 设置名称
 	 * 
 	 * @param name
 	 */
 	void setName(String name);
+
+	void setObjectId(String objectId);
+
+	void setObjectValue(String objectValue);
 
 	void setPath(String path);
 
