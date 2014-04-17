@@ -19,6 +19,7 @@
 package com.glaf.core.service.impl;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,11 +57,12 @@ public class MxTablePageServiceImpl implements ITablePageService {
 
 	public List<Map<String, Object>> getListData(String sql,
 			Map<String, Object> params) {
+		Map<String, Object> queryMap = new HashMap<String, Object>();
 		if (params != null && !params.isEmpty()) {
-			params.put("queryString", sql);
-			return tablePageMapper.getSqlQueryList(params);
+			queryMap.putAll(params);
 		}
-		return null;
+		queryMap.put("queryString", sql);
+		return tablePageMapper.getSqlQueryList(queryMap);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

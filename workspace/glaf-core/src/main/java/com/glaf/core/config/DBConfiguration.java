@@ -38,6 +38,7 @@ import com.glaf.core.dialect.H2Dialect;
 import com.glaf.core.dialect.MySQLDialect;
 import com.glaf.core.dialect.OracleDialect;
 import com.glaf.core.dialect.PostgreSQLDialect;
+import com.glaf.core.dialect.SQLServerDialect;
 import com.glaf.core.dialect.SQLiteDialect;
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.util.Constants;
@@ -268,6 +269,15 @@ public class DBConfiguration {
 		return null;
 	}
 
+	public static Dialect getDatabaseDialect(Connection connection) {
+		Dialect dialect = null;
+		String dbType = DBConnectionFactory.getDatabaseType(connection);
+		if (dbType != null) {
+			dialect = getDialects().get(dbType);
+		}
+		return dialect;
+	}
+
 	public static String getDatabaseType(String url) {
 		String dbType = null;
 		if (StringUtils.contains(url, "jdbc:mysql:")) {
@@ -353,9 +363,10 @@ public class DBConfiguration {
 	}
 
 	public static Map<String, Dialect> getDialects() {
-		Map<String, Dialect> dialects = new java.util.concurrent.ConcurrentHashMap<String, Dialect>();
+		Map<String, Dialect> dialects = new java.util.HashMap<String, Dialect>();
 		dialects.put("h2", new H2Dialect());
 		dialects.put("mysql", new MySQLDialect());
+		dialects.put("sqlserver", new SQLServerDialect());
 		dialects.put("sqlite", new SQLiteDialect());
 		dialects.put("oracle", new OracleDialect());
 		dialects.put("postgresql", new PostgreSQLDialect());
@@ -376,15 +387,6 @@ public class DBConfiguration {
 				"org.hibernate.dialect.SQLServerDialect");
 		dialectMappings.setProperty("db2", "org.hibernate.dialect.DB2Dialect");
 		return dialectMappings;
-	}
-	
-	public static Dialect getDatabaseDialect(Connection connection) {
-		Dialect dialect = null;
-		String dbType = DBConnectionFactory.getDatabaseType(connection);
-		if (dbType != null) {
-			dialect = getDialects().get(dbType);
-		}
-		return dialect;
 	}
 
 	public static Properties getProperties(String name) {
