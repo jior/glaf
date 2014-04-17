@@ -503,7 +503,9 @@ public class ReflectUtils {
 	}
 
 	public static Object getEmptyObject(Class<?> returnType) {
-		return getEmptyObject(returnType, new java.util.concurrent.ConcurrentHashMap<Class<?>, Object>(), 0);
+		return getEmptyObject(returnType,
+				new java.util.concurrent.ConcurrentHashMap<Class<?>, Object>(),
+				0);
 	}
 
 	private static Object getEmptyObject(Class<?> returnType,
@@ -1148,6 +1150,41 @@ public class ReflectUtils {
 					logger.debug(e);
 				}
 			}
+		}
+	}
+
+	public static Constructor<?> getConstructor(Class<?> type,
+			Class<?>[] parameterTypes) {
+		try {
+			Constructor<?> constructor = type
+					.getDeclaredConstructor(parameterTypes);
+			constructor.setAccessible(true);
+			return constructor;
+		} catch (NoSuchMethodException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static Object newInstance(Class<?> type) {
+		return newInstance(type, EMPTY_CLASS_ARRAY, null);
+	}
+
+	public static Object newInstance(Class<?> type, Class<?>[] parameterTypes,
+			Object[] args) {
+		return newInstance(getConstructor(type, parameterTypes), args);
+	}
+
+	public static Object newInstance(final Constructor<?> cstruct,
+			final Object[] args) {
+		boolean flag = cstruct.isAccessible();
+		try {
+			cstruct.setAccessible(true);
+			Object result = cstruct.newInstance(args);
+			return result;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		} finally {
+			cstruct.setAccessible(flag);
 		}
 	}
 

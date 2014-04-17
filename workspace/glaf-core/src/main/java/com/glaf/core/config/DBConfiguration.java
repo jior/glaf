@@ -377,6 +377,15 @@ public class DBConfiguration {
 		dialectMappings.setProperty("db2", "org.hibernate.dialect.DB2Dialect");
 		return dialectMappings;
 	}
+	
+	public static Dialect getDatabaseDialect(Connection connection) {
+		Dialect dialect = null;
+		String dbType = DBConnectionFactory.getDatabaseType(connection);
+		if (dbType != null) {
+			dialect = getDialects().get(dbType);
+		}
+		return dialect;
+	}
 
 	public static Properties getProperties(String name) {
 		if (dataSourceProperties.isEmpty()) {
