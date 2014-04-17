@@ -22,7 +22,9 @@ import java.util.List;
 
 import com.glaf.core.domain.ColumnDefinition;
 
-public class RowModel {
+public class RowModel implements java.io.Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	protected List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
 

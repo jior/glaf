@@ -22,7 +22,9 @@ import java.util.List;
 
 import com.glaf.core.domain.ColumnDefinition;
 
-public class ResultModel {
+public class ResultModel implements java.io.Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	protected int start;
 
@@ -30,9 +32,9 @@ public class ResultModel {
 
 	protected int total;
 
-	protected List<ColumnDefinition> headers = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+	protected List<ColumnDefinition> headers = new java.util.ArrayList<ColumnDefinition>();
 
-	protected List<RowModel> rows = new java.util.concurrent.CopyOnWriteArrayList<RowModel>();
+	protected List<RowModel> rows = new java.util.ArrayList<RowModel>();
 
 	public ResultModel() {
 
@@ -40,14 +42,14 @@ public class ResultModel {
 
 	public void addHeader(ColumnDefinition column) {
 		if (headers == null) {
-			headers = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+			headers = new java.util.ArrayList<ColumnDefinition>();
 		}
 		headers.add(column);
 	}
 
 	public void addRow(RowModel row) {
 		if (rows == null) {
-			rows = new java.util.concurrent.CopyOnWriteArrayList<RowModel>();
+			rows = new java.util.ArrayList<RowModel>();
 		}
 		rows.add(row);
 	}
