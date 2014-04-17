@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk>
+	<device-config>
+		<device-type>ajax</device-type>
+		<!-- An empty URL can cause the browser to reload the same URL -->
+		<timeout-uri>login.html?timeout=1</timeout-uri>
+	</device-config>
+
+
+
+	<desktop-config>
+        <!-- seconds it takes between requests for a desktop to be invalidated -->
+        <!-- a timer is introduced to avoid invalidation of pages still open -->
+        <desktop-timeout>30</desktop-timeout>
+    </desktop-config>
+
+    <session-config>
+        <!-- 0 implies default from web.xml  -->
+        <session-timeout>0</session-timeout>
+        <timer-keep-alive>true</timer-keep-alive>
+    </session-config>
+
+	<!--  Spring Security -->
+    <!-- <listener>
+       <description>ThreadLocal Synchronization Listener</description>
+       <listener-class>org.zkoss.zkplus.util.ThreadLocalListener</listener-class>
+    </listener>
+
+    <preference>
+        <name>ThreadLocal</name>
+        <value>
+            org.springframework.security.context.ThreadLocalSecurityContextHolderStrategy=contextHolder
+        </value>
+    </preference> -->
+
+    <system-config>
+        <disable-event-thread>false</disable-event-thread>
+    </system-config>
+
+	<system-config>
+        <ui-factory-class>org.zkoss.zk.ui.http.SerializableUiFactory</ui-factory-class>
+    </system-config>
+
+	<library-property>
+		<name>org.zkoss.theme.preferred</name>
+		<value>sapphire</value>
+	</library-property>
+</zk>
