@@ -26,7 +26,7 @@ public class RowModel implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	protected List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+	protected List<ColumnDefinition> columns = new java.util.ArrayList<ColumnDefinition>();
 
 	public RowModel() {
 
@@ -34,7 +34,7 @@ public class RowModel implements java.io.Serializable {
 
 	public void addColumn(ColumnDefinition column) {
 		if (columns == null) {
-			columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+			columns = new java.util.ArrayList<ColumnDefinition>();
 		}
 		columns.add(column);
 	}
