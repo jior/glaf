@@ -23,7 +23,7 @@
   </target>  
   <target name="jar"> 
     <jar jarfile="glaf-core-src.zip"> 
-      <fileset dir="." excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn" includes=".classpath, .project, .settings/**, *.bat, *.xml, *.txt, conf/**/*.*, jar-conf/**/*.*, mapping/**/*.*, sql/**/*.*, src/**/*.*,bpmn/**/*.zip,jpdl/**/*.zip"/> 
+      <fileset dir="." excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn" includes=".classpath, .project, .settings/**, *.bat, *.xml, *.txt, conf/**/*.*,template/**/*.*, jar-conf/**/*.*, mapping/**/*.*, sql/**/*.*, src/**/*.*,bpmn/**/*.zip,jpdl/**/*.zip"/> 
     </jar>  
     <jar jarfile="glaf-core.jar"> 
       <fileset dir="bin" includes="com/glaf/core/**/*.class,com/glaf/core/**/*.xml,com/glaf/core/**/*.properties"/>  
