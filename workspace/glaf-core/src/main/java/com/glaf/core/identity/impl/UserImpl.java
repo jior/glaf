@@ -90,6 +90,8 @@ public class UserImpl implements User {
 
 	protected int userType;
 
+	protected String token;
+
 	public UserImpl() {
 
 	}
@@ -223,6 +225,10 @@ public class UserImpl implements User {
 		return superiorId;
 	}
 
+	public String getToken() {
+		return token;
+	}
+
 	public int getUserType() {
 		return userType;
 	}
@@ -240,6 +246,10 @@ public class UserImpl implements User {
 			return true;
 		}
 		return false;
+	}
+
+	public User jsonToObject(JSONObject json) {
+		return UserJsonFactory.jsonToObject(json);
 	}
 
 	public void setAccountType(int accountType) {
@@ -354,21 +364,21 @@ public class UserImpl implements User {
 		this.superiorId = superiorId;
 	}
 
+	public void setToken(String token) {
+		this.token = token;
+	}
+
 	public void setUserType(int userType) {
 		this.userType = userType;
+	}
+
+	public JSONObject toJsonObject() {
+		return UserJsonFactory.toJsonObject(this);
 	}
 
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this,
 				ToStringStyle.MULTI_LINE_STYLE);
-	}
-
-	public User jsonToObject(JSONObject json) {
-		return UserJsonFactory.jsonToObject(json);
-	}
-
-	public JSONObject toJsonObject() {
-		return UserJsonFactory.toJsonObject(this);
 	}
 
 }

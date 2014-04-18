@@ -207,6 +207,9 @@ public class SysUser implements Serializable, User, JSONable {
 	@Column(name = "UPDATEDATE")
 	protected Date updateDate;
 
+	@Column(name = "TOKEN", length = 250)
+	protected String token;
+
 	@javax.persistence.Transient
 	private Set<SysUserRole> userRoles = new HashSet<SysUserRole>();
 
@@ -392,6 +395,10 @@ public class SysUser implements Serializable, User, JSONable {
 
 	public String getTelephone() {
 		return telephone;
+	}
+
+	public String getToken() {
+		return token;
 	}
 
 	public String getUpdateBy() {
@@ -638,6 +645,10 @@ public class SysUser implements Serializable, User, JSONable {
 
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	public void setUpdateBy(String updateBy) {

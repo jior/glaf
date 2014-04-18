@@ -54,6 +54,8 @@ public interface User extends java.io.Serializable {
 
 	String getRemark();
 
+	String getToken();
+
 	int getUserType();
 
 	boolean isSystemAdministrator();
@@ -89,6 +91,8 @@ public interface User extends java.io.Serializable {
 	void setPassword(String password);
 
 	void setRemark(String remark);
+
+	void setToken(String token);
 
 	void setUserType(int userType);
 

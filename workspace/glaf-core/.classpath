@@ -155,5 +155,6 @@
 	<classpathentry kind="lib" path="lib/mchange-commons-java.jar"/>
 	<classpathentry kind="lib" path="lib/mongo-java-driver.jar"/>
 	<classpathentry kind="lib" path="lib/commons-pool2.jar"/>
+	<classpathentry kind="lib" path="lib/async-http-client.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
