@@ -55,7 +55,11 @@
 			<fileset dir="bin" includes="com/glaf/cluster/catalina/**/*.class,log4j.xml" />
 		</jar>
 
-		<copy todir="E:/cluster/tomcat1/lib">
+	</target>
+
+	<target name="copy" depends="jar">
+		<echo message="运行应用程序......" />
+        <copy todir="E:/cluster/tomcat1/lib">
 			<fileset dir="." includes="*.jar" />
 		</copy>
 
