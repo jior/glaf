@@ -155,5 +155,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/curator-x-discovery.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/httpcore-nio.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/zookeeper.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/spring-data-redis.RELEASE.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

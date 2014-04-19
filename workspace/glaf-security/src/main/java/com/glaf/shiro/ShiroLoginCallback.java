@@ -9,8 +9,9 @@ import org.apache.commons.logging.LogFactory;
 import com.glaf.core.web.callback.LoginCallback;
 
 public class ShiroLoginCallback implements LoginCallback {
-	
-	protected final static Log logger = LogFactory.getLog(ShiroLoginCallback.class);
+
+	protected final static Log logger = LogFactory
+			.getLog(ShiroLoginCallback.class);
 
 	public void afterLogin(String actorId, HttpServletRequest request,
 			HttpServletResponse response) {
