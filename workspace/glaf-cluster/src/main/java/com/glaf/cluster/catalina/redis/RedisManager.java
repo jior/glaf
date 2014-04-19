@@ -31,11 +31,9 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisShardInfo;
-import redis.clients.jedis.PipelineBlock;
 import redis.clients.jedis.Protocol;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
-import redis.clients.jedis.TransactionBlock;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 
 public class RedisManager extends StandardManager {
@@ -504,77 +502,7 @@ public class RedisManager extends StandardManager {
 		}
 	}
 
-	public java.util.List<Object> jedisMulti(String key,
-			TransactionBlock jedisTransaction) {
-		if (_pool != null) {
-			Jedis jedis = null;
-			try {
-				jedis = _pool.getResource();
-				return jedis.multi(jedisTransaction);
-			} finally {
-				if (jedis != null) {
-					try {
-						_pool.returnResource(jedis);
-					} catch (Throwable thex) {
-					}
-				}
-			}
-		} else {
-			ShardedJedis jedis = null;
-			try {
-				jedis = _shardedPool.getResource();
-				byte[] bytesKey = key.getBytes(Protocol.CHARSET);
-				Jedis jedisA = jedis.getShard(bytesKey);
-				return jedisA.multi(jedisTransaction);
-			} catch (IOException e) {
-				throw new JedisConnectionException(e);
-			} finally {
-				if (jedis != null) {
-					try {
-						_shardedPool.returnResource(jedis);
-					} catch (Throwable thex) {
-					}
-				}
-			}
-		}
-
-	}
-
-	public java.util.List<Object> jedisPipelined(String key,
-			PipelineBlock pipelineBlock) {
-		if (_pool != null) {
-			Jedis jedis = null;
-			try {
-				jedis = _pool.getResource();
-				return jedis.pipelined(pipelineBlock);
-			} finally {
-				if (jedis != null) {
-					try {
-						_pool.returnResource(jedis);
-					} catch (Throwable thex) {
-					}
-				}
-			}
-		} else {
-			ShardedJedis jedis = null;
-			try {
-				jedis = _shardedPool.getResource();
-				byte[] bytesKey = key.getBytes(Protocol.CHARSET);
-				Jedis jedisA = jedis.getShard(bytesKey);
-				return jedisA.pipelined(pipelineBlock);
-			} catch (IOException e) {
-				throw new JedisConnectionException(e);
-			} finally {
-				if (jedis != null) {
-					try {
-						_shardedPool.returnResource(jedis);
-					} catch (Throwable thex) {
-					}
-				}
-			}
-		}
-
-	}
+	 
 
 	/**
 	 * Remove this Session from the active Sessions for this Manager, and from

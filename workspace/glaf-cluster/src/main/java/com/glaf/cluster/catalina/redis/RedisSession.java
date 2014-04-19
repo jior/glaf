@@ -22,7 +22,6 @@ import org.apache.catalina.session.StandardSession;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 
-import redis.clients.jedis.PipelineBlock;
 import redis.clients.jedis.Protocol;
 
 public class RedisSession extends StandardSession {
@@ -30,18 +29,6 @@ public class RedisSession extends StandardSession {
 
 	protected transient Log log = LogFactory.getLog(RedisSession.class);
 	protected transient RedisManager _manager;
-	protected transient PipelineBlock _expirePipeline = new RedisPipelineBlock(
-			this) {
-		@Override
-		public void execute() {
-			_redisSession._manager.jedisHset(RedisManager.TOMCAT_SESSION_PREFIX
-					+ _redisSession.id, "__[creationTime]__",
-					String.valueOf(System.currentTimeMillis()).getBytes());
-			_redisSession._manager.jedisExpire(
-					RedisManager.TOMCAT_SESSION_PREFIX + _redisSession.id,
-					_redisSession.maxInactiveInterval);
-		}
-	};
 
 	public RedisSession(RedisManager manager) {
 		super(manager);
@@ -67,8 +54,7 @@ public class RedisSession extends StandardSession {
 		try {
 			if (_manager.jedisExpire(RedisManager.TOMCAT_SESSION_PREFIX
 					+ this.id, this.maxInactiveInterval) == 0) {
-				_manager.jedisPipelined(RedisManager.TOMCAT_SESSION_PREFIX
-						+ this.id, _expirePipeline);
+
 			}
 		} catch (Exception ex) {
 			log.error("error:", ex);
@@ -195,12 +181,4 @@ public class RedisSession extends StandardSession {
 		this.id = id;
 	}
 
-	private static abstract class RedisPipelineBlock extends PipelineBlock {
-		RedisSession _redisSession;
-
-		RedisPipelineBlock(RedisSession redisSession) {
-			super();
-			_redisSession = redisSession;
-		}
-	}
 }
