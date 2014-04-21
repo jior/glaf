@@ -18,7 +18,12 @@
 
 package com.glaf.base.modules.sys.rest;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -30,10 +35,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysUser;
+import com.glaf.base.modules.sys.query.SysUserQuery;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysDeptRoleService;
 import com.glaf.base.modules.sys.service.SysRoleService;
@@ -46,7 +55,10 @@ import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
 import com.glaf.core.security.DigestUtil;
+import com.glaf.core.util.Paging;
+import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.Tools;
 
 @Controller("/rs/identity/user")
 @Path("/rs/identity/user")
@@ -62,6 +74,83 @@ public class UserResource {
 	protected SysTreeService sysTreeService;
 
 	protected SysUserService sysUserService;
+
+	@GET
+	@POST
+	@Path("json")
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	@ResponseBody
+	public byte[] json(@Context HttpServletRequest request,
+			@Context UriInfo uriInfo) throws IOException {
+		String searchWord = request.getParameter("searchWord");
+		if (searchWord == null) {
+			searchWord = "%";
+		}
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		SysUserQuery query = new SysUserQuery();
+		Tools.populate(query, params);
+
+		String gridType = ParamUtils.getString(params, "gridType");
+		if (gridType == null) {
+			gridType = "easyui";
+		}
+		int start = 0;
+		int limit = 10;
+		String orderName = null;
+		String order = null;
+
+		int pageNo = ParamUtils.getInt(params, "page");
+		limit = ParamUtils.getInt(params, "rows");
+		start = (pageNo - 1) * limit;
+		orderName = ParamUtils.getString(params, "sortName");
+		order = ParamUtils.getString(params, "sortOrder");
+
+		if (start < 0) {
+			start = 0;
+		}
+
+		if (limit <= 0) {
+			limit = Paging.DEFAULT_PAGE_SIZE;
+		}
+
+		JSONObject result = new JSONObject();
+		int total = sysUserService.getCountDeptUsers(searchWord);
+		if (total > 0) {
+			result.put("total", total);
+			result.put("totalCount", total);
+			result.put("totalRecords", total);
+			result.put("start", start);
+			result.put("startIndex", start);
+			result.put("limit", limit);
+			result.put("pageSize", limit);
+
+			if (StringUtils.isNotEmpty(orderName)) {
+				query.setSortOrder(orderName);
+				if (StringUtils.equals(order, "desc")) {
+					query.setSortOrder(" desc ");
+				}
+			}
+
+			List<SysUser> list = sysUserService.getDeptUsers(searchWord,
+					pageNo, limit);
+
+			if (list != null && !list.isEmpty()) {
+				JSONArray rowsJSON = new JSONArray();
+
+				result.put("rows", rowsJSON);
+
+				for (SysUser sysUser : list) {
+					JSONObject rowJSON = sysUser.toJsonObject();
+					rowJSON.put("id", sysUser.getId());
+					rowJSON.put("actorId", sysUser.getAccount());
+					rowJSON.put("startIndex", ++start);
+					rowsJSON.add(rowJSON);
+				}
+
+			}
+		}
+		return result.toJSONString().getBytes("UTF-8");
+	}
 
 	/**
 	 * 提交修改信息
