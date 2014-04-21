@@ -63,31 +63,32 @@ public class TodoServiceMyBatisImpl implements TodoService {
 
 	protected SqlSession sqlSession;
 
-	private SysDepartmentService sysDepartmentService;
+	protected SysDepartmentService sysDepartmentService;
 
-	private SysRoleService sysRoleService;
+	protected SysRoleService sysRoleService;
 
-	private ISysTodoService sysTodoService;
+	protected ISysTodoService sysTodoService;
 
-	private SysTreeService sysTreeService;
+	protected SysTreeService sysTreeService;
 
-	private SysUserService sysUserService;
+	protected SysUserService sysUserService;
 
-	private ITableDataService tableDataService;
+	protected ITableDataService tableDataService;
 
-	private ITablePageService tablePageService;
+	protected ITablePageService tablePageService;
 
 	protected TodoInstanceMapper todoInstanceMapper;
 
 	protected TodoMapper todoMapper;
 
-	private WorkCalendarService workCalendarService;
+	protected WorkCalendarService workCalendarService;
 
 	@Transactional
 	public void create(Todo todo) {
 		sysTodoService.save(todo);
 	}
 
+	@Transactional
 	public void createTasks(Collection processInstanceIds, List rows) {
 		if (processInstanceIds != null && processInstanceIds.size() > 0) {
 			TableModel table = new TableModel();
@@ -102,8 +103,9 @@ public class TodoServiceMyBatisImpl implements TodoService {
 		}
 	}
 
+	@Transactional
 	public void createTasks(String processInstanceId, List rows) {
-		List processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList();
+		List processInstanceIds = new java.util.ArrayList();
 		processInstanceIds.add(processInstanceId);
 		TableModel table = new TableModel();
 		table.setTableName("SYS_TODO_INSTANCE");
@@ -117,6 +119,7 @@ public class TodoServiceMyBatisImpl implements TodoService {
 		}
 	}
 
+	@Transactional
 	public void createTasksOfSQL(List rows) {
 		TableModel table = new TableModel();
 		table.setTableName("SYS_TODO_INSTANCE");
@@ -128,6 +131,7 @@ public class TodoServiceMyBatisImpl implements TodoService {
 		}
 	}
 
+	@Transactional
 	public void createTasksOfWorkflow(List rows) {
 		TableModel table = new TableModel();
 		table.setTableName("SYS_TODO_INSTANCE");
@@ -139,6 +143,7 @@ public class TodoServiceMyBatisImpl implements TodoService {
 		}
 	}
 
+	@Transactional
 	public void createTasksOfWorkflow(String actorId, List rows) {
 		TableModel table = new TableModel();
 		table.setTableName("SYS_TODO_INSTANCE");
@@ -152,6 +157,7 @@ public class TodoServiceMyBatisImpl implements TodoService {
 		}
 	}
 
+	@Transactional
 	public void createTodoInstances(long todoId, List rows) {
 		TableModel table = new TableModel();
 		table.setTableName("SYS_TODO_INSTANCE");
@@ -170,13 +176,13 @@ public class TodoServiceMyBatisImpl implements TodoService {
 	}
 
 	public Map getDepartmentMap() {
-		Map rowMap = new java.util.concurrent.ConcurrentHashMap();
+		Map rowMap = new java.util.HashMap();
 		List roles = sysDepartmentService.getSysDepartmentList();
 		if (roles != null && roles.size() > 0) {
 			Iterator iterator = roles.iterator();
 			while (iterator.hasNext()) {
 				SysDepartment model = (SysDepartment) iterator.next();
-				rowMap.put(Long.valueOf(model.getId()), model);
+				rowMap.put(model.getId(), model);
 			}
 		}
 		return rowMap;
@@ -191,7 +197,7 @@ public class TodoServiceMyBatisImpl implements TodoService {
 			Iterator iterator = rows.iterator();
 			while (iterator.hasNext()) {
 				Todo todo = (Todo) iterator.next();
-				rowMap.put(Long.valueOf(todo.getId()), todo);
+				rowMap.put(todo.getId(), todo);
 			}
 		}
 		return rowMap;
@@ -213,13 +219,13 @@ public class TodoServiceMyBatisImpl implements TodoService {
 	}
 
 	public Map getRoleMap() {
-		Map roleMap = new java.util.concurrent.ConcurrentHashMap();
+		Map roleMap = new java.util.HashMap();
 		List roles = sysRoleService.getSysRoleList();
 		if (roles != null && roles.size() > 0) {
 			Iterator iterator = roles.iterator();
 			while (iterator.hasNext()) {
 				SysRole sysRole = (SysRole) iterator.next();
-				roleMap.put(new Long(sysRole.getId()), sysRole);
+				roleMap.put(sysRole.getId(), sysRole);
 			}
 		}
 		return roleMap;
@@ -256,9 +262,9 @@ public class TodoServiceMyBatisImpl implements TodoService {
 			boolean isDeptAdmin = false;
 			boolean isStockTopManager = false;
 
-			List roleIds = new java.util.concurrent.CopyOnWriteArrayList();
-			List deptIds = new java.util.concurrent.CopyOnWriteArrayList();
-			List actorxIds = new java.util.concurrent.CopyOnWriteArrayList();
+			List roleIds = new java.util.ArrayList();
+			List deptIds = new java.util.ArrayList();
+			List actorxIds = new java.util.ArrayList();
 
 			actorxIds.add(actorIdx);
 
@@ -270,8 +276,8 @@ public class TodoServiceMyBatisImpl implements TodoService {
 					SysDeptRole sysDeptRole = (SysDeptRole) iteratorxy.next();
 					SysRole role = sysDeptRole.getRole();
 					SysDepartment dept = sysDeptRole.getDept();
-					roleIds.add(Long.valueOf(role.getId()));
-					deptIds.add(Long.valueOf(dept.getId()));
+					roleIds.add(role.getId());
+					deptIds.add(dept.getId());
 				}
 			}
 
@@ -281,8 +287,8 @@ public class TodoServiceMyBatisImpl implements TodoService {
 			Iterator iterator = rows.iterator();
 			while (iterator.hasNext()) {
 				UserEntity entity = (UserEntity) iterator.next();
-				roleIds.add(new Long(entity.getRoleId()));
-				deptIds.add(new Long(entity.getDeptId()));
+				roleIds.add(entity.getRoleId());
+				deptIds.add(entity.getDeptId());
 				actorxIds.add(entity.getActorId());
 
 				if (entity.getRoleId() == 6 || entity.getRoleId() == 1) {
@@ -295,12 +301,9 @@ public class TodoServiceMyBatisImpl implements TodoService {
 						Iterator iter007 = list.iterator();
 						while (iter007.hasNext()) {
 							SysDepartment dept = (SysDepartment) iter007.next();
-							deptIds.add(new Long(dept.getId()));
+							deptIds.add(dept.getId());
 						}
 					}
-				}
-				if (entity.getRoleId() == 1 && entity.getDeptId() == 134) {
-					isStockTopManager = true;
 				}
 			}
 
@@ -337,7 +340,7 @@ public class TodoServiceMyBatisImpl implements TodoService {
 			Iterator iterator = rows.iterator();
 			while (iterator.hasNext()) {
 				Todo todo = (Todo) iterator.next();
-				rowMap.put(new Long(todo.getId()), todo);
+				rowMap.put(todo.getId(), todo);
 				rowMap.put(todo.getCode(), todo);
 				String processName = todo.getProcessName();
 				String taskName = todo.getTaskName();
@@ -362,7 +365,7 @@ public class TodoServiceMyBatisImpl implements TodoService {
 		if (actorId == null) {
 			return null;
 		}
-		List<UserEntity> rows = new java.util.concurrent.CopyOnWriteArrayList<UserEntity>();
+		List<UserEntity> rows = new java.util.ArrayList<UserEntity>();
 		StringBuffer sb = new StringBuffer();
 		sb.append(
 				" SELECT distinct d.account actorId, b.deptId deptId, b.sysRoleId roleId ")
@@ -372,7 +375,7 @@ public class TodoServiceMyBatisImpl implements TodoService {
 				.append(" INNER JOIN SYS_USER d ON a.userId = d.id ")
 				.append(" WHERE ( d.account = '").append(actorId)
 				.append("' ) ");
-		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
 		List<Map<String, Object>> list = tablePageService.getListData(
 				sb.toString(), params);
 		if (list != null && !list.isEmpty()) {
@@ -386,7 +389,7 @@ public class TodoServiceMyBatisImpl implements TodoService {
 	}
 
 	public Map getUserMap() {
-		Map userMap = new java.util.concurrent.ConcurrentHashMap();
+		Map userMap = new java.util.HashMap();
 		List users = sysUserService.getSysUserWithDeptList();
 		if (users != null && users.size() > 0) {
 			Iterator iterator = users.iterator();
@@ -399,7 +402,7 @@ public class TodoServiceMyBatisImpl implements TodoService {
 	}
 
 	public Map getUserRoleMap(String actorId) {
-		Map roleMap = new java.util.concurrent.ConcurrentHashMap();
+		Map roleMap = new java.util.HashMap();
 		Collection roles = sysUserService.findByAccount(actorId).getRoles();
 		if (roles != null && roles.size() > 0) {
 			Iterator iterator = roles.iterator();
@@ -414,8 +417,8 @@ public class TodoServiceMyBatisImpl implements TodoService {
 	}
 
 	public Map getUserTodoMap(String actorId) {
-		Map todoMap = new java.util.concurrent.ConcurrentHashMap();
-		Map roleMap = new java.util.concurrent.ConcurrentHashMap();
+		Map todoMap = new java.util.HashMap();
+		Map roleMap = new java.util.HashMap();
 		Collection roles = sysUserService.findByAccountWithAll(actorId)
 				.getRoles();
 		if (roles != null && roles.size() > 0) {
@@ -435,7 +438,7 @@ public class TodoServiceMyBatisImpl implements TodoService {
 			while (iterator.hasNext()) {
 				Todo todo = (Todo) iterator.next();
 				if (roleMap.containsKey(todo.getRoleCode())) {
-					todoMap.put(Long.valueOf(todo.getId()), todo);
+					todoMap.put(todo.getId(), todo);
 				}
 			}
 		}
@@ -458,7 +461,7 @@ public class TodoServiceMyBatisImpl implements TodoService {
 	}
 
 	public Collection populate(Collection rows, Map todoMap) {
-		Map dataMap = new java.util.concurrent.ConcurrentHashMap();
+		Map dataMap = new java.util.HashMap();
 		if (rows != null && rows.size() > 0) {
 			Iterator iterator008 = rows.iterator();
 			while (iterator008.hasNext()) {
@@ -490,12 +493,13 @@ public class TodoServiceMyBatisImpl implements TodoService {
 				default:
 					break;
 				}
-				dataMap.put(Long.valueOf(tdi.getTodoId()), xx);
+				dataMap.put(tdi.getTodoId(), xx);
 			}
 		}
 		return dataMap.values();
 	}
 
+	@Transactional
 	public void saveAll(List<Todo> rows) {
 		if (rows != null && !rows.isEmpty()) {
 			for (Todo todo : rows) {
@@ -576,6 +580,7 @@ public class TodoServiceMyBatisImpl implements TodoService {
 		this.workCalendarService = workCalendarService;
 	}
 
+	@Transactional
 	public void update(Todo todo) {
 		todoMapper.updateTodo(todo);
 	}
