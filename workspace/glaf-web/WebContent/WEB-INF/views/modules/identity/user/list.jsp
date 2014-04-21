@@ -38,7 +38,7 @@
 						{title:'用户姓名',field:'name', width:90},
 					    {title:'电子邮件',field:'email', width:90},
 					    {title:'部门',field:'deptName', width:120},
-						{title:'最后登录时间',field:'loginDate_datetime', width:120},
+						{title:'最后登录时间',field:'lastLoginTime', width:120},
 						{title:'登录IP',field:'loginIP', width:120},
 						{title:'最后更新时间',field:'updateDate_datetime', width:120},
 					    {title:'功能键', field:'functionKey', align:'center', width:120, formatter:formatterKeys}
