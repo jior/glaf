@@ -112,6 +112,10 @@ public class SysUserJsonFactory {
 			model.setDeptId(jsonObject.getInteger("deptId"));
 		}
 
+		if (jsonObject.containsKey("deptName")) {
+			model.setDeptName(jsonObject.getString("deptName"));
+		}
+
 		if (jsonObject.containsKey("mail")) {
 			model.setMail(jsonObject.getString("mail"));
 		}
@@ -229,6 +233,7 @@ public class SysUserJsonFactory {
 			jsonObject.put("deptName", user.getDepartment().getName());
 		} else {
 			jsonObject.put("deptId", user.getDeptId());
+			jsonObject.put("deptName", user.getDeptName());
 		}
 		jsonObject.put("accountType", user.getAccountType());
 		jsonObject.put("userType", user.getUserType());
@@ -340,6 +345,7 @@ public class SysUserJsonFactory {
 			jsonObject.put("deptName", user.getDepartment().getName());
 		} else {
 			jsonObject.put("deptId", user.getDeptId());
+			jsonObject.put("deptName", user.getDeptName());
 		}
 
 		jsonObject.put("accountType", user.getAccountType());

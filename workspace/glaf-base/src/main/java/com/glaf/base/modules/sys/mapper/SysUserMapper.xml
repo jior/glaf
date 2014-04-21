@@ -449,6 +449,49 @@
 	</select>
 
 
+	<select id="getCountDeptUsers" parameterType="com.glaf.base.modules.sys.query.SysUserQuery"
+		resultType="int">
+		select count(E.ID) from SYS_USER E
+		inner join SYS_DEPARTMENT D
+		on
+		E.DEPTID = D.ID
+		where 1=1
+		<if test="searchWord != null and searchWord != '' ">
+			and (
+			E.NAME like #{searchWord}
+			or E.ACCOUNT like
+			#{searchWord}
+			or E.EMAIL like #{searchWord}
+			or D.NAME like
+			#{searchWord}
+			or D.DEPTDESC like #{searchWord}
+			)
+		</if>
+	</select>
+
+
+	<select id="getDeptUsers" parameterType="com.glaf.base.modules.sys.query.SysUserQuery"
+		resultMap="sysUserResultMap">
+		select E.* from SYS_USER E
+		inner join SYS_DEPARTMENT D
+		on E.DEPTID =
+		D.ID
+		where 1=1
+		<if test="searchWord != null and searchWord != '' ">
+			and (
+			E.NAME like #{searchWord}
+			or E.ACCOUNT like
+			#{searchWord}
+			or E.EMAIL like #{searchWord}
+			or D.NAME like
+			#{searchWord}
+			or D.DEPTDESC like #{searchWord}
+			)
+		</if>
+		order by E.DEPTID asc
+	</select>
+
+
 	<select id="getSysRoleUsers" parameterType="long" resultMap="sysUserResultMap">
 
 		select distinct E.* from SYS_USER E

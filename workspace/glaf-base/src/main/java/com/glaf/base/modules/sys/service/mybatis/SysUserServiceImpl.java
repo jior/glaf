@@ -192,16 +192,6 @@ public class SysUserServiceImpl implements SysUserService {
 		return user;
 	}
 
-	public SysUser findByMail(String mail) {
-		SysUser user = sysUserMapper.getSysUserByMail(mail);
-		return user;
-	}
-
-	public SysUser findByMobile(String mobile) {
-		SysUser user = sysUserMapper.getSysUserByMobile(mobile);
-		return user;
-	}
-
 	public SysUser findByAccountWithAll(String account) {
 		SysUser user = null;
 		if (StringUtils.equals(DBUtils.ORACLE,
@@ -243,8 +233,24 @@ public class SysUserServiceImpl implements SysUserService {
 		return user;
 	}
 
+	public SysUser findByMail(String mail) {
+		SysUser user = sysUserMapper.getSysUserByMail(mail);
+		return user;
+	}
+
+	public SysUser findByMobile(String mobile) {
+		SysUser user = sysUserMapper.getSysUserByMobile(mobile);
+		return user;
+	}
+
+	public int getCountDeptUsers(String searchWord) {
+		SysUserQuery query = new SysUserQuery();
+		query.searchWord(searchWord);
+		return sysUserMapper.getCountDeptUsers(query);
+	}
+
 	protected Map<Long, SysDepartment> getDepartmentMap() {
-		Map<Long, SysDepartment> deptMap = new java.util.concurrent.ConcurrentHashMap<Long, SysDepartment>();
+		Map<Long, SysDepartment> deptMap = new java.util.HashMap<Long, SysDepartment>();
 		List<SysDepartment> depts = sysDepartmentService.getSysDepartmentList();
 		if (depts != null && !depts.isEmpty()) {
 			for (SysDepartment dept : depts) {
@@ -254,8 +260,57 @@ public class SysUserServiceImpl implements SysUserService {
 		return deptMap;
 	}
 
+	/**
+	 * 根据关键字查询部门用户信息
+	 * 
+	 * @param searchWord
+	 * 
+	 * @param pageNo
+	 * 
+	 * @param pageSize
+	 * 
+	 * @return
+	 */
+	public PageResult getDeptUserList(String searchWord, int pageNo,
+			int pageSize) {
+		SysUserQuery query = new SysUserQuery();
+		query.searchWord(searchWord);
+		// 计算总数
+		PageResult pager = new PageResult();
+		int count = sysUserMapper.getCountDeptUsers(query);
+
+		if (count == 0) {// 结果集为空
+			pager.setPageSize(pageSize);
+			return pager;
+		}
+
+		int start = pageSize * (pageNo - 1);
+		RowBounds rowBounds = new RowBounds(start, pageSize);
+		List<SysUser> list = sqlSessionTemplate.selectList("getDeptUsers",
+				query, rowBounds);
+		this.initUserDepartments(list);
+		pager.setResults(list);
+		pager.setPageSize(pageSize);
+		pager.setCurrentPageNo(pageNo);
+		pager.setTotalRecordCount(count);
+
+		return pager;
+	}
+
+	public List<SysUser> getDeptUsers(String searchWord, int pageNo,
+			int pageSize) {
+		SysUserQuery query = new SysUserQuery();
+		query.searchWord(searchWord);
+		int start = pageSize * (pageNo - 1);
+		RowBounds rowBounds = new RowBounds(start, pageSize);
+		List<SysUser> list = sqlSessionTemplate.selectList("getDeptUsers",
+				query, rowBounds);
+		this.initUserDepartments(list);
+		return list;
+	}
+
 	public List<SysUser> getSuperiors(String account) {
-		List<SysUser> superiors = new java.util.concurrent.CopyOnWriteArrayList<SysUser>();
+		List<SysUser> superiors = new java.util.ArrayList<SysUser>();
 		SysUser bean = this.findByAccount(account);
 		if (bean != null && bean.getSuperiorIds() != null) {
 			List<String> superiorIds = StringTools.split(bean.getSuperiorIds());
@@ -294,22 +349,6 @@ public class SysUserServiceImpl implements SysUserService {
 	public List<SysUser> getSysUserList() {
 		SysUserQuery query = new SysUserQuery();
 		return this.list(query);
-	}
-
-	/**
-	 * 获取用户信息
-	 * 
-	 * @return
-	 */
-	public Map<String, String> getUserMap() {
-		SysUserQuery query = new SysUserQuery();
-		query.blocked(0);
-		List<SysUser> users = this.list(query);
-		Map<String, String> userMap = new LinkedHashMap<String, String>();
-		for (SysUser user : users) {
-			userMap.put(user.getActorId(), user.getName());
-		}
-		return userMap;
 	}
 
 	public List<SysUser> getSysUserList(long deptId) {
@@ -458,6 +497,22 @@ public class SysUserServiceImpl implements SysUserService {
 		return users;
 	}
 
+	/**
+	 * 获取用户信息
+	 * 
+	 * @return
+	 */
+	public Map<String, String> getUserMap() {
+		SysUserQuery query = new SysUserQuery();
+		query.blocked(0);
+		List<SysUser> users = this.list(query);
+		Map<String, String> userMap = new LinkedHashMap<String, String>();
+		for (SysUser user : users) {
+			userMap.put(user.getActorId(), user.getName());
+		}
+		return userMap;
+	}
+
 	public SysUser getUserPrivileges(SysUser user) {
 		SysUser bean = user;
 		try {
@@ -485,7 +540,7 @@ public class SysUserServiceImpl implements SysUserService {
 	 * @return
 	 */
 	public List<SysRole> getUserRoles(List<String> actorIds) {
-		List<SysRole> roles = new java.util.concurrent.CopyOnWriteArrayList<SysRole>();
+		List<SysRole> roles = new java.util.ArrayList<SysRole>();
 		if (actorIds != null && !actorIds.isEmpty()) {
 			for (String actorId : actorIds) {
 				List<SysRole> list = sysRoleMapper.getSysRolesOfUser(actorId);
@@ -522,14 +577,14 @@ public class SysUserServiceImpl implements SysUserService {
 		if (users != null && !users.isEmpty()) {
 			List<SysDepartment> depts = sysDepartmentService
 					.getSysDepartmentList();
-			Map<Long, SysDepartment> deptMap = new java.util.concurrent.ConcurrentHashMap<Long, SysDepartment>();
+			Map<Long, SysDepartment> deptMap = new java.util.HashMap<Long, SysDepartment>();
 			if (depts != null && !depts.isEmpty()) {
 				for (SysDepartment dept : depts) {
 					deptMap.put(dept.getId(), dept);
 				}
 			}
 			for (SysUser user : users) {
-				user.setDepartment(deptMap.get(Long.valueOf(user.getDeptId())));
+				user.setDepartment(deptMap.get(user.getDeptId()));
 			}
 		}
 	}
@@ -694,7 +749,7 @@ public class SysUserServiceImpl implements SysUserService {
 			}
 		}
 
-		List<Membership> memberships = new java.util.concurrent.CopyOnWriteArrayList<Membership>();
+		List<Membership> memberships = new java.util.ArrayList<Membership>();
 
 		// 增加新权限
 		if (newRoles != null && !newRoles.isEmpty()) {

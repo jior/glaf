@@ -36,21 +36,25 @@ public interface SysUserMapper {
 
 	int getCountAuthorizedUsers(SysUserQuery query);
 
+	int getCountDeptUsers(SysUserQuery query);
+
+	List<SysUser> getDeptUsers(SysUserQuery query);
+
 	List<SysUser> getSysDeptRoleUsers(SysDeptRoleQuery query);
 
 	List<SysUser> getSysRoleUsers(Long roleId);
 
 	SysUser getSysUserByAccount(String account);
 
-	SysUser getSysUserByMail(String mail);
-
-	SysUser getSysUserByMobile(String mobile);
-
 	SysUser getSysUserByAccount_oracle(String account);
 
 	SysUser getSysUserByAccount_postgresql(String account);
 
 	SysUser getSysUserById(Long id);
+
+	SysUser getSysUserByMail(String mail);
+
+	SysUser getSysUserByMobile(String mobile);
 
 	int getSysUserCount(SysUserQuery query);
 

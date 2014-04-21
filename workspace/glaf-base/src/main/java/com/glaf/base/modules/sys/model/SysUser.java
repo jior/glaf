@@ -229,6 +229,9 @@ public class SysUser implements Serializable, User, JSONable {
 	@Column(name = "LASTCHANGEPASSWORDDATE")
 	protected Date lastChangePasswordDate;
 
+	@javax.persistence.Transient
+	protected String deptName;
+
 	public SysUser() {
 
 	}
@@ -281,6 +284,10 @@ public class SysUser implements Serializable, User, JSONable {
 			return department.getId();
 		}
 		return deptId;
+	}
+
+	public String getDeptName() {
+		return deptName;
 	}
 
 	public int getDumpFlag() {
@@ -537,6 +544,10 @@ public class SysUser implements Serializable, User, JSONable {
 
 	public void setDeptId(long deptId) {
 		this.deptId = deptId;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
 	}
 
 	public void setDumpFlag(int dumpFlag) {

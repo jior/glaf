@@ -91,24 +91,6 @@ public interface SysUserService {
 	SysUser findByAccount(String account);
 
 	/**
-	 * 按邮箱查找对象
-	 * 
-	 * @param mail
-	 *            String
-	 * @return SysUser
-	 */
-	SysUser findByMail(String mail);
-
-	/**
-	 * 按手机查找对象
-	 * 
-	 * @param mobile
-	 *            String
-	 * @return SysUser
-	 */
-	SysUser findByMobile(String mobile);
-
-	/**
 	 * 按名称查找对象
 	 * 
 	 * @param name
@@ -126,6 +108,41 @@ public interface SysUserService {
 	SysUser findById(long id);
 
 	/**
+	 * 按邮箱查找对象
+	 * 
+	 * @param mail
+	 *            String
+	 * @return SysUser
+	 */
+	SysUser findByMail(String mail);
+
+	/**
+	 * 按手机查找对象
+	 * 
+	 * @param mobile
+	 *            String
+	 * @return SysUser
+	 */
+	SysUser findByMobile(String mobile);
+
+	int getCountDeptUsers(String searchWord);
+
+	/**
+	 * 根据关键字查询部门用户信息
+	 * 
+	 * @param searchWord
+	 *           
+	 * @param pageNo
+	 *            
+	 * @param pageSize
+	 *          
+	 * @return
+	 */
+	PageResult getDeptUserList(String searchWord, int pageNo, int pageSize);
+
+	List<SysUser> getDeptUsers(String searchWord, int pageNo, int pageSize);
+
+	/**
 	 * 获取某个用户的上级
 	 * 
 	 * @param account
@@ -140,15 +157,15 @@ public interface SysUserService {
 	 * @return
 	 */
 	List<SysUser> getSupplierUser(String supplierNo);
-
-	/**
+	
+    /**
 	 * 根据查询参数获取记录总数
 	 * 
 	 * @return
 	 */
 	int getSysUserCountByQueryCriteria(SysUserQuery query);
-
-	/**
+    
+    /**
 	 * 获取列表
 	 * 
 	 * @param deptId
@@ -156,7 +173,7 @@ public interface SysUserService {
 	 * @return List
 	 */
 	List<SysUser> getSysUserList();
-
+	
 	/**
 	 * 获取列表
 	 * 

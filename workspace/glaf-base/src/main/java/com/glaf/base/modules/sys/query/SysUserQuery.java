@@ -84,6 +84,7 @@ public class SysUserQuery extends DataQuery {
 	protected Integer userTypeGreaterThanOrEqual;
 	protected Integer userTypeLessThanOrEqual;
 	protected List<Integer> userTypes;
+	protected String searchWord;
 
 	public SysUserQuery() {
 
@@ -747,6 +748,18 @@ public class SysUserQuery extends DataQuery {
 		return roleCodes;
 	}
 
+	public String getSearchWord() {
+		if (searchWord != null && searchWord.trim().length() > 0) {
+			if (!searchWord.startsWith("%")) {
+				searchWord = "%" + searchWord;
+			}
+			if (!searchWord.endsWith("%")) {
+				searchWord = searchWord + "%";
+			}
+		}
+		return searchWord;
+	}
+
 	public String getSuperiorIdsLike() {
 		if (superiorIdsLike != null && superiorIdsLike.trim().length() > 0) {
 			if (!superiorIdsLike.startsWith("%")) {
@@ -920,6 +933,14 @@ public class SysUserQuery extends DataQuery {
 			throw new RuntimeException("roleCode is null");
 		}
 		this.roleCode = roleCode;
+		return this;
+	}
+
+	public SysUserQuery searchWord(String searchWord) {
+		if (searchWord == null) {
+			throw new RuntimeException("searchWord is null");
+		}
+		this.searchWord = searchWord;
 		return this;
 	}
 
@@ -1140,6 +1161,10 @@ public class SysUserQuery extends DataQuery {
 
 	public void setRoleCodes(List<String> roleCodes) {
 		this.roleCodes = roleCodes;
+	}
+
+	public void setSearchWord(String searchWord) {
+		this.searchWord = searchWord;
 	}
 
 	public void setSuperiorIdsLike(String superiorIdsLike) {
