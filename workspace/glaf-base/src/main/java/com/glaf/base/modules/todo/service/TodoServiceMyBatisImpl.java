@@ -467,12 +467,11 @@ public class TodoServiceMyBatisImpl implements TodoService {
 			while (iterator008.hasNext()) {
 				TodoInstance tdi = (TodoInstance) iterator008.next();
 				int status = TodoConstants.getTodoStatus(tdi);
-				TodoInstance xx = (TodoInstance) dataMap.get(new Long(tdi
-						.getTodoId()));
+				TodoInstance xx = (TodoInstance) dataMap.get(tdi.getTodoId());
 				if (xx == null) {
 					xx = new TodoInstance();
 					xx.setTodoId(tdi.getTodoId());
-					Todo todo = (Todo) todoMap.get(new Long(tdi.getTodoId()));
+					Todo todo = (Todo) todoMap.get(tdi.getTodoId());
 					if (todo != null) {
 						xx.setTitle(todo.getTitle());
 						xx.setContent(todo.getContent());
