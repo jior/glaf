@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.glaf.shiro;
+package com.glaf.shiro.redis;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -28,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.glaf.core.util.SerializerUtils;
+import com.glaf.shiro.Cacheable;
 
 @SuppressWarnings("unchecked")
 public class RedisShiroSessionDao extends AbstractSessionDAO {

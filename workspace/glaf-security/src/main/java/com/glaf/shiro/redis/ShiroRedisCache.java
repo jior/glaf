@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.glaf.shiro;
+package com.glaf.shiro.redis;
 
 import java.util.Collection;
 import java.util.Set;
@@ -26,6 +26,7 @@ import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
 
 import com.glaf.core.util.SerializerUtils;
+import com.glaf.shiro.Cacheable;
 
 @SuppressWarnings("unchecked")
 public class ShiroRedisCache<K, V> implements Cache<K, V> {

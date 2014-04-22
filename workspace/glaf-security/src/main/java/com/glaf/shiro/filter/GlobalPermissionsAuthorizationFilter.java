@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.glaf.shiro;
+package com.glaf.shiro.filter;
 
 import java.io.IOException;
 

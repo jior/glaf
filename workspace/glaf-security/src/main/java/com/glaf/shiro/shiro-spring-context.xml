@@ -10,9 +10,9 @@
 	<bean id="formAuthenticationFilter"
 		class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter" />
 
-	<bean id="anyRoleAuthorizationFilter" class="com.glaf.shiro.AnyRoleAuthorizationFilter" />
+	<bean id="anyRoleAuthorizationFilter" class="com.glaf.shiro.filter.AnyRoleAuthorizationFilter" />
 
-	<bean id="anyPermissionAuthorizationFilter" class="com.glaf.shiro.AnyPermissionAuthorizationFilter" />
+	<bean id="anyPermissionAuthorizationFilter" class="com.glaf.shiro.filter.AnyPermissionAuthorizationFilter" />
 
 	<bean id="shiroFilter" class="com.glaf.shiro.MyShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
@@ -32,7 +32,7 @@
 		<property name="cacheManager" ref="ehCacheManager" />
 	</bean>
 
-	<!-- <bean id="shiroCacheManager" class="com.glaf.shiro.ZooKeeperCacheManager"> 
+	<!-- <bean id="shiroCacheManager" class="com.glaf.shiro.zookeeper.ZooKeeperCacheManager"> 
 		<property name="servers" value="127.0.0.1:2181" /> </bean> -->
 
 	<bean id="myShiroRealm" class="com.glaf.shiro.SystemRealm">

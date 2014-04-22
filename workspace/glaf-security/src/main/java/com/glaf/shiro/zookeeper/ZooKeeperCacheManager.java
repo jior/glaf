@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.shiro;
+package com.glaf.shiro.zookeeper;
 
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;

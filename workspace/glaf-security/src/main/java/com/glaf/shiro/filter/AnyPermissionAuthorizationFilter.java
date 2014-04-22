@@ -16,44 +16,47 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.glaf.shiro;
+package com.glaf.shiro.filter;
 
 import java.io.IOException;
-import java.util.Set;
-
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.util.CollectionUtils;
-import org.apache.shiro.web.filter.authz.AuthorizationFilter;
+import org.apache.shiro.web.filter.authz.*;
 
 /**
- * 拥有任何一个角色即可访问
+ * 拥有任何一个权限即可访问
  * 
  */
-public class AnyRoleAuthorizationFilter extends AuthorizationFilter {
+public class AnyPermissionAuthorizationFilter extends AuthorizationFilter {
 
 	public boolean isAccessAllowed(ServletRequest request,
 			ServletResponse response, Object mappedValue) throws IOException {
 
 		Subject subject = getSubject(request, response);
-		String[] rolesArray = (String[]) mappedValue;
+		String[] perms = (String[]) mappedValue;
 
-		if (rolesArray == null || rolesArray.length == 0) {
-			return false;
-		}
-
-		Set<String> roles = CollectionUtils.asSet(rolesArray);
 		boolean isAccessAllowed = false;
-		for (String role : roles) {
-			if (subject.hasRole(role)) {
-				isAccessAllowed = true;
-				break;
+		if (perms != null && perms.length > 0) {
+			if (perms.length == 1) {
+				if (subject.isPermitted(perms[0])) {
+					isAccessAllowed = true;
+				}
+			} else {
+				for (String perm : perms) {
+					if (subject.hasRole(perm)) {
+						isAccessAllowed = true;
+						break;
+					}
+					if (subject.isPermitted(perm)) {
+						isAccessAllowed = true;
+						break;
+					}
+				}
 			}
 		}
 
 		return isAccessAllowed;
 	}
-
 }

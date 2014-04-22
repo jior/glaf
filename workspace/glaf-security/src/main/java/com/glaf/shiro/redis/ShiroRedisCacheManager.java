@@ -15,11 +15,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.glaf.shiro;
+package com.glaf.shiro.redis;
 
 import org.apache.shiro.cache.AbstractCacheManager;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
+
+import com.glaf.shiro.Cacheable;
 
 public class ShiroRedisCacheManager extends AbstractCacheManager {
 	private Cacheable cacheable;

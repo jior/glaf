@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.glaf.shiro;
+package com.glaf.shiro.redis;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -27,6 +27,7 @@ import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import com.glaf.core.util.SerializerUtils;
+import com.glaf.shiro.Cacheable;
 
 public class RedisCacheableImpl implements Cacheable {
 
