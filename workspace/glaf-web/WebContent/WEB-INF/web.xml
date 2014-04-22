@@ -36,12 +36,6 @@
 		<listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
 	</listener>
 
-	<listener>
-		<description>Used to cleanup when a session is destroyed</description>
-		<display-name>ZK Session Cleaner</display-name>
-		<listener-class>org.zkoss.zk.ui.http.HttpSessionListener</listener-class>
-	</listener>
-
 	<!--转码过滤器-->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
@@ -149,45 +143,10 @@
 		<url-pattern>/fileUploadService</url-pattern>
     </servlet-mapping>
 
-<!-- ZK loder -->
-	<servlet>
-		<description>ZK loader for ZUML pages</description>
-		<servlet-name>zkLoader</servlet-name>
-		<servlet-class>org.zkoss.zk.ui.http.DHtmlLayoutServlet</servlet-class>
-		<init-param>
-			<param-name>update-uri</param-name>
-			<param-value>/zkau</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-
-	<!-- ZK update engine -->
-	<servlet>
-		<description>The asynchronous update engine for ZK</description>
-		<servlet-name>auEngine</servlet-name>
-		<servlet-class>org.zkoss.zk.au.http.DHtmlUpdateServlet</servlet-class>
-	</servlet>
-
-	<!-- Map all *.zul, *.zhtml to ZK loader -->
-	<servlet-mapping>
-		<servlet-name>zkLoader</servlet-name>
-		<url-pattern>*.zul</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>zkLoader</servlet-name>
-		<url-pattern>*.zhtml</url-pattern>
-	</servlet-mapping>
-
-	<!-- Map all /zkau/* to ZK update engine -->
-	<servlet-mapping>
-		<servlet-name>auEngine</servlet-name>
-		<url-pattern>/zkau/*</url-pattern>
-	</servlet-mapping>
 
 	<welcome-file-list>
 	    <welcome-file>index.html</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>index.zul</welcome-file>
 	</welcome-file-list>
 
 	<!-- Session timeout on  60 * 8  (in minutes) -->
