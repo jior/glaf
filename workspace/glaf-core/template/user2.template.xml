@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="GBK"?>
+<用户列表>
+    <!--注意：查询字段as成小写的别名（因不同数据库rsmd.getColumnLabel()不同，所以统一转成了小写）
+	    查询参数定义类似MyBatis中定义查询参数，即 字段 = #{变量名}
+	-->
+    <DataSet id="ds01">
+	    <sql>
+			 select d.ID as id, d.ID as deptid, d.NAME as name, d.CODE as code, d.DEPTDESC as desc, d.FINCODE as fincode 
+			 from SYS_DEPARTMENT d where d.CODE2 like #{code2}
+		</sql>
+	</DataSet>
+
+    <!--自动切分字段，根据上面查询的结果进行切分，多个字段用半角的逗号隔开。
+	    本例中相当于在ds02数据集中增加u.DEPTID = #{deptid}条件。
+        在本例中splits="deptid"相当于只获取ds02中deptid=ds01中deptid的数据。
+	-->
+	<DataSet id="ds02" splits="deptid">
+	    <sql>
+			 select u.ID as id, u.ACCOUNT as account, u.NAME as name, u.CODE as code, u.EMAIL as email, u.MOBILE as mobile,
+			 u.DEPTID as deptid
+			 from SYS_USER u
+			 inner join SYS_DEPARTMENT d
+			 on u.DEPTID = d.ID
+             where d.CODE2 like #{code2}
+		</sql>
+	</DataSet>
+
+	<部门 DataSetId="ds01">
+	    <编号>#{id}</编号>
+		<名称>#{name}</名称>
+		<代码>#{code}</代码>
+		<描述>#{desc}</描述>
+		<财务代码>#{fincode}</财务代码>
+
+	    <用户 DataSetId="ds02" 序号="#{sortNo}">
+		    <编号>#{id}</编号>
+			<用户名>#{account}</用户名>
+			<姓名>#{name}</姓名>
+			<代码>#{code}</代码>
+			<电子邮件>#{email}</电子邮件>
+			<手机>#{mobile}</手机>
+	    </用户>
+
+	</部门>
+</用户列表>
