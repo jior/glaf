@@ -115,9 +115,9 @@ public class SecurityConfig {
 		InputStream inputStream = null;
 		try {
 			loading.set(true);
-			String config_Path = SystemProperties.getConfigRootPath()
+			String config_path = SystemProperties.getConfigRootPath()
 					+ "/conf/security/";
-			String defaultFileName = config_Path + "system-security.properties";
+			String defaultFileName = config_path + "system-security.properties";
 			File defaultFile = new File(defaultFileName);
 			if (defaultFile.isFile()) {
 				inputStream = new FileInputStream(defaultFile);
@@ -139,11 +139,11 @@ public class SecurityConfig {
 				IOUtils.closeQuietly(inputStream);
 				inputStream = null;
 			}
-			File directory = new File(config_Path);
+			File directory = new File(config_path);
 			if (directory.isDirectory()) {
 				String[] filelist = directory.list();
 				for (int i = 0; i < filelist.length; i++) {
-					String filename = config_Path + filelist[i];
+					String filename = config_path + filelist[i];
 					if (StringUtils.equals(filename,
 							"system-security.properties")) {
 						continue;
