@@ -32,7 +32,7 @@ import com.glaf.core.util.PropertiesUtils;
 
 public class SecurityConfig {
 
-	private static volatile LinkedHashMap<String, String> properties = new LinkedHashMap<String, String>();
+	private static volatile LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
 
 	protected static AtomicBoolean loading = new AtomicBoolean(false);
 
@@ -45,7 +45,7 @@ public class SecurityConfig {
 
 	public static boolean eq(String key, String value) {
 		if (key != null && value != null) {
-			String x = properties.get(key);
+			String x = filterChainDefinitionMap.get(key);
 			if (StringUtils.equals(value, x)) {
 				return true;
 			}
@@ -55,7 +55,7 @@ public class SecurityConfig {
 
 	public static boolean getBoolean(String key) {
 		if (hasObject(key)) {
-			String value = properties.get(key);
+			String value = filterChainDefinitionMap.get(key);
 			return Boolean.valueOf(value).booleanValue();
 		}
 		return false;
@@ -63,7 +63,7 @@ public class SecurityConfig {
 
 	public static double getDouble(String key) {
 		if (hasObject(key)) {
-			String value = properties.get(key);
+			String value = filterChainDefinitionMap.get(key);
 			return Double.valueOf(value).doubleValue();
 		}
 		return 0;
@@ -71,7 +71,7 @@ public class SecurityConfig {
 
 	public static int getInt(String key) {
 		if (hasObject(key)) {
-			String value = properties.get(key);
+			String value = filterChainDefinitionMap.get(key);
 			return Integer.valueOf(value).intValue();
 		}
 		return 0;
@@ -79,21 +79,21 @@ public class SecurityConfig {
 
 	public static long getLong(String key) {
 		if (hasObject(key)) {
-			String value = properties.get(key);
+			String value = filterChainDefinitionMap.get(key);
 			return Long.valueOf(value).longValue();
 		}
 		return 0;
 	}
 
 	public static LinkedHashMap<String, String> getProperties() {
-		return properties;
+		return filterChainDefinitionMap;
 	}
 
 	public static String getString(String key) {
 		if (hasObject(key)) {
-			String value = properties.get(key);
+			String value = filterChainDefinitionMap.get(key);
 			if (value == null) {
-				value = properties.get(key.toUpperCase());
+				value = filterChainDefinitionMap.get(key.toUpperCase());
 			}
 			return value;
 		}
@@ -101,10 +101,10 @@ public class SecurityConfig {
 	}
 
 	public static boolean hasObject(String key) {
-		if (properties == null || key == null) {
+		if (filterChainDefinitionMap == null || key == null) {
 			return false;
 		}
-		String value = properties.get(key);
+		String value = filterChainDefinitionMap.get(key);
 		if (value != null) {
 			return true;
 		}
@@ -131,8 +131,8 @@ public class SecurityConfig {
 						/**
 						 * 保证后面添加的配置不能覆盖前面的配置
 						 */
-						if (!properties.containsKey(key)) {
-							properties.put(key, value);
+						if (!filterChainDefinitionMap.containsKey(key)) {
+							filterChainDefinitionMap.put(key, value);
 						}
 					}
 				}
@@ -161,8 +161,8 @@ public class SecurityConfig {
 								/**
 								 * 保证后面添加的配置不能覆盖前面的配置
 								 */
-								if (!properties.containsKey(key)) {
-									properties.put(key, value);
+								if (!filterChainDefinitionMap.containsKey(key)) {
+									filterChainDefinitionMap.put(key, value);
 								}
 							}
 						}
