@@ -115,13 +115,39 @@ public class SecurityConfig {
 		InputStream inputStream = null;
 		try {
 			loading.set(true);
-			String config = SystemProperties.getConfigRootPath()
+			String config_Path = SystemProperties.getConfigRootPath()
 					+ "/conf/security/";
-			File directory = new File(config);
+			String defaultFileName = config_Path + "system-security.properties";
+			File defaultFile = new File(defaultFileName);
+			if (defaultFile.isFile()) {
+				inputStream = new FileInputStream(defaultFile);
+				LinkedHashMap<String, String> p = PropertiesUtils
+						.load(inputStream);
+				if (p != null) {
+					Iterator<String> it = p.keySet().iterator();
+					while (it.hasNext()) {
+						String key = it.next();
+						String value = p.get(key);
+						/**
+						 * 保证后面添加的配置不能覆盖前面的配置
+						 */
+						if (!properties.containsKey(key)) {
+							properties.put(key, value);
+						}
+					}
+				}
+				IOUtils.closeQuietly(inputStream);
+				inputStream = null;
+			}
+			File directory = new File(config_Path);
 			if (directory.isDirectory()) {
 				String[] filelist = directory.list();
 				for (int i = 0; i < filelist.length; i++) {
-					String filename = config + filelist[i];
+					String filename = config_Path + filelist[i];
+					if (StringUtils.equals(filename,
+							"system-security.properties")) {
+						continue;
+					}
 					File file = new File(filename);
 					if (file.isFile() && file.getName().endsWith(".properties")) {
 						inputStream = new FileInputStream(file);
@@ -132,7 +158,12 @@ public class SecurityConfig {
 							while (it.hasNext()) {
 								String key = it.next();
 								String value = p.get(key);
-								properties.put(key, value);
+								/**
+								 * 保证后面添加的配置不能覆盖前面的配置
+								 */
+								if (!properties.containsKey(key)) {
+									properties.put(key, value);
+								}
 							}
 						}
 						IOUtils.closeQuietly(inputStream);
