@@ -30,7 +30,7 @@ public class NativeCodeLoader {
 	private static volatile boolean nativeCodeLoaded = false;
 
 	static {
-		// Try to load native hadoop library and set fallback flag appropriately
+		// Try to load native glaf library and set fallback flag appropriately
 		LOG.debug("Trying to load the custom-built native-glaf library...");
 		try {
 			System.loadLibrary("glaf");

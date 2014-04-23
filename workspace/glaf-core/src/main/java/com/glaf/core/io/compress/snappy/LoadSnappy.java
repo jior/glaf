@@ -41,14 +41,13 @@ public class LoadSnappy {
 		} catch (UnsatisfiedLinkError ex) {
 
 		}
-		boolean hadoopNativeAvailable = NativeCodeLoader.isNativeCodeLoaded();
-		LOADED = AVAILABLE && hadoopNativeAvailable;
+		boolean nativeAvailable = NativeCodeLoader.isNativeCodeLoaded();
+		LOADED = AVAILABLE && nativeAvailable;
 		if (LOADED) {
 			LOG.info("Snappy native library loaded");
 		} else {
 			LOG.warn("Snappy native library not loaded");
 		}
-
 	}
 
 	/**
