@@ -117,7 +117,7 @@ public class BuiltInGzipDecompressor implements Decompressor {
 	public BuiltInGzipDecompressor() {
 		state = GzipStateLabel.HEADER_BASIC;
 		crc.reset();
-		// FIXME? Inflater docs say: 'it is also necessary to provide an extra
+		//  Inflater docs say: 'it is also necessary to provide an extra
 		// "dummy" byte as input. This is required by the ZLIB native
 		// library in order to support certain optimizations.' However,
 		// this does not appear to be true, and in any case, it's not

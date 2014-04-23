@@ -60,7 +60,7 @@ public class ZlibFactory {
 	 *         be loaded for this job, else <code>false</code>
 	 */
 	public static boolean isNativeZlibLoaded(Configuration conf) {
-		return nativeZlibLoaded && conf.getBoolean("hadoop.native.lib", true);
+		return nativeZlibLoaded && conf.getBoolean("glaf.native.lib", true);
 	}
 
 	/**

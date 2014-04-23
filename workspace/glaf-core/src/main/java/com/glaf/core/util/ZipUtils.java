@@ -44,8 +44,11 @@ import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 
+import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
+
 public class ZipUtils {
-	private static JarOutputStream jos;
+	protected static Configuration conf = BaseConfiguration.create();
 
 	private static byte buf[] = new byte[256];
 
@@ -54,6 +57,25 @@ public class ZipUtils {
 	private static int BUFFER = 8192;
 
 	private static String sp = System.getProperty("file.separator");
+
+	public static void main(String[] args) {
+		String filename = "user.xml";
+		if (args != null && args.length == 1) {
+			filename = args[0];
+		}
+		byte[] bytes = FileUtils.getBytes(filename);
+		byte[] input = null;
+		byte[] zipBytes = null;
+		try {
+			zipBytes = org.xerial.snappy.Snappy.compress(bytes);
+			FileUtils.save("output", zipBytes);
+			input = FileUtils.getBytes("output");
+			bytes = org.xerial.snappy.Snappy.uncompress(input);
+			FileUtils.save("input", bytes);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * 
@@ -233,7 +255,7 @@ public class ZipUtils {
 		try {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			BufferedOutputStream bos = new BufferedOutputStream(baos);
-			jos = new JarOutputStream(bos);
+			JarOutputStream jos = new JarOutputStream(bos);
 			if (dataMap != null) {
 				Set<Entry<String, InputStream>> entrySet = dataMap.entrySet();
 				for (Entry<String, InputStream> entry : entrySet) {
@@ -355,24 +377,25 @@ public class ZipUtils {
 
 	public static void makeZip(File dir, File zipFile) throws IOException,
 			FileNotFoundException {
-		jos = new JarOutputStream(new FileOutputStream(zipFile));
+		JarOutputStream jos = new JarOutputStream(new FileOutputStream(zipFile));
 		String as[] = dir.list();
 		if (as != null) {
 			for (int i = 0; i < as.length; i++)
-				recurseFiles(new File(dir, as[i]), "");
+				recurseFiles(jos, new File(dir, as[i]), "");
 		}
 		jos.close();
 	}
 
-	private static void recurseFiles(File file, String s) throws IOException,
-			FileNotFoundException {
+	private static void recurseFiles(JarOutputStream jos, File file, String s)
+			throws IOException, FileNotFoundException {
+
 		if (file.isDirectory()) {
 			s = s + file.getName() + "/";
 			jos.putNextEntry(new JarEntry(s));
 			String as[] = file.list();
 			if (as != null) {
 				for (int i = 0; i < as.length; i++)
-					recurseFiles(new File(file, as[i]), s);
+					recurseFiles(jos, new File(file, as[i]), s);
 			}
 		} else {
 			if (file.getName().endsWith("MANIFEST.MF")
@@ -398,6 +421,7 @@ public class ZipUtils {
 		BufferedInputStream bis = null;
 		ByteArrayOutputStream baos = null;
 		BufferedOutputStream bos = null;
+		JarOutputStream jos = null;
 		try {
 			baos = new ByteArrayOutputStream();
 			bos = new BufferedOutputStream(baos);
