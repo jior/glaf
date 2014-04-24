@@ -49,18 +49,17 @@ public class CacheTest {
 
 	@Test
 	public void testGet() {
-		for (int i = 10000; i < 10010; i++) {
+		for (int i = 1; i < 10; i++) {
 			System.out.println(CacheFactory.get("cache_" + i));
 		}
 	}
 
 	@Test
 	public void testPut() {
-		for (int i = 0; i < 200000; i++) {
-			CacheFactory.put("cache_" + i,
-					"value_" + i + "#" + UUID32.getUUID());
+		for (int i = 0; i < 2000; i++) {
+			CacheFactory.put("cache_" + i,"value_" + i + "#" + UUID32.getUUID());
 		}
-		for (int i = 10000; i < 10010; i++) {
+		for (int i = 1000; i < 1010; i++) {
 			System.out.println(CacheFactory.get("cache_" + i));
 		}
 	}

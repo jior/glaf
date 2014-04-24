@@ -8,6 +8,9 @@
 
 	<bean id="ehCacheManager"
 		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="cacheManagerName">
+			<value>glaf_cache</value>
+		</property>
 		<property name="configLocation">
 			<value>classpath:/ehcache.xml</value>
 		</property>

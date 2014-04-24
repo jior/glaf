@@ -43,22 +43,22 @@ public class SerializerUtils {
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		} finally {
-			if (baos != null) {
-				try {
-					baos.close();
-				} catch (IOException ex) {
-				}
-			}
 			if (bos != null) {
 				try {
 					bos.close();
-				} catch (IOException ex) {
+				} catch (Exception ex) {
+				}
+			}
+			if (baos != null) {
+				try {
+					baos.close();
+				} catch (Exception ex) {
 				}
 			}
 			if (oos != null) {
 				try {
 					oos.close();
-				} catch (IOException ex) {
+				} catch (Exception ex) {
 				}
 			}
 		}
