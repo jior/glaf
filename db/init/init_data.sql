@@ -36,6 +36,7 @@ insert into SYS_ROLE (id, name, roleDesc, sort, code) values (11, '…Í«Îµ£µ±', ' 
 insert into SYS_ROLE (id, name, roleDesc, sort, code) values (12, ' ’µ•µ£µ±', '', 4, 'R012');
 insert into SYS_ROLE (id, name, roleDesc, sort, code) values (15, 'œµÕ≥π‹¿Ì‘±', '', 1, 'SystemAdministrator');
 insert into SYS_ROLE (id, name, roleDesc, sort, code) values (16, '∑÷º∂π‹¿Ì‘±', '', 2, 'BranchAdmin');
+insert into SYS_ROLE (id, name, roleDesc, sort, code) values (17, '¡˜≥Ãπ‹¿Ì‘±', '', 2, 'ProcessManager');
 insert into SYS_ROLE (id, name, roleDesc, sort, code) values (18, '÷˜»Œ', '', 18, 'R017');
 
 
