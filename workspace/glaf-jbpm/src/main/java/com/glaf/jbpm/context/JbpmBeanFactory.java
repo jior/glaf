@@ -28,10 +28,6 @@ public class JbpmBeanFactory {
 
 	private static volatile ApplicationContext ctx;
 
-	private JbpmBeanFactory() {
-
-	}
-
 	public static ApplicationContext getApplicationContext() {
 		return ctx;
 	}
@@ -44,13 +40,15 @@ public class JbpmBeanFactory {
 	}
 
 	protected static ApplicationContext reload() {
-		synchronized (JbpmBeanFactory.class) {
-			if (null != ctx) {
-				ctx = null;
-			}
-			ctx = new ClassPathXmlApplicationContext(DEFAULT_CONFIG);
+		if (null != ctx) {
+			ctx = null;
 		}
+		ctx = new ClassPathXmlApplicationContext(DEFAULT_CONFIG);
 		return ctx;
+	}
+
+	private JbpmBeanFactory() {
+
 	}
 
 }

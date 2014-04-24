@@ -25,12 +25,11 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jbpm.JbpmContext;
 
 import com.glaf.core.dao.EntityDAO;
+import com.glaf.core.util.JdbcUtils;
 import com.glaf.core.util.LogUtils;
-import com.glaf.jbpm.container.ProcessContainer;
-import com.glaf.jbpm.context.Context;
+
 import com.glaf.jbpm.context.JbpmBeanFactory;
 
 public class SqlMapContainer {
@@ -71,26 +70,23 @@ public class SqlMapContainer {
 			logger.debug("execute sqlmap:" + statementId);
 			logger.debug("params:" + params);
 		}
-		JbpmContext jbpmContext = null;
+		Connection conn = null;
 		try {
-			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
-			if (jbpmContext.getSession() != null
-					&& jbpmContext.getConnection() != null) {
-				getEntityDAO().setConnection(jbpmContext.getConnection());
-
-				if (StringUtils.equalsIgnoreCase("insert", operation)) {
-					getEntityDAO().insert(statementId, params);
-				} else if (StringUtils.equalsIgnoreCase("update", operation)) {
-					getEntityDAO().update(statementId, params);
-				} else if (StringUtils.equalsIgnoreCase("delete", operation)) {
-					getEntityDAO().delete(statementId, params);
-				}
+			conn = com.glaf.core.jdbc.DBConnectionFactory.getConnection();
+			getEntityDAO().setConnection(conn);
+			if (StringUtils.equalsIgnoreCase("insert", operation)) {
+				getEntityDAO().insert(statementId, params);
+			} else if (StringUtils.equalsIgnoreCase("update", operation)) {
+				getEntityDAO().update(statementId, params);
+			} else if (StringUtils.equalsIgnoreCase("delete", operation)) {
+				getEntityDAO().delete(statementId, params);
 			}
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			logger.error(ex);
 			throw new RuntimeException(ex);
 		} finally {
-			Context.close(jbpmContext);
+			JdbcUtils.close(conn);
 		}
 	}
 
@@ -109,21 +105,17 @@ public class SqlMapContainer {
 			logger.debug("execute sqlmap:" + statementId);
 			logger.debug("parameterObject:" + parameterObject);
 		}
-		JbpmContext jbpmContext = null;
+		Connection conn = null;
 		try {
-			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
-			if (jbpmContext.getSession() != null
-					&& jbpmContext.getConnection() != null) {
-				getEntityDAO().setConnection(jbpmContext.getConnection());
-				return getEntityDAO().getList(statementId, parameterObject);
-			}
-			return null;
+			conn = com.glaf.core.jdbc.DBConnectionFactory.getConnection();
+			getEntityDAO().setConnection(conn);
+			return getEntityDAO().getList(statementId, parameterObject);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			logger.error(ex);
 			throw new RuntimeException(ex);
 		} finally {
-			Context.close(jbpmContext);
+			JdbcUtils.close(conn);
 		}
 	}
 
@@ -149,21 +141,17 @@ public class SqlMapContainer {
 			logger.debug("execute sqlmap:" + statementId);
 			logger.debug("parameterObject:" + parameterObject);
 		}
-		JbpmContext jbpmContext = null;
+		Connection conn = null;
 		try {
-			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
-			if (jbpmContext.getSession() != null
-					&& jbpmContext.getConnection() != null) {
-				getEntityDAO().setConnection(jbpmContext.getConnection());
-				return getEntityDAO().getSingleObject(statementId,
-						parameterObject);
-			}
-			return null;
+			conn = com.glaf.core.jdbc.DBConnectionFactory.getConnection();
+			getEntityDAO().setConnection(conn);
+			return getEntityDAO().getSingleObject(statementId, parameterObject);
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			logger.error(ex);
 			throw new RuntimeException(ex);
 		} finally {
-			Context.close(jbpmContext);
+			JdbcUtils.close(conn);
 		}
 	}
 
