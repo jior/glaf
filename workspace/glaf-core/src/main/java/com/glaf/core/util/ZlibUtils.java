@@ -60,9 +60,11 @@ public class ZlibUtils {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
-			try {
-				baos.close();
-			} catch (IOException e) {
+			if (baos != null) {
+				try {
+					baos.close();
+				} catch (IOException e) {
+				}
 			}
 		}
 		return output;
@@ -118,9 +120,11 @@ public class ZlibUtils {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
-			try {
-				baos.close();
-			} catch (IOException e) {
+			if (baos != null) {
+				try {
+					baos.close();
+				} catch (IOException e) {
+				}
 			}
 		}
 		return output;
