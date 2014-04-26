@@ -67,7 +67,7 @@ public class TableDefinition implements java.io.Serializable,
 	protected int columnQty;
 
 	@Transient
-	protected List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+	protected List<ColumnDefinition> columns = new java.util.ArrayList<ColumnDefinition>();
 
 	/**
 	 * 创建人
@@ -158,7 +158,7 @@ public class TableDefinition implements java.io.Serializable,
 	protected String parentTableName;
 
 	@Transient
-	protected List<QueryDefinition> queries = new java.util.concurrent.CopyOnWriteArrayList<QueryDefinition>();
+	protected List<QueryDefinition> queries = new java.util.ArrayList<QueryDefinition>();
 
 	/**
 	 * 组合查询的查询编号
@@ -230,14 +230,14 @@ public class TableDefinition implements java.io.Serializable,
 
 	public void addColumn(ColumnDefinition column) {
 		if (columns == null) {
-			columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+			columns = new java.util.ArrayList<ColumnDefinition>();
 		}
 		columns.add(column);
 	}
 
 	public void addField(FieldDefinition field) {
 		if (columns == null) {
-			columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+			columns = new java.util.ArrayList<ColumnDefinition>();
 		}
 		JSONObject jsonObject = field.toJsonObject();
 		ColumnDefinition column = ColumnDefinitionJsonFactory
@@ -247,7 +247,7 @@ public class TableDefinition implements java.io.Serializable,
 
 	public void addQuery(QueryDefinition query) {
 		if (queries == null) {
-			queries = new java.util.concurrent.CopyOnWriteArrayList<QueryDefinition>();
+			queries = new java.util.ArrayList<QueryDefinition>();
 		}
 		queries.add(query);
 	}

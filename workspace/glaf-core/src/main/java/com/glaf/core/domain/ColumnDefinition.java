@@ -356,7 +356,7 @@ public class ColumnDefinition implements
 	protected Integer position;
 
 	@javax.persistence.Transient
-	protected Map<String, String> properties = new java.util.concurrent.ConcurrentHashMap<String, String>();
+	protected Map<String, String> properties = new java.util.HashMap<String, String>();
 
 	public ColumnDefinition() {
 
@@ -364,7 +364,7 @@ public class ColumnDefinition implements
 
 	public void addProperty(String key, String value) {
 		if (properties == null) {
-			properties = new java.util.concurrent.ConcurrentHashMap<String, String>();
+			properties = new java.util.HashMap<String, String>();
 		}
 		properties.put(key, value);
 	}

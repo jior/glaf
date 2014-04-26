@@ -26,6 +26,8 @@ public class DatasetModel implements java.io.Serializable {
 
 	protected String id;
 
+	protected String title;
+
 	protected String sql;
 
 	protected String queryId;
@@ -34,12 +36,21 @@ public class DatasetModel implements java.io.Serializable {
 
 	protected boolean foreachPerRow;
 
+	protected Map<String, String> attributes = new HashMap<String, String>();
+
 	protected List<String> splitList = new ArrayList<String>();
 
 	protected List<FieldController> controllers = new ArrayList<FieldController>();
 
 	public DatasetModel() {
 
+	}
+
+	public void addAttribute(String key, String value) {
+		if (attributes == null) {
+			attributes = new HashMap<String, String>();
+		}
+		attributes.put(key, value);
 	}
 
 	public void addController(FieldController c) {
@@ -73,6 +84,10 @@ public class DatasetModel implements java.io.Serializable {
 		return true;
 	}
 
+	public Map<String, String> getAttributes() {
+		return attributes;
+	}
+
 	public List<FieldController> getControllers() {
 		return controllers;
 	}
@@ -93,6 +108,10 @@ public class DatasetModel implements java.io.Serializable {
 		return sql;
 	}
 
+	public String getTitle() {
+		return title;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -107,6 +126,10 @@ public class DatasetModel implements java.io.Serializable {
 
 	public boolean isSingle() {
 		return single;
+	}
+
+	public void setAttributes(Map<String, String> attributes) {
+		this.attributes = attributes;
 	}
 
 	public void setControllers(List<FieldController> controllers) {
@@ -135,6 +158,10 @@ public class DatasetModel implements java.io.Serializable {
 
 	public void setSql(String sql) {
 		this.sql = sql;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 }

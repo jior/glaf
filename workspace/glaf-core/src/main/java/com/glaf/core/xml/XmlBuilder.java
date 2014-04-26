@@ -105,6 +105,7 @@ public class XmlBuilder {
 			String id = element.attributeValue("id");
 			String sql = element.attributeValue("sql");
 			String queryId = element.attributeValue("queryId");
+			String title = element.attributeValue("title");
 			String single = element.attributeValue("single");
 			String splits = element.attributeValue("splits");
 			String foreachPerRow = element.attributeValue("foreachPerRow");
@@ -116,6 +117,7 @@ public class XmlBuilder {
 			dsm.setId(id);
 			dsm.setSql(sql);
 			dsm.setQueryId(queryId);
+			dsm.setTitle(title);
 			if (StringUtils.equalsIgnoreCase(single, "true")) {
 				dsm.setSingle(true);
 			}
@@ -126,6 +128,15 @@ public class XmlBuilder {
 
 			if (StringUtils.isNotEmpty(splits)) {
 				dsm.setSplitList(StringTools.split(splits));
+			}
+
+			List<?> attrs = element.attributes();
+			if (attrs != null && !attrs.isEmpty()) {
+				Iterator<?> iter = attrs.iterator();
+				while (iter.hasNext()) {
+					Attribute attr = (Attribute) iter.next();
+					dsm.addAttribute(attr.getName(), attr.getStringValue());
+				}
 			}
 
 			List<?> providers = element.elements("FieldConverter");
