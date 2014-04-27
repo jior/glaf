@@ -19,6 +19,7 @@
 package com.glaf.core.web.rest;
 
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -39,12 +40,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.IOUtils;
-
 import com.glaf.core.config.SystemProperties;
+import com.glaf.core.domain.SysDataLog;
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.util.FileUtils;
+import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.StringTools;
+import com.glaf.core.util.SysDataLogFactory;
 import com.glaf.core.xml.XmlBuilder;
 import com.glaf.core.xml.XmlProperties;
 
@@ -59,7 +62,10 @@ public class DataServiceResource {
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	public byte[] xml(@PathParam("name") String name,
 			@Context HttpServletRequest request) {
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> dataMap = RequestUtils.getParameterMap(request);
+		dataMap.put("name", name);
+		dataMap.put("queryString", request.getQueryString());
 		String text = XmlProperties.getString(name);
 		JSONObject json = JSON.parseObject(text);
 		String perms = json.getString("perms");
@@ -67,7 +73,7 @@ public class DataServiceResource {
 		if (StringUtils.isNotEmpty(perms)
 				&& !StringUtils.equalsIgnoreCase(perms, "anyone")) {
 			boolean hasPermission = false;
-			LoginContext loginContext = RequestUtils.getLoginContext(request);
+
 			if (loginContext.hasSystemPermission()
 					|| loginContext.hasAdvancedPermission()) {
 				hasPermission = true;
@@ -90,16 +96,26 @@ public class DataServiceResource {
 				+ json.getString("path");
 		XmlBuilder builder = new XmlBuilder();
 		InputStream inputStream = null;
+		SysDataLog log = new SysDataLog();
 		try {
 			inputStream = FileUtils.getInputStream(filename);
+			log.setAccountId(loginContext.getUser().getId());
+			log.setActorId(loginContext.getActorId());
+			log.setCreateTime(new Date());
+			log.setIp(RequestUtils.getIPAddress(request));
+			log.setOperate(name);
+			log.setContent(JsonUtils.encode(dataMap));
 			Document doc = builder.process(systemName, inputStream, dataMap);
+			log.setFlag(9);
 			return com.glaf.core.util.Dom4jUtils.getBytesFromPrettyDocument(
 					doc, "UTF-8");
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			log.setFlag(-1);
 			throw new RuntimeException(ex);
 		} finally {
 			IOUtils.close(inputStream);
+			SysDataLogFactory.create(log);
 		}
 	}
 

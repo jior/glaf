@@ -20,6 +20,7 @@ package com.glaf.core.web.springmvc;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -285,7 +286,34 @@ public class MxSysDataController {
 				}
 			}
 		}
+
+		Date date = DateUtils.getDateAfter(new Date(), 0);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		int year = calendar.get(Calendar.YEAR);
+		int month = calendar.get(Calendar.MONTH);
+		int daysOfMonth = DateUtils.getYearMonthDays(year, month + 1);
+
+		calendar.set(year, month, daysOfMonth);
+
+		int begin = getYearMonthDay(date);
+		int end = getYearMonthDay(calendar.getTime());
+
+		for (int i = begin; i <= end; i++) {
+			try {
+				SysDataLogTableUtils.createTable("SYS_DATA_LOG_" + i);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
 		return ResponseUtils.responseJsonResult(success);
+	}
+
+	private int getYearMonthDay(Date date) {
+		String returnStr = null;
+		SimpleDateFormat f = new SimpleDateFormat("yyyyMMdd");
+		returnStr = f.format(date);
+		return Integer.parseInt(returnStr);
 	}
 
 	@RequestMapping("/save")

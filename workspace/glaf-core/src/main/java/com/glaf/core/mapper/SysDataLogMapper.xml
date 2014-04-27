@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.mapper.SysDataLogMapper">
+
+	<resultMap id="dataLogResultMap" type="com.glaf.core.domain.SysDataLog">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="accountId" column="ACCOUNTID_" jdbcType="BIGINT" />
+		<result property="actorId" column="ACTORID_" jdbcType="VARCHAR" />
+		<result property="openId" column="OPENID_" jdbcType="VARCHAR" />
+		<result property="ip" column="IP_" jdbcType="VARCHAR" />
+		<result property="createTime" column="CREATETIME_" jdbcType="TIMESTAMP" />
+		<result property="operate" column="OPERATE_" jdbcType="VARCHAR" />
+		<result property="content" column="CONTENT_" jdbcType="VARCHAR" />
+		<result property="flag" column="FLAG_" jdbcType="INTEGER" />
+	</resultMap>
+
+
+	<insert id="insertSysDataLog" parameterType="com.glaf.core.domain.SysDataLog">
+		insert into SYS_DATA_LOG${suffix}
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="accountId != null">
+				,ACCOUNTID_
+			</if>
+			<if test="actorId != null">
+				,ACTORID_
+			</if>
+			<if test="openId != null">
+				,OPENID_
+			</if>
+			<if test="ip != null">
+				,IP_
+			</if>
+			<if test="createTime != null">
+				,CREATETIME_
+			</if>
+			<if test="operate != null">
+				,OPERATE_
+			</if>
+			<if test="content != null">
+				,CONTENT_
+			</if>
+			<if test="flag != null">
+				,FLAG_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+			<if test="accountId != null">
+				,#{accountId, jdbcType=BIGINT}
+			</if>
+			<if test="actorId != null">
+				,#{actorId, jdbcType=VARCHAR}
+			</if>
+			<if test="openId != null">
+				,#{openId, jdbcType=VARCHAR}
+			</if>
+			<if test="ip != null">
+				,#{ip, jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null">
+				,#{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="operate != null">
+				,#{operate, jdbcType=VARCHAR}
+			</if>
+			<if test="content != null">
+				,#{content, jdbcType=VARCHAR}
+			</if>
+			<if test="flag != null">
+				,#{flag, jdbcType=INTEGER}
+			</if>
+		</trim>
+	</insert>
+
+
+	<delete id="deleteSysDataLog" parameterType="com.glaf.core.domain.SysDataLog">
+		delete from
+		SYS_DATA_LOG${suffix}
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteSysDataLogs" parameterType="com.glaf.core.query.SysDataLogQuery">
+		delete from SYS_DATA_LOG${suffix}
+		where (
+		ID_ IN
+		<foreach item="x_rowId" index="index" collection="rowIds"
+			open="(" separator="," close=")">
+			#{x_rowId}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getSysDataLogById" parameterType="long" resultMap="dataLogResultMap">
+		select
+		* from SYS_DATA_LOG${suffix} where ID_ = #{id}
+	</select>
+
+
+	<select id="getSysDataLogs" parameterType="com.glaf.core.query.SysDataLogQuery"
+		resultMap="dataLogResultMap">
+		select E.*
+		<include refid="selectSysDataLogsSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.CREATETIME_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getSysDataLogCount" parameterType="com.glaf.core.query.SysDataLogQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectSysDataLogsSql" />
+	</select>
+
+
+	<sql id="selectSysDataLogsSql">
+
+		from SYS_DATA_LOG${suffix} E
+
+		<where>
+			1 = 1
+
+			<if test="accountId != null">
+				and E.ACCOUNTID_ = #{accountId}
+			</if>
+
+			<if test="accountIds != null and accountIds.size !=0">
+				and E.ACCOUNTID_ IN
+				<foreach item="x_accountId" index="index" collection="accountIds"
+					open="(" separator="," close=")">
+					#{x_accountId}
+				</foreach>
+			</if>
+
+			<if test="actorId != null and actorId != '' ">
+				and E.ACTORID_ = #{actorId}
+			</if>
+
+			<if test="actorIds != null and actorIds.size !=0">
+				and E.ACTORID_ IN
+				<foreach item="x_actorId" index="index" collection="actorIds"
+					open="(" separator="," close=")">
+					#{x_actorId}
+				</foreach>
+			</if>
+
+			<if test="openId != null and openId != '' ">
+				and E.OPENID_ = #{openId}
+			</if>
+
+			<if test="ip != null and ip != '' ">
+				and E.IP_ = #{ip}
+			</if>
+
+			<if test="ipLike != null and ipLike != '' ">
+				and E.IP_ like #{ipLike}
+			</if>
+
+			<if test="createTimeGreaterThanOrEqual != null">
+				and E.CREATETIME_ &gt;= #{createTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="createTimeLessThanOrEqual != null">
+				and E.CREATETIME_ &lt;= #{createTimeLessThanOrEqual}
+			</if>
+
+			<if test="operate != null and operate != '' ">
+				and E.OPERATE_ = #{operate}
+			</if>
+
+			<if test="flag != null">
+				and E.FLAG_ = #{flag}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>
