@@ -7,7 +7,6 @@
 	<resultMap id="sysUserResultMap" type="com.glaf.base.modules.sys.model.SysUser">
 		<id property="id" column="ID" jdbcType="BIGINT" />
 		<result property="account" column="ACCOUNT" jdbcType="VARCHAR" />
-		<result property="password" column="PASSWORD" jdbcType="VARCHAR" />
 		<result property="code" column="CODE" jdbcType="VARCHAR" />
 		<result property="name" column="NAME" jdbcType="VARCHAR" />
 		<result property="blocked" column="BLOCKED" jdbcType="INTEGER" />
@@ -344,6 +343,12 @@
 	<select id="getSysUserByAccount" parameterType="String"
 		resultMap="sysUserResultMap">
 		select * from SYS_USER where ACCOUNT = #{account}
+	</select>
+	
+	
+	<select id="getSysUserPasswordByAccount" parameterType="String"
+		resultType="String">
+		select PASSWORD from SYS_USER where ACCOUNT = #{account}
 	</select>
 
 

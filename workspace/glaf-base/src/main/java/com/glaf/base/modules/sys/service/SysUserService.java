@@ -257,6 +257,9 @@ public interface SysUserService {
 	 * @return
 	 */
 	Map<String, String> getUserMap();
+	
+	
+	String getSysUserPasswordByAccount(String account);
 
 	/**
 	 * 其用户权限

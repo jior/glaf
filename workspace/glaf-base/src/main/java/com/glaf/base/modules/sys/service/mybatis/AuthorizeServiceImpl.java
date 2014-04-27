@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.h2.util.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,8 +41,6 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 	private SysDepartmentService sysDepartmentService;
 
 	private SysUserService sysUserService;
-	
-	
 
 	/**
 	 * ”√ªß»œ÷§
@@ -59,14 +58,15 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 			if (bean.isSystemAdmin()) {
 				logger.debug(account + " is system admin");
 			}
-			if (!bean.getPassword().equals(pwd) || // √‹¬Î≤ª∆•≈‰
+			String password = sysUserService
+					.getSysUserPasswordByAccount(account);
+			if (!StringUtils.equals(password, pwd) || // √‹¬Î≤ª∆•≈‰
 					bean.getLocked() == 1) {// ’ ∫≈Ω˚÷π
 				bean = null;
 			}
 		}
 		return bean;
 	}
-
 
 	/**
 	 * ”√ªßµ«¬Ω
@@ -115,7 +115,9 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 			if (bean.isSystemAdmin()) {
 				logger.debug(account + " is system admin");
 			}
-			if (!bean.getPassword().equals(pwd) || // √‹¬Î≤ª∆•≈‰
+			String password = sysUserService
+					.getSysUserPasswordByAccount(account);
+			if (!StringUtils.equals(password, pwd) || // √‹¬Î≤ª∆•≈‰
 					bean.getBlocked() == 1) {// ’ ∫≈Ω˚÷π
 				bean = null;
 			}
@@ -132,7 +134,6 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
-		logger.info("setSysUserService");
 	}
 
 }

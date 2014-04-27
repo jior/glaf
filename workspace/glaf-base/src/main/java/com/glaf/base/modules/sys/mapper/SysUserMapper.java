@@ -45,6 +45,8 @@ public interface SysUserMapper {
 	List<SysUser> getSysRoleUsers(Long roleId);
 
 	SysUser getSysUserByAccount(String account);
+	
+	String getSysUserPasswordByAccount(String account);
 
 	SysUser getSysUserByAccount_oracle(String account);
 

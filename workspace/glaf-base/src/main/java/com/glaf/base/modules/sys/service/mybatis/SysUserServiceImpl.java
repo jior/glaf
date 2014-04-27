@@ -191,6 +191,10 @@ public class SysUserServiceImpl implements SysUserService {
 		}
 		return user;
 	}
+	
+	public String getSysUserPasswordByAccount(String account){
+		return sysUserMapper.getSysUserPasswordByAccount(account);
+	}
 
 	public SysUser findByAccountWithAll(String account) {
 		SysUser user = null;
