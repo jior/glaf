@@ -103,8 +103,12 @@ public class MxSysDataServiceImpl implements SysDataService {
 		SysData model = this.getSysData(sysData.getId());
 
 		if (model == null) {
+			sysData.setCreateDate(new Date());
+			sysData.setUpdateDate(new Date());
+			sysData.setUpdateBy(sysData.getCreateBy());
 			sysDataMapper.insertSysData(sysData);
 		} else {
+			sysData.setUpdateDate(new Date());
 			sysDataMapper.updateSysData(sysData);
 		}
 	}

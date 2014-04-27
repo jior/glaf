@@ -18,26 +18,28 @@
 
 package com.glaf.core.web.springmvc;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import com.alibaba.fastjson.*;
 
+import com.alibaba.fastjson.*;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.identity.*;
 import com.glaf.core.security.*;
 import com.glaf.core.util.*;
-
 import com.glaf.core.domain.*;
+import com.glaf.core.domain.util.SysDataJsonFactory;
 import com.glaf.core.query.*;
 import com.glaf.core.service.*;
 
@@ -240,6 +242,50 @@ public class MxSysDataController {
 			return new ModelAndView(x_view, modelMap);
 		}
 		return new ModelAndView("/modules/sys/data/query", modelMap);
+	}
+
+	@RequestMapping("/reload")
+	@ResponseBody
+	public byte[] reload(HttpServletRequest request, ModelMap modelMap)
+			throws IOException {
+		User user = RequestUtils.getUser(request);
+		String actorId = user.getActorId();
+		String root = SystemProperties.getConfigRootPath();
+		String config_path = root + "/conf/templates/xml";
+		File dir = new File(config_path);
+		boolean success = true;
+		if (dir.exists() && dir.isDirectory()) {
+			File contents[] = dir.listFiles();
+			if (contents != null) {
+				for (int i = 0; i < contents.length; i++) {
+					if (contents[i].isFile()
+							&& contents[i].getName().endsWith(".properties")) {
+						try {
+							Properties props = PropertiesUtils
+									.loadFilePathResource(contents[i]);
+							if (props != null && !props.isEmpty()) {
+								Enumeration<?> e = props.keys();
+								while (e.hasMoreElements()) {
+									String key = (String) e.nextElement();
+									String value = props.getProperty(key);
+									JSONObject json = JSON.parseObject(value);
+									SysData model = SysDataJsonFactory
+											.jsonToObject(json);
+									model.setId(key);
+									model.setCreateBy(actorId);
+									model.setUpdateBy(actorId);
+									sysDataService.save(model);
+								}
+							}
+						} catch (Exception ex) {
+							success = false;
+							ex.printStackTrace();
+						}
+					}
+				}
+			}
+		}
+		return ResponseUtils.responseJsonResult(success);
 	}
 
 	@RequestMapping("/save")
