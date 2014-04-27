@@ -311,6 +311,9 @@ public class DBConfiguration {
 	public static Properties getDataSourcePropertiesByName(String name) {
 		logger.debug("->name:" + name);
 		Properties props = dataSourceProperties.get(name);
+		if (props == null || props.isEmpty()) {
+			props = getDefaultDataSourceProperties();
+		}
 		Properties p = new Properties();
 		Enumeration<?> e = props.keys();
 		while (e.hasMoreElements()) {
@@ -324,6 +327,9 @@ public class DBConfiguration {
 	public static Properties getDefaultDataSourceProperties() {
 		Properties props = dataSourceProperties
 				.get(Environment.DEFAULT_SYSTEM_NAME);
+		if (props == null || props.isEmpty()) {
+			reloadDS();
+		}
 		Properties p = new Properties();
 		Enumeration<?> e = props.keys();
 		while (e.hasMoreElements()) {
@@ -524,6 +530,7 @@ public class DBConfiguration {
 					+ Constants.DEFAULT_JDBC_CONFIG;
 			File file = new File(filename);
 			if (file.exists() && file.isFile()) {
+				logger.info("load default jdbc config:" + filename);
 				Properties props = PropertiesUtils
 						.loadFilePathResource(filename);
 				String dbType = props.getProperty(JDBC_TYPE);
