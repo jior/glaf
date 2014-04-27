@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.mapper.SysDataMapper">
+
+	<resultMap id="sysDataResultMap" type="com.glaf.core.domain.SysData">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="description" column="DESCRIPTION_" jdbcType="VARCHAR" />
+		<result property="path" column="PATH_" jdbcType="VARCHAR" />
+		<result property="perms" column="PERMS_" jdbcType="VARCHAR" />
+		<result property="addressPerms" column="ADDRESSPERMS_"
+			jdbcType="VARCHAR" />
+		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
+		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="updateDate" column="UPDATEDATE_" jdbcType="TIMESTAMP" />
+		<result property="updateBy" column="UPDATEBY_" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="insertSysData" parameterType="com.glaf.core.domain.SysData">
+		insert into SYS_DATA_SERVICE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="title != null">
+				,TITLE_
+			</if>
+			<if test="description != null">
+				,DESCRIPTION_
+			</if>
+			<if test="path != null">
+				,PATH_
+			</if>
+			<if test="perms != null">
+				,PERMS_
+			</if>
+			<if test="addressPerms != null">
+				,ADDRESSPERMS_
+			</if>
+			<if test="type != null">
+				,TYPE_
+			</if>
+			<if test="locked != null">
+				,LOCKED_
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_
+			</if>
+			<if test="updateDate != null">
+				,UPDATEDATE_
+			</if>
+			<if test="updateBy != null">
+				,UPDATEBY_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=VARCHAR}
+
+			<if test="title != null">
+				,#{title, jdbcType=VARCHAR}
+			</if>
+			<if test="description != null">
+				,#{description, jdbcType=VARCHAR}
+			</if>
+			<if test="path != null">
+				,#{path, jdbcType=VARCHAR}
+			</if>
+			<if test="perms != null">
+				,#{perms, jdbcType=VARCHAR}
+			</if>
+			<if test="addressPerms != null">
+				,#{addressPerms, jdbcType=VARCHAR}
+			</if>
+			<if test="type != null">
+				,#{type, jdbcType=VARCHAR}
+			</if>
+			<if test="locked != null">
+				,#{locked, jdbcType=INTEGER}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="updateDate != null">
+				,#{updateDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateSysData" parameterType="com.glaf.core.domain.SysData">
+		update SYS_DATA_SERVICE
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="title != null">
+				TITLE_ = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				DESCRIPTION_ = #{description, jdbcType=VARCHAR},
+			</if>
+			<if test="path != null">
+				PATH_ = #{path, jdbcType=VARCHAR},
+			</if>
+			<if test="perms != null">
+				PERMS_ = #{perms, jdbcType=VARCHAR},
+			</if>
+			<if test="addressPerms != null">
+				ADDRESSPERMS_ = #{addressPerms, jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				TYPE_ = #{type, jdbcType=VARCHAR},
+			</if>
+			<if test="locked != null">
+				LOCKED_ = #{locked, jdbcType=INTEGER},
+			</if>
+			<if test="updateDate != null">
+				UPDATEDATE_ = #{updateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				UPDATEBY_ = #{updateBy, jdbcType=VARCHAR},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=VARCHAR}
+
+	</update>
+
+
+	<delete id="deleteSysDataById" parameterType="string">
+		delete from
+		SYS_DATA_SERVICE
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteSysDatas" parameterType="com.glaf.core.query.SysDataQuery">
+		delete from SYS_DATA_SERVICE
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getSysDataById" parameterType="string" resultMap="sysDataResultMap">
+		select * from SYS_DATA_SERVICE where ID_ = #{id}
+	</select>
+
+
+	<select id="getSysDatas" parameterType="com.glaf.core.query.SysDataQuery"
+		resultMap="sysDataResultMap">
+		select distinct E.*
+		<include refid="selectSysDatasSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.ID_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getSysDataCount" parameterType="com.glaf.core.query.SysDataQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectSysDatasSql" />
+	</select>
+
+
+	<sql id="selectSysDatasSql">
+
+		from SYS_DATA_SERVICE E
+
+		<where>
+			1 = 1
+
+			<if test="titleLike != null and titleLike != '' ">
+				and E.TITLE_ like #{titleLike}
+			</if>
+
+			<if test="pathLike != null and pathLike != '' ">
+				and E.PATH_ like #{pathLike}
+			</if>
+
+			<if test="permsLike != null and permsLike != '' ">
+				and E.PERMS_ like #{permsLike}
+			</if>
+
+			<if test="addressPermsLike != null and addressPermsLike != '' ">
+				and E.ADDRESSPERMS_ like #{addressPermsLike}
+			</if>
+
+			<if test="type != null and type != '' ">
+				and E.TYPE_ = #{type}
+			</if>
+
+			<if test="locked != null">
+				and E.LOCKED_ = #{locked}
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE_ &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE_ &lt;= #{createDateLessThanOrEqual}
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="updateDateGreaterThanOrEqual != null">
+				and E.UPDATEDATE_ &gt;= #{updateDateGreaterThanOrEqual}
+			</if>
+
+			<if test="updateDateLessThanOrEqual != null">
+				and E.UPDATEDATE_ &lt;= #{updateDateLessThanOrEqual}
+			</if>
+
+			<if test="updateBy != null and updateBy != '' ">
+				and E.UPDATEBY_ = #{updateBy}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>
