@@ -52,11 +52,11 @@ public class SpyMemCache implements com.glaf.j2cache.Cache {
 
 	protected void buildClient() {
 		try {
-			Transcoder<Object> transcoder = new SerializingTranscoder(1024);
+			Transcoder<Object> transcoder = new SerializingTranscoder();
 			connectionFactoryBuilder.setOpTimeout(5000L);
 			connectionFactoryBuilder.setUseNagleAlgorithm(false);
 			connectionFactoryBuilder.setFailureMode(FailureMode.Redistribute);
-			connectionFactoryBuilder.setTimeoutExceptionThreshold(1998);
+			connectionFactoryBuilder.setTimeoutExceptionThreshold(2000);
 			connectionFactoryBuilder
 					.setHashAlg(DefaultHashAlgorithm.KETAMA_HASH);
 			connectionFactoryBuilder.setTranscoder(transcoder);
