@@ -331,11 +331,13 @@ public class DBConfiguration {
 			reloadDS();
 		}
 		Properties p = new Properties();
-		Enumeration<?> e = props.keys();
-		while (e.hasMoreElements()) {
-			String key = (String) e.nextElement();
-			String value = props.getProperty(key);
-			p.put(key, value);
+		if (props != null && !props.isEmpty()) {
+			Enumeration<?> e = props.keys();
+			while (e.hasMoreElements()) {
+				String key = (String) e.nextElement();
+				String value = props.getProperty(key);
+				p.put(key, value);
+			}
 		}
 		return p;
 	}
