@@ -110,12 +110,6 @@
 			<if test="description != null">
 				DESCRIPTION_ = #{description, jdbcType=VARCHAR},
 			</if>
-			<if test="path != null">
-				PATH_ = #{path, jdbcType=VARCHAR},
-			</if>
-			<if test="perms != null">
-				PERMS_ = #{perms, jdbcType=VARCHAR},
-			</if>
 			<if test="addressPerms != null">
 				ADDRESSPERMS_ = #{addressPerms, jdbcType=VARCHAR},
 			</if>
