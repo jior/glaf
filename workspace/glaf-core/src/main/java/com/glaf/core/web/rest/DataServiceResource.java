@@ -37,48 +37,86 @@ import org.dom4j.Document;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.IOUtils;
 import com.glaf.core.config.SystemProperties;
+import com.glaf.core.domain.SysData;
 import com.glaf.core.domain.SysDataLog;
 import com.glaf.core.security.LoginContext;
+import com.glaf.core.service.SysDataService;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.SysDataLogFactory;
 import com.glaf.core.xml.XmlBuilder;
-import com.glaf.core.xml.XmlProperties;
 
 @Controller("/rs/data/service")
 @Path("/rs/data/service")
 public class DataServiceResource {
 
+	protected SysDataService sysDataService;
+
+	@javax.annotation.Resource
+	public void setSysDataService(SysDataService sysDataService) {
+		this.sysDataService = sysDataService;
+	}
+
 	@GET
 	@POST
-	@Path("/xml/{name}")
+	@Path("/xml/{id}")
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] xml(@PathParam("name") String name,
+	public byte[] xml(@PathParam("id") String id,
 			@Context HttpServletRequest request) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> dataMap = RequestUtils.getParameterMap(request);
-		dataMap.put("name", name);
 		dataMap.put("queryString", request.getQueryString());
-		String text = XmlProperties.getString(name);
-		JSONObject json = JSON.parseObject(text);
-		String perms = json.getString("perms");
+		dataMap.put("id", id);
+		String ipAddress = RequestUtils.getIPAddress(request);
+		XmlBuilder builder = new XmlBuilder();
+		SysDataLog log = new SysDataLog();
+		InputStream inputStream = null;
+		boolean hasPermission = false;
+		String systemName = "default";
+		SysData sysData = null;
+		try {
+			sysData = sysDataService.getSysData(id);
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
 
-		if (StringUtils.isNotEmpty(perms)
-				&& !StringUtils.equalsIgnoreCase(perms, "anyone")) {
-			boolean hasPermission = false;
+		if (sysData == null || sysData.getLocked() == 1) {
+			throw new RuntimeException(" data service '" + id
+					+ "' not available.");
+		}
 
+		if (StringUtils.isNotEmpty(sysData.getAddressPerms())) {
+			List<String> addressList = StringTools.split(sysData
+					.getAddressPerms());
+			for (String addr : addressList) {
+				if (StringUtils.equals(ipAddress, addr)) {
+					hasPermission = true;
+				}
+				if (addr.endsWith("*")) {
+					String tmp = addr.substring(0, addr.indexOf("*"));
+					// System.out.println(">>>>>>>>>>>>>>>"+tmp);
+					if (StringUtils.contains(ipAddress, tmp)) {
+						hasPermission = true;
+					}
+				}
+			}
+			if (!hasPermission) {
+				throw new RuntimeException("Permission denied.");
+			}
+		}
+
+		if (StringUtils.isNotEmpty(sysData.getPerms())
+				&& !StringUtils.equalsIgnoreCase(sysData.getPerms(), "anyone")) {
 			if (loginContext.hasSystemPermission()
 					|| loginContext.hasAdvancedPermission()) {
 				hasPermission = true;
 			}
-			List<String> permissions = StringTools.split(perms);
+			List<String> permissions = StringTools.split(sysData.getPerms());
 			for (String perm : permissions) {
 				if (loginContext.getPermissions().contains(perm)) {
 					hasPermission = true;
@@ -91,19 +129,16 @@ public class DataServiceResource {
 				throw new RuntimeException("Permission denied.");
 			}
 		}
-		String systemName = "default";
-		String filename = SystemProperties.getConfigRootPath()
-				+ json.getString("path");
-		XmlBuilder builder = new XmlBuilder();
-		InputStream inputStream = null;
-		SysDataLog log = new SysDataLog();
+
 		try {
+			String filename = SystemProperties.getConfigRootPath()
+					+ sysData.getPath();
 			inputStream = FileUtils.getInputStream(filename);
 			log.setAccountId(loginContext.getUser().getId());
 			log.setActorId(loginContext.getActorId());
 			log.setCreateTime(new Date());
 			log.setIp(RequestUtils.getIPAddress(request));
-			log.setOperate(name);
+			log.setOperate(id);
 			log.setContent(JsonUtils.encode(dataMap));
 			Document doc = builder.process(systemName, inputStream, dataMap);
 			log.setFlag(9);
