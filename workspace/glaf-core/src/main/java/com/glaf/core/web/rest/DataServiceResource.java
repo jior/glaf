@@ -43,6 +43,7 @@ import com.glaf.core.domain.SysData;
 import com.glaf.core.domain.SysDataLog;
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.SysDataService;
+import com.glaf.core.util.Dom4jUtils;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.RequestUtils;
@@ -63,15 +64,21 @@ public class DataServiceResource {
 
 	@GET
 	@POST
-	@Path("/xml/{id}")
+	@Path("/response/{id}")
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] xml(@PathParam("id") String id,
+	public byte[] response(@PathParam("id") String id,
 			@Context HttpServletRequest request) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		String dataType = request.getParameter("dataType");
+		if (dataType == null) {
+			dataType = "xml";
+		}
 		Map<String, Object> dataMap = RequestUtils.getParameterMap(request);
 		dataMap.put("queryString", request.getQueryString());
+		dataMap.put("dataType", dataType);
 		dataMap.put("id", id);
+
 		String ipAddress = RequestUtils.getIPAddress(request);
 		XmlBuilder builder = new XmlBuilder();
 		InputStream inputStream = null;
@@ -143,8 +150,14 @@ public class DataServiceResource {
 			Document doc = builder.process(systemName, inputStream, dataMap);
 			log.setFlag(9);
 			log.setModuleId("DS");
-			return com.glaf.core.util.Dom4jUtils.getBytesFromPrettyDocument(
-					doc, "UTF-8");
+
+			if (StringUtils.equals(dataType, "json")) {
+				net.sf.json.xml.XMLSerializer xmlSerializer = new net.sf.json.xml.XMLSerializer();
+				net.sf.json.JSON json = xmlSerializer.read(doc.asXML());
+				return json.toString(2).getBytes("UTF-8");
+			}
+
+			return Dom4jUtils.getBytesFromPrettyDocument(doc, "UTF-8");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			log.setFlag(-1);

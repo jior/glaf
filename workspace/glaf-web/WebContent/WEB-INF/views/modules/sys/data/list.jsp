@@ -58,19 +58,22 @@
 
  
     function formatterKeys(val, row){
-		var str = "<a href='javascript:viewRow(\""+row.id+"\");'>修改</a>&nbsp;<a href='javascript:viewData(\""+row.id+"\");'>数据</a>";
+		var str = "<a href='javascript:editRow(\""+row.id+"\");'>修改</a>&nbsp;<a href='javascript:viewXmlData(\""+row.id+"\");'>XML数据</a>&nbsp;<a href='javascript:viewJsonData(\""+row.id+"\");'>JSON数据</a>";
 	    return str;
 	}
 
 
-	function viewRow(id){
+	function editRow(id){
 		var link = "<%=request.getContextPath()%>/mx/sys/data/service/edit?id="+id;
 	    art.dialog.open(link, { height: 420, width: 660, title: "修改记录", lock: true, scrollbars:"yes" }, false);
 	}
 
+	function viewJsonData(id){
+		 window.open("<%=request.getContextPath()%>/rs/data/service/response/"+id+"?dataType=json");
+	}
 
-	function viewData(id){
-		window.open("<%=request.getContextPath()%>/rs/data/service/xml/"+id);
+	function viewXmlData(id){
+		window.open("<%=request.getContextPath()%>/rs/data/service/response/"+id);
 	}
 
 
