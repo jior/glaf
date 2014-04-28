@@ -154,6 +154,23 @@
                     }
                });
 	}
+
+	function reloadData(){
+		if(confirm("确定重新加载配置吗？")){
+           jQuery.ajax({
+                    type: "POST",
+                    url: '<%=request.getContextPath()%>/mx/sys/data/service/reload',
+                    dataType:  'json',
+                    error: function(data){
+                            alert('服务器处理错误！');
+                    },
+                    success: function(data){
+						    alert('操作成功！');
+                            jQuery('#mydatagrid').datagrid('loadData', data);
+                    }
+               });
+		}
+	}
 		 		 
 </script>
 </head>
@@ -171,6 +188,8 @@
     
 	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-search'"
 	   onclick="javascript:searchData();">查找</a>
+	<a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-imp'"
+	   onclick="javascript:reloadData();">重新加载配置</a>
    </div> 
   </div> 
   <div data-options="region:'center',border:true">

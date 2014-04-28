@@ -53,7 +53,7 @@ public class SysData implements Serializable, JSONable {
 	@Column(name = "PERMS_", length = 500)
 	protected String perms;
 
-	@Column(name = "ADDRESSPERMS_", length = 500)
+	@Column(name = "ADDRESSPERMS_", length = 2000)
 	protected String addressPerms;
 
 	@Column(name = "TYPE_", length = 50)

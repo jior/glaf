@@ -77,7 +77,7 @@ public class SysDataLogTableUtils {
 		ColumnDefinition column2 = new ColumnDefinition();
 		column2.setColumnName("IP_");
 		column2.setJavaType("String");
-		column2.setLength(50);
+		column2.setLength(100);
 		tableDefinition.addColumn(column2);
 
 		ColumnDefinition column3 = new ColumnDefinition();
@@ -88,7 +88,7 @@ public class SysDataLogTableUtils {
 		ColumnDefinition column4 = new ColumnDefinition();
 		column4.setColumnName("OPERATE_");
 		column4.setJavaType("String");
-		column4.setLength(500);
+		column4.setLength(50);
 		tableDefinition.addColumn(column4);
 
 		ColumnDefinition column6 = new ColumnDefinition();
@@ -101,6 +101,12 @@ public class SysDataLogTableUtils {
 		column8.setColumnName("FLAG_");
 		column8.setJavaType("Integer");
 		tableDefinition.addColumn(column8);
+
+		ColumnDefinition column9 = new ColumnDefinition();
+		column9.setColumnName("MODULEID_");
+		column9.setJavaType("String");
+		column9.setLength(50);
+		tableDefinition.addColumn(column9);
 
 		if (!DBUtils.tableExists(tableName)) {
 			DBUtils.createTable(tableDefinition);

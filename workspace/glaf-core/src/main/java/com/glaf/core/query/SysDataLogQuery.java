@@ -25,7 +25,6 @@ public class SysDataLogQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
 	protected Long accountId;
 	protected List<Long> accountIds;
-
 	protected String openId;
 	protected Date createTimeGreaterThanOrEqual;
 	protected Date createTimeLessThanOrEqual;
@@ -33,6 +32,7 @@ public class SysDataLogQuery extends DataQuery {
 	protected String suffix;
 	protected String ip;
 	protected String ipLike;
+	protected String moduleId;
 	protected String operate;
 	protected String operateLike;
 	protected List<String> operates;
@@ -50,7 +50,8 @@ public class SysDataLogQuery extends DataQuery {
 		return this;
 	}
 
-	public SysDataLogQuery createTimeLessThanOrEqual(Date createTimeLessThanOrEqual) {
+	public SysDataLogQuery createTimeLessThanOrEqual(
+			Date createTimeLessThanOrEqual) {
 		if (createTimeLessThanOrEqual == null) {
 			throw new RuntimeException("createTime is null");
 		}
@@ -100,6 +101,10 @@ public class SysDataLogQuery extends DataQuery {
 			}
 		}
 		return ipLike;
+	}
+
+	public String getModuleId() {
+		return moduleId;
 	}
 
 	public String getOpenId() {
@@ -189,6 +194,14 @@ public class SysDataLogQuery extends DataQuery {
 		return this;
 	}
 
+	public SysDataLogQuery moduleId(String moduleId) {
+		if (moduleId == null) {
+			throw new RuntimeException("moduleId is null");
+		}
+		this.moduleId = moduleId;
+		return this;
+	}
+
 	public SysDataLogQuery operate(String operate) {
 		if (operate == null) {
 			throw new RuntimeException("operate is null");
@@ -240,6 +253,10 @@ public class SysDataLogQuery extends DataQuery {
 
 	public void setIpLike(String ipLike) {
 		this.ipLike = ipLike;
+	}
+
+	public void setModuleId(String moduleId) {
+		this.moduleId = moduleId;
 	}
 
 	public void setOpenId(String openId) {

@@ -58,6 +58,9 @@ public class SysDataLog implements Serializable, JSONable {
 	@Column(name = "CREATETIME_")
 	private Date createTime;
 
+	@Column(name = "MODULEID_", length = 50)
+	private String moduleId;
+
 	@Column(name = "OPERATE_", length = 50)
 	private String operate;
 
@@ -74,8 +77,26 @@ public class SysDataLog implements Serializable, JSONable {
 
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SysDataLog other = (SysDataLog) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
 	public Long getAccountId() {
 		return accountId;
+	}
+
+	public String getActorId() {
+		return actorId;
 	}
 
 	public String getContent() {
@@ -98,6 +119,10 @@ public class SysDataLog implements Serializable, JSONable {
 		return ip;
 	}
 
+	public String getModuleId() {
+		return moduleId;
+	}
+
 	public String getOpenId() {
 		return openId;
 	}
@@ -118,34 +143,16 @@ public class SysDataLog implements Serializable, JSONable {
 		return result;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		SysDataLog other = (SysDataLog) obj;
-		if (id != other.id)
-			return false;
-		return true;
-	}
-
 	public SysDataLog jsonToObject(JSONObject jsonObject) {
 		return SysDataLogJsonFactory.jsonToObject(jsonObject);
 	}
 
-	public String getActorId() {
-		return actorId;
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
 	}
 
 	public void setActorId(String actorId) {
 		this.actorId = actorId;
-	}
-
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
 	}
 
 	public void setContent(String content) {
@@ -166,6 +173,10 @@ public class SysDataLog implements Serializable, JSONable {
 
 	public void setIp(String ip) {
 		this.ip = ip;
+	}
+
+	public void setModuleId(String moduleId) {
+		this.moduleId = moduleId;
 	}
 
 	public void setOpenId(String openId) {

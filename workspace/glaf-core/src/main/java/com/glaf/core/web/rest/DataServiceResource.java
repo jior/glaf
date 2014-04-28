@@ -74,7 +74,6 @@ public class DataServiceResource {
 		dataMap.put("id", id);
 		String ipAddress = RequestUtils.getIPAddress(request);
 		XmlBuilder builder = new XmlBuilder();
-		SysDataLog log = new SysDataLog();
 		InputStream inputStream = null;
 		boolean hasPermission = false;
 		String systemName = "default";
@@ -130,6 +129,7 @@ public class DataServiceResource {
 			}
 		}
 
+		SysDataLog log = new SysDataLog();
 		try {
 			String filename = SystemProperties.getConfigRootPath()
 					+ sysData.getPath();
@@ -142,6 +142,7 @@ public class DataServiceResource {
 			log.setContent(JsonUtils.encode(dataMap));
 			Document doc = builder.process(systemName, inputStream, dataMap);
 			log.setFlag(9);
+			log.setModuleId("DS");
 			return com.glaf.core.util.Dom4jUtils.getBytesFromPrettyDocument(
 					doc, "UTF-8");
 		} catch (Exception ex) {

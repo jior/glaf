@@ -11,6 +11,7 @@
 		<result property="openId" column="OPENID_" jdbcType="VARCHAR" />
 		<result property="ip" column="IP_" jdbcType="VARCHAR" />
 		<result property="createTime" column="CREATETIME_" jdbcType="TIMESTAMP" />
+		<result property="moduleId" column="MODULEID_" jdbcType="VARCHAR" />
 		<result property="operate" column="OPERATE_" jdbcType="VARCHAR" />
 		<result property="content" column="CONTENT_" jdbcType="VARCHAR" />
 		<result property="flag" column="FLAG_" jdbcType="INTEGER" />
@@ -35,6 +36,9 @@
 			</if>
 			<if test="createTime != null">
 				,CREATETIME_
+			</if>
+			<if test="moduleId != null">
+				,MODULEID_
 			</if>
 			<if test="operate != null">
 				,OPERATE_
@@ -63,6 +67,9 @@
 			</if>
 			<if test="createTime != null">
 				,#{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="moduleId != null">
+				,#{moduleId, jdbcType=VARCHAR}
 			</if>
 			<if test="operate != null">
 				,#{operate, jdbcType=VARCHAR}
@@ -173,6 +180,10 @@
 
 			<if test="createTimeLessThanOrEqual != null">
 				and E.CREATETIME_ &lt;= #{createTimeLessThanOrEqual}
+			</if>
+
+			<if test="moduleId != null and moduleId != '' ">
+				and E.MODULEID_ = #{moduleId}
 			</if>
 
 			<if test="operate != null and operate != '' ">
