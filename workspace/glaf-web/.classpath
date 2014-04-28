@@ -60,8 +60,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/hamcrest-core.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/hessian.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/hibernate-commons-annotations.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/hibernate-validator-4.0.2.GA.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/hibernate-validator.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/hibernate.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/htmlparser.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/httpclient.jar"/>
@@ -152,5 +150,11 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/xmemcached.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/xml-apis-ext.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/xml-apis.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/spring-boot.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/spring-boot-autoconfigure.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/jboss-logging-annotations.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/jboss-logging.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/jboss-transaction.jar"/>
+	<classpathentry kind="lib" path="/glaf-core/lib/hibernate-validator.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

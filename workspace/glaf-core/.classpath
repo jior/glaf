@@ -56,7 +56,6 @@
 	<classpathentry kind="lib" path="lib/hamcrest-core.jar"/>
 	<classpathentry kind="lib" path="lib/hessian.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-commons-annotations.jar"/>
-	<classpathentry kind="lib" path="lib/hibernate-validator-4.0.2.GA.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-validator.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate.jar"/>
 	<classpathentry kind="lib" path="lib/htmlparser.jar"/>
