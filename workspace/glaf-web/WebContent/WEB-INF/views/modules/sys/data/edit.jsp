@@ -86,10 +86,10 @@
   <div data-options="region:'center',border:false,cache:true">
   <form id="iForm" name="iForm" method="post">
   <input type="hidden" id="id" name="id" value="${sysData.id}"/>
-  <table class="easyui-form" style="width:600px;" align="center">
+  <table class="easyui-form" style="width:640px;" align="center">
     <tbody>
 	<tr>
-		<td width="20%" align="left">标题</td>
+		<td width="15%" align="left">标题</td>
 		<td align="left">
             <input id="title" name="title" type="text" 
 			       class="easyui-validatebox  x-text"  
@@ -97,13 +97,13 @@
 		</td>
 	</tr>
 	<tr>
-		<td width="20%" align="left">描述</td>
+		<td width="15%" align="left">描述</td>
 		<td align="left">
 			<textarea id="description" name="description" rows="6" cols="36" class="x-textarea"  >${sysData.description}</textarea>
 		</td>
 	</tr>
 	<tr>
-		<td width="20%" align="left">数据模板</td>
+		<td width="15%" align="left">数据模板</td>
 		<td align="left">
             <input id="path" name="path" type="text" 
 			       class="easyui-validatebox  x-text"  
@@ -111,7 +111,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td width="20%" align="left">访问权限</td>
+		<td width="15%" align="left">访问权限</td>
 		<td align="left">
             <input id="perms" name="perms" type="text" size="50"
 			       class="easyui-validatebox  x-text"  
@@ -119,13 +119,17 @@
 		</td>
 	</tr>
 	<tr>
-		<td width="20%" align="left">addressPerms</td>
+		<td width="15%" align="left">允许访问IP地址</td>
 		<td align="left">
 		    <textarea id="addressPerms" name="addressPerms" rows="6" cols="36" class="x-textarea"  >${sysData.addressPerms}</textarea>
+			<br>允许使用*为通配符，多个地址之间用半角的逗号“,”隔开。
+			<br>例如：192.168.*.*，那么192.168.1.100及192.168.142.100都可访问该服务。
+            <br>192.168.142.*，那么192.168.1.100不能访问但192.168.142.100可访问该服务。
+			<br>如果配置成192.168.1.*,192.168.142.*，那么192.168.1.100及192.168.142.100均可访问该服务。
 		</td>
 	</tr>
 	<tr>
-		<td width="20%" align="left">类型</td>
+		<td width="15%" align="left">类型</td>
 		<td align="left">
 		    <select id="type" name="type">
 				<option value="xml">XML</option>
@@ -138,7 +142,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td width="20%" align="left">是否有效</td>
+		<td width="15%" align="left">是否有效</td>
         <td>
 		  <input type="radio" name="locked" value="0" <c:if test="${sysData.locked == 0}">checked</c:if>/>是
           <input type="radio" name="locked" value="1" <c:if test="${sysData.locked == 1}">checked</c:if>/>否
@@ -148,7 +152,10 @@
     </tbody>
   </table>
   </form>
+  <br/>
+  <br/>
 </div>
 </div>
+
 </body>
 </html>

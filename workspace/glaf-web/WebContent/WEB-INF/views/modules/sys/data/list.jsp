@@ -65,7 +65,7 @@
 
 	function viewRow(id){
 		var link = "<%=request.getContextPath()%>/mx/sys/data/service/edit?id="+id;
-	    art.dialog.open(link, { height: 420, width: 600, title: "修改记录", lock: true, scrollbars:"yes" }, false);
+	    art.dialog.open(link, { height: 420, width: 660, title: "修改记录", lock: true, scrollbars:"yes" }, false);
 	}
 
 
