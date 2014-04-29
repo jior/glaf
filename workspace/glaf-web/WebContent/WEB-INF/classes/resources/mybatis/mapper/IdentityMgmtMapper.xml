@@ -5,35 +5,36 @@
 <mapper namespace="com.glaf.core.mapper.IdentityMgmtMapper">
 
 	<resultMap id="roleResultMap" type="com.glaf.core.identity.impl.RoleImpl">
-		<id property="roleId" column="id" jdbcType="INTEGER" />
-		<result property="name" column="rolename" jdbcType="VARCHAR" />
+		<id property="roleId" column="ID" jdbcType="INTEGER" />
+		<result property="code" column="CODE" jdbcType="VARCHAR" />
+		<result property="name" column="NAME" jdbcType="VARCHAR" />
 	</resultMap>
 
 
 	<resultMap id="userResultMap" type="com.glaf.core.identity.impl.UserImpl">
-		<id property="actorId" column="account" jdbcType="VARCHAR" />
-		<result property="activationCode" column="account" jdbcType="VARCHAR" />
-		<result property="name" column="name" jdbcType="VARCHAR" />
-		<result property="deptId" column="deptId" jdbcType="BIGINT" />
-		<result property="mail" column="email" jdbcType="VARCHAR" />
-		<result property="mobile" column="mobile" jdbcType="VARCHAR" />
-		<result property="adminFlag" column="adminFlag" jdbcType="VARCHAR" />
-		<result property="accountType" column="accountType" jdbcType="INTEGER" />
-		<result property="userType" column="userType" jdbcType="INTEGER" />
+		<id property="actorId" column="ACCOUNT" jdbcType="VARCHAR" />
+		<result property="activationCode" column="ACCOUNT" jdbcType="VARCHAR" />
+		<result property="name" column="NAME" jdbcType="VARCHAR" />
+		<result property="deptId" column="DEPTID" jdbcType="BIGINT" />
+		<result property="mail" column="EMAIL" jdbcType="VARCHAR" />
+		<result property="mobile" column="MOBILE" jdbcType="VARCHAR" />
+		<result property="adminFlag" column="ADMINFLAG" jdbcType="VARCHAR" />
+		<result property="accountType" column="ACCOUNTTYPE" jdbcType="INTEGER" />
+		<result property="userType" column="USERTYPE" jdbcType="INTEGER" />
 	</resultMap>
 
 
 	<resultMap id="baseTreeResultMap" type="com.glaf.core.base.BaseTree">
-        <id property="id" column="id" jdbcType="BIGINT" />
-        <result property="parentId" column="parent" jdbcType="BIGINT"/>
-        <result property="name" column="name" jdbcType="VARCHAR"/>
-        <result property="desc" column="nodedesc" jdbcType="VARCHAR"/>
-        <result property="sort" column="sort" jdbcType="INTEGER"/>
-        <result property="code" column="code" jdbcType="VARCHAR"/>
-        <result property="icon" column="icon" jdbcType="VARCHAR"/>
-        <result property="iconCls" column="iconCls" jdbcType="VARCHAR"/>
-        <result property="url" column="url" jdbcType="VARCHAR"/>
-        <result property="locked" column="locked" jdbcType="INTEGER"/>
+        <id property="id" column="ID" jdbcType="BIGINT" />
+        <result property="parentId" column="PARENT" jdbcType="BIGINT"/>
+        <result property="name" column="NAME" jdbcType="VARCHAR"/>
+        <result property="desc" column="NODEDESC" jdbcType="VARCHAR"/>
+        <result property="sort" column="SORT" jdbcType="INTEGER"/>
+        <result property="code" column="CODE" jdbcType="VARCHAR"/>
+        <result property="icon" column="ICON" jdbcType="VARCHAR"/>
+        <result property="iconCls" column="ICONCLS" jdbcType="VARCHAR"/>
+        <result property="url" column="URL" jdbcType="VARCHAR"/>
+        <result property="locked" column="LOCKED" jdbcType="INTEGER"/>
 	</resultMap>
 
 

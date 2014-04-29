@@ -5,38 +5,41 @@
 <mapper namespace="com.glaf.core.mapper.IdentityMgmtMapper">
 
 	<resultMap id="roleResultMap" type="com.glaf.core.identity.impl.RoleImpl">
-		<id property="roleId" column="id" jdbcType="INTEGER" />
-		<result property="name" column="rolename" jdbcType="VARCHAR" />
+		<id property="roleId" column="ID" jdbcType="INTEGER" />
+		<result property="code" column="CODE" jdbcType="VARCHAR" />
+		<result property="name" column="NAME" jdbcType="VARCHAR" />
 	</resultMap>
 
 
 	<resultMap id="userResultMap" type="com.glaf.core.identity.impl.UserImpl">
-		<id property="actorId" column="account" jdbcType="VARCHAR" />
-		<result property="activationCode" column="account" jdbcType="VARCHAR" />
-		<result property="name" column="name" jdbcType="VARCHAR" />
-		<result property="deptId" column="deptId" jdbcType="BIGINT" />
-		<result property="mail" column="email" jdbcType="VARCHAR" />
-		<result property="mobile" column="mobile" jdbcType="VARCHAR" />
-		<result property="adminFlag" column="adminFlag" jdbcType="VARCHAR" />
+		<id property="actorId" column="ACCOUNT" jdbcType="VARCHAR" />
+		<result property="activationCode" column="ACCOUNT" jdbcType="VARCHAR" />
+		<result property="name" column="NAME" jdbcType="VARCHAR" />
+		<result property="deptId" column="DEPTID" jdbcType="BIGINT" />
+		<result property="mail" column="EMAIL" jdbcType="VARCHAR" />
+		<result property="mobile" column="MOBILE" jdbcType="VARCHAR" />
+		<result property="adminFlag" column="ADMINFLAG" jdbcType="VARCHAR" />
+		<result property="accountType" column="ACCOUNTTYPE" jdbcType="INTEGER" />
+		<result property="userType" column="USERTYPE" jdbcType="INTEGER" />
 	</resultMap>
 
 
 	<resultMap id="baseTreeResultMap" type="com.glaf.core.base.BaseTree">
-        <id property="id" column="id" jdbcType="BIGINT" />
-        <result property="parentId" column="parent" jdbcType="BIGINT"/>
-        <result property="name" column="name" jdbcType="VARCHAR"/>
-        <result property="desc" column="nodedesc" jdbcType="VARCHAR"/>
-        <result property="sort" column="sort" jdbcType="INTEGER"/>
-        <result property="code" column="code" jdbcType="VARCHAR"/>
-        <result property="icon" column="icon" jdbcType="VARCHAR"/>
-        <result property="iconCls" column="iconCls" jdbcType="VARCHAR"/>
-        <result property="url" column="url" jdbcType="VARCHAR"/>
-        <result property="locked" column="locked" jdbcType="INTEGER"/>
+        <id property="id" column="ID" jdbcType="BIGINT" />
+        <result property="parentId" column="PARENT" jdbcType="BIGINT"/>
+        <result property="name" column="NAME" jdbcType="VARCHAR"/>
+        <result property="desc" column="NODEDESC" jdbcType="VARCHAR"/>
+        <result property="sort" column="SORT" jdbcType="INTEGER"/>
+        <result property="code" column="CODE" jdbcType="VARCHAR"/>
+        <result property="icon" column="ICON" jdbcType="VARCHAR"/>
+        <result property="iconCls" column="ICONCLS" jdbcType="VARCHAR"/>
+        <result property="url" column="URL" jdbcType="VARCHAR"/>
+        <result property="locked" column="LOCKED" jdbcType="INTEGER"/>
 	</resultMap>
 
 
 	<insert id="insertSysTree" parameterType="com.glaf.core.base.BaseTree">
-		insert into sys_tree
+		insert into SYS_TREE
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID
 			<if test="parentId != null">
@@ -139,7 +142,7 @@
 
 
 	<update id="updateSysTree" parameterType="com.glaf.core.base.BaseTree">
-		update sys_tree
+		update SYS_TREE
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="parentId != null">
@@ -189,24 +192,24 @@
 
 
 	<select id="getTreeModelById" parameterType="long" resultMap="baseTreeResultMap">
-		select * from sys_tree where id = #{id}
+		select * from SYS_TREE where id = #{id}
 	</select>
 
 
 	<select id="getTreeModelByCode" parameterType="string" resultMap="baseTreeResultMap">
-		select * from sys_tree where code = #{code}
+		select * from SYS_TREE where code = #{code}
 	</select>
 
 
 	<select id="getChildrenTreeModels" parameterType="long" resultMap="baseTreeResultMap">
-		select * from sys_tree where parent = #{parentId}
+		select * from SYS_TREE where parent = #{parentId}
 	</select>
 
 
 	<select id="getTreeModels" parameterType="com.glaf.core.query.TreeModelQuery"
 		resultMap="baseTreeResultMap">
 
-		select E.* from sys_tree E
+		select E.* from SYS_TREE E
 
 		<where>
 			1 = 1
@@ -215,7 +218,7 @@
 				and E.PARENT = #{parentId}
 			</if>
 
-			<if test="parentIds != null and parentIds.size() &gt; 0">
+			<if test="parentIds != null and parentIds.size != 0">
 				and E.PARENT IN
 				<foreach item="x_parentId" index="index" collection="parentIds"
 					open="(" separator="," close=")">
@@ -263,7 +266,7 @@
 				and E.CODE like #{codeLike}
 			</if>
 
-			<if test="codes != null and codes.size() &gt; 0">
+			<if test="codes != null and codes.size != 0">
 				and E.CODE IN
 				<foreach item="x_code" index="index" collection="codes"
 					open="(" separator="," close=")">
@@ -301,8 +304,9 @@
 		select  ASSIGNFROM_ as assignFrom, ASSIGNTO_ as assignTo,
 		        OBJECTID_ as objectId, OBJECTVALUE_ as objectValue,
                 PROCESSNAME_ as processName, TASKNAME_ as taskName,
-				AGENTTYPE_ as agentType
-		from sys_agent
+				AGENTTYPE_ as agentType, STARTDATE_ as startDate, 
+				ENDDATE_ as endDate
+		from SYS_AGENT
 		where ASSIGNTO_ = #{assignTo}
 
 	</select>
@@ -311,12 +315,12 @@
 	<select id="getMembershipActorIds" resultType="string" parameterType="com.glaf.core.query.MembershipQuery">
 
 		 SELECT u.account as actorId
-		   FROM sys_user u
+		   FROM SYS_USER u
 		   WHERE u.blocked = 0 AND u.id IN
-				 ( SELECT r.userId  FROM sys_user_role r
+				 ( SELECT r.userId  FROM SYS_USER_ROLE r
 			       WHERE r.authorized = 0 AND r.roleId IN
 						 ( SELECT a.id
-					       FROM sys_dept_role a, sys_role b
+					       FROM SYS_DEPT_ROLE a, SYS_ROLE b
 					       WHERE a.sysRoleId = b.id
 
 						   <if test="nodeId != null">
@@ -345,12 +349,12 @@
 		    parameterType="com.glaf.core.query.MembershipQuery">
 
 		   SELECT u.*
-		   FROM sys_user u
+		   FROM SYS_USER u
 		   WHERE u.blocked = 0 AND u.id IN
-				 ( SELECT r.userId  FROM sys_user_role r
+				 ( SELECT r.userId  FROM SYS_USER_ROLE r
 			       WHERE r.authorized = 0 AND r.roleId IN
 						 ( SELECT a.id
-					       FROM sys_dept_role a, sys_role b
+					       FROM SYS_DEPT_ROLE a, SYS_ROLE b
 					       WHERE 1=1
 						   AND  a.sysRoleId = b.id
  
@@ -386,12 +390,12 @@
 		    parameterType="com.glaf.core.query.MembershipQuery">
 
            SELECT u.*
-		   FROM sys_user u
+		   FROM SYS_USER u
 		   WHERE u.blocked = 0 AND u.id IN
-				 ( SELECT r.userId  FROM sys_user_role r
+				 ( SELECT r.userId  FROM SYS_USER_ROLE r
 			       WHERE r.authorized = 0 AND r.roleId IN
 						 ( SELECT a.id
-					       FROM sys_dept_role a, sys_role b
+					       FROM SYS_DEPT_ROLE a, SYS_ROLE b
 					       WHERE 1=1
 						   AND  a.sysRoleId = b.id
  
@@ -426,7 +430,7 @@
 	<select id="getRoleById" resultMap="roleResultMap" parameterType="int">
 
 		SELECT r.*
-		FROM sys_role r
+		FROM SYS_ROLE r
 		WHERE r.id = #{roleId} 
 
 	</select>
@@ -434,7 +438,7 @@
 	<select id="getRoleByCode" resultMap="roleResultMap" parameterType="string">
 
 		SELECT r.*
-		FROM sys_role r
+		FROM SYS_ROLE r
 		WHERE r.code = #{code} 
 
 	</select>
@@ -443,7 +447,7 @@
 	<select id="searchUsers" resultMap="userResultMap" parameterType="string">
 
 		SELECT u.* 
-		FROM sys_user u
+		FROM SYS_USER u
 		WHERE 1=1 
 		AND (
 		   u.account LIKE #{searchWord}
@@ -470,7 +474,7 @@
 		on dr.ID = ur.ROLEID
 		inner join SYS_USER u
 		on ur.USERID = u.ID
-		where 1=1
+		where r.CODE is not null
 
 		<choose>
 			<when test="actorId != null">
@@ -497,8 +501,90 @@
 			  and 1=0
 			</otherwise>
 		</choose>
-	 
 
+		union 
+
+		select E.code from SYS_APPLICATION E
+		inner join SYS_ACCESS A
+		on
+		E.id = A.appId
+		where E.code is not null 
+		and A.roleId in (
+			select dr.id from SYS_DEPT_ROLE dr
+			inner join SYS_USER_ROLE ur
+			on dr.id = ur.roleid
+			inner join SYS_USER u
+			on ur.userid = u.id
+			where ur.authorized = 0
+
+			 <choose>
+				<when test="actorId != null">
+					and u.account = #{actorId} 
+				</when>
+				<when test="actorIds != null and actorIds.size !=0">
+					and u.account IN
+					<foreach item="x_actorId" index="index" collection="actorIds"
+						open="(" separator="," close=")">
+						#{x_actorId}
+					</foreach>
+				</when>
+				<when test="nodeId != null">
+					and ( u.deptid = #{nodeId} ) 
+				</when>
+				<when test="nodeIds != null and nodeIds.size !=0">
+					and u.deptid IN
+					<foreach item="x_nodeId" index="index" collection="nodeIds"
+						open="(" separator="," close=")">
+						#{x_nodeId}
+					</foreach>
+				</when>
+				<otherwise>
+				  and 1=0
+				</otherwise>
+			</choose>
+		) 
+
+        union 
+
+		select E.CODE from SYS_FUNCTION E
+		inner join SYS_PERMISSION A
+		on E.id = A.funcId
+		where E.CODE is not null
+		and A.roleId in (
+			select dr.id from SYS_DEPT_ROLE dr
+			inner join SYS_USER_ROLE ur
+			on dr.id = ur.roleid
+			inner join SYS_USER u
+			on u.id = ur.userid
+			where ur.authorized = 0
+
+			 <choose>
+				<when test="actorId != null">
+					and u.account = #{actorId} 
+				</when>
+				<when test="actorIds != null and actorIds.size !=0">
+					and u.account IN
+					<foreach item="x_actorId" index="index" collection="actorIds"
+						open="(" separator="," close=")">
+						#{x_actorId}
+					</foreach>
+				</when>
+				<when test="nodeId != null">
+					and ( u.deptid = #{nodeId} ) 
+				</when>
+				<when test="nodeIds != null and nodeIds.size !=0">
+					and u.deptid IN
+					<foreach item="x_nodeId" index="index" collection="nodeIds"
+						open="(" separator="," close=")">
+						#{x_nodeId}
+					</foreach>
+				</when>
+				<otherwise>
+				  and 1=0
+				</otherwise>
+			</choose>
+		)
+ 
 	</select>
 
 
@@ -506,7 +592,7 @@
 		parameterType="com.glaf.core.query.UserQuery">
 
 		SELECT u.*
-		FROM sys_user u
+		FROM SYS_USER u
 		WHERE 1=1 
 
 		<choose>
@@ -545,8 +631,17 @@
 	<select id="getUserById" resultMap="userResultMap" parameterType="string">
 
 		SELECT u.*
-		FROM sys_user u 
+		FROM SYS_USER u 
 		WHERE u.account = #{actorId}
+
+	</select>
+
+
+	<select id="getUserByUserId" resultMap="userResultMap" parameterType="long">
+
+		SELECT u.*
+		FROM SYS_USER u 
+		WHERE u.id = #{userId}
 
 	</select>
 
@@ -555,7 +650,7 @@
 		parameterType="com.glaf.core.query.RoleQuery">
 
 		SELECT *
-		FROM sys_role r 
+		FROM SYS_ROLE r 
 		WHERE 1=1
 
 		<if test="roleId != null">
@@ -581,7 +676,7 @@
 		parameterType="com.glaf.core.query.TreeModelQuery">
 
 		select D.ID as id, D.NAME as name, D.CODE as code, D.DEPTDESC as description, D.SORT as sortNo,
-        D.CREATETIME as createDate, D.CREATEBY as createBy, D.DEPTLEVEL as level, D.STATUS as locked
+        D.CREATETIME as createDate, D.CREATEBY as createBy, D.DEPTLEVEL as deep, D.STATUS as locked
 		from SYS_DEPARTMENT D
 		inner join SYS_TREE T
 		on D.NODEID = T.ID

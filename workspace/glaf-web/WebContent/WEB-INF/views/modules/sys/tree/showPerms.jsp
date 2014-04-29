@@ -100,7 +100,7 @@
 		<td height="27" valign="middle" noWrap> 
 		<input type="hidden" id="x_roles" name="x_roles" value="${x_roles}">
         <textarea cols="40" id="x_roles_name" name="x_roles_name" rows="8"  wrap="yes" readonly  
-		    style="height:100px;width:350px;color: #000066; background: #ffffff;">${x_roles_name}</textarea>
+		    style="height:100px;width:350px;color: #000066; background: #ffffff;" class="x-textarea">${x_roles_name}</textarea>
 		</td>
 		<td height="27" width="20%" valign="bottom" noWrap>
 		    &nbsp;&nbsp;<input type="button" name="button" value="添加" class="button" 
@@ -115,7 +115,7 @@
 		<td height="27" valign="middle" noWrap> 
 		<input type="hidden" id="x_departments" name="x_departments" value="${x_departments}">
         <textarea cols="40" id="x_departments_name" name="x_departments_name" rows="8"  wrap="yes" readonly  
-		    style="height:100px;width:350px;color: #000066; background: #ffffff;">${x_departments_name}</textarea>
+		    style="height:100px;width:350px;color: #000066; background: #ffffff;" class="x-textarea">${x_departments_name}</textarea>
 		</td>
 		<td height="27" width="20%"   valign="bottom" noWrap>
 		    &nbsp;&nbsp;<input type="button" name="button" value="添加" class="button" 
@@ -130,7 +130,7 @@
 		<td height="27" valign="middle" noWrap> 
 		<input type="hidden" id="x_users" name="x_users" value="${x_users}">
         <textarea cols="40" id="x_users_name" name="x_users_name" rows="8"  wrap="yes" readonly  
-		    style="height:100px;width:350px;color: #000066; background: #ffffff;">${x_users_name}</textarea>
+		    style="height:100px;width:350px;color: #000066; background: #ffffff;" class="x-textarea">${x_users_name}</textarea>
 		</td>
 		<td height="27" width="20%"  valign="bottom" noWrap>
 		    &nbsp;&nbsp;<input type="button" name="button" value="添加" class="button" 

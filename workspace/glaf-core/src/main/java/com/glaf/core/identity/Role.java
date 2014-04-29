@@ -23,6 +23,8 @@ public interface Role extends java.io.Serializable {
 	int getId();
 
 	int getLocked();
+	
+	String getCode();
 
 	String getName();
 
@@ -37,6 +39,8 @@ public interface Role extends java.io.Serializable {
 	void setId(int id);
 
 	void setLocked(int locked);
+	
+	void setCode(String code);
 
 	void setName(String name);
 

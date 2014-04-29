@@ -36,6 +36,8 @@ public class RoleImpl implements Role {
 
 	protected int domainIndex;
 
+	protected String code;
+
 	protected String name;
 
 	protected int type;
@@ -76,6 +78,10 @@ public class RoleImpl implements Role {
 
 	public String getBusiessId() {
 		return busiessId;
+	}
+
+	public String getCode() {
+		return code;
 	}
 
 	public int getDomainIndex() {
@@ -136,6 +142,10 @@ public class RoleImpl implements Role {
 
 	public void setBusiessId(String busiessId) {
 		this.busiessId = busiessId;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public void setDomainIndex(int domainIndex) {

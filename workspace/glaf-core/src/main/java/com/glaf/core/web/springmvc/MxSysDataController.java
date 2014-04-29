@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -42,16 +43,20 @@ import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.domain.SysData;
+import com.glaf.core.identity.Role;
 import com.glaf.core.identity.User;
 import com.glaf.core.query.SysDataQuery;
+import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.SysDataService;
 import com.glaf.core.util.DateUtils;
+import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
+import com.glaf.core.util.StringTools;
 import com.glaf.core.util.SysDataLogTableUtils;
 import com.glaf.core.util.Tools;
 
@@ -109,6 +114,27 @@ public class MxSysDataController {
 		SysData sysData = sysDataService.getSysData(request.getParameter("id"));
 		if (sysData != null) {
 			request.setAttribute("sysData", sysData);
+
+			List<String> perms = StringTools.split(sysData.getPerms());
+			StringBuffer buffer = new StringBuffer();
+			List<Role> roles = IdentityFactory.getRoles();
+			Map<Long, String> roleIdMap = new HashMap<Long, String>();
+			Map<String, String> roleCodeMap = new HashMap<String, String>();
+			if (roles != null && !roles.isEmpty()) {
+				for (Role role : roles) {
+					roleIdMap.put(Long.valueOf(role.getId()), role.getName());
+					roleCodeMap.put(role.getCode(), role.getName());
+					if (perms.contains(String.valueOf(role.getId()))
+							|| perms.contains(role.getCode())) {
+						buffer.append(role.getName()).append("[")
+								.append(role.getCode()).append("] ");
+						buffer.append(FileUtils.newline);
+					}
+				}
+			}
+
+			request.setAttribute("x_role_names", buffer.toString());
+
 		}
 
 		String view = request.getParameter("view");
@@ -301,10 +327,27 @@ public class MxSysDataController {
 		SysData sysData = new SysData();
 		Tools.populate(sysData, params);
 
+		String perm = request.getParameter("perms");
+		List<String> perms = StringTools.split(perm);
+		StringBuffer buffer = new StringBuffer();
+		List<Role> roles = IdentityFactory.getRoles();
+		Map<Long, String> roleIdMap = new HashMap<Long, String>();
+		Map<String, String> roleCodeMap = new HashMap<String, String>();
+		if (roles != null && !roles.isEmpty()) {
+			for (Role role : roles) {
+				roleIdMap.put(Long.valueOf(role.getId()), role.getName());
+				roleCodeMap.put(role.getCode(), role.getName());
+				if (perms.contains(String.valueOf(role.getId()))
+						|| perms.contains(role.getCode())) {
+					buffer.append(role.getCode()).append(",");
+				}
+			}
+		}
+
 		sysData.setTitle(request.getParameter("title"));
 		sysData.setDescription(request.getParameter("description"));
 		sysData.setPath(request.getParameter("path"));
-		sysData.setPerms(request.getParameter("perms"));
+		sysData.setPerms(buffer.toString());
 		sysData.setAddressPerms(request.getParameter("addressPerms"));
 		sysData.setType(request.getParameter("type"));
 		sysData.setLocked(RequestUtils.getInt(request, "locked"));
@@ -322,13 +365,31 @@ public class MxSysDataController {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
+
+		String perm = request.getParameter("perms");
+		List<String> perms = StringTools.split(perm);
+		StringBuffer buffer = new StringBuffer();
+		List<Role> roles = IdentityFactory.getRoles();
+		Map<Long, String> roleIdMap = new HashMap<Long, String>();
+		Map<String, String> roleCodeMap = new HashMap<String, String>();
+		if (roles != null && !roles.isEmpty()) {
+			for (Role role : roles) {
+				roleIdMap.put(Long.valueOf(role.getId()), role.getName());
+				roleCodeMap.put(role.getCode(), role.getName());
+				if (perms.contains(String.valueOf(role.getId()))
+						|| perms.contains(role.getCode())) {
+					buffer.append(role.getCode()).append(",");
+				}
+			}
+		}
+
 		SysData sysData = new SysData();
 		try {
 			Tools.populate(sysData, params);
 			sysData.setTitle(request.getParameter("title"));
 			sysData.setDescription(request.getParameter("description"));
 			sysData.setPath(request.getParameter("path"));
-			sysData.setPerms(request.getParameter("perms"));
+			sysData.setPerms(buffer.toString());
 			sysData.setAddressPerms(request.getParameter("addressPerms"));
 			sysData.setType(request.getParameter("type"));
 			sysData.setLocked(RequestUtils.getInt(request, "locked"));
@@ -356,10 +417,27 @@ public class MxSysDataController {
 
 		SysData sysData = sysDataService.getSysData(request.getParameter("id"));
 
+		String perm = request.getParameter("perms");
+		List<String> perms = StringTools.split(perm);
+		StringBuffer buffer = new StringBuffer();
+		List<Role> roles = IdentityFactory.getRoles();
+		Map<Long, String> roleIdMap = new HashMap<Long, String>();
+		Map<String, String> roleCodeMap = new HashMap<String, String>();
+		if (roles != null && !roles.isEmpty()) {
+			for (Role role : roles) {
+				roleIdMap.put(Long.valueOf(role.getId()), role.getName());
+				roleCodeMap.put(role.getCode(), role.getName());
+				if (perms.contains(String.valueOf(role.getId()))
+						|| perms.contains(role.getCode())) {
+					buffer.append(role.getCode()).append(",");
+				}
+			}
+		}
+
 		sysData.setTitle(request.getParameter("title"));
 		sysData.setDescription(request.getParameter("description"));
 		sysData.setPath(request.getParameter("path"));
-		sysData.setPerms(request.getParameter("perms"));
+		sysData.setPerms(perm.toString());
 		sysData.setAddressPerms(request.getParameter("addressPerms"));
 		sysData.setType(request.getParameter("type"));
 		sysData.setLocked(RequestUtils.getInt(request, "locked"));

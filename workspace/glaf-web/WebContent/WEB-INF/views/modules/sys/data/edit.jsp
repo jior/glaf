@@ -113,9 +113,14 @@
 	<tr>
 		<td width="15%" align="left">访问权限</td>
 		<td align="left">
-            <input id="perms" name="perms" type="text" size="50"
-			       class="easyui-validatebox  x-text"  
-				   value="${sysData.perms}" readonly="true"/>
+			<input type="hidden" id="perms" name="perms" value="${sysData.perms}">
+            <textarea  id="x_roles_name" name="x_roles_name" rows="6" cols="36" class="x-textarea" readonly  
+		    >${x_role_names}</textarea>
+			<input type="button" name="button" value="添加" class="button" 
+			       onclick="javascript:selectRole('iForm', 'perms','x_roles_name');"> 
+			&nbsp;
+			<input type="button" name="button" value="清空" class="button" 
+			       onclick="javascript:clearSelected('perms','x_roles_name');">
 		</td>
 	</tr>
 	<tr>

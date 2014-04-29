@@ -131,6 +131,11 @@ public class DataServiceResource {
 				if (loginContext.getRoles().contains(perm)) {
 					hasPermission = true;
 				}
+				if (StringUtils.isNotEmpty(perm) && StringUtils.isNumeric(perm)) {
+					if (loginContext.getRoles().contains(Long.parseLong(perm))) {
+						hasPermission = true;
+					}
+				}
 			}
 			if (!hasPermission) {
 				throw new RuntimeException("Permission denied.");
