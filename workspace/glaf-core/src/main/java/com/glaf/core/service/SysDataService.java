@@ -42,6 +42,9 @@ public interface SysDataService {
 	 */
 	@Transactional
 	void deleteByIds(List<String> ids);
+	
+	@Transactional
+	void reload(String path);
 
 	/**
 	 * 根据主键获取一条记录

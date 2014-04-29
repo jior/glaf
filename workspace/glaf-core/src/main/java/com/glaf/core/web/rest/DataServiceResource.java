@@ -77,6 +77,7 @@ public class DataServiceResource {
 		Map<String, Object> dataMap = RequestUtils.getParameterMap(request);
 		dataMap.put("queryString", request.getQueryString());
 		dataMap.put("dataType", dataType);
+		dataMap.put("actorId", loginContext.getActorId());
 		dataMap.put("id", id);
 
 		String ipAddress = RequestUtils.getIPAddress(request);
@@ -147,6 +148,8 @@ public class DataServiceResource {
 			log.setIp(RequestUtils.getIPAddress(request));
 			log.setOperate(id);
 			log.setContent(JsonUtils.encode(dataMap));
+			dataMap.put("loginContext", loginContext);
+			dataMap.put("loginUser", loginContext.getUser());
 			Document doc = builder.process(systemName, inputStream, dataMap);
 			log.setFlag(9);
 			log.setModuleId("DS");

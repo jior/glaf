@@ -60,7 +60,7 @@ public class SysData implements Serializable, JSONable {
 	protected String type;
 
 	@Column(name = "LOCKED_")
-	protected Integer locked;
+	protected Integer locked = 0;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_")

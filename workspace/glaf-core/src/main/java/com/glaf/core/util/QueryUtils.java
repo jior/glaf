@@ -204,9 +204,14 @@ public class QueryUtils {
 			if (flag && str.charAt(i) == '}') {
 				String temp = str.substring(begin, i);
 				temp = temp.toLowerCase();
-				if (dataMap.get(temp) != null) {
-					String value = dataMap.get(temp).toString();
-					sb.append(value);
+				Object value = dataMap.get(temp);
+				if (value != null) {
+					if (value instanceof java.util.Date) {
+						java.util.Date date = (java.util.Date) value;
+						sb.append(DateUtils.getDateTime(date));
+					} else {
+						sb.append(value);
+					}
 					end = i + 1;
 					flag = false;
 				} else {

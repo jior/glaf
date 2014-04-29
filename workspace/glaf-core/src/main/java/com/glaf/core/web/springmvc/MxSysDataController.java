@@ -18,31 +18,42 @@
 
 package com.glaf.core.web.springmvc;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.alibaba.fastjson.*;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.config.ViewProperties;
-import com.glaf.core.identity.*;
-import com.glaf.core.security.*;
-import com.glaf.core.util.*;
-import com.glaf.core.domain.*;
-import com.glaf.core.domain.util.SysDataJsonFactory;
-import com.glaf.core.query.*;
-import com.glaf.core.service.*;
+import com.glaf.core.domain.SysData;
+import com.glaf.core.identity.User;
+import com.glaf.core.query.SysDataQuery;
+import com.glaf.core.security.LoginContext;
+import com.glaf.core.service.SysDataService;
+import com.glaf.core.util.DateUtils;
+import com.glaf.core.util.JsonUtils;
+import com.glaf.core.util.Paging;
+import com.glaf.core.util.ParamUtils;
+import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.ResponseUtils;
+import com.glaf.core.util.SysDataLogTableUtils;
+import com.glaf.core.util.Tools;
 
 @Controller("/sys/data/service")
 @RequestMapping("/sys/data/service")
@@ -249,44 +260,9 @@ public class MxSysDataController {
 	@ResponseBody
 	public byte[] reload(HttpServletRequest request, ModelMap modelMap)
 			throws IOException {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
 		String root = SystemProperties.getConfigRootPath();
 		String config_path = root + "/conf/templates/xml";
-		File dir = new File(config_path);
-		boolean success = true;
-		if (dir.exists() && dir.isDirectory()) {
-			File contents[] = dir.listFiles();
-			if (contents != null) {
-				for (int i = 0; i < contents.length; i++) {
-					if (contents[i].isFile()
-							&& contents[i].getName().endsWith(".properties")) {
-						try {
-							Properties props = PropertiesUtils
-									.loadFilePathResource(contents[i]);
-							if (props != null && !props.isEmpty()) {
-								Enumeration<?> e = props.keys();
-								while (e.hasMoreElements()) {
-									String key = (String) e.nextElement();
-									String value = props.getProperty(key);
-									JSONObject json = JSON.parseObject(value);
-									SysData model = SysDataJsonFactory
-											.jsonToObject(json);
-									model.setId(key);
-									model.setCreateBy(actorId);
-									model.setUpdateBy(actorId);
-									sysDataService.save(model);
-								}
-							}
-						} catch (Exception ex) {
-							success = false;
-							ex.printStackTrace();
-						}
-					}
-				}
-			}
-		}
-
+		sysDataService.reload(config_path);
 		Date date = DateUtils.getDateAfter(new Date(), 0);
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
@@ -306,7 +282,7 @@ public class MxSysDataController {
 				ex.printStackTrace();
 			}
 		}
-		return ResponseUtils.responseJsonResult(success);
+		return ResponseUtils.responseJsonResult(true);
 	}
 
 	private int getYearMonthDay(Date date) {

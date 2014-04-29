@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="GBK"?>
+<Tasks>
+    <!--注意：查询字段as成小写的别名（因不同数据库rsmd.getColumnLabel()不同，所以统一转成了小写）
+	    查询参数定义类似MyBatis中定义查询参数，即 字段 = #{变量名}
+	-->
+    <DataSet id="ds01">
+	    <sql>
+			SELECT a.ID_ AS taskInstanceId, y.ID_ AS processInstanceId,
+			z.NAME_ AS processName, z.DESCRIPTION_ AS processDescription,
+			a.NAME_ AS taskName, a.DESCRIPTION_ AS taskDescription, a.CREATE_ AS createDate,
+			a.ACTORID_ AS actorId, y.KEY_ AS businessKey
+			FROM JBPM_TASKINSTANCE a 
+			INNER JOIN JBPM_PROCESSINSTANCE y ON y.ID_ = a.PROCINST_ 
+			INNER JOIN JBPM_PROCESSDEFINITION z ON y.PROCESSDEFINITION_ = z.ID_
+			WHERE (a.ACTORID_ IS NOT NULL)
+			AND (a.END_ IS NULL)
+			AND (y.END_ IS NULL)
+			AND (a.ISOPEN_ = 1)
+			AND (a.ISSUSPENDED_ != 1)
+			AND ( a.ACTORID_ = #{actorId} ) 
+			union
+			SELECT a.ID_ AS taskInstanceId, y.ID_ AS processInstanceId,
+			z.NAME_ AS processName, z.DESCRIPTION_ AS processDescription,
+			a.NAME_ AS taskName, a.DESCRIPTION_ AS taskDescription, a.CREATE_ AS createDate,
+		    p.ACTORID_ AS actorId, y.KEY_ AS businessKey
+			FROM JBPM_POOLEDACTOR p INNER JOIN
+			JBPM_TASKACTORPOOL t ON p.ID_ = t.POOLEDACTOR_ INNER JOIN
+			JBPM_TASKINSTANCE a ON t.TASKINSTANCE_ = a.ID_ INNER JOIN
+			JBPM_PROCESSINSTANCE y ON y.ID_ = a.PROCINST_ INNER JOIN
+			JBPM_PROCESSDEFINITION z ON y.PROCESSDEFINITION_ = z.ID_
+			WHERE (a.ACTORID_ IS NULL)
+			AND (a.END_ IS NULL)
+			AND (y.END_ IS NULL)
+			AND (a.ISOPEN_ = 1)
+		    AND (a.ISSUSPENDED_ != 1)
+			AND ( p.ACTORID_ = #{actorId} )
+		</sql>
+	</DataSet>
+
+
+	<Task DataSetId="ds01">
+	    <TaskInstanceId>#{taskinstanceid}</TaskInstanceId>
+		<ProcessInstanceId>#{processinstanceid}</ProcessInstanceId>
+		<ProcessName>#{processname}</ProcessName>
+		<ProcessDescription>#{processdescription}</ProcessDescription>
+		<TaskName>#{taskname}</TaskName>
+		<TaskDescription>#{taskdescription}</TaskDescription>
+		<CreateDate>#{createdate}</CreateDate>
+		<ActorId>#{actorid}</ActorId>
+		<BusinessKey>#{businesskey}</BusinessKey>
+	</Task>
+</Tasks>

@@ -18,6 +18,7 @@
 
 package com.glaf.core.service.impl;
 
+import java.io.File;
 import java.util.*;
 
 import org.slf4j.Logger;
@@ -27,12 +28,16 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.id.*;
 import com.glaf.core.dao.*;
 import com.glaf.core.mapper.*;
 import com.glaf.core.domain.*;
+import com.glaf.core.domain.util.SysDataJsonFactory;
 import com.glaf.core.query.*;
 import com.glaf.core.service.SysDataService;
+import com.glaf.core.util.PropertiesUtils;
 
 @Service("sysDataService")
 @Transactional(readOnly = true)
@@ -96,6 +101,46 @@ public class MxSysDataServiceImpl implements SysDataService {
 		query.ensureInitialized();
 		List<SysData> list = sysDataMapper.getSysDatas(query);
 		return list;
+	}
+
+	@Transactional
+	public void reload(String path) {
+		File dir = new File(path);
+		if (dir.exists() && dir.isDirectory()) {
+			File contents[] = dir.listFiles();
+			if (contents != null) {
+				for (int i = 0; i < contents.length; i++) {
+					if (contents[i].isFile()
+							&& contents[i].getName().endsWith(".properties")) {
+						try {
+							Properties props = PropertiesUtils
+									.loadFilePathResource(contents[i]);
+							if (props != null && !props.isEmpty()) {
+								Enumeration<?> e = props.keys();
+								while (e.hasMoreElements()) {
+									String key = (String) e.nextElement();
+									if (this.getSysData(key) == null) {
+										String value = props.getProperty(key);
+										JSONObject json = JSON
+												.parseObject(value);
+										SysData model = SysDataJsonFactory
+												.jsonToObject(json);
+										model.setId(key);
+										model.setCreateBy("system");
+										model.setUpdateBy("system");
+										this.save(model);
+									}
+								}
+							}
+						} catch (Exception ex) {
+							ex.printStackTrace();
+							logger.error(contents[i].getName() + " load error",
+									ex);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	@Transactional
