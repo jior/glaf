@@ -18,6 +18,7 @@
 
 package com.glaf.core.security;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -76,7 +77,7 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static List<String> getAgentIds(String assignTo) {
-		List<String> agentIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> agentIds = new java.util.ArrayList<String>();
 		List<Object> list = getEntityService().getList("getAgents", assignTo);
 		if (list != null && !list.isEmpty()) {
 			for (Object obj : list) {
@@ -106,7 +107,7 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static List<Agent> getAgents(String assignTo) {
-		List<Agent> agents = new java.util.concurrent.CopyOnWriteArrayList<Agent>();
+		List<Agent> agents = new java.util.ArrayList<Agent>();
 		List<Object> list = getEntityService().getList("getAgents", assignTo);
 		if (list != null && !list.isEmpty()) {
 			for (Object obj : list) {
@@ -131,7 +132,7 @@ public class IdentityFactory {
 	public static List<TreeModel> getChildrenTreeModels(Long id) {
 		List<Object> list = getEntityService().getList("getChildrenTreeModels",
 				id);
-		List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
+		List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
 		if (list != null && !list.isEmpty()) {
 			Iterator<Object> iter = list.iterator();
 			while (iter.hasNext()) {
@@ -275,6 +276,20 @@ public class IdentityFactory {
 		return roleMap;
 	}
 
+	public static List<Role> getRoles() {
+		List<Role> roles = new ArrayList<Role>();
+		List<Object> list = getEntityService().getList("getRoles", null);
+		if (list != null && !list.isEmpty()) {
+			for (Object obj : list) {
+				if (obj instanceof Role) {
+					Role role = (Role) obj;
+					roles.add(role);
+				}
+			}
+		}
+		return roles;
+	}
+
 	public static TreeModel getTreeModelByCode(String code) {
 		return (TreeModel) getEntityService().getById("getTreeModelByCode",
 				code);
@@ -345,13 +360,27 @@ public class IdentityFactory {
 		}
 		return userMap;
 	}
+	
+	public static List<User> getUsers() {
+		List<User> users = new ArrayList<User>();
+		List<Object> list = getEntityService().getList("getUsers", null);
+		if (list != null && !list.isEmpty()) {
+			for (Object obj : list) {
+				if (obj instanceof User) {
+					User u = (User) obj;
+					users.add(u);
+				}
+			}
+		}
+		return users;
+	}
 
 	public static List<String> getUserRoleCodes(String actorId) {
 		MembershipQuery query = new MembershipQuery();
 		query.actorId(actorId);
 		List<Object> list = getEntityService().getList("getUserRoleCodes",
 				query);
-		List<String> roles = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> roles = new java.util.ArrayList<String>();
 		if (list != null && !list.isEmpty()) {
 			for (Object object : list) {
 				roles.add(object.toString());
