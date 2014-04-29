@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -118,12 +117,9 @@ public class MxSysDataController {
 			List<String> perms = StringTools.split(sysData.getPerms());
 			StringBuffer buffer = new StringBuffer();
 			List<Role> roles = IdentityFactory.getRoles();
-			Map<Long, String> roleIdMap = new HashMap<Long, String>();
-			Map<String, String> roleCodeMap = new HashMap<String, String>();
+
 			if (roles != null && !roles.isEmpty()) {
 				for (Role role : roles) {
-					roleIdMap.put(Long.valueOf(role.getId()), role.getName());
-					roleCodeMap.put(role.getCode(), role.getName());
 					if (perms.contains(String.valueOf(role.getId()))
 							|| perms.contains(role.getCode())) {
 						buffer.append(role.getName()).append("[")
@@ -331,12 +327,8 @@ public class MxSysDataController {
 		List<String> perms = StringTools.split(perm);
 		StringBuffer buffer = new StringBuffer();
 		List<Role> roles = IdentityFactory.getRoles();
-		Map<Long, String> roleIdMap = new HashMap<Long, String>();
-		Map<String, String> roleCodeMap = new HashMap<String, String>();
 		if (roles != null && !roles.isEmpty()) {
 			for (Role role : roles) {
-				roleIdMap.put(Long.valueOf(role.getId()), role.getName());
-				roleCodeMap.put(role.getCode(), role.getName());
 				if (perms.contains(String.valueOf(role.getId()))
 						|| perms.contains(role.getCode())) {
 					buffer.append(role.getCode()).append(",");
@@ -370,12 +362,8 @@ public class MxSysDataController {
 		List<String> perms = StringTools.split(perm);
 		StringBuffer buffer = new StringBuffer();
 		List<Role> roles = IdentityFactory.getRoles();
-		Map<Long, String> roleIdMap = new HashMap<Long, String>();
-		Map<String, String> roleCodeMap = new HashMap<String, String>();
 		if (roles != null && !roles.isEmpty()) {
 			for (Role role : roles) {
-				roleIdMap.put(Long.valueOf(role.getId()), role.getName());
-				roleCodeMap.put(role.getCode(), role.getName());
 				if (perms.contains(String.valueOf(role.getId()))
 						|| perms.contains(role.getCode())) {
 					buffer.append(role.getCode()).append(",");
@@ -421,12 +409,8 @@ public class MxSysDataController {
 		List<String> perms = StringTools.split(perm);
 		StringBuffer buffer = new StringBuffer();
 		List<Role> roles = IdentityFactory.getRoles();
-		Map<Long, String> roleIdMap = new HashMap<Long, String>();
-		Map<String, String> roleCodeMap = new HashMap<String, String>();
 		if (roles != null && !roles.isEmpty()) {
 			for (Role role : roles) {
-				roleIdMap.put(Long.valueOf(role.getId()), role.getName());
-				roleCodeMap.put(role.getCode(), role.getName());
 				if (perms.contains(String.valueOf(role.getId()))
 						|| perms.contains(role.getCode())) {
 					buffer.append(role.getCode()).append(",");
