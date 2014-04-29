@@ -132,7 +132,7 @@ public class DataServiceResource {
 					hasPermission = true;
 				}
 				if (StringUtils.isNotEmpty(perm) && StringUtils.isNumeric(perm)) {
-					if (loginContext.getRoles().contains(Long.parseLong(perm))) {
+					if (loginContext.getRoleIds().contains(Long.parseLong(perm))) {
 						hasPermission = true;
 					}
 				}
