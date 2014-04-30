@@ -61,7 +61,7 @@ public class UserTaskExecutionListener implements ExecutionListener {
 				+ commandContext.getDbSqlSession().getSqlSession());
 
 		if (execution != null && outputVar != null) {
-			Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 			paramMap.putAll(execution.getVariables());
 
 			String statement = "getMembershipUsers";
@@ -83,7 +83,7 @@ public class UserTaskExecutionListener implements ExecutionListener {
 						commandContext.getDbSqlSession().getSqlSession());
 				List<?> list = entityDAO.getList(statement, paramMap);
 				if (list != null && !list.isEmpty()) {
-					List<String> users = new java.util.concurrent.CopyOnWriteArrayList<String>();
+					List<String> users = new java.util.ArrayList<String>();
 
 					for (Object object : list) {
 						if (object instanceof org.activiti.engine.identity.User) {

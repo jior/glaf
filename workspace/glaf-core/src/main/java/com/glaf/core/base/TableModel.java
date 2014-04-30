@@ -131,7 +131,7 @@ public class TableModel implements java.io.Serializable {
 	public void addCollectionColumn(String columnName,
 			Collection<Object> collection) {
 		if (columns == null) {
-			columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnModel>();
+			columns = new java.util.ArrayList<ColumnModel>();
 		}
 		ColumnModel column = new ColumnModel();
 		column.setColumnName(columnName);
@@ -144,7 +144,7 @@ public class TableModel implements java.io.Serializable {
 
 	public void addColumn(ColumnModel column) {
 		if (columns == null) {
-			columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnModel>();
+			columns = new java.util.ArrayList<ColumnModel>();
 		}
 		column.setTable(this);
 		columns.add(column);
@@ -153,7 +153,7 @@ public class TableModel implements java.io.Serializable {
 	@SuppressWarnings({ "rawtypes" })
 	public void addColumn(String columnName, String javaType, Object value) {
 		if (columns == null) {
-			columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnModel>();
+			columns = new java.util.ArrayList<ColumnModel>();
 		}
 		ColumnModel column = new ColumnModel();
 		column.setColumnName(columnName);
@@ -176,7 +176,7 @@ public class TableModel implements java.io.Serializable {
 
 	public void addExclude(String exclude) {
 		if (excludes == null) {
-			excludes = new java.util.concurrent.CopyOnWriteArrayList<String>();
+			excludes = new java.util.ArrayList<String>();
 		}
 		excludes.add(exclude);
 	}

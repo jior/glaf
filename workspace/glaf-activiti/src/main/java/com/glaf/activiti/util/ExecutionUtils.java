@@ -57,7 +57,7 @@ public class ExecutionUtils {
 						processDefinitionId);
 		String processName = processDefinitionEntity.getKey();
 
-		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
 
 		Map<String, Object> variables = execution.getVariables();
 		if (variables != null && variables.size() > 0) {
@@ -94,7 +94,7 @@ public class ExecutionUtils {
 
 			sqlx = StringTools.replaceIgnoreCase(sqlx, "${", "#{");
 
-			List<Object> values = new java.util.concurrent.CopyOnWriteArrayList<Object>();
+			List<Object> values = new java.util.ArrayList<Object>();
 			SqlExecutor sqlExecutor = JdbcUtils.rebuildSQL(sqlx, params);
 			sqlx = sqlExecutor.getSql();
 			if (sqlExecutor.getParameter() != null) {
@@ -136,7 +136,7 @@ public class ExecutionUtils {
 						processDefinitionId);
 		String processName = processDefinitionEntity.getKey();
 
-		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
 
 		Map<String, Object> variables = execution.getVariables();
 		if (variables != null && variables.size() > 0) {

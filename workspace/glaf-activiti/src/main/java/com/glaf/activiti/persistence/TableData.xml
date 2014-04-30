@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.activiti.persistence.TableDataPersistence">
+
+
+	<insert id="insertBusinessTableData" parameterType="com.glaf.core.base.TableModel">
+
+		insert into ${tableName}
+
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<foreach collection="columns" item="column">
+				<if test="column.value != null">
+					${column.columnName},
+				</if>
+			</foreach>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<foreach collection="columns" item="column">
+				<if test="column.value != null">
+					<choose>
+						<when test="column.javaType == 'Boolean'">
+							#{column.value, jdbcType=BOOLEAN},
+						</when>
+						<when test="column.javaType == 'Integer'">
+							#{column.value, jdbcType=INTEGER},
+						</when>
+						<when test="column.javaType == 'Long'">
+							#{column.value, jdbcType=BIGINT},
+						</when>
+						<when test="column.javaType == 'Double'">
+							#{column.value, jdbcType=DOUBLE},
+						</when>
+						<when test="column.javaType == 'Date'">
+							#{column.value, jdbcType=TIMESTAMP},
+						</when>
+						<when test="column.javaType == 'Clob'">
+							#{column.value, jdbcType=CLOB},
+						</when>
+						<when test="column.javaType == 'Blob'">
+							#{column.value, jdbcType=BLOB},
+						</when>
+						<otherwise>
+							#{column.value, jdbcType=VARCHAR},
+						</otherwise>
+					</choose>
+				</if>
+			</foreach>
+		</trim>
+
+	</insert>
+
+
+	<update id="updateBusinessTableDataByPrimaryKey" parameterType="com.glaf.core.base.TableModel">
+
+		update ${tableName}
+
+		<set>
+			<trim prefix="" suffix="" suffixOverrides=",">
+				<foreach collection="columns" item="column">
+					<if test="column.value != null">
+						<choose>
+							<when test="column.javaType == 'Boolean'">
+								${column.columnName} = #{column.value,
+								jdbcType=BOOLEAN},
+							</when>
+							<when test="column.javaType == 'Integer'">
+								${column.columnName} = #{column.value,
+								jdbcType=INTEGER},
+							</when>
+							<when test="column.javaType == 'Long'">
+								${column.columnName} = #{column.value,
+								jdbcType=BIGINT},
+							</when>
+							<when test="column.javaType == 'Double'">
+								${column.columnName} = #{column.value,
+								jdbcType=DOUBLE},
+							</when>
+							<when test="column.javaType == 'Date'">
+								${column.columnName} = #{column.value,
+								jdbcType=TIMESTAMP},
+							</when>
+							<when test="column.javaType == 'Clob'">
+								${column.columnName} = #{column.value,
+								jdbcType=CLOB},
+							</when>
+							<when test="column.javaType == 'Blob'">
+								${column.columnName} = #{column.value,
+								jdbcType=BLOB},
+							</when>
+							<otherwise>
+								${column.columnName} = #{column.value,
+								jdbcType=VARCHAR},
+							</otherwise>
+						</choose>
+					</if>
+				</foreach>
+			</trim>
+		</set>
+
+		where
+
+		<choose>
+			<when test="idColumn.javaType == 'Integer'">
+				${idColumn.columnName} = #{idColumn.value,
+				jdbcType=INTEGER}
+			</when>
+			<when test="idColumn.javaType == 'Long'">
+				${idColumn.columnName} = #{idColumn.value,
+				jdbcType=BIGINT}
+			</when>
+			<otherwise>
+				${idColumn.columnName} = #{idColumn.value,
+				jdbcType=VARCHAR}
+			</otherwise>
+		</choose>
+
+	</update>
+
+
+	<delete id="deleteBusinessTableData" parameterType="com.glaf.core.base.TableModel">
+
+		delete from ${tableName}
+		where 1=1
+
+		<choose>
+			<when test="columns.size != 0">
+				<foreach collection="columns" item="column">
+					<choose>
+						<when test="column.javaType == 'Boolean'">
+							and ${column.columnName} = #{column.value,
+							jdbcType=BOOLEAN}
+						</when>
+						<when test="column.javaType == 'Integer'">
+							and ${column.columnName} = #{column.value,
+							jdbcType=INTEGER}
+						</when>
+						<when test="column.javaType == 'Long'">
+							and ${column.columnName} = #{column.value,
+							jdbcType=BIGINT}
+						</when>
+						<when test="column.javaType == 'Double'">
+							and ${column.columnName} = #{column.value,
+							jdbcType=DOUBLE}
+						</when>
+						<when test="column.javaType == 'Collection'">
+							<if
+								test="column.collectionValues != null and column.collectionValues.size != 0">
+								and ${column.columnName} IN
+								<foreach item="x_rowId" index="index" collection="column.collectionValues"
+									open="(" separator="," close=")">
+									#{x_rowId}
+								</foreach>
+							</if>
+						</when>
+						<otherwise>
+							and ${column.columnName} = #{column.value,
+							jdbcType=VARCHAR}
+						</otherwise>
+					</choose>
+				</foreach>
+			</when>
+			<otherwise>
+				and 1=0
+			</otherwise>
+		</choose>
+
+	</delete>
+
+</mapper>

@@ -38,22 +38,25 @@
 		<result property="value" column="VALUE_" jdbcType="VARCHAR" />
 	</resultMap>
 
-	<insert id="insertExtensionEntity"
-		parameterType="com.glaf.activiti.extension.model.ExtensionEntity">
-		insert into EX_ACT_EXTENSION (ID_, EXTENDID_, NAME_, TYPE_,
-		DESCRIPTION_, PROCESSNAME_, TASKNAME_, OBJECTID_, OBJECTVALUE_,
-		LOCKED_, CREATEDATE_, CREATEBY_ ) values (
-		#{id, jdbcType=VARCHAR}, #{extendId, jdbcType=VARCHAR}, 
-		#{name, jdbcType=VARCHAR}, 
-		#{type, jdbcType=VARCHAR}, 
-		#{description, jdbcType=VARCHAR}, 
-		#{processName,	jdbcType=VARCHAR}, 
-		#{taskName, jdbcType=VARCHAR}, 
-		#{objectId, jdbcType=VARCHAR}, 
-		#{objectValue, jdbcType=VARCHAR}, 
-		#{locked, jdbcType=INTEGER}, 
-		#{createDate, jdbcType=TIMESTAMP}, 
-		#{createBy,	jdbcType=VARCHAR})
+	<insert id="insertExtensionEntity" parameterType="com.glaf.activiti.extension.model.ExtensionEntity">
+		insert into
+		EX_ACT_EXTENSION (ID_, EXTENDID_, NAME_, TYPE_,
+		DESCRIPTION_,
+		PROCESSNAME_, TASKNAME_, OBJECTID_, OBJECTVALUE_,
+		LOCKED_, CREATEDATE_,
+		CREATEBY_ ) values (
+		#{id, jdbcType=VARCHAR}, #{extendId,
+		jdbcType=VARCHAR},
+		#{name, jdbcType=VARCHAR},
+		#{type, jdbcType=VARCHAR},
+		#{description, jdbcType=VARCHAR},
+		#{processName, jdbcType=VARCHAR},
+		#{taskName, jdbcType=VARCHAR},
+		#{objectId, jdbcType=VARCHAR},
+		#{objectValue, jdbcType=VARCHAR},
+		#{locked, jdbcType=INTEGER},
+		#{createDate, jdbcType=TIMESTAMP},
+		#{createBy, jdbcType=VARCHAR})
 	</insert>
 
 
@@ -61,9 +64,9 @@
 		parameterType="com.glaf.activiti.extension.model.ExtensionFieldEntity">
 		insert into EX_ACT_EXTENSION_FIELD (ID_, EXTENDID_,
 		NAME_, VALUE_ ) values (
-		#{id, jdbcType=VARCHAR}, 
+		#{id, jdbcType=VARCHAR},
 		#{extendId, jdbcType=VARCHAR},
-		#{name, jdbcType=VARCHAR}, 
+		#{name, jdbcType=VARCHAR},
 		#{value, jdbcType=VARCHAR} )
 	</insert>
 
@@ -71,41 +74,45 @@
 		parameterType="com.glaf.activiti.extension.model.ExtensionParamEntity">
 		insert into EX_ACT_EXTENSION_PARAM (ID_, EXTENDID_,
 		NAME_, TYPE_, VALUE_ )
-		values ( #{id, jdbcType=VARCHAR}, 
+		values ( #{id, jdbcType=VARCHAR},
 		#{extendId, jdbcType=VARCHAR},
 		#{name, jdbcType=VARCHAR},
-		#{type,	jdbcType=VARCHAR},
+		#{type,
+		jdbcType=VARCHAR},
 		#{value, jdbcType=VARCHAR} )
 	</insert>
-	
+
 	<update id="updateSql" parameterType="map">
-	      ${updateSql}
+		${updateSql}
 	</update>
 
 	<delete id="deleteExtension" parameterType="string">
-		delete from EX_ACT_EXTENSION 
+		delete from
+		EX_ACT_EXTENSION
 		where ID_ = #{value}
 	</delete>
 
 	<delete id="deleteExtensionField" parameterType="string">
-		delete from	EX_ACT_EXTENSION_FIELD
-		where EXTENDID_ = #{value} 
+		delete from
+		EX_ACT_EXTENSION_FIELD
+		where EXTENDID_ = #{value}
 	</delete>
 
 	<delete id="deleteExtensionParam" parameterType="string">
-		delete from	EX_ACT_EXTENSION_PARAM
-		where EXTENDID_ = #{value} 
+		delete from
+		EX_ACT_EXTENSION_PARAM
+		where EXTENDID_ = #{value}
 	</delete>
 
 	<sql id="selectExtensionEntitiesByQueryCriteriaSql">
 		from EX_ACT_EXTENSION
 		<where>
 			<if test="extendId != null "> and EXTENDID_ = #{extendId} </if>
-			 
+
 			<if test="name != null "> and NAME_ = #{name} </if>
 
 			<if test="processName != null "> and PROCESSNAME_ = #{processName} </if>
- 
+
 			<if test="taskName != null "> and TASKNAME_ = #{taskName} </if>
 
 			<if test="locked != null "> and LOCKED_ = #{locked } </if>
@@ -133,12 +140,14 @@
 		<include refid="selectExtensionEntitiesByQueryCriteriaSql" />
 	</select>
 
-	<select id="getExtensionFields" parameterType="string" resultMap="extensionFieldEntityResultMap">
-	    select * from EX_ACT_EXTENSION_FIELD where EXTENDID_ = #{value}
+	<select id="getExtensionFields" parameterType="string"
+		resultMap="extensionFieldEntityResultMap">
+		select * from EX_ACT_EXTENSION_FIELD where EXTENDID_ = #{value}
 	</select>
 
-	<select id="getExtensionParams" parameterType="string" resultMap="extensionParamEntityResultMap">
-	    select * from EX_ACT_EXTENSION_PARAM where EXTENDID_ = #{value}
+	<select id="getExtensionParams" parameterType="string"
+		resultMap="extensionParamEntityResultMap">
+		select * from EX_ACT_EXTENSION_PARAM where EXTENDID_ = #{value}
 	</select>
 
 </mapper>

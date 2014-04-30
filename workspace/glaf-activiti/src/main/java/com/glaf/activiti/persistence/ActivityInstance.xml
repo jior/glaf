@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.glaf.activiti.persistence.StepInstancePersistence">
+<mapper namespace="com.glaf.activiti.persistence.ActivityInstancePersistence">
 
 	<resultMap id="mxActivityInstanceResultMap" type="com.glaf.activiti.model.ActivityInstance">
 		<id property="id" column="ID_" jdbcType="VARCHAR" />
@@ -20,9 +20,11 @@
 
 	<insert id="insertActivityInstance" parameterType="com.glaf.activiti.model.ActivityInstance">
 		insert into
-		EX_ACT_ACTIVITY_INSTANCE (ID_, ACTORID_, PROCESSINSTANCEID_,EVENTNAME_,
+		EX_ACT_ACTIVITY_INSTANCE (ID_, ACTORID_,
+		PROCESSINSTANCEID_,EVENTNAME_,
 		STATE_,
-		OUTCOME_, APPROVE_, OPINION_, CREATETIME_, ENDTIME_, TYPE_ )
+		OUTCOME_, APPROVE_, OPINION_,
+		CREATETIME_, ENDTIME_, TYPE_ )
 		values (
 		#{id, jdbcType=VARCHAR},
 		#{actorId, jdbcType=VARCHAR},
@@ -33,10 +35,12 @@
 		jdbcType=VARCHAR},
 		#{approve,
 		jdbcType=VARCHAR},
-		#{opinion, jdbcType=VARCHAR},
+		#{opinion,
+		jdbcType=VARCHAR},
 		#{createTime,
 		jdbcType=TIMESTAMP},
-		#{endTime, jdbcType=TIMESTAMP},
+		#{endTime,
+		jdbcType=TIMESTAMP},
 		#{type,
 		jdbcType=VARCHAR} )
 	</insert>
@@ -81,13 +85,11 @@
 				and E.PROCESSINSTANCEID_ = #{processInstanceId}
 			</if>
 
-			<if
-				test="processInstanceIdLike != null and processInstanceIdLike != '' ">
+			<if test="processInstanceIdLike != null and processInstanceIdLike != '' ">
 				and E.PROCESSINSTANCEID_ like #{processInstanceIdLike}
 			</if>
 
-			<if
-				test="processInstanceIds != null and processInstanceIds.size() &gt; 0">
+			<if test="processInstanceIds != null and processInstanceIds.size() &gt; 0">
 				and E.PROCESSINSTANCEID_ IN
 				<foreach item="x_processInstanceId" index="index"
 					collection="processInstanceIds" open="(" separator="," close=")">
