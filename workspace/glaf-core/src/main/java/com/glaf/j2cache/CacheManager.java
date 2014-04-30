@@ -23,12 +23,6 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 
-import com.glaf.j2cache.ehcache.EhCacheProvider;
-import com.glaf.j2cache.guava.GuavaCacheProvider;
-import com.glaf.j2cache.mongodb.MongodbCacheProvider;
-import com.glaf.j2cache.redis.RedisCacheProvider;
-import com.glaf.j2cache.spymemcache.SpyMemCacheProvider;
-import com.glaf.j2cache.xmemcache.XMemCacheProvider;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.IOUtils;
@@ -51,6 +45,146 @@ class CacheManager {
 	private static CacheProvider l2_provider;
 
 	private static CacheExpiredListener listener;
+
+	private final static Cache _GetCache(int level, String cache_name,
+			boolean autoCreate) {
+		return ((level == 1) ? l1_provider : l2_provider).buildCache(
+				cache_name, autoCreate, listener);
+	}
+
+	/**
+	 * 批量删除缓存中的一些数据
+	 * 
+	 * @param level
+	 * @param name
+	 * @param keys
+	 */
+	@SuppressWarnings("rawtypes")
+	public final static void batchEvict(int level, String name, List keys) {
+		if (name != null && keys != null && keys.size() > 0) {
+			Cache cache = _GetCache(level, name, false);
+			if (cache != null) {
+				cache.evict(keys);
+			}
+		}
+	}
+
+	/**
+	 * Clear the cache
+	 */
+	public final static void clear(int level, String name)
+			throws CacheException {
+		Cache cache = _GetCache(level, name, false);
+		if (cache != null) {
+			cache.clear();
+		}
+	}
+
+	/**
+	 * 清除缓存中的某个数据
+	 * 
+	 * @param level
+	 * @param name
+	 * @param key
+	 */
+	public final static void evict(int level, String name, Object key) {
+		// batchEvict(level, name, java.util.Arrays.asList(key));
+		if (name != null && key != null) {
+			Cache cache = _GetCache(level, name, false);
+			if (cache != null) {
+				cache.evict(key);
+			}
+		}
+	}
+
+	/**
+	 * 获取缓存中的数据
+	 * 
+	 * @param <T>
+	 * @param level
+	 * @param resultClass
+	 * @param name
+	 * @param key
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public final static <T> T get(int level, Class<T> resultClass, String name,
+			Object key) {
+		// System.out.println("GET2 => " + name+":"+key);
+		if (name != null && key != null) {
+			Cache cache = _GetCache(level, name, false);
+			if (cache != null) {
+				return (T) cache.get(key);
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 获取缓存中的数据
+	 * 
+	 * @param level
+	 * @param name
+	 * @param key
+	 * @return
+	 */
+	public final static Object get(int level, String name, Object key) {
+		// System.out.println("GET1 => " + name+":"+key);
+		if (name != null && key != null) {
+			Cache cache = _GetCache(level, name, false);
+			if (cache != null) {
+				return cache.get(key);
+			}
+		}
+		return null;
+	}
+
+	private final static CacheProvider getProviderInstance(String value)
+			throws Exception {
+		String className = value;
+		if ("ehcache".equalsIgnoreCase(value)) {
+			className = "com.glaf.j2cache.ehcache.EhCacheProvider";
+		}
+		if ("redis".equalsIgnoreCase(value)) {
+			className = "com.glaf.j2cache.redis.RedisCacheProvider";
+		}
+		if ("guava".equalsIgnoreCase(value)) {
+			className = "com.glaf.j2cache.guava.GuavaCacheProvider";
+		}
+		if ("hazelcast".equalsIgnoreCase(value)) {
+			className = "com.glaf.j2cache.hazelcast.HazelcastCacheProvider";
+		}
+		if ("mongodb".equalsIgnoreCase(value)) {
+			className = "com.glaf.j2cache.mongodb.MongodbCacheProvider";
+		}
+		if ("spymemcached".equalsIgnoreCase(value)) {
+			className = "com.glaf.j2cache.spymemcache.SpyMemCacheProvider";
+		}
+		if ("xmemcached".equalsIgnoreCase(value)) {
+			className = "com.glaf.j2cache.xmemcache.XMemCacheProvider";
+		}
+		if ("map".equalsIgnoreCase(value)) {
+			className = "com.glaf.j2cache.MapCacheProvider";
+		}
+		if ("none".equalsIgnoreCase(value)) {
+			className = "com.glaf.j2cache.NullCacheProvider";
+		}
+		return (CacheProvider) Class.forName(className).newInstance();
+	}
+
+	private final static Properties getProviderProperties(Properties props,
+			CacheProvider provider) {
+		Properties new_props = new Properties();
+		Enumeration<Object> keys = props.keys();
+		String prefix = provider.name() + '.';
+		while (keys.hasMoreElements()) {
+			String key = (String) keys.nextElement();
+			if (key.startsWith(prefix))
+				new_props.setProperty(key.substring(prefix.length()),
+						props.getProperty(key));
+		}
+		return new_props;
+	}
 
 	public static void initCacheProvider(CacheExpiredListener listener) {
 		InputStream configStream = null;
@@ -84,87 +218,10 @@ class CacheManager {
 		}
 	}
 
-	private final static CacheProvider getProviderInstance(String value)
-			throws Exception {
-		if ("ehcache".equalsIgnoreCase(value))
-			return new EhCacheProvider();
-		if ("redis".equalsIgnoreCase(value))
-			return new RedisCacheProvider();
-		if ("guava".equalsIgnoreCase(value))
-			return new GuavaCacheProvider();
-		if ("mongodb".equalsIgnoreCase(value))
-			return new MongodbCacheProvider();
-		if ("spymemcached".equalsIgnoreCase(value))
-			return new SpyMemCacheProvider();
-		if ("xmemcached".equalsIgnoreCase(value))
-			return new XMemCacheProvider();
-		if ("map".equalsIgnoreCase(value))
-			return new MapCacheProvider();
-		if ("none".equalsIgnoreCase(value))
-			return new NullCacheProvider();
-		return (CacheProvider) Class.forName(value).newInstance();
-	}
-
-	private final static Properties getProviderProperties(Properties props,
-			CacheProvider provider) {
-		Properties new_props = new Properties();
-		Enumeration<Object> keys = props.keys();
-		String prefix = provider.name() + '.';
-		while (keys.hasMoreElements()) {
-			String key = (String) keys.nextElement();
-			if (key.startsWith(prefix))
-				new_props.setProperty(key.substring(prefix.length()),
-						props.getProperty(key));
-		}
-		return new_props;
-	}
-
-	private final static Cache _GetCache(int level, String cache_name,
-			boolean autoCreate) {
-		return ((level == 1) ? l1_provider : l2_provider).buildCache(
-				cache_name, autoCreate, listener);
-	}
-
-	/**
-	 * 获取缓存中的数据
-	 * 
-	 * @param level
-	 * @param name
-	 * @param key
-	 * @return
-	 */
-	public final static Object get(int level, String name, Object key) {
-		// System.out.println("GET1 => " + name+":"+key);
-		if (name != null && key != null) {
-			Cache cache = _GetCache(level, name, false);
-			if (cache != null) {
-				return cache.get(key);
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * 获取缓存中的数据
-	 * 
-	 * @param <T>
-	 * @param level
-	 * @param resultClass
-	 * @param name
-	 * @param key
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	public final static <T> T get(int level, Class<T> resultClass, String name,
-			Object key) {
-		// System.out.println("GET2 => " + name+":"+key);
-		if (name != null && key != null) {
-			Cache cache = _GetCache(level, name, false);
-			if (cache != null) {
-				return (T) cache.get(key);
-			}
-		}
-		return null;
+	@SuppressWarnings("rawtypes")
+	public final static List keys(int level, String name) throws CacheException {
+		Cache cache = _GetCache(level, name, false);
+		return (cache != null) ? cache.keys() : null;
 	}
 
 	/**
@@ -184,57 +241,6 @@ class CacheManager {
 				cache.put(key, value);
 			}
 		}
-	}
-
-	/**
-	 * 清除缓存中的某个数据
-	 * 
-	 * @param level
-	 * @param name
-	 * @param key
-	 */
-	public final static void evict(int level, String name, Object key) {
-		// batchEvict(level, name, java.util.Arrays.asList(key));
-		if (name != null && key != null) {
-			Cache cache = _GetCache(level, name, false);
-			if (cache != null) {
-				cache.evict(key);
-			}
-		}
-	}
-
-	/**
-	 * 批量删除缓存中的一些数据
-	 * 
-	 * @param level
-	 * @param name
-	 * @param keys
-	 */
-	@SuppressWarnings("rawtypes")
-	public final static void batchEvict(int level, String name, List keys) {
-		if (name != null && keys != null && keys.size() > 0) {
-			Cache cache = _GetCache(level, name, false);
-			if (cache != null) {
-				cache.evict(keys);
-			}
-		}
-	}
-
-	/**
-	 * Clear the cache
-	 */
-	public final static void clear(int level, String name)
-			throws CacheException {
-		Cache cache = _GetCache(level, name, false);
-		if (cache != null) {
-			cache.clear();
-		}
-	}
-
-	@SuppressWarnings("rawtypes")
-	public final static List keys(int level, String name) throws CacheException {
-		Cache cache = _GetCache(level, name, false);
-		return (cache != null) ? cache.keys() : null;
 	}
 
 }
