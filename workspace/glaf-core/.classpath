@@ -157,5 +157,11 @@
 	<classpathentry kind="lib" path="lib/async-http-client.jar"/>
 	<classpathentry kind="lib" path="lib/jgroups.jar"/>
 	<classpathentry kind="lib" path="lib/fst.jar"/>
+	<classpathentry kind="lib" path="lib/classmate.jar"/>
+	<classpathentry kind="lib" path="lib/disruptor.jar"/>
+	<classpathentry kind="lib" path="lib/fourinone.jar"/>
+	<classpathentry kind="lib" path="lib/hazelcast-all.jar"/>
+	<classpathentry kind="lib" path="lib/jboss-logging.jar"/>
+	<classpathentry kind="lib" path="lib/xom.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
