@@ -27,18 +27,17 @@ import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 
-import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
-import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
+import net.sf.jasperreports.export.ExporterInput;
+import net.sf.jasperreports.export.SimpleExporterInput;
 
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.util.JdbcUtils;
-
 import com.glaf.report.domain.Report;
 
 public class JasperReportGen extends AbstractReportGen implements ReportGen {
@@ -68,19 +67,9 @@ public class JasperReportGen extends AbstractReportGen implements ReportGen {
 							bos);
 				} else if ("xls".equals(report.getReportFormat())) {
 					JRXlsExporter exporter = new JRXlsExporter();
-					exporter.setParameter(JRExporterParameter.JASPER_PRINT,
+					ExporterInput exporterInput = new SimpleExporterInput(
 							jasperPrint);
-					exporter.setParameter(JRExporterParameter.OUTPUT_STREAM,
-							bos);
-					exporter.setParameter(
-							JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS,
-							Boolean.TRUE);
-					exporter.setParameter(
-							JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET,
-							Boolean.FALSE);
-					exporter.setParameter(
-							JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND,
-							Boolean.FALSE);
+					exporter.setExporterInput(exporterInput);
 					exporter.exportReport();
 				}
 			} else {
@@ -91,19 +80,9 @@ public class JasperReportGen extends AbstractReportGen implements ReportGen {
 							bos);
 				} else if ("xls".equals(report.getReportFormat())) {
 					JRXlsExporter exporter = new JRXlsExporter();
-					exporter.setParameter(JRExporterParameter.JASPER_PRINT,
+					ExporterInput exporterInput = new SimpleExporterInput(
 							jasperPrint);
-					exporter.setParameter(JRExporterParameter.OUTPUT_STREAM,
-							bos);
-					exporter.setParameter(
-							JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS,
-							Boolean.TRUE);
-					exporter.setParameter(
-							JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET,
-							Boolean.FALSE);
-					exporter.setParameter(
-							JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND,
-							Boolean.FALSE);
+					exporter.setExporterInput(exporterInput);
 					exporter.exportReport();
 				}
 			}
