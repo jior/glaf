@@ -165,7 +165,7 @@ public class MxConsoleController {
 				.getId());
 
 		Collection<Long> roles = loginContext.getRoleIds();
-		List<Long> list = new java.util.concurrent.CopyOnWriteArrayList<Long>();
+		List<Long> list = new java.util.ArrayList<Long>();
 		if (roles != null && !roles.isEmpty()) {
 			for (Long r : roles) {
 				list.add(r);
@@ -178,8 +178,8 @@ public class MxConsoleController {
 			userPanel = panelService.getUserPanel("system");
 		}
 
-		Map<String, Integer> panelPxMap = new java.util.concurrent.ConcurrentHashMap<String, Integer>();
-		Map<String, Integer> panelMap = new java.util.concurrent.ConcurrentHashMap<String, Integer>();
+		Map<String, Integer> panelPxMap = new java.util.HashMap<String, Integer>();
+		Map<String, Integer> panelMap = new java.util.HashMap<String, Integer>();
 		if (userPanel != null && userPanel.getPanelInstances() != null) {
 			String layoutName = userPanel.getLayoutName();
 			Set<PanelInstance> set = userPanel.getPanelInstances();

@@ -477,7 +477,7 @@ public class MxSystemDbTableController {
 		String dbType = request.getParameter("dbType");
 		if (StringUtils.isNotEmpty(dbType) && StringUtils.isNotEmpty(tables)) {
 			XmlWriter xmlWriter = new XmlWriter();
-			Map<String, byte[]> bytesMap = new java.util.concurrent.ConcurrentHashMap<String, byte[]>();
+			Map<String, byte[]> bytesMap = new java.util.HashMap<String, byte[]>();
 			List<String> list = StringTools.split(tables);
 			for (String table : list) {
 				List<ColumnDefinition> columns = DBUtils

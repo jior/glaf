@@ -94,10 +94,10 @@ public class ActivitiProcessController {
 		List<ProcessDefinition> rows = activitiProcessQueryService
 				.getProcessDefinitions(start, limit, paramMap);
 
-		List<Object> list = new java.util.concurrent.CopyOnWriteArrayList<Object>();
+		List<Object> list = new java.util.ArrayList<Object>();
 
 		for (ProcessDefinition processDefinition : rows) {
-			Map<String, Object> rowMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			Map<String, Object> rowMap = new java.util.HashMap<String, Object>();
 			rowMap.put("id", processDefinition.getId());
 			rowMap.put("processDefinitionId", processDefinition.getId());
 			rowMap.put("deploymentId", processDefinition.getDeploymentId());
@@ -113,7 +113,7 @@ public class ActivitiProcessController {
 			list.add(rowMap);
 		}
 
-		Map<String, Object> pageInfo = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> pageInfo = new java.util.HashMap<String, Object>();
 		// 当前页数设置
 		pageInfo.put("startIndex", start);
 
@@ -193,10 +193,10 @@ public class ActivitiProcessController {
 		List<ProcessInstance> rows = activitiProcessQueryService
 				.getProcessInstances(start, limit, paramMap);
 
-		List<Object> list = new java.util.concurrent.CopyOnWriteArrayList<Object>();
+		List<Object> list = new java.util.ArrayList<Object>();
 
 		for (ProcessInstance processInstance : rows) {
-			Map<String, Object> rowMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			Map<String, Object> rowMap = new java.util.HashMap<String, Object>();
 			rowMap.put("id", processInstance.getId());
 			rowMap.put("processInstanceId", processInstance.getId());
 			rowMap.put("businessKey", processInstance.getBusinessKey());
@@ -206,7 +206,7 @@ public class ActivitiProcessController {
 			list.add(rowMap);
 		}
 
-		Map<String, Object> pageInfo = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> pageInfo = new java.util.HashMap<String, Object>();
 		// 当前页数设置
 		pageInfo.put("startIndex", start);
 

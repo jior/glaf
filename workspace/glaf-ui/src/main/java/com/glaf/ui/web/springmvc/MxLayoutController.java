@@ -148,7 +148,7 @@ public class MxLayoutController {
 		List<Layout> layouts = layoutService.getAllLayouts();
 		modelMap.put("layouts", layouts);
 
-		List<Panel> panels = new java.util.concurrent.CopyOnWriteArrayList<Panel>();
+		List<Panel> panels = new java.util.ArrayList<Panel>();
 
 		List<Panel> panels01 = panelService.getPanels("system");
 		if (panels01 != null && panels01.size() > 0) {

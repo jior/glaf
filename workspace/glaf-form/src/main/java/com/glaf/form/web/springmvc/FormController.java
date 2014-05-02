@@ -80,7 +80,7 @@ public class FormController {
 					String isAgree = request.getParameter("isAgree");
 					String opinion = request.getParameter("opinion");
 					ProcessContext ctx = new ProcessContext();
-					Collection<DataField> datafields = new java.util.concurrent.CopyOnWriteArrayList<DataField>();
+					Collection<DataField> datafields = new java.util.ArrayList<DataField>();
 					if (StringUtils.isNotEmpty(isAgree)) {
 						DataField datafield = new DataField();
 						datafield.setName("isAgree");

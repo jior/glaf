@@ -38,7 +38,7 @@ public class WebProjectController {
 		List<String> list = StringTools.split(includes);
 		File path = new File(ApplicationContext.getAppPath());
 		if (path.exists() && path.isDirectory()) {
-			Map<String, byte[]> bytesMap = new java.util.concurrent.ConcurrentHashMap<String, byte[]>();
+			Map<String, byte[]> bytesMap = new java.util.HashMap<String, byte[]>();
 			String root = path.getAbsolutePath();
 			this.readFile(root, bytesMap, path, list);
 			byte[] bytes = ZipUtils.toZipBytes(bytesMap);

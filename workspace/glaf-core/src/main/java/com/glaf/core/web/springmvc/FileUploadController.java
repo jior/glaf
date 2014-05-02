@@ -114,7 +114,7 @@ public class FileUploadController {
 		int status = ParamUtils.getInt(paramMap, "status");
 		try {
 			if (request.getAttribute("dataFiles") == null) {
-				List<DataFile> dataFiles = new java.util.concurrent.CopyOnWriteArrayList<DataFile>();
+				List<DataFile> dataFiles = new java.util.ArrayList<DataFile>();
 				if (StringUtils.isNotEmpty(businessKey)) {
 					List<DataFile> rows = blobService.getBlobList(businessKey);
 					if (rows != null && rows.size() > 0) {

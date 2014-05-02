@@ -72,13 +72,10 @@ import com.glaf.mail.service.IMailTaskService;
 public class MailTaskResource {
 	protected static Log logger = LogFactory.getLog(MailTaskResource.class);
 
-	 
 	protected IMailDataService mailDataService;
 
-	 
 	protected IMailTaskService mailTaskService;
 
-	 
 	protected MailDataFacede mailDataFacede;
 
 	@POST

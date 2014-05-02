@@ -174,7 +174,7 @@ public class MxDiskFileManagerJsonController {
 		}
 
 		// 遍历目录取的文件信息
-		List<Hashtable<String, Object>> fileList = new java.util.concurrent.CopyOnWriteArrayList<Hashtable<String, Object>>();
+		List<Hashtable<String, Object>> fileList = new java.util.ArrayList<Hashtable<String, Object>>();
 		if (currentPathFile.listFiles() != null) {
 			for (File file : currentPathFile.listFiles()) {
 				Hashtable<String, Object> hash = new Hashtable<String, Object>();

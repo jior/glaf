@@ -135,7 +135,7 @@ public class ActivitiTaskController {
 			List<Task> allTasks = activitiTaskQueryService
 					.getAllTasks(processInstanceId);
 
-			List<Object> historyTaskItems = new java.util.concurrent.CopyOnWriteArrayList<Object>();
+			List<Object> historyTaskItems = new java.util.ArrayList<Object>();
 
 			List<?> row01 = activitiTaskQueryService
 					.getHistoryTasks(processInstanceId);
@@ -145,7 +145,7 @@ public class ActivitiTaskController {
 
 			model.addAttribute("historyTaskItems", historyTaskItems);
 
-			List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
+			List<TaskItem> taskItems = new java.util.ArrayList<TaskItem>();
 			if (allTasks != null && !allTasks.isEmpty()) {
 				for (Task task : allTasks) {
 					if (task.getAssignee() != null) {
@@ -307,7 +307,7 @@ public class ActivitiTaskController {
 			}
 		}
 
-		Map<String, Object> pageInfo = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> pageInfo = new java.util.HashMap<String, Object>();
 		// 当前页数设置
 		pageInfo.put("startIndex", start);
 

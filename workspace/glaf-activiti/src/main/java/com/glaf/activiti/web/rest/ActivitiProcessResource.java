@@ -255,7 +255,7 @@ public class ActivitiProcessResource {
 			}
 		}
 
-		Map<String, Object> context = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> context = new java.util.HashMap<String, Object>();
 		context.put("contextPath", contextPath);
 		context.put("x_script", buffer.toString());
 		context.put("processInstanceId", processInstanceId);

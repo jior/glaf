@@ -75,7 +75,7 @@ public class MxTreeModelResource {
 		}
 		List<TreeModel> children = treeNode.getChildren();
 		if (children != null && children.size() > 0) {
-			Collection<JSONObject> rows = new java.util.concurrent.CopyOnWriteArrayList<JSONObject>();
+			Collection<JSONObject> rows = new java.util.ArrayList<JSONObject>();
 			for (TreeModel node : children) {
 				JSONObject o = this.fillTreeDataChildren(node);
 				rows.add(o);
@@ -123,7 +123,7 @@ public class MxTreeModelResource {
 		String nodeCode = request.getParameter("nodeCode");
 		Long nodeId = RequestUtils.getLong(request, "id");
 		logger.debug(RequestUtils.getParameterMap(request));
-		List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
+		List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
 
 		if (nodeId > 0) {
 			TreeModel treeNode = treeModelService.getTreeModel(nodeId);
@@ -156,7 +156,7 @@ public class MxTreeModelResource {
 	public byte[] treeJson(@Context HttpServletRequest request) {
 		String nodeCode = request.getParameter("nodeCode");
 
-		List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
+		List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
 		if (StringUtils.isNotEmpty(nodeCode)) {
 			TreeModel treeNode = treeModelService.getTreeModelByCode(nodeCode);
 			if (treeNode != null) {

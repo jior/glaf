@@ -158,7 +158,7 @@ public class MxDBFileManagerJsonController {
 		List<DataFile> dataFiles = blobService.getBlobList(query);
 
 		// 遍历目录取的文件信息
-		List<Hashtable<?, ?>> fileList = new java.util.concurrent.CopyOnWriteArrayList<Hashtable<?, ?>>();
+		List<Hashtable<?, ?>> fileList = new java.util.ArrayList<Hashtable<?, ?>>();
 		if (dataFiles != null && !dataFiles.isEmpty()) {
 			for (DataFile file : dataFiles) {
 				Hashtable<String, Object> hash = new Hashtable<String, Object>();

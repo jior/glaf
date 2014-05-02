@@ -638,13 +638,13 @@ public class ActivitiResource {
 	}
 
 	private List<String> getHighLightedFlows() {
-		List<String> highLightedFlows = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> highLightedFlows = new java.util.ArrayList<String>();
 		List<HistoricActivityInstance> historicActivityInstances = historyService
 				.createHistoricActivityInstanceQuery()
 				.processInstanceId(processInstanceId)
 				.orderByHistoricActivityInstanceStartTime().asc().list();
 
-		List<String> historicActivityInstanceList = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> historicActivityInstanceList = new java.util.ArrayList<String>();
 
 		for (HistoricActivityInstance hai : historicActivityInstances) {
 			historicActivityInstanceList.add(hai.getActivityId());
@@ -736,10 +736,10 @@ public class ActivitiResource {
 				.getRepositoryService();
 		processInstance = null;
 		processDefinition = null;
-		highLightedFlows = new java.util.concurrent.CopyOnWriteArrayList<String>();
-		highLightedActivities = new java.util.concurrent.CopyOnWriteArrayList<String>();
-		subProcessInstanceMap = new java.util.concurrent.ConcurrentHashMap<String, ObjectNode>();
-		historicActivityInstanceList = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		highLightedFlows = new java.util.ArrayList<String>();
+		highLightedActivities = new java.util.ArrayList<String>();
+		subProcessInstanceMap = new java.util.HashMap<String, ObjectNode>();
+		historicActivityInstanceList = new java.util.ArrayList<String>();
 	}
 
 	private boolean isGraphicNotationDefined(

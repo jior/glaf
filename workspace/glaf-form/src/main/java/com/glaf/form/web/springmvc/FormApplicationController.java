@@ -173,7 +173,7 @@ public class FormApplicationController {
 						.read(new ByteArrayInputStream(entityDefinition
 								.getData()));
 
-				List<ColumnDefinition> unselectColumns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+				List<ColumnDefinition> unselectColumns = new java.util.ArrayList<ColumnDefinition>();
 				if (tableDefinition.getColumns() != null) {
 					for (ColumnDefinition c : tableDefinition.getColumns()) {
 						if (columns != null && columns.contains(c)) {
@@ -374,7 +374,7 @@ public class FormApplicationController {
 				EntityDefinition entityDefinition = entityDefinitionService
 						.getEntityDefinition(targetId);
 				if (entityDefinition != null) {
-					List<ColumnDefinition> selectColumns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+					List<ColumnDefinition> selectColumns = new java.util.ArrayList<ColumnDefinition>();
 					XmlReader reader = new XmlReader();
 					TableDefinition tableDefinition = reader
 							.read(new ByteArrayInputStream(entityDefinition

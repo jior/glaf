@@ -175,7 +175,7 @@ public class MxSystemTableResource {
 
 		tableName = tableName.toUpperCase();
 
-		Collection<String> rejects = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		Collection<String> rejects = new java.util.ArrayList<String>();
 		rejects.add("FILEATT");
 		rejects.add("SYS_LOB");
 		rejects.add("SYS_MAIL_FILE");

@@ -141,7 +141,7 @@ public class MxSystemParamResource {
 		String serviceKey = request.getParameter("serviceKey");
 		String businessKey = request.getParameter("businessKey");
 		try {
-			Map<String, InputDefinition> paramMap = new java.util.concurrent.ConcurrentHashMap<String, InputDefinition>();
+			Map<String, InputDefinition> paramMap = new java.util.HashMap<String, InputDefinition>();
 			List<InputDefinition> params = systemParamService
 					.getInputDefinitions(serviceKey);
 			if (params != null && !params.isEmpty()) {
@@ -346,7 +346,7 @@ public class MxSystemParamResource {
 			List<InputDefinition> params = systemParamService
 					.getInputDefinitions(serviceKey);
 			if (params != null && !params.isEmpty()) {
-				List<SystemParam> rows = new java.util.concurrent.CopyOnWriteArrayList<SystemParam>();
+				List<SystemParam> rows = new java.util.ArrayList<SystemParam>();
 				for (InputDefinition def : params) {
 					String paramName = def.getKeyName();
 					String value = request.getParameter(paramName);

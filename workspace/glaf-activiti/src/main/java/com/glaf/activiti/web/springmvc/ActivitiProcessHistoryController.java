@@ -87,7 +87,7 @@ public class ActivitiProcessHistoryController {
 		List<HistoricProcessInstance> rows = activitiProcessQueryService
 				.getHistoricProcessInstances(start, limit, paramMap);
 
-		List<Object> list = new java.util.concurrent.CopyOnWriteArrayList<Object>();
+		List<Object> list = new java.util.ArrayList<Object>();
 
 		for (HistoricProcessInstance processInstance : rows) {
 			Map<String, Object> rowMap = new java.util.HashMap<String, Object>();
@@ -114,7 +114,7 @@ public class ActivitiProcessHistoryController {
 			list.add(rowMap);
 		}
 
-		Map<String, Object> pageInfo = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> pageInfo = new java.util.HashMap<String, Object>();
 		// 当前页数设置
 		pageInfo.put("startIndex", start);
 

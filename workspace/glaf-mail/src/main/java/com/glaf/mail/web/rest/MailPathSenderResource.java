@@ -57,7 +57,6 @@ public class MailPathSenderResource {
 	protected static final Log logger = LogFactory
 			.getLog(MailPathSenderResource.class);
 
-	 
 	protected IMailPathSenderService mailPathSenderService;
 
 	@POST

@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.jbpm.web.springmvc;
 
@@ -143,8 +143,7 @@ public class MxJbpmStartProcessController {
 			if (processInstanceId != null) {
 				jsonMap.put("statusCode", 200);
 				jsonMap.put("success", "true");
-				jsonMap.put("data",
-						ViewProperties.getString("res_submit_ok"));
+				jsonMap.put("data", ViewProperties.getString("res_submit_ok"));
 				jsonMap.put("message",
 						ViewProperties.getString("res_submit_ok"));
 			} else {
@@ -201,14 +200,13 @@ public class MxJbpmStartProcessController {
 			templateId = CustomProperties.getString("jbpm_start_template");
 		}
 		if (StringUtils.isNotEmpty(templateId)) {
-			 
+
 			Map<String, Object> context = new java.util.HashMap<String, Object>();
 			context.putAll(paramMap);
 			context.put("actorId", actorId);
 			context.put("processInstanceId", processInstanceId);
 			context.put("contextPath", request.getContextPath());
-			 
-			 
+
 			if (processInstanceId != null) {
 				context.put("statusCode", 200);
 				context.put("message",

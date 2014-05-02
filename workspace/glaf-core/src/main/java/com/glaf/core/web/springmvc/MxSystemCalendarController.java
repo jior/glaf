@@ -76,7 +76,7 @@ public class MxSystemCalendarController {
 		request.setAttribute("productionLine", productionLine);
 		request.setAttribute("daySize", daySize);
 
-		Map<String, SysCalendar> map = new java.util.concurrent.ConcurrentHashMap<String, SysCalendar>();
+		Map<String, SysCalendar> map = new java.util.HashMap<String, SysCalendar>();
 		for (int i = 0, len = list.size(); i < len; i++) {
 			SysCalendar sysCalendar = list.get(i);
 			String key = sysCalendar.getProductionLine() + ""
@@ -169,7 +169,7 @@ public class MxSystemCalendarController {
 		String v2 = request.getParameter("v2");
 		String mode = request.getParameter("mode");
 
-		Map<String, String> map = new java.util.concurrent.ConcurrentHashMap<String, String>();
+		Map<String, String> map = new java.util.HashMap<String, String>();
 		map.put("morning", v1);
 		map.put("evening", v2);
 		map.put("mode", mode);

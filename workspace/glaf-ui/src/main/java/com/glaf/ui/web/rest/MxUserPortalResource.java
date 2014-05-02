@@ -60,7 +60,7 @@ public class MxUserPortalResource {
 		logger.debug(titles);
 		logger.debug(poss);
 		if (titles.length() > 0) {
-			List<UserPortal> rows = new java.util.concurrent.CopyOnWriteArrayList<UserPortal>();
+			List<UserPortal> rows = new java.util.ArrayList<UserPortal>();
 			String title[] = titles.split("[,]");
 			String pos[] = poss.split("[,]");
 			for (int i = 0; i < title.length; i++) {
@@ -103,7 +103,7 @@ public class MxUserPortalResource {
 		String actorId = RequestUtils.getActorId(request);
 		String portals = request.getParameter("portalState");
 		logger.debug(portals);
-		List<UserPortal> rows = new java.util.concurrent.CopyOnWriteArrayList<UserPortal>();
+		List<UserPortal> rows = new java.util.ArrayList<UserPortal>();
 		if (portals != null && portals.length() > 0) {
 			int position = 0;
 			StringTokenizer st01 = new StringTokenizer(portals, ":");
