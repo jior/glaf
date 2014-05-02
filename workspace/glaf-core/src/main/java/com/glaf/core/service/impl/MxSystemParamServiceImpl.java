@@ -20,6 +20,7 @@ package com.glaf.core.service.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
@@ -108,8 +109,7 @@ public class MxSystemParamServiceImpl implements ISystemParamService {
 					}
 				}
 
-				String id = serviceKey + "_" + businessKey + "_"
-						+ def.getTypeCd() + "_" + def.getKeyName();
+				String id = def.getTypeCd() + "_" + def.getKeyName();
 				m.setId(id);
 				if (this.getSystemParam(id) == null) {
 					this.save(m);
@@ -232,9 +232,10 @@ public class MxSystemParamServiceImpl implements ISystemParamService {
 
 	@Transactional
 	public void save(SystemParam systemParam) {
-		String id = systemParam.getServiceKey() + "_"
-				+ systemParam.getBusinessKey() + "_" + systemParam.getTypeCd()
-				+ "_" + systemParam.getKeyName();
+		String id = systemParam.getId();
+		if (StringUtils.isEmpty(id)) {
+			id = systemParam.getTypeCd() + "_" + systemParam.getKeyName();
+		}
 		SystemParam model = this.getSystemParam(id);
 		if (model != null) {
 			if (systemParam.getServiceKey() != null) {
