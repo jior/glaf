@@ -62,7 +62,7 @@ public class PrepareTaskAssigneeListener implements TaskListener {
 				+ commandContext.getDbSqlSession().getSqlSession());
 
 		if (execution != null) {
-			Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 			paramMap.putAll(execution.getVariables());
 			String statement = null;
 			if (statementId != null) {
@@ -79,8 +79,8 @@ public class PrepareTaskAssigneeListener implements TaskListener {
 						commandContext.getDbSqlSession().getSqlSession());
 				List<?> list = entityDAO.getList(statement, paramMap);
 				if (list != null && !list.isEmpty()) {
-					List<String> users = new java.util.concurrent.CopyOnWriteArrayList<String>();
-					List<String> groups = new java.util.concurrent.CopyOnWriteArrayList<String>();
+					List<String> users = new java.util.ArrayList<String>();
+					List<String> groups = new java.util.ArrayList<String>();
 					for (Object object : list) {
 						if (object instanceof org.activiti.engine.identity.User) {
 							String actorId = ((org.activiti.engine.identity.User) object)

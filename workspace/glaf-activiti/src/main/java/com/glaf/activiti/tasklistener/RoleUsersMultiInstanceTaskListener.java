@@ -65,7 +65,7 @@ public class RoleUsersMultiInstanceTaskListener implements TaskListener {
 		logger.debug("task name:" + delegateTask.getName());
 
 		if (execution != null) {
-			Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 
 			String statement = null;
 			if (statementId != null) {
@@ -90,7 +90,7 @@ public class RoleUsersMultiInstanceTaskListener implements TaskListener {
 				statement = "getMembershipUsers";
 			}
 
-			Collection<String> assigneeList = new java.util.concurrent.CopyOnWriteArrayList<String>();
+			Collection<String> assigneeList = new java.util.ArrayList<String>();
 
 			if (!paramMap.isEmpty()) {
 				paramMap.putAll(execution.getVariables());

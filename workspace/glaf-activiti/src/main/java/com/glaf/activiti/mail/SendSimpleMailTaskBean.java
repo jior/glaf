@@ -95,7 +95,7 @@ public class SendSimpleMailTaskBean {
 				if (taskItems != null && !taskItems.isEmpty()) {
 					logger.debug("taskItems size=" + taskItems.size());
 
-					Map<String, Object> context = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+					Map<String, Object> context = new java.util.HashMap<String, Object>();
 					context.put("actorId", user.getActorId());
 					context.put("user", user);
 					context.put("taskItems", taskItems);
@@ -119,10 +119,10 @@ public class SendSimpleMailTaskBean {
 						}
 					}
 
-					List<Todo> userTasks = new java.util.concurrent.CopyOnWriteArrayList<Todo>();
+					List<Todo> userTasks = new java.util.ArrayList<Todo>();
 
-					Map<String, Todo> todoMap = new java.util.concurrent.ConcurrentHashMap<String, Todo>();
-					Map<String, TodoTotal> todoTotalMap = new java.util.concurrent.ConcurrentHashMap<String, TodoTotal>();
+					Map<String, Todo> todoMap = new java.util.HashMap<String, Todo>();
+					Map<String, TodoTotal> todoTotalMap = new java.util.HashMap<String, TodoTotal>();
 					long index = 1;
 					for (TaskItem task : taskItems) {
 						String key = task.getProcessName() + "_"

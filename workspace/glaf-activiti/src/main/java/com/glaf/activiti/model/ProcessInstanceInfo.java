@@ -37,14 +37,14 @@ public class ProcessInstanceInfo {
 
 	public void addActiveActivityInfo(ActivityInfo activityInfo) {
 		if (activeActivityInfos == null) {
-			activeActivityInfos = new java.util.concurrent.CopyOnWriteArrayList<ActivityInfo>();
+			activeActivityInfos = new java.util.ArrayList<ActivityInfo>();
 		}
 		activeActivityInfos.add(activityInfo);
 	}
 
 	public void addProcessedActivityInfo(ActivityInfo activityInfo) {
 		if (processedActivityInfos == null) {
-			processedActivityInfos = new java.util.concurrent.CopyOnWriteArrayList<ActivityInfo>();
+			processedActivityInfos = new java.util.ArrayList<ActivityInfo>();
 		}
 		processedActivityInfos.add(activityInfo);
 	}

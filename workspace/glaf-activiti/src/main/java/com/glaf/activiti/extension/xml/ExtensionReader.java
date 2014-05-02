@@ -33,7 +33,7 @@ import com.glaf.activiti.extension.model.ExtensionParamEntity;
 public class ExtensionReader {
 
 	public List<ExtensionEntity> readTasks(java.io.InputStream inputStream) {
-		List<ExtensionEntity> extensions = new java.util.concurrent.CopyOnWriteArrayList<ExtensionEntity>();
+		List<ExtensionEntity> extensions = new java.util.ArrayList<ExtensionEntity>();
 		SAXReader xmlReader = new SAXReader();
 		try {
 			Document doc = xmlReader.read(inputStream);
@@ -93,7 +93,7 @@ public class ExtensionReader {
 	}
 
 	public List<ExtensionEntity> readActions(java.io.InputStream inputStream) {
-		List<ExtensionEntity> extensions = new java.util.concurrent.CopyOnWriteArrayList<ExtensionEntity>();
+		List<ExtensionEntity> extensions = new java.util.ArrayList<ExtensionEntity>();
 		SAXReader xmlReader = new SAXReader();
 		try {
 			Document doc = xmlReader.read(inputStream);

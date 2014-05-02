@@ -74,7 +74,7 @@ public class ExecutionListenerTypes {
 	}
 
 	static Map<String, Class<?>> initializeExecutionListenerTypes() {
-		Map<String, Class<?>> types = new java.util.concurrent.ConcurrentHashMap<String, Class<?>>();
+		Map<String, Class<?>> types = new java.util.HashMap<String, Class<?>>();
 		String resource = SystemProperties.getString("activiti.executionListeners");
 		if (StringUtils.isEmpty(resource)) {
 			resource = DEFAULT_CONFIG;

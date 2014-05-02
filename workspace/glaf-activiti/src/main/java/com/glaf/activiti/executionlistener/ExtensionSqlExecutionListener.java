@@ -106,7 +106,7 @@ public class ExtensionSqlExecutionListener implements ExecutionListener {
 			logger.debug("extension:" + extension.toJsonObject());
 		}
 
-		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
 
 		Map<String, Object> variables = execution.getVariables();
 		if (variables != null && variables.size() > 0) {

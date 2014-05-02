@@ -47,7 +47,7 @@ public class BpmnXmlReader {
 	}
 
 	public List<ActivityInfo> read(Element root, String processDefinitionKey) {
-		List<ActivityInfo> activities = new java.util.concurrent.CopyOnWriteArrayList<ActivityInfo>();
+		List<ActivityInfo> activities = new java.util.ArrayList<ActivityInfo>();
 		Element element = root.element("BPMNDiagram");
 		if (element != null) {
 			List<?> elements = element.elements("BPMNPlane");
@@ -91,7 +91,7 @@ public class BpmnXmlReader {
 
 	public List<UserTask> readUserTasks(Element root,
 			String processDefinitionKey) {
-		List<UserTask> tasks = new java.util.concurrent.CopyOnWriteArrayList<UserTask>();
+		List<UserTask> tasks = new java.util.ArrayList<UserTask>();
 		List<?> elements = root.elements("process");
 		if (elements != null && !elements.isEmpty()) {
 			Iterator<?> iterator = elements.iterator();

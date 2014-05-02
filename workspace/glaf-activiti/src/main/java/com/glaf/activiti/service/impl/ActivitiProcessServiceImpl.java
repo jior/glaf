@@ -115,7 +115,7 @@ public class ActivitiProcessServiceImpl implements ActivitiProcessService {
 	}
 
 	protected List<Task> getUserTasks(String processInstanceId, String actorId) {
-		List<Task> tasks = new java.util.concurrent.CopyOnWriteArrayList<Task>();
+		List<Task> tasks = new java.util.ArrayList<Task>();
 		TaskQuery query01 = taskService.createTaskQuery();
 		query01.processInstanceId(processInstanceId);
 		query01.taskAssignee(actorId);
@@ -139,7 +139,7 @@ public class ActivitiProcessServiceImpl implements ActivitiProcessService {
 		String taskId = ctx.getTaskId();
 		Map<String, Object> variables = ctx.getVariables();
 		if (variables == null) {
-			variables = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			variables = new java.util.HashMap<String, Object>();
 		}
 
 		if (ctx.getOutcome() != null) {
@@ -339,7 +339,7 @@ public class ActivitiProcessServiceImpl implements ActivitiProcessService {
 		String businessKey = ctx.getBusinessKey();
 		Map<String, Object> variables = ctx.getVariables();
 		if (variables == null) {
-			variables = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			variables = new java.util.HashMap<String, Object>();
 		}
 		variables.put(Constants.PROCESS_STARTER, actorId);
 		variables.remove(Constants.BUSINESS_KEY);

@@ -55,7 +55,7 @@ public class ExtensionTaskCreateListener implements TaskListener {
 
 	protected List<String> getDeptRoleUsers(DelegateExecution execution,
 			SqlSession sqlSession, ExtensionEntity extension) {
-		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
 		Map<String, Object> variables = execution.getVariables();
 		if (variables != null && variables.size() > 0) {
 			Iterator<String> iterator = variables.keySet().iterator();
@@ -68,7 +68,7 @@ public class ExtensionTaskCreateListener implements TaskListener {
 			}
 		}
 
-		Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 
 		Map<String, ExtensionFieldEntity> fields = extension.getFields();
 
@@ -110,7 +110,7 @@ public class ExtensionTaskCreateListener implements TaskListener {
 
 	protected List<String> getMemberships(DelegateExecution execution,
 			SqlSession sqlSession, String processName, String taskDefinitionKey) {
-		Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 		Map<String, Object> variables = execution.getVariables();
 		if (variables != null && variables.size() > 0) {
 			Iterator<String> iterator = variables.keySet().iterator();
@@ -123,7 +123,7 @@ public class ExtensionTaskCreateListener implements TaskListener {
 			}
 		}
 
-		List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> actorIds = new java.util.ArrayList<String>();
 		String roleId = processName + "_" + taskDefinitionKey;
 
 		paramMap.put("roleId", roleId);
@@ -140,7 +140,7 @@ public class ExtensionTaskCreateListener implements TaskListener {
 
 	protected List<String> getRuntimeAssign(DelegateExecution execution,
 			String processName, String taskDefinitionKey) {
-		List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> actorIds = new java.util.ArrayList<String>();
 		String dynamicActors = processName + "_" + taskDefinitionKey;
 		String actors = (String) execution.getVariable(dynamicActors);
 		if (StringUtils.isEmpty(actors)) {
@@ -230,7 +230,7 @@ public class ExtensionTaskCreateListener implements TaskListener {
 			break;
 		// 流程启动者
 		case Constants.TM_PROCESS_STARTER_TYPE:
-			actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
+			actorIds = new java.util.ArrayList<String>();
 			actorIds.add(startUserId);
 			break;
 		// 流程启动者的直接上级

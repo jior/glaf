@@ -51,7 +51,7 @@ public class ActivitiTaskQueryServiceImpl implements ActivitiTaskQueryService {
 	protected TaskService taskService;
 
 	public List<Task> getAllTasks() {
-		List<Task> tasks = new java.util.concurrent.CopyOnWriteArrayList<Task>();
+		List<Task> tasks = new java.util.ArrayList<Task>();
 		List<Task> rows = taskService.createTaskQuery().list();
 		for (Task task : rows) {
 			tasks.add(task);
@@ -60,7 +60,7 @@ public class ActivitiTaskQueryServiceImpl implements ActivitiTaskQueryService {
 	}
 
 	public List<Task> getAllTasks(String processInstanceId) {
-		List<Task> tasks = new java.util.concurrent.CopyOnWriteArrayList<Task>();
+		List<Task> tasks = new java.util.ArrayList<Task>();
 		List<Task> rows = taskService.createTaskQuery()
 				.processInstanceId(processInstanceId).list();
 		for (Task task : rows) {
@@ -70,7 +70,7 @@ public class ActivitiTaskQueryServiceImpl implements ActivitiTaskQueryService {
 	}
 
 	public List<Task> getAssigneeTasks(String processInstanceId) {
-		List<Task> tasks = new java.util.concurrent.CopyOnWriteArrayList<Task>();
+		List<Task> tasks = new java.util.ArrayList<Task>();
 		List<Task> rows = taskService.createTaskQuery()
 				.processInstanceId(processInstanceId).list();
 		for (Task task : rows) {
@@ -88,7 +88,7 @@ public class ActivitiTaskQueryServiceImpl implements ActivitiTaskQueryService {
 	}
 
 	public List<TaskItem> getHistoryTasks(String processInstanceId) {
-		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.ArrayList<TaskItem>();
 		List<HistoricTaskInstance> tasks = historyService
 				.createHistoricTaskInstanceQuery()
 				.processInstanceId(processInstanceId).list();
@@ -300,7 +300,7 @@ public class ActivitiTaskQueryServiceImpl implements ActivitiTaskQueryService {
 		query.processInstanceId(processInstanceId).orderByTaskCreateTime()
 				.desc();
 		List<Task> tasks = query.list();
-		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.ArrayList<TaskItem>();
 		for (Task task : tasks) {
 			if (task.getAssignee() != null) {
 				TaskItem taskItem = new TaskItem();
@@ -598,7 +598,7 @@ public class ActivitiTaskQueryServiceImpl implements ActivitiTaskQueryService {
 	 * @return
 	 */
 	public List<Task> getUserTasks(String actorId) {
-		List<Task> tasks = new java.util.concurrent.CopyOnWriteArrayList<Task>();
+		List<Task> tasks = new java.util.ArrayList<Task>();
 		TaskQuery query01 = taskService.createTaskQuery();
 		query01.taskAssignee(actorId);
 		List<Task> tasks01 = query01.list();
@@ -621,7 +621,7 @@ public class ActivitiTaskQueryServiceImpl implements ActivitiTaskQueryService {
 	}
 
 	public List<Task> getUserTasks(String processInstanceId, String actorId) {
-		List<Task> tasks = new java.util.concurrent.CopyOnWriteArrayList<Task>();
+		List<Task> tasks = new java.util.ArrayList<Task>();
 		TaskQuery query01 = taskService.createTaskQuery();
 		query01.processInstanceId(processInstanceId);
 		query01.taskAssignee(actorId);
@@ -647,7 +647,7 @@ public class ActivitiTaskQueryServiceImpl implements ActivitiTaskQueryService {
 
 	public List<String> getWorkedProcessInstanceIds(String processName,
 			String actorId) {
-		List<String> processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> processInstanceIds = new java.util.ArrayList<String>();
 		HistoricTaskInstanceQuery query = historyService
 				.createHistoricTaskInstanceQuery();
 		query.processDefinitionKey(processName);

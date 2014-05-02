@@ -57,7 +57,7 @@ public class MyBatisExecutionListener implements ExecutionListener {
 		logger.debug("sqlsession:"
 				+ commandContext.getDbSqlSession().getSqlSession());
 		if (execution != null) {
-			Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 			paramMap.putAll(execution.getVariables());
 			String statement = null;
 			String op = null;

@@ -88,7 +88,7 @@ public class CancelAllTaskListener implements TaskListener {
 			if (includesExpression != null) {
 				includes = (String) includesExpression.getValue(delegateTask);
 			}
-			List<String> list = new java.util.concurrent.CopyOnWriteArrayList<String>();
+			List<String> list = new java.util.ArrayList<String>();
 			if (includes != null && includes.trim().length() > 0) {
 				list = StringTools.split(includes);
 			}

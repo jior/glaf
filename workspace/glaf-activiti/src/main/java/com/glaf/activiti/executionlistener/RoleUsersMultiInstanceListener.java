@@ -60,7 +60,7 @@ public class RoleUsersMultiInstanceListener implements ExecutionListener {
 		CommandContext commandContext = Context.getCommandContext();
 
 		if (execution != null) {
-			Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 
 			String statement = null;
 			if (statementId != null) {
@@ -83,7 +83,7 @@ public class RoleUsersMultiInstanceListener implements ExecutionListener {
 				statement = "getMembershipUsers";
 			}
 
-			Collection<String> assigneeList = new java.util.concurrent.CopyOnWriteArrayList<String>();
+			Collection<String> assigneeList = new java.util.ArrayList<String>();
 
 			if (!paramMap.isEmpty()) {
 				paramMap.putAll(execution.getVariables());

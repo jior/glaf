@@ -44,7 +44,7 @@ public class MyCreateMembershipCmd implements Command<Object> {
 		if (groupId == null) {
 			throw new ActivitiException("groupId is null");
 		}
-		Map<String, Object> parameters = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> parameters = new java.util.HashMap<String, Object>();
 		parameters.put("id", UUID32.getUUID());
 		parameters.put("userId", userId);
 		parameters.put("groupId", groupId);

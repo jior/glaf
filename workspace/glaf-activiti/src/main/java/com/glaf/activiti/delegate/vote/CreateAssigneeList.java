@@ -28,7 +28,7 @@ public class CreateAssigneeList implements JavaDelegate {
 	public void execute(DelegateExecution execution) {
 		String participants = (String) execution.getVariable("participants");
 		String[] participantsArray = participants.split(",");
-		List<String> assigneeList = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> assigneeList = new java.util.ArrayList<String>();
 		for (String assignee : participantsArray) {
 			assigneeList.add(assignee);
 		}

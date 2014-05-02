@@ -25,7 +25,7 @@ public class DecisionVoting implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private List<Vote> voteList = new java.util.concurrent.CopyOnWriteArrayList<Vote>();
+	private List<Vote> voteList = new java.util.ArrayList<Vote>();
 	
 	private boolean decisionVotingOutcome;
 

@@ -46,11 +46,11 @@ public class ProcessContext implements Serializable {
 
 	private String opinion;
 
-	private Map<String, Object> variables = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+	private Map<String, Object> variables = new java.util.HashMap<String, Object>();
 
-	private Collection<String> agentIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
+	private Collection<String> agentIds = new java.util.ArrayList<String>();
 
-	private Collection<DataField> dataFields = new java.util.concurrent.CopyOnWriteArrayList<DataField>();
+	private Collection<DataField> dataFields = new java.util.ArrayList<DataField>();
 
 	public ProcessContext() {
 
@@ -58,7 +58,7 @@ public class ProcessContext implements Serializable {
 
 	public void addDataField(DataField dataField) {
 		if (dataFields == null) {
-			dataFields = new java.util.concurrent.CopyOnWriteArrayList<DataField>();
+			dataFields = new java.util.ArrayList<DataField>();
 		}
 		dataFields.add(dataField);
 	}
@@ -77,7 +77,7 @@ public class ProcessContext implements Serializable {
 
 	public Collection<DataField> getDataFields() {
 		if (dataFields == null) {
-			dataFields = new java.util.concurrent.CopyOnWriteArrayList<DataField>();
+			dataFields = new java.util.ArrayList<DataField>();
 		}
 		return dataFields;
 	}

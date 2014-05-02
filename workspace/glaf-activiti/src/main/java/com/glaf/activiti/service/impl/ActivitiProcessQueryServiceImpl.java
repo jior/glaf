@@ -887,7 +887,7 @@ public class ActivitiProcessQueryServiceImpl implements
 
 			if (activities != null && !activities.isEmpty()) {
 				logger.debug("activities:" + activities.size());
-				Map<String, ActivityInfo> actMap = new java.util.concurrent.ConcurrentHashMap<String, ActivityInfo>();
+				Map<String, ActivityInfo> actMap = new java.util.HashMap<String, ActivityInfo>();
 				for (ActivityInfo act : activities) {
 					actMap.put(act.getActivityId(), act);
 				}

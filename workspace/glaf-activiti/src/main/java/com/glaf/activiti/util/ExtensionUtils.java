@@ -35,7 +35,7 @@ public class ExtensionUtils {
 	public static List<Object> getValues(Map<String, Object> paramMap,
 			ExtensionEntity extension) {
 		java.util.Date now = new java.util.Date();
-		List<Object> values = new java.util.concurrent.CopyOnWriteArrayList<Object>();
+		List<Object> values = new java.util.ArrayList<Object>();
 		List<ExtensionParamEntity> x_params = extension.getParams();
 		Iterator<ExtensionParamEntity> iterator = x_params.iterator();
 		while (iterator.hasNext()) {

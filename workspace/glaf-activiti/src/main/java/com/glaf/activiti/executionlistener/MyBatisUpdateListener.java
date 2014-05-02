@@ -47,7 +47,7 @@ public class MyBatisUpdateListener implements ExecutionListener {
 	protected String statementId;
 
 	public void notify(DelegateExecution execution) throws Exception {
-		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
 		CommandContext commandContext = Context.getCommandContext();
 
 		Map<String, Object> variables = execution.getVariables();
