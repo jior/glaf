@@ -441,7 +441,7 @@ public class BranchDepartmentController {
 
 		SysTree treeNode = sysTreeService.findById(parent);
 		SysDepartment dept = treeNode.getDepartment();
-		List<SysDepartment> list = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
+		List<SysDepartment> list = new java.util.ArrayList<SysDepartment>();
 		sysDepartmentService.findNestingDepartment(list, dept);
 		request.setAttribute("nav", list);
 

@@ -120,7 +120,7 @@ public class MessageController {
 
 		int msgPageSize = 5;
 		com.glaf.core.util.PageResult messagePager = messageService
-				.getNoReadList(user.getId(), new java.util.concurrent.ConcurrentHashMap<String, Object>(), 1,
+				.getNoReadList(user.getId(), new java.util.HashMap<String, Object>(), 1,
 						msgPageSize);
 		List<?> messageList = messagePager.getResults();
 		request.setAttribute("messageList", messageList);
