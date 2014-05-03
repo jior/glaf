@@ -43,9 +43,9 @@ public class MailMessage extends BaseMessage {
 
 	private boolean supportExpression = true;
 
-	private Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+	private Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 
-	private Collection<Object> files = new java.util.concurrent.CopyOnWriteArrayList<Object>();
+	private Collection<Object> files = new java.util.ArrayList<Object>();
 
 	public MailMessage() {
 
@@ -53,7 +53,7 @@ public class MailMessage extends BaseMessage {
 
 	public void addFile(Object file) {
 		if (files == null) {
-			files = new java.util.concurrent.CopyOnWriteArrayList<Object>();
+			files = new java.util.ArrayList<Object>();
 		}
 		files.add(file);
 	}

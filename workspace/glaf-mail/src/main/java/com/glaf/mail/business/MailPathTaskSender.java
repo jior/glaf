@@ -97,7 +97,7 @@ public class MailPathTaskSender {
 			mailMessage.setSaveMessage(true);
 			mailMessage.setSubject(subject);
 			mailMessage.setContent(content);
-			Collection<Object> dataFiles = new java.util.concurrent.CopyOnWriteArrayList<Object>();
+			Collection<Object> dataFiles = new java.util.ArrayList<Object>();
 			try {
 				if (mailTask.getMailFilePath() != null) {
 					logger.debug("mail send path:" + mailTask.getMailFilePath());
@@ -218,9 +218,9 @@ public class MailPathTaskSender {
 		try {
 			MailMessage mailMessage = this.getMailTaskMailMessage(mailTask);
 			Collection<Object> dataFiles = mailMessage.getFiles();
-			List<DataFile> files = new java.util.concurrent.CopyOnWriteArrayList<DataFile>();
+			List<DataFile> files = new java.util.ArrayList<DataFile>();
 			if (StringUtils.equalsIgnoreCase(mailTask.getCompressFlag(), "1")) {
-				Map<String, byte[]> bytesMap = new java.util.concurrent.ConcurrentHashMap<String, byte[]>();
+				Map<String, byte[]> bytesMap = new java.util.HashMap<String, byte[]>();
 				if (dataFiles != null && !dataFiles.isEmpty()) {
 					for (Object obj : dataFiles) {
 						if (obj instanceof DataFile) {
@@ -232,7 +232,7 @@ public class MailPathTaskSender {
 				}
 				if (!bytesMap.isEmpty()) {
 					byte[] bytes = ZipUtils.toZipBytes(bytesMap);
-					dataFiles = new java.util.concurrent.CopyOnWriteArrayList<Object>();
+					dataFiles = new java.util.ArrayList<Object>();
 					DataFile blobData = new BlobItemEntity();
 					blobData.setFilename(DateUtils.getDateTime(new Date())
 							+ ".zip");

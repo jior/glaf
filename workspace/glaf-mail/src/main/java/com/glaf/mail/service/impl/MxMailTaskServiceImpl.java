@@ -94,7 +94,7 @@ public class MxMailTaskServiceImpl implements IMailTaskService {
 	}
 
 	public List<String> getAccountIds(String taskId) {
-		List<String> list = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> list = new java.util.ArrayList<String>();
 		List<MailTaskAccount> accounts = mailTaskAccountMapper
 				.getMailTaskAccountsByTaskId(taskId);
 		for (MailTaskAccount a : accounts) {

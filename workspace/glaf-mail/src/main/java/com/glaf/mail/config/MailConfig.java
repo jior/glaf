@@ -236,7 +236,7 @@ public class MailConfig implements java.io.Serializable {
 		properties.put("mail.auth", String.valueOf(auth));
 		properties.put("mail.mailFrom", mailFrom);
 
-		Map<String, String> dataMap = new java.util.concurrent.ConcurrentHashMap<String, String>();
+		Map<String, String> dataMap = new java.util.HashMap<String, String>();
 
 		Enumeration<Object> e = properties.keys();
 		while (e.hasMoreElements()) {

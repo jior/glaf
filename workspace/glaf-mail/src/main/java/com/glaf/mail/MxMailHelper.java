@@ -167,7 +167,7 @@ public class MxMailHelper {
 	}
 
 	public Map<String, String> getAttributes(String attribute) {
-		Map<String, String> dataMap = new java.util.concurrent.ConcurrentHashMap<String, String>();
+		Map<String, String> dataMap = new java.util.HashMap<String, String>();
 		StringReader stringReader = new StringReader(attribute);
 		SAXReader xmlReader = new SAXReader();
 		try {

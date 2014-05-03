@@ -104,7 +104,7 @@ public class MailTask implements Serializable {
 	protected MailStorage storage;
 
 	@javax.persistence.Transient
-	protected List<MailAccount> accounts = new java.util.concurrent.CopyOnWriteArrayList<MailAccount>();
+	protected List<MailAccount> accounts = new java.util.ArrayList<MailAccount>();
 
 	public MailTask() {
 

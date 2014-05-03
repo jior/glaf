@@ -107,7 +107,7 @@ public class MailProcessBean {
 
 	public Map<String, Object> populate(String mailDefId, String actorId,
 			Map<String, Object> context) {
-		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 		dataMap.putAll(context);
 		MailTemplate mail = MailContainer.getContainer().getMailDefinition(
 				mailDefId);

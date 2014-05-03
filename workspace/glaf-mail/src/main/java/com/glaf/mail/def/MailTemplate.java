@@ -54,12 +54,12 @@ public class MailTemplate implements java.io.Serializable {
 	/**
 	 * 邮件数据集，邮件中用到的数据集合
 	 */
-	protected List<MailDataSet> dataSetList = new java.util.concurrent.CopyOnWriteArrayList<MailDataSet>();
+	protected List<MailDataSet> dataSetList = new java.util.ArrayList<MailDataSet>();
 
 	/**
 	 * 邮件属性定义，主要用于自定义处理程序
 	 */
-	protected Map<String, Object> properties = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+	protected Map<String, Object> properties = new java.util.HashMap<String, Object>();
 
 	public MailTemplate() {
 
@@ -67,7 +67,7 @@ public class MailTemplate implements java.io.Serializable {
 
 	public void addDataSet(MailDataSet mds) {
 		if (dataSetList == null) {
-			dataSetList = new java.util.concurrent.CopyOnWriteArrayList<MailDataSet>();
+			dataSetList = new java.util.ArrayList<MailDataSet>();
 		}
 		mds.setMailDefinition(this);
 		dataSetList.add(mds);
@@ -83,7 +83,7 @@ public class MailTemplate implements java.io.Serializable {
 
 	public List<MailDataSet> getDataSetList() {
 		if (dataSetList == null) {
-			dataSetList = new java.util.concurrent.CopyOnWriteArrayList<MailDataSet>();
+			dataSetList = new java.util.ArrayList<MailDataSet>();
 		}
 		return dataSetList;
 	}

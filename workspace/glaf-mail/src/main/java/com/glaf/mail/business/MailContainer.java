@@ -53,7 +53,7 @@ public class MailContainer {
 	}
 
 	public Map<String, MailTemplate> reload() {
-		Map<String, MailTemplate> mailMap = new java.util.concurrent.ConcurrentHashMap<String, MailTemplate>();
+		Map<String, MailTemplate> mailMap = new java.util.HashMap<String, MailTemplate>();
 		String configLocation = SystemProperties.getString("mail.config.path");
 		if (StringUtils.isEmpty(configLocation)) {
 			configLocation = CustomProperties.getString("mail.config.path");

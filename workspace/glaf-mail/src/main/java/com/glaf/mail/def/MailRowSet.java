@@ -78,7 +78,7 @@ public class MailRowSet implements java.io.Serializable {
 	/**
 	 * 邮件属性定义，主要用于自定义处理程序
 	 */
-	protected Map<String, Object> properties = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+	protected Map<String, Object> properties = new java.util.HashMap<String, Object>();
 
 	protected MailDataSet mailDataSet;
 

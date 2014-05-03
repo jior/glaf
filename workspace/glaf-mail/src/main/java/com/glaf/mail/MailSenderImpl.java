@@ -62,7 +62,7 @@ public class MailSenderImpl implements MailSender {
 	protected String mailFrom;
 
 	public static void main(String[] args) throws Exception {
-		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 		dataMap.put("taskDescription", "邮件系统开发");
 		dataMap.put("processStarterName", "系统管理员");
 		dataMap.put("serviceUrl", "http://127.0.0.1:8080/glaf");
@@ -171,7 +171,7 @@ public class MailSenderImpl implements MailSender {
 
 		Map<String, Object> dataMap = mailMessage.getDataMap();
 		if (dataMap == null) {
-			dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			dataMap = new java.util.HashMap<String, Object>();
 		}
 
 		ISystemPropertyService systemPropertyService = ContextFactory
