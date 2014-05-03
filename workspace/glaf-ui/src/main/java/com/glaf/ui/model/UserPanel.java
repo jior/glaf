@@ -56,7 +56,7 @@ public class UserPanel implements Serializable {
 	protected Layout layout = null;
 
 	@Transient
-	protected Map<String, Panel> panels = new java.util.concurrent.ConcurrentHashMap<String, Panel>();
+	protected Map<String, Panel> panels = new java.util.HashMap<String, Panel>();
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "userPanel")
 	protected Set<PanelInstance> panelInstances = new HashSet<PanelInstance>();
@@ -67,7 +67,7 @@ public class UserPanel implements Serializable {
 
 	public void addPanel(Panel panel) {
 		if (panels == null) {
-			panels = new java.util.concurrent.ConcurrentHashMap<String, Panel>();
+			panels = new java.util.HashMap<String, Panel>();
 		}
 		panels.put(panel.getName(), panel);
 	}

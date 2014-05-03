@@ -101,7 +101,7 @@ public class MxPanelServiceImpl implements PanelService {
 		PanelQuery query = new PanelQuery();
 		query.actorId(actorId);
 		List<Panel> rows = this.list(query);
-		List<Panel> panels = new java.util.concurrent.CopyOnWriteArrayList<Panel>();
+		List<Panel> panels = new java.util.ArrayList<Panel>();
 		if (rows != null && rows.size() > 0) {
 			Iterator<Panel> iterator = rows.iterator();
 			while (iterator.hasNext()) {
@@ -120,7 +120,7 @@ public class MxPanelServiceImpl implements PanelService {
 		PanelQuery query = new PanelQuery();
 		query.actorId("system");
 		List<Panel> rows = this.list(query);
-		List<Panel> panels = new java.util.concurrent.CopyOnWriteArrayList<Panel>();
+		List<Panel> panels = new java.util.ArrayList<Panel>();
 		if (rows != null && rows.size() > 0) {
 			Iterator<Panel> iterator = rows.iterator();
 			while (iterator.hasNext()) {
@@ -162,7 +162,7 @@ public class MxPanelServiceImpl implements PanelService {
 
 	@Transactional
 	public void installPanels(List<Panel> panels) {
-		Map<String, Panel> panelMap = new java.util.concurrent.ConcurrentHashMap<String, Panel>();
+		Map<String, Panel> panelMap = new java.util.HashMap<String, Panel>();
 		if (panels != null && panels.size() > 0) {
 			Iterator<Panel> iter = panels.iterator();
 			while (iter.hasNext()) {
