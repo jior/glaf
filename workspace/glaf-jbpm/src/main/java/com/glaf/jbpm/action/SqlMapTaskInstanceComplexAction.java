@@ -228,7 +228,7 @@ public class SqlMapTaskInstanceComplexAction implements ActionHandler {
 		Token token = ctx.getToken();
 		TaskMgmtInstance tmi = ctx.getTaskMgmtInstance();
 
-		List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> actorIds = new java.util.ArrayList<String>();
 
 		/**
 		 * 如果动态指定多个部门
@@ -480,7 +480,7 @@ public class SqlMapTaskInstanceComplexAction implements ActionHandler {
 					}
 				}
 			}
-			
+
 			String startActorId = (String) contextInstance
 					.getVariable(Constant.PROCESS_STARTERID);
 			actorIds.remove(startActorId);

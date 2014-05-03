@@ -94,7 +94,7 @@ public class JbpmTaskDAO {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(" select ti from org.jbpm.taskmgmt.exe.TaskInstance as ti where ti.actorId is not null and ti.start is not null and ti.end is not null and ti.isSuspended != true and ti.isOpen = false ");
 
-		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
 
 		if (query.getActorId() != null) {
 			buffer.append(" and ti.actorId = :actorId ");
@@ -257,7 +257,7 @@ public class JbpmTaskDAO {
 		}
 
 		List<?> rows = q.list();
-		List<TaskInstance> taskInstances = new java.util.concurrent.CopyOnWriteArrayList<TaskInstance>();
+		List<TaskInstance> taskInstances = new java.util.ArrayList<TaskInstance>();
 		if (rows != null && rows.size() > 0) {
 			Iterator<?> iterator = rows.iterator();
 			while (iterator.hasNext()) {
@@ -272,7 +272,7 @@ public class JbpmTaskDAO {
 			ProcessQuery query) {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(" select ti from org.jbpm.taskmgmt.exe.PooledActor pooledActor join pooledActor.taskInstances ti where 1=1 and ti.actorId is null and ti.isSuspended != true and ti.isOpen = true and ti.processInstance.end is null ");
-		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
 
 		if (query.getActorId() != null) {
 			buffer.append(" and pooledActor.actorId = :actorId ");
@@ -435,7 +435,7 @@ public class JbpmTaskDAO {
 		}
 
 		List<?> rows = q.list();
-		List<TaskInstance> taskInstances = new java.util.concurrent.CopyOnWriteArrayList<TaskInstance>();
+		List<TaskInstance> taskInstances = new java.util.ArrayList<TaskInstance>();
 		if (rows != null && rows.size() > 0) {
 			Iterator<?> iterator = rows.iterator();
 			while (iterator.hasNext()) {
@@ -451,7 +451,7 @@ public class JbpmTaskDAO {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("  select ti from org.jbpm.taskmgmt.exe.TaskInstance as ti where ti.actorId is not null and ti.isSuspended != true and ti.isOpen = true and ti.processInstance.end is null ");
 
-		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
 
 		if (query.getActorId() != null) {
 			buffer.append(" and ti.actorId = :actorId ");
@@ -616,7 +616,7 @@ public class JbpmTaskDAO {
 		}
 
 		List<?> rows = q.list();
-		List<TaskInstance> taskInstances = new java.util.concurrent.CopyOnWriteArrayList<TaskInstance>();
+		List<TaskInstance> taskInstances = new java.util.ArrayList<TaskInstance>();
 		if (rows != null && rows.size() > 0) {
 			Iterator<?> iterator = rows.iterator();
 			while (iterator.hasNext()) {
@@ -629,7 +629,7 @@ public class JbpmTaskDAO {
 
 	public List<TaskItem> getTaskItems(JbpmContext jbpmContext,
 			ProcessQuery query) {
-		List<TaskInstance> taskInstances = new java.util.concurrent.CopyOnWriteArrayList<TaskInstance>();
+		List<TaskInstance> taskInstances = new java.util.ArrayList<TaskInstance>();
 
 		List<TaskInstance> rows01 = this.getTaskInstances(jbpmContext, query);
 		List<TaskInstance> rows02 = this.getPooledTaskInstances(jbpmContext,
@@ -653,7 +653,7 @@ public class JbpmTaskDAO {
 			}
 		}
 
-		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
+		List<TaskItem> taskItems = new java.util.ArrayList<TaskItem>();
 
 		Iterator<TaskInstance> iterator = taskInstances.iterator();
 		while (iterator.hasNext()) {
@@ -743,7 +743,7 @@ public class JbpmTaskDAO {
 	 */
 	public List<TaskItem> getWorkedTaskItems(JbpmContext jbpmContext,
 			ProcessQuery query) {
-		List<TaskItem> finishedTaskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
+		List<TaskItem> finishedTaskItems = new java.util.ArrayList<TaskItem>();
 		Collection<TaskInstance> taskInstances = this.getFinishedTaskInstances(
 				jbpmContext, query);
 		if (taskInstances != null && taskInstances.size() > 0) {

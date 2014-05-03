@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.jbpm.factory;
 
@@ -36,7 +36,8 @@ import com.glaf.core.util.XmlUtils;
 
 public class JbpmActionHandlerTypes {
 
-	private static final Log logger = LogFactory.getLog(JbpmActionHandlerTypes.class);
+	private static final Log logger = LogFactory
+			.getLog(JbpmActionHandlerTypes.class);
 
 	static Map<String, Class<?>> actionHandles = initializeHandlerTypes();
 
@@ -49,8 +50,7 @@ public class JbpmActionHandlerTypes {
 
 	public static void addHandler(String className) {
 		try {
-			Class<?> clazz = com.glaf.core.util.ClassUtils
-					.loadClass(className);
+			Class<?> clazz = com.glaf.core.util.ClassUtils.loadClass(className);
 			actionHandles.put(className, clazz);
 		} catch (Exception ex) {
 			logger.error("class '" + className + "' couldn't be loaded");
@@ -71,7 +71,7 @@ public class JbpmActionHandlerTypes {
 	}
 
 	static Map<String, Class<?>> initializeHandlerTypes() {
-		Map<String, Class<?>> types = new java.util.concurrent.ConcurrentHashMap<String, Class<?>>();
+		Map<String, Class<?>> types = new java.util.HashMap<String, Class<?>>();
 		String resource = SystemProperties.getString("jbpm.actions");
 		if (StringUtils.isEmpty(resource)) {
 			resource = DEFAULT_CONFIG;
@@ -93,7 +93,7 @@ public class JbpmActionHandlerTypes {
 					types.put(elementTag, clazz);
 				} catch (Exception ex) {
 					if (LogUtils.isDebug()) {
-						 ex.printStackTrace();
+						ex.printStackTrace();
 					}
 					logger.error("node '" + elementTag
 							+ "' will not be available. class '" + className
@@ -120,7 +120,7 @@ public class JbpmActionHandlerTypes {
 					types.put(elementTag, clazz);
 				} catch (Exception ex) {
 					if (LogUtils.isDebug()) {
-						 ex.printStackTrace();
+						ex.printStackTrace();
 					}
 					logger.error("node '" + elementTag
 							+ "' will not be available. class '" + className

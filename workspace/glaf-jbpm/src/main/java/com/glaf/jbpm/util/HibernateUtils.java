@@ -105,7 +105,7 @@ public class HibernateUtils {
 			return null;
 		}
 		SqlExecutor sqlExecutor = new SqlExecutor();
-		Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 
 		StringBuffer sb = new StringBuffer();
 		int begin = 0;

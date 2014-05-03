@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.jbpm.action;
 
@@ -76,7 +76,7 @@ public class SQLAction implements ActionHandler {
 
 		ContextInstance contextInstance = ctx.getContextInstance();
 
-		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
 
 		Map<String, Object> variables = contextInstance.getVariables();
 		if (variables != null && variables.size() > 0) {
@@ -89,7 +89,7 @@ public class SQLAction implements ActionHandler {
 				}
 			}
 		}
-		
+
 		ProcessInstance processInstance = ctx.getProcessInstance();
 		ProcessDefinition processDefinition = processInstance
 				.getProcessDefinition();
@@ -99,7 +99,6 @@ public class SQLAction implements ActionHandler {
 		params.put("processDefinitionId", processDefinition.getId());
 		params.put("processDefinition", processDefinition);
 		params.put("processInstance", processInstance);
-		
 
 		boolean executable = true;
 
@@ -121,7 +120,7 @@ public class SQLAction implements ActionHandler {
 			return;
 		}
 
-		List<Object> values = new java.util.concurrent.CopyOnWriteArrayList<Object>();
+		List<Object> values = new java.util.ArrayList<Object>();
 
 		if (elements != null) {
 			values = ExpressionUtils.getValues(ctx, elements);

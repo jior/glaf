@@ -156,7 +156,7 @@ public class SqlMapTaskInstanceAction implements ActionHandler {
 
 		boolean executable = true;
 
-		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
 
 		ContextInstance contextInstance = ctx.getContextInstance();
 		Map<String, Object> variables = contextInstance.getVariables();
@@ -192,7 +192,7 @@ public class SqlMapTaskInstanceAction implements ActionHandler {
 			return;
 		}
 
-		List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> actorIds = new java.util.ArrayList<String>();
 		if (StringUtils.isNotEmpty(dynamicActors)) {
 			String actorId = (String) contextInstance
 					.getVariable(dynamicActors);

@@ -33,7 +33,7 @@ import com.glaf.jbpm.model.ExtensionParam;
 public class JbpmExtensionReader {
 
 	public List<Extension> readTasks(java.io.InputStream inputStream) {
-		List<Extension> extensions = new java.util.concurrent.CopyOnWriteArrayList<Extension>();
+		List<Extension> extensions = new java.util.ArrayList<Extension>();
 		SAXReader xmlReader = new SAXReader();
 		try {
 			Document doc = xmlReader.read(inputStream);
@@ -93,7 +93,7 @@ public class JbpmExtensionReader {
 	}
 
 	public List<Extension> readActions(java.io.InputStream inputStream) {
-		List<Extension> extensions = new java.util.concurrent.CopyOnWriteArrayList<Extension>();
+		List<Extension> extensions = new java.util.ArrayList<Extension>();
 		SAXReader xmlReader = new SAXReader();
 		try {
 			Document doc = xmlReader.read(inputStream);

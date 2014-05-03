@@ -129,7 +129,7 @@ public class JbpmProcessImageTag extends TagSupport {
 		JspWriter jspOut = pageContext.getOut();
 
 		if (tokenInstanceId > 0) {
-			List<Token> allTokens = new java.util.concurrent.CopyOnWriteArrayList<Token>();
+			List<Token> allTokens = new java.util.ArrayList<Token>();
 			walkTokens(currentToken, allTokens);
 			jspOut.println("<div style='position:relative; background-image:url("
 					+ imageLink

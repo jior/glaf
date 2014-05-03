@@ -1,20 +1,20 @@
 /*
-* Licensed to the Apache Software Foundation (ASF) under one
-* or more contributor license agreements.  See the NOTICE file
-* distributed with this work for additional information
-* regarding copyright ownership.  The ASF licenses this file
-* to you under the Apache License, Version 2.0 (the
-* "License"); you may not use this file except in compliance
-* with the License.  You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.glaf.jbpm.model;
 
@@ -51,8 +51,8 @@ public class Extension implements java.io.Serializable {
 	protected String createActorId = null;
 	protected Date updateDate = null;
 	protected String updateActorId = null;
-	protected List<ExtensionParam> params = new java.util.concurrent.CopyOnWriteArrayList<ExtensionParam>();
-	protected Map<String, ExtensionField> fields = new java.util.concurrent.ConcurrentHashMap<String, ExtensionField>();
+	protected List<ExtensionParam> params = new java.util.ArrayList<ExtensionParam>();
+	protected Map<String, ExtensionField> fields = new java.util.HashMap<String, ExtensionField>();
 
 	public Extension() {
 
@@ -60,7 +60,7 @@ public class Extension implements java.io.Serializable {
 
 	public void addField(ExtensionField extensionField) {
 		if (fields == null) {
-			fields = new java.util.concurrent.ConcurrentHashMap<String, ExtensionField>();
+			fields = new java.util.HashMap<String, ExtensionField>();
 		}
 		extensionField.setExtension(this);
 		fields.put(extensionField.getName(), extensionField);
@@ -68,7 +68,7 @@ public class Extension implements java.io.Serializable {
 
 	public void addParam(ExtensionParam extensionParam) {
 		if (params == null) {
-			params = new java.util.concurrent.CopyOnWriteArrayList<ExtensionParam>();
+			params = new java.util.ArrayList<ExtensionParam>();
 		}
 		extensionParam.setExtension(this);
 		params.add(extensionParam);
@@ -331,7 +331,7 @@ public class Extension implements java.io.Serializable {
 		}
 
 		if (params != null && params.size() > 0) {
-			Collection<JSONObject> rows = new java.util.concurrent.CopyOnWriteArrayList<JSONObject>();
+			Collection<JSONObject> rows = new java.util.ArrayList<JSONObject>();
 			for (ExtensionParam param : params) {
 				JSONObject json = new JSONObject();
 				json.put("id", param.getId());
@@ -348,7 +348,7 @@ public class Extension implements java.io.Serializable {
 		}
 
 		if (fields != null && fields.size() > 0) {
-			Collection<JSONObject> rows = new java.util.concurrent.CopyOnWriteArrayList<JSONObject>();
+			Collection<JSONObject> rows = new java.util.ArrayList<JSONObject>();
 			Set<Entry<String, ExtensionField>> entrySet = fields.entrySet();
 			for (Entry<String, ExtensionField> entry : entrySet) {
 				ExtensionField field = entry.getValue();

@@ -27,7 +27,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jbpm.JbpmContext;
 import org.jbpm.JbpmException;
- 
+
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.LogUtils;
 import com.glaf.jbpm.container.ProcessContainer;
@@ -89,7 +89,7 @@ public class JbpmConfigLoader {
 
 	public List<Extension> getActions(java.io.File directory) {
 		JbpmExtensionReader reader = new JbpmExtensionReader();
-		List<Extension> extensions = new java.util.concurrent.CopyOnWriteArrayList<Extension>();
+		List<Extension> extensions = new java.util.ArrayList<Extension>();
 		InputStream inputStream = null;
 		String[] filelist = directory.list();
 		for (int i = 0; i < filelist.length; i++) {

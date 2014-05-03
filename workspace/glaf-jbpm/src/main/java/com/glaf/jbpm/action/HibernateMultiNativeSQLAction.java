@@ -72,7 +72,7 @@ public class HibernateMultiNativeSQLAction implements ActionHandler {
 
 		ContextInstance contextInstance = ctx.getContextInstance();
 
-		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
 
 		Map<String, Object> variables = contextInstance.getVariables();
 		if (variables != null && variables.size() > 0) {
@@ -123,7 +123,7 @@ public class HibernateMultiNativeSQLAction implements ActionHandler {
 						.getVariable(Constant.PROCESS_ROWID);
 				for (int i = 0, len = array.size(); i < len; i++) {
 					JSONObject jsonObject = array.getJSONObject(i);
-					Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+					Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 					dataMap.putAll(params);
 					Iterator<Entry<String, Object>> iterator = jsonObject
 							.entrySet().iterator();

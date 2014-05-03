@@ -180,13 +180,13 @@ public class JbpmTaskManager {
 	 */
 	public List<ActivityInstance> getActivityInstances(JbpmContext jbpmContext,
 			Long processInstanceId) {
-		final List<ActivityInstance> rows = new java.util.concurrent.CopyOnWriteArrayList<ActivityInstance>();
+		final List<ActivityInstance> rows = new java.util.ArrayList<ActivityInstance>();
 		final SqlExecutor queryExecutor = new SqlExecutor();
 		queryExecutor
 				.setSql(" select a from "
 						+ ActivityInstance.class.getSimpleName()
 						+ " as a where a.processInstanceId = :processInstanceId order by a.id asc ");
-		final Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		final Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 		paramMap.put("processInstanceId", processInstanceId);
 		queryExecutor.setParameter(paramMap);
 
@@ -265,7 +265,7 @@ public class JbpmTaskManager {
 	 */
 	public Paging getPageTaskInstances(JbpmContext jbpmContext, int pageNo,
 			int pageSize, ProcessQuery query) {
-		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
 
 		SqlExecutor countExecutor = new SqlExecutor();
 		SqlExecutor queryExecutor = new SqlExecutor();
@@ -352,11 +352,11 @@ public class JbpmTaskManager {
 	public List<TaskInstance> getTaskInstances(JbpmContext jbpmContext,
 			String actorId) {
 		final List<?> taskInstances = jbpmContext.getTaskList(actorId);
-		final List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		final List<String> actorIds = new java.util.ArrayList<String>();
 		actorIds.add(actorId);
 		final List<?> pooledTaskinstances = jbpmContext
 				.getGroupTaskList(actorIds);
-		final List<TaskInstance> rows = new java.util.concurrent.CopyOnWriteArrayList<TaskInstance>();
+		final List<TaskInstance> rows = new java.util.ArrayList<TaskInstance>();
 		if (taskInstances != null && taskInstances.size() > 0) {
 			for (int i = 0; i < taskInstances.size(); i++) {
 				rows.add((TaskInstance) taskInstances.get(i));
@@ -437,11 +437,10 @@ public class JbpmTaskManager {
 	 */
 	public List<TaskItem> getTaskItems(JbpmContext jbpmContext,
 			ProcessQuery query) {
-		List<TaskItem> taskItems = new java.util.concurrent.CopyOnWriteArrayList<TaskItem>();
-		if (query != null  ) {
+		List<TaskItem> taskItems = new java.util.ArrayList<TaskItem>();
+		if (query != null) {
 			Set<String> rows = new HashSet<String>();
-			List<TaskItem> rowsx = jbpmTaskDAO
-					.getTaskItems(jbpmContext, query);
+			List<TaskItem> rowsx = jbpmTaskDAO.getTaskItems(jbpmContext, query);
 			if (rowsx != null && rowsx.size() > 0) {
 				Iterator<TaskItem> iterator = rowsx.iterator();
 				while (iterator.hasNext()) {
@@ -688,7 +687,7 @@ public class JbpmTaskManager {
 			}
 		}
 
-		List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> actorIds = new java.util.ArrayList<String>();
 		actorIds.add(previousActorId);
 		taskInstances = jbpmContext.getGroupTaskList(actorIds);
 		if (taskInstances != null && taskInstances.size() > 0) {
@@ -794,7 +793,7 @@ public class JbpmTaskManager {
 
 		TaskMgmtInstance tmi = processInstance.getTaskMgmtInstance();
 		Collection<TaskInstance> taskInstances = tmi.getTaskInstances();
-		List<TaskInstance> unfinishedTasks = new java.util.concurrent.CopyOnWriteArrayList<TaskInstance>();
+		List<TaskInstance> unfinishedTasks = new java.util.ArrayList<TaskInstance>();
 		if (taskInstances != null) {
 			Iterator<TaskInstance> iter = taskInstances.iterator();
 			while (iter.hasNext()) {

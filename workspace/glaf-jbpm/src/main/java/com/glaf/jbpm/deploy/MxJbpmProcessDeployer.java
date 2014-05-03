@@ -196,7 +196,7 @@ public class MxJbpmProcessDeployer {
 		Element root = doc.getRootElement();
 		String processName = root.attributeValue("name");
 		String className = null;
-		Map<String, String> actionMap = new java.util.concurrent.ConcurrentHashMap<String, String>();
+		Map<String, String> actionMap = new java.util.HashMap<String, String>();
 		List<?> actionList = root.elements("action");
 		if (actionList != null && actionList.size() > 0) {
 			Iterator<?> iterator = actionList.iterator();
@@ -229,7 +229,7 @@ public class MxJbpmProcessDeployer {
 		Iterator<?> iterator = taskNodeList.iterator();
 		while (iterator.hasNext()) {
 			Element element = (Element) iterator.next();
-			Map<String, String> taskMap = new java.util.concurrent.ConcurrentHashMap<String, String>();
+			Map<String, String> taskMap = new java.util.HashMap<String, String>();
 			List<?> taskList = element.elements("task");
 			if (taskList != null && taskList.size() > 0) {
 				Iterator<?> iter = taskList.iterator();
