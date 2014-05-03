@@ -51,8 +51,14 @@ public class SysLogJsonFactory {
 		if (jsonObject.containsKey("createTime")) {
 			model.setCreateTime(jsonObject.getDate("createTime"));
 		}
+		if (jsonObject.containsKey("moduleId")) {
+			model.setModuleId(jsonObject.getString("moduleId"));
+		}
 		if (jsonObject.containsKey("operate")) {
 			model.setOperate(jsonObject.getString("operate"));
+		}
+		if (jsonObject.containsKey("content")) {
+			model.setContent(jsonObject.getString("content"));
 		}
 		if (jsonObject.containsKey("flag")) {
 			model.setFlag(jsonObject.getInteger("flag"));
@@ -94,8 +100,14 @@ public class SysLogJsonFactory {
 			jsonObject.put("createTime_datetime",
 					DateUtils.getDateTime(model.getCreateTime()));
 		}
+		if (model.getModuleId() != null) {
+			jsonObject.put("moduleId", model.getModuleId());
+		}
 		if (model.getOperate() != null) {
 			jsonObject.put("operate", model.getOperate());
+		}
+		if (model.getContent() != null) {
+			jsonObject.put("content", model.getContent());
 		}
 		jsonObject.put("flag", model.getFlag());
 		jsonObject.put("timeMS", model.getTimeMS());
@@ -121,8 +133,14 @@ public class SysLogJsonFactory {
 			jsonObject.put("createTime_datetime",
 					DateUtils.getDateTime(model.getCreateTime()));
 		}
+		if (model.getModuleId() != null) {
+			jsonObject.put("moduleId", model.getModuleId());
+		}
 		if (model.getOperate() != null) {
 			jsonObject.put("operate", model.getOperate());
+		}
+		if (model.getContent() != null) {
+			jsonObject.put("content", model.getContent());
 		}
 		jsonObject.put("flag", model.getFlag());
 		jsonObject.put("timeMS", model.getTimeMS());

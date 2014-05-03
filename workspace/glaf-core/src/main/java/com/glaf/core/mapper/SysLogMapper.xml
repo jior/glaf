@@ -9,9 +9,11 @@
 		<result property="account" column="ACCOUNT" jdbcType="VARCHAR" />
 		<result property="ip" column="IP" jdbcType="VARCHAR" />
 		<result property="createTime" column="CREATETIME" jdbcType="TIMESTAMP" />
+		<result property="moduleId" column="MODULEID" jdbcType="VARCHAR" />
 		<result property="operate" column="OPERATE" jdbcType="VARCHAR" />
+		<result property="content" column="CONTENT" jdbcType="VARCHAR" />
 		<result property="flag" column="FLAG" jdbcType="INTEGER" />
-		<result property="timeMS" column="TIMEMS_" jdbcType="INTEGER" />
+		<result property="timeMS" column="TIMEMS" jdbcType="INTEGER" />
 	</resultMap>
 
 
@@ -28,14 +30,20 @@
 			<if test="createTime != null">
 				,CREATETIME
 			</if>
+			<if test="moduleId != null">
+				,MODULEID
+			</if>
 			<if test="operate != null">
 				,OPERATE
+			</if>
+			<if test="content != null">
+				,CONTENT
 			</if>
 			<if test="flag != null">
 				,FLAG
 			</if>
 			<if test="timeMS != null">
-				,TIMEMS_
+				,TIMEMS
 			</if>
 		</trim>
 
@@ -51,8 +59,14 @@
 			<if test="createTime != null">
 				,#{createTime, jdbcType=TIMESTAMP}
 			</if>
+			<if test="moduleId != null">
+				,#{moduleId, jdbcType=VARCHAR}
+			</if>
 			<if test="operate != null">
 				,#{operate, jdbcType=VARCHAR}
+			</if>
+			<if test="content != null">
+				,#{content, jdbcType=VARCHAR}
 			</if>
 			<if test="flag != null">
 				,#{flag, jdbcType=INTEGER}

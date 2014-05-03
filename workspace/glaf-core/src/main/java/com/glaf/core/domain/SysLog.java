@@ -21,19 +21,50 @@ package com.glaf.core.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.base.JSONable;
 import com.glaf.core.domain.util.SysLogJsonFactory;
 
+@Entity
+@Table(name = "SYS_LOG")
 public class SysLog implements Serializable, JSONable {
 	private static final long serialVersionUID = 3489584842305336744L;
+
+	@Id
+	@Column(name = "ID", nullable = false)
 	private long id;
+
+	@Column(name = "ACCOUNT", length = 50)
 	private String account;
+
+	@Column(name = "IP", length = 100)
 	private String ip;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATETIME")
 	private Date createTime;
+
+	@Column(name = "MODULEID", length = 50)
+	private String moduleId;
+
+	@Column(name = "OPERATE", length = 50)
 	private String operate;
+
+	@Column(name = "CONTENT", length = 500)
+	private String content;
+
+	@Column(name = "FLAG")
 	private int flag;
+
+	@Column(name = "TIMEMS")
 	private int timeMS;
 
 	public boolean equals(Object obj) {
@@ -53,6 +84,10 @@ public class SysLog implements Serializable, JSONable {
 		return account;
 	}
 
+	public String getContent() {
+		return content;
+	}
+
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -67,6 +102,10 @@ public class SysLog implements Serializable, JSONable {
 
 	public String getIp() {
 		return ip;
+	}
+
+	public String getModuleId() {
+		return moduleId;
 	}
 
 	public String getOperate() {
@@ -92,6 +131,10 @@ public class SysLog implements Serializable, JSONable {
 		this.account = account;
 	}
 
+	public void setContent(String content) {
+		this.content = content;
+	}
+
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
@@ -106,6 +149,10 @@ public class SysLog implements Serializable, JSONable {
 
 	public void setIp(String ip) {
 		this.ip = ip;
+	}
+
+	public void setModuleId(String moduleId) {
+		this.moduleId = moduleId;
 	}
 
 	public void setOperate(String operate) {
