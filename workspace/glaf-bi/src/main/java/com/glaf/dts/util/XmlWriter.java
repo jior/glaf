@@ -47,7 +47,7 @@ public class XmlWriter {
 	}
 
 	public Document write(DataTransfer dataTransfer) {
-		List<DataTransfer> rows = new java.util.concurrent.CopyOnWriteArrayList<DataTransfer>();
+		List<DataTransfer> rows = new java.util.ArrayList<DataTransfer>();
 		rows.add(dataTransfer);
 		return this.write(rows);
 	}

@@ -30,7 +30,7 @@ public class ChartType implements java.io.Serializable {
 
 	protected String className;
 
-	protected Map<String, String> dataMap = new java.util.concurrent.ConcurrentHashMap<String, String>();
+	protected Map<String, String> dataMap = new java.util.HashMap<String, String>();
 
 	public ChartType() {
 

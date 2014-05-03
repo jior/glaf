@@ -141,7 +141,7 @@ public class MxTransformManager {
 			logger.debug("-------------------------1 executeQuery------------------------");
 			int count = rsmd.getColumnCount();
 			while (rs.next()) {
-				Map<String, Object> rowMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+				Map<String, Object> rowMap = new java.util.HashMap<String, Object>();
 				for (int i = 1; i <= count; i++) {
 					String columnName = rsmd.getColumnName(i);
 					try {

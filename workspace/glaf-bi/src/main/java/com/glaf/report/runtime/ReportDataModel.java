@@ -121,7 +121,7 @@ public class ReportDataModel implements java.io.Serializable {
 
 	protected ReportDataModel parent;
 
-	protected List<ReportDataModel> children = new java.util.concurrent.CopyOnWriteArrayList<ReportDataModel>();
+	protected List<ReportDataModel> children = new java.util.ArrayList<ReportDataModel>();
 
 	public ReportDataModel() {
 
@@ -129,7 +129,7 @@ public class ReportDataModel implements java.io.Serializable {
 
 	public void addChild(ReportDataModel child) {
 		if (children == null) {
-			children = new java.util.concurrent.CopyOnWriteArrayList<ReportDataModel>();
+			children = new java.util.ArrayList<ReportDataModel>();
 		}
 		child.setParent(this);
 		child.setParentId(this.getId());

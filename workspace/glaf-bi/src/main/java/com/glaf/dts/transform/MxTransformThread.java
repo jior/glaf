@@ -103,7 +103,7 @@ public class MxTransformThread implements java.lang.Runnable {
 			JsonFactory f = new JsonFactory();
 			ObjectMapper mapper = new ObjectMapper(f);
 			try {
-				paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+				paramMap = new java.util.HashMap<String, Object>();
 				paramMap = (Map<String, Object>) mapper.readValue(parameter,
 						HashMap.class);
 				logger.debug("paramMap:" + paramMap);
@@ -127,7 +127,7 @@ public class MxTransformThread implements java.lang.Runnable {
 			transformTaskService.save(task);
 		}
 
-		List<TableModel> resultList = new java.util.concurrent.CopyOnWriteArrayList<TableModel>();
+		List<TableModel> resultList = new java.util.ArrayList<TableModel>();
 
 		Connection conn = null;
 		PreparedStatement psmt = null;

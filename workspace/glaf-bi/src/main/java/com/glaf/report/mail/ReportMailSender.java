@@ -127,7 +127,7 @@ public class ReportMailSender {
 		mailMessage.setSubject(subject);
 		mailMessage.setContent(content);
 
-		Collection<Object> dataFiles = new java.util.concurrent.CopyOnWriteArrayList<Object>();
+		Collection<Object> dataFiles = new java.util.ArrayList<Object>();
 
 		if (reports != null && !reports.isEmpty()) {
 			for (Report report : reports) {
@@ -152,7 +152,7 @@ public class ReportMailSender {
 			}
 		}
 
-		List<String> recipients = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> recipients = new java.util.ArrayList<String>();
 
 		if (StringUtils.isNotEmpty(reportTask.getMailRecipient())) {
 			recipients.addAll(StringTools.split(reportTask.getMailRecipient()));
@@ -248,7 +248,7 @@ public class ReportMailSender {
 			mailMessage.setSaveMessage(true);
 			mailMessage.setSubject(subject);
 			mailMessage.setContent(content);
-			Collection<Object> dataFiles = new java.util.concurrent.CopyOnWriteArrayList<Object>();
+			Collection<Object> dataFiles = new java.util.ArrayList<Object>();
 
 			byte[] bytes = null;
 			try {

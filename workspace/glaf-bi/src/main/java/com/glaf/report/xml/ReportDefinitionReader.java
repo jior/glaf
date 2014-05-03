@@ -34,7 +34,7 @@ import com.glaf.report.def.ReportRowSet;
 public class ReportDefinitionReader {
 
 	public List<ReportDefinition> read(java.io.InputStream inputStream) {
-		List<ReportDefinition> reports = new java.util.concurrent.CopyOnWriteArrayList<ReportDefinition>();
+		List<ReportDefinition> reports = new java.util.ArrayList<ReportDefinition>();
 		SAXReader xmlReader = new SAXReader();
 		Document doc = null;
 		try {
@@ -96,7 +96,7 @@ public class ReportDefinitionReader {
 	}
 
 	protected Map<String, Object> readProperties(Element element) {
-		Map<String, Object> properties = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> properties = new java.util.HashMap<String, Object>();
 		Element propsElement = element.element("properties");
 		if (propsElement != null) {
 			List<?> rows = propsElement.elements("property");

@@ -35,12 +35,12 @@ public class ReportDataSet implements java.io.Serializable {
 	/**
 	 * 报表结果集
 	 */
-	protected List<ReportRowSet> rowSetList = new java.util.concurrent.CopyOnWriteArrayList<ReportRowSet>();
+	protected List<ReportRowSet> rowSetList = new java.util.ArrayList<ReportRowSet>();
 
 	/**
 	 * 报表属性定义，主要用于自定义处理程序
 	 */
-	protected Map<String, Object> properties = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+	protected Map<String, Object> properties = new java.util.HashMap<String, Object>();
 
 	public ReportDataSet() {
 
@@ -48,7 +48,7 @@ public class ReportDataSet implements java.io.Serializable {
 
 	public void addRowSet(ReportRowSet rowset) {
 		if (rowSetList == null) {
-			rowSetList = new java.util.concurrent.CopyOnWriteArrayList<ReportRowSet>();
+			rowSetList = new java.util.ArrayList<ReportRowSet>();
 		}
 		rowset.setReportDataSet(this);
 		rowSetList.add(rowset);
@@ -68,7 +68,7 @@ public class ReportDataSet implements java.io.Serializable {
 
 	public List<ReportRowSet> getRowSetList() {
 		if (rowSetList == null) {
-			rowSetList = new java.util.concurrent.CopyOnWriteArrayList<ReportRowSet>();
+			rowSetList = new java.util.ArrayList<ReportRowSet>();
 		}
 		return rowSetList;
 	}

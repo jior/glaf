@@ -106,7 +106,7 @@ public class TransformActivity implements java.io.Serializable {
 	protected int revision;
 
 	@Transient
-	protected List<TransformStep> steps = new java.util.concurrent.CopyOnWriteArrayList<TransformStep>();
+	protected List<TransformStep> steps = new java.util.ArrayList<TransformStep>();
 
 	public TransformActivity() {
 
@@ -114,7 +114,7 @@ public class TransformActivity implements java.io.Serializable {
 
 	public void addStep(TransformStep step) {
 		if (steps == null) {
-			steps = new java.util.concurrent.CopyOnWriteArrayList<TransformStep>();
+			steps = new java.util.ArrayList<TransformStep>();
 		}
 		steps.add(step);
 	}

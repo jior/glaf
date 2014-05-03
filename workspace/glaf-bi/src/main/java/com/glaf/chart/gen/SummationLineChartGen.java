@@ -188,7 +188,7 @@ public class SummationLineChartGen implements ChartGen {
 
 	public CategoryDataset createDataset(Chart chartModel) {
 		DefaultCategoryDataset localDefaultCategoryDataset = new DefaultCategoryDataset();
-		Map<String, Double> total = new java.util.concurrent.ConcurrentHashMap<String, Double>();
+		Map<String, Double> total = new java.util.HashMap<String, Double>();
 		for (ColumnModel cell : chartModel.getColumns()) {
 			if (cell.getSeries() != null && cell.getCategory() != null) {
 				Double d = total.get(cell.getSeries());

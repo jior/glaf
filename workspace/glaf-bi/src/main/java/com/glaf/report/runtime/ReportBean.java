@@ -46,7 +46,7 @@ public class ReportBean {
 
 	public synchronized Map<String, Object> populate(String reportId,
 			String actorId, Map<String, Object> context) {
-		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 		ReportDefinition reportDefinition = ReportContainer.getContainer()
 				.getReportDefinition(reportId);
 		logger.debug(reportDefinition.getReportId() + " -> "

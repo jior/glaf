@@ -48,12 +48,12 @@ public class ReportDefinition implements java.io.Serializable {
 	/**
 	 * 报表数据集，报表中用到的数据集合
 	 */
-	protected List<ReportDataSet> dataSetList = new java.util.concurrent.CopyOnWriteArrayList<ReportDataSet>();
+	protected List<ReportDataSet> dataSetList = new java.util.ArrayList<ReportDataSet>();
 
 	/**
 	 * 报表属性定义，主要用于自定义处理程序
 	 */
-	protected Map<String, Object> properties = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+	protected Map<String, Object> properties = new java.util.HashMap<String, Object>();
 
 	public ReportDefinition() {
 
@@ -61,7 +61,7 @@ public class ReportDefinition implements java.io.Serializable {
 
 	public void addDataSet(ReportDataSet rds) {
 		if (dataSetList == null) {
-			dataSetList = new java.util.concurrent.CopyOnWriteArrayList<ReportDataSet>();
+			dataSetList = new java.util.ArrayList<ReportDataSet>();
 		}
 		rds.setReportDefinition(this);
 		dataSetList.add(rds);
@@ -73,7 +73,7 @@ public class ReportDefinition implements java.io.Serializable {
 
 	public List<ReportDataSet> getDataSetList() {
 		if (dataSetList == null) {
-			dataSetList = new java.util.concurrent.CopyOnWriteArrayList<ReportDataSet>();
+			dataSetList = new java.util.ArrayList<ReportDataSet>();
 		}
 		return dataSetList;
 	}

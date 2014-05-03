@@ -65,7 +65,7 @@ public class JxlsReportContainer {
 	public Workbook execute(String reportId, String actorId,
 			Map<String, Object> context) {
 		if (context == null) {
-			context = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			context = new java.util.HashMap<String, Object>();
 		}
 
 		Workbook workbook = null;

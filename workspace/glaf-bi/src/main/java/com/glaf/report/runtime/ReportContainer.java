@@ -58,7 +58,7 @@ public class ReportContainer {
 	}
 
 	public Map<String, ReportDefinition> reload() {
-		Map<String, ReportDefinition> reportMap = new java.util.concurrent.ConcurrentHashMap<String, ReportDefinition>();
+		Map<String, ReportDefinition> reportMap = new java.util.HashMap<String, ReportDefinition>();
 		String configLocation = SystemProperties
 				.getString("report.config.path");
 		if (StringUtils.isEmpty(configLocation)) {

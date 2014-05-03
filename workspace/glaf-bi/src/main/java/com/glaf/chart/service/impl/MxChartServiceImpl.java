@@ -110,7 +110,7 @@ public class MxChartServiceImpl implements IChartService {
 			if (rows != null && !rows.isEmpty()) {
 				logger.debug(rows);
 				int index = 0;
-				Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+				Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 				for (Map<String, Object> rowMap : rows) {
 					dataMap.clear();
 					Set<Entry<String, Object>> entrySet = rowMap.entrySet();

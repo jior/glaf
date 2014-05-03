@@ -86,7 +86,7 @@ public class ChartResource {
 			if (!DBUtils.isLegalQuerySql(querySQL)) {
 				return ResponseUtils.responseJsonResult(false, "SQL查询不合法！");
 			}
-			Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 
 			querySQL = QueryUtils.replaceSQLVars(querySQL);
 			querySQL = QueryUtils.replaceSQLParas(querySQL, paramMap);

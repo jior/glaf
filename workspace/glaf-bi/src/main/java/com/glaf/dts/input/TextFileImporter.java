@@ -38,7 +38,7 @@ public class TextFileImporter {
 		List<SystemProperty> props = systemPropertyService
 				.getAllSystemProperties();
 		if (props != null && !props.isEmpty()) {
-			Map<String, String> dataMap = new java.util.concurrent.ConcurrentHashMap<String, String>();
+			Map<String, String> dataMap = new java.util.HashMap<String, String>();
 			for (SystemProperty p : props) {
 				dataMap.put(p.getName(), p.getValue());
 			}

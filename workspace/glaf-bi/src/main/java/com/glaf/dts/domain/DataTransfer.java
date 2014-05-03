@@ -123,16 +123,16 @@ public class DataTransfer implements Serializable, JSONable {
 	protected ColumnDefinition idColumn;
 
 	@javax.persistence.Transient
-	protected List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+	protected List<ColumnDefinition> columns = new java.util.ArrayList<ColumnDefinition>();
 
 	/**
 	 * 需要排除的行列表
 	 */
 	@javax.persistence.Transient
-	protected List<String> excludes = new java.util.concurrent.CopyOnWriteArrayList<String>();
+	protected List<String> excludes = new java.util.ArrayList<String>();
 
 	@javax.persistence.Transient
-	protected Map<String, String> properties = new java.util.concurrent.ConcurrentHashMap<String, String>();
+	protected Map<String, String> properties = new java.util.HashMap<String, String>();
 
 	public DataTransfer() {
 
@@ -141,7 +141,7 @@ public class DataTransfer implements Serializable, JSONable {
 	public void addCollectionColumn(String columnName,
 			Collection<Object> collection) {
 		if (columns == null) {
-			columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+			columns = new java.util.ArrayList<ColumnDefinition>();
 		}
 		ColumnDefinition column = new ColumnDefinition();
 		column.setColumnName(columnName);
@@ -152,14 +152,14 @@ public class DataTransfer implements Serializable, JSONable {
 
 	public void addColumn(ColumnDefinition column) {
 		if (columns == null) {
-			columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+			columns = new java.util.ArrayList<ColumnDefinition>();
 		}
 		columns.add(column);
 	}
 
 	public void addColumn(String columnName, String javaType, Object value) {
 		if (columns == null) {
-			columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+			columns = new java.util.ArrayList<ColumnDefinition>();
 		}
 		ColumnDefinition column = new ColumnDefinition();
 		column.setColumnName(columnName);
@@ -170,14 +170,14 @@ public class DataTransfer implements Serializable, JSONable {
 
 	public void addExclude(String exclude) {
 		if (excludes == null) {
-			excludes = new java.util.concurrent.CopyOnWriteArrayList<String>();
+			excludes = new java.util.ArrayList<String>();
 		}
 		excludes.add(exclude);
 	}
 
 	public void addProperty(String key, String value) {
 		if (properties == null) {
-			properties = new java.util.concurrent.ConcurrentHashMap<String, String>();
+			properties = new java.util.HashMap<String, String>();
 		}
 		properties.put(key, value);
 	}
@@ -264,7 +264,7 @@ public class DataTransfer implements Serializable, JSONable {
 	}
 
 	public List<String> getListStringAggregationKeys() {
-		List<String> list = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> list = new java.util.ArrayList<String>();
 		if (aggregationKeys != null && aggregationKeys.trim().length() > 0) {
 			int start = 0;
 			int end = aggregationKeys.indexOf(",");
