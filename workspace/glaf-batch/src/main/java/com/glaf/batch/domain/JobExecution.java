@@ -20,8 +20,6 @@ package com.glaf.batch.domain;
 
 import java.io.*;
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 import javax.persistence.*;
 
@@ -102,10 +100,10 @@ public class JobExecution implements Serializable, JSONable {
 	protected Date lastUpdated;
 
 	@javax.persistence.Transient
-	protected Collection<JobExecutionParam> params = new CopyOnWriteArraySet<JobExecutionParam>();
+	protected Collection<JobExecutionParam> params = new HashSet<JobExecutionParam>();
 
 	@javax.persistence.Transient
-	protected List<StepExecution> steps = new CopyOnWriteArrayList<StepExecution>();
+	protected List<StepExecution> steps = new ArrayList<StepExecution>();
 
 	public JobExecution() {
 
@@ -120,7 +118,7 @@ public class JobExecution implements Serializable, JSONable {
 
 	public void addStep(StepExecution step) {
 		if (steps == null) {
-			steps = new java.util.concurrent.CopyOnWriteArrayList<StepExecution>();
+			steps = new java.util.ArrayList<StepExecution>();
 		}
 		steps.add(step);
 	}

@@ -51,7 +51,7 @@ public class JobDefinition implements Serializable, JSONable {
 	protected Date createTime;
 
 	@javax.persistence.Transient
-	protected List<StepDefinition> steps = new java.util.concurrent.CopyOnWriteArrayList<StepDefinition>();
+	protected List<StepDefinition> steps = new java.util.ArrayList<StepDefinition>();
 
 	public JobDefinition() {
 
@@ -59,7 +59,7 @@ public class JobDefinition implements Serializable, JSONable {
 
 	public void addStep(StepDefinition step) {
 		if (steps == null) {
-			steps = new java.util.concurrent.CopyOnWriteArrayList<StepDefinition>();
+			steps = new java.util.ArrayList<StepDefinition>();
 		}
 		steps.add(step);
 	}
