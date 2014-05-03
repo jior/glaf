@@ -33,11 +33,11 @@ import com.glaf.form.core.graph.node.TextFieldNode;
 
 public class SearchFilterTools {
 
-	protected final static Map<String, String> searchFilters = new java.util.concurrent.ConcurrentHashMap<String, String>();
+	protected final static Map<String, String> searchFilters = new java.util.HashMap<String, String>();
 
-	protected final static Map<String, String> searchNodeFilters = new java.util.concurrent.ConcurrentHashMap<String, String>();
+	protected final static Map<String, String> searchNodeFilters = new java.util.HashMap<String, String>();
 
-	protected final static Map<Integer, String> searchTypeFilters = new java.util.concurrent.ConcurrentHashMap<Integer, String>();
+	protected final static Map<Integer, String> searchTypeFilters = new java.util.HashMap<Integer, String>();
 
 	static {
 		searchFilters.put("=", "eq");

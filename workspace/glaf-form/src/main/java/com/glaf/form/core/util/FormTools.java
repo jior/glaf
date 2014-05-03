@@ -52,7 +52,7 @@ public final class FormTools {
 
 	public static Map<String, Object> distill(FormDefinition formDefinition,
 			DataModel formModel) {
-		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 		List<FormNode> nodes = formDefinition.getNodes();
 		if (nodes != null && nodes.size() > 0) {
 			Iterator<FormNode> iterator = nodes.iterator();
@@ -202,7 +202,7 @@ public final class FormTools {
 
 	public static Map<String, Object> distill(Map<String, String> params,
 			FormDefinition formDefinition, DataModel formModel) {
-		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 		List<FormNode> nodes = formDefinition.getNodes();
 		if (nodes != null && nodes.size() > 0) {
 			Iterator<FormNode> iterator = nodes.iterator();
@@ -353,7 +353,7 @@ public final class FormTools {
 
 	public static Map<String, Object> distill(HttpServletRequest request,
 			FormDefinition formDefinition, DataModel formModel) {
-		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 		List<FormNode> nodes = formDefinition.getNodes();
 		if (nodes != null && nodes.size() > 0) {
 			Iterator<FormNode> iterator = nodes.iterator();

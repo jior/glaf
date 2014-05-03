@@ -79,7 +79,7 @@ public class FormDefinitionType {
 
 	public List<EventType> getEvent() {
 		if (event == null) {
-			event = new java.util.concurrent.CopyOnWriteArrayList<EventType>();
+			event = new java.util.ArrayList<EventType>();
 		}
 		return this.event;
 	}
@@ -94,7 +94,7 @@ public class FormDefinitionType {
 
 	public List<NodeType> getNode() {
 		if (node == null) {
-			node = new java.util.concurrent.CopyOnWriteArrayList<NodeType>();
+			node = new java.util.ArrayList<NodeType>();
 		}
 		return this.node;
 	}
@@ -105,7 +105,7 @@ public class FormDefinitionType {
 
 	public List<PropertyType> getProperty() {
 		if (property == null) {
-			property = new java.util.concurrent.CopyOnWriteArrayList<PropertyType>();
+			property = new java.util.ArrayList<PropertyType>();
 		}
 		return this.property;
 	}
@@ -116,7 +116,7 @@ public class FormDefinitionType {
 
 	public List<ScriptType> getScript() {
 		if (script == null) {
-			script = new java.util.concurrent.CopyOnWriteArrayList<ScriptType>();
+			script = new java.util.ArrayList<ScriptType>();
 		}
 		return this.script;
 	}

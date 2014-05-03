@@ -44,7 +44,7 @@ public class FormEvent implements Serializable {
 				&& StringUtils.isNotEmpty(formProperty.getValue())) {
 			formProperty.setGraphElement(graphElement);
 			if (properties == null) {
-				properties = new java.util.concurrent.ConcurrentHashMap<String, FormProperty>();
+				properties = new java.util.HashMap<String, FormProperty>();
 			}
 			FormProperty p = properties.get(formProperty.getName());
 			if (p == null) {
@@ -60,7 +60,7 @@ public class FormEvent implements Serializable {
 	public void addProperty(String name, String value) {
 		if (StringUtils.isNotEmpty(name) && StringUtils.isNotEmpty(value)) {
 			if (properties == null) {
-				properties = new java.util.concurrent.ConcurrentHashMap<String, FormProperty>();
+				properties = new java.util.HashMap<String, FormProperty>();
 			}
 			FormProperty p = properties.get(name);
 			if (p == null) {
@@ -79,7 +79,7 @@ public class FormEvent implements Serializable {
 					"can't add a null script to an event");
 		}
 		if (scripts == null) {
-			scripts = new java.util.concurrent.CopyOnWriteArrayList<FormScript>();
+			scripts = new java.util.ArrayList<FormScript>();
 		}
 		scripts.add(script);
 		script.setFormEvent(this);
@@ -92,7 +92,7 @@ public class FormEvent implements Serializable {
 
 	public Map<String, FormProperty> getProperties() {
 		if (properties == null) {
-			properties = new java.util.concurrent.ConcurrentHashMap<String, FormProperty>();
+			properties = new java.util.HashMap<String, FormProperty>();
 		}
 		return properties;
 	}

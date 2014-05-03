@@ -51,7 +51,7 @@ public class FormAccessUtil {
 	public static Map<String, Object> process(FormContext formContext,
 			Object entity, boolean isCreate) {
 		FormDefinition formDefinition = formContext.getFormDefinition();
-		Map<String, Object> persistMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> persistMap = new java.util.HashMap<String, Object>();
 		Map<String, Object> dataMap = formContext.getDataMap();
 		DataModel dataModel = formContext.getDataModel();
 		if (isCreate) {

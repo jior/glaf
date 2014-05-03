@@ -37,14 +37,14 @@ public class EventType {
 
 	public List<PropertyType> getProperty() {
 		if (property == null) {
-			property = new java.util.concurrent.CopyOnWriteArrayList<PropertyType>();
+			property = new java.util.ArrayList<PropertyType>();
 		}
 		return this.property;
 	}
 
 	public List<ScriptType> getScript() {
 		if (script == null) {
-			script = new java.util.concurrent.CopyOnWriteArrayList<ScriptType>();
+			script = new java.util.ArrayList<ScriptType>();
 		}
 		return this.script;
 	}

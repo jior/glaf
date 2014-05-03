@@ -32,8 +32,8 @@ public class FormContext {
 	protected byte[] content = null;
 	protected String contextPath = null;
 	protected Collection<DataFile> dataFiles = null;
-	protected Map<String, DataItem> dataItemMap = new java.util.concurrent.ConcurrentHashMap<String, DataItem>();
-	protected Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+	protected Map<String, DataItem> dataItemMap = new java.util.HashMap<String, DataItem>();
+	protected Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 	protected String encoding = "UTF-8";
 	protected FormApplication formApplication = null;
 	protected FormDefinition formDefinition = null;
@@ -88,7 +88,7 @@ public class FormContext {
 
 	public Map<String, DataItem> getDataItemMap() {
 		if (dataItemMap == null) {
-			dataItemMap = new java.util.concurrent.ConcurrentHashMap<String, DataItem>();
+			dataItemMap = new java.util.HashMap<String, DataItem>();
 		}
 		return dataItemMap;
 	}
@@ -103,7 +103,7 @@ public class FormContext {
 
 	public Map<String, Object> getDataMap() {
 		if (dataMap == null) {
-			dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			dataMap = new java.util.HashMap<String, Object>();
 		}
 		return dataMap;
 	}
@@ -145,7 +145,7 @@ public class FormContext {
 
 	public void put(String key, Object value) {
 		if (dataMap == null) {
-			dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			dataMap = new java.util.HashMap<String, Object>();
 		}
 		if (key != null && value != null) {
 			dataMap.put(key, value);

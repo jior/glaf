@@ -80,8 +80,8 @@ public class MxFormArchiveServiceImpl implements FormArchiveService {
 		if (loginContext != null) {
 			formContext.setLoginContext(loginContext);
 		}
-		Collection<DataFile> dataFiles = new java.util.concurrent.CopyOnWriteArrayList<DataFile>();
-		Map<String, InputStream> zipMap = new java.util.concurrent.ConcurrentHashMap<String, InputStream>();
+		Collection<DataFile> dataFiles = new java.util.ArrayList<DataFile>();
+		Map<String, InputStream> zipMap = new java.util.HashMap<String, InputStream>();
 
 		formContext.setFormApplication(formApplication);
 		formDefinition = formDataService
@@ -178,7 +178,7 @@ public class MxFormArchiveServiceImpl implements FormArchiveService {
 			zipMap.clear();
 			zipMap = null;
 
-			Map<String, Object> parameter = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			Map<String, Object> parameter = new java.util.HashMap<String, Object>();
 
 			parameter.put("archivesFlag", "Y");
 			parameter.put("id", businessKey);

@@ -128,7 +128,7 @@ public class FormDefinition extends GraphElement implements JSONable {
 					"can't add a null node to a form definition");
 		}
 		if (nodes == null) {
-			nodes = new java.util.concurrent.CopyOnWriteArrayList<FormNode>();
+			nodes = new java.util.ArrayList<FormNode>();
 		}
 		node.setFormDefinition(this);
 		nodes.add(node);
@@ -143,7 +143,7 @@ public class FormDefinition extends GraphElement implements JSONable {
 					"can't add a null script to a form definition");
 		}
 		if (scripts == null) {
-			scripts = new java.util.concurrent.CopyOnWriteArrayList<FormScript>();
+			scripts = new java.util.ArrayList<FormScript>();
 		}
 		scripts.add(script);
 		return script;
@@ -200,7 +200,7 @@ public class FormDefinition extends GraphElement implements JSONable {
 	@Transient
 	public List<FormNode> getNodes() {
 		if (nodes == null) {
-			nodes = new java.util.concurrent.CopyOnWriteArrayList<FormNode>();
+			nodes = new java.util.ArrayList<FormNode>();
 		}
 		return nodes;
 	}
@@ -235,7 +235,7 @@ public class FormDefinition extends GraphElement implements JSONable {
 	@Transient
 	public List<FormScript> getScripts() {
 		if (scripts == null) {
-			scripts = new java.util.concurrent.CopyOnWriteArrayList<FormScript>();
+			scripts = new java.util.ArrayList<FormScript>();
 		}
 		return scripts;
 	}

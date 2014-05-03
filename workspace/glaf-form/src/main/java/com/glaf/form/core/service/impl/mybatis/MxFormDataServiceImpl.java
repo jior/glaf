@@ -207,7 +207,7 @@ public class MxFormDataServiceImpl implements FormDataService {
 	}
 
 	public Map<String, FormApplication> getFormApplicationMap() {
-		Map<String, FormApplication> appMap = new java.util.concurrent.ConcurrentHashMap<String, FormApplication>();
+		Map<String, FormApplication> appMap = new java.util.HashMap<String, FormApplication>();
 		FormApplicationQuery query = new FormApplicationQuery();
 		List<FormApplication> list = this.formApplicationList(query);
 		if (list != null && !list.isEmpty()) {
@@ -288,7 +288,7 @@ public class MxFormDataServiceImpl implements FormDataService {
 		FormApplication formApplication = this.getFormApplication(appId);
 		query.setTableName(formApplication.getTableName());
 
-		Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 		if (query.getParameter() != null) {
 			if (Map.class.isAssignableFrom(query.getParameter().getClass())) {
 				paramMap.putAll((Map<String, Object>) query.getParameter());
@@ -300,7 +300,7 @@ public class MxFormDataServiceImpl implements FormDataService {
 			Object object = ParamUtils.get(paramMap, "processInstanceIds");
 			if (object instanceof java.util.Collection<?>) {
 				Collection<?> rows = (Collection<?>) object;
-				List<String> processInstanceIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
+				List<String> processInstanceIds = new java.util.ArrayList<String>();
 				Iterator<?> iterator = rows.iterator();
 				while (iterator.hasNext()) {
 					Object value = iterator.next();
@@ -382,7 +382,7 @@ public class MxFormDataServiceImpl implements FormDataService {
 		}
 
 		Paging page = new Paging();
-		List<Object> rows = new java.util.concurrent.CopyOnWriteArrayList<Object>();
+		List<Object> rows = new java.util.ArrayList<Object>();
 
 		int total = dataModelService.getDataModelCount(query);
 		if (total > 0) {
@@ -431,7 +431,7 @@ public class MxFormDataServiceImpl implements FormDataService {
 		String tableName = formApplication.getTableName();
 		List<ColumnDefinition> columns = tableDefinitionService
 				.getColumnDefinitionsByTableName(tableName);
-		Map<String, ColumnDefinition> columnMap = new java.util.concurrent.ConcurrentHashMap<String, ColumnDefinition>();
+		Map<String, ColumnDefinition> columnMap = new java.util.HashMap<String, ColumnDefinition>();
 		for (ColumnDefinition column : columns) {
 			columnMap.put(column.getColumnName(), column);
 			columnMap.put(column.getColumnName().toLowerCase(), column);
@@ -661,7 +661,7 @@ public class MxFormDataServiceImpl implements FormDataService {
 		String tableName = formApplication.getTableName();
 		List<ColumnDefinition> columns = tableDefinitionService
 				.getColumnDefinitionsByTableName(tableName);
-		Map<String, ColumnDefinition> columnMap = new java.util.concurrent.ConcurrentHashMap<String, ColumnDefinition>();
+		Map<String, ColumnDefinition> columnMap = new java.util.HashMap<String, ColumnDefinition>();
 		for (ColumnDefinition column : columns) {
 			columnMap.put(column.getColumnName(), column);
 			columnMap.put(column.getColumnName().toLowerCase(), column);

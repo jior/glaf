@@ -51,7 +51,7 @@ public class FormScript implements Serializable {
 				&& StringUtils.isNotEmpty(formProperty.getValue())) {
 			formProperty.setGraphElement(graphElement);
 			if (properties == null) {
-				properties = new java.util.concurrent.ConcurrentHashMap<String, FormProperty>();
+				properties = new java.util.HashMap<String, FormProperty>();
 			}
 			FormProperty p = properties.get(formProperty.getName());
 			if (p == null) {
@@ -67,7 +67,7 @@ public class FormScript implements Serializable {
 	public void addProperty(String name, String value) {
 		if (StringUtils.isNotEmpty(name) && StringUtils.isNotEmpty(value)) {
 			if (properties == null) {
-				properties = new java.util.concurrent.ConcurrentHashMap<String, FormProperty>();
+				properties = new java.util.HashMap<String, FormProperty>();
 			}
 			FormProperty p = properties.get(name);
 			if (p == null) {
@@ -81,7 +81,7 @@ public class FormScript implements Serializable {
 	}
 
 	public Map<String, Object> eval(FormContext formContext) throws Exception {
-		Map<String, Object> inputMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> inputMap = new java.util.HashMap<String, Object>();
 		Set<Object> outputNames = new HashSet<Object>();
 
 		if (formContext.getDataMap() != null) {
@@ -89,7 +89,7 @@ public class FormScript implements Serializable {
 			outputNames.addAll(formContext.getDataMap().keySet());
 		}
 
-		Map<String, Object> outputMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> outputMap = new java.util.HashMap<String, Object>();
 		try {
 			log.debug("script input: " + inputMap);
 
@@ -135,7 +135,7 @@ public class FormScript implements Serializable {
 
 	public Map<String, FormProperty> getProperties() {
 		if (properties == null) {
-			properties = new java.util.concurrent.ConcurrentHashMap<String, FormProperty>();
+			properties = new java.util.HashMap<String, FormProperty>();
 		}
 		return properties;
 	}

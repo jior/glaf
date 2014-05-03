@@ -77,7 +77,7 @@ public class NodeTypes {
 
 	static Map<String, Class<?>> nodeTypes = initialiseNodeTypes();
 
-	static Map<String, Integer> nodeTypeMap = new java.util.concurrent.ConcurrentHashMap<String, Integer>();
+	static Map<String, Integer> nodeTypeMap = new java.util.HashMap<String, Integer>();
 
 	static {
 		nodeTypeMap.put(BoxNode.NODE_TYPE, Integer.valueOf(BOX_NODE_TYPE));
@@ -140,7 +140,7 @@ public class NodeTypes {
 	}
 
 	static Map<String, Class<?>> initialiseNodeTypes() {
-		Map<String, Class<?>> types = new java.util.concurrent.ConcurrentHashMap<String, Class<?>>();
+		Map<String, Class<?>> types = new java.util.HashMap<String, Class<?>>();
 		String resource = SystemProperties
 				.getString("resource.form.node.types");
 		if (StringUtils.isNotEmpty(resource)) {

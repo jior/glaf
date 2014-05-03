@@ -74,7 +74,7 @@ public class MxFormXmlServiceImpl implements FormXmlService {
 		Map<String, User> userMap = IdentityFactory.getUserMap();
 		Paging page = MxFormContainer.getContainer().getPageDataModel(
 				formApplication.getId(), query);
-		Map<String, Object> rowMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> rowMap = new java.util.HashMap<String, Object>();
 		Document doc = DocumentHelper.createDocument();
 		Element root = doc.addElement("List");
 		root.addAttribute("app_name", formApplication.getName());

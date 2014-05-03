@@ -133,7 +133,7 @@ public class MxFormArchiveReader {
 	 * @return
 	 */
 	public List<FormDefinition> getFormDefinitions(InputStream is) {
-		List<FormDefinition> rows = new java.util.concurrent.CopyOnWriteArrayList<FormDefinition>();
+		List<FormDefinition> rows = new java.util.ArrayList<FormDefinition>();
 		ZipInputStream zipInputStream = null;
 		ByteArrayOutputStream baos = null;
 		BufferedOutputStream bos = null;
@@ -214,7 +214,7 @@ public class MxFormArchiveReader {
 	}
 
 	public List<FormDefinition> readFormDefinitions(File dir) {
-		List<FormDefinition> rows = new java.util.concurrent.CopyOnWriteArrayList<FormDefinition>();
+		List<FormDefinition> rows = new java.util.ArrayList<FormDefinition>();
 		if (dir.exists() && dir.isDirectory()) {
 			readInternal(dir, rows);
 		}

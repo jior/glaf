@@ -138,7 +138,7 @@ public class MxPOIExcelDataImport implements FormDataImport {
 
 					NodeType node = null;
 
-					Map<String, Object> propertyMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+					Map<String, Object> propertyMap = new java.util.HashMap<String, Object>();
 
 					String cellValue = null;
 

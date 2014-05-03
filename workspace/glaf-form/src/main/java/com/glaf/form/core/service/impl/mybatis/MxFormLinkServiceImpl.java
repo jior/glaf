@@ -66,7 +66,7 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 
 	public List<FormApplication> getChildrenApplications(String app_name) {
 		List<FormLink> list = this.getFormLinks(app_name);
-		List<FormApplication> rows = new java.util.concurrent.CopyOnWriteArrayList<FormApplication>();
+		List<FormApplication> rows = new java.util.ArrayList<FormApplication>();
 		if (list != null && !list.isEmpty()) {
 			for (FormLink model : list) {
 				FormApplication childApplication = formDataService
@@ -82,7 +82,7 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 		FormLinkQuery query = new FormLinkQuery();
 		query.applicationName(app_name);
 		List<FormLink> list = this.list(query);
-		List<FormDefinition> rows = new java.util.concurrent.CopyOnWriteArrayList<FormDefinition>();
+		List<FormDefinition> rows = new java.util.ArrayList<FormDefinition>();
 		if (list != null && !list.isEmpty()) {
 			for (FormLink model : list) {
 				FormApplication childApplication = formDataService
@@ -102,7 +102,7 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 		FormLinkQuery query = new FormLinkQuery();
 		query.applicationName(app_name);
 		List<FormLink> list = this.list(query);
-		List<FormDefinition> rows = new java.util.concurrent.CopyOnWriteArrayList<FormDefinition>();
+		List<FormDefinition> rows = new java.util.ArrayList<FormDefinition>();
 		if (list != null && !list.isEmpty()) {
 			for (FormLink model : list) {
 				FormApplication childApplication = formDataService

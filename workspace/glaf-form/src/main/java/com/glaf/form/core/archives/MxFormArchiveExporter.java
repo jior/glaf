@@ -75,7 +75,7 @@ public class MxFormArchiveExporter {
 		FormApplicationQuery query = new FormApplicationQuery();
 		Paging page = formDataService.getPageApplication(query);
 		List<Object> rows = page.getRows();
-		Map<String, InputStream> zipMap = new java.util.concurrent.ConcurrentHashMap<String, InputStream>();
+		Map<String, InputStream> zipMap = new java.util.HashMap<String, InputStream>();
 		for (Object object : rows) {
 			FormApplication app = (FormApplication) object;
 			byte[] bytes = this.zip(app.getName(), false);
@@ -99,7 +99,7 @@ public class MxFormArchiveExporter {
 				.getFormApplicationByName(app_name);
 		if (formApplication != null) {
 			String encoding = "GBK";
-			Map<String, InputStream> zipMap = new java.util.concurrent.ConcurrentHashMap<String, InputStream>();
+			Map<String, InputStream> zipMap = new java.util.HashMap<String, InputStream>();
 			FormDefinition formDefinition = formDataService
 					.getLatestFormDefinition(formApplication.getFormName());
 			formContext.setFormDefinition(formDefinition);
@@ -190,7 +190,7 @@ public class MxFormArchiveExporter {
 
 			if (StringUtils.isNotEmpty(formApplication.getProcessName())) {
 
-				List<Todo> todoList = new java.util.concurrent.CopyOnWriteArrayList<Todo>();
+				List<Todo> todoList = new java.util.ArrayList<Todo>();
 				ProcessDefinition processDefinition = null;
 				JbpmContext jbpmContext = null;
 				try {
@@ -299,7 +299,7 @@ public class MxFormArchiveExporter {
 						formApplication.getId(), query);
 				List<Object> rows = jpage.getRows();
 				if (rows != null && rows.size() > 0) {
-					List<Object> list = new java.util.concurrent.CopyOnWriteArrayList<Object>();
+					List<Object> list = new java.util.ArrayList<Object>();
 					doc = DocumentHelper.createDocument();
 					Element root = doc.addElement("rows");
 					root.addAttribute("total", String.valueOf(rows.size()));
@@ -365,7 +365,7 @@ public class MxFormArchiveExporter {
 							new ByteArrayInputStream(dataBytes));
 					zipMap.put("formdata.xml", inputStream);
 
-					Map<String, Object> pageInfo = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+					Map<String, Object> pageInfo = new java.util.HashMap<String, Object>();
 
 					pageInfo.put("total", list.size());
 					pageInfo.put("records", list);

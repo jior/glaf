@@ -51,7 +51,7 @@ public class ScriptType {
 
 	public List<PropertyType> getProperty() {
 		if (property == null) {
-			property = new java.util.concurrent.CopyOnWriteArrayList<PropertyType>();
+			property = new java.util.ArrayList<PropertyType>();
 		}
 		return this.property;
 	}
