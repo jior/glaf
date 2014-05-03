@@ -33,6 +33,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -54,6 +56,9 @@ import com.glaf.core.xml.XmlBuilder;
 @Controller("/rs/data/service")
 @Path("/rs/data/service")
 public class DataServiceResource {
+
+	protected static final Log logger = LogFactory
+			.getLog(DataServiceResource.class);
 
 	protected SysDataService sysDataService;
 
@@ -132,7 +137,8 @@ public class DataServiceResource {
 					hasPermission = true;
 				}
 				if (StringUtils.isNotEmpty(perm) && StringUtils.isNumeric(perm)) {
-					if (loginContext.getRoleIds().contains(Long.parseLong(perm))) {
+					if (loginContext.getRoleIds()
+							.contains(Long.parseLong(perm))) {
 						hasPermission = true;
 					}
 				}
@@ -142,6 +148,7 @@ public class DataServiceResource {
 			}
 		}
 
+		long start = System.currentTimeMillis();
 		SysDataLog log = new SysDataLog();
 		try {
 			String filename = SystemProperties.getConfigRootPath()
@@ -158,6 +165,10 @@ public class DataServiceResource {
 			Document doc = builder.process(systemName, inputStream, dataMap);
 			log.setFlag(9);
 			log.setModuleId("DS");
+
+			int timeMS = (int) (System.currentTimeMillis() - start);
+			logger.debug("”√ ±£®∫¡√Î£©:" + timeMS);
+			log.setTimeMS(timeMS);
 
 			if (StringUtils.equals(dataType, "json")) {
 				net.sf.json.xml.XMLSerializer xmlSerializer = new net.sf.json.xml.XMLSerializer();

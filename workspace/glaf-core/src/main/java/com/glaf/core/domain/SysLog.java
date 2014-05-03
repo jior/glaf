@@ -34,6 +34,7 @@ public class SysLog implements Serializable, JSONable {
 	private Date createTime;
 	private String operate;
 	private int flag;
+	private int timeMS;
 
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -72,6 +73,10 @@ public class SysLog implements Serializable, JSONable {
 		return operate;
 	}
 
+	public int getTimeMS() {
+		return timeMS;
+	}
+
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -105,6 +110,10 @@ public class SysLog implements Serializable, JSONable {
 
 	public void setOperate(String operate) {
 		this.operate = operate;
+	}
+
+	public void setTimeMS(int timeMS) {
+		this.timeMS = timeMS;
 	}
 
 	public JSONObject toJsonObject() {

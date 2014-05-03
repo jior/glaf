@@ -70,6 +70,9 @@ public class SysDataLog implements Serializable, JSONable {
 	@Column(name = "FLAG_")
 	private int flag;
 
+	@Column(name = "TIMEMS_")
+	private int timeMS;
+
 	@javax.persistence.Transient
 	private String suffix;
 
@@ -135,6 +138,10 @@ public class SysDataLog implements Serializable, JSONable {
 		return suffix;
 	}
 
+	public int getTimeMS() {
+		return timeMS;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -189,6 +196,10 @@ public class SysDataLog implements Serializable, JSONable {
 
 	public void setSuffix(String suffix) {
 		this.suffix = suffix;
+	}
+
+	public void setTimeMS(int timeMS) {
+		this.timeMS = timeMS;
 	}
 
 	public JSONObject toJsonObject() {

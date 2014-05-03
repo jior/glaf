@@ -11,6 +11,7 @@
 		<result property="createTime" column="CREATETIME" jdbcType="TIMESTAMP" />
 		<result property="operate" column="OPERATE" jdbcType="VARCHAR" />
 		<result property="flag" column="FLAG" jdbcType="INTEGER" />
+		<result property="timeMS" column="TIMEMS_" jdbcType="INTEGER" />
 	</resultMap>
 
 
@@ -33,6 +34,9 @@
 			<if test="flag != null">
 				,FLAG
 			</if>
+			<if test="timeMS != null">
+				,TIMEMS_
+			</if>
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
@@ -53,35 +57,11 @@
 			<if test="flag != null">
 				,#{flag, jdbcType=INTEGER}
 			</if>
+			<if test="timeMS != null">
+				,#{timeMS, jdbcType=INTEGER}
+			</if>
 		</trim>
 	</insert>
-
-
-	<update id="updateSysLog" parameterType="com.glaf.core.domain.SysLog">
-		update SYS_LOG
-		set
-		<trim prefix="" suffix="" suffixOverrides=",">
-			<if test="account != null">
-				ACCOUNT = #{account, jdbcType=VARCHAR},
-			</if>
-			<if test="ip != null">
-				IP = #{ip, jdbcType=VARCHAR},
-			</if>
-			<if test="createTime != null">
-				CREATETIME = #{createTime, jdbcType=TIMESTAMP},
-			</if>
-			<if test="operate != null">
-				OPERATE = #{operate, jdbcType=VARCHAR},
-			</if>
-			<if test="flag != null">
-				FLAG = #{flag, jdbcType=INTEGER},
-			</if>
-		</trim>
-		where
-		ID = #{id, jdbcType=BIGINT}
-
-	</update>
-
 
 	<delete id="deleteSysLogById" parameterType="long">
 		delete from SYS_LOG

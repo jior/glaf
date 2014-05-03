@@ -38,6 +38,4 @@ public interface SysLogMapper {
 
 	void insertSysLog(SysLog model);
 
-	void updateSysLog(SysLog model);
-
 }

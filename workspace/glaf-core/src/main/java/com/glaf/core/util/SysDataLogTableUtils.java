@@ -108,6 +108,11 @@ public class SysDataLogTableUtils {
 		column9.setLength(50);
 		tableDefinition.addColumn(column9);
 
+		ColumnDefinition column10 = new ColumnDefinition();
+		column10.setColumnName("TIMEMS_");
+		column10.setJavaType("Integer");
+		tableDefinition.addColumn(column10);
+
 		if (!DBUtils.tableExists(tableName)) {
 			DBUtils.createTable(tableDefinition);
 		} else {

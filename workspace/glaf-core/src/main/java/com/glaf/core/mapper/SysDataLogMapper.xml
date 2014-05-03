@@ -15,6 +15,7 @@
 		<result property="operate" column="OPERATE_" jdbcType="VARCHAR" />
 		<result property="content" column="CONTENT_" jdbcType="VARCHAR" />
 		<result property="flag" column="FLAG_" jdbcType="INTEGER" />
+		<result property="timeMS" column="TIMEMS_" jdbcType="INTEGER" />
 	</resultMap>
 
 
@@ -49,6 +50,9 @@
 			<if test="flag != null">
 				,FLAG_
 			</if>
+			<if test="timeMS != null">
+				,TIMEMS_
+			</if>
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
@@ -79,6 +83,9 @@
 			</if>
 			<if test="flag != null">
 				,#{flag, jdbcType=INTEGER}
+			</if>
+			<if test="timeMS != null">
+				,#{timeMS, jdbcType=INTEGER}
 			</if>
 		</trim>
 	</insert>
