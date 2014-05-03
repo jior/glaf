@@ -46,7 +46,7 @@ public class TemplateXmlReader {
 
 	@SuppressWarnings("unchecked")
 	public Map<String, Template> getTemplates(InputStream inputStream) {
-		Map<String, Template> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Template>();
+		Map<String, Template> dataMap = new java.util.HashMap<String, Template>();
 		SAXReader xmlReader = new SAXReader();
 		Document doc = null;
 		try {
@@ -64,7 +64,7 @@ public class TemplateXmlReader {
 
 				List<Element> elems = element.elements();
 				if (elems != null && !elems.isEmpty()) {
-					Map<String, Object> rowMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+					Map<String, Object> rowMap = new java.util.HashMap<String, Object>();
 					for (Element em : elems) {
 						rowMap.put(em.getName(), em.getTextTrim());
 					}

@@ -64,7 +64,7 @@ public class POIExcelParser implements Parser {
 	}
 
 	public List<TableModel> parse(TableModel metadata, java.io.InputStream data) {
-		List<TableModel> rows = new java.util.concurrent.CopyOnWriteArrayList<TableModel>();
+		List<TableModel> rows = new java.util.ArrayList<TableModel>();
 		HSSFWorkbook wb = null;
 		try {
 			wb = new HSSFWorkbook(data);

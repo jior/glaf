@@ -29,7 +29,7 @@ import com.glaf.core.base.FieldDefinition;
 public class XmlWriter {
 
 	public Document write(ClassDefinition classDefinition) {
-		List<ClassDefinition> rows = new java.util.concurrent.CopyOnWriteArrayList<ClassDefinition>();
+		List<ClassDefinition> rows = new java.util.ArrayList<ClassDefinition>();
 		rows.add(classDefinition);
 		return this.write(rows);
 	}

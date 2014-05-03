@@ -41,10 +41,10 @@ public class DataModelEntity implements DataModel, Serializable {
 	protected String businessKey;
 	protected String createBy;
 	protected Date createDate;
-	protected Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+	protected Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 	protected int deleteFlag;
 	protected String fallbackFlag;
-	protected Map<String, ColumnModel> fields = new java.util.concurrent.ConcurrentHashMap<String, ColumnModel>();
+	protected Map<String, ColumnModel> fields = new java.util.HashMap<String, ColumnModel>();
 	protected String formName;
 	protected Long id;
 	protected int level;
@@ -67,7 +67,7 @@ public class DataModelEntity implements DataModel, Serializable {
 	protected String updateBy;
 	protected Date updateDate;
 	protected int wfStatus;
-	protected List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+	protected List<ColumnDefinition> columns = new java.util.ArrayList<ColumnDefinition>();
 
 	public DataModelEntity() {
 
@@ -79,12 +79,12 @@ public class DataModelEntity implements DataModel, Serializable {
 
 	public void addField(ColumnModel field) {
 		if (fields == null) {
-			fields = new java.util.concurrent.ConcurrentHashMap<String, ColumnModel>();
+			fields = new java.util.HashMap<String, ColumnModel>();
 		}
 		fields.put(field.getName(), field);
 
 		if (dataMap == null) {
-			dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			dataMap = new java.util.HashMap<String, Object>();
 		}
 		dataMap.put(field.getName(), field.getValue());
 
@@ -92,7 +92,7 @@ public class DataModelEntity implements DataModel, Serializable {
 
 	public void addField(String columnName, String key, Object value) {
 		if (dataMap == null) {
-			dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			dataMap = new java.util.HashMap<String, Object>();
 		}
 		dataMap.put(key, value);
 		ColumnModel field = new ColumnModel();
@@ -123,7 +123,7 @@ public class DataModelEntity implements DataModel, Serializable {
 
 	public Map<String, Object> getDataMap() {
 		if (dataMap == null) {
-			dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			dataMap = new java.util.HashMap<String, Object>();
 		}
 		return dataMap;
 	}
@@ -366,7 +366,7 @@ public class DataModelEntity implements DataModel, Serializable {
 
 		if (dataMap != null && dataMap.size() > 0) {
 			dataMap.remove("dataMap");
-			Map<String, Object> rowMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			Map<String, Object> rowMap = new java.util.HashMap<String, Object>();
 			rowMap.putAll(dataMap);
 			// dataMap.remove(StringTools.lower(this.getFormName()));
 			Set<Entry<String, Object>> entrySet = dataMap.entrySet();

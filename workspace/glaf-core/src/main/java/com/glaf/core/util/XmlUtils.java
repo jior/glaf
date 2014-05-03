@@ -78,7 +78,7 @@ public class XmlUtils {
 	}
 
 	public static List<Element> elements(Element element) {
-		List<Element> elements = new java.util.concurrent.CopyOnWriteArrayList<Element>();
+		List<Element> elements = new java.util.ArrayList<Element>();
 		NodeList nodeList = element.getChildNodes();
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Node node = nodeList.item(i);

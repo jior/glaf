@@ -490,11 +490,11 @@ public final class StringTools {
 	}
 
 	public static Collection<String> getStringCollection(String str) {
-		List<String> values = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> values = new java.util.ArrayList<String>();
 		if (str == null)
 			return values;
 		StringTokenizer tokenizer = new StringTokenizer(str, ",");
-		values = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		values = new java.util.ArrayList<String>();
 		while (tokenizer.hasMoreTokens()) {
 			values.add(tokenizer.nextToken());
 		}
@@ -780,7 +780,7 @@ public final class StringTools {
 		if (text == null) {
 			return Collections.EMPTY_LIST;
 		}
-		List<String> pieces = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> pieces = new java.util.ArrayList<String>();
 		int start = 0;
 		int end = text.indexOf(delimiter);
 		while (end != -1) {
@@ -839,7 +839,7 @@ public final class StringTools {
 		if (text == null) {
 			return Collections.EMPTY_LIST;
 		}
-		List<Integer> pieces = new java.util.concurrent.CopyOnWriteArrayList<Integer>();
+		List<Integer> pieces = new java.util.ArrayList<Integer>();
 		int start = 0;
 		int end = text.indexOf(delimiter);
 		while (end != -1) {
@@ -873,7 +873,7 @@ public final class StringTools {
 		if (text == null) {
 			return Collections.EMPTY_LIST;
 		}
-		List<Long> pieces = new java.util.concurrent.CopyOnWriteArrayList<Long>();
+		List<Long> pieces = new java.util.ArrayList<Long>();
 		int start = 0;
 		int end = text.indexOf(delimiter);
 		while (end != -1) {
@@ -917,7 +917,7 @@ public final class StringTools {
 		if (string == null || string.trim().length() == 0) {
 			return Collections.emptyList();
 		}
-		Collection<String> collection = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		Collection<String> collection = new java.util.ArrayList<String>();
 		StringTokenizer tokens = new StringTokenizer(string, ",");
 		while (tokens.hasMoreTokens()) {
 			collection.add(tokens.nextToken().trim());
@@ -962,7 +962,7 @@ public final class StringTools {
 			return new String[0];
 		}
 
-		List<String> wordList = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> wordList = new java.util.ArrayList<String>();
 		BreakIterator boundary = BreakIterator.getWordInstance();
 		boundary.setText(text);
 		int start = 0;

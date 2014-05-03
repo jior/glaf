@@ -18,6 +18,7 @@
 
 package com.glaf.core.util;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +69,7 @@ public class Paging implements java.io.Serializable {
 	/**
 	 * 本页的数据
 	 */
-	private List<Object> rows = new java.util.concurrent.CopyOnWriteArrayList<Object>();
+	private List<Object> rows = new java.util.ArrayList<Object>();
 
 	/**
 	 * 是否需要缓存结果集
@@ -85,15 +86,15 @@ public class Paging implements java.io.Serializable {
 	/**
 	 * 环境变量
 	 */
-	private Map<String, Object> contextMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+	private Map<String, Object> contextMap = new java.util.HashMap<String, Object>();
 
 	/**
 	 * 显示页的参数
 	 */
-	private Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+	private Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 
 	public Paging() {
-		rows = new java.util.concurrent.CopyOnWriteArrayList<Object>();
+		rows = new ArrayList<Object>();
 		this.currentPage = 0;
 		this.pageSize = 0;
 		this.total = 0;
@@ -108,14 +109,14 @@ public class Paging implements java.io.Serializable {
 
 	public void addRow(Object row) {
 		if (rows == null) {
-			rows = new java.util.concurrent.CopyOnWriteArrayList<Object>();
+			rows = new ArrayList<Object>();
 		}
 		rows.add(row);
 	}
 
 	public void addRows(List<?> list) {
 		if (rows == null) {
-			rows = new java.util.concurrent.CopyOnWriteArrayList<Object>();
+			rows = new ArrayList<Object>();
 		}
 		if (list != null && !list.isEmpty()) {
 			for (Object row : list) {
@@ -163,7 +164,7 @@ public class Paging implements java.io.Serializable {
 
 	public List<Object> getRows() {
 		if (rows == null) {
-			rows = new java.util.concurrent.CopyOnWriteArrayList<Object>();
+			rows = new ArrayList<Object>();
 		}
 		return rows;
 	}

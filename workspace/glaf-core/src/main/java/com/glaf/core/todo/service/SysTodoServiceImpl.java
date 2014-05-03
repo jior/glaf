@@ -116,7 +116,7 @@ public class SysTodoServiceImpl implements ISysTodoService {
 
 	public Map<Long, Todo> getTodoMap() {
 		List<Todo> todos = this.getTodoList();
-		Map<Long, Todo> todoMap = new java.util.concurrent.ConcurrentHashMap<Long, Todo>();
+		Map<Long, Todo> todoMap = new java.util.HashMap<Long, Todo>();
 		for (Todo todo : todos) {
 			todoMap.put(todo.getId(), todo);
 		}
@@ -125,7 +125,7 @@ public class SysTodoServiceImpl implements ISysTodoService {
 
 	public List<TodoTotal> getTodoTotalList(LoginContext loginContext,
 			Map<String, Object> params) {
-		List<TodoTotal> list = new java.util.concurrent.CopyOnWriteArrayList<TodoTotal>();
+		List<TodoTotal> list = new java.util.ArrayList<TodoTotal>();
 		List<Todo> todoList = this.getTodoList();
 		for (Todo todo : todoList) {
 			if (!StringUtils.equals(todo.getProvider(), "mybatis3")) {

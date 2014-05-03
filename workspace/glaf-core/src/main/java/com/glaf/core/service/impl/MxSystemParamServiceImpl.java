@@ -321,7 +321,7 @@ public class MxSystemParamServiceImpl implements ISystemParamService {
 	 */
 	@Transactional
 	public void updateAll(String serviceKey, List<InputDefinition> rows) {
-		Map<String, InputDefinition> rowMap = new java.util.concurrent.ConcurrentHashMap<String, InputDefinition>();
+		Map<String, InputDefinition> rowMap = new java.util.HashMap<String, InputDefinition>();
 		for (InputDefinition def : rows) {
 			rowMap.put(def.getKeyName(), def);
 		}

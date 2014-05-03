@@ -257,8 +257,8 @@ public class MxQueryDefinitionServiceImpl implements IQueryDefinitionService {
 		if (queryDefinition.getColumns() != null
 				&& !queryDefinition.getColumns().isEmpty()) {
 
-			List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
-			List<ColumnDefinition> parameters = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+			List<ColumnDefinition> columns = new java.util.ArrayList<ColumnDefinition>();
+			List<ColumnDefinition> parameters = new java.util.ArrayList<ColumnDefinition>();
 
 			for (ColumnDefinition column : queryDefinition.getColumns()) {
 				if ("C".equals(column.getDiscriminator())) {

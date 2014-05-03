@@ -93,7 +93,7 @@ public final class JdbcUtils {
 	}
 
 	private static Map<String, Object> lowerKeyMap(Map<String, Object> params) {
-		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 		Set<Entry<String, Object>> entrySet = params.entrySet();
 		for (Entry<String, Object> entry : entrySet) {
 			String key = entry.getKey();
@@ -109,7 +109,7 @@ public final class JdbcUtils {
 			return null;
 		}
 		SqlExecutor sqlExecutor = new SqlExecutor();
-		List<Object> values = new java.util.concurrent.CopyOnWriteArrayList<Object>();
+		List<Object> values = new java.util.ArrayList<Object>();
 		Map<String, Object> dataMap = lowerKeyMap(params);
 		StringBuffer sb = new StringBuffer(sql.length()+1000);
 		int begin = 0;

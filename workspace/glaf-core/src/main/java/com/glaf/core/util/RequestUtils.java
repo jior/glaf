@@ -125,7 +125,7 @@ public class RequestUtils {
 	}
 
 	private static Map<String, String> decodeValues(String ip, String value) {
-		Map<String, String> cookieMap = new java.util.concurrent.ConcurrentHashMap<String, String>();
+		Map<String, String> cookieMap = new java.util.HashMap<String, String>();
 		if (StringUtils.isNotEmpty(value)) {
 			String c_x = decodeString(value);
 			c_x = StringUtils.replace(c_x, DigestUtils.md5Hex(ip), "");
@@ -504,7 +504,7 @@ public class RequestUtils {
 	 */
 	public static Object getParameter(HttpServletRequest request, Object object)
 			throws ServletException {
-		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 		Enumeration<?> enumeration = request.getParameterNames();
 		while (enumeration.hasMoreElements()) {
 			String paramName = (String) enumeration.nextElement();
@@ -611,7 +611,7 @@ public class RequestUtils {
 	 */
 	public static Map<String, Object> getParameterMap(
 			HttpServletRequest request, String prefix) {
-		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 		Enumeration<?> enumeration = request.getParameterNames();
 		while (enumeration.hasMoreElements()) {
 			String paramName = (String) enumeration.nextElement();
@@ -638,7 +638,7 @@ public class RequestUtils {
 	 */
 	public static Map<String, Object> getParameterMap(
 			MultipartHttpServletRequest request) {
-		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 		dataMap.put("contextPath", request.getContextPath());
 		Enumeration<?> enumeration = request.getParameterNames();
 		while (enumeration.hasMoreElements()) {
@@ -674,7 +674,7 @@ public class RequestUtils {
 	 * @return
 	 */
 	public static Map<String, Object> getQueryParams(HttpServletRequest request) {
-		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
 
 		String complex_query = request.getParameter("xyz_complex_query");
 		if (StringUtils.isNotEmpty(complex_query)) {
@@ -749,7 +749,7 @@ public class RequestUtils {
 	 */
 	public static Map<String, Object> getQueryParams(
 			HttpServletRequest request, String prefix) {
-		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
 
 		String complex_query = request.getParameter("xyz_complex_query");
 		if (StringUtils.isNotEmpty(complex_query)) {

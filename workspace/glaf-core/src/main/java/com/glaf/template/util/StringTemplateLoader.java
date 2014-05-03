@@ -63,7 +63,7 @@ public class StringTemplateLoader implements TemplateLoader {
 
 		Template template = cfg.getTemplate("");
 
-		Map<String, Object> root = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> root = new java.util.HashMap<String, Object>();
 		root.put("user", "jior huang");
 
 		StringWriter writer = new StringWriter();

@@ -46,7 +46,7 @@ public class TemplateReader {
 
 	@SuppressWarnings("unchecked")
 	public List<Template> readTemplates(InputStream inputStream) {
-		List<Template> templates = new java.util.concurrent.CopyOnWriteArrayList<Template>();
+		List<Template> templates = new java.util.ArrayList<Template>();
 		Element root = this.getRootElement(inputStream);
 		List<Element> elements = root.elements("template");
 		if (elements != null && !elements.isEmpty()) {
@@ -56,7 +56,7 @@ public class TemplateReader {
 				tpl.setDescription(element.attributeValue("description"));
 				List<Element> elems = element.elements();
 				if (elems != null && !elems.isEmpty()) {
-					Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+					Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 					for (Element em : elems) {
 						dataMap.put(em.getName(), em.getTextTrim());
 					}

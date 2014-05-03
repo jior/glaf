@@ -31,14 +31,14 @@ public class TableModel implements java.io.Serializable {
 
 	protected String aggregationKey;
 
-	protected Collection<String> aggregationKeys = new java.util.concurrent.CopyOnWriteArrayList<String>();
+	protected Collection<String> aggregationKeys = new java.util.ArrayList<String>();
 
 	/**
 	 * 批处理的大小
 	 */
 	protected int batchSize;
 
-	protected List<ColumnModel> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnModel>();
+	protected List<ColumnModel> columns = new java.util.ArrayList<ColumnModel>();
 
 	/**
 	 * 英文标题
@@ -53,7 +53,7 @@ public class TableModel implements java.io.Serializable {
 	/**
 	 * 需要排除的行列表
 	 */
-	protected List<String> excludes = new java.util.concurrent.CopyOnWriteArrayList<String>();
+	protected List<String> excludes = new java.util.ArrayList<String>();
 
 	/**
 	 * 文件前缀
@@ -236,7 +236,7 @@ public class TableModel implements java.io.Serializable {
 
 	public List<String> getExcludes() {
 		if (excludes == null) {
-			excludes = new java.util.concurrent.CopyOnWriteArrayList<String>();
+			excludes = new java.util.ArrayList<String>();
 		}
 		return excludes;
 	}

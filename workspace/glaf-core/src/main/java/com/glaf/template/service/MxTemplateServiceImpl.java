@@ -105,7 +105,7 @@ public class MxTemplateServiceImpl implements ITemplateService {
 	}
 
 	public Map<String, Template> getAllTemplate() {
-		Map<String, Template> templateMap = new java.util.concurrent.ConcurrentHashMap<String, Template>();
+		Map<String, Template> templateMap = new java.util.HashMap<String, Template>();
 		TemplateQuery query = new TemplateQuery();
 		query.setLocked(0);
 		query.setDeleteFlag(0);

@@ -232,7 +232,7 @@ public class SystemPageTag extends TagSupport {
 		String x_complex_query = request.getParameter("x_complex_query");
 		String xyz_complex_query = request.getParameter("xyz_complex_query");
 		imagePath = request.getContextPath() + "/images/go.gif";
-		Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 		StringBuffer buffer = new StringBuffer();
 
 		Enumeration<?> enumeration = request.getParameterNames();

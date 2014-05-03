@@ -104,8 +104,8 @@ public class HttpQueryUtils {
 			HttpServletResponse response, String serviceKey,
 			Map<String, Object> paramMap) {
 		BaseQuery query = new BaseQuery();
-		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
-		List<QueryCondition> conditions = new java.util.concurrent.CopyOnWriteArrayList<QueryCondition>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
+		List<QueryCondition> conditions = new java.util.ArrayList<QueryCondition>();
 		JSONObject rootJson = new JSONObject();
 		JSONObject paramJson = new JSONObject();
 		JSONObject queryJson = new JSONObject();

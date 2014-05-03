@@ -68,7 +68,7 @@ public class CollectionUtils {
 		if (map == null) {
 			return null;
 		}
-		List<String> list = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> list = new java.util.ArrayList<String>();
 		if (map == null || map.size() == 0) {
 			return list;
 		}
@@ -89,7 +89,7 @@ public class CollectionUtils {
 		if (map == null) {
 			return null;
 		}
-		Map<String, List<String>> result = new java.util.concurrent.ConcurrentHashMap<String, List<String>>();
+		Map<String, List<String>> result = new java.util.HashMap<String, List<String>>();
 		for (Map.Entry<String, Map<String, String>> entry : map.entrySet()) {
 			result.put(entry.getKey(), join(entry.getValue(), separator));
 		}
@@ -146,7 +146,7 @@ public class CollectionUtils {
 		if (list == null) {
 			return null;
 		}
-		Map<String, String> map = new java.util.concurrent.ConcurrentHashMap<String, String>();
+		Map<String, String> map = new java.util.HashMap<String, String>();
 		if (list == null || list.size() == 0) {
 			return map;
 		}
@@ -166,7 +166,7 @@ public class CollectionUtils {
 		if (list == null) {
 			return null;
 		}
-		Map<String, Map<String, String>> result = new java.util.concurrent.ConcurrentHashMap<String, Map<String, String>>();
+		Map<String, Map<String, String>> result = new java.util.HashMap<String, Map<String, String>>();
 		for (Map.Entry<String, List<String>> entry : list.entrySet()) {
 			result.put(entry.getKey(), split(entry.getValue(), separator));
 		}
@@ -175,7 +175,7 @@ public class CollectionUtils {
 
 	@SuppressWarnings("unchecked")
 	public static <K, V> Map<K, V> toMap(Object... pairs) {
-		Map<K, V> ret = new java.util.concurrent.ConcurrentHashMap<K, V>();
+		Map<K, V> ret = new java.util.HashMap<K, V>();
 		if (pairs == null || pairs.length == 0)
 			return ret;
 
@@ -191,7 +191,7 @@ public class CollectionUtils {
 	}
 
 	public static Map<String, String> toStringMap(String... pairs) {
-		Map<String, String> parameters = new java.util.concurrent.ConcurrentHashMap<String, String>();
+		Map<String, String> parameters = new java.util.HashMap<String, String>();
 		if (pairs.length > 0) {
 			if (pairs.length % 2 != 0) {
 				throw new IllegalArgumentException("pairs must be even.");

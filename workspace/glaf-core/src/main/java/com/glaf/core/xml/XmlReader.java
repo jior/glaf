@@ -40,7 +40,7 @@ public class XmlReader {
 			if (element != null) {
 				List<?> attrs = element.attributes();
 				if (attrs != null && !attrs.isEmpty()) {
-					Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+					Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 					Iterator<?> iter = attrs.iterator();
 					while (iter.hasNext()) {
 						Attribute attr = (Attribute) iter.next();
@@ -110,7 +110,7 @@ public class XmlReader {
 	protected void read(Element elem, ColumnDefinition field) {
 		List<?> attrs = elem.attributes();
 		if (attrs != null && !attrs.isEmpty()) {
-			Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 			Iterator<?> iter = attrs.iterator();
 			while (iter.hasNext()) {
 				Attribute attr = (Attribute) iter.next();

@@ -190,7 +190,7 @@ public class ResponseUtils {
 
 	public static byte[] responseJsonResult(boolean success) {
 		if (success) {
-			Map<String, Object> jsonMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			Map<String, Object> jsonMap = new java.util.HashMap<String, Object>();
 			jsonMap.put("statusCode", 200);
 			jsonMap.put("msg", MessageProperties.getString("res_op_ok"));
 			jsonMap.put("message", MessageProperties.getString("res_op_ok"));
@@ -200,7 +200,7 @@ public class ResponseUtils {
 			} catch (UnsupportedEncodingException e) {
 			}
 		} else {
-			Map<String, Object> jsonMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			Map<String, Object> jsonMap = new java.util.HashMap<String, Object>();
 			jsonMap.put("statusCode", 500);
 			jsonMap.put("msg", MessageProperties.getString("res_op_error"));
 			jsonMap.put("message", MessageProperties.getString("res_op_error"));
@@ -215,7 +215,7 @@ public class ResponseUtils {
 
 	public static byte[] responseJsonResult(boolean success, String message) {
 		if (success) {
-			Map<String, Object> jsonMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			Map<String, Object> jsonMap = new java.util.HashMap<String, Object>();
 			jsonMap.put("statusCode", 200);
 			jsonMap.put("message", message);
 			JSONObject object = new JSONObject(jsonMap);
@@ -224,7 +224,7 @@ public class ResponseUtils {
 			} catch (UnsupportedEncodingException e) {
 			}
 		} else {
-			Map<String, Object> jsonMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			Map<String, Object> jsonMap = new java.util.HashMap<String, Object>();
 			jsonMap.put("statusCode", 500);
 			jsonMap.put("message", message);
 			JSONObject object = new JSONObject(jsonMap);

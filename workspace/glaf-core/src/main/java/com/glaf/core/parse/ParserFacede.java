@@ -395,7 +395,7 @@ public class ParserFacede {
 	public void process(String mappingDir, String dataDir) {
 		XmlMappingReader reader = new XmlMappingReader();
 		Set<String> prefixs = new HashSet<String>();
-		Map<String, TableModel> tplMap = new java.util.concurrent.ConcurrentHashMap<String, TableModel>();
+		Map<String, TableModel> tplMap = new java.util.HashMap<String, TableModel>();
 		java.io.File directory = new java.io.File(mappingDir);
 		if (directory.exists()) {
 			File[] entries = directory.listFiles();

@@ -128,7 +128,7 @@ public class InputDefinition implements Serializable, JSONable {
 	protected String initValue;
 
 	@javax.persistence.Transient
-	protected List<ColumnModel> extendedColumns = new java.util.concurrent.CopyOnWriteArrayList<ColumnModel>();
+	protected List<ColumnModel> extendedColumns = new java.util.ArrayList<ColumnModel>();
 
 	public InputDefinition() {
 
@@ -142,7 +142,7 @@ public class InputDefinition implements Serializable, JSONable {
 
 	public List<ColumnModel> getExtendedColumns() {
 		if (extendedColumns == null) {
-			extendedColumns = new java.util.concurrent.CopyOnWriteArrayList<ColumnModel>();
+			extendedColumns = new java.util.ArrayList<ColumnModel>();
 		}
 		return extendedColumns;
 	}

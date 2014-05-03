@@ -92,7 +92,7 @@ public class MxAccessServiceImpl implements IAccessService {
 			throw new RuntimeException("serviceKey is null");
 		}
 
-		List<Accessable> rows = new java.util.concurrent.CopyOnWriteArrayList<Accessable>();
+		List<Accessable> rows = new java.util.ArrayList<Accessable>();
 		List<DataAccess> list01 = this.getDataAccesses(serviceKey,
 				dataInstanceId);
 		for (DataAccess da : list01) {
@@ -143,12 +143,12 @@ public class MxAccessServiceImpl implements IAccessService {
 		if (StringUtils.isEmpty(serviceKey)) {
 			throw new RuntimeException("serviceKey is null");
 		}
-		Map<String, Object> parameter = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> parameter = new java.util.HashMap<String, Object>();
 		parameter.put("serviceKey", serviceKey);
 		parameter.put("businessKey", businessKey);
 		List<Object> rows = this.entityDAO.getList(
 				"getDataAccessByBusinessKey", parameter);
-		List<DataAccess> list = new java.util.concurrent.CopyOnWriteArrayList<DataAccess>();
+		List<DataAccess> list = new java.util.ArrayList<DataAccess>();
 		for (Object object : rows) {
 			list.add((DataAccess) object);
 		}
@@ -187,11 +187,11 @@ public class MxAccessServiceImpl implements IAccessService {
 		if (StringUtils.isEmpty(serviceKey)) {
 			throw new RuntimeException("serviceKey is null");
 		}
-		Map<String, Object> parameter = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> parameter = new java.util.HashMap<String, Object>();
 		parameter.put("serviceKey", serviceKey);
 		List<Object> rows = this.entityDAO.getList(
 				"getModuleAccessByServiceKey", parameter);
-		List<ModuleAccess> list = new java.util.concurrent.CopyOnWriteArrayList<ModuleAccess>();
+		List<ModuleAccess> list = new java.util.ArrayList<ModuleAccess>();
 		for (Object object : rows) {
 			list.add((ModuleAccess) object);
 		}

@@ -375,12 +375,13 @@ public class IOUtils {
 	 * @throws IOException
 	 */
 	public static String[] readLines(InputStream is) throws IOException {
-		List<String> lines = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> lines = new java.util.ArrayList<String>();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 		try {
 			String line;
-			while ((line = reader.readLine()) != null)
+			while ((line = reader.readLine()) != null){
 				lines.add(line);
+			}
 			return lines.toArray(new String[0]);
 		} finally {
 			reader.close();

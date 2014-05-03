@@ -161,10 +161,10 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			tableDefinition.setTableName(tableDefinition.getTableName()
 					.toUpperCase());
 		}
-		Map<String, Object> colMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> colMap = new java.util.HashMap<String, Object>();
 
-		Map<String, String> exprMap = new java.util.concurrent.ConcurrentHashMap<String, String>();
-		List<ColumnDefinition> exprColumns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+		Map<String, String> exprMap = new java.util.HashMap<String, String>();
+		List<ColumnDefinition> exprColumns = new java.util.ArrayList<ColumnDefinition>();
 
 		ColumnModel idColumn = new ColumnModel();
 
@@ -191,7 +191,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 
 		logger.debug("expr map:" + exprMap);
 
-		List<TableModel> inertRows = new java.util.concurrent.CopyOnWriteArrayList<TableModel>();
+		List<TableModel> inertRows = new java.util.ArrayList<TableModel>();
 
 		logger.debug(" rows size = " + rows.size());
 		// logger.debug(" key map: " + keyMap);
@@ -432,10 +432,10 @@ public class MxTableDataServiceImpl implements ITableDataService {
 
 		Collection<String> aggregationKeys = new HashSet<String>();
 
-		Map<String, Object> colMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
-		Map<String, Object> keyMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
-		Map<String, String> exprMap = new java.util.concurrent.ConcurrentHashMap<String, String>();
-		List<ColumnDefinition> exprColumns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+		Map<String, Object> colMap = new java.util.HashMap<String, Object>();
+		Map<String, Object> keyMap = new java.util.HashMap<String, Object>();
+		Map<String, String> exprMap = new java.util.HashMap<String, String>();
+		List<ColumnDefinition> exprColumns = new java.util.ArrayList<ColumnDefinition>();
 
 		ColumnModel idColumn = new ColumnModel();
 
@@ -528,8 +528,8 @@ public class MxTableDataServiceImpl implements ITableDataService {
 				}
 			}
 
-			List<TableModel> inertRows = new java.util.concurrent.CopyOnWriteArrayList<TableModel>();
-			List<TableModel> updateRows = new java.util.concurrent.CopyOnWriteArrayList<TableModel>();
+			List<TableModel> inertRows = new java.util.ArrayList<TableModel>();
+			List<TableModel> updateRows = new java.util.ArrayList<TableModel>();
 			logger.debug(" rows size = " + rows.size());
 			Iterator<TableModel> iterator = rows.iterator();
 			while (iterator.hasNext()) {
@@ -683,8 +683,8 @@ public class MxTableDataServiceImpl implements ITableDataService {
 				}
 			}
 
-			List<Map<String, Object>> inertRows = new java.util.concurrent.CopyOnWriteArrayList<Map<String, Object>>();
-			List<Map<String, Object>> updateRows = new java.util.concurrent.CopyOnWriteArrayList<Map<String, Object>>();
+			List<Map<String, Object>> inertRows = new java.util.ArrayList<Map<String, Object>>();
+			List<Map<String, Object>> updateRows = new java.util.ArrayList<Map<String, Object>>();
 			Iterator<Map<String, Object>> iterator = rows.iterator();
 			while (iterator.hasNext()) {
 				Map<String, Object> dataMap = iterator.next();
@@ -744,8 +744,8 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			}
 		}
 
-		List<Map<String, Object>> inertRows = new java.util.concurrent.CopyOnWriteArrayList<Map<String, Object>>();
-		List<Map<String, Object>> updateRows = new java.util.concurrent.CopyOnWriteArrayList<Map<String, Object>>();
+		List<Map<String, Object>> inertRows = new java.util.ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> updateRows = new java.util.ArrayList<Map<String, Object>>();
 		Iterator<Map<String, Object>> iterator = rows.iterator();
 		while (iterator.hasNext()) {
 			Map<String, Object> dataMap = iterator.next();
@@ -1002,7 +1002,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	@Transactional
 	public void updateAllDbids(List<Dbid> rows) {
 		if (rows != null && !rows.isEmpty()) {
-			Map<String, Long> idMap = new java.util.concurrent.ConcurrentHashMap<String, Long>();
+			Map<String, Long> idMap = new java.util.HashMap<String, Long>();
 			List<Dbid> list = this.getAllDbids();
 			for (Dbid id : rows) {
 				if (StringUtils.isNumeric(id.getValue())) {

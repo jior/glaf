@@ -88,13 +88,13 @@ public class SchedulerEntity implements Serializable, Scheduler, JSONable {
 	protected String jobClass;
 
 	@javax.persistence.Transient
-	protected Map<String, Parameter> jobDataMap = new java.util.concurrent.ConcurrentHashMap<String, Parameter>();
+	protected Map<String, Parameter> jobDataMap = new java.util.HashMap<String, Parameter>();
 
 	@Column(name = "locked_")
 	protected int locked;
 
 	@javax.persistence.Transient
-	protected List<SchedulerParam> params = new java.util.concurrent.CopyOnWriteArrayList<SchedulerParam>();
+	protected List<SchedulerParam> params = new java.util.ArrayList<SchedulerParam>();
 
 	@Column(name = "priority_")
 	protected int priority;
@@ -133,7 +133,7 @@ public class SchedulerEntity implements Serializable, Scheduler, JSONable {
 
 	public void addParam(SchedulerParam param) {
 		if (params == null) {
-			params = new java.util.concurrent.CopyOnWriteArrayList<SchedulerParam>();
+			params = new java.util.ArrayList<SchedulerParam>();
 		}
 		params.add(param);
 	}

@@ -147,7 +147,7 @@ public class EntityEntry implements java.io.Serializable, JSONable {
 	 * ∑√Œ µ„
 	 */
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "entityEntry")
-	protected List<EntryPoint> entryPoints = new java.util.concurrent.CopyOnWriteArrayList<EntryPoint>();
+	protected List<EntryPoint> entryPoints = new java.util.ArrayList<EntryPoint>();
 
 	public EntityEntry() {
 
@@ -159,7 +159,7 @@ public class EntityEntry implements java.io.Serializable, JSONable {
 
 	public void addEntryPoint(EntryPoint entryPoint) {
 		if (entryPoints == null) {
-			entryPoints = new java.util.concurrent.CopyOnWriteArrayList<EntryPoint>();
+			entryPoints = new java.util.ArrayList<EntryPoint>();
 		}
 		entryPoint.setEntityEntry(this);
 		entryPoints.add(entryPoint);

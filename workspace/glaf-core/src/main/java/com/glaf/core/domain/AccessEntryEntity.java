@@ -96,7 +96,7 @@ public class AccessEntryEntity implements java.io.Serializable, AccessEntry,
 	protected String createBy;
 
 	@javax.persistence.Transient
-	protected Map<String, AccessPoint> accessPoints = new java.util.concurrent.ConcurrentHashMap<String, AccessPoint>();
+	protected Map<String, AccessPoint> accessPoints = new java.util.HashMap<String, AccessPoint>();
 
 	public AccessEntryEntity() {
 
@@ -105,7 +105,7 @@ public class AccessEntryEntity implements java.io.Serializable, AccessEntry,
 	@Transient
 	public void addAccessPoint(AccessPoint accessPoint) {
 		if (accessPoints == null) {
-			accessPoints = new java.util.concurrent.ConcurrentHashMap<String, AccessPoint>();
+			accessPoints = new java.util.HashMap<String, AccessPoint>();
 		}
 		accessPoints.put(accessPoint.getName(), accessPoint);
 	}
@@ -129,7 +129,7 @@ public class AccessEntryEntity implements java.io.Serializable, AccessEntry,
 
 	public Map<String, AccessPoint> getAccessPoints() {
 		if (accessPoints == null) {
-			accessPoints = new java.util.concurrent.ConcurrentHashMap<String, AccessPoint>();
+			accessPoints = new java.util.HashMap<String, AccessPoint>();
 		}
 		return accessPoints;
 	}

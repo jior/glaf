@@ -92,7 +92,7 @@ public class PlainTextParser implements Parser {
 		row.setTableName(tableModel.getTableName());
 		row.setAggregationKeys(tableModel.getAggregationKeys());
 
-		List<ColumnModel> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnModel>();
+		List<ColumnModel> columns = new java.util.ArrayList<ColumnModel>();
 		for (ColumnModel cell : tableModel.getColumns()) {
 			if (cell.getPosition() > 0) {
 				columns.add(cell);
@@ -166,7 +166,7 @@ public class PlainTextParser implements Parser {
 
 	public List<TableModel> parse(TableModel tableModel,
 			java.io.InputStream data) {
-		List<TableModel> rows = new java.util.concurrent.CopyOnWriteArrayList<TableModel>();
+		List<TableModel> rows = new java.util.ArrayList<TableModel>();
 		InputStreamReader isr = null;
 		BufferedReader reader = null;
 		int startRow = tableModel.getStartRow();

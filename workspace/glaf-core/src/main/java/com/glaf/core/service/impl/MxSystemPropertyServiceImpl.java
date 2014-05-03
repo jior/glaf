@@ -18,6 +18,7 @@
 
 package com.glaf.core.service.impl;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -74,7 +75,7 @@ public class MxSystemPropertyServiceImpl implements ISystemPropertyService {
 	public List<SystemProperty> getAllSystemProperties() {
 		SystemPropertyQuery query = new SystemPropertyQuery();
 		List<SystemProperty> list = this.list(query);
-		List<SystemProperty> rows = new java.util.concurrent.CopyOnWriteArrayList<SystemProperty>();
+		List<SystemProperty> rows = new ArrayList<SystemProperty>();
 		if (list != null && !list.isEmpty()) {
 			for (SystemProperty p : list) {
 				if (!StringUtils.equals("TOKEN", p.getId())) {
@@ -87,7 +88,7 @@ public class MxSystemPropertyServiceImpl implements ISystemPropertyService {
 
 	public Map<String, SystemProperty> getProperyMap() {
 		List<SystemProperty> list = this.getAllSystemProperties();
-		Map<String, SystemProperty> dataMap = new java.util.concurrent.ConcurrentHashMap<String, SystemProperty>();
+		Map<String, SystemProperty> dataMap = new java.util.HashMap<String, SystemProperty>();
 		Iterator<SystemProperty> iterator = list.iterator();
 		while (iterator.hasNext()) {
 			SystemProperty p = iterator.next();
@@ -100,7 +101,7 @@ public class MxSystemPropertyServiceImpl implements ISystemPropertyService {
 		SystemPropertyQuery query = new SystemPropertyQuery();
 		query.category(category);
 		List<SystemProperty> list = this.list(query);
-		List<SystemProperty> rows = new java.util.concurrent.CopyOnWriteArrayList<SystemProperty>();
+		List<SystemProperty> rows = new ArrayList<SystemProperty>();
 		if (list != null && !list.isEmpty()) {
 			for (SystemProperty p : list) {
 				if (!StringUtils.equals("TOKEN", p.getId())) {
@@ -131,7 +132,7 @@ public class MxSystemPropertyServiceImpl implements ISystemPropertyService {
 	public List<SystemProperty> list(SystemPropertyQuery query) {
 		List<SystemProperty> list = systemPropertyMapper
 				.getSystemProperties(query);
-		List<SystemProperty> rows = new java.util.concurrent.CopyOnWriteArrayList<SystemProperty>();
+		List<SystemProperty> rows = new ArrayList<SystemProperty>();
 		if (list != null && !list.isEmpty()) {
 			for (SystemProperty p : list) {
 				if (!StringUtils.equals("TOKEN", p.getId())) {

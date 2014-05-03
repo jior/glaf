@@ -58,7 +58,7 @@ public class FreemarkerPipeline implements Pipeline {
 	public Writer pipeline(String pipeTemplates[], Object rootMap, Writer writer)
 			throws PipeException {
 		try {
-			Map<String, String> globalContext = new java.util.concurrent.ConcurrentHashMap<String, String>();
+			Map<String, String> globalContext = new java.util.HashMap<String, String>();
 			for (int i = 0; i < pipeTemplates.length; i++) {
 				String templateName = pipeTemplates[i];
 				Template template = conf.getTemplate(templateName);

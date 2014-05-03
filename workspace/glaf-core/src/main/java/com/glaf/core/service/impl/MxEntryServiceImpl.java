@@ -18,6 +18,7 @@
 
 package com.glaf.core.service.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -147,8 +148,8 @@ public class MxEntryServiceImpl implements IEntryService {
 		if (CacheFactory.get(cacheKey) != null) {
 
 		}
-		List<String> entityIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
-		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		List<String> entityIds = new java.util.ArrayList<String>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
 		List<EntryPoint> entryPoints = null;
 
 		params.put("moduleId", moduleId);
@@ -249,8 +250,8 @@ public class MxEntryServiceImpl implements IEntryService {
 		if (CacheFactory.get(cacheKey) != null) {
 
 		}
-		List<String> entryKeys = new java.util.concurrent.CopyOnWriteArrayList<String>();
-		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		List<String> entryKeys = new java.util.ArrayList<String>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
 
 		params.put("moduleId", moduleId);
 
@@ -359,9 +360,9 @@ public class MxEntryServiceImpl implements IEntryService {
 		if (CacheFactory.get(cacheKey) != null) {
 
 		}
-		List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
-		List<Long> nodeIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
-		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
+		List<Long> nodeIds = new java.util.ArrayList<Long>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
 		EntryPointQuery query = new EntryPointQuery();
 		List<EntryPoint> entryPoints = null;
 
@@ -513,7 +514,7 @@ public class MxEntryServiceImpl implements IEntryService {
 		/**
 		 * 角色是否具有该节点的权限
 		 */
-		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
 		params.put("nodeId", nodeId);
 		params.put("entryKey", permKey);
 
@@ -593,7 +594,7 @@ public class MxEntryServiceImpl implements IEntryService {
 			List<TreeModel> treeModels = treeModelService
 					.getAncestorTreeModels(nodeId);
 			if (treeModels != null && treeModels.size() > 0) {
-				List<Long> nodeIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
+				List<Long> nodeIds = new ArrayList<Long>();
 				Iterator<TreeModel> it = treeModels.iterator();
 				while (it.hasNext()) {
 					TreeModel nd = it.next();
@@ -654,7 +655,7 @@ public class MxEntryServiceImpl implements IEntryService {
 		/**
 		 * 角色是否具有该记录的权限
 		 */
-		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
 		params.put("entityId", entityId);
 		params.put("moduleId", moduleId);
 		params.put("entryKey", permKey);

@@ -180,7 +180,7 @@ public final class PropertiesHelper {
 	 */
 	public static Map<String, String> toMap(String propertyName, String delim,
 			Properties properties) {
-		Map<String, String> map = new java.util.concurrent.ConcurrentHashMap<String, String>();
+		Map<String, String> map = new java.util.HashMap<String, String>();
 		String value = extractPropertyValue(propertyName, properties);
 		if (value != null) {
 			StringTokenizer tokens = new StringTokenizer(value, delim);

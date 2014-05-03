@@ -186,7 +186,7 @@ public class EntityEntryJsonFactory {
 		
 		List<EntryPoint> entryPoints= model.getEntryPoints();
 		if (entryPoints != null && entryPoints.size() > 0) {
-			Collection<JSONObject> rows = new java.util.concurrent.CopyOnWriteArrayList<JSONObject>();
+			Collection<JSONObject> rows = new java.util.ArrayList<JSONObject>();
 			for (EntryPoint p : entryPoints) {
 				JSONObject json = new JSONObject();
 				json.put("name", p.getName());

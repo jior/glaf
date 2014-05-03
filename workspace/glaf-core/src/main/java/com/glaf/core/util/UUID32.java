@@ -30,7 +30,7 @@ public class UUID32 {
 	}
 
 	public static void main(String[] args) {
-		Map<String, Object> map = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> map = new java.util.HashMap<String, Object>();
 		for (int i = 0; i < 10000; i++) {
 			String id = UUID32.getUUID();
 			System.out.println(id);

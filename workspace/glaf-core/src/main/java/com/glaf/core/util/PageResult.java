@@ -114,7 +114,7 @@ public class PageResult implements Serializable {
 	 */
 	public List getResults() {
 		if (results == null) {
-			results = new java.util.concurrent.CopyOnWriteArrayList();
+			results = new java.util.ArrayList();
 		}
 		return results;
 	}

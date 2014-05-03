@@ -306,7 +306,7 @@ public class InfoPageTag extends TagSupport {
 
 		imagePath = request.getContextPath() + "/images";
 
-		Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 		StringBuffer buffer = new StringBuffer();
 
 		Enumeration<?> enumeration = request.getParameterNames();

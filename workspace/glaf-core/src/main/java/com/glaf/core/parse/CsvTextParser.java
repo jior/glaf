@@ -140,7 +140,7 @@ public class CsvTextParser implements Parser {
 
 	public List<TableModel> parse(TableModel tableModel,
 			java.io.InputStream data) {
-		List<TableModel> rows = new java.util.concurrent.CopyOnWriteArrayList<TableModel>();
+		List<TableModel> rows = new java.util.ArrayList<TableModel>();
 		InputStreamReader isr = null;
 		BufferedReader reader = null;
 		int startRow = tableModel.getStartRow();
@@ -207,7 +207,7 @@ public class CsvTextParser implements Parser {
 		if (text == null) {
 			return Collections.EMPTY_LIST;
 		}
-		List<String> pieces = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> pieces = new java.util.ArrayList<String>();
 		int start = 0;
 		int end = text.indexOf(delimiter);
 		while (end != -1) {

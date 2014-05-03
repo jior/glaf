@@ -290,7 +290,7 @@ public class ZipUtils {
 
 	public static Map<String, byte[]> getZipBytesMap(
 			ZipInputStream zipInputStream) {
-		Map<String, byte[]> zipMap = new java.util.concurrent.ConcurrentHashMap<String, byte[]>();
+		Map<String, byte[]> zipMap = new java.util.HashMap<String, byte[]>();
 		java.util.zip.ZipEntry zipEntry = null;
 		ByteArrayOutputStream baos = null;
 		BufferedOutputStream bos = null;
@@ -321,7 +321,7 @@ public class ZipUtils {
 
 	public static Map<String, byte[]> getZipBytesMap(
 			ZipInputStream zipInputStream, List<String> includes) {
-		Map<String, byte[]> zipMap = new java.util.concurrent.ConcurrentHashMap<String, byte[]>();
+		Map<String, byte[]> zipMap = new java.util.HashMap<String, byte[]>();
 		java.util.zip.ZipEntry zipEntry = null;
 		ByteArrayOutputStream baos = null;
 		BufferedOutputStream bos = null;

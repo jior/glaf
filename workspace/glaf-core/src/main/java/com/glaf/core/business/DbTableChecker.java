@@ -62,7 +62,7 @@ public class DbTableChecker {
 
 		List<TableDefinition> list = tableDefinitionService
 				.getTableColumnsCount(query);
-		Map<String, TableDefinition> tableMap = new java.util.concurrent.ConcurrentHashMap<String, TableDefinition>();
+		Map<String, TableDefinition> tableMap = new java.util.HashMap<String, TableDefinition>();
 		if (list != null && !list.isEmpty()) {
 			for (TableDefinition t : list) {
 				tableMap.put(t.getTableName().toLowerCase(), t);

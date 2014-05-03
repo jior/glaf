@@ -270,7 +270,7 @@ public class MxDataModelServiceImpl implements DataModelService {
 		RowBounds rowBounds = new RowBounds(begin, pageSize);
 		List<Map<String, Object>> rows = sqlSession.selectList(
 				"getTableDataByDataModelQuery", query, rowBounds);
-		List<DataModel> dataModels = new java.util.concurrent.CopyOnWriteArrayList<DataModel>();
+		List<DataModel> dataModels = new java.util.ArrayList<DataModel>();
 		if (rows != null && !rows.isEmpty()) {
 			for (Map<String, Object> dataMap : rows) {
 				DataModelEntity model = this.populate(dataMap);
@@ -281,7 +281,7 @@ public class MxDataModelServiceImpl implements DataModelService {
 	}
 
 	public DataModelEntity populate(Map<String, Object> rowMap) {
-		Map<String, Object> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 		if (rowMap != null && rowMap.size() > 0) {
 			Iterator<?> iterator = rowMap.keySet().iterator();
 			while (iterator.hasNext()) {
