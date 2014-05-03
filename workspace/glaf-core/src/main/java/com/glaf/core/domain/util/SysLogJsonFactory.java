@@ -57,6 +57,9 @@ public class SysLogJsonFactory {
 		if (jsonObject.containsKey("flag")) {
 			model.setFlag(jsonObject.getInteger("flag"));
 		}
+		if (jsonObject.containsKey("timeMS")) {
+			model.setTimeMS(jsonObject.getInteger("timeMS"));
+		}
 
 		return model;
 	}
@@ -95,6 +98,7 @@ public class SysLogJsonFactory {
 			jsonObject.put("operate", model.getOperate());
 		}
 		jsonObject.put("flag", model.getFlag());
+		jsonObject.put("timeMS", model.getTimeMS());
 		return jsonObject;
 	}
 
@@ -121,6 +125,7 @@ public class SysLogJsonFactory {
 			jsonObject.put("operate", model.getOperate());
 		}
 		jsonObject.put("flag", model.getFlag());
+		jsonObject.put("timeMS", model.getTimeMS());
 		return jsonObject;
 	}
 
