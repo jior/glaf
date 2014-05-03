@@ -108,10 +108,10 @@ public class Survey implements Serializable, JSONable {
 	protected String relationIds;
 
 	@javax.persistence.Transient
-	protected List<Survey> relations = new java.util.concurrent.CopyOnWriteArrayList<Survey>();
+	protected List<Survey> relations = new java.util.ArrayList<Survey>();
 
 	@javax.persistence.Transient
-	protected List<SurveyItem> items = new java.util.concurrent.CopyOnWriteArrayList<SurveyItem>();
+	protected List<SurveyItem> items = new java.util.ArrayList<SurveyItem>();
 
 	public Survey() {
 
@@ -119,14 +119,14 @@ public class Survey implements Serializable, JSONable {
 
 	public void addItem(SurveyItem item) {
 		if (items == null) {
-			items = new java.util.concurrent.CopyOnWriteArrayList<SurveyItem>();
+			items = new java.util.ArrayList<SurveyItem>();
 		}
 		items.add(item);
 	}
 
 	public void addRelation(Survey item) {
 		if (relations == null) {
-			relations = new java.util.concurrent.CopyOnWriteArrayList<Survey>();
+			relations = new java.util.ArrayList<Survey>();
 		}
 		relations.add(item);
 	}

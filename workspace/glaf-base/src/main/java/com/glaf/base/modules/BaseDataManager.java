@@ -868,7 +868,7 @@ public class BaseDataManager {
 							.getAvailableDictoryList(treeNode.getId());
 					if (list != null && !list.isEmpty()) {
 						Iterator<Dictory> iter = list.iterator();
-						List<BaseDataInfo> tmp = new java.util.concurrent.CopyOnWriteArrayList<BaseDataInfo>();
+						List<BaseDataInfo> tmp = new java.util.ArrayList<BaseDataInfo>();
 						while (iter.hasNext()) {
 							Dictory bean = (Dictory) iter.next();
 							BaseDataInfo bdi = new BaseDataInfo();
@@ -930,7 +930,7 @@ public class BaseDataManager {
 			// 显示所有模块列表
 			if (list != null && !list.isEmpty()) {
 				Iterator<SysFunction> iter = list.iterator();
-				List<BaseDataInfo> tmp = new java.util.concurrent.CopyOnWriteArrayList<BaseDataInfo>();
+				List<BaseDataInfo> tmp = new java.util.ArrayList<BaseDataInfo>();
 				while (iter.hasNext()) {
 					SysFunction bean = (SysFunction) iter.next();
 					if (bean != null) {
@@ -966,7 +966,7 @@ public class BaseDataManager {
 			// 显示所有列表
 			if (list != null) {
 				Iterator<SubjectCode> iter = list.iterator();
-				List<BaseDataInfo> tmp = new java.util.concurrent.CopyOnWriteArrayList<BaseDataInfo>();
+				List<BaseDataInfo> tmp = new java.util.ArrayList<BaseDataInfo>();
 				while (iter.hasNext()) {
 					SubjectCode bean = (SubjectCode) iter.next();
 					if (bean != null) {
@@ -1025,7 +1025,7 @@ public class BaseDataManager {
 			List<SysUser> list = getSysUserService().getSysUserList();
 			if (list != null) {
 				Iterator<SysUser> iter = list.iterator();
-				List<BaseDataInfo> tmp = new java.util.concurrent.CopyOnWriteArrayList<BaseDataInfo>();
+				List<BaseDataInfo> tmp = new java.util.ArrayList<BaseDataInfo>();
 				while (iter.hasNext()) {
 					SysUser bean = (SysUser) iter.next();
 					if (bean != null) {

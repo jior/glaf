@@ -266,7 +266,7 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 	protected void initRoles(List<SysDeptRole> list) {
 		if (list != null && !list.isEmpty()) {
 			List<SysRole> rows = sysRoleService.getSysRoleList();
-			Map<Long, SysRole> dataMap = new java.util.concurrent.ConcurrentHashMap<Long, SysRole>();
+			Map<Long, SysRole> dataMap = new java.util.HashMap<Long, SysRole>();
 			if (rows != null && !rows.isEmpty()) {
 				for (SysRole m : rows) {
 					dataMap.put(m.getId(), m);
@@ -282,7 +282,7 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 		if (users != null && !users.isEmpty()) {
 			List<SysDepartment> depts = sysDepartmentService
 					.getSysDepartmentList();
-			Map<Long, SysDepartment> deptMap = new java.util.concurrent.ConcurrentHashMap<Long, SysDepartment>();
+			Map<Long, SysDepartment> deptMap = new java.util.HashMap<Long, SysDepartment>();
 			if (depts != null && !depts.isEmpty()) {
 				for (SysDepartment dept : depts) {
 					deptMap.put(dept.getId(), dept);
@@ -559,7 +559,7 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 		table.addLongColumn("ROLEID", bean.getId());
 		tableDataService.deleteTableData(table);
 
-		List<Membership> memberships = new java.util.concurrent.CopyOnWriteArrayList<Membership>();
+		List<Membership> memberships = new java.util.ArrayList<Membership>();
 		Set<SysUser> users = bean.getUsers();
 		if (users != null && !users.isEmpty()) {
 			for (SysUser user : users) {

@@ -51,7 +51,7 @@ public class HibernateUtil {
 		Set<String> params = map.keySet();
 		// boolean createAliased = false;
 		if (params != null) {
-			Map<String, String> aliasMap = new java.util.concurrent.ConcurrentHashMap<String, String>();// 储存别名
+			Map<String, String> aliasMap = new java.util.HashMap<String, String>();// 储存别名
 			int aliasNum = 0;// 别名数量
 			Iterator<String> it = params.iterator();
 			while (it.hasNext()) {

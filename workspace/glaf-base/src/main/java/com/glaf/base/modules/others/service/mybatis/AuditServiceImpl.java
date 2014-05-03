@@ -171,7 +171,7 @@ public class AuditServiceImpl implements AuditService {
 	}
 
 	public List<Audit> getAuditList(long referId, String referTypes) {
-		List<Integer> rows = new java.util.concurrent.CopyOnWriteArrayList<Integer>();
+		List<Integer> rows = new java.util.ArrayList<Integer>();
 		StringTokenizer token = new StringTokenizer(referTypes, ",");
 		while (token.hasMoreTokens()) {
 			String str = token.nextToken();

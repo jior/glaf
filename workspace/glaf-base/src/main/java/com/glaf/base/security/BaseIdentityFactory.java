@@ -69,7 +69,7 @@ public class BaseIdentityFactory {
 	 * @return
 	 */
 	public static List<String> getAgentIds(String assignTo) {
-		List<String> agentIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> agentIds = new java.util.ArrayList<String>();
 		List<Object> rows = getEntityService().getList("getAgents", assignTo);
 		if (rows != null && !rows.isEmpty()) {
 			for (Object object : rows) {
@@ -172,7 +172,7 @@ public class BaseIdentityFactory {
 	 * @return
 	 */
 	public static Map<String, SysDepartment> getDepartmentMap() {
-		Map<String, SysDepartment> deptMap = new java.util.concurrent.ConcurrentHashMap<String, SysDepartment>();
+		Map<String, SysDepartment> deptMap = new java.util.HashMap<String, SysDepartment>();
 		List<SysDepartment> depts = getSysDepartmentService()
 				.getSysDepartmentList();
 		if (depts != null && !depts.isEmpty()) {
@@ -296,7 +296,7 @@ public class BaseIdentityFactory {
 	 */
 	public static List<SysDepartment> getParentAndChildrenDepartments(
 			Long deptId, Integer deptLevel) {
-		List<SysDepartment> list = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
+		List<SysDepartment> list = new java.util.ArrayList<SysDepartment>();
 		SysDepartment dept = getSysDepartmentService().findById(deptId);
 		if (dept != null) {
 			getSysDepartmentService().findNestingDepartment(list, dept.getId());
@@ -332,7 +332,7 @@ public class BaseIdentityFactory {
 	 * @return
 	 */
 	public static Map<String, SysRole> getRoleMap() {
-		Map<String, SysRole> roleMap = new java.util.concurrent.ConcurrentHashMap<String, SysRole>();
+		Map<String, SysRole> roleMap = new java.util.HashMap<String, SysRole>();
 		List<SysRole> roles = getSysRoleService().getSysRoleList();
 		if (roles != null && !roles.isEmpty()) {
 			for (SysRole role : roles) {
@@ -477,7 +477,7 @@ public class BaseIdentityFactory {
 	 * @return
 	 */
 	public static List<String> getUserRoleCodes(List<String> actorIds) {
-		List<String> codes = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> codes = new java.util.ArrayList<String>();
 		List<SysRole> list = getUserRoles(actorIds);
 		if (list != null && !list.isEmpty()) {
 			for (SysRole role : list) {
@@ -501,7 +501,7 @@ public class BaseIdentityFactory {
 	 * @return
 	 */
 	public static List<String> getUserRoles(String actorId) {
-		List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		List<String> actorIds = new java.util.ArrayList<String>();
 		actorIds.add(actorId);
 		return getUserRoleCodes(actorIds);
 	}

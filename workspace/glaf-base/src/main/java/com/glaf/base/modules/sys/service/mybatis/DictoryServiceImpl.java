@@ -217,7 +217,7 @@ public class DictoryServiceImpl implements DictoryService {
 	}
 
 	public Map<String, String> getDictoryMap(List<Dictory> list, long purchaseId) {
-		Map<String, String> dictoryMap = new java.util.concurrent.ConcurrentHashMap<String, String>();
+		Map<String, String> dictoryMap = new java.util.HashMap<String, String>();
 		return dictoryMap;
 	}
 

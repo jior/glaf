@@ -51,7 +51,7 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 	protected boolean checked;
 
 	@javax.persistence.Transient
-	protected List<TreeModel> children = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
+	protected List<TreeModel> children = new java.util.ArrayList<TreeModel>();
 
 	/**
 	 * ±àÂë
@@ -164,7 +164,7 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 
 	public void addChild(TreeModel treeModel) {
 		if (children == null) {
-			children = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
+			children = new java.util.ArrayList<TreeModel>();
 		}
 		children.add(treeModel);
 	}

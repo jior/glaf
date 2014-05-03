@@ -70,8 +70,8 @@ public class PermissionTag extends BodyTagSupport {
 		SysUser user = bean.getUser(userId);
 		boolean hasPermission = false;
 		StringTokenizer token = new StringTokenizer(key, ",");
-		Collection<String> roleIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
-		Collection<String> permissions = new java.util.concurrent.CopyOnWriteArrayList<String>();
+		Collection<String> roleIds = new java.util.ArrayList<String>();
+		Collection<String> permissions = new java.util.ArrayList<String>();
 		if (user != null) {
 			if (user.isSystemAdmin()) {
 				return 1;

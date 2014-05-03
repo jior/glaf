@@ -127,7 +127,7 @@ public class SendMessageBean {
 			}
 		}
 
-		Collection rows99 = new java.util.concurrent.CopyOnWriteArrayList();
+		Collection rows99 = new java.util.ArrayList();
 
 		if (appXIds.size() > 0) {
 			List actorIds = new java.util.ArrayList();
@@ -256,7 +256,7 @@ public class SendMessageBean {
 			}
 		}
 
-		Map qtyMap = new java.util.concurrent.ConcurrentHashMap();
+		Map qtyMap = new java.util.HashMap();
 		Set linkTypes = new HashSet();
 		Map todoMap = todoService.getTodoMap();
 
@@ -352,7 +352,7 @@ public class SendMessageBean {
 	}
 
 	public List getXYTodoInstances(String actorId) {
-		List list = new java.util.concurrent.CopyOnWriteArrayList();
+		List list = new java.util.ArrayList();
 		SysUser user = sysUserService.findByAccount(actorId);
 
 		if (user == null) {
@@ -366,7 +366,7 @@ public class SendMessageBean {
 		Collection agentIds = ProcessContainer.getContainer().getAgentIds(
 				actorId);
 
-		List appXIds = new java.util.concurrent.CopyOnWriteArrayList();
+		List appXIds = new java.util.ArrayList();
 		Collection appIds = new HashSet();
 
 		Collection apps = user.getApps();
@@ -412,11 +412,11 @@ public class SendMessageBean {
 			}
 		}
 
-		Collection rows99 = new java.util.concurrent.CopyOnWriteArrayList();
+		Collection rows99 = new java.util.ArrayList();
 
 		if (appXIds.size() > 0) {
 
-			List actorIds = new java.util.concurrent.CopyOnWriteArrayList();
+			List actorIds = new java.util.ArrayList();
 			actorIds.add(actorId);
 			if (agentIds != null && agentIds.size() > 0) {
 				actorIds.addAll(agentIds);
@@ -514,7 +514,7 @@ public class SendMessageBean {
 			}
 		}
 
-		Map qtyMap = new java.util.concurrent.ConcurrentHashMap();
+		Map qtyMap = new java.util.HashMap();
 		Set linkTypes = new HashSet();
 		Map todoMap = todoService.getTodoMap();
 
@@ -602,7 +602,7 @@ public class SendMessageBean {
 	}
 
 	public Collection populate(Collection rows, Map todoMap) {
-		Map dataMap = new java.util.concurrent.ConcurrentHashMap();
+		Map dataMap = new java.util.HashMap();
 		if (rows != null && rows.size() > 0) {
 			Iterator iterator008 = rows.iterator();
 			while (iterator008.hasNext()) {
@@ -659,7 +659,7 @@ public class SendMessageBean {
 		List<String> agentIds = ProcessContainer.getContainer().getAgentIds(
 				actorId);
 
-		List appXIds = new java.util.concurrent.CopyOnWriteArrayList();
+		List appXIds = new java.util.ArrayList();
 		Collection appIds = new HashSet();
 
 		Collection apps = user.getApps();
@@ -705,10 +705,10 @@ public class SendMessageBean {
 			}
 		}
 
-		Collection rows99 = new java.util.concurrent.CopyOnWriteArrayList();
+		Collection rows99 = new java.util.ArrayList();
 
 		if (appXIds.size() > 0) {
-			List actorIds = new java.util.concurrent.CopyOnWriteArrayList();
+			List actorIds = new java.util.ArrayList();
 			actorIds.add(actorId);
 			if (agentIds != null && agentIds.size() > 0) {
 				actorIds.addAll(agentIds);
@@ -814,7 +814,7 @@ public class SendMessageBean {
 			}
 		}
 
-		Map qtyMap = new java.util.concurrent.ConcurrentHashMap();
+		Map qtyMap = new java.util.HashMap();
 		Set linkTypes = new HashSet();
 		Map todoMap = todoService.getTodoMap();
 
@@ -877,8 +877,8 @@ public class SendMessageBean {
 			}
 
 			if (todoList != null && todoList.size() > 0) {
-				Collection rowsXY = new java.util.concurrent.CopyOnWriteArrayList();
-				Collection redWarnXY = new java.util.concurrent.CopyOnWriteArrayList();
+				Collection rowsXY = new java.util.ArrayList();
+				Collection redWarnXY = new java.util.ArrayList();
 				Iterator iter = todoList.iterator();
 				while (iter.hasNext()) {
 					Todo todo = (Todo) iter.next();
@@ -904,7 +904,7 @@ public class SendMessageBean {
 				}
 
 				if (rowsXY.size() > 0) {
-					Map mailMap = new java.util.concurrent.ConcurrentHashMap();
+					Map mailMap = new java.util.HashMap();
 					mailMap.put("user", user);
 					mailMap.put("rows", rowsXY);
 					if(dept != null){
@@ -946,7 +946,7 @@ public class SendMessageBean {
 												.getEmail())) {
 									continue;
 								}
-								Map mailMap = new java.util.concurrent.ConcurrentHashMap();
+								Map mailMap = new java.util.HashMap();
 								mailMap.put("user", user);
 								mailMap.put("leader", leader);
 								mailMap.put("rows", redWarnXY);
@@ -996,8 +996,8 @@ public class SendMessageBean {
 
 		logger.info("todo 事项数量:" + rows.size());
 
-		Map dataMap = new java.util.concurrent.ConcurrentHashMap();
-		Map roleMap = new java.util.concurrent.ConcurrentHashMap();
+		Map dataMap = new java.util.HashMap();
+		Map roleMap = new java.util.HashMap();
 
 		Iterator iterator008 = rows.iterator();
 		while (iterator008.hasNext()) {
@@ -1013,7 +1013,7 @@ public class SendMessageBean {
 				if (actorId != null) {
 					List list = (List) dataMap.get(actorId);
 					if (list == null) {
-						list = new java.util.concurrent.CopyOnWriteArrayList();
+						list = new java.util.ArrayList();
 					}
 					list.add(tdi);
 					dataMap.put(actorId, list);
@@ -1021,7 +1021,7 @@ public class SendMessageBean {
 				if (roleCode != null) {
 					List listx = (List) roleMap.get(roleCode);
 					if (listx == null) {
-						listx = new java.util.concurrent.CopyOnWriteArrayList();
+						listx = new java.util.ArrayList();
 					}
 					listx.add(tdi);
 					roleMap.put(roleCode, listx);
@@ -1041,9 +1041,9 @@ public class SendMessageBean {
 		while (iterator.hasNext()) {
 			String actorId = (String) iterator.next();
 			List list = (List) dataMap.get(actorId);
-			Collection oks = new java.util.concurrent.CopyOnWriteArrayList();
-			Collection alerts = new java.util.concurrent.CopyOnWriteArrayList();
-			Collection pastDues = new java.util.concurrent.CopyOnWriteArrayList();
+			Collection oks = new java.util.ArrayList();
+			Collection alerts = new java.util.ArrayList();
+			Collection pastDues = new java.util.ArrayList();
 			Iterator iterator009 = list.iterator();
 			while (iterator009.hasNext()) {
 				TodoInstance tdi = (TodoInstance) iterator009.next();
@@ -1074,7 +1074,7 @@ public class SendMessageBean {
 
 			if (alerts.size() > 0) {
 				SysUser user = (SysUser) userMap.get(actorId);
-				List messages = new java.util.concurrent.CopyOnWriteArrayList();
+				List messages = new java.util.ArrayList();
 				Iterator iteratorxy = alerts.iterator();
 				while (iteratorxy.hasNext()) {
 					TodoInstance tdi = (TodoInstance) iteratorxy.next();
@@ -1096,7 +1096,7 @@ public class SendMessageBean {
 				}
 				SysDepartment dept = user.getDepartment();
 
-				Map mailMap = new java.util.concurrent.ConcurrentHashMap();
+				Map mailMap = new java.util.HashMap();
 				mailMap.put("user", user);
 				mailMap.put("dept", dept);
 				mailMap.put("rows", alerts);

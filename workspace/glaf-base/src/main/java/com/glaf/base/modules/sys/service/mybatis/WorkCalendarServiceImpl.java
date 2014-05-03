@@ -49,7 +49,7 @@ public class WorkCalendarServiceImpl implements WorkCalendarService {
 
 	protected WorkCalendarMapper workCalendarMapper;
 
-	private static List<Integer> workDateList = new java.util.concurrent.CopyOnWriteArrayList<Integer>();
+	private static List<Integer> workDateList = new java.util.ArrayList<Integer>();
 
 	public WorkCalendarServiceImpl() {
 
@@ -158,7 +158,7 @@ public class WorkCalendarServiceImpl implements WorkCalendarService {
 		int year = cal.get(Calendar.YEAR);
 		int month = cal.get(Calendar.MONTH);
 
-		List<Date> noneWorkDays = new java.util.concurrent.CopyOnWriteArrayList<Date>();
+		List<Date> noneWorkDays = new java.util.ArrayList<Date>();
 		if (workDateList.size() == 0)
 			initWorkDate();
 		if (!workDateList.isEmpty()) {
@@ -200,7 +200,7 @@ public class WorkCalendarServiceImpl implements WorkCalendarService {
 		int year = cal.get(Calendar.YEAR);
 		int month = cal.get(Calendar.MONTH);
 
-		List<Date> noneWorkDays = new java.util.concurrent.CopyOnWriteArrayList<Date>();
+		List<Date> noneWorkDays = new java.util.ArrayList<Date>();
 
 		// 取连续2个月的非工作日
 		List<Integer> list = getWorkDateList(year, month + 1);
@@ -236,7 +236,7 @@ public class WorkCalendarServiceImpl implements WorkCalendarService {
 		query.freeMonth(freeMonth);
 
 		List<WorkCalendar> list = this.list(query);
-		List<Integer> days = new java.util.concurrent.CopyOnWriteArrayList<Integer>();
+		List<Integer> days = new java.util.ArrayList<Integer>();
 		if (list != null && !list.isEmpty()) {
 			for (WorkCalendar cal : list) {
 				days.add(cal.getFreeDay());

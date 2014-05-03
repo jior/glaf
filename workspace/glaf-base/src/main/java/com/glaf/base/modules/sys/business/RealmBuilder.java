@@ -37,7 +37,7 @@ public class RealmBuilder {
 		java.util.Properties props = new java.util.Properties();
 		List<RealmInfo> realms = getSysApplicationService().getRealmInfos();
 		if (realms != null && !realms.isEmpty()) {
-			Map<String, StringBuffer> map = new java.util.concurrent.ConcurrentHashMap<String, StringBuffer>();
+			Map<String, StringBuffer> map = new java.util.HashMap<String, StringBuffer>();
 			for (RealmInfo realm : realms) {
 				StringBuffer sb = (StringBuffer) map.get(realm.getUrl());
 				if (sb == null) {

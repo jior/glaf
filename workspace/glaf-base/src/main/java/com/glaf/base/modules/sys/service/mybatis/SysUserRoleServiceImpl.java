@@ -243,8 +243,8 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List getAuthorizedUser(SysUser user) {
-		List list = new java.util.concurrent.CopyOnWriteArrayList();
-		Map<Long, SysUser> userMap = new java.util.concurrent.ConcurrentHashMap<Long, SysUser>();
+		List list = new java.util.ArrayList();
+		Map<Long, SysUser> userMap = new java.util.HashMap<Long, SysUser>();
 		List<SysUser> users = sysUserMapper.getAuthorizedUsersByUserId(user
 				.getId());
 		if (users != null && !users.isEmpty()) {
@@ -274,10 +274,10 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	}
 
 	public List<SysUser> getChildrenMembershipUsers(long deptId, long roleId) {
-		List<SysUser> users = new java.util.concurrent.CopyOnWriteArrayList<SysUser>();
+		List<SysUser> users = new java.util.ArrayList<SysUser>();
 		SysDepartment dept = sysDepartmentService.findById(deptId);
 		if (dept != null) {
-			List<SysDepartment> list = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
+			List<SysDepartment> list = new java.util.ArrayList<SysDepartment>();
 			// sysDepartmentService.findNestingDepartment(list, deptId);
 			sysDepartmentService.findAllChildrenDepartments(list, deptId);
 			if (!list.isEmpty()) {
@@ -296,7 +296,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	}
 
 	public List<SysUser> getMembershipUsers(List<Long> deptIds, long roleId) {
-		List<SysUser> users = new java.util.concurrent.CopyOnWriteArrayList<SysUser>();
+		List<SysUser> users = new java.util.ArrayList<SysUser>();
 		for (Long deptId : deptIds) {
 			List<SysUser> list = this.getMembershipUsers(deptId, roleId);
 			if (!list.isEmpty()) {
@@ -308,7 +308,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 	}
 
 	public List<SysUser> getMembershipUsers(long deptId, long roleId) {
-		List<SysUser> users = new java.util.concurrent.CopyOnWriteArrayList<SysUser>();
+		List<SysUser> users = new java.util.ArrayList<SysUser>();
 		SysDepartment dept = sysDepartmentService.findById(deptId);
 		if (dept != null && dept.getRoles() != null) {
 			Set<SysDeptRole> roles = dept.getRoles();
@@ -328,7 +328,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List getProcessByUser(SysUser user) {
-		List list = new java.util.concurrent.CopyOnWriteArrayList();
+		List list = new java.util.ArrayList();
 		List<Map<String, Object>> rows = sysUserRoleMapper
 				.getProcessByUser(user.getId());
 		if (rows != null && !rows.isEmpty()) {
@@ -366,7 +366,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 
 	public List<SysUser> getUnAuthorizedUser(SysUser user) {
 		if (user == null) {
-			return new java.util.concurrent.CopyOnWriteArrayList<SysUser>();
+			return new java.util.ArrayList<SysUser>();
 		}
 		logger.info("name:" + user.getName());
 		user = sysUserService.findById(user.getId());
@@ -397,14 +397,14 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		if (users != null && !users.isEmpty()) {
 			List<SysDepartment> depts = sysDepartmentService
 					.getSysDepartmentList();
-			Map<Long, SysDepartment> deptMap = new java.util.concurrent.ConcurrentHashMap<Long, SysDepartment>();
+			Map<Long, SysDepartment> deptMap = new java.util.HashMap<Long, SysDepartment>();
 			if (depts != null && !depts.isEmpty()) {
 				for (SysDepartment dept : depts) {
 					deptMap.put(dept.getId(), dept);
 				}
 			}
 			for (SysUser user : users) {
-				user.setDepartment(deptMap.get(Long.valueOf(user.getDeptId())));
+				user.setDepartment(deptMap.get(user.getDeptId()));
 			}
 		}
 	}

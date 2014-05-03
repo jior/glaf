@@ -29,8 +29,8 @@ public class SysTreeUpdate {
 		List<SysTree> list = getSysTreeService().getAllSysTreeList();
 		if (list != null && !list.isEmpty()) {
 			TreeRepositoryBuilder builder = new TreeRepositoryBuilder();
-			Map<String, SysTree> treeMap = new java.util.concurrent.ConcurrentHashMap<String, SysTree>();
-			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
+			Map<String, SysTree> treeMap = new java.util.HashMap<String, SysTree>();
+			List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
 			for (SysTree tree : list) {
 				treeModels.add(tree);
 				treeMap.put(String.valueOf(tree.getId()), tree);

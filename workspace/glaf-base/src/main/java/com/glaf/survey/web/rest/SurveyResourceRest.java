@@ -89,7 +89,7 @@ public class SurveyResourceRest {
 				}
 				if (survey.getRelations() != null
 						&& !survey.getRelations().isEmpty()) {
-					List<SurveyResult> wxSurveyResults = new java.util.concurrent.CopyOnWriteArrayList<SurveyResult>();
+					List<SurveyResult> surveyResults = new java.util.ArrayList<SurveyResult>();
 					for (Survey relation : survey.getRelations()) {
 						SurveyResult result = new SurveyResult();
 						result.setIp(ip);
@@ -97,9 +97,9 @@ public class SurveyResourceRest {
 						result.setSurveyDate(new Date());
 						result.setResult(request.getParameter("result_"
 								+ relation.getId()));
-						wxSurveyResults.add(result);
+						surveyResults.add(result);
 					}
-					surveyResultService.saveAll(wxSurveyResults);
+					surveyResultService.saveAll(surveyResults);
 				} else {
 					SurveyResult result = new SurveyResult();
 					result.setIp(ip);

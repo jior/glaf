@@ -210,7 +210,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 		query.referId(referId);
 		query.referType(referType);
 		query.setOrderBy(" E.ID desc ");
-		Map<String, String> map = new java.util.concurrent.ConcurrentHashMap<String, String>();
+		Map<String, String> map = new java.util.HashMap<String, String>();
 		List<Attachment> list = this.list(query);
 		if (list != null && !list.isEmpty()) {
 			for (int i = 0; list != null && i < list.size(); i++) {
@@ -222,7 +222,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 	}
 
 	public List<Attachment> getAttachmentList(long[] referIds, int referType) {
-		List<Long> rows = new java.util.concurrent.CopyOnWriteArrayList<Long>();
+		List<Long> rows = new java.util.ArrayList<Long>();
 		for (int i = 0; i < referIds.length; i++) {
 			rows.add(referIds[i]);
 		}
@@ -234,7 +234,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 	}
 
 	public int getAttachmentCount(long[] referIds, int referType) {
-		List<Long> rows = new java.util.concurrent.CopyOnWriteArrayList<Long>();
+		List<Long> rows = new java.util.ArrayList<Long>();
 		for (int i = 0; i < referIds.length; i++) {
 			rows.add(referIds[i]);
 		}
@@ -246,7 +246,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 	}
 
 	public List<Attachment> getPurchaseAttachmentList(long[] ids, int referType) {
-		List<Long> rows = new java.util.concurrent.CopyOnWriteArrayList<Long>();
+		List<Long> rows = new java.util.ArrayList<Long>();
 		for (int i = 0; i < ids.length; i++) {
 			rows.add(ids[i]);
 		}
@@ -268,7 +268,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 	}
 
 	public int getAttachmentCount(long[] referIds, int referType, long createId) {
-		List<Long> rows = new java.util.concurrent.CopyOnWriteArrayList<Long>();
+		List<Long> rows = new java.util.ArrayList<Long>();
 		for (int i = 0; i < referIds.length; i++) {
 			rows.add(referIds[i]);
 		}

@@ -131,7 +131,7 @@ public class UserAuthController {
 			user.setIsChangePassword(0);
 			user.setCreateBy("website");
 			user.setUpdateBy("website");
-			List<String> roleCodes = new java.util.concurrent.CopyOnWriteArrayList<String>();
+			List<String> roleCodes = new java.util.ArrayList<String>();
 			roleCodes.add("website");
 			try {
 				if (complexUserService.createUser(user, roleCodes)) {
@@ -287,7 +287,7 @@ public class UserAuthController {
 			user.setIsChangePassword(0);
 			user.setCreateBy("website");
 			user.setUpdateBy("website");
-			List<String> roleCodes = new java.util.concurrent.CopyOnWriteArrayList<String>();
+			List<String> roleCodes = new java.util.ArrayList<String>();
 			roleCodes.add("website");
 			try {
 				if (complexUserService.createUser(user, roleCodes)) {

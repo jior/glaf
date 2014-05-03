@@ -39,11 +39,11 @@ public class UpdateTreeBean {
 			}
 			List<SysTree> trees = sysTreeService.getAllSysTreeList();
 			if (trees != null && !trees.isEmpty()) {
-				Map<Long, SysTree> dataMap = new java.util.concurrent.ConcurrentHashMap<Long, SysTree>();
+				Map<Long, SysTree> dataMap = new java.util.HashMap<Long, SysTree>();
 				for (SysTree tree : trees) {
 					dataMap.put(tree.getId(), tree);
 				}
-				Map<Long, String> treeIdMap = new java.util.concurrent.ConcurrentHashMap<Long, String>();
+				Map<Long, String> treeIdMap = new java.util.HashMap<Long, String>();
 				for (SysTree tree : trees) {
 					if (StringUtils.isEmpty(tree.getTreeId())) {
 						String treeId = this.getTreeId(dataMap, tree);

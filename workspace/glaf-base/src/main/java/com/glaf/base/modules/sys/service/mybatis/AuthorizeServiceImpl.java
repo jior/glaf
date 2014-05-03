@@ -90,7 +90,7 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 				bean = sysUserService.getUserPrivileges(bean);
 
 				// 取出用户的部门列表
-				List<SysDepartment> list = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
+				List<SysDepartment> list = new java.util.ArrayList<SysDepartment>();
 				sysDepartmentService.findNestingDepartment(list,
 						bean.getDepartment());
 				bean.setNestingDepartment(list);

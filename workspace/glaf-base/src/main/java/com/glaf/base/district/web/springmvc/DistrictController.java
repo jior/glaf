@@ -118,7 +118,7 @@ public class DistrictController {
 		if (parentId > 0) {
 			DistrictEntity parent = districtService.getDistrict(parentId);
 			if (districts == null) {
-				districts = new java.util.concurrent.CopyOnWriteArrayList<DistrictEntity>();
+				districts = new java.util.ArrayList<DistrictEntity>();
 			}
 			districts.add(parent);
 		}
@@ -315,9 +315,9 @@ public class DistrictController {
 			districts = districtService.getDistrictList(parentId);
 		}
 		if (districts != null && !districts.isEmpty()) {
-			Map<Long, TreeModel> treeMap = new java.util.concurrent.ConcurrentHashMap<Long, TreeModel>();
-			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
-			List<Long> districtIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
+			Map<Long, TreeModel> treeMap = new java.util.HashMap<Long, TreeModel>();
+			List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
+			List<Long> districtIds = new java.util.ArrayList<Long>();
 			for (DistrictEntity district : districts) {
 				if (district.getLocked() != 0) {
 					continue;

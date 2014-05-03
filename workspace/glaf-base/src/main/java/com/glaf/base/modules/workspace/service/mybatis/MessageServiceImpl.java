@@ -149,7 +149,7 @@ public class MessageServiceImpl implements MessageService {
 				query);
 		if (list != null && !list.isEmpty()) {
 			List<SysUser> users = sysUserService.getSysUserList();
-			Map<Long, SysUser> userMap = new java.util.concurrent.ConcurrentHashMap<Long, SysUser>();
+			Map<Long, SysUser> userMap = new java.util.HashMap<Long, SysUser>();
 			for (SysUser user : users) {
 				userMap.put(user.getId(), user);
 			}
@@ -173,7 +173,7 @@ public class MessageServiceImpl implements MessageService {
 				query, rowBounds);
 		if (rows != null && !rows.isEmpty()) {
 			List<SysUser> users = sysUserService.getSysUserList();
-			Map<Long, SysUser> userMap = new java.util.concurrent.ConcurrentHashMap<Long, SysUser>();
+			Map<Long, SysUser> userMap = new java.util.HashMap<Long, SysUser>();
 			for (SysUser user : users) {
 				userMap.put(user.getId(), user);
 			}
@@ -207,7 +207,7 @@ public class MessageServiceImpl implements MessageService {
 				query);
 		if (list != null && !list.isEmpty()) {
 			List<SysUser> users = sysUserService.getSysUserList();
-			Map<Long, SysUser> userMap = new java.util.concurrent.ConcurrentHashMap<Long, SysUser>();
+			Map<Long, SysUser> userMap = new java.util.HashMap<Long, SysUser>();
 			for (SysUser user : users) {
 				userMap.put(user.getId(), user);
 			}
@@ -245,7 +245,7 @@ public class MessageServiceImpl implements MessageService {
 				query);
 		if (list != null && !list.isEmpty()) {
 			List<SysUser> users = sysUserService.getSysUserList();
-			Map<Long, SysUser> userMap = new java.util.concurrent.ConcurrentHashMap<Long, SysUser>();
+			Map<Long, SysUser> userMap = new java.util.HashMap<Long, SysUser>();
 			for (SysUser user : users) {
 				userMap.put(user.getId(), user);
 			}
@@ -283,7 +283,7 @@ public class MessageServiceImpl implements MessageService {
 				query);
 		if (list != null && !list.isEmpty()) {
 			List<SysUser> users = sysUserService.getSysUserList();
-			Map<Long, SysUser> userMap = new java.util.concurrent.ConcurrentHashMap<Long, SysUser>();
+			Map<Long, SysUser> userMap = new java.util.HashMap<Long, SysUser>();
 			for (SysUser user : users) {
 				userMap.put(user.getId(), user);
 			}

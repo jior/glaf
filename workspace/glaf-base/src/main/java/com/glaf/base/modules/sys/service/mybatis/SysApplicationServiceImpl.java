@@ -229,7 +229,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		query.parentId(parentAppId);
 		query.setOrderBy(" E.SORT asc ");
 		query.setLocked(0);
-		List<Long> nodeIds = new java.util.concurrent.CopyOnWriteArrayList<Long>();
+		List<Long> nodeIds = new java.util.ArrayList<Long>();
 		nodeIds.add(-1L);
 
 		List<SysApplication> apps = sysApplicationMapper
@@ -336,7 +336,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	}
 
 	public List<RealmInfo> getRealmInfos() {
-		Map<String, Object> params = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> params = new java.util.HashMap<String, Object>();
 		return sysApplicationMapper.getRealmInfos(params);
 	}
 
@@ -455,7 +455,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 			query.treeId(app.getNode().getTreeId());
 			query.treeIdLike(app.getNode().getTreeId() + "%");
 			if (!user.isSystemAdmin()) {
-				List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
+				List<String> actorIds = new java.util.ArrayList<String>();
 				List<Object> rows = entityService.getList("getAgents", actorId);
 				if (rows != null && !rows.isEmpty()) {
 					for (Object object : rows) {
@@ -485,7 +485,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 				treeList = sysTreeMapper.getTreeList(query);
 			}
 
-			List<TreeModel> treeModels = new java.util.concurrent.CopyOnWriteArrayList<TreeModel>();
+			List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
 			for (SysTree tree : treeList) {
 				treeModels.add(tree);
 			}

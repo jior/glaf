@@ -41,7 +41,7 @@ import com.glaf.core.base.JSONable;
 public class SysDepartment implements Serializable, JSONable {
 	private static final long serialVersionUID = -1700125499848402378L;
 	@javax.persistence.Transient
-	private List<SysDepartment> children = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
+	private List<SysDepartment> children = new java.util.ArrayList<SysDepartment>();
 
 	/**
 	 * ±àÂë
@@ -149,7 +149,7 @@ public class SysDepartment implements Serializable, JSONable {
 
 	public void addChild(SysDepartment dept) {
 		if (children == null) {
-			children = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
+			children = new java.util.ArrayList<SysDepartment>();
 		}
 		dept.setParent(this);
 		children.add(dept);

@@ -113,7 +113,7 @@ public class UserRegisterController {
 				logger.error(ex);
 			}
 
-			List<SysDepartment> depts = new java.util.concurrent.CopyOnWriteArrayList<SysDepartment>();
+			List<SysDepartment> depts = new java.util.ArrayList<SysDepartment>();
 			depts.add(department);
 			modelMap.put("depts", depts);
 			request.setAttribute("depts", depts);

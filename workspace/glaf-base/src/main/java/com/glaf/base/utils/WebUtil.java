@@ -69,7 +69,7 @@ public class WebUtil {
 	 * @return
 	 */
 	public static String getQueryString(String url) {
-		Map<String, String> map = new java.util.concurrent.ConcurrentHashMap<String, String>();
+		Map<String, String> map = new java.util.HashMap<String, String>();
 		String[] param = url.split("&");
 		for (int i = 0; i < param.length; i++) {
 			String[] entry = param[i].split("=");

@@ -346,7 +346,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 			SysApplicationQuery query = new SysApplicationQuery();
 			List<SysApplication> apps = sysApplicationMapper
 					.getSysApplications(query);
-			Map<Long, SysApplication> appMap = new java.util.concurrent.ConcurrentHashMap<Long, SysApplication>();
+			Map<Long, SysApplication> appMap = new java.util.HashMap<Long, SysApplication>();
 			if (apps != null && !apps.isEmpty()) {
 				for (SysApplication m : apps) {
 					appMap.put(m.getNodeId(), m);
@@ -364,7 +364,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 			query.status(0);
 			List<SysDepartment> depts = sysDepartmentMapper
 					.getSysDepartments(query);
-			Map<Long, SysDepartment> deptMap = new java.util.concurrent.ConcurrentHashMap<Long, SysDepartment>();
+			Map<Long, SysDepartment> deptMap = new java.util.HashMap<Long, SysDepartment>();
 			if (depts != null && !depts.isEmpty()) {
 				for (SysDepartment dept : depts) {
 					deptMap.put(dept.getNodeId(), dept);
@@ -537,7 +537,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 		 * 如果节点移动了位置，即移动到别的节点下面去了
 		 */
 		if (model.getParentId() != bean.getParentId()) {
-			List<SysTree> list = new java.util.concurrent.CopyOnWriteArrayList<SysTree>();
+			List<SysTree> list = new java.util.ArrayList<SysTree>();
 			this.loadChildren(list, bean.getId());
 			if (!list.isEmpty()) {
 				for (SysTree node : list) {
@@ -613,11 +613,11 @@ public class SysTreeServiceImpl implements SysTreeService {
 			}
 			List<SysTree> trees = this.getAllSysTreeList();
 			if (trees != null && !trees.isEmpty()) {
-				Map<Long, SysTree> dataMap = new java.util.concurrent.ConcurrentHashMap<Long, SysTree>();
+				Map<Long, SysTree> dataMap = new java.util.HashMap<Long, SysTree>();
 				for (SysTree tree : trees) {
 					dataMap.put(tree.getId(), tree);
 				}
-				Map<Long, String> treeIdMap = new java.util.concurrent.ConcurrentHashMap<Long, String>();
+				Map<Long, String> treeIdMap = new java.util.HashMap<Long, String>();
 				for (SysTree tree : trees) {
 					if (StringUtils.isEmpty(tree.getTreeId())) {
 						String treeId = this.getTreeId(dataMap, tree);
