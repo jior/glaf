@@ -312,13 +312,13 @@ public class MyBatisEntityDAOImpl extends SqlSessionDaoSupport implements
 			dbid = (Dbid) getSqlSession().selectOne("getNextDbId", name);
 		}
 		long oldValue = Long.parseLong(dbid.getValue());
-		long newValue = oldValue + conf.getInt("dbid_step_" + name, 100);
+		long newValue = oldValue + 1;
 		dbid.setName(name);
 		dbid.setTitle("系统内置主键");
 		dbid.setValue(Long.toString(newValue));
 		dbid.setVersion(dbid.getVersion() + 1);
 		getSqlSession().update("updateNextDbId", dbid);
-		return new IdBlock(oldValue, newValue - 1);
+		return new IdBlock(oldValue, newValue);
 	}
 
 	public void setConnection(Connection con) {
