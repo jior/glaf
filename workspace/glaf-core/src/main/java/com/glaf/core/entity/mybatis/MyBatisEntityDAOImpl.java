@@ -306,7 +306,7 @@ public class MyBatisEntityDAOImpl extends SqlSessionDaoSupport implements
 			dbid = new Dbid();
 			dbid.setTitle("系统内置主键");
 			dbid.setName(name);
-			dbid.setValue("1001");
+			dbid.setValue("1");
 			dbid.setVersion(1);
 			getSqlSession().insert("inertNextDbId", dbid);
 			dbid = (Dbid) getSqlSession().selectOne("getNextDbId", name);
@@ -318,7 +318,7 @@ public class MyBatisEntityDAOImpl extends SqlSessionDaoSupport implements
 		dbid.setValue(Long.toString(newValue));
 		dbid.setVersion(dbid.getVersion() + 1);
 		getSqlSession().update("updateNextDbId", dbid);
-		return new IdBlock(oldValue, newValue);
+		return new IdBlock(oldValue, newValue - 1);
 	}
 
 	public void setConnection(Connection con) {
