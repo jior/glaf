@@ -214,7 +214,6 @@ public class SysTreeServiceImpl implements SysTreeService {
 	public void getSysTree(List<SysTree> tree, long parentId, int deep) {
 		SysTreeQuery query = new SysTreeQuery();
 		query.setParentId(Long.valueOf(parentId));
-		query.setOrderBy("  E.SORT desc ");
 		List<SysTree> nodes = this.list(query);
 		if (nodes != null && !nodes.isEmpty()) {
 			this.initDepartments(nodes);
@@ -256,7 +255,6 @@ public class SysTreeServiceImpl implements SysTreeService {
 	public List<SysTree> getSysTreeList(long parentId) {
 		SysTreeQuery query = new SysTreeQuery();
 		query.setParentId(Long.valueOf(parentId));
-		query.setOrderBy("  E.SORT asc ");
 		List<SysTree> list = this.list(query);
 		Collections.sort(list);
 		return list;
@@ -272,7 +270,6 @@ public class SysTreeServiceImpl implements SysTreeService {
 			pager.setPageSize(pageSize);
 			return pager;
 		}
-		query.setOrderBy(" E.SORT desc");
 
 		int start = pageSize * (pageNo - 1);
 		List<SysTree> list = this.getSysTreesByQueryCriteria(start, pageSize,
@@ -292,7 +289,6 @@ public class SysTreeServiceImpl implements SysTreeService {
 		if (status != -1) {
 			query.setDepartmentStatus(status);
 		}
-		query.setOrderBy(" E.SORT desc");
 		List<SysTree> list = this.list(query);
 		Collections.sort(list);
 		this.initDepartments(list);
@@ -400,7 +396,6 @@ public class SysTreeServiceImpl implements SysTreeService {
 		if (status != -1) {
 			query.setDepartmentStatus(status);
 		}
-		query.setOrderBy(" E.SORT desc");
 		List<SysTree> trees = this.list(query);
 		if (trees != null && !trees.isEmpty()) {
 			for (SysTree tt : trees) {
@@ -476,11 +471,12 @@ public class SysTreeServiceImpl implements SysTreeService {
 	@Transactional
 	public void sort(long parent, SysTree bean, int operate) {
 		if (operate == SysConstants.SORT_PREVIOUS) {// 前移
+			logger.debug("前移:" + bean.getName());
 			sortByPrevious(parent, bean);
 		} else if (operate == SysConstants.SORT_FORWARD) {// 后移
 			sortByForward(parent, bean);
+			logger.debug("后移:" + bean.getName());
 		}
-
 	}
 
 	/**
@@ -497,11 +493,11 @@ public class SysTreeServiceImpl implements SysTreeService {
 		List<SysTree> list = this.list(query);
 		if (list != null && list.size() > 0) {// 有记录
 			SysTree temp = (SysTree) list.get(0);
-			int i = bean.getSort();
-			bean.setSort(temp.getSort());
+			int sort = bean.getSort();
+			bean.setSort(temp.getSort() - 1);
 			this.update(bean);// 更新bean
 
-			temp.setSort(i);
+			temp.setSort(sort + 1);
 			this.update(temp);// 更新temp
 		}
 	}
@@ -521,11 +517,11 @@ public class SysTreeServiceImpl implements SysTreeService {
 		List<SysTree> list = this.list(query);
 		if (list != null && list.size() > 0) {// 有记录
 			SysTree temp = (SysTree) list.get(0);
-			int i = bean.getSort();
-			bean.setSort(temp.getSort());
+			int sort = bean.getSort();
+			bean.setSort(temp.getSort() + 1);
 			this.update(bean);// 更新bean
 
-			temp.setSort(i);
+			temp.setSort(sort - 1);
 			this.update(temp);// 更新temp
 		}
 	}

@@ -59,7 +59,6 @@ public class DictoryServiceImpl implements DictoryService {
 	}
 
 	public int count(DictoryQuery query) {
-		query.ensureInitialized();
 		return dictoryMapper.getDictoryCount(query);
 	}
 
@@ -230,7 +229,6 @@ public class DictoryServiceImpl implements DictoryService {
 	}
 
 	public List<Dictory> list(DictoryQuery query) {
-		query.ensureInitialized();
 		List<Dictory> list = dictoryMapper.getDictorys(query);
 		return list;
 	}
@@ -273,9 +271,11 @@ public class DictoryServiceImpl implements DictoryService {
 		if (bean == null)
 			return;
 		if (operate == SysConstants.SORT_PREVIOUS) {// 前移
+			logger.debug("前移:" + bean.getName());
 			sortByPrevious(parent, bean);
 		} else if (operate == SysConstants.SORT_FORWARD) {// 后移
 			sortByForward(parent, bean);
+			logger.debug("后移:" + bean.getName());
 		}
 	}
 
@@ -287,22 +287,21 @@ public class DictoryServiceImpl implements DictoryService {
 	private void sortByForward(long nodeId, Dictory bean) {
 		DictoryQuery query = new DictoryQuery();
 		query.nodeId(nodeId);
-		// query.setSortLessThan(bean.getSort());
 		query.setSortLessThanOrEqual(bean.getSort());
 		query.setIdNotEqual(bean.getId());
-		query.setOrderBy(" E.SORT desc");
+		query.setOrderBy(" E.SORT desc ");
 
 		List<?> list = this.list(query);
 		if (list != null && list.size() > 0) {// 有记录
 			Dictory temp = (Dictory) list.get(0);
-			int i = bean.getSort();
+			int sort = bean.getSort();
 			bean.setSort(temp.getSort() - 1);
-			if (i != temp.getSort()) {
+			if (sort != temp.getSort()) {
 				bean.setSort(temp.getSort());
 			}
 			this.update(bean);// 更新bean
 
-			temp.setSort(i);
+			temp.setSort(sort+1);
 			this.update(temp);// 更新temp
 		}
 	}
@@ -315,22 +314,20 @@ public class DictoryServiceImpl implements DictoryService {
 	private void sortByPrevious(long nodeId, Dictory bean) {
 		DictoryQuery query = new DictoryQuery();
 		query.nodeId(nodeId);
-		// query.setSortGreaterThan(bean.getSort());
 		query.setSortGreaterThanOrEqual(bean.getSort());
 		query.setIdNotEqual(bean.getId());
-		query.setOrderBy(" E.SORT asc");
 
 		List<?> list = this.list(query);
 		if (list != null && list.size() > 0) {// 有记录
 			Dictory temp = (Dictory) list.get(0);
-			int i = bean.getSort();
+			int sort = bean.getSort();
 			bean.setSort(temp.getSort() + 1);
-			if (i != temp.getSort()) {
+			if (sort != temp.getSort()) {
 				bean.setSort(temp.getSort());
 			}
 			this.update(bean);// 更新bean
 
-			temp.setSort(i);
+			temp.setSort(sort-1);
 			this.update(temp);// 更新temp
 		}
 	}

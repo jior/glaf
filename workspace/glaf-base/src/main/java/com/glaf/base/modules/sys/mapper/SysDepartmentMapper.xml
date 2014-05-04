@@ -176,6 +176,7 @@
 		where ID = #{id}
 	</delete>
 
+
 	<delete id="deleteSysDepartments" parameterType="com.glaf.base.modules.sys.query.SysDepartmentQuery">
 		delete from SYS_DEPARTMENT
 		where (
@@ -186,6 +187,7 @@
 		</foreach>
 		)
 	</delete>
+
 
 	<select id="getSysDepartmentById" parameterType="long"
 		resultMap="sysDepartmentResultMap">
@@ -202,16 +204,18 @@
 				order by ${orderBy}
 			</when>
 			<otherwise>
-				order by E.SORT asc
+				order by E.SORT desc
 			</otherwise>
 		</choose>
 	</select>
+
 
 	<select id="getSysDepartmentCount" parameterType="com.glaf.base.modules.sys.query.SysDepartmentQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectSysDepartmentsSql" />
 	</select>
+
 
 	<sql id="selectSysDepartmentsSql">
 

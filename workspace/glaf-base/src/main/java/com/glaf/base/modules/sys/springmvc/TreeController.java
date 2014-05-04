@@ -52,6 +52,7 @@ import com.glaf.core.util.PageResult;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.Tools;
 
 @Controller("/base/tree")
@@ -411,11 +412,17 @@ public class TreeController {
 
 	@ResponseBody
 	@RequestMapping(params = "method=sort")
-	public void sort(@RequestParam(value = "parent") int parent,
+	public byte[] sort(@RequestParam(value = "parent") int parent,
 			@RequestParam(value = "id") int id,
 			@RequestParam(value = "operate") int operate) {
 		logger.info("parent:" + parent + "; id:" + id + "; operate:" + operate);
-		SysTree bean = sysTreeService.findById(id);
-		sysTreeService.sort(parent, bean, operate);
+		try {
+			SysTree bean = sysTreeService.findById(id);
+			sysTreeService.sort(parent, bean, operate);
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return ResponseUtils.responseJsonResult(false);
 	}
 }

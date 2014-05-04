@@ -61,6 +61,7 @@ import com.glaf.core.util.PageResult;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.Tools;
 
 @Controller("/sys/role")
@@ -465,9 +466,15 @@ public class SysRoleController {
 
 	@ResponseBody
 	@RequestMapping(params = "method=sort")
-	public void sort(@RequestParam(value = "id") int id,
+	public byte[] sort(@RequestParam(value = "id") int id,
 			@RequestParam(value = "operate") int operate) {
 		logger.info("id:" + id + ",operate:" + operate);
-		sysRoleService.sort(sysRoleService.findById(id), operate);
+		try {
+			sysRoleService.sort(sysRoleService.findById(id), operate);
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return ResponseUtils.responseJsonResult(false);
 	}
 }

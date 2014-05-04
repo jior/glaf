@@ -18,7 +18,6 @@
 
 package com.glaf.base.modules.sys.service.mybatis;
 
- 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -70,15 +69,22 @@ public class WorkCalendarServiceImpl implements WorkCalendarService {
 	}
 
 	public int count(WorkCalendarQuery query) {
-		query.ensureInitialized();
 		return workCalendarMapper.getWorkCalendarCount(query);
 	}
 
 	@Transactional
 	public boolean create(WorkCalendar bean) {
-		if (bean.getId() == 0) {
-			bean.setId(idGenerator.nextId());
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(bean.getFreeYear());
+		if (bean.getFreeMonth() <= 9) {
+			buffer.append("0");
 		}
+		buffer.append(bean.getFreeMonth());
+		if (bean.getFreeDay() <= 9) {
+			buffer.append("0");
+		}
+		buffer.append(bean.getFreeDay());
+		bean.setId(Long.parseLong(buffer.toString()));
 		this.workCalendarMapper.insertWorkCalendar(bean);
 		return false;
 	}

@@ -56,40 +56,44 @@ public class WorkCalendar implements Serializable, JSONable {
 	@Column(name = "FREEYEAR")
 	protected int freeYear;
 
-	public int getFreeDay() {
-		return freeDay;
+	public WorkCalendar() {
+
 	}
 
-	public void setFreeDay(int freeDay) {
-		this.freeDay = freeDay;
+	public int getFreeDay() {
+		return freeDay;
 	}
 
 	public int getFreeMonth() {
 		return freeMonth;
 	}
 
-	public void setFreeMonth(int freeMonth) {
-		this.freeMonth = freeMonth;
-	}
-
 	public int getFreeYear() {
 		return freeYear;
-	}
-
-	public void setFreeYear(int freeYear) {
-		this.freeYear = freeYear;
 	}
 
 	public long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	public WorkCalendar jsonToObject(JSONObject jsonObject) {
 		return WorkCalendarJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public void setFreeDay(int freeDay) {
+		this.freeDay = freeDay;
+	}
+
+	public void setFreeMonth(int freeMonth) {
+		this.freeMonth = freeMonth;
+	}
+
+	public void setFreeYear(int freeYear) {
+		this.freeYear = freeYear;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public JSONObject toJsonObject() {

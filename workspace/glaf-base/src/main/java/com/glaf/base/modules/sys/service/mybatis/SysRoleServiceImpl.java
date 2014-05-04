@@ -57,7 +57,6 @@ public class SysRoleServiceImpl implements SysRoleService {
 	}
 
 	public int count(SysRoleQuery query) {
-		query.ensureInitialized();
 		return sysRoleMapper.getSysRoleCount(query);
 	}
 
@@ -159,7 +158,6 @@ public class SysRoleServiceImpl implements SysRoleService {
 
 	public List<SysRole> getSysRoleList() {
 		SysRoleQuery query = new SysRoleQuery();
-		query.setOrderBy(" E.SORT desc ");
 
 		List<SysRole> list = this.list(query);
 		return list;
@@ -179,7 +177,6 @@ public class SysRoleServiceImpl implements SysRoleService {
 			pager.setPageSize(pageSize);
 			return pager;
 		}
-		query.setOrderBy(" E.SORT desc");
 
 		int start = pageSize * (pageNo - 1);
 		List<SysRole> list = this.getSysRolesByQueryCriteria(start, pageSize,
@@ -201,7 +198,6 @@ public class SysRoleServiceImpl implements SysRoleService {
 	}
 
 	public List<SysRole> list(SysRoleQuery query) {
-		query.ensureInitialized();
 		List<SysRole> list = sysRoleMapper.getSysRoles(query);
 		return list;
 	}
@@ -251,8 +247,10 @@ public class SysRoleServiceImpl implements SysRoleService {
 		if (bean == null)
 			return;
 		if (operate == SysConstants.SORT_PREVIOUS) {// 前移
+			logger.debug("前移:" + bean.getName());
 			sortByPrevious(bean);
 		} else if (operate == SysConstants.SORT_FORWARD) {// 后移
+			logger.debug("后移:" + bean.getName());
 			sortByForward(bean);
 		}
 	}
@@ -269,11 +267,11 @@ public class SysRoleServiceImpl implements SysRoleService {
 		List<SysRole> list = this.list(query);
 		if (list != null && list.size() > 0) {// 有记录
 			SysRole temp = (SysRole) list.get(0);
-			int i = bean.getSort();
-			bean.setSort(temp.getSort());
+			int sort = bean.getSort();
+			bean.setSort(temp.getSort()-1);
 			this.update(bean);// 更新bean
 
-			temp.setSort(i);
+			temp.setSort(sort+1);
 			this.update(temp);// 更新temp
 		}
 	}
@@ -286,16 +284,16 @@ public class SysRoleServiceImpl implements SysRoleService {
 	private void sortByPrevious(SysRole bean) {
 		SysRoleQuery query = new SysRoleQuery();
 		query.setSortGreaterThan(bean.getSort());
+		query.setOrderBy(" E.SORT asc ");
 		// 查找前一个对象
-
 		List<SysRole> list = this.list(query);
 		if (list != null && list.size() > 0) {// 有记录
 			SysRole temp = (SysRole) list.get(0);
-			int i = bean.getSort();
-			bean.setSort(temp.getSort());
+			int sort = bean.getSort();
+			bean.setSort(temp.getSort()+1);
 			this.update(bean);// 更新bean
 
-			temp.setSort(i);
+			temp.setSort(sort-1);
 			this.update(temp);// 更新temp
 		}
 	}

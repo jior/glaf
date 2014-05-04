@@ -147,10 +147,11 @@
 		     order by ${orderBy}
 			</when>
 			<otherwise>
-		      order by E.SORT asc
+		      order by E.SORT desc
 			</otherwise>
 		</choose>
 	</select>
+
 
 	<select id="getSysDeptRoleCount" 
 		parameterType="com.glaf.base.modules.sys.query.SysDeptRoleQuery"
@@ -158,6 +159,7 @@
 		select count(*)
 		<include refid="selectSysDeptRolesSql" />
 	</select>
+
 
 	<sql id="selectSysDeptRolesSql">
 

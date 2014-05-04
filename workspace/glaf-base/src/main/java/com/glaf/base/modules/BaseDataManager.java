@@ -42,14 +42,12 @@ import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.business.UpdateTreeBean;
 import com.glaf.base.modules.sys.model.BaseDataInfo;
 import com.glaf.base.modules.sys.model.Dictory;
-import com.glaf.base.modules.sys.model.SubjectCode;
 import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysFunction;
 import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.query.SysTreeQuery;
 import com.glaf.base.modules.sys.service.DictoryService;
-import com.glaf.base.modules.sys.service.SubjectCodeService;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysDeptRoleService;
@@ -95,8 +93,6 @@ public class BaseDataManager {
 	protected DictoryService dictoryService;
 
 	protected EntityService entityService;
-
-	protected SubjectCodeService subjectCodeService;
 
 	protected SysApplicationService sysApplicationService;
 
@@ -405,13 +401,6 @@ public class BaseDataManager {
 		}
 	}
 
-	public SubjectCodeService getSubjectCodeService() {
-		if (subjectCodeService == null) {
-			subjectCodeService = ContextFactory.getBean("subjectCodeService");
-		}
-		return subjectCodeService;
-	}
-
 	public SysApplicationService getSysApplicationService() {
 		if (sysApplicationService == null) {
 			sysApplicationService = ContextFactory
@@ -691,11 +680,8 @@ public class BaseDataManager {
 		loadFunctions();
 		// 数据字典
 		loadDictInfo();
-		// 科目代码
-		loadSubjectCode();
 		// 数据表定义信息
 		loadTableMeta();
-
 	}
 
 	private void loadCustomHandler() {
@@ -953,44 +939,6 @@ public class BaseDataManager {
 		}
 	}
 
-	/**
-	 * 
-	 * 装载预算科目信息
-	 * 
-	 */
-	public void loadSubjectCode() {
-		try {
-			logger.info("装载科目代码开始...");
-			List<SubjectCode> list = getSubjectCodeService()
-					.getSubjectCodeList();
-			// 显示所有列表
-			if (list != null) {
-				Iterator<SubjectCode> iter = list.iterator();
-				List<BaseDataInfo> tmp = new java.util.ArrayList<BaseDataInfo>();
-				while (iter.hasNext()) {
-					SubjectCode bean = (SubjectCode) iter.next();
-					if (bean != null) {
-						BaseDataInfo bdi = new BaseDataInfo();
-						bdi.setId(bean.getId());// 分类id
-						bdi.setName(bean.getSubjectName());// 分类名称
-						String code = bean.getSubjectCode();
-						code = code.substring(code.indexOf(".") + 1);
-						bdi.setCode(code);// 分类编号
-						logger.debug("id:" + bean.getId() + ",SubjectName:"
-								+ bean.getSubjectName() + ", SubjectCode:"
-								+ code);
-						tmp.add(bdi);
-					}
-				}
-				baseDataMap.put(Constants.SYS_SUBJECTS, tmp);
-			}
-			logger.info("装载科目代码信息结束");
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error("提取科目代码数据失败！");
-		}
-	}
-
 	private void loadTableMeta() {
 		// 需要在glaf-base-site.xml中配置load.table.meta=true
 		/**
@@ -1080,10 +1028,6 @@ public class BaseDataManager {
 
 	public void setEntityService(EntityService entityService) {
 		this.entityService = entityService;
-	}
-
-	public void setSubjectCodeService(SubjectCodeService subjectCodeService) {
-		this.subjectCodeService = subjectCodeService;
 	}
 
 	public void setSysApplicationService(

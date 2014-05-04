@@ -83,7 +83,6 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	}
 
 	public int count(SysApplicationQuery query) {
-		query.ensureInitialized();
 		return sysApplicationMapper.getSysApplicationCount(query);
 	}
 
@@ -227,7 +226,6 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 
 		SysApplicationQuery query = new SysApplicationQuery();
 		query.parentId(parentAppId);
-		query.setOrderBy(" E.SORT asc ");
 		query.setLocked(0);
 		List<Long> nodeIds = new java.util.ArrayList<Long>();
 		nodeIds.add(-1L);
@@ -246,7 +244,6 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 
 	public List<SysApplication> getApplicationList() {
 		SysApplicationQuery query = new SysApplicationQuery();
-		query.setOrderBy(" E.SORT asc ");
 		return this.list(query);
 	}
 
@@ -262,7 +259,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		SysApplicationQuery query = new SysApplicationQuery();
 		query.parentId(parentAppId);
 		query.setLocked(0);
-		query.setOrderBy(" E.SORT asc ");
+
 		List<SysApplication> apps = this.list(query);
 		logger.debug("----------------apps size:" + apps.size());
 		return apps;
@@ -278,7 +275,6 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 			pager.setPageSize(pageSize);
 			return pager;
 		}
-		query.setOrderBy(" E.SORT asc");
 
 		int start = pageSize * (pageNo - 1);
 		List<SysApplication> list = this.getSysApplicationsByQueryCriteria(
@@ -596,7 +592,6 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	}
 
 	public List<SysApplication> list(SysApplicationQuery query) {
-		query.ensureInitialized();
 		List<SysApplication> list = sysApplicationMapper
 				.getSysApplications(query);
 		return list;
@@ -695,9 +690,11 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		if (bean == null)
 			return;
 		if (operate == SysConstants.SORT_PREVIOUS) {// 前移
+			logger.debug("前移:" + bean.getName());
 			sortByPrevious(parent, bean);
 		} else if (operate == SysConstants.SORT_FORWARD) {// 后移
 			sortByForward(parent, bean);
+			logger.debug("后移:" + bean.getName());
 		}
 	}
 
@@ -711,17 +708,18 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		query.parentId(Long.valueOf(parentId));
 		query.setSortLessThan(bean.getSort());
 		query.setOrderBy(" E.SORT desc ");
+
 		List<SysApplication> list = this.list(query);
 		if (list != null && list.size() > 0) {// 有记录
 			SysApplication temp = (SysApplication) list.get(0);
-			int i = bean.getSort();
-			bean.setSort(temp.getSort());
+			int sort = bean.getSort();
+			bean.setSort(temp.getSort() - 1);
 			this.update(bean);// 更新bean
 			SysTree node = sysTreeService.findById(bean.getNodeId());
 			node.setSort(bean.getSort());
 			sysTreeService.update(node);
 
-			temp.setSort(i);
+			temp.setSort(sort + 1);
 			this.update(temp);// 更新temp
 			node = sysTreeService.findById(temp.getNodeId());
 			node.setSort(temp.getSort());
@@ -745,14 +743,14 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		List<SysApplication> list = this.list(query);
 		if (list != null && list.size() > 0) {// 有记录
 			SysApplication temp = (SysApplication) list.get(0);
-			int i = bean.getSort();
-			bean.setSort(temp.getSort());
+			int sort = bean.getSort();
+			bean.setSort(temp.getSort() + 1);
 			this.update(bean);// 更新bean
 			SysTree node = sysTreeService.findById(bean.getNodeId());
 			node.setSort(bean.getSort());
 			sysTreeService.update(node);
 
-			temp.setSort(i);
+			temp.setSort(sort - 1);
 			this.update(temp);// 更新temp
 			node = sysTreeService.findById(temp.getNodeId());
 			node.setSort(temp.getSort());

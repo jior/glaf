@@ -370,7 +370,7 @@
 				order by ${orderBy}
 			</when>
 			<otherwise>
-				order by E.SORT asc
+				order by E.SORT desc
 			</otherwise>
 		</choose>
 	</select>

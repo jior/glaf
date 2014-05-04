@@ -136,8 +136,7 @@
 
 		select R.* from SYS_ROLE R
 		inner join SYS_DEPT_ROLE DR
-		on DR.SYSROLEID =
-		R.ID
+		on DR.SYSROLEID = R.ID
 		inner join SYS_DEPARTMENT D
 		on DR.DEPTID = D.ID
 		where 1=1
@@ -194,7 +193,7 @@
 				order by ${orderBy}
 			</when>
 			<otherwise>
-				order by E.SORT asc
+				order by E.SORT desc
 			</otherwise>
 		</choose>
 	</select>

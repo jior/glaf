@@ -243,7 +243,7 @@
 
 		<include refid="getSysTreesSql" />
 
-		order by E.PARENT asc, E.SORT asc
+		order by E.PARENT asc, E.SORT desc
 
 	</select>
 
@@ -259,7 +259,7 @@
 
 		<include refid="getSysTreesSql" />
 
-		order by E.PARENT asc, E.SORT asc
+		order by E.PARENT asc, E.SORT desc
 
 	</select>
 
@@ -275,7 +275,7 @@
 
 		<include refid="getSysTreesSql" />
 
-		order by E.PARENT asc, E.SORT asc
+		order by E.PARENT asc, E.SORT desc
 
 	</select>
 
@@ -305,7 +305,7 @@
 		U.ACCOUNT=#{account}
 		and R.CODE=#{roleCode}
 		order by E.PARENT asc,
-		E.SORT asc
+		E.SORT desc
 
 	</select>
 
@@ -322,7 +322,7 @@
 		where
 		t.treeid like #{treeIdLike}
 		and t.treeid !=  #{treeId}
-		order by t.parent,t.sort,t.treeid
+		order by t.parent asc, t.sort desc 
 
 	</select>
 
@@ -367,7 +367,7 @@
 		</choose>
 		and ur.authorized = 0
 		)
-		order by t.parent,t.sort,t.treeid
+		order by t.parent asc, t.sort desc
 
 	</select>
 
@@ -381,16 +381,18 @@
 				order by ${orderBy}
 			</when>
 			<otherwise>
-				order by E.SORT asc
+				order by E.SORT desc
 			</otherwise>
 		</choose>
 	</select>
+
 
 	<select id="getSysTreeCount" parameterType="com.glaf.base.modules.sys.query.SysTreeQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectSysTreesSql" />
 	</select>
+
 
 	<sql id="selectSysTreesSql">
 

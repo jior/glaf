@@ -163,7 +163,6 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 	public SysDepartment findByCode(String code) {
 		SysDepartmentQuery query = new SysDepartmentQuery();
 		query.code(code);
-		query.setOrderBy(" E.ID asc ");
 
 		List<SysDepartment> list = this.list(query);
 		if (list != null && !list.isEmpty()) {
@@ -263,7 +262,6 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 	public SysDepartment getSysDepartmentByNodeId(long nodeId) {
 		SysDepartmentQuery query = new SysDepartmentQuery();
 		query.nodeId(nodeId);
-		query.setOrderBy(" E.ID asc ");
 
 		List<SysDepartment> list = this.list(query);
 		if (list != null && !list.isEmpty()) {
@@ -299,7 +297,6 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 			pager.setPageSize(pageSize);
 			return pager;
 		}
-		query.setOrderBy(" E.SORT asc");
 
 		int start = pageSize * (pageNo - 1);
 		List<SysDepartment> list = this.getSysDepartmentsByQueryCriteria(start,
@@ -402,9 +399,11 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		if (bean == null)
 			return;
 		if (operate == SysConstants.SORT_PREVIOUS) {// 前移
+			logger.debug("前移:" + bean.getName());
 			sortByPrevious(parent, bean);
 		} else if (operate == SysConstants.SORT_FORWARD) {// 后移
 			sortByForward(parent, bean);
+			logger.debug("后移:" + bean.getName());
 		}
 	}
 
@@ -424,17 +423,17 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		List<SysDepartment> list = this.list(query);
 		if (list != null && list.size() > 0) {// 有记录
 			SysDepartment temp = (SysDepartment) list.get(0);
-			int i = bean.getSort();
-			bean.setSort(temp.getSort());
+			int sort = bean.getSort();
+			bean.setSort(temp.getSort()-1);
 			this.update(bean);// 更新bean
 			SysTree node = bean.getNode();
-			node.setSort(bean.getSort());
+			node.setSort(bean.getSort()-1);
 			sysTreeService.update(node);
 
-			temp.setSort(i);
+			temp.setSort(sort+1);
 			this.update(temp);// 更新temp
 			node = temp.getNode();
-			node.setSort(temp.getSort());
+			node.setSort(temp.getSort()+1);
 			sysTreeService.update(node);
 		}
 	}
@@ -449,23 +448,21 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		query.parentId(Long.valueOf(parent));
 		query.setSortGreaterThan(bean.getSort());
 		query.setOrderBy(" E.SORT asc ");
-
 		// 查找后一个对象
-
 		List<SysDepartment> list = this.list(query);
 		if (list != null && list.size() > 0) {// 有记录
 			SysDepartment temp = (SysDepartment) list.get(0);
-			int i = bean.getSort();
-			bean.setSort(temp.getSort());
+			int sort = bean.getSort();
+			bean.setSort(temp.getSort()+1);
 			this.update(bean);// 更新bean
 			SysTree node = bean.getNode();
-			node.setSort(bean.getSort());
+			node.setSort(bean.getSort()+1);
 			sysTreeService.update(node);
 
-			temp.setSort(i);
+			temp.setSort(sort-1);
 			this.update(temp);// 更新temp
 			node = temp.getNode();
-			node.setSort(temp.getSort());
+			node.setSort(temp.getSort()-1);
 			sysTreeService.update(node);
 		}
 	}

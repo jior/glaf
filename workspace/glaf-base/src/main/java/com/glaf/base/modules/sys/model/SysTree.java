@@ -181,9 +181,9 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 		int ret = 0;
 
 		if (l > 0) {
-			ret = 1;
-		} else if (l < 0) {
 			ret = -1;
+		} else if (l < 0) {
+			ret = 1;
 		}
 		return ret;
 	}

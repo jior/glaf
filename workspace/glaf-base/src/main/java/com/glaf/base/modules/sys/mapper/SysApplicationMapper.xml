@@ -222,8 +222,7 @@
 		select dr.id from SYS_DEPT_ROLE dr
 		inner join SYS_USER_ROLE ur
 		on dr.id = ur.roleid
-		where ur.userid =
-		#{userId}
+		where ur.userid = #{userId}
 		and ur.authorized = 0
 		)
 
@@ -258,7 +257,7 @@
 				order by ${orderBy}
 			</when>
 			<otherwise>
-				order by E.SORT asc
+				order by E.SORT desc
 			</otherwise>
 		</choose>
 	</select>
