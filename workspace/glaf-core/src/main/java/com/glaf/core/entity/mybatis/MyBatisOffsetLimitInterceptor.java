@@ -127,8 +127,6 @@ public class MyBatisOffsetLimitInterceptor implements Interceptor {
 		int offset = rowBounds.getOffset();
 		int limit = rowBounds.getLimit();
 
-	 
-
 		if (dialect != null
 				&& dialect.supportsLimit()
 				&& (offset != RowBounds.NO_ROW_OFFSET || limit != RowBounds.NO_ROW_LIMIT)) {
