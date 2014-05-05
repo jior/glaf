@@ -4,6 +4,7 @@
 		<savePath>/java/domain</savePath>
 		<saveName>${entityName}.java</saveName>
 		<template>/templates/java/entity/Entity.java.ftl</template>
+		<encoding>UTF-8</encoding>
 	</definition>
 	<!-- <definition name="Entity">
 		<savePath>/java/model</savePath>
@@ -14,32 +15,38 @@
 		<savePath>/java/query</savePath>
 		<saveName>${entityName}Query.java</saveName>
 		<template>/templates/java/query/Query.java.ftl</template>
+		<encoding>UTF-8</encoding>
 	</definition>
 	<definition name="Mapper">
 		<savePath>/java/mapper</savePath>
 		<saveName>${entityName}Mapper.xml</saveName>
 		<!-- <processor>com.glaf.generator.mybatis3.MyBatis3CodeGenerator</processor> -->
 		<template>/templates/java/mapper/mybatis3/MyBatis3Mapper.xml.ftl</template>
+		<encoding>UTF-8</encoding>
 	</definition>
 	<definition name="JavaMapper">
 		<savePath>/java/mapper</savePath>
 		<saveName>${entityName}Mapper.java</saveName>
 		<template>/templates/java/mapper/mybatis3/MyBatis3Mapper.java.ftl</template>
+		<encoding>UTF-8</encoding>
 	</definition>
 	<definition name="Service">
 		<savePath>/java/service</savePath>
 		<saveName>${entityName}Service.java</saveName>
 		<template>/templates/java/service/mybatis3/MyBatis3Service.java.ftl</template>
+		<encoding>UTF-8</encoding>
 	</definition>
 	<definition name="ServiceImpl">
 		<savePath>/java/service</savePath>
 		<saveName>${entityName}ServiceImpl.java</saveName>
 		<template>/templates/java/service/mybatis3/MyBatis3ServiceImpl.java.ftl</template>
+		<encoding>UTF-8</encoding>
 	</definition>
 	<definition name="JsonFactory">
 		<savePath>/java/util</savePath>
 		<saveName>${entityName}JsonFactory.java</saveName>
 		<template>/templates/java/util/JsonFactory.java.ftl</template>
+		<encoding>UTF-8</encoding>
 	</definition>
 	<!-- <definition name="spring-service-context">
 		<savePath>/java/service</savePath>
@@ -50,11 +57,13 @@
 		<savePath>/java/web/rest</savePath>
 		<saveName>${entityName}ResourceRest.java</saveName>
 		<template>/templates/java/rest/ResourceRest.java.ftl</template>
+		<encoding>UTF-8</encoding>
 	</definition> 
 	<definition name="Controller">
 		<savePath>/java/web/springmvc</savePath>
 		<saveName>${entityName}Controller.java</saveName>
 		<template>/templates/java/springmvc/Controller.java.ftl</template>
+		<encoding>UTF-8</encoding>
 	</definition>
 	<!-- <definition name="BaseController">
 		<savePath>/java/web/springmvc</savePath>
