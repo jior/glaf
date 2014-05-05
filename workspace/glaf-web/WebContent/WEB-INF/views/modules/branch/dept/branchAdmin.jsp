@@ -38,7 +38,7 @@
 		for (var i=0, l=childNodes.length; i<l; i++) {
 			childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
             //if(childNodes[i].iconCls=='icon-user'){
-			   // childNodes[i].icon="<%=request.getContextPath()%>/icons/icons/user.gif";
+			   // childNodes[i].icon="<%=request.getContextPath()%>/images/user.gif";
 		    //}
 		}
 		return childNodes;

@@ -1,3 +1,5 @@
+@charset "utf-8";
+
 body {
     background:#FEFEFE;
 	margin:0;
@@ -85,7 +87,7 @@ a:hover {
   background-color:#CCCCCC;
 }
 .input-multi{
-  font-family: ËÎÌå;
+  font-family: å®‹ä½“;
   border:1px solid #8BAEB4;
 }
 .input-box {
@@ -259,7 +261,7 @@ a:hover {
 .td-font{
 	color: #0000CC;
 	font-weight: bold;
-	font-family:"ËÎÌå";
+	font-family:"å®‹ä½“";
 	font-size: 17px;
 }
 .list-back td {
@@ -367,7 +369,7 @@ a.new-a:hover {
 	text-decoration:underline;
 }
 textarea:focus, input:focus, .sffocus, .sftarget{
-  font-family: ËÎÌå;
+  font-family: å®‹ä½“;
   border: 1px solid red;
   background-color: #ffc;
 }

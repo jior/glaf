@@ -1,5 +1,7 @@
+@charset "utf-8";
+
 .button {
-	BACKGROUND-IMAGE: url(../images/rx_1.gif); BORDER-BOTTOM: #909090 1px solid; BORDER-LEFT: #909090 1px solid; BACKGROUND-COLOR: #fff; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; BACKGROUND-REPEAT: repeat-x; FONT-FAMILY: "ËÎÌå"; HEIGHT: 25px; COLOR: #333; FONT-SIZE: 12px; BORDER-TOP: #909090 1px solid; CURSOR: hand; BORDER-RIGHT: #909090 1px solid; PADDING-TOP: 2px
+	BACKGROUND-IMAGE: url(../images/rx_1.gif); BORDER-BOTTOM: #909090 1px solid; BORDER-LEFT: #909090 1px solid; BACKGROUND-COLOR: #fff; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; BACKGROUND-REPEAT: repeat-x; FONT-FAMILY: "å®‹ä½“"; HEIGHT: 25px; COLOR: #333; FONT-SIZE: 12px; BORDER-TOP: #909090 1px solid; CURSOR: hand; BORDER-RIGHT: #909090 1px solid; PADDING-TOP: 2px
 }
 
  .x_content_title {

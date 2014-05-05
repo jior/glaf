@@ -1,7 +1,8 @@
+@charset "utf-8";
 /*-----------------------------glaf---------------------------------------------------*/
 
 body,table,td,th{
-   font-size:12px;  font-weight:normal; font-family: Arial,ËÎÌå,helvertica,sans-serif; color:#656565
+   font-size:12px;  font-weight:normal; font-family: Arial,å®‹ä½“,helvertica,sans-serif; color:#656565
 }
 
 a:link,a:visited,a:active{color:#656565; text-decoration:none}
@@ -11,7 +12,7 @@ a:hover{color:#F3A36E; text-decoration:none}
 	height: 20px; 
 	line-height:20px;
 	text-align: center; 
-	font: bold 15px ËÎÌå; 
+	font: bold 15px å®‹ä½“; 
 	color: #484848; 
 	background: url(../images/panel_title.gif) #fff repeat-x left bottom; 
 	border: #d9d9d9 1px solid; 
@@ -21,13 +22,13 @@ a:hover{color:#F3A36E; text-decoration:none}
 	background-color: #ffffff; 
  	border: 0px solid; 
 	text-decoration: none ; 
-	font-family:"ËÎÌå";
+	font-family:"å®‹ä½“";
 	font-size: 15px;
 	height: 24px; 
 }
 
 .button {
-	BACKGROUND-IMAGE: url(../images/bluebg.gif); BORDER-BOTTOM: #909090 1px solid; BORDER-LEFT: #909090 1px solid; BACKGROUND-COLOR: #fff; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; BACKGROUND-REPEAT: repeat-x; font: 12px "ËÎÌå",tahoma,arial,helvetica,sans-serif; HEIGHT: 25px; COLOR: #333; FONT-SIZE: 13px; BORDER-TOP: #909090 1px solid; CURSOR: pointer; BORDER-RIGHT: #909090 1px solid; PADDING-TOP: 2px
+	BACKGROUND-IMAGE: url(../images/bluebg.gif); BORDER-BOTTOM: #909090 1px solid; BORDER-LEFT: #909090 1px solid; BACKGROUND-COLOR: #fff; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; BACKGROUND-REPEAT: repeat-x; font: 12px "å®‹ä½“",tahoma,arial,helvetica,sans-serif; HEIGHT: 25px; COLOR: #333; FONT-SIZE: 13px; BORDER-TOP: #909090 1px solid; CURSOR: pointer; BORDER-RIGHT: #909090 1px solid; PADDING-TOP: 2px
 } 
 
 .x-text {

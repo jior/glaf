@@ -1,4 +1,5 @@
-﻿*{font-size:12px; font-family:Tahoma,Verdana,微软雅黑,新宋体}
+
+*{font-size:12px; font-family:Tahoma,Verdana,微软雅黑,新宋体}
 body{background:#D2E0F2; }
 a{ color:Black; text-decoration:none;}
 a:hover{ color:Red; text-decoration:underline;}
@@ -43,7 +44,7 @@ a:hover{ color:Red; text-decoration:underline;}
 .icon-arrow{ background:url('../images/arrow.gif') no-repeat right;}
 
 .btn {
-  background:url(../../images/s_11.jpg);
+  background:url(../../../images/s_11.jpg);
 	width:57px;
 	height:21px;
 	line-height:21px;
@@ -52,7 +53,7 @@ a:hover{ color:Red; text-decoration:underline;}
 }
 
 .button{
-  background: url(../../images/button_xp.gif);
+  background: url(../../../images/button_xp.gif);
   background-repeat:no-repeat;
   background-position:center;
   height: 21px;

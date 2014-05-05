@@ -57,7 +57,7 @@ limitations under the License.
 		if (!childNodes) return null;
 		for (var i=0, l=childNodes.length; i<l; i++) {
 			childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
-			childNodes[i].icon="<%=request.getContextPath()%>/icons/icons/basic.gif";
+			childNodes[i].icon="<%=request.getContextPath()%>/images/basic.gif";
 		}
 		return childNodes;
 	}

@@ -22,13 +22,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><%=SystemConfig.getString("res_system_name")%></title>
-<link href="<%=request.getContextPath()%>/layout/css/styles.css" rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath()%>/scripts/layout/css/styles.css" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/themes/${theme}/styles.css" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/css/icons.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
-<script type="text/javascript" src='${contextPath}/scripts/easyui.simple.extend.js'></script> 
+<script type="text/javascript" src='<%=request.getContextPath()%>/scripts/easyui.simple.extend.js'></script> 
 <script type="text/javascript">
 
     var openTabSize = 0;  
@@ -138,7 +138,7 @@
 			<tr
 				style="overflow: hidden; height: 63px; background: url(${contextPath}/themes/<%=theme%>/images/top_bar_bg.jpg)">
 				<td width="5%" align="center" valign="middle"><img
-					src="<%=request.getContextPath()%>/layout/images/logo.gif"
+					src="<%=request.getContextPath()%>/images/logo.gif"
 					border="0"></td>
 				<td width="35%" align="left" valign="middle"><span
 					class="sys_name" style="padding-left:10px; font-size: 24px; "><%=SystemConfig.getString("res_system_name")%></span>

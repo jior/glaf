@@ -44,7 +44,7 @@
 		for (var i=0, l=childNodes.length; i<l; i++) {
 			childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
 			if(childNodes[i].isParent){
-			    //childNodes[i].icon="<%=request.getContextPath()%>/icons/icons/orm_root.gif";
+			    //childNodes[i].icon="<%=request.getContextPath()%>/images/orm_root.gif";
 			}
 		}
 		return childNodes;
