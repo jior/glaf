@@ -53,7 +53,7 @@ public class SysFunctionResource {
 	private SysFunctionService sysFunctionService;
 
 	/**
-	 * ÅúÁ¿É¾³ıĞÅÏ¢
+	 * æ‰¹é‡åˆ é™¤ä¿¡æ¯
 	 * 
 	 * @param request
 	 * @param uriInfo
@@ -70,10 +70,10 @@ public class SysFunctionResource {
 		ret = sysFunctionService.deleteAll(id);
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"function.delete_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"function.delete_failure"));
 		}
@@ -82,7 +82,7 @@ public class SysFunctionResource {
 	}
 
 	/**
-	 * Ìá½»Ôö¼ÓĞÅÏ¢
+	 * æäº¤å¢åŠ ä¿¡æ¯
 	 * 
 	 * @param request
 	 * @param uriInfo
@@ -103,20 +103,20 @@ public class SysFunctionResource {
 		boolean ret = sysFunctionService.create(bean);
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"function.add_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"function.add_failure"));
 		}
 		MessageUtils.addMessages(request, messages);
-		// ÏÔÊ¾Ìá½»ºóÒ³Ãæ
+		// æ˜¾ç¤ºæäº¤åé¡µé¢
 		return new ModelAndView("show_json_msg");
 	}
 
 	/**
-	 * Ìá½»ĞŞ¸ÄĞÅÏ¢
+	 * æäº¤ä¿®æ”¹ä¿¡æ¯
 	 * 
 	 * @param request
 	 * @param uriInfo
@@ -135,15 +135,15 @@ public class SysFunctionResource {
 		boolean ret = sysFunctionService.update(bean);
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"function.modify_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"function.modify_failure"));
 		}
 		MessageUtils.addMessages(request, messages);
-		// ÏÔÊ¾Ìá½»ºóÒ³Ãæ
+		// æ˜¾ç¤ºæäº¤åé¡µé¢
 		return new ModelAndView("show_json_msg");
 	}
 

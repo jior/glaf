@@ -44,7 +44,7 @@ public class BatchJob implements IJob, org.quartz.Job {
 			List<StepExecution> steps = execution.getSteps();
 			Collections.sort(steps);
 			/**
-			 * ½«Ö´ĞĞ²½Öè°´ÏÈºóË³ĞòÑ¹½øÕ»
+			 * å°†æ‰§è¡Œæ­¥éª¤æŒ‰å…ˆåé¡ºåºå‹è¿›æ ˆ
 			 */
 			Stack<StepExecution> stack = new Stack<StepExecution>();
 			for (int i = steps.size() - 1; i >= 0; i--) {
@@ -69,7 +69,7 @@ public class BatchJob implements IJob, org.quartz.Job {
 									if (jobService.stepExecutionCompleted(step
 											.getJobStepKey())) {
 										/**
-										 * ´¦Àí³É¹¦£¬µ¯³öÕ»£¬±ê¼Ç³É¹¦£¬½áÊø±¾´ÎÑ­»·
+										 * å¤„ç†æˆåŠŸï¼Œå¼¹å‡ºæ ˆï¼Œæ ‡è®°æˆåŠŸï¼Œç»“æŸæœ¬æ¬¡å¾ªç¯
 										 */
 										stack.pop();
 										success = true;

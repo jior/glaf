@@ -25,13 +25,13 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 /**
- * »ùÓÚÁ÷µÄ¹¤¾ßÀà¡£
+ * åŸºäºæµçš„å·¥å…·ç±»ã€‚
  * 
  */
 public class StreamUtil {
 	private static final int DEFAULT_BUFFER_SIZE = 8192;
 
-	/** ´ÓÊäÈëÁ÷¶ÁÈ¡ÄÚÈİ£¬Ğ´Èëµ½Êä³öÁ÷ÖĞ¡£ */
+	/** ä»è¾“å…¥æµè¯»å–å†…å®¹ï¼Œå†™å…¥åˆ°è¾“å‡ºæµä¸­ã€‚ */
 	public static void io(InputStream in, OutputStream out, boolean closeIn,
 			boolean closeOut) throws IOException {
 		int bufferSize = DEFAULT_BUFFER_SIZE;
@@ -61,7 +61,7 @@ public class StreamUtil {
 		}
 	}
 
-	/** ´ÓÊäÈëÁ÷¶ÁÈ¡ÄÚÈİ£¬Ğ´Èëµ½Êä³öÁ÷ÖĞ¡£ */
+	/** ä»è¾“å…¥æµè¯»å–å†…å®¹ï¼Œå†™å…¥åˆ°è¾“å‡ºæµä¸­ã€‚ */
 	public static void io(Reader in, Writer out, boolean closeIn,
 			boolean closeOut) throws IOException {
 		int bufferSize = DEFAULT_BUFFER_SIZE >> 1;
@@ -91,7 +91,7 @@ public class StreamUtil {
 		}
 	}
 
-	/** ½«Ö¸¶¨<code>InputStream</code>µÄËùÓĞÄÚÈİÈ«²¿¶Á³öµ½Ò»¸öbyteÊı×éÖĞ¡£ */
+	/** å°†æŒ‡å®š<code>InputStream</code>çš„æ‰€æœ‰å†…å®¹å…¨éƒ¨è¯»å‡ºåˆ°ä¸€ä¸ªbyteæ•°ç»„ä¸­ã€‚ */
 	public static ByteArray readBytes(InputStream in, boolean closeIn)
 			throws IOException {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -101,7 +101,7 @@ public class StreamUtil {
 		return out.toByteArray();
 	}
 
-	/** ½«Ö¸¶¨ÊäÈëÁ÷µÄËùÓĞÎÄ±¾È«²¿¶Á³öµ½Ò»¸ö×Ö·û´®ÖĞ¡£ */
+	/** å°†æŒ‡å®šè¾“å…¥æµçš„æ‰€æœ‰æ–‡æœ¬å…¨éƒ¨è¯»å‡ºåˆ°ä¸€ä¸ªå­—ç¬¦ä¸²ä¸­ã€‚ */
 	public static String readText(InputStream in, String charset,
 			boolean closeIn) throws IOException {
 		Reader reader = charset == null ? new InputStreamReader(in)
@@ -110,7 +110,7 @@ public class StreamUtil {
 		return readText(reader, closeIn);
 	}
 
-	/** ½«Ö¸¶¨<code>Reader</code>µÄËùÓĞÎÄ±¾È«²¿¶Á³öµ½Ò»¸ö×Ö·û´®ÖĞ¡£ */
+	/** å°†æŒ‡å®š<code>Reader</code>çš„æ‰€æœ‰æ–‡æœ¬å…¨éƒ¨è¯»å‡ºåˆ°ä¸€ä¸ªå­—ç¬¦ä¸²ä¸­ã€‚ */
 	public static String readText(Reader in, boolean closeIn)
 			throws IOException {
 		StringWriter out = new StringWriter();
@@ -120,13 +120,13 @@ public class StreamUtil {
 		return out.toString();
 	}
 
-	/** ½«byteÊı×éĞ´Èëµ½Ö¸¶¨<code>OutputStream</code>ÖĞ¡£ */
+	/** å°†byteæ•°ç»„å†™å…¥åˆ°æŒ‡å®š<code>OutputStream</code>ä¸­ã€‚ */
 	public static void writeBytes(byte[] bytes, OutputStream out,
 			boolean closeOut) throws IOException {
 		writeBytes(new ByteArray(bytes), out, closeOut);
 	}
 
-	/** ½«byteÊı×éĞ´Èëµ½Ö¸¶¨<code>OutputStream</code>ÖĞ¡£ */
+	/** å°†byteæ•°ç»„å†™å…¥åˆ°æŒ‡å®š<code>OutputStream</code>ä¸­ã€‚ */
 	public static void writeBytes(ByteArray bytes, OutputStream out,
 			boolean closeOut) throws IOException {
 		try {
@@ -142,7 +142,7 @@ public class StreamUtil {
 		}
 	}
 
-	/** ½«×Ö·û´®Ğ´Èëµ½Ö¸¶¨Êä³öÁ÷ÖĞ¡£ */
+	/** å°†å­—ç¬¦ä¸²å†™å…¥åˆ°æŒ‡å®šè¾“å‡ºæµä¸­ã€‚ */
 	public static void writeText(CharSequence chars, OutputStream out,
 			String charset, boolean closeOut) throws IOException {
 		Writer writer = charset == null ? new OutputStreamWriter(out)
@@ -151,7 +151,7 @@ public class StreamUtil {
 		writeText(chars, writer, closeOut);
 	}
 
-	/** ½«×Ö·û´®Ğ´Èëµ½Ö¸¶¨<code>Writer</code>ÖĞ¡£ */
+	/** å°†å­—ç¬¦ä¸²å†™å…¥åˆ°æŒ‡å®š<code>Writer</code>ä¸­ã€‚ */
 	public static void writeText(CharSequence chars, Writer out,
 			boolean closeOut) throws IOException {
 		try {

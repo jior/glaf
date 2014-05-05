@@ -34,93 +34,93 @@ public class TableModel implements java.io.Serializable {
 	protected Collection<String> aggregationKeys = new java.util.ArrayList<String>();
 
 	/**
-	 * Åú´¦ÀíµÄ´óĞ¡
+	 * æ‰¹å¤„ç†çš„å¤§å°
 	 */
 	protected int batchSize;
 
 	protected List<ColumnModel> columns = new java.util.ArrayList<ColumnModel>();
 
 	/**
-	 * Ó¢ÎÄ±êÌâ
+	 * è‹±æ–‡æ ‡é¢˜
 	 */
 	protected String englishTitle;
 
 	/**
-	 * ÊµÌåÃû³Æ
+	 * å®ä½“åç§°
 	 */
 	protected String entityName;
 
 	/**
-	 * ĞèÒªÅÅ³ıµÄĞĞÁĞ±í
+	 * éœ€è¦æ’é™¤çš„è¡Œåˆ—è¡¨
 	 */
 	protected List<String> excludes = new java.util.ArrayList<String>();
 
 	/**
-	 * ÎÄ¼şÇ°×º
+	 * æ–‡ä»¶å‰ç¼€
 	 */
 	protected String filePrefix;
 
 	protected ColumnModel idColumn;
 
 	/**
-	 * ÊÇ·ñ²åÈë
+	 * æ˜¯å¦æ’å…¥
 	 */
 	protected boolean insertOnly;
 
 	/**
-	 * ºÏ·¨Êı¾İµÄ×îĞ¡³¤¶È
+	 * åˆæ³•æ•°æ®çš„æœ€å°é•¿åº¦
 	 */
 	protected int minLength;
 
 	/**
-	 * Java °üÃû
+	 * Java åŒ…å
 	 */
 	protected String packageName;
 
 	/**
-	 * ×ÔĞĞÌá¹©µÄ½âÎöÆ÷ÀàÃû
+	 * è‡ªè¡Œæä¾›çš„è§£æå™¨ç±»å
 	 */
 	protected String parseClass;
 
 	/**
-	 * ½âÎöÀàĞÍ,csv,text,xls
+	 * è§£æç±»å‹,csv,text,xls
 	 */
 	protected String parseType;
 
 	/**
-	 * ÎïÀí±íµÄÖ÷¼ü×Ö¶ÎÃû³Æ
+	 * ç‰©ç†è¡¨çš„ä¸»é”®å­—æ®µåç§°
 	 */
 	protected String primaryKey;
 
 	/**
-	 * ·Ö¸ô·û
+	 * åˆ†éš”ç¬¦
 	 */
 	protected String split;
 
 	protected String sql;
 
 	/**
-	 * ¿ªÊ¼ĞĞÊı,´Ó1¿ªÊ¼
+	 * å¼€å§‹è¡Œæ•°,ä»1å¼€å§‹
 	 */
 	protected int startRow;
 
 	/**
-	 * ×îºóÌø¹ıĞĞÊı(²»ĞèÒª´¦ÀíµÄfooterĞÅÏ¢ĞĞÊı)
+	 * æœ€åè·³è¿‡è¡Œæ•°(ä¸éœ€è¦å¤„ç†çš„footerä¿¡æ¯è¡Œæ•°)
 	 */
 	protected int stopSkipRow;
 
 	/**
-	 * Í£Ö¹½âÎö×Ö·û
+	 * åœæ­¢è§£æå­—ç¬¦
 	 */
 	protected String stopWord;
 
 	/**
-	 * Êı¾İ¿â±íÃû³Æ
+	 * æ•°æ®åº“è¡¨åç§°
 	 */
 	protected String tableName;
 
 	/**
-	 * ±êÌâ
+	 * æ ‡é¢˜
 	 */
 	protected String title;
 

@@ -33,7 +33,7 @@ public class CacheTest {
 
 	@Before
 	public void setUp() throws Exception {
-		System.out.println("¿ªÊ¼²âÊÔ..................................");
+		System.out.println("å¼€å§‹æµ‹è¯•..................................");
 		start = System.currentTimeMillis();
 		CustomProperties.reload();
 		CacheFactory.getString("xx");
@@ -43,8 +43,8 @@ public class CacheTest {
 	@After
 	public void tearDown() throws Exception {
 		long times = System.currentTimeMillis() - start;
-		System.out.println("×Ü¹²ºÄÊ±(ºÁÃë):" + times);
-		System.out.println("²âÊÔÍê³É¡£");
+		System.out.println("æ€»å…±è€—æ—¶(æ¯«ç§’):" + times);
+		System.out.println("æµ‹è¯•å®Œæˆã€‚");
 	}
 
 	@Test

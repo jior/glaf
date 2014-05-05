@@ -147,7 +147,7 @@ public class SystemPropertyJsonFactory {
 	}
 
 	public static void main(String[] args) {
-		String str = "[{\"name\":\"限制\",\"value\":\"true\"},{\"name\":\"不限制\",\"value\":\"false\"}]";
+		String str = "[{\"name\":\"闄愬埗\",\"value\":\"true\"},{\"name\":\"涓嶉檺鍒禱",\"value\":\"false\"}]";
 		System.out.println(str);
 		JSONArray array = JSON.parseArray(str);
 		StringBuffer buffer = new StringBuffer();

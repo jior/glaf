@@ -76,12 +76,12 @@ public class MxJbpmResource {
 			ProcessContext ctx = new ProcessContext();
 			ctx.setRowId(rowId);
 			ctx.setActorId(actorId);
-			ctx.setTitle("µ¥¾İ±àºÅ£º" + rowId);
+			ctx.setTitle("å•æ®ç¼–å·ï¼š" + rowId);
 			ctx.setProcessName(processName);
 
 			/**
-			 * Á÷³Ì¿ØÖÆ²ÎÊıÎªjson¸ñÊ½µÄ×Ö·û´®.<br>
-			 * ÀıÈç£º{money:100000,day:5,pass:true,deptId:"123", roleId:"R001"}
+			 * æµç¨‹æ§åˆ¶å‚æ•°ä¸ºjsonæ ¼å¼çš„å­—ç¬¦ä¸².<br>
+			 * ä¾‹å¦‚ï¼š{money:100000,day:5,pass:true,deptId:"123", roleId:"R001"}
 			 */
 			if (StringUtils.isNotEmpty(json)) {
 				Map<String, Object> jsonMap = JsonUtils.decode(json);
@@ -174,7 +174,7 @@ public class MxJbpmResource {
 
 		if (taskInstanceId != null && StringUtils.isNotEmpty(actorId)) {
 			/**
-			 * ¸ù¾İÈÎÎñÊµÀı±àºÅºÍÓÃ»§±àºÅ»ñÈ¡´ı°ìÈÎÎñ
+			 * æ ¹æ®ä»»åŠ¡å®ä¾‹ç¼–å·å’Œç”¨æˆ·ç¼–å·è·å–å¾…åŠä»»åŠ¡
 			 */
 			taskItem = container.getTaskItem(taskInstanceId, actorId);
 			if (taskItem != null) {
@@ -184,7 +184,7 @@ public class MxJbpmResource {
 			}
 		} else if (processInstanceId != null && StringUtils.isNotEmpty(actorId)) {
 			/**
-			 * ¸ù¾İÁ÷³ÌÊµÀı±àºÅºÍÓÃ»§±àºÅ»ñÈ¡´ı°ìÈÎÎñ
+			 * æ ¹æ®æµç¨‹å®ä¾‹ç¼–å·å’Œç”¨æˆ·ç¼–å·è·å–å¾…åŠä»»åŠ¡
 			 */
 			taskItem = container.getMinTaskItem(actorId, processInstanceId);
 			if (taskItem != null) {
@@ -194,13 +194,13 @@ public class MxJbpmResource {
 		}
 
 		/**
-		 * Èç¹û´æÔÚ´ı°ìÈÎÎñ²¢ÇÒ¿ÉÒÔÌá½»ÉóºË
+		 * å¦‚æœå­˜åœ¨å¾…åŠä»»åŠ¡å¹¶ä¸”å¯ä»¥æäº¤å®¡æ ¸
 		 */
 		if (canSubmit && taskItem != null) {
 			ProcessContext ctx = new ProcessContext();
 			/**
-			 * Á÷³Ì¿ØÖÆ²ÎÊıÎªjson¸ñÊ½µÄ×Ö·û´®.<br>
-			 * ÀıÈç£º{money:100000,day:5,pass:true,deptId:"123", roleId:"R001"}
+			 * æµç¨‹æ§åˆ¶å‚æ•°ä¸ºjsonæ ¼å¼çš„å­—ç¬¦ä¸².<br>
+			 * ä¾‹å¦‚ï¼š{money:100000,day:5,pass:true,deptId:"123", roleId:"R001"}
 			 */
 			if (StringUtils.isNotEmpty(json)) {
 				Map<String, Object> jsonMap = JsonUtils.decode(json);

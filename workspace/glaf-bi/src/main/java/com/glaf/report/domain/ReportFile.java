@@ -40,38 +40,38 @@ public class ReportFile implements Serializable {
 	protected String id;
 
 	/**
-	 * ±¨±í±àºÅ
+	 * æŠ¥è¡¨ç¼–å·
 	 */
 	@Column(name = "REPORTID_", length = 50)
 	protected String reportId;
 
 	/**
-	 * ÎÄ¼şÃû³Æ
+	 * æ–‡ä»¶åç§°
 	 */
 	@Column(name = "FILENAME_", length = 50)
 	protected String filename;
 
 	/**
-	 * ÎÄ¼ş´óĞ¡
+	 * æ–‡ä»¶å¤§å°
 	 */
 	@Column(name = "FILESIZE_")
 	protected Integer fileSize;
 
 	/**
-	 * ÎÄ¼şÄÚÈİ
+	 * æ–‡ä»¶å†…å®¹
 	 */
 	@Lob
 	@Column(name = "FILECONTENT_")
 	protected byte[] fileContent;
 
 	/**
-	 * ÎÄ¼şÄêÔÂÈÕ
+	 * æ–‡ä»¶å¹´æœˆæ—¥
 	 */
 	@Column(name = "REPORTYEARMONTHDAY_")
 	protected Integer reportYearMonthDay;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_")

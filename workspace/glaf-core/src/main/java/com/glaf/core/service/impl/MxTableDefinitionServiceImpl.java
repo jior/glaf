@@ -77,7 +77,7 @@ public class MxTableDefinitionServiceImpl implements ITableDefinitionService {
 	}
 
 	/**
-	 * É¾³ı±í¶¨Òå
+	 * åˆ é™¤è¡¨å®šä¹‰
 	 * 
 	 * @param tableName
 	 */
@@ -151,7 +151,7 @@ public class MxTableDefinitionServiceImpl implements ITableDefinitionService {
 	}
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
@@ -163,7 +163,7 @@ public class MxTableDefinitionServiceImpl implements ITableDefinitionService {
 	}
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */

@@ -94,7 +94,7 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 	}
 
 	/**
-	 * ¸ù¾İ·şÎñID»ñÈ¡Ò»Ìõ¼ÇÂ¼
+	 * æ ¹æ®æœåŠ¡IDè·å–ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */

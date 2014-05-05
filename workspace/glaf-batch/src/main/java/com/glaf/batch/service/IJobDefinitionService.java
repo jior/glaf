@@ -11,7 +11,7 @@ import com.glaf.batch.query.*;
 public interface IJobDefinitionService {
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ı¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®åˆ é™¤è®°å½•
 	 * 
 	 * @return
 	 */
@@ -19,7 +19,7 @@ public interface IJobDefinitionService {
 	void deleteById(Long id);
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ı¶àÌõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®åˆ é™¤å¤šæ¡è®°å½•
 	 * 
 	 * @return
 	 */
@@ -27,7 +27,7 @@ public interface IJobDefinitionService {
 	void deleteByIds(List<Long> jobDefinitionIds);
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡Ò»Ìõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®è·å–ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */
@@ -36,14 +36,14 @@ public interface IJobDefinitionService {
 	JobDefinition getJobDefinitionByKey(String jobKey);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
 	int getJobDefinitionCountByQueryCriteria(JobDefinitionQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */
@@ -51,14 +51,14 @@ public interface IJobDefinitionService {
 			int pageSize, JobDefinitionQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼ÁĞ±í
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•åˆ—è¡¨
 	 * 
 	 * @return
 	 */
 	List<JobDefinition> list(JobDefinitionQuery query);
 
 	/**
-	 * ±£´æÒ»ÌõJob¶¨ÒåĞÅÏ¢
+	 * ä¿å­˜ä¸€æ¡Jobå®šä¹‰ä¿¡æ¯
 	 * 
 	 * @return
 	 */
@@ -66,7 +66,7 @@ public interface IJobDefinitionService {
 	void saveJobDefinition(JobDefinition jobDefinition);
 
 	/**
-	 * ±£´æÒ»ÌõJob²½Öè¶¨ÒåĞÅÏ¢
+	 * ä¿å­˜ä¸€æ¡Jobæ­¥éª¤å®šä¹‰ä¿¡æ¯
 	 * 
 	 * @param stepDefinition
 	 */

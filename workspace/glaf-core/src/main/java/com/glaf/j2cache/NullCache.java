@@ -21,7 +21,7 @@ package com.glaf.j2cache;
 import java.util.List;
 
 /**
- * ¿ÕµÄ»º´æProvider
+ * ç©ºçš„ç¼“å­˜Provider
  * 
  * @author oschina.net
  */

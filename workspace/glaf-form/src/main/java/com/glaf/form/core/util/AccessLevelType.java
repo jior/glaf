@@ -36,11 +36,11 @@ public class AccessLevelType {
 	private final static Map<Integer, String> nameMap = new LinkedHashMap<Integer, String>();
 
 	static {
-		nameMap.put(HIDE_TYPE, "Òş²Ø");
-		nameMap.put(VIEW_TYPE, "¿É¼û");
-		nameMap.put(READ_ONLY_TYPE, "Ö»¶Á");
-		nameMap.put(WRITE_TYPE, "¿É±à¼­");
-		nameMap.put(REQUIRED_TYPE, "±ØÌî");
+		nameMap.put(HIDE_TYPE, "éšè—");
+		nameMap.put(VIEW_TYPE, "å¯è§");
+		nameMap.put(READ_ONLY_TYPE, "åªè¯»");
+		nameMap.put(WRITE_TYPE, "å¯ç¼–è¾‘");
+		nameMap.put(REQUIRED_TYPE, "å¿…å¡«");
 	}
 
 	private AccessLevelType() {

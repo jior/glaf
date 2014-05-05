@@ -78,26 +78,26 @@ public class UserAuthController {
 		String email = jsonObject.getString("email");
 		if (sysUserService.findByMail(email) != null) {
 			result.put("status", 500);
-			result.put("message", "ÓÊÏäÒÑ¾­´æÔÚ£¬Çë»»¸öÔÙÀ´£¡");
+			result.put("message", "é‚®ç®±å·²ç»å­˜åœ¨ï¼Œè¯·æ¢ä¸ªå†æ¥ï¼");
 			return result.toJSONString().getBytes("UTF-8");
 		}
 		SysUser user = sysUserService.findByAccount(actorId);
 		int status = 0;
 		if (user != null) {
-			// ÓÃ»§ÒÑ¾­´æÔÚ£¬ÑéÖ¤ÓÃ»§Ãû¼°ÃÜÂëÊÇ·ñÕıÈ·
+			// ç”¨æˆ·å·²ç»å­˜åœ¨ï¼ŒéªŒè¯ç”¨æˆ·ååŠå¯†ç æ˜¯å¦æ­£ç¡®
 			String pwd = DigestUtil.digestString(password, "MD5");
 			if (pwd != null && !user.getPassword().equals(pwd)) {
 				status = 500;
 				result.put("status", 500);
-				result.put("message", "ÃÜÂë²»Æ¥Åä");
+				result.put("message", "å¯†ç ä¸åŒ¹é…");
 			} else if (user.getBlocked() == 1) {
 				status = 500;
 				result.put("status", 500);
-				result.put("message", "ÕÊºÅÒÑ¾­½ûÖ¹");
+				result.put("message", "å¸å·å·²ç»ç¦æ­¢");
 			} else {
 				status = 200;
 				result.put("status", 200);
-				result.put("message", "ÑéÖ¤Í¨¹ı");
+				result.put("message", "éªŒè¯é€šè¿‡");
 			}
 		} else {
 			user = new SysUser();
@@ -141,19 +141,19 @@ public class UserAuthController {
 				status = 500;
 				logger.error(ex);
 			}
-			if (status == 200) {// ±£´æ³É¹¦
+			if (status == 200) {// ä¿å­˜æˆåŠŸ
 				result.put("status", 200);
-				result.put("message", "×¢²á³É¹¦");
+				result.put("message", "æ³¨å†ŒæˆåŠŸ");
 			} else if (status == 500) {
 				result.put("status", 500);
-				result.put("message", "×¢²áÊ§°Ü");
+				result.put("message", "æ³¨å†Œå¤±è´¥");
 			}
 		}
 
 		if (status == 200) {
 
 			HttpSession session = request.getSession(true);
-			ContextUtil.put(actorId, user);// ´«ÈëÈ«¾Ö±äÁ¿
+			ContextUtil.put(actorId, user);// ä¼ å…¥å…¨å±€å˜é‡
 			RequestUtils.setLoginUser(request, response, "default", actorId);
 
 			java.util.Random random = new java.util.Random();
@@ -172,7 +172,7 @@ public class UserAuthController {
 					user.setLoginCount(1);
 				}
 
-				// µÇÂ¼³É¹¦£¬ĞŞ¸Ä×î½üÒ»´ÎµÇÂ¼Ê±¼ä
+				// ç™»å½•æˆåŠŸï¼Œä¿®æ”¹æœ€è¿‘ä¸€æ¬¡ç™»å½•æ—¶é—´
 				user.setLastLoginDate(new Date());
 				sysUserService.updateUser(user);
 
@@ -194,7 +194,7 @@ public class UserAuthController {
 	}
 
 	/**
-	 * µÇÂ¼
+	 * ç™»å½•
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -205,7 +205,7 @@ public class UserAuthController {
 			HttpServletResponse response) {
 		String ip = RequestUtils.getIPAddress(request);
 		/**
-		 * ÔÊĞí´ÓÖ¸¶¨µÄ»úÆ÷ÉÏÍ¨¹ıÓÃ»§ÃûÃÜÂëµÇÂ¼
+		 * å…è®¸ä»æŒ‡å®šçš„æœºå™¨ä¸Šé€šè¿‡ç”¨æˆ·åå¯†ç ç™»å½•
 		 */
 		if (StringUtils.contains(conf.get("login.allow.ip", "127.0.0.1"), ip)
 				|| StringUtils.contains(
@@ -246,7 +246,7 @@ public class UserAuthController {
 		String email = jsonObject.getString("email");
 		if (sysUserService.findByMail(email) != null) {
 			result.put("status", 500);
-			result.put("message", "ÓÊÏäÒÑ¾­´æÔÚ£¬Çë»»¸öÔÙÀ´£¡");
+			result.put("message", "é‚®ç®±å·²ç»å­˜åœ¨ï¼Œè¯·æ¢ä¸ªå†æ¥ï¼");
 			return result.toJSONString().getBytes("UTF-8");
 		}
 		SysUser user = sysUserService.findByAccount(actorId);
@@ -254,7 +254,7 @@ public class UserAuthController {
 		if (user != null) {
 			status = 400;
 			result.put("status", 400);
-			result.put("message", "ÓÃ»§ÒÑ¾­´æÔÚ£¡");
+			result.put("message", "ç”¨æˆ·å·²ç»å­˜åœ¨ï¼");
 		} else {
 			user = new SysUser();
 			user.setAccount(actorId);
@@ -297,12 +297,12 @@ public class UserAuthController {
 				status = 500;
 				logger.error(ex);
 			}
-			if (status == 200) {// ±£´æ³É¹¦
+			if (status == 200) {// ä¿å­˜æˆåŠŸ
 				result.put("status", 200);
-				result.put("message", "×¢²á³É¹¦");
+				result.put("message", "æ³¨å†ŒæˆåŠŸ");
 			} else if (status == 500) {
 				result.put("status", 500);
-				result.put("message", "×¢²áÊ§°Ü");
+				result.put("message", "æ³¨å†Œå¤±è´¥");
 			}
 		}
 

@@ -130,7 +130,7 @@ public class OAReportController {
 	private DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
 	/**
-	 * 2¡¢²îÂÃ·ÑÓÃ»ã×Ü±í
+	 * 2ã€å·®æ—…è´¹ç”¨æ±‡æ€»è¡¨
 	 */
 	@ResponseBody
 	@RequestMapping("/exportReimbursement")
@@ -151,19 +151,19 @@ public class OAReportController {
 				String describe = "";
 				double remain = 0.0;
 				for (Ritem ri : ritemList) {
-					ri.setUpdateBy(getConvert(ri.getFeetype() + "", "FYLX")); // ½èÓÃÎŞĞ§×Ö¶Î£¨·ÑÓÃÀàĞÍ£©
+					ri.setUpdateBy(getConvert(ri.getFeetype() + "", "FYLX")); // å€Ÿç”¨æ— æ•ˆå­—æ®µï¼ˆè´¹ç”¨ç±»å‹ï¼‰
 					ri.setCurrency(getConvert(ri.getCurrency(), "money"));
 					DecimalFormat df = new DecimalFormat("###############0.0");
 					String strappsum = df.format(ri.getItemsum()
 							* ri.getExrate());
-					ri.setCreateBy(strappsum); // ½èÓÃÎŞĞ§×Ö¶Î(±ÒÖÖ*»ãÂÊ
+					ri.setCreateBy(strappsum); // å€Ÿç”¨æ— æ•ˆå­—æ®µ(å¸ç§*æ±‡ç‡
 					rmbsum += ri.getItemsum() * ri.getExrate();
 				}
-				if (rmbsum > reimbursement.getBudgetsum()) { // Ö§³ö>Ô¤Ëã
-					describe = "¹«Ë¾Ó¦¸¶ÉêÇëÈË";
+				if (rmbsum > reimbursement.getBudgetsum()) { // æ”¯å‡º>é¢„ç®—
+					describe = "å…¬å¸åº”ä»˜ç”³è¯·äºº";
 					remain = rmbsum - reimbursement.getBudgetsum();
 				} else {
-					describe = "ÏòÉêÇëÈËÓ¦ÊÕ»Ø";
+					describe = "å‘ç”³è¯·äººåº”æ”¶å›";
 					remain = reimbursement.getBudgetsum() - rmbsum;
 				}
 				map.clear();
@@ -208,7 +208,7 @@ public class OAReportController {
 	}
 
 	/**
-	 * 3¡¢ºÏÍ¬ÉêÇë
+	 * 3ã€åˆåŒç”³è¯·
 	 */
 	@ResponseBody
 	@RequestMapping("/exportContract")
@@ -221,20 +221,20 @@ public class OAReportController {
 			Contract contract = contractService.getContract(id);
 			if (contract != null) {
 				map.clear();
-				map.put("projrctName", contract.getProjrctname()); // ÏîÄ¿Ãû³Æ
-				map.put("contactName", contract.getContactname()); // ºÏÍ¬Ãû³Æ
+				map.put("projrctName", contract.getProjrctname()); // é¡¹ç›®åç§°
+				map.put("contactName", contract.getContactname()); // åˆåŒåç§°
 				map.put("companyName",
 						getConvert(contract.getCompanyname(),
-								contract.getArea())); // ÎÒ·½Ç©Ô¼µ¥Î»
-				map.put("suppliserName", contract.getSupplisername());// ¶Ô·½Ç©Ô¼µ¥Î»
-				map.put("contractSum", contract.getContractsum());// ×Ü¶î
+								contract.getArea())); // æˆ‘æ–¹ç­¾çº¦å•ä½
+				map.put("suppliserName", contract.getSupplisername());// å¯¹æ–¹ç­¾çº¦å•ä½
+				map.put("contractSum", contract.getContractsum());// æ€»é¢
 				map.put("currency", getConvert(contract.getCurrency(), "money"));
 				map.put("appDate", format(contract.getAppdate()));
 				if (contract.getPaytype() != null) {
 					map.put("payType",
 							getConvert(contract.getPaytype() + "", "paytype"));
 				}
-				map.put("attachment", getAttachment(id, 2)); // ¸½¼ş
+				map.put("attachment", getAttachment(id, 2)); // é™„ä»¶
 				if (contract.getProcessinstanceid() != null) {
 					Long Processinstanceid = Long.valueOf(contract
 							.getProcessinstanceid());
@@ -249,7 +249,7 @@ public class OAReportController {
 	}
 
 	/**
-	 * 4¡¢Ó¡ÕÂÉêÇë
+	 * 4ã€å°ç« ç”³è¯·
 	 */
 	@ResponseBody
 	@RequestMapping("/exportSeal")
@@ -290,7 +290,7 @@ public class OAReportController {
 	}
 
 	/**
-	 * 5¡¢Ö§³öÔ¤ËãÉêÇëµ¥
+	 * 5ã€æ”¯å‡ºé¢„ç®—ç”³è¯·å•
 	 */
 	@ResponseBody
 	@RequestMapping("/exportBudget")
@@ -312,7 +312,7 @@ public class OAReportController {
 					payList.add(new Paymentplan());
 				}
 				for (Paymentplan pp : payList) {
-					pp.setCreateBy(format(pp.getPaymentdate()));// ½èÓÃÎŞĞ§×Ö¶Î
+					pp.setCreateBy(format(pp.getPaymentdate()));// å€Ÿç”¨æ— æ•ˆå­—æ®µ
 				}
 				map.put("payList", payList);
 				budget.setCurrency(getConvert(budget.getCurrency(), "money"));
@@ -341,7 +341,7 @@ public class OAReportController {
 	}
 
 	/**
-	 * 6¡¢¸¶¿îÉêÇëµ¥
+	 * 6ã€ä»˜æ¬¾ç”³è¯·å•
 	 */
 	@RequestMapping("/exportPayment")
 	public void exportPayment(HttpServletRequest request,
@@ -375,7 +375,7 @@ public class OAReportController {
 	}
 
 	/**
-	 * 7¡¢Ô±¹¤½èÖ§µ¥
+	 * 7ã€å‘˜å·¥å€Ÿæ”¯å•
 	 */
 	@RequestMapping("/exportBorrow")
 	public void exportBorrow(HttpServletRequest request,
@@ -393,7 +393,7 @@ public class OAReportController {
 				if (borrowadderssList.size() == 0)
 					borrowadderssList = new ArrayList<Borrowadderss>();
 				for (Borrowadderss bd : borrowadderssList) {
-					bd.setUpdateBy(bd.getStart() + " ÖÁ£º" + bd.getReach());
+					bd.setUpdateBy(bd.getStart() + " è‡³ï¼š" + bd.getReach());
 				}
 				borrow.setDept(getConvert(borrow.getDept(), "SYS_DEPTS"));
 				borrow.setAppuser(getConvert(borrow.getAppuser(), "SYS_USERS"));
@@ -440,7 +440,7 @@ public class OAReportController {
 	}
 
 	/**
-	 * 8¡¢¹«³ö&³ö²îÉêÇë±í
+	 * 8ã€å…¬å‡º&å‡ºå·®ç”³è¯·è¡¨
 	 */
 	@ResponseBody
 	@RequestMapping("/exportLTravel")
@@ -470,7 +470,7 @@ public class OAReportController {
 	}
 
 	/**
-	 * 9¡¢Ô±¹¤³ö²îÉêÇëµ¥
+	 * 9ã€å‘˜å·¥å‡ºå·®ç”³è¯·å•
 	 */
 	@ResponseBody
 	@RequestMapping("/exportSTravel")
@@ -483,13 +483,13 @@ public class OAReportController {
 			Stravel stravel = stravelService.getStravel(travelid);
 			if (stravel != null) {
 				List<Traveladdress> addressList = stravelService
-						.getTraveladdressList(travelid); // ĞĞ³Ì
+						.getTraveladdressList(travelid); // è¡Œç¨‹
 
 				List<Travelpersonnel> personnelList = stravelService
-						.getTravelpersonnelList(travelid); // ÈËÔ±
+						.getTravelpersonnelList(travelid); // äººå‘˜
 
 				List<Travelfee> feeList = stravelService
-						.getTravelfeeList(travelid); // ·ÑÓÃ
+						.getTravelfeeList(travelid); // è´¹ç”¨
 
 				map.clear();
 				map.put("appdate", format(stravel.getAppdate()));
@@ -524,7 +524,7 @@ public class OAReportController {
 	}
 
 	/**
-	 * 10¡¢²É¹ºÉêÇëµ¥
+	 * 10ã€é‡‡è´­ç”³è¯·å•
 	 */
 	@ResponseBody
 	@RequestMapping("/exportPurchase")
@@ -550,7 +550,7 @@ public class OAReportController {
 				for (Purchaseitem pi : purchaseList) {
 					String sum = df.format(pi.getQuantity()
 							* pi.getReferenceprice());
-					pi.setUpdateBy(sum); // ½èÓÃÎŞĞ§×Ö¶Î£¨Ã÷Ï¸×Ü¼Û£©
+					pi.setUpdateBy(sum); // å€Ÿç”¨æ— æ•ˆå­—æ®µï¼ˆæ˜ç»†æ€»ä»·ï¼‰
 				}
 				map.put("purchaseList", purchaseList);
 				dataList = new ArrayList<String>();
@@ -567,7 +567,7 @@ public class OAReportController {
 	}
 
 	/**
-	 * 11¡¢È¡ÏÖÉêÇë
+	 * 11ã€å–ç°ç”³è¯·
 	 */
 	@ResponseBody
 	@RequestMapping("/exportWithDrawal")
@@ -602,7 +602,7 @@ public class OAReportController {
 	}
 
 	/**
-	 * 12¡¢¼Ó°àÉêÇëµ¥
+	 * 12ã€åŠ ç­ç”³è¯·å•
 	 */
 	@ResponseBody
 	@RequestMapping("/exportOverTime")
@@ -622,7 +622,7 @@ public class OAReportController {
 				map.put("appdate", format(overTime.getAppdate()));
 				map.put("startdate", format(overTime.getStartdate()));
 				map.put("enddate", format(overTime.getEnddate()));
-				setActivityInstanceMap(overTime.getProcessinstanceid(), map); // Á÷³Ì
+				setActivityInstanceMap(overTime.getProcessinstanceid(), map); // æµç¨‹
 				overTime.setCompany(getConvert(overTime.getCompany(),
 						overTime.getArea()));
 				map.put("overtime", overTime);
@@ -635,7 +635,7 @@ public class OAReportController {
 	}
 
 	/**
-	 * 13¡¢Çë¼ÙÉêÇëµ¥
+	 * 13ã€è¯·å‡ç”³è¯·å•
 	 */
 	@ResponseBody
 	@RequestMapping("/exportLeave")
@@ -655,7 +655,7 @@ public class OAReportController {
 				map.put("appdate", format(leave.getAppdate()));
 				map.put("startdate", format(leave.getStartdate()));
 				map.put("enddate", format(leave.getEnddate()));
-				setActivityInstanceMap(leave.getProcessinstanceid(), map); // Á÷³Ì
+				setActivityInstanceMap(leave.getProcessinstanceid(), map); // æµç¨‹
 				leave.setCompany(getConvert(leave.getCompany(), leave.getArea()));
 				map.put("leave", leave);
 
@@ -667,7 +667,7 @@ public class OAReportController {
 	}
 
 	/**
-	 * 14¡¢ÊÛ³µºÏÍ¬ÉêÇë±í
+	 * 14ã€å”®è½¦åˆåŒç”³è¯·è¡¨
 	 * 
 	 * @param request
 	 * @param response
@@ -686,32 +686,32 @@ public class OAReportController {
 			map.clear();
 			if (salescontract != null) {
 
-				map.put("projrctName", salescontract.getProjrctname()); // ÏîÄ¿Ãû³Æ
-				map.put("contactName", salescontract.getContactname()); // ºÏÍ¬Ãû³Æ
+				map.put("projrctName", salescontract.getProjrctname()); // é¡¹ç›®åç§°
+				map.put("contactName", salescontract.getContactname()); // åˆåŒåç§°
 				map.put("companyName",
 						getConvert(salescontract.getCompanyname(),
-								salescontract.getArea()));// ÎÒ·½Ç©Ô¼µ¥Î»
-				map.put("suppliserName", salescontract.getSupplisername());// ¶Ô·½Ç©Ô¼µ¥Î»
-				map.put("contractSum", salescontract.getContractsum());// ×Ü¶î
+								salescontract.getArea()));// æˆ‘æ–¹ç­¾çº¦å•ä½
+				map.put("suppliserName", salescontract.getSupplisername());// å¯¹æ–¹ç­¾çº¦å•ä½
+				map.put("contractSum", salescontract.getContractsum());// æ€»é¢
 
-				map.put("contractNo", salescontract.getContractno());// ºÏÍ¬±àºÅ
+				map.put("contractNo", salescontract.getContractno());// åˆåŒç¼–å·
 
-				map.put("optionalSum", salescontract.getOptionalsum());// Ñ¡Åä×Ü¼Û
+				map.put("optionalSum", salescontract.getOptionalsum());// é€‰é…æ€»ä»·
 
-				map.put("firstPay", salescontract.getFirstpay());// Ê×¸¶¿î
+				map.put("firstPay", salescontract.getFirstpay());// é¦–ä»˜æ¬¾
 
-				map.put("lastPay", salescontract.getLastpay());// Î²¿î
-				map.put("discount", salescontract.getDiscount());// ²î¼Û
+				map.put("lastPay", salescontract.getLastpay());// å°¾æ¬¾
+				map.put("discount", salescontract.getDiscount());// å·®ä»·
 
 				map.put("currency",
-						getConvert(salescontract.getCurrency(), "money"));// ±ÒÖÖ
-				map.put("deliveryDate", format(salescontract.getDeliverydate()));// Ô¤¼Æ½»³µÊ±¼ä
-				map.put("Sales", salescontract.getSales());// ÏúÊÛ¹ËÎÊ
-				map.put("contractSales", salescontract.getContractsales());// ºÏÍ¬Áô´æÏúÊÛ¹ËÎÊ
-				map.put("giftSum", salescontract.getGiftsum());// ÔùËÍ¼ÛÖµ
-				map.put("giftRemark", salescontract.getGiftremark());// ÔùËÍÃ÷Ï¸
-				map.put("remark", salescontract.getRemark());// ±¸×¢Ìõ¿î
-				map.put("attachment", getAttachment(id, 3));// ¸½¼ş
+						getConvert(salescontract.getCurrency(), "money"));// å¸ç§
+				map.put("deliveryDate", format(salescontract.getDeliverydate()));// é¢„è®¡äº¤è½¦æ—¶é—´
+				map.put("Sales", salescontract.getSales());// é”€å”®é¡¾é—®
+				map.put("contractSales", salescontract.getContractsales());// åˆåŒç•™å­˜é”€å”®é¡¾é—®
+				map.put("giftSum", salescontract.getGiftsum());// èµ é€ä»·å€¼
+				map.put("giftRemark", salescontract.getGiftremark());// èµ é€æ˜ç»†
+				map.put("remark", salescontract.getRemark());// å¤‡æ³¨æ¡æ¬¾
+				map.put("attachment", getAttachment(id, 3));// é™„ä»¶
 
 				if (salescontract.getProcessinstanceid() != null) {
 					Long Processinstanceid = new Double(
@@ -732,7 +732,7 @@ public class OAReportController {
 	}
 
 	/**
-	 * 15¡¢Ö°Î»¿¼ºË±í
+	 * 15ã€èŒä½è€ƒæ ¸è¡¨
 	 */
 	@ResponseBody
 	@RequestMapping("/exportAssessQuestion")
@@ -740,23 +740,23 @@ public class OAReportController {
 			HttpServletResponse response) {
 		Long resultid = RequestUtils.getLong(request, "resultid");
 		if (resultid != null) {
-			// ¿¼ºË½á¹û
+			// è€ƒæ ¸ç»“æœ
 			AssessresultService assessresultService = ContextFactory
 					.getBean(AssessresultService.class);
 			Assessresult assessresult = assessresultService
 					.getAssessresult(resultid);
 
-			// // ¿¼ºËÎÊ¾í
+			// // è€ƒæ ¸é—®å·
 			// AssessquestionService assessquestionService = ContextFactory
 			// .getBean(AssessquestionService.class);
 			// Assessquestion assessquestion = assessquestionService
 			// .getAssessquestion(assessresult.getQustionid());
 
-			// Ö¸±ê¿¼ºËÄÚÈİ
+			// æŒ‡æ ‡è€ƒæ ¸å†…å®¹
 			AssesscontentService assesscontentService = ContextFactory
 					.getBean(AssesscontentService.class);
 			List<AssesscontentAndScore> contentAndScoreList;
-			// Ö¸±ê¿¼ºË·ÖÀà
+			// æŒ‡æ ‡è€ƒæ ¸åˆ†ç±»
 			AssesssortService assesssortService = ContextFactory
 					.getBean(AssesssortService.class);
 			AssesssortQuery query = new AssesssortQuery();
@@ -822,7 +822,7 @@ public class OAReportController {
 	}
 
 	/**
-	 * »ù´¡Êı¾İ
+	 * åŸºç¡€æ•°æ®
 	 * 
 	 * @param type1
 	 * @param type
@@ -840,7 +840,7 @@ public class OAReportController {
 	}
 
 	/**
-	 * »ñÈ¡Á÷³Ì
+	 * è·å–æµç¨‹
 	 * 
 	 * @param id
 	 * @param map
@@ -854,8 +854,8 @@ public class OAReportController {
 					if (ai.getTaskName().equalsIgnoreCase("task0")
 							|| ai.getIsAgree() != null
 							&& ai.getIsAgree().equalsIgnoreCase("true")) {
-						ai.setObjectValue(format(ai.getDate())); // ½èÓÃÎŞĞ§×Ö¶Îformat
-						// date ÀàĞÍ
+						ai.setObjectValue(format(ai.getDate())); // å€Ÿç”¨æ— æ•ˆå­—æ®µformat
+						// date ç±»å‹
 						map.put(ai.getTaskName(), ai);
 					}
 				}
@@ -866,11 +866,11 @@ public class OAReportController {
 	/**
 	 * 
 	 * @param map
-	 *            Êı¾İÔ´
+	 *            æ•°æ®æº
 	 * @param fileName
-	 *            ÎÄ¼şÃû
+	 *            æ–‡ä»¶å
 	 * @param reportId
-	 *            ±¨±íID
+	 *            æŠ¥è¡¨ID
 	 * @param request
 	 * @param response
 	 */
@@ -942,10 +942,10 @@ public class OAReportController {
 				firstRow = lastRow + 2;
 				last = 6 + aIndex - 1;
 				cellRangeAddress = new CellRangeAddress(first, last, 0, 0);
-				// ¶¯Ì¬ºÏÍ¬µ¥Ôª¸ñ
+				// åŠ¨æ€åˆåŒå•å…ƒæ ¼
 				sheet.addMergedRegion(cellRangeAddress);
 				cellRangeAddress = new CellRangeAddress(first, last, 3, 3);
-				// ¶¯Ì¬ºÏÍ¬µ¥Ôª¸ñ
+				// åŠ¨æ€åˆåŒå•å…ƒæ ¼
 				sheet.addMergedRegion(cellRangeAddress);
 				aIndex = aIndex + 1;
 				first = last + 2;
@@ -1016,7 +1016,7 @@ public class OAReportController {
 			String targetName) {
 		OutputStream os = null;
 		try {
-			response.reset(); // ·Ç³£ÖØÒª
+			response.reset(); // éå¸¸é‡è¦
 			response.setHeader("content-disposition", "attachment; filename="
 					+ targetName);
 			response.setContentType("application/msexcel");

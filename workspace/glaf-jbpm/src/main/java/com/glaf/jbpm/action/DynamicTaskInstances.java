@@ -43,23 +43,23 @@ public class DynamicTaskInstances implements ActionHandler {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * ¶¯Ì¬ÉèÖÃµÄ²ÎÓëÕßµÄ²ÎÊıÃû£¬»·¾³±äÁ¿¿ÉÒÔÍ¨¹ıcontextInstance.getVariable()È¡µÃ
-	 * ÀıÈç£ºcontextInstance.getVariable("SendDocAuditor");
+	 * åŠ¨æ€è®¾ç½®çš„å‚ä¸è€…çš„å‚æ•°åï¼Œç¯å¢ƒå˜é‡å¯ä»¥é€šè¿‡contextInstance.getVariable()å–å¾—
+	 * ä¾‹å¦‚ï¼šcontextInstance.getVariable("SendDocAuditor");
 	 */
 	protected String dynamicActors;
 
 	/**
-	 * ÈÎÎñÃû³Æ
+	 * ä»»åŠ¡åç§°
 	 */
 	protected String taskName;
 
 	/**
-	 * ×ªÒÆÂ·¾¶µÄÃû³Æ
+	 * è½¬ç§»è·¯å¾„çš„åç§°
 	 */
 	protected String transitionName;
 
 	/**
-	 * Èç¹û²»ÄÜ»ñÈ¡ÈÎÎñ²ÎÓëÕßÊÇ·ñÀë¿ª±¾½Úµã£¨ÈÎÎñ½Úµã£©
+	 * å¦‚æœä¸èƒ½è·å–ä»»åŠ¡å‚ä¸è€…æ˜¯å¦ç¦»å¼€æœ¬èŠ‚ç‚¹ï¼ˆä»»åŠ¡èŠ‚ç‚¹ï¼‰
 	 */
 	protected boolean leaveNodeIfActorNotAvailable;
 
@@ -144,7 +144,7 @@ public class DynamicTaskInstances implements ActionHandler {
 			}
 		}
 
-		// Èç¹ûÃ»ÓĞÈÎÎñ²ÎÓëÕß£¬ÅĞ¶ÏÊÇ·ñ¿ÉÒÔÀë¿ª±¾½Úµã¡£
+		// å¦‚æœæ²¡æœ‰ä»»åŠ¡å‚ä¸è€…ï¼Œåˆ¤æ–­æ˜¯å¦å¯ä»¥ç¦»å¼€æœ¬èŠ‚ç‚¹ã€‚
 		if (!hasActors) {
 			if (leaveNodeIfActorNotAvailable) {
 				contextInstance.setVariable(Constant.IS_AGREE, "true");

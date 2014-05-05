@@ -37,7 +37,7 @@ public class WebUtil {
 	protected static final Log logger = LogFactory.getLog(WebUtil.class);
 
 	/**
-	 * ¸ù¾İqueryString¹¹ÔìurlµØÖ·
+	 * æ ¹æ®queryStringæ„é€ urlåœ°å€
 	 * 
 	 * @param request
 	 */
@@ -46,7 +46,7 @@ public class WebUtil {
 	}
 
 	/**
-	 * ¸ù¾İqueryString¹¹ÔìurlµØÖ·
+	 * æ ¹æ®queryStringæ„é€ urlåœ°å€
 	 * 
 	 * @param request
 	 */
@@ -63,7 +63,7 @@ public class WebUtil {
 	}
 
 	/**
-	 * ¸ù¾İqueryString¹¹ÔìurlµØÖ·
+	 * æ ¹æ®queryStringæ„é€ urlåœ°å€
 	 * 
 	 * @param url
 	 * @return
@@ -92,7 +92,7 @@ public class WebUtil {
 	 * @return
 	 */
 	public static Map<String, String> getQueryMap(HttpServletRequest request) {
-		Map<String, String> map = new LinkedHashMap<String, String>();// ÅÅĞòMap
+		Map<String, String> map = new LinkedHashMap<String, String>();// æ’åºMap
 
 		Enumeration<String> names = request.getParameterNames();
 		while (names.hasMoreElements()) {
@@ -157,11 +157,11 @@ public class WebUtil {
 	}
 
 	/**
-	 * ¸ñÊ½»¯Êı¾İ²¢ËÄÉáÎåÈë
+	 * æ ¼å¼åŒ–æ•°æ®å¹¶å››èˆäº”å…¥
 	 * 
 	 * @param number
 	 * @param digits
-	 *            Ğ¡ÊıÎ»Êı
+	 *            å°æ•°ä½æ•°
 	 * @return
 	 */
 	public static String getFormatCurrency(double number) {
@@ -169,11 +169,11 @@ public class WebUtil {
 	}
 
 	/**
-	 * ¸ñÊ½»¯Êı¾İ²¢ËÄÉáÎåÈë
+	 * æ ¼å¼åŒ–æ•°æ®å¹¶å››èˆäº”å…¥
 	 * 
 	 * @param number
 	 * @param digits
-	 *            Ğ¡ÊıÎ»Êı
+	 *            å°æ•°ä½æ•°
 	 * @return
 	 */
 	public static String getFormatCurrency(Double number) {
@@ -196,11 +196,11 @@ public class WebUtil {
 	}
 
 	/**
-	 * ¸ñÊ½»¯Êı¾İ²¢ËÄÉáÎåÈë,²¢·µ»ØÒÔ¶ººÅ·Ö¸ôµÄ×Ö·û´®
+	 * æ ¼å¼åŒ–æ•°æ®å¹¶å››èˆäº”å…¥,å¹¶è¿”å›ä»¥é€—å·åˆ†éš”çš„å­—ç¬¦ä¸²
 	 * 
 	 * @param number
 	 * @param digits
-	 *            Ğ¡ÊıÎ»Êı
+	 *            å°æ•°ä½æ•°
 	 * @return
 	 */
 	public static String getFormatNumberToString(double number) {
@@ -208,11 +208,11 @@ public class WebUtil {
 	}
 
 	/**
-	 * ¸ñÊ½»¯Êı¾İ²¢ËÄÉáÎåÈë,²¢·µ»ØÒÔ¶ººÅ·Ö¸ôµÄ×Ö·û´®
+	 * æ ¼å¼åŒ–æ•°æ®å¹¶å››èˆäº”å…¥,å¹¶è¿”å›ä»¥é€—å·åˆ†éš”çš„å­—ç¬¦ä¸²
 	 * 
 	 * @param number
 	 * @param digits
-	 *            Ğ¡ÊıÎ»Êı
+	 *            å°æ•°ä½æ•°
 	 * @return
 	 */
 	public static String getFormatNumberToString(Double number) {
@@ -235,11 +235,11 @@ public class WebUtil {
 	}
 
 	/**
-	 * ¸ñÊ½»¯Êı¾İ²¢ËÄÉáÎåÈë
+	 * æ ¼å¼åŒ–æ•°æ®å¹¶å››èˆäº”å…¥
 	 * 
 	 * @param number
 	 * @param digits
-	 *            Ğ¡ÊıÎ»Êı
+	 *            å°æ•°ä½æ•°
 	 * @return
 	 */
 	public static String getFormarPercentage(double number) {
@@ -251,7 +251,7 @@ public class WebUtil {
 	}
 
 	/**
-	 * ¿½±´BEAN
+	 * æ‹·è´BEAN
 	 * 
 	 * @param dest
 	 * @param orig
@@ -266,7 +266,7 @@ public class WebUtil {
 	}
 
 	/**
-	 * Ñ¡ÔñÅÅĞò
+	 * é€‰æ‹©æ’åº
 	 * 
 	 * @param array
 	 * @return
@@ -274,14 +274,14 @@ public class WebUtil {
 	public static long[] selectionSort(long[] array) {
 		int out, in, min, nElems = array.length;
 
-		for (out = 0; out < nElems - 1; out++) // Íâ²ãÑ­»·
+		for (out = 0; out < nElems - 1; out++) // å¤–å±‚å¾ªç¯
 		{
-			min = out; // ×îĞ¡Öµ
+			min = out; // æœ€å°å€¼
 			for (in = out + 1; in < nElems; in++)
-				// ÄÚ²ãÑ­»·
-				if (array[in] < array[min]) // Èç¹ûÓĞ±È×îĞ¡Öµ»¹Ğ¡µÄ
-					min = in; // µÃµ½ĞÂ×îĞ¡Öµ
-			// ½»»»
+				// å†…å±‚å¾ªç¯
+				if (array[in] < array[min]) // å¦‚æœæœ‰æ¯”æœ€å°å€¼è¿˜å°çš„
+					min = in; // å¾—åˆ°æ–°æœ€å°å€¼
+			// äº¤æ¢
 			long temp = array[out];
 			array[out] = array[min];
 			array[min] = temp;

@@ -55,10 +55,10 @@ public abstract class AbstractReportGen {
 			templateData = FileUtils.getBytes(templatePath);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			throw new RuntimeException("¶ÁÈ¡±¨±íÄ£°åÊ§°Ü", ex);
+			throw new RuntimeException("è¯»å–æŠ¥è¡¨æ¨¡æ¿å¤±è´¥", ex);
 		}
 		if (templateData == null) {
-			throw new RuntimeException("Ã»ÓĞÕÒµ½±¨±íÄ£°åÊı¾İ¡£");
+			throw new RuntimeException("æ²¡æœ‰æ‰¾åˆ°æŠ¥è¡¨æ¨¡æ¿æ•°æ®ã€‚");
 		}
 		return createReport(report, templateData, params);
 	}

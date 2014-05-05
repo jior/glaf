@@ -40,24 +40,24 @@ public class PasswordCheckCallback implements LoginCallback {
 					.getInt("parameter.periodDays");
 			int disabledMonths = CallbackProperties
 					.getInt("parameter.disabledDays");
-			if (ruleSwitch == 1) {// ÔÊĞíÃÜÂë²ßÂÔ
-				if (userLoginCount <= loginCount && userIsChangePassword == 0) {// Ğ¡ÓÚÖ¸¶¨µÇÂ½´ÎÊı&&Î´ĞŞ¸ÄÃÜÂë£¬ĞèÌá³öĞŞ¸ÄÃÜÂë
+			if (ruleSwitch == 1) {// å…è®¸å¯†ç ç­–ç•¥
+				if (userLoginCount <= loginCount && userIsChangePassword == 0) {// å°äºæŒ‡å®šç™»é™†æ¬¡æ•°&&æœªä¿®æ”¹å¯†ç ï¼Œéœ€æå‡ºä¿®æ”¹å¯†ç 
 					changePassWordFlag = "open";
 				}
-				if (userLoginCount > loginCount && userIsChangePassword == 0) {// ³¬¹ıÖ¸¶¨´ÎÊıÎ´ĞŞ¸ÄÃÜÂë£¬Ëø¶¨ÕÊºÅ£¬²»ÄÜµÇÂ¼ÏµÍ³
-					logger.info("³¬¹ıÖ¸¶¨´ÎÊıÎ´ĞŞ¸ÄÃÜÂë£¬Ëø¶¨ÕÊºÅ£¬²»ÄÜµÇÂ¼ÏµÍ³");
+				if (userLoginCount > loginCount && userIsChangePassword == 0) {// è¶…è¿‡æŒ‡å®šæ¬¡æ•°æœªä¿®æ”¹å¯†ç ï¼Œé”å®šå¸å·ï¼Œä¸èƒ½ç™»å½•ç³»ç»Ÿ
+					logger.info("è¶…è¿‡æŒ‡å®šæ¬¡æ•°æœªä¿®æ”¹å¯†ç ï¼Œé”å®šå¸å·ï¼Œä¸èƒ½ç™»å½•ç³»ç»Ÿ");
 					bean.setBlocked(1);
 					bean.setUpdateDate(new Date());
 					sysUserService.updateUser(bean);
 					bean = null;
 				}
-				if ("close".equals(changePassWordFlag) && null != bean) {// ¶¨ÆÚ(3¸öÔÂ)ÌáĞÑĞŞ¸ÄÃÜÂë£ºÌáÇ°5Ìì¿ªÊ¼ÌáĞÑĞŞ¸ÄÃÜÂë£¨Î´ĞŞ¸ÄµÄÇé¿öÃ¿´ÎµÇÂ½¶¼ÌáĞÑ£©£»³¬ÆÚÎ´ĞŞ¸ÄÃÜÂë£¬ÔòËø¶¨ÓÃ»§ÕÊºÅ£¬²»ÄÜµÇÂ¼ÏµÍ³£»
+				if ("close".equals(changePassWordFlag) && null != bean) {// å®šæœŸ(3ä¸ªæœˆ)æé†’ä¿®æ”¹å¯†ç ï¼šæå‰5å¤©å¼€å§‹æé†’ä¿®æ”¹å¯†ç ï¼ˆæœªä¿®æ”¹çš„æƒ…å†µæ¯æ¬¡ç™»é™†éƒ½æé†’ï¼‰ï¼›è¶…æœŸæœªä¿®æ”¹å¯†ç ï¼Œåˆ™é”å®šç”¨æˆ·å¸å·ï¼Œä¸èƒ½ç™»å½•ç³»ç»Ÿï¼›
 					if (null != bean.getLastChangePasswordDate()) {
 						Date toDate = DateUtils.getDateAfter(
 								bean.getLastChangePasswordDate(), periodMonths);
 						long daysDiff = DateUtils.dateDiff(new Date(), toDate);
 						if (daysDiff < 0) {
-							logger.info("¶¨ÆÚ(3¸öÔÂ)ÌáĞÑĞŞ¸ÄÃÜÂë£ºÌáÇ°5Ìì¿ªÊ¼ÌáĞÑĞŞ¸ÄÃÜÂë£¨Î´ĞŞ¸ÄµÄÇé¿öÃ¿´ÎµÇÂ½¶¼ÌáĞÑ£©£»³¬ÆÚÎ´ĞŞ¸ÄÃÜÂë£¬ÔòËø¶¨ÓÃ»§ÕÊºÅ£¬²»ÄÜµÇÂ¼ÏµÍ³");
+							logger.info("å®šæœŸ(3ä¸ªæœˆ)æé†’ä¿®æ”¹å¯†ç ï¼šæå‰5å¤©å¼€å§‹æé†’ä¿®æ”¹å¯†ç ï¼ˆæœªä¿®æ”¹çš„æƒ…å†µæ¯æ¬¡ç™»é™†éƒ½æé†’ï¼‰ï¼›è¶…æœŸæœªä¿®æ”¹å¯†ç ï¼Œåˆ™é”å®šç”¨æˆ·å¸å·ï¼Œä¸èƒ½ç™»å½•ç³»ç»Ÿ");
 							bean.setBlocked(1);
 							bean.setUpdateDate(new Date());
 							sysUserService.updateUser(bean);
@@ -73,12 +73,12 @@ public class PasswordCheckCallback implements LoginCallback {
 						}
 					}
 				}
-				if (null != bean && null != bean.getLastLoginDate()) {// ²»»îÔ¾ÓÃ»§ÕÊºÅËø¶¨£ºN¸öÔÂÎ´µÇÂ¼¹ıÏµÍ³ÔòËø¶¨ÓÃ»§ÕÊºÅ£¬²»ÄÜµÇÂ¼ÏµÍ³£»
+				if (null != bean && null != bean.getLastLoginDate()) {// ä¸æ´»è·ƒç”¨æˆ·å¸å·é”å®šï¼šNä¸ªæœˆæœªç™»å½•è¿‡ç³»ç»Ÿåˆ™é”å®šç”¨æˆ·å¸å·ï¼Œä¸èƒ½ç™»å½•ç³»ç»Ÿï¼›
 					Date toDate = DateUtils.getDateAfter(
 							bean.getLastLoginDate(), disabledMonths);
 					long daysDiff = DateUtils.dateDiff(new Date(), toDate);
 					if (daysDiff < 0) {
-						logger.info("²»»îÔ¾ÓÃ»§ÕÊºÅËø¶¨£ºN¸öÔÂÎ´µÇÂ¼¹ıÏµÍ³ÔòËø¶¨ÓÃ»§ÕÊºÅ£¬²»ÄÜµÇÂ¼ÏµÍ³");
+						logger.info("ä¸æ´»è·ƒç”¨æˆ·å¸å·é”å®šï¼šNä¸ªæœˆæœªç™»å½•è¿‡ç³»ç»Ÿåˆ™é”å®šç”¨æˆ·å¸å·ï¼Œä¸èƒ½ç™»å½•ç³»ç»Ÿ");
 						bean.setBlocked(1);
 						bean.setUpdateDate(new Date());
 						sysUserService.updateUser(bean);

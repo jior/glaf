@@ -49,25 +49,25 @@ public class MailStorage implements Serializable {
 	protected String id;
 
 	/**
-	 * Ö÷Ìâ
+	 * ä¸»é¢˜
 	 */
 	@Column(name = "SUBJECT_", length = 200)
 	protected String subject;
 
 	/**
-	 * Êı¾İ¿Õ¼ä
+	 * æ•°æ®ç©ºé—´
 	 */
 	@Column(name = "DATASPACE_", length = 50)
 	protected String dataSpace;
 
 	/**
-	 * Êı¾İ±í
+	 * æ•°æ®è¡¨
 	 */
 	@Column(name = "DATATABLE_", length = 25)
 	protected String dataTable;
 
 	/**
-	 * ´æ´¢ÀàĞÍ
+	 * å­˜å‚¨ç±»å‹
 	 */
 	@Column(name = "STORAGETYPE_", length = 50)
 	protected String storageType;
@@ -85,19 +85,19 @@ public class MailStorage implements Serializable {
 	protected String password;
 
 	/**
-	 * Ê¹ÓÃ×´Ì¬
+	 * ä½¿ç”¨çŠ¶æ€
 	 */
 	@Column(name = "STATUS_")
 	protected Integer status;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_")

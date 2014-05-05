@@ -28,7 +28,7 @@ import com.glaf.core.query.*;
 public interface ISystemParamService {
 
 	/**
-	 * ¸ù¾İ²ÎÊı¶¨Òå´´½¨²ÎÊıÊµÀı
+	 * æ ¹æ®å‚æ•°å®šä¹‰åˆ›å»ºå‚æ•°å®ä¾‹
 	 * 
 	 * @param serviceKey
 	 * @param businessKey
@@ -37,7 +37,7 @@ public interface ISystemParamService {
 	void createSystemParams(String serviceKey, String businessKey);
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ı¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®åˆ é™¤è®°å½•
 	 * 
 	 * @return
 	 */
@@ -45,7 +45,7 @@ public interface ISystemParamService {
 	void deleteById(String id);
 
 	/**
-	 * ¸ù¾İ·şÎñÖ÷¼ü»ñÈ¡ÄÚÈİ
+	 * æ ¹æ®æœåŠ¡ä¸»é”®è·å–å†…å®¹
 	 * 
 	 * @param serviceKey
 	 * @return
@@ -53,7 +53,7 @@ public interface ISystemParamService {
 	List<InputDefinition> getInputDefinitions(String serviceKey);
 
 	/**
-	 * ¸ù¾İ·şÎñÖ÷¼ü»ñÈ¡ÄÚÈİ
+	 * æ ¹æ®æœåŠ¡ä¸»é”®è·å–å†…å®¹
 	 * 
 	 * @param serviceKey
 	 * @return
@@ -61,14 +61,14 @@ public interface ISystemParamService {
 	List<InputDefinition> getInputDefinitions(String serviceKey, String typeCd);
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡Ò»Ìõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®è·å–ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */
 	SystemParam getSystemParam(String id);
 
 	/**
-	 * »ñÈ¡ÏµÍ³²ÎÊı
+	 * è·å–ç³»ç»Ÿå‚æ•°
 	 * 
 	 * @param serviceKey
 	 * @param businessKey
@@ -79,28 +79,28 @@ public interface ISystemParamService {
 			String keyName);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
 	int getSystemParamCount(Map<String, Object> parameter);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
 	int getSystemParamCountByQueryCriteria(SystemParamQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼ÁĞ±í
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•åˆ—è¡¨
 	 * 
 	 * @return
 	 */
 	List<SystemParam> getSystemParams(Map<String, Object> parameter);
 
 	/**
-	 * ¸ù¾İ·şÎñÖ÷¼ü»ñÈ¡ÄÚÈİ
+	 * æ ¹æ®æœåŠ¡ä¸»é”®è·å–å†…å®¹
 	 * 
 	 * @param serviceKey
 	 * @param businessKey
@@ -109,7 +109,7 @@ public interface ISystemParamService {
 	List<SystemParam> getSystemParams(String serviceKey, String businessKey);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */
@@ -117,14 +117,14 @@ public interface ISystemParamService {
 			SystemParamQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼ÁĞ±í
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•åˆ—è¡¨
 	 * 
 	 * @return
 	 */
 	List<SystemParam> list(SystemParamQuery query);
 
 	/**
-	 * ±£´æÒ»Ìõ¼ÇÂ¼
+	 * ä¿å­˜ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */
@@ -132,7 +132,7 @@ public interface ISystemParamService {
 	void save(SystemParam systemParam);
 
 	/**
-	 * ±£´æ¶àÌõ¼ÇÂ¼
+	 * ä¿å­˜å¤šæ¡è®°å½•
 	 * 
 	 * @param serviceKey
 	 * @param businessKey
@@ -142,7 +142,7 @@ public interface ISystemParamService {
 	void saveAll(String serviceKey, String businessKey, List<SystemParam> rows);
 
 	/**
-	 * ĞŞ¸Ä¶àÌõ²ÎÊı¶¨Òå
+	 * ä¿®æ”¹å¤šæ¡å‚æ•°å®šä¹‰
 	 * 
 	 * @param serviceKey
 	 * @param rows

@@ -74,7 +74,7 @@ public class BorrowadderssController {
 					Borrowadderss borrowadderss = borrowadderssService
 							.getBorrowadderss(Long.valueOf(x));
 					/**
-					 * �˴�ҵ���߼������е���
+					 * 此处业务逻辑需自行调整
 					 */
 					if (borrowadderss != null
 							&& (StringUtils.equals(borrowadderss.getCreateBy(),
@@ -88,7 +88,7 @@ public class BorrowadderssController {
 			Borrowadderss borrowadderss = borrowadderssService
 					.getBorrowadderss(Long.valueOf(addressid));
 			/**
-			 * �˴�ҵ���߼������е���
+			 * 此处业务逻辑需自行调整
 			 */
 			if (borrowadderss != null
 					&& (StringUtils.equals(borrowadderss.getCreateBy(),
@@ -162,7 +162,7 @@ public class BorrowadderssController {
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
 		/**
-		 * �˴�ҵ���߼������е���
+		 * 此处业务逻辑需自行调整
 		 */
 		if (!loginContext.isSystemAdministrator()) {
 			String actorId = loginContext.getActorId();

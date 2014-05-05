@@ -36,7 +36,7 @@ import com.glaf.base.modules.todo.model.UserEntity;
 public interface TodoService {
 
 	/**
-	 * ´´½¨Todo
+	 * åˆ›å»ºTodo
 	 * 
 	 * @param todo
 	 */
@@ -44,7 +44,7 @@ public interface TodoService {
 	void create(Todo todo);
 
 	/**
-	 * ÖØ½¨Ö¸¶¨Á÷³ÌÊµÀıµÄ´ı°ìÊÂÏî
+	 * é‡å»ºæŒ‡å®šæµç¨‹å®ä¾‹çš„å¾…åŠäº‹é¡¹
 	 * 
 	 * @param processInstanceIds
 	 * @param rows
@@ -54,7 +54,7 @@ public interface TodoService {
 			List<TodoInstance> rows);
 
 	/**
-	 * ÖØ½¨Ö¸¶¨Á÷³ÌÊµÀıµÄ´ı°ìÊÂÏî
+	 * é‡å»ºæŒ‡å®šæµç¨‹å®ä¾‹çš„å¾…åŠäº‹é¡¹
 	 * 
 	 * @param processInstanceId
 	 * @param rows
@@ -63,7 +63,7 @@ public interface TodoService {
 	void createTasks(String processInstanceId, List<TodoInstance> rows);
 
 	/**
-	 * ÖØ½¨SQL²éÑ¯µÄ´ı°ìÊÂÏî
+	 * é‡å»ºSQLæŸ¥è¯¢çš„å¾…åŠäº‹é¡¹
 	 * 
 	 * @param rows
 	 */
@@ -71,7 +71,7 @@ public interface TodoService {
 	void createTasksOfSQL(List<TodoInstance> rows);
 
 	/**
-	 * ÖØ½¨¹¤×÷Á÷µÄ´ı°ìÊÂÏî
+	 * é‡å»ºå·¥ä½œæµçš„å¾…åŠäº‹é¡¹
 	 * 
 	 * @param rows
 	 */
@@ -79,7 +79,7 @@ public interface TodoService {
 	void createTasksOfWorkflow(List<TodoInstance> rows);
 
 	/**
-	 * ÖØ½¨Ä³¸öÓÃ»§¹¤×÷Á÷µÄ´ı°ìÊÂÏî
+	 * é‡å»ºæŸä¸ªç”¨æˆ·å·¥ä½œæµçš„å¾…åŠäº‹é¡¹
 	 * 
 	 * @param actorId
 	 * @param rows
@@ -88,7 +88,7 @@ public interface TodoService {
 	void createTasksOfWorkflow(String actorId, List<TodoInstance> rows);
 
 	/**
-	 * ÖØ½¨Ä³¸ötodoµÄ´ı°ìÊÂÏî
+	 * é‡å»ºæŸä¸ªtodoçš„å¾…åŠäº‹é¡¹
 	 * 
 	 * @param todoId
 	 * @param rows
@@ -97,21 +97,21 @@ public interface TodoService {
 	void createTodoInstances(long todoId, List<TodoInstance> rows);
 
 	/**
-	 * »ñÈ¡È«²¿TodoÁĞ±í
+	 * è·å–å…¨éƒ¨Todoåˆ—è¡¨
 	 * 
 	 * @return
 	 */
 	List<Todo> getAllTodoList();
 
 	/**
-	 * »ñÈ¡²¿ÃÅĞÅÏ¢
+	 * è·å–éƒ¨é—¨ä¿¡æ¯
 	 * 
 	 * @return
 	 */
 	Map<Long, SysDepartment> getDepartmentMap();
 
 	/**
-	 * »ñÈ¡Ä³¸ö²¿ÃÅµÄ¸¸²¿ÃÅ
+	 * è·å–æŸä¸ªéƒ¨é—¨çš„çˆ¶éƒ¨é—¨
 	 * 
 	 * @param id
 	 * @return
@@ -119,21 +119,21 @@ public interface TodoService {
 	SysDepartment getParentDepartment(long id);
 
 	/**
-	 * »ñÈ¡½ÇÉ«ĞÅÏ¢
+	 * è·å–è§’è‰²ä¿¡æ¯
 	 * 
 	 * @return
 	 */
 	Map<Long, SysRole> getRoleMap();
 
 	/**
-	 * »ñÈ¡SQLÅäÖÃµÄTodo
+	 * è·å–SQLé…ç½®çš„Todo
 	 * 
 	 * @return
 	 */
 	List<Todo> getSQLTodos();
 
 	/**
-	 * ¸ù¾İTodo±àºÅ»ñÈ¡Todo
+	 * æ ¹æ®Todoç¼–å·è·å–Todo
 	 * 
 	 * @param todoId
 	 * @return
@@ -141,7 +141,7 @@ public interface TodoService {
 	Todo getTodo(long todoId);
 
 	/**
-	 * ¸ù¾İ²ÎÊı»ñÈ¡´ı°ìÊÂÏîÁĞ±í
+	 * æ ¹æ®å‚æ•°è·å–å¾…åŠäº‹é¡¹åˆ—è¡¨
 	 * 
 	 * @param paramMap
 	 * @return
@@ -149,14 +149,14 @@ public interface TodoService {
 	List<TodoInstance> getTodoInstanceList(TodoQuery query);
 
 	/**
-	 * »ñÈ¡TodoÁĞ±í£¬µ«ÅÅ³ıÒÑ¾­½ûÓÃµÄ
+	 * è·å–Todoåˆ—è¡¨ï¼Œä½†æ’é™¤å·²ç»ç¦ç”¨çš„
 	 * 
 	 * @return
 	 */
 	List<Todo> getTodoList();
 
 	/**
-	 * »ñÈ¡TodoĞÅÏ¢
+	 * è·å–Todoä¿¡æ¯
 	 * 
 	 * @return
 	 */
@@ -164,14 +164,14 @@ public interface TodoService {
 	Map getTodoMap();
 
 	/**
-	 * »ñÈ¡¿ÉÓÃµÄTodoĞÅÏ¢
+	 * è·å–å¯ç”¨çš„Todoä¿¡æ¯
 	 * 
 	 * @return
 	 */
 	Map<Long, Todo> getEnabledTodoMap();
 
 	/**
-	 * »ñÈ¡ÓÃ»§ĞÅÏ¢
+	 * è·å–ç”¨æˆ·ä¿¡æ¯
 	 * 
 	 * @param actorId
 	 * @return
@@ -179,7 +179,7 @@ public interface TodoService {
 	SysUser getUser(String actorId);
 
 	/**
-	 * »ñÈ¡ÓÃ»§ĞÅÏ¢£¬°üº¬²¿ÃÅ¡¢½ÇÉ«
+	 * è·å–ç”¨æˆ·ä¿¡æ¯ï¼ŒåŒ…å«éƒ¨é—¨ã€è§’è‰²
 	 * 
 	 * @param actorId
 	 * @return
@@ -187,14 +187,14 @@ public interface TodoService {
 	List<UserEntity> getUserEntityList(String actorId);
 
 	/**
-	 * »ñÈ¡ÓÃ»§¼¯ºÏ
+	 * è·å–ç”¨æˆ·é›†åˆ
 	 * 
 	 * @return
 	 */
 	Map<String, SysUser> getUserMap();
 
 	/**
-	 * »ñÈ¡Ã¿¸öÓÃ»§µÄ½ÇÉ«¼¯ºÏ
+	 * è·å–æ¯ä¸ªç”¨æˆ·çš„è§’è‰²é›†åˆ
 	 * 
 	 * @param actorId
 	 * @return
@@ -202,7 +202,7 @@ public interface TodoService {
 	Map<String, SysRole> getUserRoleMap(String actorId);
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§µÄTodo¼¯ºÏ
+	 * è·å–æŸä¸ªç”¨æˆ·çš„Todoé›†åˆ
 	 * 
 	 * @param actorId
 	 * @return
@@ -210,7 +210,7 @@ public interface TodoService {
 	Map<Long, Todo> getUserTodoMap(String actorId);
 
 	/**
-	 * ÅĞ¶ÏÄ³¸öÓÃ»§ÊÇ·ñÓĞÈÎÎñ
+	 * åˆ¤æ–­æŸä¸ªç”¨æˆ·æ˜¯å¦æœ‰ä»»åŠ¡
 	 * 
 	 * @param actorId
 	 * @param taskInstanceId
@@ -219,7 +219,7 @@ public interface TodoService {
 	boolean hasTask(String actorId, String taskInstanceId);
 
 	/**
-	 * ÅĞ¶ÏÄ³¸öÈÕÆÚÊÇ·ñÎª¹¤×÷ÈÕ
+	 * åˆ¤æ–­æŸä¸ªæ—¥æœŸæ˜¯å¦ä¸ºå·¥ä½œæ—¥
 	 * 
 	 * @param date
 	 * @return
@@ -227,7 +227,7 @@ public interface TodoService {
 	boolean isWorkDate(java.util.Date date);
 
 	/**
-	 * ½«´ı°ìÊÂÏî°´Todo½øĞĞ·Ö×é
+	 * å°†å¾…åŠäº‹é¡¹æŒ‰Todoè¿›è¡Œåˆ†ç»„
 	 * 
 	 * @return
 	 */
@@ -235,7 +235,7 @@ public interface TodoService {
 			Map<Long, Todo> todoMap);
 
 	/**
-	 * ÅúÁ¿±£´æTodo
+	 * æ‰¹é‡ä¿å­˜Todo
 	 * 
 	 * @param rows
 	 */
@@ -243,7 +243,7 @@ public interface TodoService {
 	void saveAll(List<Todo> rows);
 
 	/**
-	 * ĞŞ¸ÄTodo
+	 * ä¿®æ”¹Todo
 	 * 
 	 * @param todo
 	 */

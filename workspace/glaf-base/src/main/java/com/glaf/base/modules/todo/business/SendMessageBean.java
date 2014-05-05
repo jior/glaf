@@ -149,11 +149,11 @@ public class SendMessageBean {
 			}
 
 			/**
-			 * »ñÈ¡¹¤×÷Á÷µÄTODOÊµÀı
+			 * è·å–å·¥ä½œæµçš„TODOå®ä¾‹
 			 */
 			Collection rows = todoService.getTodoInstanceList(query);
 			if (rows != null && rows.size() > 0) {
-				logger.info(user.getName() + "µÄ¹¤×÷Á÷ÈÎÎñÓĞ" + rows.size() + "Ïî.");
+				logger.info(user.getName() + "çš„å·¥ä½œæµä»»åŠ¡æœ‰" + rows.size() + "é¡¹.");
 				Iterator iterator008 = rows.iterator();
 				while (iterator008.hasNext()) {
 					TodoInstance tdi = (TodoInstance) iterator008.next();
@@ -167,7 +167,7 @@ public class SendMessageBean {
 
 						Collection agentList = ProcessContainer.getContainer()
 								.getAgentIds(actorId, processName);
-						if (null != agentList && agentList.size() > 0) {// ÅĞ¶Ï´úÀíÊÇ·ñÓĞ¸ÃÁ÷³Ì´úÀí£¬ÓĞÔòadd
+						if (null != agentList && agentList.size() > 0) {// åˆ¤æ–­ä»£ç†æ˜¯å¦æœ‰è¯¥æµç¨‹ä»£ç†ï¼Œæœ‰åˆ™add
 							rows99.add(tdi);
 						}
 					}
@@ -182,12 +182,12 @@ public class SendMessageBean {
 			q.setAppIds(appXIds);
 
 			/**
-			 * ¸ù¾İTODO sqlÅäÖÃÈ¡µÃµÄTODOÊµÀı
+			 * æ ¹æ®TODO sqlé…ç½®å–å¾—çš„TODOå®ä¾‹
 			 */
 			Collection rows_sql = todoService.getTodoInstanceList(q);
 
 			if (rows_sql != null && rows_sql.size() > 0) {
-				logger.info("È«²¿µÄsqlÈÎÎñ¹²ÓĞ" + rows_sql.size() + "Ïî.");
+				logger.info("å…¨éƒ¨çš„sqlä»»åŠ¡å…±æœ‰" + rows_sql.size() + "é¡¹.");
 				Set rowIds = new HashSet();
 				int qty = 0;
 				Iterator iter9988 = rows_sql.iterator();
@@ -252,7 +252,7 @@ public class SendMessageBean {
 						}
 					}
 				}
-				logger.info(user.getName() + "µÄsqlÈÎÎñÓĞ" + qty + "Ïî.");
+				logger.info(user.getName() + "çš„sqlä»»åŠ¡æœ‰" + qty + "é¡¹.");
 			}
 		}
 
@@ -262,10 +262,10 @@ public class SendMessageBean {
 
 		Collection todoList = todoService.getTodoList();
 
-		logger.info(user.getName() + "µÄTODOÈÎÎñÓĞ" + rows99.size() + "Ïî.");
+		logger.info(user.getName() + "çš„TODOä»»åŠ¡æœ‰" + rows99.size() + "é¡¹.");
 
 		/**
-		 * ´¦ÀíTODOÊµÀı
+		 * å¤„ç†TODOå®ä¾‹
 		 */
 		if (rows99 != null && rows99.size() > 0) {
 			Iterator iterator = rows99.iterator();
@@ -427,12 +427,12 @@ public class SendMessageBean {
 			query.setProvider("jbpm");
 
 			/**
-			 * »ñÈ¡¹¤×÷Á÷µÄTODOÊµÀı
+			 * è·å–å·¥ä½œæµçš„TODOå®ä¾‹
 			 */
 			Collection rows = todoService.getTodoInstanceList(query);
 
 			if (rows != null && rows.size() > 0) {
-				logger.info(user.getName() + "µÄ¹¤×÷Á÷ÈÎÎñÓĞ" + rows.size() + "Ïî.");
+				logger.info(user.getName() + "çš„å·¥ä½œæµä»»åŠ¡æœ‰" + rows.size() + "é¡¹.");
 				Iterator iterator008 = rows.iterator();
 				while (iterator008.hasNext()) {
 					// TodoInstance tdi = (TodoInstance) iterator008.next();
@@ -449,7 +449,7 @@ public class SendMessageBean {
 						// System.out.println(actorId+"---"+tdi.getActorId()+"---"+processName);
 						List agentList = ProcessContainer.getContainer()
 								.getAgentIds(actorId, processName);
-						if (null != agentList && agentList.size() > 0) {// ÅĞ¶Ï´úÀíÊÇ·ñÓĞ¸ÃÁ÷³Ì´úÀí£¬ÓĞÔòadd
+						if (null != agentList && agentList.size() > 0) {// åˆ¤æ–­ä»£ç†æ˜¯å¦æœ‰è¯¥æµç¨‹ä»£ç†ï¼Œæœ‰åˆ™add
 							rows99.add(tdi);
 						}
 					}
@@ -462,12 +462,12 @@ public class SendMessageBean {
 			q.setProvider("sql");
 
 			/**
-			 * ¸ù¾İTODO sqlÅäÖÃÈ¡µÃµÄTODOÊµÀı
+			 * æ ¹æ®TODO sqlé…ç½®å–å¾—çš„TODOå®ä¾‹
 			 */
 			Collection rows_sql = todoService.getTodoInstanceList(q);
 
 			if (rows_sql != null && rows_sql.size() > 0) {
-				logger.info("È«²¿µÄsqlÈÎÎñ¹²ÓĞ" + rows_sql.size() + "Ïî.");
+				logger.info("å…¨éƒ¨çš„sqlä»»åŠ¡å…±æœ‰" + rows_sql.size() + "é¡¹.");
 				int qty = 0;
 				Set rowIds = new HashSet();
 				Iterator iter9988 = rows_sql.iterator();
@@ -510,7 +510,7 @@ public class SendMessageBean {
 						}
 					}
 				}
-				logger.info(user.getName() + "µÄsqlÈÎÎñÓĞ" + qty + "Ïî.");
+				logger.info(user.getName() + "çš„sqlä»»åŠ¡æœ‰" + qty + "é¡¹.");
 			}
 		}
 
@@ -520,10 +520,10 @@ public class SendMessageBean {
 
 		Collection todoList = todoService.getTodoList();
 
-		logger.info(user.getName() + "µÄTODOÈÎÎñÓĞ" + rows99.size() + "Ïî.");
+		logger.info(user.getName() + "çš„TODOä»»åŠ¡æœ‰" + rows99.size() + "é¡¹.");
 
 		/**
-		 * ´¦ÀíTODOÊµÀı
+		 * å¤„ç†TODOå®ä¾‹
 		 */
 		if (rows99 != null && rows99.size() > 0) {
 			Iterator iterator = rows99.iterator();
@@ -727,13 +727,13 @@ public class SendMessageBean {
 			}
 
 			/**
-			 * »ñÈ¡¹¤×÷Á÷µÄTODOÊµÀı
+			 * è·å–å·¥ä½œæµçš„TODOå®ä¾‹
 			 */
 			Collection rows = todoService.getTodoInstanceList(q);
 
 			if (rows != null && rows.size() > 0) {
-				// ##System.out.println(user.getName() + "µÄ¹¤×÷Á÷ÈÎÎñÓĞ" +
-				// rows.size()+ "Ïî.");
+				// ##System.out.println(user.getName() + "çš„å·¥ä½œæµä»»åŠ¡æœ‰" +
+				// rows.size()+ "é¡¹.");
 				Iterator iterator008 = rows.iterator();
 				while (iterator008.hasNext()) {
 					// TodoInstance tdi = (TodoInstance) iterator008.next();
@@ -750,7 +750,7 @@ public class SendMessageBean {
 						// System.out.println(actorId+"---"+tdi.getActorId()+"---"+processName);
 						Collection agentList = ProcessContainer.getContainer()
 								.getAgentIds(actorId, processName);
-						if (null != agentList && agentList.size() > 0) {// ÅĞ¶Ï´úÀíÊÇ·ñÓĞ¸ÃÁ÷³Ì´úÀí£¬ÓĞÔòadd
+						if (null != agentList && agentList.size() > 0) {// åˆ¤æ–­ä»£ç†æ˜¯å¦æœ‰è¯¥æµç¨‹ä»£ç†ï¼Œæœ‰åˆ™add
 							rows99.add(tdi);
 						}
 					}
@@ -762,12 +762,12 @@ public class SendMessageBean {
 			qx.setAppIds(appXIds);
 
 			/**
-			 * ¸ù¾İTODO sqlÅäÖÃÈ¡µÃµÄTODOÊµÀı
+			 * æ ¹æ®TODO sqlé…ç½®å–å¾—çš„TODOå®ä¾‹
 			 */
 			Collection rows_sql = todoService.getTodoInstanceList(qx);
 
 			if (rows_sql != null && rows_sql.size() > 0) {
-				logger.info("È«²¿µÄsqlÈÎÎñ¹²ÓĞ" + rows_sql.size() + "Ïî.");
+				logger.info("å…¨éƒ¨çš„sqlä»»åŠ¡å…±æœ‰" + rows_sql.size() + "é¡¹.");
 				int qty = 0;
 				Set rowIds = new HashSet();
 				Iterator iter9988 = rows_sql.iterator();
@@ -810,7 +810,7 @@ public class SendMessageBean {
 						}
 					}
 				}
-				logger.info(user.getName() + "µÄsqlÈÎÎñÓĞ" + qty + "Ïî.");
+				logger.info(user.getName() + "çš„sqlä»»åŠ¡æœ‰" + qty + "é¡¹.");
 			}
 		}
 
@@ -820,10 +820,10 @@ public class SendMessageBean {
 
 		Collection todoList = todoService.getTodoList();
 
-		logger.info(user.getName() + "µÄTODOÈÎÎñÓĞ" + rows99.size() + "Ïî.");
+		logger.info(user.getName() + "çš„TODOä»»åŠ¡æœ‰" + rows99.size() + "é¡¹.");
 
 		/**
-		 * ´¦ÀíTODOÊµÀı
+		 * å¤„ç†TODOå®ä¾‹
 		 */
 		if (rows99 != null && rows99.size() > 0) {
 			Date now = new Date();
@@ -863,7 +863,7 @@ public class SendMessageBean {
 					xy.setQty03(xy.getQty03() + 1);
 					Date pastDue = tdi.getPastDueDate();
 					if (pastDue != null) {
-						// ³¬¹ı7Ìì
+						// è¶…è¿‡7å¤©
 						if ((now.getTime() - pastDue.getTime()) > DateUtils.WEEK) {
 							xy.setQtyRedWarn(xy.getQtyRedWarn() + 1);
 						}
@@ -913,7 +913,7 @@ public class SendMessageBean {
 
 					String subject = (dept != null ? dept.getName() : "") + " "
 							+ user.getName() + " "
-							+ DateUtils.getDate(new Date()) + " GLAFÏµÍ³TodoÊÂÏî";
+							+ DateUtils.getDate(new Date()) + " GLAFç³»ç»ŸTodoäº‹é¡¹";
 					logger.info(subject);
 					MailMessage mailMessage = new MailMessage();
 					mailMessage.setDataMap(mailMap);
@@ -933,7 +933,7 @@ public class SendMessageBean {
 					}
 				}
 				if (redWarnXY.size() > 0) {
-					// Í¨ÖªÖ±½ÓÉÏ¼¶
+					// é€šçŸ¥ç›´æ¥ä¸Šçº§
 					if (notifySuperior) {
 						List<SysUser> superiors = sysUserService
 								.getSuperiors(actorId);
@@ -960,7 +960,7 @@ public class SendMessageBean {
 										+ user.getName()
 										+ " "
 										+ DateUtils.getDate(new Date())
-										+ " GLAGÏµÍ³³¬¹ı7ÌìÆÚÏŞTODOÊÂÏî";
+										+ " GLAGç³»ç»Ÿè¶…è¿‡7å¤©æœŸé™TODOäº‹é¡¹";
 								logger.info(subject);
 								MailMessage mailMessage = new MailMessage();
 								mailMessage.setDataMap(mailMap);
@@ -994,7 +994,7 @@ public class SendMessageBean {
 			return;
 		}
 
-		logger.info("todo ÊÂÏîÊıÁ¿:" + rows.size());
+		logger.info("todo äº‹é¡¹æ•°é‡:" + rows.size());
 
 		Map dataMap = new java.util.HashMap();
 		Map roleMap = new java.util.HashMap();
@@ -1105,13 +1105,13 @@ public class SendMessageBean {
 				Set actors = new HashSet();
 
 				if (pastDues.size() > 0) {
-					// ·¢ÓÊ¼şÌáÊ¾TODOµÄµ£µ±µÄÉÏ¼¶¡£
+					// å‘é‚®ä»¶æç¤ºTODOçš„æ‹…å½“çš„ä¸Šçº§ã€‚
 					SysUser sysUser = sysUserService.findByAccount(user
 							.getAccount());
 					sysUser = sysUserService.getUserPrivileges(sysUser);
 					Collection roles = sysUser.getRoles();
 					if (logger.isDebugEnabled()) {
-						logger.debug("²éÕÒ" + user.getName() + "µÄ½ÇÉ«");
+						logger.debug("æŸ¥æ‰¾" + user.getName() + "çš„è§’è‰²");
 					}
 					if (roles != null && roles.size() > 0) {
 						if (logger.isDebugEnabled()) {
@@ -1205,7 +1205,7 @@ public class SendMessageBean {
 
 						String subject = dept.getName() + " " + user.getName()
 								+ " " + DateUtils.getDateTime(new Date())
-								+ " GLAFÏµÍ³TodoÊÂÏî";
+								+ " GLAFç³»ç»ŸTodoäº‹é¡¹";
 						String messageId = DateUtils.getNowYearMonthDay()
 								+ "-cc-" + u.getAccount();
 						MailMessage mailMessage = new MailMessage();
@@ -1237,7 +1237,7 @@ public class SendMessageBean {
 							+ actorId;
 					String subject = dept.getName() + " " + user.getName()
 							+ " " + DateUtils.getDateTime(new Date())
-							+ " GLAFÏµÍ³TodoÊÂÏî";
+							+ " GLAFç³»ç»ŸTodoäº‹é¡¹";
 					MailMessage mailMessage = new MailMessage();
 					mailMessage.setDataMap(mailMap);
 					mailMessage.setTo(user.getEmail());

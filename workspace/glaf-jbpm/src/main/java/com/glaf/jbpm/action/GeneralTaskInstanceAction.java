@@ -43,9 +43,9 @@ import com.glaf.jbpm.container.ProcessContainer;
 import com.glaf.jbpm.util.Constant;
 
 /**
- * ÈÎÎñ·ÖÅäËµÃ÷£º ¸ù¾İÓÅÏÈ¼¶Ë³Ğò£¬ÉèÖÃÈÎÎñµÄ²ÎÓëÕß<br>
- * 1¡¢Ö±½Ó´ÓÍâ²¿»ñÈ¡µÄ¶¯Ì¬²ÎÓëÕßID <br>
- * 2¡¢Á÷³ÌÈÎÎñÔ¤¶¨ÒåµÄ²ÎÓëÕß<br>
+ * ä»»åŠ¡åˆ†é…è¯´æ˜ï¼š æ ¹æ®ä¼˜å…ˆçº§é¡ºåºï¼Œè®¾ç½®ä»»åŠ¡çš„å‚ä¸è€…<br>
+ * 1ã€ç›´æ¥ä»å¤–éƒ¨è·å–çš„åŠ¨æ€å‚ä¸è€…ID <br>
+ * 2ã€æµç¨‹ä»»åŠ¡é¢„å®šä¹‰çš„å‚ä¸è€…<br>
  * 
  */
 public class GeneralTaskInstanceAction implements ActionHandler {
@@ -55,33 +55,33 @@ public class GeneralTaskInstanceAction implements ActionHandler {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * ¶¯Ì¬ÉèÖÃµÄ²ÎÓëÕßµÄ²ÎÊıÃû£¬»·¾³±äÁ¿¿ÉÒÔÍ¨¹ıcontextInstance.getVariable()È¡µÃ
-	 * ÀıÈç£ºcontextInstance.getVariable("SendDocAuditor");
+	 * åŠ¨æ€è®¾ç½®çš„å‚ä¸è€…çš„å‚æ•°åï¼Œç¯å¢ƒå˜é‡å¯ä»¥é€šè¿‡contextInstance.getVariable()å–å¾—
+	 * ä¾‹å¦‚ï¼šcontextInstance.getVariable("SendDocAuditor");
 	 */
 	String dynamicActors;
 
 	/**
-	 * ½ÇÉ«±àºÅ
+	 * è§’è‰²ç¼–å·
 	 */
 	String roleId;
 
 	/**
-	 * ×ªÒÆÂ·¾¶µÄÃû³Æ
+	 * è½¬ç§»è·¯å¾„çš„åç§°
 	 */
 	String transitionName;
 
 	/**
-	 * ÈÎÎñÃû³Æ
+	 * ä»»åŠ¡åç§°
 	 */
 	String taskName;
 
 	/**
-	 * Èç¹û¶à¸öÉóÅúÕßÖ»ÒªÓĞÒ»¸öÍ¨¹ı¾Í¿ÉÒÔµÄ£¬ÉèÖÃ¸ÃÖµÎªtrue
+	 * å¦‚æœå¤šä¸ªå®¡æ‰¹è€…åªè¦æœ‰ä¸€ä¸ªé€šè¿‡å°±å¯ä»¥çš„ï¼Œè®¾ç½®è¯¥å€¼ä¸ºtrue
 	 */
 	boolean isPooled;
 
 	/**
-	 * Èç¹û²»ÄÜ»ñÈ¡ÈÎÎñ²ÎÓëÕßÊÇ·ñÀë¿ª±¾½Úµã£¨ÈÎÎñ½Úµã£©
+	 * å¦‚æœä¸èƒ½è·å–ä»»åŠ¡å‚ä¸è€…æ˜¯å¦ç¦»å¼€æœ¬èŠ‚ç‚¹ï¼ˆä»»åŠ¡èŠ‚ç‚¹ï¼‰
 	 */
 	boolean leaveNodeIfActorNotAvailable;
 
@@ -148,7 +148,7 @@ public class GeneralTaskInstanceAction implements ActionHandler {
 		List<String> actorIds = new java.util.ArrayList<String>();
 
 		/**
-		 * 1¡¢Ö±½Ó´ÓÍâ²¿»ñÈ¡µÄ¶¯Ì¬²ÎÓëÕßID
+		 * 1ã€ç›´æ¥ä»å¤–éƒ¨è·å–çš„åŠ¨æ€å‚ä¸è€…ID
 		 */
 		if (StringUtils.isNotEmpty(dynamicActors)) {
 			String actorId = (String) contextInstance
@@ -168,7 +168,7 @@ public class GeneralTaskInstanceAction implements ActionHandler {
 				.getProcessDefinition().getName();
 
 		/**
-		 * 2¡¢Á÷³ÌÈÎÎñÔ¤¶¨ÒåµÄ²ÎÓëÕß
+		 * 2ã€æµç¨‹ä»»åŠ¡é¢„å®šä¹‰çš„å‚ä¸è€…
 		 */
 
 		if (StringUtils.isEmpty(roleId)) {

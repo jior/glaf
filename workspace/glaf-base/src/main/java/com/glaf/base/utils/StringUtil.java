@@ -34,7 +34,7 @@ import com.glaf.core.util.DateUtils;
  * Title: StringUtil.java
  * </p>
  * <p>
- * Description: ×Ö·û´®´¦Àí¹¤¾ß
+ * Description: å­—ç¬¦ä¸²å¤„ç†å·¥å…·
  * </p>
  */
 
@@ -46,29 +46,29 @@ public class StringUtil {
 	private static char[] numbersAndLetters = null;
 
 	static {
-		// ³õÊ¼»¯Ëæ»úÊı×ÖÉú³ÉÆ÷
+		// åˆå§‹åŒ–éšæœºæ•°å­—ç”Ÿæˆå™¨
 		if (randGen == null) {
 			synchronized (initLock) {
 				randGen = new Random();
-				// ³õÊ¼»¯Êı×Ö¡¢×ÖÄ¸Êı×é
+				// åˆå§‹åŒ–æ•°å­—ã€å­—æ¯æ•°ç»„
 				numbersAndLetters = ("0123456789").toCharArray();
 			}
 		}
 	}
 
 	/**
-	 * Éú³ÉËæ»ú×Ö·û´®
+	 * ç”Ÿæˆéšæœºå­—ç¬¦ä¸²
 	 * 
 	 * @param length
-	 *            ³¤¶È
-	 * @return String Ëæ»ú×Ö·û´®
+	 *            é•¿åº¦
+	 * @return String éšæœºå­—ç¬¦ä¸²
 	 */
 	public static final String randomNumString(int length) {
 		if (length < 1) {
 			return null;
 		}
 
-		// ´´½¨×Ö·û»º´æÊı×é×°Èë×ÖÄ¸ºÍÊı×Ö
+		// åˆ›å»ºå­—ç¬¦ç¼“å­˜æ•°ç»„è£…å…¥å­—æ¯å’Œæ•°å­—
 		char[] randBuffer = new char[length];
 		for (int i = 0; i < randBuffer.length; i++) {
 			randBuffer[i] = numbersAndLetters[randGen.nextInt(9)];
@@ -77,15 +77,15 @@ public class StringUtil {
 	}
 
 	/**
-	 * Ìæ»»×Ö·û´®
+	 * æ›¿æ¢å­—ç¬¦ä¸²
 	 * 
 	 * @param line
-	 *            String ÊäÈë´®
+	 *            String è¾“å…¥ä¸²
 	 * @param oldString
-	 *            String ±»Ìæ»»µÄ´®
+	 *            String è¢«æ›¿æ¢çš„ä¸²
 	 * @param newString
-	 *            String ÒªÌæ»»µÄ´®
-	 * @return String Ìæ»»ºóµÄ×Ö·û´®
+	 *            String è¦æ›¿æ¢çš„ä¸²
+	 * @return String æ›¿æ¢åçš„å­—ç¬¦ä¸²
 	 */
 	public static final String replace(String line, String oldString,
 			String newString) {
@@ -113,7 +113,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * Ğ£ÑéÒ»¶Î×Ö·û´®ÊÇ·ñ°üº¬ºº×Ö
+	 * æ ¡éªŒä¸€æ®µå­—ç¬¦ä¸²æ˜¯å¦åŒ…å«æ±‰å­—
 	 * 
 	 * @param str
 	 *            String
@@ -140,7 +140,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * Éú³ÉËæ»úÄ¿Â¼
+	 * ç”Ÿæˆéšæœºç›®å½•
 	 * 
 	 * @param root
 	 * @return
@@ -161,7 +161,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * * È¡×Ö·û´®µÄÇ°toCount¸ö×Ö·û
+	 * * å–å­—ç¬¦ä¸²çš„å‰toCountä¸ªå­—ç¬¦
 	 * 
 	 * @param str
 	 * @param toCount
@@ -217,7 +217,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * ×ª»»³ÉList¶ÔÏó
+	 * è½¬æ¢æˆListå¯¹è±¡
 	 * 
 	 * @param vec
 	 * @return
@@ -228,7 +228,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * String[] Êı×é×ª»»Îª String ¶ÔÏó ÓÃ·Ö¸î·û·Ö¿ª
+	 * String[] æ•°ç»„è½¬æ¢ä¸º String å¯¹è±¡ ç”¨åˆ†å‰²ç¬¦åˆ†å¼€
 	 * 
 	 * @param vec
 	 * @return
@@ -254,7 +254,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * String Êı×é×ª»»Îª String[] ¶ÔÏó
+	 * String æ•°ç»„è½¬æ¢ä¸º String[] å¯¹è±¡
 	 * 
 	 * @param vec
 	 * @return
@@ -276,12 +276,12 @@ public class StringUtil {
 	}
 
 	/**
-	 * ¸ñÊ½»¯Êı×Ö
+	 * æ ¼å¼åŒ–æ•°å­—
 	 * 
 	 * @param number
-	 *            Êı×Ö
+	 *            æ•°å­—
 	 * @param pattern
-	 *            ¸ñÊ½
+	 *            æ ¼å¼
 	 * @return
 	 */
 	public static String getFormatNumber(double number, String pattern) {
@@ -290,12 +290,12 @@ public class StringUtil {
 	}
 
 	/**
-	 * ¸ñÊ½»¯½ğ¶îÊı×Ö£¬Ğ¡ÊıÎ»ËÄÉáÎåÈë(²¢·µ»ØÒÔ¶ººÅ·Ö¸ôµÄ×Ö·û´®)
+	 * æ ¼å¼åŒ–é‡‘é¢æ•°å­—ï¼Œå°æ•°ä½å››èˆäº”å…¥(å¹¶è¿”å›ä»¥é€—å·åˆ†éš”çš„å­—ç¬¦ä¸²)
 	 * 
 	 * @param number
-	 *            double Êı×Ö
+	 *            double æ•°å­—
 	 * @param digit
-	 *            int Ğ¡ÊıÎ»
+	 *            int å°æ•°ä½
 	 * @return String
 	 */
 	public static String getFormatCurrency(double number, int digit) {
@@ -310,7 +310,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * ¸ñÊ½»¯½ğ¶îÊı×Ö£¬Ğ¡ÊıÎ»ËÄÉáÎåÈë(²¢·µ»ØÒÔ¶ººÅ·Ö¸ôµÄ×Ö·û´®,±£Áô2Î»Êı)
+	 * æ ¼å¼åŒ–é‡‘é¢æ•°å­—ï¼Œå°æ•°ä½å››èˆäº”å…¥(å¹¶è¿”å›ä»¥é€—å·åˆ†éš”çš„å­—ç¬¦ä¸²,ä¿ç•™2ä½æ•°)
 	 * 
 	 * @param number
 	 * @param digit
@@ -321,12 +321,12 @@ public class StringUtil {
 	}
 
 	/**
-	 * ¸ñÊ½»¯½ğ¶îÊı×Ö£¬Ğ¡ÊıÎ»ËÄÉáÎåÈë(²»´ø¶ººÅ·Ö¸ôµÄ×Ö·û´®)
+	 * æ ¼å¼åŒ–é‡‘é¢æ•°å­—ï¼Œå°æ•°ä½å››èˆäº”å…¥(ä¸å¸¦é€—å·åˆ†éš”çš„å­—ç¬¦ä¸²)
 	 * 
 	 * @param number
-	 *            double Êı×Ö
+	 *            double æ•°å­—
 	 * @param digit
-	 *            int Ğ¡ÊıÎ»
+	 *            int å°æ•°ä½
 	 * @return String
 	 */
 	public static String getFormatCurrencyNumber(double number, int digit) {
@@ -341,7 +341,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * ¸ñÊ½»¯½ğ¶îÊı×Ö£¬Ğ¡ÊıÎ»ËÄÉáÎåÈë(²»´ø¶ººÅ·Ö¸ôµÄ×Ö·û´®,±£Áô2Î»Êı)
+	 * æ ¼å¼åŒ–é‡‘é¢æ•°å­—ï¼Œå°æ•°ä½å››èˆäº”å…¥(ä¸å¸¦é€—å·åˆ†éš”çš„å­—ç¬¦ä¸²,ä¿ç•™2ä½æ•°)
 	 * 
 	 * @param number
 	 * @param digit
@@ -352,7 +352,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * ¸ñÊ½»¯½ğ¶îÊı×ÖÓÉpattern µÃµ½ËùĞèÒªµÄ¸ñÊ½
+	 * æ ¼å¼åŒ–é‡‘é¢æ•°å­—ç”±pattern å¾—åˆ°æ‰€éœ€è¦çš„æ ¼å¼
 	 * 
 	 * @param number
 	 * @param digit
@@ -364,10 +364,10 @@ public class StringUtil {
 	}
 
 	/**
-	 * ¸ñÊ½»¯°Ù·Ö±È(±£ÁôĞ¡Êıºó2Î»)
+	 * æ ¼å¼åŒ–ç™¾åˆ†æ¯”(ä¿ç•™å°æ•°å2ä½)
 	 * 
 	 * @param number
-	 *            double Êı×Ö
+	 *            double æ•°å­—
 	 * @return
 	 */
 	public static String getFormatPercent(double number) {
@@ -375,12 +375,12 @@ public class StringUtil {
 	}
 
 	/**
-	 * ¸ñÊ½»¯°Ù·Ö±È
+	 * æ ¼å¼åŒ–ç™¾åˆ†æ¯”
 	 * 
 	 * @param number
-	 *            double Êı×Ö
+	 *            double æ•°å­—
 	 * @param digit
-	 *            int Ğ¡ÊıÎ»
+	 *            int å°æ•°ä½
 	 * @return
 	 */
 	public static String getFormatPercent(double number, int digit) {
@@ -396,7 +396,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * ¸ñÊ½»¯°Ù·Ö±È(²»´ø%)
+	 * æ ¼å¼åŒ–ç™¾åˆ†æ¯”(ä¸å¸¦%)
 	 * 
 	 * @param number
 	 * @param digit
@@ -414,7 +414,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * ¸ñÊ½»¯°Ù·Ö±È(²»´ø%)
+	 * æ ¼å¼åŒ–ç™¾åˆ†æ¯”(ä¸å¸¦%)
 	 * 
 	 * @param number
 	 * @return
@@ -424,7 +424,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * ÅĞ¶ÏÊÇ·ñÓĞĞ¡Êı
+	 * åˆ¤æ–­æ˜¯å¦æœ‰å°æ•°
 	 * 
 	 * @param num
 	 * @return
@@ -434,38 +434,38 @@ public class StringUtil {
 	}
 
 	/**
-	 * ½«Êı×Ö×ª»»ÎªÈËÃñ±Ò´óĞ´
+	 * å°†æ•°å­—è½¬æ¢ä¸ºäººæ°‘å¸å¤§å†™
 	 * 
 	 */
 
 	static char pp(char c) {
 		switch (c) {
 		case '1':
-			return 'Ò¼';
+			return 'å£¹';
 		case '2':
-			return '·¡';
+			return 'è´°';
 		case '3':
-			return 'Èş';
+			return 'å';
 		case '4':
-			return 'ËÁ';
+			return 'è‚†';
 		case '5':
-			return 'Îé';
+			return 'ä¼';
 		case '6':
-			return 'Â½';
+			return 'é™†';
 		case '7':
-			return 'Æâ';
+			return 'æŸ’';
 		case '8':
-			return '°Æ';
+			return 'æŒ';
 		case '9':
-			return '¾Á';
+			return 'ç–';
 		case '0':
-			return 'Áã';
+			return 'é›¶';
 		}
 		return c;
 	}
 
 	/**
-	 * ½«ÊäÈëÊıÖµ×ª»»Îª´óĞ´µÄRMB¸ñÊ½
+	 * å°†è¾“å…¥æ•°å€¼è½¬æ¢ä¸ºå¤§å†™çš„RMBæ ¼å¼
 	 * 
 	 * @param input
 	 * @return
@@ -473,12 +473,12 @@ public class StringUtil {
 	public static StringBuffer toRMB(String input) {
 		String in = input;
 
-		boolean xb = false; // Ä¬ÈÏÃ»ÓĞĞ¡Êı
+		boolean xb = false; // é»˜è®¤æ²¡æœ‰å°æ•°
 		if (in.indexOf(".") != -1) {
 			xb = true;
 		}
 
-		// Èç¹ûÓĞĞ¡Êıµã¾Í½«Æä°´Ğ¡Êıµã·Ö¸î,²¢·Ö±ğ´æÈës1ºÍs2ÖĞ
+		// å¦‚æœæœ‰å°æ•°ç‚¹å°±å°†å…¶æŒ‰å°æ•°ç‚¹åˆ†å‰²,å¹¶åˆ†åˆ«å­˜å…¥s1å’Œs2ä¸­
 		StringBuffer out = new StringBuffer("");
 		String s1 = new String("");
 		String s2 = new String("");
@@ -491,105 +491,105 @@ public class StringUtil {
 			s1 = in;
 		}
 
-		// Êä³öĞ¡Êıµã×ó±ßµÄÊı
-		if (s1.length() >= 9) { // ÒÚ
+		// è¾“å‡ºå°æ•°ç‚¹å·¦è¾¹çš„æ•°
+		if (s1.length() >= 9) { // äº¿
 			String yi = s1.substring(0, s1.length() - 8);
 			String wan = s1.substring(s1.length() - 8, s1.length() - 4);
 			String qian = s1.substring(s1.length() - 4, s1.length());
 
 			int len = yi.length();
-			// ´¦ÀíÒÚÇø¼ä
+			// å¤„ç†äº¿åŒºé—´
 			for (int i = 0; i < yi.length(); i++) {
 				if (len == 4) {
 					out.append(pp(yi.charAt(i)));
-					out.append(" Çª ");
+					out.append(" ä»Ÿ ");
 					len--;
 				} else if (len == 3) {
 					out.append(pp(yi.charAt(i)));
-					out.append(" °Û ");
+					out.append(" ä½° ");
 					len--;
 					continue;
 				} else if (len == 2) {
 					out.append(pp(yi.charAt(i)));
-					out.append(" Ê° ");
+					out.append(" æ‹¾ ");
 					len--;
 					continue;
 
 				} else if (len == 1) {
 
 					out.append(pp(yi.charAt(i)));
-					out.append(" ÒÚ ");
+					out.append(" äº¿ ");
 					len--;
 
 				}
 			}
 
-			// ´¦ÀíÍòÇø¼ä
+			// å¤„ç†ä¸‡åŒºé—´
 			len = wan.length();
 			for (int i = 0; i < wan.length(); i++) {
 				if (len == 4) {
 					out.append(pp(wan.charAt(i)));
-					out.append(" Çª ");
+					out.append(" ä»Ÿ ");
 					len--;
 					continue;
 				} else if (len == 3) {
 					out.append(pp(wan.charAt(i)));
-					out.append(" °Û ");
+					out.append(" ä½° ");
 					len--;
 					continue;
 				} else if (len == 2) {
 					out.append(pp(wan.charAt(i)));
-					out.append(" Ê° ");
+					out.append(" æ‹¾ ");
 					len--;
 					continue;
 				} else if (len == 1) {
 					out.append(pp(wan.charAt(i)));
-					out.append(" Íò ");
+					out.append(" ä¸‡ ");
 					len--;
 					continue;
 
 				}
 			}
 
-			// Ç§Çø¼ä
+			// åƒåŒºé—´
 			len = qian.length();
 			for (int i = 0; i < qian.length(); i++) {
 				if (len == 4) {
 					out.append(pp(qian.charAt(i)));
-					out.append(" Çª ");
+					out.append(" ä»Ÿ ");
 					len--;
 					continue;
 				} else if (len == 3) {
 					out.append(pp(qian.charAt(i)));
-					out.append(" °Û ");
+					out.append(" ä½° ");
 					len--;
 					continue;
 				} else if (len == 2) {
 					out.append(pp(qian.charAt(i)));
-					out.append(" Ê° ");
+					out.append(" æ‹¾ ");
 					len--;
 					continue;
 				} else if (len == 1) {
 					out.append(pp(qian.charAt(i)));
-					out.append(" Ôª ");
+					out.append(" å…ƒ ");
 					len--;
 					continue;
 				}
 			}
 
-			// ´¦ÀíĞ¡Êı
+			// å¤„ç†å°æ•°
 			if (xb) {
 				int llen = s2.length();
 				if (llen >= 2) {
 					out.append(pp(s2.charAt(0)));
-					out.append(" ½Ç ");
+					out.append(" è§’ ");
 					out.append(pp(s2.charAt(1)));
-					out.append(" ·Ö ");
+					out.append(" åˆ† ");
 				}
 				if (llen == 1) {
 					if (s2.charAt(0) == '0') {
 						out.append(pp(s2.charAt(0)));
-						out.append(" ½Ç ");
+						out.append(" è§’ ");
 					}
 				}
 				return out;
@@ -597,81 +597,81 @@ public class StringUtil {
 				return out;
 			}
 
-		} else if (s1.length() >= 5) { // Íò
+		} else if (s1.length() >= 5) { // ä¸‡
 			String wan = s1.substring(0, s1.length() - 4);
 			String qian = s1.substring(s1.length() - 4, s1.length());
-			// ´¦ÀíÍòÇø¼ä
+			// å¤„ç†ä¸‡åŒºé—´
 			int len = wan.length();
 			for (int i = 0; i < wan.length(); i++) {
 				if (len == 4) {
 					out.append(pp(wan.charAt(i)));
-					out.append(" Çª ");
+					out.append(" ä»Ÿ ");
 					len--;
 				} else if (len == 3) {
 					out.append(pp(wan.charAt(i)));
-					out.append(" °Û ");
+					out.append(" ä½° ");
 					len--;
 					continue;
 				} else if (len == 2) {
 					out.append(pp(wan.charAt(i)));
-					out.append(" Ê° ");
+					out.append(" æ‹¾ ");
 					len--;
 					continue;
 				} else if (len == 1) {
 					out.append(pp(wan.charAt(i)));
-					out.append(" Íò ");
+					out.append(" ä¸‡ ");
 					len--;
 				}
 			}
 
-			// Ç§Çø¼ä
+			// åƒåŒºé—´
 			len = qian.length();
 			for (int i = 0; i < qian.length(); i++) {
 				if (len == 4) {
 
 					out.append(pp(qian.charAt(i)));
-					out.append(" Çª ");
+					out.append(" ä»Ÿ ");
 					len--;
 				} else if (len == 3) {
 
 					out.append(pp(qian.charAt(i)));
-					out.append(" °Û ");
+					out.append(" ä½° ");
 					len--;
 					continue;
 
 				} else if (len == 2) {
 
 					out.append(pp(qian.charAt(i)));
-					out.append(" Ê° ");
+					out.append(" æ‹¾ ");
 					len--;
 					continue;
 
 				} else if (len == 1) {
 
 					out.append(pp(qian.charAt(i)));
-					out.append(" Ôª ");
+					out.append(" å…ƒ ");
 					len--;
 
 				}
 			}
 
-			// ´¦ÀíĞ¡ÊıµãÓÒ±ßµÄÊı
+			// å¤„ç†å°æ•°ç‚¹å³è¾¹çš„æ•°
 			if (xb) {
 				int llen = s2.length();
 				if (llen >= 2) {
 
 					out.append(pp(s2.charAt(0)));
-					out.append(" ½Ç ");
+					out.append(" è§’ ");
 					out.append(pp(s2.charAt(1)));
-					out.append(" ·Ö ");
+					out.append(" åˆ† ");
 
 				}
 				if (llen == 1) {
 					if (s2.charAt(0) == '0') {
-						// Ğ¡ÊıÎªÁ½¸ö0¾ÍÊ²Ã´Ò²²»×ö
+						// å°æ•°ä¸ºä¸¤ä¸ª0å°±ä»€ä¹ˆä¹Ÿä¸åš
 					} else {
 						out.append(pp(s2.charAt(0)));
-						out.append(" ½Ç ");
+						out.append(" è§’ ");
 					}
 				}
 				return out;
@@ -679,55 +679,55 @@ public class StringUtil {
 				return out;
 			}
 
-		} else { // Ç§
+		} else { // åƒ
 			String qian = s1;
-			// Ç§Çø¼ä
+			// åƒåŒºé—´
 			int len = qian.length();
 			if (qian.charAt(0) == '0' && len == 1) {
-				out.append(pp(qian.charAt(0)) + " Ôª ");
+				out.append(pp(qian.charAt(0)) + " å…ƒ ");
 			} else if (qian.charAt(0) == '0' && qian.charAt(1) == '0'
 					&& qian.charAt(2) == '0' && qian.charAt(3) == '0') {
 
-				out.append(pp(qian.charAt(0)) + " Ôª ");
-				// Èç¹ûÇ§Çø¼äÈ«Îª0¾ÍÊ²Ã´Ò²²»×ö
+				out.append(pp(qian.charAt(0)) + " å…ƒ ");
+				// å¦‚æœåƒåŒºé—´å…¨ä¸º0å°±ä»€ä¹ˆä¹Ÿä¸åš
 			} else {
 				for (int i = 0; i < qian.length(); i++) {
 					if (len == 4) {
 						out.append(pp(qian.charAt(i)));
-						out.append(" Çª ");
+						out.append(" ä»Ÿ ");
 						len--;
 					} else if (len == 3) {
 						out.append(pp(qian.charAt(i)));
-						out.append(" °Û ");
+						out.append(" ä½° ");
 						len--;
 						continue;
 					} else if (len == 2) {
 						out.append(pp(qian.charAt(i)));
-						out.append(" Ê° ");
+						out.append(" æ‹¾ ");
 						len--;
 						continue;
 					} else if (len == 1) {
 						out.append(pp(qian.charAt(i)));
-						out.append(" Ôª ");
+						out.append(" å…ƒ ");
 						len--;
 					}
 				}
 			}
 
-			// ´¦ÀíĞ¡ÊıµãÓÒ±ßµÄÊı
+			// å¤„ç†å°æ•°ç‚¹å³è¾¹çš„æ•°
 			if (xb) {
 				int llen = s2.length();
 				if (llen >= 2) {
 					out.append(pp(s2.charAt(0)));
-					out.append(" ½Ç ");
+					out.append(" è§’ ");
 					out.append(pp(s2.charAt(1)));
-					out.append(" ·Ö ");
+					out.append(" åˆ† ");
 				}
 				if (llen == 1) {
 					if (s2.charAt(0) == '0') {
 					} else {
 						out.append(pp(s2.charAt(0)));
-						out.append(" ½Ç ");
+						out.append(" è§’ ");
 					}
 				}
 				return out;
@@ -738,7 +738,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * ×ª»»³ÉHTML´úÂë
+	 * è½¬æ¢æˆHTMLä»£ç 
 	 * 
 	 * @param s
 	 * @return
@@ -766,7 +766,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * ½«×Ö·û´®×ª»»³ÉintÊı×é
+	 * å°†å­—ç¬¦ä¸²è½¬æ¢æˆintæ•°ç»„
 	 * 
 	 * @param str
 	 * @return
@@ -784,7 +784,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * È¡×îºóÒ»¸ö×ÖÄ¸µÄÏÂÒ»¸ö×ÖÄ¸
+	 * å–æœ€åä¸€ä¸ªå­—æ¯çš„ä¸‹ä¸€ä¸ªå­—æ¯
 	 * 
 	 * @param str
 	 * @return
@@ -803,22 +803,22 @@ public class StringUtil {
 
 		s = s.replaceAll("&ensp;", " ");
 		s = s.replaceAll("&nbsp;", " ");
-		s = s.replaceAll("&emsp;", "¡¡");
+		s = s.replaceAll("&emsp;", "ã€€");
 		s = s.replaceAll("&lt;", "<");
 		s = s.replaceAll("&gt;", ">");
-		s = s.replaceAll("&ldquo;", "¡°");
-		s = s.replaceAll("&rdquo;", "¡±");
-		s = s.replaceAll("&quot;", "¡°");
-		s = s.replaceAll("&rsquo;", "¡¯");
-		s = s.replaceAll("&lsquo;", "¡®");
-		s = s.replaceAll("&mdash;", "¡ª");
-		s = s.replaceAll("&ndash;", "¨C");
-		s = s.replaceAll("&middot;", "¡¤");
-		s = s.replaceAll("&hellip;", "¡­");
+		s = s.replaceAll("&ldquo;", "â€œ");
+		s = s.replaceAll("&rdquo;", "â€");
+		s = s.replaceAll("&quot;", "â€œ");
+		s = s.replaceAll("&rsquo;", "â€™");
+		s = s.replaceAll("&lsquo;", "â€˜");
+		s = s.replaceAll("&mdash;", "â€”");
+		s = s.replaceAll("&ndash;", "â€“");
+		s = s.replaceAll("&middot;", "Â·");
+		s = s.replaceAll("&hellip;", "â€¦");
 		s = s.replaceAll("<br>", "\r\n");
 		s = s.replaceAll("<br/>", "\r\n");
 		s = s.replaceAll("<br />", "\r\n");
-		s = s.replaceAll("  ", "¡¡");
+		s = s.replaceAll("  ", "ã€€");
 		s = s.replaceAll("&amp;", "&");
 
 		return s;
@@ -828,21 +828,21 @@ public class StringUtil {
 		if (s == null)
 			return "";
 		s = s.replaceAll("&", "&amp;");
-		s = s.replaceAll("¡¡", " ");
-		s = s.replaceAll("¡­", "&hellip;");
+		s = s.replaceAll("ã€€", " ");
+		s = s.replaceAll("â€¦", "&hellip;");
 		s = s.replaceAll("<", "&lt;");
 		s = s.replaceAll(">", "&gt;");
 		s = s.replaceAll("\r\n", "<br>");
 		s = s.replaceAll("\r\n", "<br/>");
 		s = s.replaceAll("\r\n", "<br />");
-		s = s.replaceAll("¡°", "&ldquo;");
-		s = s.replaceAll("¡±", "&rdquo;");
-		s = s.replaceAll("¡°", "&quot;");
-		s = s.replaceAll("¡¯", "&rsquo;");
-		s = s.replaceAll("¡®", "&lsquo;");
-		s = s.replaceAll("¡ª", "&mdash;");
-		s = s.replaceAll("¨C", "&ndash;");
-		s = s.replaceAll("¡¤", "&middot;");
+		s = s.replaceAll("â€œ", "&ldquo;");
+		s = s.replaceAll("â€", "&rdquo;");
+		s = s.replaceAll("â€œ", "&quot;");
+		s = s.replaceAll("â€™", "&rsquo;");
+		s = s.replaceAll("â€˜", "&lsquo;");
+		s = s.replaceAll("â€”", "&mdash;");
+		s = s.replaceAll("â€“", "&ndash;");
+		s = s.replaceAll("Â·", "&middot;");
 
 		return s;
 	}

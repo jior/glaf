@@ -27,7 +27,7 @@ import java.util.List;
  * </p>
  * 
  * <p>
- * Description: ·ÖÒ³¶ÔÏó
+ * Description: åˆ†é¡µå¯¹è±¡
  * </p>
  * 
  */
@@ -37,17 +37,17 @@ public class PageResult implements Serializable {
 
 	public final static int DEFAULT_PAGE_SIZE = 20;
 
-	private int currentPageNo;// µ±Ç°Ò³
-	private int totalPageCount;// ×ÜÒ³Êı
-	private int totalRecordCount;// ×Ü¼ÇÂ¼Êı
+	private int currentPageNo;// å½“å‰é¡µ
+	private int totalPageCount;// æ€»é¡µæ•°
+	private int totalRecordCount;// æ€»è®°å½•æ•°
 
-	private List results;// ½á¹û¼¯
-	private int pageSize;// Ò³Ãæ´óĞ¡
+	private List results;// ç»“æœé›†
+	private int pageSize;// é¡µé¢å¤§å°
 
 	/**
-	 * È¡µ±Ç°Ò³ºÅ
+	 * å–å½“å‰é¡µå·
 	 * 
-	 * @return µ±Ç°Ò³ºÅ
+	 * @return å½“å‰é¡µå·
 	 */
 	public int getCurrentPageNo() {
 		if (currentPageNo == 0 || getTotalPageCount() == 0)
@@ -59,19 +59,19 @@ public class PageResult implements Serializable {
 	}
 
 	/**
-	 * ÉèÖÃµ±Ç°Ò³ºÅ
+	 * è®¾ç½®å½“å‰é¡µå·
 	 * 
 	 * @param currentPageNo
-	 *            µ±Ç°Ò³ºÅ
+	 *            å½“å‰é¡µå·
 	 */
 	public void setCurrentPageNo(int currentPageNo) {
 		this.currentPageNo = currentPageNo;
 	}
 
 	/**
-	 * È¡×ÜµÄÒ³Êı
+	 * å–æ€»çš„é¡µæ•°
 	 * 
-	 * @return ×ÜµÄÒ³Êı
+	 * @return æ€»çš„é¡µæ•°
 	 */
 	public int getTotalPageCount() {
 		this.totalPageCount = (this.totalRecordCount + pageSize - 1) / pageSize;
@@ -79,38 +79,38 @@ public class PageResult implements Serializable {
 	}
 
 	/**
-	 * ÉèÖÃ×ÜµÄÒ³Êı
+	 * è®¾ç½®æ€»çš„é¡µæ•°
 	 * 
 	 * @param totalPageCount
-	 *            ×ÜµÄÒ³Êı
+	 *            æ€»çš„é¡µæ•°
 	 */
 	public void setTotalPageCount(int totalPageCount) {
 		this.totalPageCount = totalPageCount;
 	}
 
 	/**
-	 * È¡×ÜµÄ¼ÇÂ¼Êı
+	 * å–æ€»çš„è®°å½•æ•°
 	 * 
-	 * @return ×ÜµÄ¼ÇÂ¼Êı
+	 * @return æ€»çš„è®°å½•æ•°
 	 */
 	public int getTotalRecordCount() {
 		return totalRecordCount;
 	}
 
 	/**
-	 * ÉèÖÃ×ÜµÄ¼ÇÂ¼Êı
+	 * è®¾ç½®æ€»çš„è®°å½•æ•°
 	 * 
 	 * @param totalRecordCount
-	 *            ×ÜµÄ¼ÇÂ¼Êı
+	 *            æ€»çš„è®°å½•æ•°
 	 */
 	public void setTotalRecordCount(int totalRecordCount) {
 		this.totalRecordCount = totalRecordCount;
 	}
 
 	/**
-	 * È¡½á¹û¼¯
+	 * å–ç»“æœé›†
 	 * 
-	 * @return ½á¹û¼¯
+	 * @return ç»“æœé›†
 	 */
 	public List getResults() {
 		if (results == null) {
@@ -120,29 +120,29 @@ public class PageResult implements Serializable {
 	}
 
 	/**
-	 * ÉèÖÃ½á¹û¼¯
+	 * è®¾ç½®ç»“æœé›†
 	 * 
 	 * @param results
-	 *            ½á¹û¼¯
+	 *            ç»“æœé›†
 	 */
 	public void setResults(List results) {
 		this.results = results;
 	}
 
 	/**
-	 * È¡Ò³Ãæ´óĞ¡
+	 * å–é¡µé¢å¤§å°
 	 * 
-	 * @return Ò³Ãæ´óĞ¡
+	 * @return é¡µé¢å¤§å°
 	 */
 	public int getPageSize() {
 		return pageSize;
 	}
 
 	/**
-	 * ÉèÖÃÒ³Ãæ´óĞ¡
+	 * è®¾ç½®é¡µé¢å¤§å°
 	 * 
 	 * @param pageSize
-	 *            Ò³Ãæ´óĞ¡
+	 *            é¡µé¢å¤§å°
 	 */
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;

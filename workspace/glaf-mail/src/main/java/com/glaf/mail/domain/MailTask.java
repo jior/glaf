@@ -62,7 +62,7 @@ public class MailTask implements Serializable {
 	protected String callbackUrl;
 
 	/**
-	 * µ÷¶È±í´ïÊ½
+	 * è°ƒåº¦è¡¨è¾¾å¼
 	 */
 	@Column(name = "CRONEXPRESSION_", length = 50)
 	protected String cronExpression;

@@ -119,17 +119,17 @@ public class AuthorizeBean {
 	}
 
 	/**
-	 * µÇÂ¼
+	 * ç™»å½•
 	 * 
 	 * @param request
 	 */
 	public SysUser login(String account, HttpServletRequest request,
 			HttpServletResponse response) {
 		logger.debug(account + " start login........................");
-		// ÓÃ»§µÇÂ½£¬·µ»ØÏµÍ³ÓÃ»§¶ÔÏó
+		// ç”¨æˆ·ç™»é™†ï¼Œè¿”å›ç³»ç»Ÿç”¨æˆ·å¯¹è±¡
 		SysUser bean = getSysUserService().findByAccount(account);
 		if (bean != null) {
-			// µÇÂ¼³É¹¦£¬ĞŞ¸Ä×î½üÒ»´ÎµÇÂ¼Ê±¼ä
+			// ç™»å½•æˆåŠŸï¼Œä¿®æ”¹æœ€è¿‘ä¸€æ¬¡ç™»å½•æ—¶é—´
 			Properties props = CallbackProperties.getProperties();
 			if (props != null && props.keys().hasMoreElements()) {
 				Enumeration<?> e = props.keys();
@@ -149,7 +149,7 @@ public class AuthorizeBean {
 				}
 			}
 
-			ContextUtil.put(bean.getAccount(), bean);// ´«ÈëÈ«¾Ö±äÁ¿
+			ContextUtil.put(bean.getAccount(), bean);// ä¼ å…¥å…¨å±€å˜é‡
 			RequestUtils.setLoginUser(request, response, "default",
 					bean.getAccount());
 

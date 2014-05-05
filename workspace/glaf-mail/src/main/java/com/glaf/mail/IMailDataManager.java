@@ -24,12 +24,12 @@ import java.util.Map;
 public interface IMailDataManager {
 
 	/**
-	 * »ñÈ¡½á¹û¼¯
+	 * è·å–ç»“æœé›†
 	 * 
 	 * @param query
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param paramMap
-	 *            ²ÎÊı
+	 *            å‚æ•°
 	 * @return
 	 */
 	List<Object> getResultList(String query, Map<String, Object> paramMap);

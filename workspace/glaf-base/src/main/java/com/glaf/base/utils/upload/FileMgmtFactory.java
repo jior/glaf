@@ -14,8 +14,8 @@ package com.glaf.base.utils.upload;
 
 /**
  *  
- * Ö÷Òª×÷ÓÃÊÇ¶ÔFileUploadStatus½øĞĞ¹ÜÀí£¬Îª¿Í»§¶ËÌá¹©ÏàÓ¦µÄ
- * FileUploadStatusÀà¶ÔÏó¡£ 
+ * ä¸»è¦ä½œç”¨æ˜¯å¯¹FileUploadStatusè¿›è¡Œç®¡ç†ï¼Œä¸ºå®¢æˆ·ç«¯æä¾›ç›¸åº”çš„
+ * FileUploadStatusç±»å¯¹è±¡ã€‚ 
  *
  */
 import java.util.Vector;
@@ -33,7 +33,7 @@ public class FileMgmtFactory {
 	}
 
 	/**
-	 * ´ÓrequestÖĞÈ¡³öFileUploadStatus
+	 * ä»requestä¸­å–å‡ºFileUploadStatus
 	 */
 	public static FileUploadStatus getStatusBean(HttpServletRequest request) {
 		FileMgmtFactory factory = getInstance();
@@ -41,7 +41,7 @@ public class FileMgmtFactory {
 	}
 
 	/**
-	 * °ÑFileUploadStatus·ÅÈëFactory
+	 * æŠŠFileUploadStatusæ”¾å…¥Factory
 	 */
 	public static void saveStatusBean(HttpServletRequest request,
 			FileUploadStatus statusBean) {
@@ -56,7 +56,7 @@ public class FileMgmtFactory {
 	}
 
 	/**
-	 * È¡µÃÏàÓ¦FileUploadStatusÀà¶ÔÏó
+	 * å–å¾—ç›¸åº”FileUploadStatusç±»å¯¹è±¡
 	 */
 	public FileUploadStatus getUploadStatus(String strID) {
 		int pos = indexOf(strID);
@@ -68,7 +68,7 @@ public class FileMgmtFactory {
 	}
 
 	/**
-	 * È¡µÃÏàÓ¦FileUploadStatusÀà¶ÔÏóµÄ´æ´¢Î»ÖÃ
+	 * å–å¾—ç›¸åº”FileUploadStatusç±»å¯¹è±¡çš„å­˜å‚¨ä½ç½®
 	 */
 	private int indexOf(String strID) {
 		int nReturn = -1;
@@ -83,7 +83,7 @@ public class FileMgmtFactory {
 	}
 
 	/**
-	 * É¾³ıFileUploadStatusÀà¶ÔÏó
+	 * åˆ é™¤FileUploadStatusç±»å¯¹è±¡
 	 */
 	public void removeUploadStatus(String strID) {
 		int nIndex = indexOf(strID);
@@ -93,7 +93,7 @@ public class FileMgmtFactory {
 	}
 
 	/**
-	 * ´æ´¢FileUploadStatusÀà¶ÔÏó
+	 * å­˜å‚¨FileUploadStatusç±»å¯¹è±¡
 	 */
 	public void setUploadStatus(FileUploadStatus status) {
 		int nIndex = indexOf(status.getUploadAddr());

@@ -30,7 +30,7 @@ import com.glaf.mail.query.MailItemQuery;
 public interface IMailDataService {
 
 	/**
-	 * »ñÈ¡ÓÊ¼şÕÊ»§½ÓÊÕ×´¿ö»ã×Ü
+	 * è·å–é‚®ä»¶å¸æˆ·æ¥æ”¶çŠ¶å†µæ±‡æ€»
 	 * 
 	 * @param query
 	 * @return
@@ -38,7 +38,7 @@ public interface IMailDataService {
 	List<MailCount> getMailAccountReceiveStatusCount(MailItemQuery query);
 
 	/**
-	 * »ñÈ¡ÓÊ¼şÕÊ»§·¢ËÍ×´¿ö»ã×Ü
+	 * è·å–é‚®ä»¶å¸æˆ·å‘é€çŠ¶å†µæ±‡æ€»
 	 * 
 	 * @param query
 	 * @return
@@ -46,7 +46,7 @@ public interface IMailDataService {
 	List<MailCount> getMailAccountSendStatusCount(MailItemQuery query);
 
 	/**
-	 * »ñÈ¡Ä³¸öÈÎÎñµÄÓÊ¼şÁĞ±í
+	 * è·å–æŸä¸ªä»»åŠ¡çš„é‚®ä»¶åˆ—è¡¨
 	 * 
 	 * @param query
 	 * @return
@@ -54,7 +54,7 @@ public interface IMailDataService {
 	List<MailItem> getMailItems(MailItemQuery query);
 
 	/**
-	 * »ñÈ¡ÓÊ¼ş
+	 * è·å–é‚®ä»¶
 	 * 
 	 * @param taskId
 	 * @param itemId
@@ -63,14 +63,14 @@ public interface IMailDataService {
 	MailItem getMailItem(String taskId, String itemId);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
 	int getMailCount(MailItemQuery query);
 
 	/**
-	 * »ñÈ¡ÓÊ¼ş½ÓÊÕ×´¿ö»ã×Ü
+	 * è·å–é‚®ä»¶æ¥æ”¶çŠ¶å†µæ±‡æ€»
 	 * 
 	 * @param query
 	 * @return
@@ -78,7 +78,7 @@ public interface IMailDataService {
 	List<MailCount> getMailReceiveStatusCount(MailItemQuery query);
 
 	/**
-	 * »ñÈ¡ÓÊ¼ş·¢ËÍ×´¿ö»ã×Ü
+	 * è·å–é‚®ä»¶å‘é€çŠ¶å†µæ±‡æ€»
 	 * 
 	 * @param query
 	 * @return
@@ -86,7 +86,7 @@ public interface IMailDataService {
 	List<MailCount> getMailSendStatusCount(MailItemQuery query);
 
 	/**
-	 * ±£´æÄ³¸öÈÎÎñµÄÓÊ¼ş
+	 * ä¿å­˜æŸä¸ªä»»åŠ¡çš„é‚®ä»¶
 	 * 
 	 * @param taskId
 	 * @param mailAddresses
@@ -95,7 +95,7 @@ public interface IMailDataService {
 	void saveMails(String taskId, List<String> mailAddresses);
 
 	/**
-	 * ¸üĞÂÓÊ¼şĞÅÏ¢
+	 * æ›´æ–°é‚®ä»¶ä¿¡æ¯
 	 * 
 	 * @param taskId
 	 * @param item

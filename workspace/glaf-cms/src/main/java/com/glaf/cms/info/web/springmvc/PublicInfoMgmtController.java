@@ -142,7 +142,7 @@ public class PublicInfoMgmtController {
 				if (StringUtils.isNotEmpty(x)) {
 					PublicInfo publicInfo = publicInfoService.getPublicInfo(x);
 					/**
-					 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+					 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 					 */
 					if (publicInfo != null
 							&& (StringUtils.equals(publicInfo.getCreateBy(),
@@ -155,7 +155,7 @@ public class PublicInfoMgmtController {
 		} else if (StringUtils.isNotEmpty(id)) {
 			PublicInfo publicInfo = publicInfoService.getPublicInfo(id);
 			/**
-			 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+			 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 			 */
 			if (publicInfo != null
 					&& (StringUtils.equals(publicInfo.getCreateBy(),
@@ -373,7 +373,7 @@ public class PublicInfoMgmtController {
 		} else if (StringUtils.equals(workedProcessFlag, "DF")) {
 			query.setWorkedProcessFlag(null);
 			query.setStatus(0);
-			// Èç¹û²»ÊÇÏµÍ³¹ÜÀíÔ±»òĞÅÏ¢ÉóºËÔ±£¬Ö»ÄÜ¿´×Ô¼º·¢²¼µÄĞÅÏ¢
+			// å¦‚æœä¸æ˜¯ç³»ç»Ÿç®¡ç†å‘˜æˆ–ä¿¡æ¯å®¡æ ¸å‘˜ï¼Œåªèƒ½çœ‹è‡ªå·±å‘å¸ƒçš„ä¿¡æ¯
 			if (!(loginContext.isSystemAdministrator() || loginContext
 					.hasPermission("Auditor", "and"))) {
 				query.setCreateBy(loginContext.getActorId());
@@ -532,7 +532,7 @@ public class PublicInfoMgmtController {
 	public byte[] publish(HttpServletRequest request) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		/**
-		 * Ö»ÓĞÏµÍ³¹ÜÀíÔ±¼°ĞÅÏ¢ÉóºËÔ±²ÅÄÜ·¢²¼ĞÅÏ¢
+		 * åªæœ‰ç³»ç»Ÿç®¡ç†å‘˜åŠä¿¡æ¯å®¡æ ¸å‘˜æ‰èƒ½å‘å¸ƒä¿¡æ¯
 		 */
 		if (loginContext.isSystemAdministrator()
 				|| loginContext.hasPermission("Auditor", "and")) {

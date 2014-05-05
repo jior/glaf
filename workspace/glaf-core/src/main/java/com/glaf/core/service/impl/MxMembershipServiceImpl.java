@@ -112,14 +112,14 @@ public class MxMembershipServiceImpl implements MembershipService {
 	}
 
 	/**
-	 * 保存成员关系
+	 * 淇濆瓨鎴愬憳鍏崇郴
 	 * 
 	 * @param actorId
-	 *            用户编号
+	 *            鐢ㄦ埛缂栧彿
 	 * @param type
-	 *            类型
+	 *            绫诲瀷
 	 * @param nodeIds
-	 *            节点集合
+	 *            鑺傜偣闆嗗悎
 	 */
 	@Transactional
 	public void saveMemberships(String actorId, String type, List<Long> nodeIds) {

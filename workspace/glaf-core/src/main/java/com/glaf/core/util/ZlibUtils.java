@@ -27,18 +27,18 @@ import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 
 /**
- * ZLibÑ¹Ëõ¹¤¾ß
+ * ZLibå‹ç¼©å·¥å…·
  * 
  */
 public class ZlibUtils {
 	private static final int BUFFER = 8192;
 
 	/**
-	 * Ñ¹Ëõ×Ö½ÚÁ÷
+	 * å‹ç¼©å­—èŠ‚æµ
 	 * 
 	 * @param data
-	 *            ´ıÑ¹ËõÊı¾İ
-	 * @return byte[] Ñ¹ËõºóµÄÊı¾İ
+	 *            å¾…å‹ç¼©æ•°æ®
+	 * @return byte[] å‹ç¼©åçš„æ•°æ®
 	 */
 	public static byte[] compress(byte[] data) {
 		byte[] output = null;
@@ -71,13 +71,13 @@ public class ZlibUtils {
 	}
 
 	/**
-	 * Ñ¹Ëõ×Ö½ÚÁ÷
+	 * å‹ç¼©å­—èŠ‚æµ
 	 * 
 	 * @param data
-	 *            ´ıÑ¹ËõÊı¾İ
+	 *            å¾…å‹ç¼©æ•°æ®
 	 * 
 	 * @param os
-	 *            Êä³öÁ÷
+	 *            è¾“å‡ºæµ
 	 */
 	public static void compress(byte[] data, OutputStream os) {
 		DeflaterOutputStream dos = null;
@@ -95,11 +95,11 @@ public class ZlibUtils {
 	}
 
 	/**
-	 * ½âÑ¹Ëõ
+	 * è§£å‹ç¼©
 	 * 
 	 * @param data
-	 *            ÒÑ¾­Ñ¹ËõµÄÊı¾İ
-	 * @return byte[] ½âÑ¹ËõºóµÄÊı¾İ
+	 *            å·²ç»å‹ç¼©çš„æ•°æ®
+	 * @return byte[] è§£å‹ç¼©åçš„æ•°æ®
 	 */
 	public static byte[] uncompress(byte[] data) {
 		byte[] output = null;
@@ -131,11 +131,11 @@ public class ZlibUtils {
 	}
 
 	/**
-	 * ½âÑ¹Ëõ
+	 * è§£å‹ç¼©
 	 * 
 	 * @param inputStream
-	 *            ÒÑ¾­Ñ¹ËõµÄÊı¾İÊäÈëÁ÷
-	 * @return byte[] ½âÑ¹ËõºóµÄÊı¾İ
+	 *            å·²ç»å‹ç¼©çš„æ•°æ®è¾“å…¥æµ
+	 * @return byte[] è§£å‹ç¼©åçš„æ•°æ®
 	 */
 	public static byte[] uncompress(InputStream inputStream) {
 		byte[] bytes = null;

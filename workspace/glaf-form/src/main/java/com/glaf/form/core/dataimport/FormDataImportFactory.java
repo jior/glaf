@@ -49,7 +49,7 @@ public class FormDataImportFactory {
 	}
 
 	/**
-	 * Í¨¹ıÄ£°åÀàĞÍ»ñÈ¡½âÎö½Ó¿ÚÊµÏÖÀà
+	 * é€šè¿‡æ¨¡æ¿ç±»å‹è·å–è§£ææ¥å£å®ç°ç±»
 	 * 
 	 * @param templateType
 	 * @return
@@ -60,7 +60,7 @@ public class FormDataImportFactory {
 	}
 
 	/**
-	 * Í¨¹ıÄ£°åÀàĞÍºÍÄ£°åÎÄ¼ş»ñÈ¡±íµ¥¶¨ÒåĞÅÏ¢
+	 * é€šè¿‡æ¨¡æ¿ç±»å‹å’Œæ¨¡æ¿æ–‡ä»¶è·å–è¡¨å•å®šä¹‰ä¿¡æ¯
 	 * 
 	 * @param templateType
 	 * @param inputStream
@@ -85,7 +85,7 @@ public class FormDataImportFactory {
 	}
 
 	/**
-	 * Í¨¹ıÄ£°åÀàĞÍºÍÄ£°åÎÄ¼ş»ñÈ¡±íµ¥¶¨ÒåĞÅÏ¢
+	 * é€šè¿‡æ¨¡æ¿ç±»å‹å’Œæ¨¡æ¿æ–‡ä»¶è·å–è¡¨å•å®šä¹‰ä¿¡æ¯
 	 * 
 	 * @param templateType
 	 * @param inputStream

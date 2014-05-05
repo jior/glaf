@@ -58,7 +58,7 @@ public class SysDeptRoleResource {
 	private SysRoleService sysRoleService;
 
 	/**
-	 * ÉèÖÃÈ¨ÏŞ
+	 * è®¾ç½®æƒé™
 	 * 
 	 * @param request
 	 * @param uriInfo
@@ -84,10 +84,10 @@ public class SysDeptRoleResource {
 		boolean ret = sysDeptRoleService.saveRoleApplication(roleId, appId,
 				funcId);
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"role.app_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"role.app_failure"));
 		}
@@ -97,7 +97,7 @@ public class SysDeptRoleResource {
 	}
 
 	/**
-	 * ÉèÖÃ²¿ÃÅ½ÇÉ«
+	 * è®¾ç½®éƒ¨é—¨è§’è‰²
 	 * 
 	 * @param request
 	 * @param uriInfo
@@ -111,15 +111,15 @@ public class SysDeptRoleResource {
 		RequestUtils.setRequestParameterToAttribute(request);
 		ViewMessages messages = new ViewMessages();
 		long deptId = ParamUtil.getIntParameter(request, "deptId", 0);
-		SysDepartment dept = sysDepartmentService.getSysDepartment(deptId);// ²éÕÒ²¿ÃÅ¶ÔÏó
-		if (dept != null) {// ²¿ÃÅ´æÔÚ
-			long[] id = ParamUtil.getLongParameterValues(request, "id");// »ñÈ¡roleId
+		SysDepartment dept = sysDepartmentService.getSysDepartment(deptId);// æŸ¥æ‰¾éƒ¨é—¨å¯¹è±¡
+		if (dept != null) {// éƒ¨é—¨å­˜åœ¨
+			long[] id = ParamUtil.getLongParameterValues(request, "id");// è·å–roleId
 			if (id != null) {
 				Iterator<?> iter = dept.getRoles().iterator();
 				while (iter.hasNext()) {
 					sysDeptRoleService.delete((SysDeptRole) iter.next());
 				}
-				// ´´½¨ĞÂ½ÇÉ«
+				// åˆ›å»ºæ–°è§’è‰²
 				for (int i = 0; i < id.length; i++) {
 					SysRole role = sysRoleService.findById(id[i]);
 					if (role == null) {

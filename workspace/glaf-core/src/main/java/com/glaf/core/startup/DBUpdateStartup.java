@@ -44,10 +44,10 @@ public class DBUpdateStartup implements Bootstrap {
 					+ props.getProperty(DBConfiguration.JDBC_URL));
 			try {
 				/**
-				 * ¼ì²éÁ¬½ÓĞÅÏ¢£¬Èç¹ûÕıÈ·£¬Ö´ĞĞ¸üĞÂ
+				 * æ£€æŸ¥è¿æ¥ä¿¡æ¯ï¼Œå¦‚æœæ­£ç¡®ï¼Œæ‰§è¡Œæ›´æ–°
 				 */
 				if (DBConnectionFactory.checkConnection(props)) {
-					logger.debug("×¼±¸Ö´ĞĞ¸üĞÂSQL......");
+					logger.debug("å‡†å¤‡æ‰§è¡Œæ›´æ–°SQL......");
 					DBUpdateThread thread = new DBUpdateThread(props);
 					ThreadFactory.run(thread);
 				}

@@ -110,7 +110,7 @@ public class ParserFacede {
 			dataFile.setSize(file.length());
 		} else {
 			if (dataFile.getLastModified() == file.lastModified()) {
-				logger.debug(file.getAbsolutePath() + " ÒÑ¾­³É¹¦´¦ÀíÁË£¬²»ÔÙÖØ¸´´¦Àí¡£");
+				logger.debug(file.getAbsolutePath() + " å·²ç»æˆåŠŸå¤„ç†äº†ï¼Œä¸å†é‡å¤å¤„ç†ã€‚");
 				return;
 			}
 			insert = false;
@@ -127,7 +127,7 @@ public class ParserFacede {
 				TableModel tableModel = tplMap.get(prefix);
 				String parseClass = tableModel.getParseClass();
 				if (StringUtils.isNotEmpty(parseClass)) {
-					// ¼ÓÔØ×Ô¶¨ÒåµÄ½âÎöÆ÷
+					// åŠ è½½è‡ªå®šä¹‰çš„è§£æå™¨
 					parser = (Parser) ClassUtils.instantiateClass(parseClass);
 				} else {
 					String parseType = tableModel.getParseType();
@@ -150,11 +150,11 @@ public class ParserFacede {
 							if (insert) {
 								dataFile.setStatus(9);
 								getBlobService().insertBlob(dataFile);
-								logger.debug(dataFile.getFilename() + "ÄÚÈİÒÑ¾­´æ´¢¡£");
+								logger.debug(dataFile.getFilename() + "å†…å®¹å·²ç»å­˜å‚¨ã€‚");
 							} else {
 								dataFile.setStatus(9);
 								getBlobService().updateBlobFileInfo(dataFile);
-								logger.debug(dataFile.getFilename() + "ÄÚÈİÒÑ¾­¸üĞÂ¡£");
+								logger.debug(dataFile.getFilename() + "å†…å®¹å·²ç»æ›´æ–°ã€‚");
 							}
 						}
 					} catch (Exception ex) {
@@ -169,14 +169,14 @@ public class ParserFacede {
 	}
 
 	/**
-	 * ½âÎöÊı¾İÄ£ĞÍ
+	 * è§£ææ•°æ®æ¨¡å‹
 	 * 
 	 * @param mappingFile
-	 *            ÔªÊı¾İÅäÖÃÎÄ¼ş
+	 *            å…ƒæ•°æ®é…ç½®æ–‡ä»¶
 	 * @param dataFile
-	 *            ½âÎöÊı¾İÎÄ¼ş
+	 *            è§£ææ•°æ®æ–‡ä»¶
 	 * @param saveToDB
-	 *            ÊÇ·ñ±£´æµ½Êı¾İ¿â
+	 *            æ˜¯å¦ä¿å­˜åˆ°æ•°æ®åº“
 	 * @return
 	 */
 	public List<TableModel> parse(InputStream mappingFile,
@@ -191,7 +191,7 @@ public class ParserFacede {
 
 		if (tableDefinition != null) {
 			ColumnDefinition column4 = new ColumnDefinition();
-			column4.setTitle("¾ÛºÏÖ÷¼ü");
+			column4.setTitle("èšåˆä¸»é”®");
 			column4.setName("aggregationKey");
 			column4.setColumnName("AGGREGATIONKEY");
 			column4.setJavaType("String");
@@ -209,7 +209,7 @@ public class ParserFacede {
 			tableModel = xmlReader.read(mappingFile);
 			String parseClass = tableModel.getParseClass();
 			if (StringUtils.isNotEmpty(parseClass)) {
-				// ¼ÓÔØ×Ô¶¨ÒåµÄ½âÎöÆ÷
+				// åŠ è½½è‡ªå®šä¹‰çš„è§£æå™¨
 				parser = (Parser) ClassUtils.instantiateClass(parseClass);
 			} else {
 				String parseType = tableModel.getParseType();
@@ -240,14 +240,14 @@ public class ParserFacede {
 	}
 
 	/**
-	 * ½âÎöÊı¾İÄ£ĞÍ
+	 * è§£ææ•°æ®æ¨¡å‹
 	 * 
 	 * @param mappingFile
-	 *            ÔªÊı¾İÅäÖÃÎÄ¼ş
+	 *            å…ƒæ•°æ®é…ç½®æ–‡ä»¶
 	 * @param dataFile
-	 *            ½âÎöÊı¾İÎÄ¼ş
+	 *            è§£ææ•°æ®æ–‡ä»¶
 	 * @param saveToDB
-	 *            ÊÇ·ñ±£´æµ½Êı¾İ¿â
+	 *            æ˜¯å¦ä¿å­˜åˆ°æ•°æ®åº“
 	 * @return
 	 */
 	public List<TableModel> parse(byte[] mappingFile, InputStream dataFile,
@@ -265,7 +265,7 @@ public class ParserFacede {
 
 		if (tableDefinition != null) {
 			ColumnDefinition column4 = new ColumnDefinition();
-			column4.setTitle("¾ÛºÏÖ÷¼ü");
+			column4.setTitle("èšåˆä¸»é”®");
 			column4.setName("aggregationKey");
 			column4.setColumnName("AGGREGATIONKEY");
 			column4.setJavaType("String");
@@ -285,7 +285,7 @@ public class ParserFacede {
 					new ByteArrayInputStream(mappingFile)));
 			String parseClass = tableModel.getParseClass();
 			if (StringUtils.isNotEmpty(parseClass)) {
-				// ¼ÓÔØ×Ô¶¨ÒåµÄ½âÎöÆ÷
+				// åŠ è½½è‡ªå®šä¹‰çš„è§£æå™¨
 				parser = (Parser) ClassUtils.instantiateClass(parseClass);
 			} else {
 				String parseType = tableModel.getParseType();
@@ -316,14 +316,14 @@ public class ParserFacede {
 	}
 
 	/**
-	 * ½âÎöÊı¾İÄ£ĞÍ
+	 * è§£ææ•°æ®æ¨¡å‹
 	 * 
 	 * @param mappingFile
-	 *            ÔªÊı¾İÅäÖÃÎÄ¼ş
+	 *            å…ƒæ•°æ®é…ç½®æ–‡ä»¶
 	 * @param dataFile
-	 *            ½âÎöÊı¾İÎÄ¼ş
+	 *            è§£ææ•°æ®æ–‡ä»¶
 	 * @param saveToDB
-	 *            ÊÇ·ñ±£´æµ½Êı¾İ¿â
+	 *            æ˜¯å¦ä¿å­˜åˆ°æ•°æ®åº“
 	 * @return
 	 */
 	public List<TableModel> parse(String mappingFile, String dataFile,
@@ -339,7 +339,7 @@ public class ParserFacede {
 		}
 		if (tableDefinition != null) {
 			ColumnDefinition column4 = new ColumnDefinition();
-			column4.setTitle("¾ÛºÏÖ÷¼ü");
+			column4.setTitle("èšåˆä¸»é”®");
 			column4.setName("aggregationKey");
 			column4.setColumnName("AGGREGATIONKEY");
 			column4.setJavaType("String");
@@ -359,7 +359,7 @@ public class ParserFacede {
 					.read(new java.io.FileInputStream(mappingFile));
 			String parseClass = tableModel.getParseClass();
 			if (StringUtils.isNotEmpty(parseClass)) {
-				// ¼ÓÔØ×Ô¶¨ÒåµÄ½âÎöÆ÷
+				// åŠ è½½è‡ªå®šä¹‰çš„è§£æå™¨
 				parser = (Parser) ClassUtils.instantiateClass(parseClass);
 			} else {
 				String parseType = tableModel.getParseType();
@@ -418,7 +418,7 @@ public class ParserFacede {
 		}
 
 		/**
-		 * ÏÂÃæ¶ÁÈ¡ÎÄ¼şÖ»¿¼ÂÇÁ½²ã
+		 * ä¸‹é¢è¯»å–æ–‡ä»¶åªè€ƒè™‘ä¸¤å±‚
 		 */
 		java.io.File directory2 = new java.io.File(dataDir);
 		if (directory2.exists()) {

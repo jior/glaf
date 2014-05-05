@@ -30,20 +30,20 @@ public class InitBaseDataServlet extends HttpServlet {
 	private final static Log logger = LogFactory
 			.getLog(InitBaseDataServlet.class);
 
-	private BaseDataManager bdm = BaseDataManager.getInstance();// »ù´¡ĞÅÏ¢¹ÜÀí
+	private BaseDataManager bdm = BaseDataManager.getInstance();// åŸºç¡€ä¿¡æ¯ç®¡ç†
 
 	public void init() {
 		long startTime = System.currentTimeMillis();
-		logger.info("³õÊ¼»¯»ù´¡ĞÅÏ¢...");
+		logger.info("åˆå§‹åŒ–åŸºç¡€ä¿¡æ¯...");
 		try {
-			bdm.refreshBaseData();// Ë¢ĞÂÊı¾İ
-			logger.info("³õÊ¼»¯»ù´¡ĞÅÏ¢Íê³É.");
-			// ×°ÔØÏµÍ³¹¦ÄÜÁĞ±í
+			bdm.refreshBaseData();// åˆ·æ–°æ•°æ®
+			logger.info("åˆå§‹åŒ–åŸºç¡€ä¿¡æ¯å®Œæˆ.");
+			// è£…è½½ç³»ç»ŸåŠŸèƒ½åˆ—è¡¨
 			ContextUtil.put("function", bdm.getBaseData(Constants.SYS_FUNCTIONS));
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			logger.error("³õÊ¼»¯»ù´¡ĞÅÏ¢Ê§°Ü£¡");
+			logger.error("åˆå§‹åŒ–åŸºç¡€ä¿¡æ¯å¤±è´¥ï¼");
 		}
-		logger.info("ºÄÊ±£º" + (System.currentTimeMillis() - startTime) + " ms.");
+		logger.info("è€—æ—¶ï¼š" + (System.currentTimeMillis() - startTime) + " ms.");
 	}
 }

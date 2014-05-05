@@ -126,7 +126,7 @@ public class DataTransfer implements Serializable, JSONable {
 	protected List<ColumnDefinition> columns = new java.util.ArrayList<ColumnDefinition>();
 
 	/**
-	 * ĞèÒªÅÅ³ıµÄĞĞÁĞ±í
+	 * éœ€è¦æ’é™¤çš„è¡Œåˆ—è¡¨
 	 */
 	@javax.persistence.Transient
 	protected List<String> excludes = new java.util.ArrayList<String>();

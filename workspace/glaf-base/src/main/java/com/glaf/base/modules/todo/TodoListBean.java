@@ -39,7 +39,7 @@ public class TodoListBean {
 			.getLog(TodoListBean.class);
 
 	/**
-	 * »ñÈ¡ÓÃ»§µÄÈÎÎñ»ã×Ü
+	 * è·å–ç”¨æˆ·çš„ä»»åŠ¡æ±‡æ€»
 	 * 
 	 * @param actorId
 	 * @return

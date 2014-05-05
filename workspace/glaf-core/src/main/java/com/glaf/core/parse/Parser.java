@@ -25,9 +25,9 @@ import com.glaf.core.base.TableModel;
 public interface Parser {
 
 	/**
-	 * ½«Êı¾İÁ÷½âÎöÎªÊı¾İÄ£ĞÍ
-	 * @param tableModel ¶¨ÒåÄ£ĞÍ¶ÔÏó
-	 * @param data Êı¾İÁ÷
+	 * å°†æ•°æ®æµè§£æä¸ºæ•°æ®æ¨¡å‹
+	 * @param tableModel å®šä¹‰æ¨¡å‹å¯¹è±¡
+	 * @param data æ•°æ®æµ
 	 * @return
 	 */
 	List<TableModel> parse(TableModel tableModel, java.io.InputStream data);

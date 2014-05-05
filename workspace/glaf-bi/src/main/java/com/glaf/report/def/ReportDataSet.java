@@ -26,19 +26,19 @@ public class ReportDataSet implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Êı¾İÔ´¶¨Òå
+	 * æ•°æ®æºå®šä¹‰
 	 */
 	protected String datasourceName;
 
 	protected ReportDefinition reportDefinition;
 
 	/**
-	 * ±¨±í½á¹û¼¯
+	 * æŠ¥è¡¨ç»“æœé›†
 	 */
 	protected List<ReportRowSet> rowSetList = new java.util.ArrayList<ReportRowSet>();
 
 	/**
-	 * ±¨±íÊôĞÔ¶¨Òå£¬Ö÷ÒªÓÃÓÚ×Ô¶¨Òå´¦Àí³ÌĞò
+	 * æŠ¥è¡¨å±æ€§å®šä¹‰ï¼Œä¸»è¦ç”¨äºè‡ªå®šä¹‰å¤„ç†ç¨‹åº
 	 */
 	protected Map<String, Object> properties = new java.util.HashMap<String, Object>();
 

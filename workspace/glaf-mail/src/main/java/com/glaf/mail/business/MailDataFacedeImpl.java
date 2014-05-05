@@ -72,12 +72,12 @@ public class MailDataFacedeImpl implements MailDataFacede {
 	protected org.quartz.Scheduler scheduler;
 
 	/**
-	 * Ìí¼Ó´æ´¢ÓÊ¼şĞÅÏ¢µÄÊı¾İ±í
+	 * æ·»åŠ å­˜å‚¨é‚®ä»¶ä¿¡æ¯çš„æ•°æ®è¡¨
 	 * 
 	 * @param dataTable
-	 *            ±íÃû³Æ
+	 *            è¡¨åç§°
 	 * @param storage
-	 *            ´æ´¢ÀàĞÍ
+	 *            å­˜å‚¨ç±»å‹
 	 */
 	public void addDataTable(String dataTable, MailStorage storage) {
 		String storageType = storage.getStorageType();
@@ -101,7 +101,7 @@ public class MailDataFacedeImpl implements MailDataFacede {
 	}
 
 	/**
-	 * Ö´ĞĞÍ³¼Æ
+	 * æ‰§è¡Œç»Ÿè®¡
 	 */
 	public void executeCount() {
 		MailTaskQuery q = new MailTaskQuery();
@@ -109,7 +109,7 @@ public class MailDataFacedeImpl implements MailDataFacede {
 		List<MailTask> list = mailTaskService.list(q);
 		for (MailTask task : list) {
 			/**
-			 * Î´¿ªÊ¼µÄÈÎÎñ²»Í³¼Æ
+			 * æœªå¼€å§‹çš„ä»»åŠ¡ä¸ç»Ÿè®¡
 			 */
 			if (task.getStartDate().getTime() > (new java.util.Date().getTime())) {
 				continue;
@@ -122,7 +122,7 @@ public class MailDataFacedeImpl implements MailDataFacede {
 			query.setTableName(task.getStorage().getDataTable());
 
 			/**
-			 * ÒÑ¾­Íê³ÉµÄÈÎÎñ£¬²»ĞèÒªÍ³¼Æ·¢ËÍ×´Ì¬
+			 * å·²ç»å®Œæˆçš„ä»»åŠ¡ï¼Œä¸éœ€è¦ç»Ÿè®¡å‘é€çŠ¶æ€
 			 */
 			if (task.getEndDate().getTime() > (new java.util.Date().getTime())) {
 				try {
@@ -157,7 +157,7 @@ public class MailDataFacedeImpl implements MailDataFacede {
 	}
 
 	/**
-	 * »ñÈ¡ÓÊ¼şÕÊ»§½ÓÊÕ×´¿ö»ã×Ü
+	 * è·å–é‚®ä»¶å¸æˆ·æ¥æ”¶çŠ¶å†µæ±‡æ€»
 	 * 
 	 * @param query
 	 * @return
@@ -186,7 +186,7 @@ public class MailDataFacedeImpl implements MailDataFacede {
 	}
 
 	/**
-	 * »ñÈ¡ÓÊ¼şÕÊ»§·¢ËÍ×´¿ö»ã×Ü
+	 * è·å–é‚®ä»¶å¸æˆ·å‘é€çŠ¶å†µæ±‡æ€»
 	 * 
 	 * @param query
 	 * @return
@@ -267,7 +267,7 @@ public class MailDataFacedeImpl implements MailDataFacede {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÈÎÎñµÄÓÊ¼şÁĞ±í
+	 * è·å–æŸä¸ªä»»åŠ¡çš„é‚®ä»¶åˆ—è¡¨
 	 * 
 	 * @param taskId
 	 * @param query
@@ -304,7 +304,7 @@ public class MailDataFacedeImpl implements MailDataFacede {
 	}
 
 	/**
-	 * »ñÈ¡ÓÊ¼ş½ÓÊÕ×´¿ö»ã×Ü
+	 * è·å–é‚®ä»¶æ¥æ”¶çŠ¶å†µæ±‡æ€»
 	 * 
 	 * @param query
 	 * @return
@@ -338,7 +338,7 @@ public class MailDataFacedeImpl implements MailDataFacede {
 	}
 
 	/**
-	 * »ñÈ¡ÓÊ¼ş·¢ËÍ×´¿ö»ã×Ü
+	 * è·å–é‚®ä»¶å‘é€çŠ¶å†µæ±‡æ€»
 	 * 
 	 * @param query
 	 * @return
@@ -374,7 +374,7 @@ public class MailDataFacedeImpl implements MailDataFacede {
 	}
 
 	/**
-	 * ±£´æÄ³¸öÈÎÎñµÄÓÊ¼ş
+	 * ä¿å­˜æŸä¸ªä»»åŠ¡çš„é‚®ä»¶
 	 * 
 	 * @param taskId
 	 * @param mailAddresses
@@ -413,13 +413,13 @@ public class MailDataFacedeImpl implements MailDataFacede {
 
 		for (MailTask task : list) {
 			/**
-			 * Î´¿ªÊ¼µÄÈÎÎñ²»´¦Àí
+			 * æœªå¼€å§‹çš„ä»»åŠ¡ä¸å¤„ç†
 			 */
 			if (task.getStartDate().getTime() > (new java.util.Date().getTime())) {
 				continue;
 			}
 			/**
-			 * ÒÑ¾­µ½ÆÚµÄÈÎÎñÒ²²»´¦Àí
+			 * å·²ç»åˆ°æœŸçš„ä»»åŠ¡ä¹Ÿä¸å¤„ç†
 			 */
 			if (task.getEndDate().getTime() < (new java.util.Date().getTime())) {
 				continue;
@@ -472,7 +472,7 @@ public class MailDataFacedeImpl implements MailDataFacede {
 
 		for (MailTask task : list) {
 			/**
-			 * Î´¿ªÊ¼µÄÈÎÎñ²»Í³¼Æ
+			 * æœªå¼€å§‹çš„ä»»åŠ¡ä¸ç»Ÿè®¡
 			 */
 			if (task.getStartDate().getTime() > (new java.util.Date().getTime())) {
 				continue;
@@ -543,7 +543,7 @@ public class MailDataFacedeImpl implements MailDataFacede {
 	}
 
 	/**
-	 * ·¢ËÍÓÊ¼ş
+	 * å‘é€é‚®ä»¶
 	 * 
 	 * @param taskId
 	 * @param itemId
@@ -578,7 +578,7 @@ public class MailDataFacedeImpl implements MailDataFacede {
 	}
 
 	/**
-	 * ·¢ËÍÓÊ¼ş
+	 * å‘é€é‚®ä»¶
 	 * 
 	 * @param taskId
 	 */
@@ -655,7 +655,7 @@ public class MailDataFacedeImpl implements MailDataFacede {
 	}
 
 	/**
-	 * ¸üĞÂÓÊ¼şĞÅÏ¢
+	 * æ›´æ–°é‚®ä»¶ä¿¡æ¯
 	 * 
 	 * @param taskId
 	 * @param item

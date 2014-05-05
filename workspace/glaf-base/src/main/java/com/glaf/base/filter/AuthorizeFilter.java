@@ -44,13 +44,13 @@ public class AuthorizeFilter implements Filter {
 	private String errorUrl = "";
 
 	/**
-	 * ×¢Ïú
+	 * æ³¨é”€
 	 */
 	public void destroy() {
 	}
 
 	/**
-	 * ¹ıÂË
+	 * è¿‡æ»¤
 	 * 
 	 * @param request
 	 *            ServletRequest
@@ -66,16 +66,16 @@ public class AuthorizeFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 
-		// ĞèÒªÑéÖ¤
+		// éœ€è¦éªŒè¯
 		if ("true".equals(require)) {
-			// ¼ì²âÓÃ»§ÊÇ·ñÒÑ¾­µÇÂ¼
+			// æ£€æµ‹ç”¨æˆ·æ˜¯å¦å·²ç»ç™»å½•
 			SysUser bean = RequestUtil.getLoginUser(req);
 			String uri = req.getRequestURI();
 			logger.debug(uri);
 
-			// ÓÃ»§Ã»ÓĞµÇÂ¼ÇÒµ±Ç°Ò³²»ÊÇµÇÂ¼Ò³Ãæ
+			// ç”¨æˆ·æ²¡æœ‰ç™»å½•ä¸”å½“å‰é¡µä¸æ˜¯ç™»å½•é¡µé¢
 			logger.debug("ignoreUrl:" + ignoreUrl(uri));
-			if (bean == null && !ignoreUrl(uri)) {// ÏÔÊ¾µÇÂ½Ò³
+			if (bean == null && !ignoreUrl(uri)) {// æ˜¾ç¤ºç™»é™†é¡µ
 				res.sendRedirect(req.getContextPath() + errorUrl);
 				return;
 			} else {
@@ -113,7 +113,7 @@ public class AuthorizeFilter implements Filter {
 	}
 
 	/**
-	 * ÊÇ·ñºöÂÔµ±Ç°Ò³Ãæ
+	 * æ˜¯å¦å¿½ç•¥å½“å‰é¡µé¢
 	 * 
 	 * @param uri
 	 * @return
@@ -131,7 +131,7 @@ public class AuthorizeFilter implements Filter {
 	}
 
 	/**
-	 * ³õÊ¼»¯Filter
+	 * åˆå§‹åŒ–Filter
 	 * 
 	 * @param config
 	 *            FilterConfig

@@ -26,7 +26,7 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authz.*;
 
 /**
- * ÓµÓĞÈÎºÎÒ»¸öÈ¨ÏŞ¼´¿É·ÃÎÊ
+ * æ‹¥æœ‰ä»»ä½•ä¸€ä¸ªæƒé™å³å¯è®¿é—®
  * 
  */
 public class AnyPermissionAuthorizationFilter extends AuthorizationFilter {

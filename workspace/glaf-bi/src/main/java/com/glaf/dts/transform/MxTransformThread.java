@@ -201,7 +201,7 @@ public class MxTransformThread implements java.lang.Runnable {
 				while (iterator.hasNext()) {
 					ColumnDefinition column = iterator.next();
 					/**
-					 * ²»È¡ÏµÍ³ÄÚÖÃ±äÁ¿
+					 * ä¸å–ç³»ç»Ÿå†…ç½®å˜é‡
 					 */
 					if (cols.contains(column.getColumnName())) {
 						continue;
@@ -223,15 +223,15 @@ public class MxTransformThread implements java.lang.Runnable {
 							cell.setValue(value);
 						} catch (Exception e) {
 							String str = rs.getString(columnName);
-							logger.error("´íÎóµÄinteger:" + str);
+							logger.error("é”™è¯¯çš„integer:" + str);
 							str = StringTools.replace(str, "$", "");
-							str = StringTools.replace(str, "£¤", "");
+							str = StringTools.replace(str, "ï¿¥", "");
 							str = StringTools.replace(str, ",", "");
 							NumberFormat fmt = NumberFormat.getInstance();
 							Number num = fmt.parse(str);
 							cell.setIntValue(num.intValue());
 							cell.setValue(cell.getIntValue());
-							logger.debug("ĞŞÕıºó:" + num.intValue());
+							logger.debug("ä¿®æ­£å:" + num.intValue());
 						}
 					} else if ("Long".equals(javaType)) {
 						try {
@@ -240,14 +240,14 @@ public class MxTransformThread implements java.lang.Runnable {
 							cell.setValue(value);
 						} catch (Exception e) {
 							String str = rs.getString(columnName);
-							logger.error("´íÎóµÄlong:" + str);
-							str = StringTools.replace(str, "£¤", "");
+							logger.error("é”™è¯¯çš„long:" + str);
+							str = StringTools.replace(str, "ï¿¥", "");
 							str = StringTools.replace(str, ",", "");
 							NumberFormat fmt = NumberFormat.getInstance();
 							Number num = fmt.parse(str);
 							cell.setLongValue(num.longValue());
 							cell.setValue(cell.getLongValue());
-							logger.debug("ĞŞÕıºó:" + num.longValue());
+							logger.debug("ä¿®æ­£å:" + num.longValue());
 						}
 					} else if ("Double".equals(javaType)) {
 						try {
@@ -256,14 +256,14 @@ public class MxTransformThread implements java.lang.Runnable {
 							cell.setValue(d);
 						} catch (Exception e) {
 							String str = rs.getString(columnName);
-							logger.error("´íÎóµÄdouble:" + str);
-							str = StringTools.replace(str, "£¤", "");
+							logger.error("é”™è¯¯çš„double:" + str);
+							str = StringTools.replace(str, "ï¿¥", "");
 							str = StringTools.replace(str, ",", "");
 							NumberFormat fmt = NumberFormat.getInstance();
 							Number num = fmt.parse(str);
 							cell.setDoubleValue(num.doubleValue());
 							cell.setValue(cell.getDoubleValue());
-							logger.debug("ĞŞÕıºó:" + num.doubleValue());
+							logger.debug("ä¿®æ­£å:" + num.doubleValue());
 						}
 					} else if ("Boolean".equals(javaType)) {
 						Boolean value = rs.getBoolean(columnName);

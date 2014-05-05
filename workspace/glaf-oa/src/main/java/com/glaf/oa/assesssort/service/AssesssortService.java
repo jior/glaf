@@ -31,7 +31,7 @@ import com.glaf.base.modules.sys.model.BaseDataInfo;
 public interface AssesssortService {
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ı¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®åˆ é™¤è®°å½•
 	 * 
 	 * @return
 	 */
@@ -39,7 +39,7 @@ public interface AssesssortService {
 	void deleteById(Long id);
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ı¶àÌõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®åˆ é™¤å¤šæ¡è®°å½•
 	 * 
 	 * @return
 	 */
@@ -47,21 +47,21 @@ public interface AssesssortService {
 	void deleteByIds(List<Long> assesssortids);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼ÁĞ±í
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•åˆ—è¡¨
 	 * 
 	 * @return
 	 */
 	List<Assesssort> list(AssesssortQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
 	int getAssesssortCountByQueryCriteria(AssesssortQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */
@@ -69,14 +69,14 @@ public interface AssesssortService {
 			AssesssortQuery query);
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡Ò»Ìõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®è·å–ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */
 	Assesssort getAssesssort(Long id);
 
 	/**
-	 * ±£´æÒ»Ìõ¼ÇÂ¼
+	 * ä¿å­˜ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */
@@ -84,7 +84,7 @@ public interface AssesssortService {
 	void save(Assesssort assesssort);
 
 	/**
-	 * »ñµÃËùÓĞ·ÖÀàÀàĞÍ
+	 * è·å¾—æ‰€æœ‰åˆ†ç±»ç±»å‹
 	 * 
 	 * @return
 	 */
@@ -92,7 +92,7 @@ public interface AssesssortService {
 	List<AssesssortType> getAssesssortsType(String typeCode);
 
 	/**
-	 * °´ID»ñµÃÉÏ²ã´ÎĞÅÏ¢
+	 * æŒ‰IDè·å¾—ä¸Šå±‚æ¬¡ä¿¡æ¯
 	 * 
 	 * @param typeCode
 	 * @return
@@ -101,7 +101,7 @@ public interface AssesssortService {
 	List<AssessortTree> getParentsInfoByDictId(Integer dictId);
 
 	/**
-	 * °´CODE»ñµÃÒ»²ãÖ¸±ê·ÖÀà
+	 * æŒ‰CODEè·å¾—ä¸€å±‚æŒ‡æ ‡åˆ†ç±»
 	 * 
 	 * @param typeCode
 	 * @return

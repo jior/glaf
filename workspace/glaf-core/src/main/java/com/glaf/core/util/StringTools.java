@@ -59,7 +59,7 @@ public final class StringTools {
 	}
 
 	/**
-	 * ×Ö½ÚÊı×é×ª»¯³É16½øÖÆĞÎÊ½
+	 * å­—èŠ‚æ•°ç»„è½¬åŒ–æˆ16è¿›åˆ¶å½¢å¼
 	 */
 	public static String bytes2string(byte[] src) {
 		StringBuilder sb = new StringBuilder();
@@ -404,7 +404,7 @@ public final class StringTools {
 				length--;
 			}
 		}
-		return new String(distinChrs) + "¡­";
+		return new String(distinChrs) + "â€¦";
 	}
 
 	public static String fromCSVString(String s) {
@@ -819,7 +819,7 @@ public final class StringTools {
 				length--;
 			}
 		}
-		return new String(distinChrs) + "¡­";
+		return new String(distinChrs) + "â€¦";
 	}
 
 	public static String[] splitToArray(String text, String delimiter) {
@@ -896,7 +896,7 @@ public final class StringTools {
 	}
 
 	/**
-	 * 16½øÖÆ×Ö·û´®×ª»¯³É×Ö½ÚÊı×é
+	 * 16è¿›åˆ¶å­—ç¬¦ä¸²è½¬åŒ–æˆå­—èŠ‚æ•°ç»„
 	 */
 	public static byte[] string2bytes(String hexString) {
 		if (hexString == null || hexString.equals("")) {

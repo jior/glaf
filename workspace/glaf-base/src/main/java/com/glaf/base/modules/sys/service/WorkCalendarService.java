@@ -29,7 +29,7 @@ import com.glaf.base.modules.sys.model.WorkCalendar;
 public interface WorkCalendarService {
 
 	/**
-	 * ¼ì²âÊÇ·ñ¹¤×÷ÈÕÆÚ,falseÎª·ñ,trueÎªÊÇ
+	 * æ£€æµ‹æ˜¯å¦å·¥ä½œæ—¥æœŸ,falseä¸ºå¦,trueä¸ºæ˜¯
 	 * 
 	 * @param date
 	 * @return
@@ -38,7 +38,7 @@ public interface WorkCalendarService {
 	boolean checkWorkDate(Date date);
 
 	/**
-	 * ±£´æ
+	 * ä¿å­˜
 	 * 
 	 * @param bean
 	 *            WorkCalendar
@@ -48,7 +48,7 @@ public interface WorkCalendarService {
 	boolean create(WorkCalendar bean);
 
 	/**
-	 * É¾³ı
+	 * åˆ é™¤
 	 * 
 	 * @param id
 	 *            int
@@ -58,7 +58,7 @@ public interface WorkCalendarService {
 	boolean delete(long id);
 
 	/**
-	 * É¾³ı
+	 * åˆ é™¤
 	 * 
 	 * @param bean
 	 *            WorkCalendar
@@ -68,7 +68,7 @@ public interface WorkCalendarService {
 	boolean delete(WorkCalendar bean);
 
 	/**
-	 * »ñÈ¡¶ÔÏó
+	 * è·å–å¯¹è±¡
 	 * 
 	 * @param year
 	 *            int
@@ -81,7 +81,7 @@ public interface WorkCalendarService {
 	WorkCalendar find(int year, int month, int day);
 
 	/**
-	 * »ñÈ¡¶ÔÏó
+	 * è·å–å¯¹è±¡
 	 * 
 	 * @param id
 	 * @return
@@ -89,12 +89,12 @@ public interface WorkCalendarService {
 	WorkCalendar findById(long id);
 
 	/**
-	 * È¡ÓĞĞ§µÃ¹¤×÷ÈÕÆÚ
+	 * å–æœ‰æ•ˆå¾—å·¥ä½œæ—¥æœŸ
 	 * 
 	 * @param startDate
-	 *            ¿ªÊ¼ÈÕÆÚ
+	 *            å¼€å§‹æ—¥æœŸ
 	 * @param interval
-	 *            ¼ä¸ô
+	 *            é—´éš”
 	 * @return
 	 */
 	Date getWorkDate(Date startDate, int interval);
@@ -109,18 +109,18 @@ public interface WorkCalendarService {
 	Date getWorkDate(Date startDate, int interval, List<Date> noneWorkDays);
 
 	/**
-	 * È¡ÓĞĞ§µÃ¹¤×÷ÈÕÆÚ
+	 * å–æœ‰æ•ˆå¾—å·¥ä½œæ—¥æœŸ
 	 * 
 	 * @param startDate
-	 *            ¿ªÊ¼ÈÕÆÚ
+	 *            å¼€å§‹æ—¥æœŸ
 	 * @param interval
-	 *            ¼ä¸ô
+	 *            é—´éš”
 	 * @return
 	 */
 	Date getWorkDate2(Date startDate, int interval);
 
 	/**
-	 * ·µ»ØËùÓĞ·Ç¹¤×÷ÈÕÁĞ±í
+	 * è¿”å›æ‰€æœ‰éå·¥ä½œæ—¥åˆ—è¡¨
 	 * 
 	 * @param year
 	 * @param month
@@ -129,7 +129,7 @@ public interface WorkCalendarService {
 	List<Integer> getWorkDateList(int year, int month);
 
 	/**
-	 * ¸üĞÂ
+	 * æ›´æ–°
 	 * 
 	 * @param bean
 	 *            WorkCalendar

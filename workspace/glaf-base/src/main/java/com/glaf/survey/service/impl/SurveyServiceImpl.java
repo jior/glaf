@@ -108,12 +108,12 @@ public class SurveyServiceImpl implements SurveyService {
 	}
 
 	/**
-	 * »ñÈ¡×îĞÂµÄÒ»ÌõÍ¶Æ±½á¹û
+	 * è·å–æœ€æ–°çš„ä¸€æ¡æŠ•ç¥¨ç»“æœ
 	 * 
 	 * @param surveyId
-	 *            Í¶Æ±¼ÇÂ¼
+	 *            æŠ•ç¥¨è®°å½•
 	 * @param ip
-	 *            IPµØÖ·
+	 *            IPåœ°å€
 	 * @return
 	 */
 	public SurveyResult getLatestSurveyResult(Long surveyId, String ip) {

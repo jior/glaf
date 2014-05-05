@@ -34,7 +34,7 @@ public class AbstractTest {
 
 	@Before
 	public void setUp() throws Exception {
-		System.out.println("¿ªÊ¼²âÊÔ..................................");
+		System.out.println("å¼€å§‹æµ‹è¯•..................................");
 		start = System.currentTimeMillis();
 		if (ctx == null) {
 			ctx = new ClassPathXmlApplicationContext(configurationResource);
@@ -44,8 +44,8 @@ public class AbstractTest {
 	@After
 	public void tearDown() throws Exception {
 		long times = System.currentTimeMillis() - start;
-		System.out.println("×Ü¹²ºÄÊ±(ºÁÃë):" + times);
-		System.out.println("²âÊÔÍê³É¡£");
+		System.out.println("æ€»å…±è€—æ—¶(æ¯«ç§’):" + times);
+		System.out.println("æµ‹è¯•å®Œæˆã€‚");
 	}
 
 	@SuppressWarnings("unchecked")

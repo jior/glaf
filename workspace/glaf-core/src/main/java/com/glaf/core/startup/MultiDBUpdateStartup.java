@@ -127,10 +127,10 @@ public class MultiDBUpdateStartup implements Bootstrap {
 								props.put(DBConfiguration.JDBC_NAME, name);
 
 								/**
-								 * ¼ì²éÁ¬½ÓĞÅÏ¢£¬Èç¹ûÕıÈ·£¬±£´æÅäÖÃ
+								 * æ£€æŸ¥è¿æ¥ä¿¡æ¯ï¼Œå¦‚æœæ­£ç¡®ï¼Œä¿å­˜é…ç½®
 								 */
 								if (DBConnectionFactory.checkConnection(props)) {
-									logger.debug("×¼±¸Ö´ĞĞ¸üĞÂSQL......");
+									logger.debug("å‡†å¤‡æ‰§è¡Œæ›´æ–°SQL......");
 									DBUpdateThread thread = new DBUpdateThread(
 											props);
 									ThreadFactory.run(thread);

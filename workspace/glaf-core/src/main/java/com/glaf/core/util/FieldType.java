@@ -93,26 +93,26 @@ public class FieldType {
 		javaTypeMap.put(Types.TIMESTAMP, "Date");
 		javaTypeMap.put(Types.VARCHAR, "String");
 
-		nameMap.put(INTEGER_TYPE, "ÕûÊıĞÍ");
-		nameMap.put(DOUBLE_TYPE, "ÊıÖµĞÍ");
-		nameMap.put(BOOLEAN_TYPE, "²¼¶ûÖµ");
-		nameMap.put(STRING_TYPE, "×Ö·ûĞÍ");
-		nameMap.put(DATE_TYPE, "ÈÕÆÚĞÍ");
-		nameMap.put(TIMESTAMP_TYPE, "ÈÕÆÚÊ±¼äĞÍ");
-		nameMap.put(CLOB_TYPE, "³¤ÎÄ±¾ĞÍ");
-		nameMap.put(BLOB_TYPE, "¶ş½øÖÆÊı¾İ");
-		nameMap.put(CHAR_TYPE, "×Ö·ûĞÍ");
-		nameMap.put(SHORT_TYPE, "¶ÌÕûÊıĞÍ");
-		nameMap.put(LONG_TYPE, "³¤ÕûÊıĞÍ");
-		nameMap.put(TEXT_TYPE, "³¤ÎÄ±¾ĞÍ");
+		nameMap.put(INTEGER_TYPE, "æ•´æ•°å‹");
+		nameMap.put(DOUBLE_TYPE, "æ•°å€¼å‹");
+		nameMap.put(BOOLEAN_TYPE, "å¸ƒå°”å€¼");
+		nameMap.put(STRING_TYPE, "å­—ç¬¦å‹");
+		nameMap.put(DATE_TYPE, "æ—¥æœŸå‹");
+		nameMap.put(TIMESTAMP_TYPE, "æ—¥æœŸæ—¶é—´å‹");
+		nameMap.put(CLOB_TYPE, "é•¿æ–‡æœ¬å‹");
+		nameMap.put(BLOB_TYPE, "äºŒè¿›åˆ¶æ•°æ®");
+		nameMap.put(CHAR_TYPE, "å­—ç¬¦å‹");
+		nameMap.put(SHORT_TYPE, "çŸ­æ•´æ•°å‹");
+		nameMap.put(LONG_TYPE, "é•¿æ•´æ•°å‹");
+		nameMap.put(TEXT_TYPE, "é•¿æ–‡æœ¬å‹");
 	}
 
 	/**
-	 * ¸ù¾İÀàĞÍÃû³Æ»ñÈ¡Êı¾İÀàĞÍ
+	 * æ ¹æ®ç±»å‹åç§°è·å–æ•°æ®ç±»å‹
 	 * 
 	 * @param typeName
-	 *            ÀàĞÍÃû³Æ
-	 * @return java.sql.Types ¶ÔÓ¦µÄÖµ
+	 *            ç±»å‹åç§°
+	 * @return java.sql.Types å¯¹åº”çš„å€¼
 	 */
 	public static int getFieldType(String typeName) {
 		if (typeName == null) {
@@ -127,11 +127,11 @@ public class FieldType {
 	}
 
 	/**
-	 * ¸ù¾İÖµ·µ»ØÀàĞÍÃû³Æ
+	 * æ ¹æ®å€¼è¿”å›ç±»å‹åç§°
 	 * 
 	 * @param dataType
-	 *            java.sql.Types ¶ÔÓ¦µÄÖµ
-	 * @return ÀàĞÍÃû³Æ
+	 *            java.sql.Types å¯¹åº”çš„å€¼
+	 * @return ç±»å‹åç§°
 	 */
 	public static String getJavaType(int dataType) {
 		if (javaTypeMap.get(dataType) != null) {
@@ -141,11 +141,11 @@ public class FieldType {
 	}
 
 	/**
-	 * ¸ù¾İÖµ·µ»ØÀàĞÍÃû³Æ
+	 * æ ¹æ®å€¼è¿”å›ç±»å‹åç§°
 	 * 
 	 * @param dataType
-	 *            java.sql.Types ¶ÔÓ¦µÄÖµ
-	 * @return ÀàĞÍÃû³Æ
+	 *            java.sql.Types å¯¹åº”çš„å€¼
+	 * @return ç±»å‹åç§°
 	 */
 	public static String getType(int dataType) {
 		Iterator<String> iterator = dataMap.keySet().iterator();
@@ -160,11 +160,11 @@ public class FieldType {
 	}
 
 	/**
-	 * ¸ù¾İÖµ·µ»ØÀàĞÍÖĞÎÄÃû³Æ
+	 * æ ¹æ®å€¼è¿”å›ç±»å‹ä¸­æ–‡åç§°
 	 * 
 	 * @param dataType
-	 *            java.sql.Types ¶ÔÓ¦µÄÖµ
-	 * @return ÀàĞÍÖĞÎÄÃû³Æ
+	 *            java.sql.Types å¯¹åº”çš„å€¼
+	 * @return ç±»å‹ä¸­æ–‡åç§°
 	 */
 	public static String getTypeName(int dataType) {
 		return nameMap.get(dataType);

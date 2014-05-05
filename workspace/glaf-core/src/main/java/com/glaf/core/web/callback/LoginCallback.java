@@ -23,16 +23,16 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 
- * 登录成功后的回调接口
+ * 鐧诲綍鎴愬姛鍚庣殑鍥炶皟鎺ュ彛
  * 
  */
 public interface LoginCallback {
 
 	/**
-	 * 登录之后要处理的方法
+	 * 鐧诲綍涔嬪悗瑕佸鐞嗙殑鏂规硶
 	 * 
 	 * @param actorId
-	 *            用户账号
+	 *            鐢ㄦ埛璐﹀彿
 	 * @param request
 	 * @param response
 	 */

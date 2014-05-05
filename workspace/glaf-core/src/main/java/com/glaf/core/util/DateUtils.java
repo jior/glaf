@@ -57,7 +57,7 @@ public class DateUtils {
 	public static final String YEAR_MONTH_DAY_FORMAT = "yyyyMMdd";
 
 	/**
-	 * ÅĞ¶ÏÄ³¸öÊ±¼ätime2ÊÇ·ñÔÚÁíÒ»¸öÊ±¼ätime1Ö®Ç°
+	 * åˆ¤æ–­æŸä¸ªæ—¶é—´time2æ˜¯å¦åœ¨å¦ä¸€ä¸ªæ—¶é—´time1ä¹‹å‰
 	 * 
 	 * @param time1
 	 * @param time2
@@ -82,7 +82,7 @@ public class DateUtils {
 	}
 	
 	/**
-	 * È¡Á½ÈÕÆÚ²îÒìÌìÊı
+	 * å–ä¸¤æ—¥æœŸå·®å¼‚å¤©æ•°
 	 * @param fromDate
 	 * @param toDate
 	 * @return
@@ -108,7 +108,7 @@ public class DateUtils {
 
 	
 	/**
-	 * µÃµ½¼¸ÌìÇ°µÄÊ±¼ä
+	 * å¾—åˆ°å‡ å¤©å‰çš„æ—¶é—´
 	 * 
 	 * @param date
 	 * @param day
@@ -122,7 +122,7 @@ public class DateUtils {
 	}
 
 	/**
-	 * µÃµ½¼¸ÌìºóµÄÊ±¼ä
+	 * å¾—åˆ°å‡ å¤©åçš„æ—¶é—´
 	 * 
 	 * @param date
 	 * @param day
@@ -137,7 +137,7 @@ public class DateUtils {
 
 
 	/**
-	 * ¸ù¾İÄêÔÂÈ¡Ã¿ÔÂµÄÌìÊı
+	 * æ ¹æ®å¹´æœˆå–æ¯æœˆçš„å¤©æ•°
 	 * 
 	 * @param year
 	 * @param month
@@ -173,7 +173,7 @@ public class DateUtils {
 	}
 
 	/**
-	 * °´Ö¸¶¨¸ñÊ½½«java.util.DateÈÕÆÚ×ª»»Îª×Ö·û´® ÀıÈç:2009-10-01
+	 * æŒ‰æŒ‡å®šæ ¼å¼å°†java.util.Dateæ—¥æœŸè½¬æ¢ä¸ºå­—ç¬¦ä¸² ä¾‹å¦‚:2009-10-01
 	 * 
 	 * @param date
 	 * @return
@@ -183,7 +183,7 @@ public class DateUtils {
 	}
 
 	/**
-	 * °´Ö¸¶¨¸ñÊ½½«java.util.DateÈÕÆÚ×ª»»Îª×Ö·û´® ÀıÈç:2009-01-01 15:02:01
+	 * æŒ‰æŒ‡å®šæ ¼å¼å°†java.util.Dateæ—¥æœŸè½¬æ¢ä¸ºå­—ç¬¦ä¸² ä¾‹å¦‚:2009-01-01 15:02:01
 	 * 
 	 * @param date
 	 * @return
@@ -193,7 +193,7 @@ public class DateUtils {
 	}
 
 	/**
-	 * °´¸ø¶¨¸ñÊ½×ª»»java.util.DateÈÕÆÚÎª×Ö·û´®
+	 * æŒ‰ç»™å®šæ ¼å¼è½¬æ¢java.util.Dateæ—¥æœŸä¸ºå­—ç¬¦ä¸²
 	 * 
 	 * @param pattern
 	 * @param date
@@ -213,7 +213,7 @@ public class DateUtils {
 	}
 
 	/**
-	 * »ñÈ¡Á½¸öÈÕÆÚÖ®¼äµÄÌìÊı
+	 * è·å–ä¸¤ä¸ªæ—¥æœŸä¹‹é—´çš„å¤©æ•°
 	 * 
 	 * @param startDate
 	 * @param endDate
@@ -240,7 +240,7 @@ public class DateUtils {
 	}
 
 	/**
-	 * »ñÈ¡Á½¸öÈÕÆÚÖ®¼äµÄÌìÊı
+	 * è·å–ä¸¤ä¸ªæ—¥æœŸä¹‹é—´çš„å¤©æ•°
 	 * 
 	 * @param startDate
 	 * @param endDate
@@ -255,7 +255,7 @@ public class DateUtils {
 	}
 
 	/**
-	 * ¼ÆËãÁ½¸öÈÕÆÚÖ®¼äµÄ¼ÙÆÚÌìÊı£¨½ö½öÊÇÕı³£ĞİÏ¢ÈÕ¼´ÖÜÁùÖÜÈÕ£©
+	 * è®¡ç®—ä¸¤ä¸ªæ—¥æœŸä¹‹é—´çš„å‡æœŸå¤©æ•°ï¼ˆä»…ä»…æ˜¯æ­£å¸¸ä¼‘æ¯æ—¥å³å‘¨å…­å‘¨æ—¥ï¼‰
 	 * 
 	 * @param startDate
 	 * @param endDate
@@ -267,7 +267,7 @@ public class DateUtils {
 	}
 
 	/**
-	 * »ñµÃÖ¸¶¨ÈÕÆÚµÄÏÂÒ»¸öĞÇÆÚÒ»µÄÈÕÆÚ
+	 * è·å¾—æŒ‡å®šæ—¥æœŸçš„ä¸‹ä¸€ä¸ªæ˜ŸæœŸä¸€çš„æ—¥æœŸ
 	 * 
 	 * @param date
 	 * @return
@@ -298,7 +298,7 @@ public class DateUtils {
 	}
 
 	/**
-	 * ¼ÆËãÁ½¸öÈÕÆÚÖ®¼äµÄ¹¤×÷ÌìÊı
+	 * è®¡ç®—ä¸¤ä¸ªæ—¥æœŸä¹‹é—´çš„å·¥ä½œå¤©æ•°
 	 * 
 	 * @param startDate
 	 * @param endDate
@@ -312,17 +312,17 @@ public class DateUtils {
 			endDate = swap;
 		}
 
-		int charge_start_date = 0;// ¿ªÊ¼ÈÕÆÚµÄÈÕÆÚÆ«ÒÆÁ¿
-		int charge_end_date = 0;// ½áÊøÈÕÆÚµÄÈÕÆÚÆ«ÒÆÁ¿
-		// ÈÕÆÚ²»ÔÚÍ¬Ò»¸öÈÕÆÚÄÚ
+		int charge_start_date = 0;// å¼€å§‹æ—¥æœŸçš„æ—¥æœŸåç§»é‡
+		int charge_end_date = 0;// ç»“æŸæ—¥æœŸçš„æ—¥æœŸåç§»é‡
+		// æ—¥æœŸä¸åœ¨åŒä¸€ä¸ªæ—¥æœŸå†…
 		int stmp;
 		int etmp;
 		stmp = 7 - startDate.get(Calendar.DAY_OF_WEEK);
 		etmp = 7 - endDate.get(Calendar.DAY_OF_WEEK);
-		if (stmp != 0 && stmp != 6) {// ¿ªÊ¼ÈÕÆÚÎªĞÇÆÚÁùºÍĞÇÆÚÈÕÊ±Æ«ÒÆÁ¿Îª0
+		if (stmp != 0 && stmp != 6) {// å¼€å§‹æ—¥æœŸä¸ºæ˜ŸæœŸå…­å’Œæ˜ŸæœŸæ—¥æ—¶åç§»é‡ä¸º0
 			charge_start_date = stmp - 1;
 		}
-		if (etmp != 0 && etmp != 6) {// ½áÊøÈÕÆÚÎªĞÇÆÚÁùºÍĞÇÆÚÈÕÊ±Æ«ÒÆÁ¿Îª0
+		if (etmp != 0 && etmp != 6) {// ç»“æŸæ—¥æœŸä¸ºæ˜ŸæœŸå…­å’Œæ˜ŸæœŸæ—¥æ—¶åç§»é‡ä¸º0
 			charge_end_date = etmp - 1;
 		}
 
@@ -335,7 +335,7 @@ public class DateUtils {
 	}
 
 	/**
-	 * ¼ÆËãÁ½¸öÈÕÆÚÖ®¼äµÄ¹¤×÷ÌìÊı
+	 * è®¡ç®—ä¸¤ä¸ªæ—¥æœŸä¹‹é—´çš„å·¥ä½œå¤©æ•°
 	 * 
 	 * @param startDate
 	 * @param endDate

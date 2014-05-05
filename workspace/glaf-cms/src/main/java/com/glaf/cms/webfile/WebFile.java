@@ -403,10 +403,10 @@ public class WebFile {
 					relativePath.lastIndexOf(File.separator));
 			try {
 				if (fileToDelete.isFile()) {
-					// ²»ÔÊĞíÉ¾³ıÎÄ¼ş
+					// ä¸å…è®¸åˆ é™¤æ–‡ä»¶
 					// FileHandle.deleteFile(fileToDelete.getAbsolutePath());
 				} else {
-					// ²»ÔÊĞíÉ¾³ıÄ¿Â¼
+					// ä¸å…è®¸åˆ é™¤ç›®å½•
 					// FileHandle.deleteFolder(fileToDelete.getAbsolutePath());
 				}
 			} catch (Exception e) {
@@ -1264,7 +1264,7 @@ public class WebFile {
 					responseWriteLn("</BODY></HTML>");
 				} else {
 					if (m_overWrite && FileHandle.fileExists(path)) {
-						// ²»ÔÊĞíÉ¾³ıÎÄ¼ş
+						// ä¸å…è®¸åˆ é™¤æ–‡ä»¶
 						// FileHandle.deleteFile(path);
 					}
 					try {

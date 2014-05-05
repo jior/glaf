@@ -52,26 +52,26 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 	protected List<ColumnDefinition> columns = new java.util.ArrayList<ColumnDefinition>();
 
 	/**
-	 * ²éÑ¯SQLÓï¾ä
+	 * æŸ¥è¯¢SQLè¯­å¥
 	 */
 	@Lob
 	@Column(name = "COUNTSQL_")
 	protected String countSql;
 
 	/**
-	 * MyBatis²éÑ¯Óï¾äµÄselect±àºÅ
+	 * MyBatisæŸ¥è¯¢è¯­å¥çš„selectç¼–å·
 	 */
 	@Column(name = "COUNTSTATEMENTID_", length = 100)
 	protected String countStatementId;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY_")
 	protected String createBy;
 
 	/**
-	 * ´´½¨Ê±¼ä
+	 * åˆ›å»ºæ—¶é—´
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATETIME_")
@@ -81,7 +81,7 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 	protected int deleteFlag;
 
 	/**
-	 * ÃèÊö
+	 * æè¿°
 	 */
 	@Column(name = "DESCRIPTION_", length = 500)
 	protected String description;
@@ -93,13 +93,13 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 	protected String detailUrl;
 
 	/**
-	 * Êı¾İÔ´Ãû³Æ
+	 * æ•°æ®æºåç§°
 	 */
 	@Column(name = "DSNAME_")
 	protected String dsName;
 
 	/**
-	 * Ö÷¼ü
+	 * ä¸»é”®
 	 */
 	@Id
 	@Column(name = "ID_", length = 50, nullable = false)
@@ -115,19 +115,19 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 	protected String listUrl;
 
 	/**
-	 * ÊÇ·ñËø¶¨
+	 * æ˜¯å¦é”å®š
 	 */
 	@Column(name = "LOCKED_")
 	protected int locked;
 
 	/**
-	 * ±ğÃû
+	 * åˆ«å
 	 */
 	@Column(name = "MAPPING_", length = 50)
 	protected String mapping;
 
 	/**
-	 * Ãû³Æ
+	 * åç§°
 	 */
 	@Column(name = "NAME_", length = 50)
 	protected String name;
@@ -136,7 +136,7 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 	protected List<ColumnDefinition> parameters = new java.util.ArrayList<ColumnDefinition>();
 
 	/**
-	 * ²ÎÊıÀàĞÍ
+	 * å‚æ•°ç±»å‹
 	 */
 	@Column(name = "PARAMETERTYPE_", length = 200)
 	protected String parameterType;
@@ -148,7 +148,7 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 	protected QueryDefinition parent = null;
 
 	/**
-	 * ¸¸²éÑ¯±àºÅ
+	 * çˆ¶æŸ¥è¯¢ç¼–å·
 	 */
 	@Column(name = "PARENTID_", length = 50)
 	protected String parentId;
@@ -157,50 +157,50 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 	protected List<Map<String, Object>> resultList = new java.util.ArrayList<Map<String, Object>>();
 
 	/**
-	 * ·µ»ØÖµÀàĞÍ
+	 * è¿”å›å€¼ç±»å‹
 	 */
 	@Column(name = "RESULTTYPE_", length = 200)
 	protected String resultType;
 
 	/**
-	 * ĞŞ¶©°æ±¾
+	 * ä¿®è®¢ç‰ˆæœ¬
 	 */
 	@Column(name = "REVISION_")
 	protected int revision;
 
 	/**
-	 * ·şÎñ±êÊ¶
+	 * æœåŠ¡æ ‡è¯†
 	 */
 	@Column(name = "SERVICEKEY_", length = 50)
 	protected String serviceKey;
 
 	/**
-	 * ²éÑ¯SQLÓï¾ä
+	 * æŸ¥è¯¢SQLè¯­å¥
 	 */
 	@Lob
 	@Column(name = "SQL_")
 	protected String sql;
 
 	/**
-	 * MyBatis²éÑ¯Óï¾äµÄselect±àºÅ
+	 * MyBatisæŸ¥è¯¢è¯­å¥çš„selectç¼–å·
 	 */
 	@Column(name = "STATEMENTID_", length = 100)
 	protected String statementId;
 
 	/**
-	 * Ä¿±ê±íÃû
+	 * ç›®æ ‡è¡¨å
 	 */
 	@Column(name = "TARGETTABLENAME_", length = 50)
 	protected String targetTableName;
 
 	/**
-	 * ±êÌâ
+	 * æ ‡é¢˜
 	 */
 	@Column(name = "TITLE_")
 	protected String title;
 
 	/**
-	 * Àà±ğ
+	 * ç±»åˆ«
 	 */
 	@Column(name = "TYPE_", length = 50)
 	protected String type;

@@ -115,7 +115,7 @@ public class AssessquestionController {
 					Assessquestion assessquestion = assessquestionService
 							.getAssessquestion(Long.valueOf(x));
 					/**
-					 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+					 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 					 */
 					if (assessquestion != null
 							&& (StringUtils.equals(
@@ -131,7 +131,7 @@ public class AssessquestionController {
 			Assessquestion assessquestion = assessquestionService
 					.getAssessquestion(Long.valueOf(qustionid));
 			/**
-			 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+			 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 			 */
 			if (assessquestion != null
 					&& (StringUtils.equals(assessquestion.getCreateBy(),
@@ -213,7 +213,7 @@ public class AssessquestionController {
 	}
 
 	/**
-	 * ¸ÚÎ»¿¼ºËÖ¸±êÖÆ×÷£¬Ñ¡Ôñ·ÖÀàºó²åÈëµ½±íÖĞ
+	 * å²—ä½è€ƒæ ¸æŒ‡æ ‡åˆ¶ä½œï¼Œé€‰æ‹©åˆ†ç±»åæ’å…¥åˆ°è¡¨ä¸­
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -228,7 +228,7 @@ public class AssessquestionController {
 		result.put("qid", "");
 		result.put("sid", "");
 
-		// ¾ßÌå±ê×¼ID
+		// å…·ä½“æ ‡å‡†ID
 		long sid = RequestUtils.getInt(request, "sid");
 
 		String squestionid = request.getParameter("questionId");
@@ -315,11 +315,11 @@ public class AssessquestionController {
 
 			List<Assessquestion> list = assessquestionService
 					.getAssessquestionsByQueryCriteria(start, limit, query);
-			// Ö¸±ê·ÖÀà ASSESS_CLASS
+			// æŒ‡æ ‡åˆ†ç±» ASSESS_CLASS
 			// ENTERPRISE_INDEX
 
-			// quarter ¼¾¶È
-			// monthly =ÔÂ¶È
+			// quarter å­£åº¦
+			// monthly =æœˆåº¦
 			if (list != null && !list.isEmpty()) {
 				JSONArray rowsJSON = new JSONArray();
 
@@ -380,7 +380,7 @@ public class AssessquestionController {
 	}
 
 	/**
-	 * ¸ÚÎ»¿¼ºËÖ¸±êÖÆ×÷
+	 * å²—ä½è€ƒæ ¸æŒ‡æ ‡åˆ¶ä½œ
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -393,16 +393,16 @@ public class AssessquestionController {
 		// LoginContext loginContext = RequestUtils.getLoginContext( request );
 		RequestUtils.setRequestParameterToAttribute(request);
 		// Map<String, Object> params = RequestUtils.getParameterMap( request );
-		// ASSESS_ISVALID ÊÇ·ñÓĞĞ§ÁĞ±í
+		// ASSESS_ISVALID æ˜¯å¦æœ‰æ•ˆåˆ—è¡¨
 		List<BaseDataInfo> isValidList = AQUtils
 				.getBaseInfoByCode("ASSESS_ISVALID");
 		request.setAttribute("isValidList", isValidList);
-		// ÆµÂÊÁĞ±í
+		// é¢‘ç‡åˆ—è¡¨
 		List<BaseDataInfo> frequencyList = AQUtils
 				.getBaseInfoByCode("ASSESS_AUDIT_RATE");
 		request.setAttribute("frequencyList", frequencyList);
 		String squestionId = request.getParameter("questionId");
-		// ²é¿´»òĞŞ¸Ä×´Ì¬
+		// æŸ¥çœ‹æˆ–ä¿®æ”¹çŠ¶æ€
 		String editType = request.getParameter("editType");
 		modelMap.put("editType", editType);
 		long questionId = 0;
@@ -423,7 +423,7 @@ public class AssessquestionController {
 
 				AssesssortQuery sortQuery = new AssesssortQuery();
 				sortQuery.setQustionid(assessquestion.getQustionid());
-				// Ò»ÕÅÎÊ¾íÓĞ¶à¸ö·ÖÀàÀàĞÍ
+				// ä¸€å¼ é—®å·æœ‰å¤šä¸ªåˆ†ç±»ç±»å‹
 				List<Assesssort> assessSortList = assesssortService
 						.list(sortQuery);
 				if (assessSortList != null && !assessSortList.isEmpty()) {
@@ -432,7 +432,7 @@ public class AssessquestionController {
 					for (Assesssort assessSort : assessSortList) {
 						details = new AssessQuestionDetails();
 						details.setIndex(++index + "");
-						// ·µ»ØÎ¨Ò»µÄ¼ÇÂ¼
+						// è¿”å›å”¯ä¸€çš„è®°å½•
 						List<AssessortTree> treeList = assesssortService
 								.getParentsInfoByDictId(assessSort.getSortid()
 										.intValue());
@@ -446,7 +446,7 @@ public class AssessquestionController {
 						Long assessSortId = assessSort.getAssesssortid();
 						AssesscontentQuery assessContentQuery = new AssesscontentQuery();
 						assessContentQuery.setSortid(assessSortId);
-						// Ö¸±ê¿¼ºË·ÖÀàID¶ÔÓ¦ Ò»ÌõÄÚÈİ
+						// æŒ‡æ ‡è€ƒæ ¸åˆ†ç±»IDå¯¹åº” ä¸€æ¡å†…å®¹
 						List<Assesscontent> contentList = assesscontentService
 								.list(assessContentQuery);
 						if (contentList == null) {
@@ -530,14 +530,14 @@ public class AssessquestionController {
 
 			List<Assessquestion> assessList = assessquestionService
 					.getAssessquestionsByQueryCriteria(start, limit, query);
-			// Ö¸±ê·ÖÀà ASSESS_CLASS
+			// æŒ‡æ ‡åˆ†ç±» ASSESS_CLASS
 			// ENTERPRISE_INDEX
 
 			// FACTORY_INDEX
-			// ¿¼ºËÆµÂÊ
+			// è€ƒæ ¸é¢‘ç‡
 
-			// quarter ¼¾¶È
-			// monthly =ÔÂ¶È
+			// quarter å­£åº¦
+			// monthly =æœˆåº¦
 			if (assessList != null && !assessList.isEmpty()) {
 				JSONArray rowsJSON = new JSONArray();
 
@@ -626,7 +626,7 @@ public class AssessquestionController {
 	}
 
 	/**
-	 * ±£´æ¸ÚÎ»¿¼ºËÁĞ±í
+	 * ä¿å­˜å²—ä½è€ƒæ ¸åˆ—è¡¨
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -662,7 +662,7 @@ public class AssessquestionController {
 			ex.printStackTrace();
 			logger.error(ex);
 			ModelAndView mav = new ModelAndView();
-			mav.addObject("message", "²Ù×÷Ê§°Ü¡£");
+			mav.addObject("message", "æ“ä½œå¤±è´¥ã€‚");
 			return mav;
 		}
 
@@ -688,7 +688,7 @@ public class AssessquestionController {
 							ex.printStackTrace();
 							logger.error(ex);
 							ModelAndView mav = new ModelAndView();
-							mav.addObject("message", "²Ù×÷Ê§°Ü¡£");
+							mav.addObject("message", "æ“ä½œå¤±è´¥ã€‚");
 							return mav;
 						}
 					}
@@ -701,7 +701,7 @@ public class AssessquestionController {
 	}
 
 	/**
-	 * µã»÷Ìí¼ÓÖ¸±êÀàĞÍÊ±±£´æ±êÌâĞÅÏ¢
+	 * ç‚¹å‡»æ·»åŠ æŒ‡æ ‡ç±»å‹æ—¶ä¿å­˜æ ‡é¢˜ä¿¡æ¯
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -730,7 +730,7 @@ public class AssessquestionController {
 			ex.printStackTrace();
 			logger.error(ex);
 			ModelAndView mav = new ModelAndView();
-			mav.addObject("message", "²Ù×÷Ê§°Ü¡£");
+			mav.addObject("message", "æ“ä½œå¤±è´¥ã€‚");
 			return mav;
 		}
 		modelMap.put("questionid", question.getQustionid());
@@ -788,7 +788,7 @@ public class AssessquestionController {
 	}
 
 	/**
-	 * ¸ÚÎ»¿¼ºË
+	 * å²—ä½è€ƒæ ¸
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -815,7 +815,7 @@ public class AssessquestionController {
 	@RequestMapping("/viewAssess")
 	public ModelAndView viewAssess(HttpServletRequest request, ModelMap modelMap) {
 		String squestionId = request.getParameter("questionId");
-		// ²é¿´»òĞŞ¸Ä×´Ì¬
+		// æŸ¥çœ‹æˆ–ä¿®æ”¹çŠ¶æ€
 		String editType = request.getParameter("editType");
 		modelMap.put("editType", editType);
 		long questionId = 0;
@@ -837,7 +837,7 @@ public class AssessquestionController {
 				// assessquestion.setSortTreeList( sortTreeList );
 				AssesssortQuery sortQuery = new AssesssortQuery();
 				sortQuery.setQustionid(assessquestion.getQustionid());
-				// Ò»ÕÅÎÊ¾íÓĞ¶à¸ö·ÖÀàÀàĞÍ,Ò»²ã ¹²·ÖÈı²ã´Î
+				// ä¸€å¼ é—®å·æœ‰å¤šä¸ªåˆ†ç±»ç±»å‹,ä¸€å±‚ å…±åˆ†ä¸‰å±‚æ¬¡
 				List<Assesssort> assessSortList = assesssortService
 						.list(sortQuery);
 				List<Long> sortIds = new ArrayList<Long>();
@@ -853,31 +853,31 @@ public class AssessquestionController {
 				assessContentQuery.setSortids(assessSortIds);
 				List<Assesscontent> contentList = assesscontentService
 						.list(assessContentQuery);
-				Map<String, Assesscontent> contentMap = contentList2MapByContentId(contentList); // ¿É°´contentIdÈ¡
-				Map<String, BaseDataInfo> level1Map = new HashMap<String, BaseDataInfo>();// Ê÷ĞÍÒ»²ãÄÚÈİ
-				Map<String, BaseDataInfo> level2Map = new HashMap<String, BaseDataInfo>();// Ê÷ĞÍ¶ş²ãÄÚÈİ
-				Map<String, BaseDataInfo> level3Map = new HashMap<String, BaseDataInfo>();// Ê÷ĞÍÈı²ãÄÚÈİ
+				Map<String, Assesscontent> contentMap = contentList2MapByContentId(contentList); // å¯æŒ‰contentIdå–
+				Map<String, BaseDataInfo> level1Map = new HashMap<String, BaseDataInfo>();// æ ‘å‹ä¸€å±‚å†…å®¹
+				Map<String, BaseDataInfo> level2Map = new HashMap<String, BaseDataInfo>();// æ ‘å‹äºŒå±‚å†…å®¹
+				Map<String, BaseDataInfo> level3Map = new HashMap<String, BaseDataInfo>();// æ ‘å‹ä¸‰å±‚å†…å®¹
 				sortQuery = new AssesssortQuery();
 				sortQuery.setSortids(sortIds);
-				// »ñµÃÒ»²ãÖ¸±ê·ÖÀàĞÅÏ¢ £¬Èç£ºÆóÒµ¹¤×÷Ö¸±ê£¬³§¼Ò¹¤×÷Ö¸±ê
+				// è·å¾—ä¸€å±‚æŒ‡æ ‡åˆ†ç±»ä¿¡æ¯ ï¼Œå¦‚ï¼šä¼ä¸šå·¥ä½œæŒ‡æ ‡ï¼Œå‚å®¶å·¥ä½œæŒ‡æ ‡
 				List<BaseDataInfo> sortTypeLevelList1 = assesssortService
 						.getAssessTypeByCode("ASSESS_CLASS");
 				for (BaseDataInfo baseInfo1 : sortTypeLevelList1) {
 					boolean l1 = false;
-					// »ñµÃ¶ş²ãÀàĞÍ Èç£º³§¼ÒÒªÇó¹¤×÷Íê³ÉÇé¿ö Ñ§Ï°Óë³É³¤
+					// è·å¾—äºŒå±‚ç±»å‹ å¦‚ï¼šå‚å®¶è¦æ±‚å·¥ä½œå®Œæˆæƒ…å†µ å­¦ä¹ ä¸æˆé•¿
 					List<BaseDataInfo> sortTypeLevelList2 = assesssortService
 							.getAssessTypeById(baseInfo1.getId());
 					for (BaseDataInfo baseInfo2 : sortTypeLevelList2) {
 						boolean l2 = false;
-						// ¶ş²ãID
+						// äºŒå±‚ID
 						sortQuery.setQustionid(baseInfo2.getId());
-						// Èç¹ûÓĞ½á¹û±íÊ¾¸ÃÀàÏÂÓĞÖ¸±ê
+						// å¦‚æœæœ‰ç»“æœè¡¨ç¤ºè¯¥ç±»ä¸‹æœ‰æŒ‡æ ‡
 						List<BaseDataInfo> sortTypeLevelList3 = assesssortService
 								.getAssessTypeByStandardAndSortIds(sortQuery);
 						if (sortTypeLevelList3 != null
 								&& sortTypeLevelList3.size() > 0) {
-							l1 = true;// L1ÏÂ´æÔÚÄÚÈİ
-							l2 = true;// l2ÏÂ´æÔÚÄÚÈİ
+							l1 = true;// L1ä¸‹å­˜åœ¨å†…å®¹
+							l2 = true;// l2ä¸‹å­˜åœ¨å†…å®¹
 							for (BaseDataInfo baseInfo3 : sortTypeLevelList3) {
 								level3Map
 										.put(baseInfo3.getId() + "", baseInfo3);
@@ -892,14 +892,14 @@ public class AssessquestionController {
 					}
 				}
 
-				// Ò»²ã
+				// ä¸€å±‚
 				Iterator<BaseDataInfo> iter1 = level1Map.values().iterator();
 				while (iter1.hasNext()) {
 					BaseDataInfo info1 = iter1.next();
 					AssessortTree sortTree1 = new AssessortTree();
 					boolean flag1 = false;
 					int contentLiseSize = 0;
-					// ¶ş²ã
+					// äºŒå±‚
 					List<BaseDataInfo> level2List = AQUtils
 							.getBaseListByParentId(level2Map,
 									(int) info1.getId());
@@ -908,7 +908,7 @@ public class AssessquestionController {
 					for (BaseDataInfo info2 : level2List) {
 						boolean flag2 = false;
 						int subTreeSize = 0;
-						// Èı²ã
+						// ä¸‰å±‚
 						List<BaseDataInfo> level3List = AQUtils
 								.getBaseListByParentId(level3Map,
 										(int) info2.getId());
@@ -921,7 +921,7 @@ public class AssessquestionController {
 										contentMap,
 										assessSortMap.get(info3.getId())
 												.getAssesssortid() + "");
-								// ¸´ÖÆµ½Êı×é
+								// å¤åˆ¶åˆ°æ•°ç»„
 								addToList(contentTempList, contentList1);
 							}
 							sortTree2.setContentList(contentList1);
@@ -948,11 +948,11 @@ public class AssessquestionController {
 		}
 		assessquestion.setSortTreeList(sortTreeList);
 
-		// ASSESS_ISVALID ÊÇ·ñÓĞĞ§ÁĞ±í
+		// ASSESS_ISVALID æ˜¯å¦æœ‰æ•ˆåˆ—è¡¨
 		List<BaseDataInfo> isValidList = AQUtils
 				.getBaseInfoByCode("ASSESS_ISVALID");
 		// request.setAttribute( "isValidList", isValidList );
-		// ÆµÂÊÁĞ±í
+		// é¢‘ç‡åˆ—è¡¨
 		List<BaseDataInfo> frequencyList = AQUtils
 				.getBaseInfoByCode("ASSESS_AUDIT_RATE");
 		// request.setAttribute( "frequencyList", frequencyList );
@@ -973,7 +973,7 @@ public class AssessquestionController {
 	}
 
 	/**
-	 * ²éÑ¯¸ÚÎ»¿¼ºËÁĞ±í
+	 * æŸ¥è¯¢å²—ä½è€ƒæ ¸åˆ—è¡¨
 	 * 
 	 * @param request
 	 * @param modelMap

@@ -56,7 +56,7 @@ public class MxLayoutServiceImpl implements LayoutService {
 	}
 
 	/**
-	 * 获取全部布局
+	 * 鑾峰彇鍏ㄩ儴甯冨眬
 	 * 
 	 * @return
 	 */

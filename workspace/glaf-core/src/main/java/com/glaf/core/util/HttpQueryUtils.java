@@ -131,7 +131,7 @@ public class HttpQueryUtils {
 		}
 
 		/**
-		 * ½«IPµØÖ·¼ÓÈëCookieÍ·ÖĞ·ÀÖ¹¿Í»§¶Ë´Û¸Ä
+		 * å°†IPåœ°å€åŠ å…¥Cookieå¤´ä¸­é˜²æ­¢å®¢æˆ·ç«¯ç¯¡æ”¹
 		 */
 		String ip = RequestUtils.getIPAddress(request);
 		String cookieKey = ip + "_mx_query_" + serviceKey;
@@ -143,7 +143,7 @@ public class HttpQueryUtils {
 		if (cookies != null && cookies.length > 0) {
 			for (Cookie cookie : cookies) {
 				/**
-				 * ´ÓCookieÖĞ»ñÈ¡ÒÔÇ°µÄ²éÑ¯²ÎÊı
+				 * ä»Cookieä¸­è·å–ä»¥å‰çš„æŸ¥è¯¢å‚æ•°
 				 */
 				if (StringUtils.equals(cookie.getName(), cookieKey)) {
 					content = cookie.getValue();
@@ -229,13 +229,13 @@ public class HttpQueryUtils {
 		}
 
 		/**
-		 * »ñÈ¡±¾´Î²éÑ¯µÄ²éÑ¯²ÎÊı
+		 * è·å–æœ¬æ¬¡æŸ¥è¯¢çš„æŸ¥è¯¢å‚æ•°
 		 */
 		if (StringUtils.isNotEmpty(qid)) {
 			EntityService entityService = ContextFactory
 					.getBean("entityService");
 			/**
-			 * ¸ù¾İ²éÑ¯²ÎÊı¶¨Òå±àºÅ»ñÈ¡²éÑ¯²ÎÊıÁĞ±í
+			 * æ ¹æ®æŸ¥è¯¢å‚æ•°å®šä¹‰ç¼–å·è·å–æŸ¥è¯¢å‚æ•°åˆ—è¡¨
 			 */
 			List<Object> rows = entityService.getList(qid, params);
 			if (rows != null && rows.size() > 0) {
@@ -327,7 +327,7 @@ public class HttpQueryUtils {
 		}
 
 		/**
-		 * Èç¹ûÔÚCookie»òSessionÖĞÕÒµ½ÒÔÇ°µÄ²éÑ¯²ÎÊı£¬½«TaÃÇ½âÂëºó·Åµ½Ìõ¼şÁĞ±íÖĞ
+		 * å¦‚æœåœ¨Cookieæˆ–Sessionä¸­æ‰¾åˆ°ä»¥å‰çš„æŸ¥è¯¢å‚æ•°ï¼Œå°†Taä»¬è§£ç åæ”¾åˆ°æ¡ä»¶åˆ—è¡¨ä¸­
 		 */
 		if (oldJson != null) {
 			JSONArray array = oldJson.getJSONArray("conditions");
@@ -370,7 +370,7 @@ public class HttpQueryUtils {
 				}
 			}
 			/**
-			 * È¥³ı×î½üÒ»´ÎµÄ²éÑ¯Ìõ¼ş
+			 * å»é™¤æœ€è¿‘ä¸€æ¬¡çš„æŸ¥è¯¢æ¡ä»¶
 			 */
 			if (removeLast && conditions.size() > 0) {
 				conditions.remove(conditions.size() - 1);
@@ -378,7 +378,7 @@ public class HttpQueryUtils {
 		}
 
 		/**
-		 * Èç¹û²»ÊÇ´ÓÒÔÇ°µÄ½á¹ûÖĞ²éÕÒ£¬ÔòÇå¿ÕÒÔÇ°µÄ²éÑ¯Ìõ¼ş
+		 * å¦‚æœä¸æ˜¯ä»ä»¥å‰çš„ç»“æœä¸­æŸ¥æ‰¾ï¼Œåˆ™æ¸…ç©ºä»¥å‰çš„æŸ¥è¯¢æ¡ä»¶
 		 */
 		if (StringUtils.equals("R", qt)) {
 			logger.debug("#### clear conditions");

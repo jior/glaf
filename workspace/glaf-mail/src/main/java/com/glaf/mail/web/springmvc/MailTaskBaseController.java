@@ -317,7 +317,7 @@ public class MailTaskBaseController {
 						}
 					}
 				}
-			} catch (Exception ex) {// 处理文件尺寸过大异常
+			} catch (Exception ex) {// 澶勭悊鏂囦欢灏哄杩囧ぇ寮傚父
 				ex.printStackTrace();
 				throw new RuntimeException(ex.getMessage());
 			}

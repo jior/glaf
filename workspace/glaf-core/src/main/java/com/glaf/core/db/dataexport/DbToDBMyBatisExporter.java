@@ -61,16 +61,16 @@ public class DbToDBMyBatisExporter {
 	}
 
 	/**
-	 * µ¼³ö±íÊı¾İ
+	 * å¯¼å‡ºè¡¨æ•°æ®
 	 * 
 	 * @param systemName
-	 *            ÏµÍ³Ãû³Æ
+	 *            ç³»ç»Ÿåç§°
 	 * @param dbtype
-	 *            µ¼³öÊı¾İ¿âÀàĞÍ
+	 *            å¯¼å‡ºæ•°æ®åº“ç±»å‹
 	 * @param dbPath
-	 *            µ¼³öÊı¾İ¿âÂ·¾¶
+	 *            å¯¼å‡ºæ•°æ®åº“è·¯å¾„
 	 * @param tableName
-	 *            µ¼³ö±íÃû³Æ
+	 *            å¯¼å‡ºè¡¨åç§°
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void exportTable(String systemName, String dbtype, String dbPath,
@@ -140,7 +140,7 @@ public class DbToDBMyBatisExporter {
 					String javaType = c.getJavaType();
 					if ("Blob".equals(javaType)) {
 						/**
-						 * ÓĞ¶ş½øÖÆÁ÷µÄÇé¿ö£¬Ã¿Ò³È¡Êı²»ÄÜÌ«´ó
+						 * æœ‰äºŒè¿›åˆ¶æµçš„æƒ…å†µï¼Œæ¯é¡µå–æ•°ä¸èƒ½å¤ªå¤§
 						 */
 						pageSize = 5;
 					}
@@ -214,14 +214,14 @@ public class DbToDBMyBatisExporter {
 	}
 
 	/**
-	 * µ¼³ö±íÊı¾İ
+	 * å¯¼å‡ºè¡¨æ•°æ®
 	 * 
 	 * @param systemName
-	 *            ÏµÍ³Ãû³Æ
+	 *            ç³»ç»Ÿåç§°
 	 * @param dbtype
-	 *            µ¼³öÊı¾İ¿âÀàĞÍ
+	 *            å¯¼å‡ºæ•°æ®åº“ç±»å‹
 	 * @param dbPath
-	 *            µ¼³öÊı¾İ¿âÂ·¾¶
+	 *            å¯¼å‡ºæ•°æ®åº“è·¯å¾„
 	 */
 	public void exportTables(String systemName, String dbtype, String dbPath) {
 		List<String> tables = new java.util.ArrayList<String>();
@@ -266,16 +266,16 @@ public class DbToDBMyBatisExporter {
 	}
 
 	/**
-	 * µ¼³ö±íÊı¾İ
+	 * å¯¼å‡ºè¡¨æ•°æ®
 	 * 
 	 * @param systemName
-	 *            ÏµÍ³Ãû³Æ
+	 *            ç³»ç»Ÿåç§°
 	 * @param dbtype
-	 *            µ¼³öÊı¾İ¿âÀàĞÍ
+	 *            å¯¼å‡ºæ•°æ®åº“ç±»å‹
 	 * @param dbPath
-	 *            µ¼³öÊı¾İ¿âÂ·¾¶
+	 *            å¯¼å‡ºæ•°æ®åº“è·¯å¾„
 	 * @param tables
-	 *            µ¼³ö±í¼¯ºÏ
+	 *            å¯¼å‡ºè¡¨é›†åˆ
 	 */
 	public void exportTables(String systemName, String dbtype, String dbPath,
 			List<String> tables) {

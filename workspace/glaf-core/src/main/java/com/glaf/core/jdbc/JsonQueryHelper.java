@@ -58,9 +58,9 @@ public class JsonQueryHelper {
 
 	/**
 	 * @param conn
-	 *            Êı¾İ¿âÁ¬½Ó¶ÔÏó
+	 *            æ•°æ®åº“è¿æ¥å¯¹è±¡
 	 * @param sqlExecutor
-	 *            ²éÑ¯¶ÔÏó
+	 *            æŸ¥è¯¢å¯¹è±¡
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
@@ -126,9 +126,9 @@ public class JsonQueryHelper {
 							rowMap.put(columnLabel.toLowerCase(), value);
 						} catch (Exception e) {
 							String str = rs.getString(columnName);
-							logger.error("´íÎóµÄinteger:" + str);
+							logger.error("é”™è¯¯çš„integer:" + str);
 							str = StringTools.replace(str, "$", "");
-							str = StringTools.replace(str, "£¤", "");
+							str = StringTools.replace(str, "ï¿¥", "");
 							str = StringTools.replace(str, ",", "");
 							NumberFormat fmt = NumberFormat.getInstance();
 							Number num = fmt.parse(str);
@@ -138,7 +138,7 @@ public class JsonQueryHelper {
 									rowMap.get(columnName));
 							rowMap.put(columnLabel.toLowerCase(),
 									rowMap.get(columnName));
-							logger.debug("ĞŞÕıºó:" + num.intValue());
+							logger.debug("ä¿®æ­£å:" + num.intValue());
 						}
 					} else if ("Long".equals(javaType)) {
 						try {
@@ -151,9 +151,9 @@ public class JsonQueryHelper {
 									rowMap.get(columnName));
 						} catch (Exception e) {
 							String str = rs.getString(columnName);
-							logger.error("´íÎóµÄlong:" + str);
+							logger.error("é”™è¯¯çš„long:" + str);
 							str = StringTools.replace(str, "$", "");
-							str = StringTools.replace(str, "£¤", "");
+							str = StringTools.replace(str, "ï¿¥", "");
 							str = StringTools.replace(str, ",", "");
 							NumberFormat fmt = NumberFormat.getInstance();
 							Number num = fmt.parse(str);
@@ -163,7 +163,7 @@ public class JsonQueryHelper {
 									rowMap.get(columnName));
 							rowMap.put(columnLabel.toLowerCase(),
 									rowMap.get(columnName));
-							logger.debug("ĞŞÕıºó:" + num.longValue());
+							logger.debug("ä¿®æ­£å:" + num.longValue());
 						}
 					} else if ("Double".equals(javaType)) {
 						try {
@@ -176,9 +176,9 @@ public class JsonQueryHelper {
 									rowMap.get(columnName));
 						} catch (Exception e) {
 							String str = rs.getString(columnName);
-							logger.error("´íÎóµÄdouble:" + str);
+							logger.error("é”™è¯¯çš„double:" + str);
 							str = StringTools.replace(str, "$", "");
-							str = StringTools.replace(str, "£¤", "");
+							str = StringTools.replace(str, "ï¿¥", "");
 							str = StringTools.replace(str, ",", "");
 							NumberFormat fmt = NumberFormat.getInstance();
 							Number num = fmt.parse(str);
@@ -188,7 +188,7 @@ public class JsonQueryHelper {
 									rowMap.get(columnName));
 							rowMap.put(columnLabel.toLowerCase(),
 									rowMap.get(columnName));
-							logger.debug("ĞŞÕıºó:" + num.doubleValue());
+							logger.debug("ä¿®æ­£å:" + num.doubleValue());
 						}
 					} else if ("Boolean".equals(javaType)) {
 						rowMap.put(columnName, rs.getBoolean(columnName));
@@ -240,13 +240,13 @@ public class JsonQueryHelper {
 
 	/**
 	 * @param conn
-	 *            Êı¾İ¿âÁ¬½Ó¶ÔÏó
+	 *            æ•°æ®åº“è¿æ¥å¯¹è±¡
 	 * @param sqlExecutor
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param start
-	 *            ¿ªÊ¼¼ÇÂ¼ÓÎ±ê
+	 *            å¼€å§‹è®°å½•æ¸¸æ ‡
 	 * @param pageSize
-	 *            Ã¿Ò³¼ÇÂ¼Êı
+	 *            æ¯é¡µè®°å½•æ•°
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
@@ -329,9 +329,9 @@ public class JsonQueryHelper {
 									rowMap.get(columnName));
 						} catch (Exception e) {
 							String str = rs.getString(columnName);
-							logger.error("´íÎóµÄinteger:" + str);
+							logger.error("é”™è¯¯çš„integer:" + str);
 							str = StringTools.replace(str, "$", "");
-							str = StringTools.replace(str, "£¤", "");
+							str = StringTools.replace(str, "ï¿¥", "");
 							str = StringTools.replace(str, ",", "");
 							NumberFormat fmt = NumberFormat.getInstance();
 							Number num = fmt.parse(str);
@@ -341,7 +341,7 @@ public class JsonQueryHelper {
 									rowMap.get(columnName));
 							rowMap.put(columnLabel.toLowerCase(),
 									rowMap.get(columnName));
-							logger.debug("ĞŞÕıºó:" + num.intValue());
+							logger.debug("ä¿®æ­£å:" + num.intValue());
 						}
 					} else if ("Long".equals(javaType)) {
 						try {
@@ -354,9 +354,9 @@ public class JsonQueryHelper {
 									rowMap.get(columnName));
 						} catch (Exception e) {
 							String str = rs.getString(columnName);
-							logger.error("´íÎóµÄlong:" + str);
+							logger.error("é”™è¯¯çš„long:" + str);
 							str = StringTools.replace(str, "$", "");
-							str = StringTools.replace(str, "£¤", "");
+							str = StringTools.replace(str, "ï¿¥", "");
 							str = StringTools.replace(str, ",", "");
 							NumberFormat fmt = NumberFormat.getInstance();
 							Number num = fmt.parse(str);
@@ -366,7 +366,7 @@ public class JsonQueryHelper {
 									rowMap.get(columnName));
 							rowMap.put(columnLabel.toLowerCase(),
 									rowMap.get(columnName));
-							logger.debug("ĞŞÕıºó:" + num.longValue());
+							logger.debug("ä¿®æ­£å:" + num.longValue());
 						}
 					} else if ("Double".equals(javaType)) {
 						try {
@@ -379,9 +379,9 @@ public class JsonQueryHelper {
 									rowMap.get(columnName));
 						} catch (Exception e) {
 							String str = rs.getString(columnName);
-							logger.error("´íÎóµÄdouble:" + str);
+							logger.error("é”™è¯¯çš„double:" + str);
 							str = StringTools.replace(str, "$", "");
-							str = StringTools.replace(str, "£¤", "");
+							str = StringTools.replace(str, "ï¿¥", "");
 							str = StringTools.replace(str, ",", "");
 							NumberFormat fmt = NumberFormat.getInstance();
 							Number num = fmt.parse(str);
@@ -391,7 +391,7 @@ public class JsonQueryHelper {
 									rowMap.get(columnName));
 							rowMap.put(columnLabel.toLowerCase(),
 									rowMap.get(columnName));
-							logger.debug("ĞŞÕıºó:" + num.doubleValue());
+							logger.debug("ä¿®æ­£å:" + num.doubleValue());
 						}
 					} else if ("Boolean".equals(javaType)) {
 						rowMap.put(columnName, rs.getBoolean(columnName));
@@ -454,15 +454,15 @@ public class JsonQueryHelper {
 
 	/**
 	 * @param conn
-	 *            Êı¾İ¿âÁ¬½Ó¶ÔÏó
+	 *            æ•°æ®åº“è¿æ¥å¯¹è±¡
 	 * @param start
-	 *            ¿ªÊ¼¼ÇÂ¼ÓÎ±ê
+	 *            å¼€å§‹è®°å½•æ¸¸æ ‡
 	 * @param pageSize
-	 *            Ã¿Ò³¼ÇÂ¼Êı
+	 *            æ¯é¡µè®°å½•æ•°
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param paramMap
-	 *            ²ÎÊı
+	 *            å‚æ•°
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
@@ -545,7 +545,7 @@ public class JsonQueryHelper {
 						} catch (Exception e) {
 							String str = rs.getString(columnName);
 							str = StringTools.replace(str, "$", "");
-							str = StringTools.replace(str, "£¤", "");
+							str = StringTools.replace(str, "ï¿¥", "");
 							str = StringTools.replace(str, ",", "");
 							NumberFormat fmt = NumberFormat.getInstance();
 							Number num = fmt.parse(str);
@@ -558,7 +558,7 @@ public class JsonQueryHelper {
 						} catch (Exception e) {
 							String str = rs.getString(columnName);
 							str = StringTools.replace(str, "$", "");
-							str = StringTools.replace(str, "£¤", "");
+							str = StringTools.replace(str, "ï¿¥", "");
 							str = StringTools.replace(str, ",", "");
 							NumberFormat fmt = NumberFormat.getInstance();
 							Number num = fmt.parse(str);
@@ -571,7 +571,7 @@ public class JsonQueryHelper {
 						} catch (Exception e) {
 							String str = rs.getString(columnName);
 							str = StringTools.replace(str, "$", "");
-							str = StringTools.replace(str, "£¤", "");
+							str = StringTools.replace(str, "ï¿¥", "");
 							str = StringTools.replace(str, ",", "");
 							NumberFormat fmt = NumberFormat.getInstance();
 							Number num = fmt.parse(str);
@@ -617,7 +617,7 @@ public class JsonQueryHelper {
 	}
 
 	/**
-	 * ¸ù¾İSQLÓï¾ä»ñÈ¡½á¹û¼¯
+	 * æ ¹æ®SQLè¯­å¥è·å–ç»“æœé›†
 	 * 
 	 * @param sql
 	 * @param paramMap
@@ -639,13 +639,13 @@ public class JsonQueryHelper {
 	/**
 	 * 
 	 * @param sql
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param paramMap
-	 *            ²ÎÊı
+	 *            å‚æ•°
 	 * @param start
-	 *            ¿ªÊ¼¼ÇÂ¼ÓÎ±ê
+	 *            å¼€å§‹è®°å½•æ¸¸æ ‡
 	 * @param pageSize
-	 *            Ã¿Ò³¼ÇÂ¼Êı
+	 *            æ¯é¡µè®°å½•æ•°
 	 * @return
 	 */
 	public JSONArray getJSONArray(String sql, Map<String, Object> paramMap,
@@ -663,7 +663,7 @@ public class JsonQueryHelper {
 	}
 
 	/**
-	 * ¸ù¾İSQLÓï¾ä»ñÈ¡½á¹û¼¯
+	 * æ ¹æ®SQLè¯­å¥è·å–ç»“æœé›†
 	 * 
 	 * @param systemName
 	 * @param sqlExecutor
@@ -683,7 +683,7 @@ public class JsonQueryHelper {
 	}
 
 	/**
-	 * ¸ù¾İÖ¸¶¨Êı¾İÔ´¼°SQLÓï¾ä»ñÈ¡½á¹û¼¯
+	 * æ ¹æ®æŒ‡å®šæ•°æ®æºåŠSQLè¯­å¥è·å–ç»“æœé›†
 	 * 
 	 * @param systemName
 	 * @param sql
@@ -705,7 +705,7 @@ public class JsonQueryHelper {
 	}
 
 	/**
-	 * ¸ù¾İÖ¸¶¨Êı¾İÔ´¼°SQLÓï¾ä»ñÈ¡Ö¸¶¨Ò³ÂëµÄ½á¹û¼¯
+	 * æ ¹æ®æŒ‡å®šæ•°æ®æºåŠSQLè¯­å¥è·å–æŒ‡å®šé¡µç çš„ç»“æœé›†
 	 * 
 	 * @param systemName
 	 * @param sql
@@ -728,18 +728,18 @@ public class JsonQueryHelper {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸ö±íµÄÊı¾İ
+	 * è·å–æŸä¸ªè¡¨çš„æ•°æ®
 	 * 
 	 * @param conn
-	 *            JDBCÁ¬½Ó
+	 *            JDBCè¿æ¥
 	 * @param start
-	 *            ¿ªÊ¼¼ÇÂ¼Î»ÖÃ
+	 *            å¼€å§‹è®°å½•ä½ç½®
 	 * @param pageSize
-	 *            Ã¿Ò³¼ÇÂ¼Êı
+	 *            æ¯é¡µè®°å½•æ•°
 	 * @param tableName
-	 *            Êı¾İ±í
+	 *            æ•°æ®è¡¨
 	 * @param paramMap
-	 *            ²ÎÊı¼¯ºÏ
+	 *            å‚æ•°é›†åˆ
 	 * @return
 	 */
 	public JSONObject getPageResult(Connection conn, String tableName,
@@ -829,9 +829,9 @@ public class JsonQueryHelper {
 									result.get(columnName));
 						} catch (Exception e) {
 							String str = rs.getString(columnName);
-							logger.error("´íÎóµÄinteger:" + str);
+							logger.error("é”™è¯¯çš„integer:" + str);
 							str = StringTools.replace(str, "$", "");
-							str = StringTools.replace(str, "£¤", "");
+							str = StringTools.replace(str, "ï¿¥", "");
 							str = StringTools.replace(str, ",", "");
 							NumberFormat fmt = NumberFormat.getInstance();
 							Number num = fmt.parse(str);
@@ -841,7 +841,7 @@ public class JsonQueryHelper {
 									result.get(columnName));
 							result.put(columnLabel.toLowerCase(),
 									result.get(columnName));
-							logger.debug("ĞŞÕıºó:" + num.intValue());
+							logger.debug("ä¿®æ­£å:" + num.intValue());
 						}
 					} else if ("Long".equals(javaType)) {
 						try {
@@ -854,9 +854,9 @@ public class JsonQueryHelper {
 									result.get(columnName));
 						} catch (Exception e) {
 							String str = rs.getString(columnName);
-							logger.error("´íÎóµÄlong:" + str);
+							logger.error("é”™è¯¯çš„long:" + str);
 							str = StringTools.replace(str, "$", "");
-							str = StringTools.replace(str, "£¤", "");
+							str = StringTools.replace(str, "ï¿¥", "");
 							str = StringTools.replace(str, ",", "");
 							NumberFormat fmt = NumberFormat.getInstance();
 							Number num = fmt.parse(str);
@@ -866,7 +866,7 @@ public class JsonQueryHelper {
 									result.get(columnName));
 							result.put(columnLabel.toLowerCase(),
 									result.get(columnName));
-							logger.debug("ĞŞÕıºó:" + num.longValue());
+							logger.debug("ä¿®æ­£å:" + num.longValue());
 						}
 					} else if ("Double".equals(javaType)) {
 						try {
@@ -874,9 +874,9 @@ public class JsonQueryHelper {
 							result.put(columnName, d);
 						} catch (Exception e) {
 							String str = rs.getString(columnName);
-							logger.error("´íÎóµÄdouble:" + str);
+							logger.error("é”™è¯¯çš„double:" + str);
 							str = StringTools.replace(str, "$", "");
-							str = StringTools.replace(str, "£¤", "");
+							str = StringTools.replace(str, "ï¿¥", "");
 							str = StringTools.replace(str, ",", "");
 							NumberFormat fmt = NumberFormat.getInstance();
 							Number num = fmt.parse(str);
@@ -886,7 +886,7 @@ public class JsonQueryHelper {
 									result.get(columnName));
 							result.put(columnLabel.toLowerCase(),
 									result.get(columnName));
-							logger.debug("ĞŞÕıºó:" + num.doubleValue());
+							logger.debug("ä¿®æ­£å:" + num.doubleValue());
 						}
 					} else if ("Boolean".equals(javaType)) {
 						result.put(columnName, rs.getBoolean(columnName));
@@ -938,7 +938,7 @@ public class JsonQueryHelper {
 	}
 
 	/**
-	 * ¸ù¾İSQLÓï¾ä»ñÈ¡½á¹û¼¯
+	 * æ ¹æ®SQLè¯­å¥è·å–ç»“æœé›†
 	 * 
 	 * @param sql
 	 * @param paramMap

@@ -104,21 +104,21 @@ public class QueryUtils {
 				.append("\" name=\"x_filter_").append(name)
 				.append("\"	class=\"span2\">");
 		buffer.append(newline).append(
-				"			<option value=\"\">----ÇëÑ¡Ôñ----</option>");
-		buffer.append(newline).append("			<option value=\"=\">µÈÓÚ</option>");
-		buffer.append(newline).append("			<option value=\"!=\">²»µÈÓÚ</option>");
+				"			<option value=\"\">----è¯·é€‰æ‹©----</option>");
+		buffer.append(newline).append("			<option value=\"=\">ç­‰äº</option>");
+		buffer.append(newline).append("			<option value=\"!=\">ä¸ç­‰äº</option>");
 		if (!isString) {
 			buffer.append(newline).append(
-					"			<option value=\">=\">´óÓÚ»òµÈÓÚ</option>");
-			buffer.append(newline).append("			<option value=\">\">´óÓÚ</option>");
+					"			<option value=\">=\">å¤§äºæˆ–ç­‰äº</option>");
+			buffer.append(newline).append("			<option value=\">\">å¤§äº</option>");
 			buffer.append(newline).append(
-					"			<option value=\"<=\">Ğ¡ÓÚ»òµÈÓÚ</option>");
-			buffer.append(newline).append("			<option value=\"<\">Ğ¡ÓÚ</option>");
+					"			<option value=\"<=\">å°äºæˆ–ç­‰äº</option>");
+			buffer.append(newline).append("			<option value=\"<\">å°äº</option>");
 		} else {
 			buffer.append(newline).append(
-					"			<option value=\"LIKE\">°üº¬</option>");
+					"			<option value=\"LIKE\">åŒ…å«</option>");
 			buffer.append(newline).append(
-					"			<option value=\"NOT LIKE\">²»°üº¬</option>");
+					"			<option value=\"NOT LIKE\">ä¸åŒ…å«</option>");
 		}
 		buffer.append(newline).append("		 </select>");
 		return buffer.toString();
@@ -237,7 +237,7 @@ public class QueryUtils {
 		int begin = 0;
 		int left = 0;
 		int end = 0;
-		boolean flag = false; // Æ¥Åä±êÖ¾
+		boolean flag = false; // åŒ¹é…æ ‡å¿—
 		for (int i = 0; i < str.length(); i++) {
 			if (str.charAt(i) == '(') {
 				sb.append(str.substring(end, i));
@@ -280,7 +280,7 @@ public class QueryUtils {
 		int begin = 0;
 		int left = 0;
 		int end = 0;
-		boolean flag = false; // Æ¥Åä±êÖ¾
+		boolean flag = false; // åŒ¹é…æ ‡å¿—
 		for (int i = 0; i < str.length(); i++) {
 			if (str.charAt(i) == '(') {
 				sb.append(str.substring(end, i));

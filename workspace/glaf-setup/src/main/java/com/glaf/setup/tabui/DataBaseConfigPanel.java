@@ -44,49 +44,49 @@ import com.glaf.setup.conf.Database;
 import com.glaf.setup.conf.DatabaseConfig;
 
 /**
- * Êý¾Ý¿âÅäÖÃ½çÃæ
+ * æ•°æ®åº“é…ç½®ç•Œé¢
  */
 public class DataBaseConfigPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	public final String sp = System.getProperty("file.separator");
 
-	private JLabel jarPath; // Ó¦ÓÃÂ·¾¶
+	private JLabel jarPath; // åº”ç”¨è·¯å¾„
 	private JTextField jarPathText;
-	private JButton upLoadJarBtn; // Â·¾¶ä¯ÀÀ
-	private JButton browseJarBtn; // Â·¾¶ä¯ÀÀ
+	private JButton upLoadJarBtn; // è·¯å¾„æµè§ˆ
+	private JButton browseJarBtn; // è·¯å¾„æµè§ˆ
 
-	private JLabel dataDrive; // Êý¾Ý¿âÇý¶¯
+	private JLabel dataDrive; // æ•°æ®åº“é©±åŠ¨
 	private JComboBox dataDriveBox;
 
-	private JLabel serverIp; // Êý¾Ý¿â·þÎñÆ÷µØÖ·
+	private JLabel serverIp; // æ•°æ®åº“æœåŠ¡å™¨åœ°å€
 	private JTextField serverIpText;
 
-	private JLabel dataBaseName; // Êý¾Ý¿âÃû³Æ
+	private JLabel dataBaseName; // æ•°æ®åº“åç§°
 	private JTextField dataBaseNameText;
 
-	private JLabel dataBasePort; // Êý¾Ý¿â¶Ë¿Ú
+	private JLabel dataBasePort; // æ•°æ®åº“ç«¯å£
 	private JTextField dataBasePortText;
 
-	private JLabel userName; // ÓÃ»§Ãû
+	private JLabel userName; // ç”¨æˆ·å
 	private JTextField userNameText;
 
-	private JLabel password; // ÃÜÂë
+	private JLabel password; // å¯†ç 
 	private JPasswordField passwordText;
 
-	private JButton saveBtn; // ±£´æÅäÖÃ
-	private JButton connectBtn; // Çå¿Õ
+	private JButton saveBtn; // ä¿å­˜é…ç½®
+	private JButton connectBtn; // æ¸…ç©º
 
 	public DataBaseConfigPanel() {
 		this.setLayout(new GridBagLayout());
 
 		int row = 0;
 		this.add(new JPanel(), new GBC(0, row, 1, 1).setInsets(2, 2, 2, 2)
-				.setFill(GBC.BOTH).setWeight(30, 0));// Ìî³ä×ó±ß¿Õ°×Î»ÖÃ
+				.setFill(GBC.BOTH).setWeight(30, 0));// å¡«å……å·¦è¾¹ç©ºç™½ä½ç½®
 		this.add(new JPanel(), new GBC(1, row, 1, 1).setInsets(2, 2, 2, 2)
 				.setFill(GBC.BOTH).setWeight(15, 10));
 		this.add(new JPanel(), new GBC(2, 0, 1, 1).setInsets(2, 2, 2, 2)
-				.setFill(GBC.BOTH).setWeight(30, 0));// Ìî³äÓÒ±ß¿Õ°×Î»ÖÃ
+				.setFill(GBC.BOTH).setWeight(30, 0));// å¡«å……å³è¾¹ç©ºç™½ä½ç½®
 
 		row++;
 		this.add(initDataBasePanel(),
@@ -95,7 +95,7 @@ public class DataBaseConfigPanel extends JPanel {
 
 		row++;
 		this.add(new JPanel(), new GBC(0, row, 3, 1).setInsets(2, 2, 2, 2)
-				.setFill(GBC.BOTH).setWeight(100, 100));// Ìî³äµ×²¿¿Õ°×Î»ÖÃ
+				.setFill(GBC.BOTH).setWeight(100, 100));// å¡«å……åº•éƒ¨ç©ºç™½ä½ç½®
 
 		row++;
 		this.add(initButton(), new GBC(1, row, 1, 1).setInsets(2, 2, 2, 2)
@@ -103,14 +103,14 @@ public class DataBaseConfigPanel extends JPanel {
 
 	}
 
-	// ³õÊ¼»¯Êý¾Ý¿âÅäÖÃÃæ°å
+	// åˆå§‹åŒ–æ•°æ®åº“é…ç½®é¢æ¿
 	private JPanel initDataBasePanel() {
-		jarPath = new JLabel("Çý¶¯°üÂ·¾¶"); // ·þÎñÆ÷Â·¾¶
+		jarPath = new JLabel("é©±åŠ¨åŒ…è·¯å¾„"); // æœåŠ¡å™¨è·¯å¾„
 		jarPathText = new JTextField();
-		upLoadJarBtn = new JButton("ÉÏ´«");
-		browseJarBtn = new JButton("ä¯ÀÀ"); // Çý¶¯ä¯ÀÀ
+		upLoadJarBtn = new JButton("ä¸Šä¼ ");
+		browseJarBtn = new JButton("æµè§ˆ"); // é©±åŠ¨æµè§ˆ
 
-		// ÉÏ´«
+		// ä¸Šä¼ 
 		upLoadJarBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String filePaths = jarPathText.getText();
@@ -118,17 +118,17 @@ public class DataBaseConfigPanel extends JPanel {
 				String[] JarFiles = filePaths.split(";");
 				if (JarFiles.length > 0) {
 					String appPath = AppConfig.appPath;
-					String libPath = appPath + sp + "WEB-INF" + sp + "lib"; // Çý¶¯Â·¾¶
+					String libPath = appPath + sp + "WEB-INF" + sp + "lib"; // é©±åŠ¨è·¯å¾„
 					for (int i = 0; i < JarFiles.length; i++) {
 						File jarFile = new File(JarFiles[i]);
 
-						// ÏÈÅÐ¶ÏËùÑ¡Çý¶¯°üÊÇ·ñ´æÔÚ
+						// å…ˆåˆ¤æ–­æ‰€é€‰é©±åŠ¨åŒ…æ˜¯å¦å­˜åœ¨
 						if (jarFile.exists()) {
-							// ÏÈÅÐ¶ÏÓ¦ÓÃÂ·¾¶ÊÇ·ñÕýÈ· serverPathText
+							// å…ˆåˆ¤æ–­åº”ç”¨è·¯å¾„æ˜¯å¦æ­£ç¡® serverPathText
 							File appFile = new File(appPath);
 							if (appFile.exists() == false) {
 								javax.swing.JOptionPane.showConfirmDialog(null,
-										"Ó¦ÓÃÂ·¾¶²»ÕýÈ·£¬ÇëÖØÐÂÑ¡Ôñ!");
+										"åº”ç”¨è·¯å¾„ä¸æ­£ç¡®ï¼Œè¯·é‡æ–°é€‰æ‹©!");
 								return;
 							}
 
@@ -137,8 +137,8 @@ public class DataBaseConfigPanel extends JPanel {
 							int choice = JOptionPane.YES_OPTION;
 							if (newFile.exists()) {
 								choice = JOptionPane.showConfirmDialog(null,
-										"Ó¦ÓÃÂ·¾¶" + libPath + "ÒÑ¾­´æÔÚ" + fileName
-												+ "Çý¶¯£¬ÒªÌæ»»ËüÂð£¿", "ÌáÊ¾",
+										"åº”ç”¨è·¯å¾„" + libPath + "å·²ç»å­˜åœ¨" + fileName
+												+ "é©±åŠ¨ï¼Œè¦æ›¿æ¢å®ƒå—ï¼Ÿ", "æç¤º",
 										JOptionPane.YES_NO_OPTION,
 										JOptionPane.WARNING_MESSAGE);
 							}
@@ -150,7 +150,7 @@ public class DataBaseConfigPanel extends JPanel {
 								if (uploadFlag == false) {
 									JOptionPane.showMessageDialog(null,
 											JarFiles[i]
-													+ "Çý¶¯°üÉÏ´«Ê§°Ü£¬Çë¼ì²éÉÏ´«Â·¾¶ÊÇ·ñÕýÈ·£¡");
+													+ "é©±åŠ¨åŒ…ä¸Šä¼ å¤±è´¥ï¼Œè¯·æ£€æŸ¥ä¸Šä¼ è·¯å¾„æ˜¯å¦æ­£ç¡®ï¼");
 									return;
 								} else {
 									jarToolText = jarToolText + JarFiles[i]
@@ -159,28 +159,28 @@ public class DataBaseConfigPanel extends JPanel {
 							}
 						} else {
 							JOptionPane.showMessageDialog(null, JarFiles[i]
-									+ "Çý¶¯°ü²»´æÔÚ£¬ÇëÖØÐÂÑ¡Ôñ£¡");
+									+ "é©±åŠ¨åŒ…ä¸å­˜åœ¨ï¼Œè¯·é‡æ–°é€‰æ‹©ï¼");
 							return;
 						}
 					}
 					if (!jarToolText.trim().equals("")) {
-						JOptionPane.showMessageDialog(null, "³É¹¦ÉÏ´«\n"
-								+ jarToolText + "µ½Ó¦ÓÃÂ·¾¶\n" + libPath, "Çý¶¯°üÉÏ´«³É¹¦",
+						JOptionPane.showMessageDialog(null, "æˆåŠŸä¸Šä¼ \n"
+								+ jarToolText + "åˆ°åº”ç”¨è·¯å¾„\n" + libPath, "é©±åŠ¨åŒ…ä¸Šä¼ æˆåŠŸ",
 								JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
 			}
 		});
 
-		// Ñ¡ÔñÇý¶¯jarÂ·¾¶
+		// é€‰æ‹©é©±åŠ¨jarè·¯å¾„
 		browseJarBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new JFileChooser();
 				chooser.setMultiSelectionEnabled(true);
 				FileNameExtensionFilter filter = new FileNameExtensionFilter(
-						"jar Çý¶¯°ü", "jar");
+						"jar é©±åŠ¨åŒ…", "jar");
 				chooser.addChoosableFileFilter(filter);
-				chooser.setApproveButtonText("Ñ¡Ôñ");
+				chooser.setApproveButtonText("é€‰æ‹©");
 				chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				File f = null;
 				try {
@@ -230,7 +230,7 @@ public class DataBaseConfigPanel extends JPanel {
 			}
 		});
 
-		dataDrive = new JLabel("Êý¾Ý¿âÀàÐÍ"); // Êý¾Ý¿âÇý¶¯
+		dataDrive = new JLabel("æ•°æ®åº“ç±»åž‹"); // æ•°æ®åº“é©±åŠ¨
 		dataDriveBox = new JComboBox(new Object[] { "" });
 		dataDriveBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -242,7 +242,7 @@ public class DataBaseConfigPanel extends JPanel {
 			}
 		});
 		DatabaseConfig dbConfig = new DatabaseConfig();
-		// Õâ¸öÊý¾ÝÀ´ÓÚÃæ°åÂ·¾¶
+		// è¿™ä¸ªæ•°æ®æ¥äºŽé¢æ¿è·¯å¾„
 		List<Database> dbList = dbConfig.getDatabases(AppConfig.appPath);
 		if (dbList.size() > 0) {
 			for (int i = 0; i < dbList.size(); i++) {
@@ -251,25 +251,25 @@ public class DataBaseConfigPanel extends JPanel {
 			}
 		}
 
-		serverIp = new JLabel("Êý¾Ý¿âµØÖ·"); // Êý¾Ý¿â·þÎñÆ÷µØÖ·
+		serverIp = new JLabel("æ•°æ®åº“åœ°å€"); // æ•°æ®åº“æœåŠ¡å™¨åœ°å€
 		serverIpText = new JTextField("127.0.0.1");
 
-		dataBaseName = new JLabel("Êý¾Ý¿âÃû³Æ"); // Êý¾Ý¿âÃû³Æ
+		dataBaseName = new JLabel("æ•°æ®åº“åç§°"); // æ•°æ®åº“åç§°
 		dataBaseNameText = new JTextField("pMagic");
 
-		dataBasePort = new JLabel("Êý¾Ý¿â¶Ë¿Ú"); // ¶Ë¿Ú
+		dataBasePort = new JLabel("æ•°æ®åº“ç«¯å£"); // ç«¯å£
 		dataBasePortText = new JTextField("");
 
-		userName = new JLabel("ÓÃ    »§   Ãû"); // ÓÃ»§Ãû
+		userName = new JLabel("ç”¨    æˆ·   å"); // ç”¨æˆ·å
 		userNameText = new JTextField();
 
-		password = new JLabel("ÃÜ            Âë"); // ÃÜÂë
+		password = new JLabel("å¯†            ç "); // å¯†ç 
 		passwordText = new JPasswordField();
 
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new GridBagLayout());
 		mainPanel.setBorder(javax.swing.BorderFactory
-				.createTitledBorder("Êý¾Ý¿âÅäÖÃ"));
+				.createTitledBorder("æ•°æ®åº“é…ç½®"));
 
 		int row = 0;
 		mainPanel.add(jarPath, new GBC(0, row, 1, 1).setInsets(2, 2, 2, 2));
@@ -288,7 +288,7 @@ public class DataBaseConfigPanel extends JPanel {
 				new GBC(1, row, 1, 1).setInsets(10, 2, 2, 2));
 		mainPanel.add(new JPanel(), new GBC(2, row, 1, 1)
 				.setInsets(10, 2, 2, 2).setAnchor(GBC.WEST).setFill(GBC.BOTH)
-				.setWeight(100, 0));// Ìî³ä¿Õ°×
+				.setWeight(100, 0));// å¡«å……ç©ºç™½
 
 		row++;
 		mainPanel.add(serverIp, new GBC(0, row, 1, 1).setInsets(2, 2, 2, 2));
@@ -322,10 +322,10 @@ public class DataBaseConfigPanel extends JPanel {
 		return mainPanel;
 	}
 
-	// ³õÊ¼°´Å¥Ãæ°å ±£´æÅäÖÃÊÂ¼þ´¦Àí, ²âÊÔÁ¬½ÓÊÂ¼þ´¦Àí
+	// åˆå§‹æŒ‰é’®é¢æ¿ ä¿å­˜é…ç½®äº‹ä»¶å¤„ç†, æµ‹è¯•è¿žæŽ¥äº‹ä»¶å¤„ç†
 	private JPanel initButton() {
-		saveBtn = new JButton("±£´æÅäÖÃ"); // ±£´æÅäÖÃ
-		connectBtn = new JButton("²âÊÔÁ¬½Ó"); // ²âÊÔÁ¬½Ó
+		saveBtn = new JButton("ä¿å­˜é…ç½®"); // ä¿å­˜é…ç½®
+		connectBtn = new JButton("æµ‹è¯•è¿žæŽ¥"); // æµ‹è¯•è¿žæŽ¥
 
 		saveBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -335,14 +335,14 @@ public class DataBaseConfigPanel extends JPanel {
 					try {
 						dbConfig.reconfig(AppConfig.appPath, db);
 						javax.swing.JOptionPane
-								.showMessageDialog(null, "±£´æ³É¹¦£¡");
+								.showMessageDialog(null, "ä¿å­˜æˆåŠŸï¼");
 					} catch (RuntimeException ex) {
 						ex.printStackTrace();
-						javax.swing.JOptionPane.showMessageDialog(null, "±£´æÊ§°Ü£¬"
+						javax.swing.JOptionPane.showMessageDialog(null, "ä¿å­˜å¤±è´¥ï¼Œ"
 								+ ex.getMessage());
 					} catch (Exception ex) {
 						ex.printStackTrace();
-						javax.swing.JOptionPane.showMessageDialog(null, "±£´æÊ§°Ü,"
+						javax.swing.JOptionPane.showMessageDialog(null, "ä¿å­˜å¤±è´¥,"
 								+ ex.getMessage());
 					}
 				}
@@ -353,7 +353,7 @@ public class DataBaseConfigPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 				if (checkConnect() != null) {
-					javax.swing.JOptionPane.showMessageDialog(null, "Êý¾Ý¿âÁ¬½Ó³É¹¦£¡");
+					javax.swing.JOptionPane.showMessageDialog(null, "æ•°æ®åº“è¿žæŽ¥æˆåŠŸï¼");
 				}
 			}
 		});
@@ -372,24 +372,24 @@ public class DataBaseConfigPanel extends JPanel {
 			Database db = new Database();// ((Database)obj);
 
 			if (serverIpText.getText().trim().equals("")) {
-				javax.swing.JOptionPane.showMessageDialog(null, "ÇëÊäÈëÊý¾Ý¿âµØÖ·£¡");
+				javax.swing.JOptionPane.showMessageDialog(null, "è¯·è¾“å…¥æ•°æ®åº“åœ°å€ï¼");
 				return null;
 			}
 			if (dataBaseNameText.getText().trim().equals("")) {
-				javax.swing.JOptionPane.showMessageDialog(null, "ÇëÊäÈëÊý¾Ý¿âÃû³Æ£¡");
+				javax.swing.JOptionPane.showMessageDialog(null, "è¯·è¾“å…¥æ•°æ®åº“åç§°ï¼");
 				return null;
 			}
 			if (dataBasePortText.getText().trim().equals("")) {
-				javax.swing.JOptionPane.showMessageDialog(null, "ÇëÊäÈëÊý¾Ý¿â¶Ë¿Ú£¡");
+				javax.swing.JOptionPane.showMessageDialog(null, "è¯·è¾“å…¥æ•°æ®åº“ç«¯å£ï¼");
 				return null;
 			}
 			if (userNameText.getText().trim().equals("")) {
-				javax.swing.JOptionPane.showMessageDialog(null, "ÇëÊäÈëÓÃ»§Ãû£¡");
+				javax.swing.JOptionPane.showMessageDialog(null, "è¯·è¾“å…¥ç”¨æˆ·åï¼");
 				return null;
 			}
 			// ((Database)obj)
 
-			db.setHost(serverIpText.getText().trim()); // ·þÎñÆ÷IP
+			db.setHost(serverIpText.getText().trim()); // æœåŠ¡å™¨IP
 			db.setDatabaseName(dataBaseNameText.getText().trim());
 			db.setPort(Integer.valueOf(dataBasePortText.getText()));
 			db.setUsername(userNameText.getText().trim());
@@ -410,12 +410,12 @@ public class DataBaseConfigPanel extends JPanel {
 					dbConfig.check(AppConfig.appPath, db);
 				} catch (RuntimeException ex) {
 					ex.printStackTrace();
-					javax.swing.JOptionPane.showMessageDialog(null, "Êý¾Ý¿âÁ¬½ÓÊ§°Ü£¬"
+					javax.swing.JOptionPane.showMessageDialog(null, "æ•°æ®åº“è¿žæŽ¥å¤±è´¥ï¼Œ"
 							+ ex.getMessage());
 					return null;
 				} catch (Exception ex) {
 					ex.printStackTrace();
-					javax.swing.JOptionPane.showMessageDialog(null, "Êý¾Ý¿âÁ¬½ÓÊ§°Ü£¬"
+					javax.swing.JOptionPane.showMessageDialog(null, "æ•°æ®åº“è¿žæŽ¥å¤±è´¥ï¼Œ"
 							+ ex.getMessage());
 					return null;
 				}
@@ -424,27 +424,27 @@ public class DataBaseConfigPanel extends JPanel {
 
 			return db;
 		} else {
-			javax.swing.JOptionPane.showMessageDialog(null, "ÇëÏÈÑ¡ÔñÊý¾Ý¿âÀàÐÍ£¡");
+			javax.swing.JOptionPane.showMessageDialog(null, "è¯·å…ˆé€‰æ‹©æ•°æ®åº“ç±»åž‹ï¼");
 		}
 		return null;
 	}
 
 	/**
-	 * ¸´ÖÆµ¥¸öÎÄ¼þ
+	 * å¤åˆ¶å•ä¸ªæ–‡ä»¶
 	 */
 	public boolean copyFile(String oldPath, String newPath) {
 		FileInputStream fin = null;
 		FileOutputStream fout = null;
 		try {
 			int byteread = 0;
-			fin = new FileInputStream(oldPath); // ¶ÁÈëÔ­ÎÄ¼þ
+			fin = new FileInputStream(oldPath); // è¯»å…¥åŽŸæ–‡ä»¶
 			fout = new FileOutputStream(newPath);
 			byte[] buffer = new byte[256];
 			while ((byteread = fin.read(buffer)) != -1) {
 				fout.write(buffer, 0, byteread);
 			}
 		} catch (IOException ex) {
-			throw new RuntimeException("ÎÄ¼þ¸´ÖÆÊ§°Ü£¡", ex);
+			throw new RuntimeException("æ–‡ä»¶å¤åˆ¶å¤±è´¥ï¼", ex);
 		} finally {
 			try {
 				if (fin != null) {

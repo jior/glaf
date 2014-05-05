@@ -45,135 +45,135 @@ public class Chart implements Serializable, JSONable {
 	protected Long nodeId;
 
 	/**
-	 * ²éÑ¯±àºÅ
+	 * æŸ¥è¯¢ç¼–å·
 	 */
 	@Column(name = "QUERYIDS_")
 	protected String queryIds;
 
 	/**
-	 * ²éÑ¯SQL
+	 * æŸ¥è¯¢SQL
 	 */
 	@Lob
 	@Column(name = "QUERYSQL_")
 	protected String querySQL;
 
 	/**
-	 * ±êÌâ
+	 * æ ‡é¢˜
 	 */
 	@Column(name = "SUBJECT_")
 	protected String subject;
 
 	/**
-	 * Í¼±íÃû³Æ
+	 * å›¾è¡¨åç§°
 	 */
 	@Column(name = "CHARTNAME_")
 	protected String chartName;
 
 	/**
-	 * Í¼±íÖ÷Ìâ
+	 * å›¾è¡¨ä¸»é¢˜
 	 */
 	@Column(name = "CHARTTITLE_")
 	protected String chartTitle;
 
 	/**
-	 * Í¼±íÀàĞÍ
+	 * å›¾è¡¨ç±»å‹
 	 */
 	@Column(name = "CHARTTYPE_")
 	protected String chartType;
 
 	/**
-	 * Í¼±í×ÖÌå
+	 * å›¾è¡¨å­—ä½“
 	 */
 	@Column(name = "CHARTFONT_")
 	protected String chartFont;
 
 	/**
-	 * Í¼±í×ÖÌå´óĞ¡
+	 * å›¾è¡¨å­—ä½“å¤§å°
 	 */
 	@Column(name = "CHARTFONTSIZE_")
 	protected Integer chartFontSize;
 
 	/**
-	 * Í¼±í±êÌâÀ¸×ÖÌå
+	 * å›¾è¡¨æ ‡é¢˜æ å­—ä½“
 	 */
 	@Column(name = "CHARTTITLEFONT_")
 	protected String chartTitleFont;
 
 	/**
-	 * Í¼±í±êÌâÀ¸×ÖÌå´óĞ¡
+	 * å›¾è¡¨æ ‡é¢˜æ å­—ä½“å¤§å°
 	 */
 	@Column(name = "CHARTTITLEFONTSIZE_")
 	protected Integer chartTitleFontSize;
 
 	/**
-	 * Í¼±í¿í´ø
+	 * å›¾è¡¨å®½å¸¦
 	 */
 	@Column(name = "CHARTWIDTH_")
 	protected Integer chartWidth;
 
 	/**
-	 * Í¼±í¸ß¶È
+	 * å›¾è¡¨é«˜åº¦
 	 */
 	@Column(name = "CHARTHEIGHT_")
 	protected Integer chartHeight;
 
 	/**
-	 * ÊÇ·ñÏÔÊ¾Í¼Àı
+	 * æ˜¯å¦æ˜¾ç¤ºå›¾ä¾‹
 	 */
 	@Column(name = "LEGEND_")
 	protected String legend;
 
 	/**
-	 * ÊÇ·ñÏÔÊ¾tooltip
+	 * æ˜¯å¦æ˜¾ç¤ºtooltip
 	 */
 	@Column(name = "TOOLTIP_", length = 100)
 	protected String tooltip;
 
 	/**
-	 * Ó³ÉäÃû³Æ
+	 * æ˜ å°„åç§°
 	 */
 	@Column(name = "MAPPING_", length = 50)
 	protected String mapping;
 
 	/**
-	 * X×ø±ê±êÇ©
+	 * Xåæ ‡æ ‡ç­¾
 	 */
 	@Column(name = "COORDINATEX_")
 	protected String coordinateX;
 
 	/**
-	 * Y×ø±ê±êÇ©
+	 * Yåæ ‡æ ‡ç­¾
 	 */
 	@Column(name = "COORDINATEY_")
 	protected String coordinateY;
 
 	/**
-	 * »æÖÆ·½Ïò
+	 * ç»˜åˆ¶æ–¹å‘
 	 */
 	@Column(name = "PLOTORIENTATION_")
 	protected String plotOrientation;
 
 	/**
-	 * Éú³ÉÍ¼ÏñÀàĞÍ
+	 * ç”Ÿæˆå›¾åƒç±»å‹
 	 */
 	@Column(name = "IMAGETYPE_")
 	protected String imageType;
 
 	/**
-	 * ÊÇ·ñÆôÓÃ
+	 * æ˜¯å¦å¯ç”¨
 	 */
 	@Column(name = "ENABLEFLAG_", length = 1)
 	protected String enableFlag;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_")
 	protected Date createDate;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY_")
 	protected String createBy;

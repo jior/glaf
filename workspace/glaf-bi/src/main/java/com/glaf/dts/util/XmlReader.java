@@ -145,7 +145,7 @@ public class XmlReader {
 		field.setValueExpression(elem.attributeValue("valueExpression"));
 
 		/**
-		 * Èç¹ûÊÇ±ØÐë×Ö¶Î
+		 * å¦‚æžœæ˜¯å¿…é¡»å­—æ®µ
 		 */
 		if ("true".equals(elem.attributeValue("required"))) {
 			field.setRequired(true);

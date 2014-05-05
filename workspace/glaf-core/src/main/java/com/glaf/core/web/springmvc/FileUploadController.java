@@ -104,7 +104,7 @@ public class FileUploadController {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String serviceKey = request.getParameter("serviceKey");
 		if (StringUtils.isEmpty(serviceKey)) {
-			modelMap.put("error_message", "ÄúÃ»ÓĞÌá¹©±ØÒªµÄĞÅÏ¢£¬serviceKeyÊÇ±ØĞëµÄ£¡");
+			modelMap.put("error_message", "æ‚¨æ²¡æœ‰æä¾›å¿…è¦çš„ä¿¡æ¯ï¼ŒserviceKeyæ˜¯å¿…é¡»çš„ï¼");
 			return new ModelAndView("/error");
 		}
 
@@ -150,7 +150,7 @@ public class FileUploadController {
 			}
 		} catch (Exception ex) {
 			logger.debug(ex);
-			modelMap.put("error_message", "²»ÄÜ»ñÈ¡ÎÄ¼şĞÅÏ¢¡£");
+			modelMap.put("error_message", "ä¸èƒ½è·å–æ–‡ä»¶ä¿¡æ¯ã€‚");
 			return new ModelAndView("/error");
 		}
 
@@ -185,7 +185,7 @@ public class FileUploadController {
 		maxUploadSize = maxUploadSize * FileUtils.MB_SIZE;
 
 		/**
-		 * ÎÄ¼ş´óĞ¡³¬¹ımaxDiskSizeÊ±½«ÎÄ¼şĞ´µ½±¾µØÓ²ÅÌ,Ä¬ÈÏ³¬¹ı5MBµÄ½«Ğ´µ½±¾µØÓ²ÅÌ
+		 * æ–‡ä»¶å¤§å°è¶…è¿‡maxDiskSizeæ—¶å°†æ–‡ä»¶å†™åˆ°æœ¬åœ°ç¡¬ç›˜,é»˜è®¤è¶…è¿‡5MBçš„å°†å†™åˆ°æœ¬åœ°ç¡¬ç›˜
 		 */
 		int maxDiskSize = conf.getInt(serviceKey + ".maxDiskSize", 0);
 		if (maxDiskSize == 0) {
@@ -209,7 +209,7 @@ public class FileUploadController {
 					logger.debug("fize size:" + mFile.getSize());
 					String fileId = UUID32.getUUID();
 
-					// Ã¿ÌìÉÏ´«µÄÎÄ¼ş¸ù¾İÈÕÆÚ´æ·ÅÔÚ²»Í¬µÄÎÄ¼ş¼Ğ
+					// æ¯å¤©ä¸Šä¼ çš„æ–‡ä»¶æ ¹æ®æ—¥æœŸå­˜æ”¾åœ¨ä¸åŒçš„æ–‡ä»¶å¤¹
 					String autoCreatedDateDirByParttern = "yyyy/MM/dd";
 					String autoCreatedDateDir = DateFormatUtils.format(
 							new java.util.Date(), autoCreatedDateDirByParttern);

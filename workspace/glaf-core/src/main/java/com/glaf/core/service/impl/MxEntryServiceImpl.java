@@ -72,7 +72,7 @@ public class MxEntryServiceImpl implements IEntryService {
 	}
 
 	/**
-	 * É¾³ı¼ÇÂ¼
+	 * åˆ é™¤è®°å½•
 	 * 
 	 * @param rowId
 	 */
@@ -98,7 +98,7 @@ public class MxEntryServiceImpl implements IEntryService {
 	}
 
 	/**
-	 * É¾³ı¼ÇÂ¼
+	 * åˆ é™¤è®°å½•
 	 * 
 	 * @param id
 	 */
@@ -131,14 +131,14 @@ public class MxEntryServiceImpl implements IEntryService {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§ÄÜ·ÃÎÊµÄ¼ÇÂ¼¼¯ºÏ
+	 * è·å–æŸä¸ªç”¨æˆ·èƒ½è®¿é—®çš„è®°å½•é›†åˆ
 	 * 
 	 * @param loginContext
-	 *            ÓÃ»§ÉÏÏÂÎÄ
+	 *            ç”¨æˆ·ä¸Šä¸‹æ–‡
 	 * @param moduleId
-	 *            Ä£¿é±êÊ¶
+	 *            æ¨¡å—æ ‡è¯†
 	 * @param entryKey
-	 *            È¨ÏŞ
+	 *            æƒé™
 	 * @return
 	 */
 	public List<String> getEntityIds(LoginContext loginContext,
@@ -161,7 +161,7 @@ public class MxEntryServiceImpl implements IEntryService {
 		query.entryKey(entryKey);
 
 		/**
-		 * ½ÇÉ«ÓµÓĞµÄ¼ÇÂ¼±àºÅ
+		 * è§’è‰²æ‹¥æœ‰çš„è®°å½•ç¼–å·
 		 */
 		params.put("name", "ROLE");
 		params.put("value", loginContext.getRoles());
@@ -200,7 +200,7 @@ public class MxEntryServiceImpl implements IEntryService {
 
 		if (loginContext.getDeptId() != null) {
 			/**
-			 * ²¿ÃÅÓµÓĞµÄ¼ÇÂ¼±àºÅ
+			 * éƒ¨é—¨æ‹¥æœ‰çš„è®°å½•ç¼–å·
 			 */
 			params.remove("values");
 			params.put("name", "DEPT");
@@ -219,7 +219,7 @@ public class MxEntryServiceImpl implements IEntryService {
 		}
 
 		/**
-		 * ÓÃ»§ÓµÓĞµÄ¼ÇÂ¼±àºÅ
+		 * ç”¨æˆ·æ‹¥æœ‰çš„è®°å½•ç¼–å·
 		 */
 		params.put("name", "USER");
 		params.put("value", loginContext.getActorId());
@@ -239,7 +239,7 @@ public class MxEntryServiceImpl implements IEntryService {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§Ä³¸öÄ£¿éµÄ·ÃÎÊÈ¨ÏŞ
+	 * è·å–æŸä¸ªç”¨æˆ·æŸä¸ªæ¨¡å—çš„è®¿é—®æƒé™
 	 * 
 	 * @param loginContext
 	 * @param moduleId
@@ -261,7 +261,7 @@ public class MxEntryServiceImpl implements IEntryService {
 		query.moduleId(moduleId);
 
 		/**
-		 * ½ÇÉ«ÓµÓĞµÄ¼ÇÂ¼±àºÅ
+		 * è§’è‰²æ‹¥æœ‰çš„è®°å½•ç¼–å·
 		 */
 		params.put("name", "ROLE");
 		params.put("values", loginContext.getRoles());
@@ -299,7 +299,7 @@ public class MxEntryServiceImpl implements IEntryService {
 		}
 
 		/**
-		 * ²¿ÃÅÓµÓĞµÄ¼ÇÂ¼±àºÅ
+		 * éƒ¨é—¨æ‹¥æœ‰çš„è®°å½•ç¼–å·
 		 */
 		if (loginContext.getDeptId() != null) {
 			params.remove("values");
@@ -320,7 +320,7 @@ public class MxEntryServiceImpl implements IEntryService {
 		}
 
 		/**
-		 * ÓÃ»§ÓµÓĞµÄ¼ÇÂ¼±àºÅ
+		 * ç”¨æˆ·æ‹¥æœ‰çš„è®°å½•ç¼–å·
 		 */
 		params.put("name", "USER");
 		params.put("value", loginContext.getActorId());
@@ -349,10 +349,10 @@ public class MxEntryServiceImpl implements IEntryService {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§ÄÜ·ÃÎÊµÄ½Úµã¼¯ºÏ
+	 * è·å–æŸä¸ªç”¨æˆ·èƒ½è®¿é—®çš„èŠ‚ç‚¹é›†åˆ
 	 * 
 	 * @param loginContext
-	 *            ÓÃ»§ÉÏÏÂÎÄ
+	 *            ç”¨æˆ·ä¸Šä¸‹æ–‡
 	 * @return
 	 */
 	public List<TreeModel> getTreeModels(LoginContext loginContext) {
@@ -367,7 +367,7 @@ public class MxEntryServiceImpl implements IEntryService {
 		List<EntryPoint> entryPoints = null;
 
 		/**
-		 * ½ÇÉ«ÓµÓĞµÄ½Úµã
+		 * è§’è‰²æ‹¥æœ‰çš„èŠ‚ç‚¹
 		 */
 		params.put("name", "ROLE");
 		params.put("values", loginContext.getRoles());
@@ -405,7 +405,7 @@ public class MxEntryServiceImpl implements IEntryService {
 		}
 
 		/**
-		 * ²¿ÃÅÓµÓĞµÄ½Úµã
+		 * éƒ¨é—¨æ‹¥æœ‰çš„èŠ‚ç‚¹
 		 */
 		if (loginContext.getDeptId() != null) {
 			params.remove("values");
@@ -427,7 +427,7 @@ public class MxEntryServiceImpl implements IEntryService {
 		}
 
 		/**
-		 * ÓÃ»§ÓµÓĞµÄ½Úµã
+		 * ç”¨æˆ·æ‹¥æœ‰çš„èŠ‚ç‚¹
 		 */
 
 		params.put("name", "USER");
@@ -474,14 +474,14 @@ public class MxEntryServiceImpl implements IEntryService {
 	}
 
 	/**
-	 * ¼ì²éÄ³¸öÓÃ»§ÊÇ·ñÓĞÄ³¸ö·ÖÀàµÄÄ³¸öÈ¨ÏŞ
+	 * æ£€æŸ¥æŸä¸ªç”¨æˆ·æ˜¯å¦æœ‰æŸä¸ªåˆ†ç±»çš„æŸä¸ªæƒé™
 	 * 
 	 * @param loginContext
-	 *            ÓÃ»§ÉÏÏÂÎÄ
+	 *            ç”¨æˆ·ä¸Šä¸‹æ–‡
 	 * @param nodeId
-	 *            ·ÖÀà±àºÅ
+	 *            åˆ†ç±»ç¼–å·
 	 * @param permKey
-	 *            È¨ÏŞµã
+	 *            æƒé™ç‚¹
 	 * @return
 	 */
 	public boolean hasPermission(LoginContext loginContext, long nodeId,
@@ -512,7 +512,7 @@ public class MxEntryServiceImpl implements IEntryService {
 		}
 
 		/**
-		 * ½ÇÉ«ÊÇ·ñ¾ßÓĞ¸Ã½ÚµãµÄÈ¨ÏŞ
+		 * è§’è‰²æ˜¯å¦å…·æœ‰è¯¥èŠ‚ç‚¹çš„æƒé™
 		 */
 		Map<String, Object> params = new java.util.HashMap<String, Object>();
 		params.put("nodeId", nodeId);
@@ -525,7 +525,7 @@ public class MxEntryServiceImpl implements IEntryService {
 		query.entryKey(permKey);
 
 		/**
-		 * ½ÇÉ«ÓµÓĞµÄ¼ÇÂ¼±àºÅ
+		 * è§’è‰²æ‹¥æœ‰çš„è®°å½•ç¼–å·
 		 */
 		params.put("name", "ROLE");
 		params.put("values", loginContext.getRoles());
@@ -557,7 +557,7 @@ public class MxEntryServiceImpl implements IEntryService {
 		}
 
 		/**
-		 * ²¿ÃÅÊÇ·ñ¾ßÓĞ¸Ã½ÚµãµÄÈ¨ÏŞ
+		 * éƒ¨é—¨æ˜¯å¦å…·æœ‰è¯¥èŠ‚ç‚¹çš„æƒé™
 		 */
 		if (!hasPermission && loginContext.getDeptId() != null) {
 			params.remove("values");
@@ -573,7 +573,7 @@ public class MxEntryServiceImpl implements IEntryService {
 		}
 
 		/**
-		 * ÓÃ»§ÊÇ·ñ¾ßÓĞ¸Ã½ÚµãµÄÈ¨ÏŞ
+		 * ç”¨æˆ·æ˜¯å¦å…·æœ‰è¯¥èŠ‚ç‚¹çš„æƒé™
 		 */
 		if (!hasPermission) {
 			params.put("name", "USER");
@@ -589,7 +589,7 @@ public class MxEntryServiceImpl implements IEntryService {
 
 		if (!hasPermission) {
 			/**
-			 * ²éÕÒ¸Ã½ÚµãµÄËùÓĞÉÏ¼¶½Úµã£¬ÅĞ¶ÏÊÇ·ñÓĞÈ¨ÏŞ
+			 * æŸ¥æ‰¾è¯¥èŠ‚ç‚¹çš„æ‰€æœ‰ä¸Šçº§èŠ‚ç‚¹ï¼Œåˆ¤æ–­æ˜¯å¦æœ‰æƒé™
 			 */
 			List<TreeModel> treeModels = treeModelService
 					.getAncestorTreeModels(nodeId);
@@ -622,17 +622,17 @@ public class MxEntryServiceImpl implements IEntryService {
 	}
 
 	/**
-	 * ¼ì²éÄ³¸öÓÃ»§ÊÇ·ñÓĞÄ³¸ö¼ÇÂ¼µÄÄ³¸öÈ¨ÏŞ
+	 * æ£€æŸ¥æŸä¸ªç”¨æˆ·æ˜¯å¦æœ‰æŸä¸ªè®°å½•çš„æŸä¸ªæƒé™
 	 * 
 	 * @param loginContext
-	 *            ÓÃ»§ÉÏÏÂÎÄ
+	 *            ç”¨æˆ·ä¸Šä¸‹æ–‡
 	 * @param moduleId
-	 *            Ä£¿é±êÊ¶
+	 *            æ¨¡å—æ ‡è¯†
 	 * @param entityId
-	 *            ¼ÇÂ¼±àºÅ
+	 *            è®°å½•ç¼–å·
 	 * 
 	 * @param permKey
-	 *            È¨ÏŞµã
+	 *            æƒé™ç‚¹
 	 * @return
 	 */
 	public boolean hasPermission(LoginContext loginContext, String moduleId,
@@ -653,7 +653,7 @@ public class MxEntryServiceImpl implements IEntryService {
 		// + "_" + loginContext.getActorId();
 
 		/**
-		 * ½ÇÉ«ÊÇ·ñ¾ßÓĞ¸Ã¼ÇÂ¼µÄÈ¨ÏŞ
+		 * è§’è‰²æ˜¯å¦å…·æœ‰è¯¥è®°å½•çš„æƒé™
 		 */
 		Map<String, Object> params = new java.util.HashMap<String, Object>();
 		params.put("entityId", entityId);
@@ -696,7 +696,7 @@ public class MxEntryServiceImpl implements IEntryService {
 		}
 
 		/**
-		 * ²¿ÃÅÊÇ·ñ¾ßÓĞ¸Ã½ÚµãµÄÈ¨ÏŞ
+		 * éƒ¨é—¨æ˜¯å¦å…·æœ‰è¯¥èŠ‚ç‚¹çš„æƒé™
 		 */
 		if (!hasPermission && loginContext.getDeptId() != null) {
 			params.remove("values");
@@ -712,7 +712,7 @@ public class MxEntryServiceImpl implements IEntryService {
 		}
 
 		/**
-		 * ÓÃ»§ÊÇ·ñ¾ßÓĞ¸Ã½ÚµãµÄÈ¨ÏŞ
+		 * ç”¨æˆ·æ˜¯å¦å…·æœ‰è¯¥èŠ‚ç‚¹çš„æƒé™
 		 */
 		if (!hasPermission) {
 			params.put("name", "USER");
@@ -744,7 +744,7 @@ public class MxEntryServiceImpl implements IEntryService {
 	}
 
 	/**
-	 * ±£´æ¼ÇÂ¼
+	 * ä¿å­˜è®°å½•
 	 * 
 	 * @param entityEntry
 	 */

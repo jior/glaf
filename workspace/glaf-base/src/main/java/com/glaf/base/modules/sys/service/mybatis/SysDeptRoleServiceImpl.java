@@ -211,12 +211,12 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 	}
 
 	public PageResult getRoleList(long deptId, int pageNo, int pageSize) {
-		// ¼ÆËã×ÜÊı
+		// è®¡ç®—æ€»æ•°
 		PageResult pager = new PageResult();
 		SysDeptRoleQuery query = new SysDeptRoleQuery();
 		query.deptId(Long.valueOf(deptId));
 		int count = this.count(query);
-		if (count == 0) {// ½á¹û¼¯Îª¿Õ
+		if (count == 0) {// ç»“æœé›†ä¸ºç©º
 			pager.setPageSize(pageSize);
 			return pager;
 		}
@@ -322,7 +322,7 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 	}
 
 	/**
-	 * ÉèÖÃ½ÇÉ«¶ÔÓ¦µÄÄ£¿é¡¢¹¦ÄÜ
+	 * è®¾ç½®è§’è‰²å¯¹åº”çš„æ¨¡å—ã€åŠŸèƒ½
 	 * 
 	 * @param roleId
 	 * @param appId
@@ -335,7 +335,7 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 		SysDeptRole role = findById(roleId);
 		if (appIds != null) {
 			sysAccessMapper.deleteSysAccessByRoleId(roleId);
-			// ÉèÖÃ½ÇÉ«¶ÔÓ¦µÄÄ£¿é·ÃÎÊÈ¨ÏŞ
+			// è®¾ç½®è§’è‰²å¯¹åº”çš„æ¨¡å—è®¿é—®æƒé™
 			for (int i = 0; i < appIds.length; i++) {
 				logger.info("app id:" + appIds[i]);
 				if (appIds[i] > 0) {
@@ -347,7 +347,7 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 			}
 		}
 
-		// ÉèÖÃÄ£¿é¶ÔÓ¦µÄ¹¦ÄÜ²Ù×÷È¨ÏŞ
+		// è®¾ç½®æ¨¡å—å¯¹åº”çš„åŠŸèƒ½æ“ä½œæƒé™
 		if (funcIds != null) {
 			sysPermissionMapper.deleteSysPermissionByRoleId(roleId);
 			for (int i = 0; i < funcIds.length; i++) {
@@ -364,7 +364,7 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 	}
 
 	/**
-	 * È«¾ÖÉèÖÃ½ÇÉ«¶ÔÓ¦µÄÄ£¿é
+	 * å…¨å±€è®¾ç½®è§’è‰²å¯¹åº”çš„æ¨¡å—
 	 * 
 	 * @param roleId
 	 * @param appId
@@ -375,7 +375,7 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 	public boolean saveOrCancelRoleApplicationWhole(long deptRoleId,
 			long[] appIds, int saveType) {
 		if (appIds != null) {
-			// ÉèÖÃ½ÇÉ«¶ÔÓ¦µÄÄ£¿é·ÃÎÊÈ¨ÏŞ
+			// è®¾ç½®è§’è‰²å¯¹åº”çš„æ¨¡å—è®¿é—®æƒé™
 			SysAccessQuery query = new SysAccessQuery();
 			for (int i = 0; i < appIds.length; i++) {
 				if (appIds[i] > 0) {
@@ -484,26 +484,26 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 	}
 
 	/**
-	 * ÅÅĞò
+	 * æ’åº
 	 * 
 	 * @param bean
 	 *            SysDeptRole
 	 * @param operate
-	 *            int ²Ù×÷
+	 *            int æ“ä½œ
 	 */
 	@Transactional
 	public void sort(SysDeptRole bean, int operate) {
 		if (bean == null)
 			return;
-		if (operate == SysConstants.SORT_PREVIOUS) {// Ç°ÒÆ
+		if (operate == SysConstants.SORT_PREVIOUS) {// å‰ç§»
 			sortByPrevious(bean);
-		} else if (operate == SysConstants.SORT_FORWARD) {// ºóÒÆ
+		} else if (operate == SysConstants.SORT_FORWARD) {// åç§»
 			sortByForward(bean);
 		}
 	}
 
 	/**
-	 * ÏòºóÒÆ¶¯ÅÅĞò
+	 * å‘åç§»åŠ¨æ’åº
 	 * 
 	 * @param bean
 	 */
@@ -513,21 +513,21 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 		query.setSortLessThan(bean.getSort());
 		query.setOrderBy(" E.SORT desc ");
 
-		// ²éÕÒºóÒ»¸ö¶ÔÏó
+		// æŸ¥æ‰¾åä¸€ä¸ªå¯¹è±¡
 		List<SysDeptRole> list = this.list(query);
-		if (list != null && list.size() > 0) {// ÓĞ¼ÇÂ¼
+		if (list != null && list.size() > 0) {// æœ‰è®°å½•
 			SysDeptRole temp = (SysDeptRole) list.get(0);
 			int i = bean.getSort();
 			bean.setSort(temp.getSort());
-			this.update(bean);// ¸üĞÂbean
+			this.update(bean);// æ›´æ–°bean
 
 			temp.setSort(i);
-			this.update(temp);// ¸üĞÂtemp
+			this.update(temp);// æ›´æ–°temp
 		}
 	}
 
 	/**
-	 * ÏòÇ°ÒÆ¶¯ÅÅĞò
+	 * å‘å‰ç§»åŠ¨æ’åº
 	 * 
 	 * @param bean
 	 */
@@ -536,17 +536,17 @@ public class SysDeptRoleServiceImpl implements SysDeptRoleService {
 		query.setDeptId(bean.getDeptId());
 		query.setSortGreaterThan(bean.getSort());
 		query.setOrderBy(" E.SORT asc ");
-		// ²éÕÒÇ°Ò»¸ö¶ÔÏó
+		// æŸ¥æ‰¾å‰ä¸€ä¸ªå¯¹è±¡
 
 		List<SysDeptRole> list = this.list(query);
-		if (list != null && list.size() > 0) {// ÓĞ¼ÇÂ¼
+		if (list != null && list.size() > 0) {// æœ‰è®°å½•
 			SysDeptRole temp = (SysDeptRole) list.get(0);
 			int i = bean.getSort();
 			bean.setSort(temp.getSort());
-			this.update(bean);// ¸üĞÂbean
+			this.update(bean);// æ›´æ–°bean
 
 			temp.setSort(i);
-			this.update(temp);// ¸üĞÂtemp
+			this.update(temp);// æ›´æ–°temp
 		}
 	}
 

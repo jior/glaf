@@ -168,12 +168,12 @@ public class SysRoleServiceImpl implements SysRoleService {
 	}
 
 	public PageResult getSysRoleList(int pageNo, int pageSize) {
-		// ¼ÆËã×ÜÊı
+		// è®¡ç®—æ€»æ•°
 		PageResult pager = new PageResult();
 		SysRoleQuery query = new SysRoleQuery();
 
 		int count = this.count(query);
-		if (count == 0) {// ½á¹û¼¯Îª¿Õ
+		if (count == 0) {// ç»“æœé›†ä¸ºç©º
 			pager.setPageSize(pageSize);
 			return pager;
 		}
@@ -235,28 +235,28 @@ public class SysRoleServiceImpl implements SysRoleService {
 	}
 
 	/**
-	 * ÅÅĞò
+	 * æ’åº
 	 * 
 	 * @param bean
 	 *            SysRole
 	 * @param operate
-	 *            int ²Ù×÷
+	 *            int æ“ä½œ
 	 */
 	@Transactional
 	public void sort(SysRole bean, int operate) {
 		if (bean == null)
 			return;
-		if (operate == SysConstants.SORT_PREVIOUS) {// Ç°ÒÆ
-			logger.debug("Ç°ÒÆ:" + bean.getName());
+		if (operate == SysConstants.SORT_PREVIOUS) {// å‰ç§»
+			logger.debug("å‰ç§»:" + bean.getName());
 			sortByPrevious(bean);
-		} else if (operate == SysConstants.SORT_FORWARD) {// ºóÒÆ
-			logger.debug("ºóÒÆ:" + bean.getName());
+		} else if (operate == SysConstants.SORT_FORWARD) {// åç§»
+			logger.debug("åç§»:" + bean.getName());
 			sortByForward(bean);
 		}
 	}
 
 	/**
-	 * ÏòºóÒÆ¶¯ÅÅĞò
+	 * å‘åç§»åŠ¨æ’åº
 	 * 
 	 * @param bean
 	 */
@@ -265,19 +265,19 @@ public class SysRoleServiceImpl implements SysRoleService {
 		query.setSortLessThan(bean.getSort());
 		query.setOrderBy(" E.SORT desc ");
 		List<SysRole> list = this.list(query);
-		if (list != null && list.size() > 0) {// ÓĞ¼ÇÂ¼
+		if (list != null && list.size() > 0) {// æœ‰è®°å½•
 			SysRole temp = (SysRole) list.get(0);
 			int sort = bean.getSort();
 			bean.setSort(temp.getSort()-1);
-			this.update(bean);// ¸üĞÂbean
+			this.update(bean);// æ›´æ–°bean
 
 			temp.setSort(sort+1);
-			this.update(temp);// ¸üĞÂtemp
+			this.update(temp);// æ›´æ–°temp
 		}
 	}
 
 	/**
-	 * ÏòÇ°ÒÆ¶¯ÅÅĞò
+	 * å‘å‰ç§»åŠ¨æ’åº
 	 * 
 	 * @param bean
 	 */
@@ -285,16 +285,16 @@ public class SysRoleServiceImpl implements SysRoleService {
 		SysRoleQuery query = new SysRoleQuery();
 		query.setSortGreaterThan(bean.getSort());
 		query.setOrderBy(" E.SORT asc ");
-		// ²éÕÒÇ°Ò»¸ö¶ÔÏó
+		// æŸ¥æ‰¾å‰ä¸€ä¸ªå¯¹è±¡
 		List<SysRole> list = this.list(query);
-		if (list != null && list.size() > 0) {// ÓĞ¼ÇÂ¼
+		if (list != null && list.size() > 0) {// æœ‰è®°å½•
 			SysRole temp = (SysRole) list.get(0);
 			int sort = bean.getSort();
 			bean.setSort(temp.getSort()+1);
-			this.update(bean);// ¸üĞÂbean
+			this.update(bean);// æ›´æ–°bean
 
 			temp.setSort(sort-1);
-			this.update(temp);// ¸üĞÂtemp
+			this.update(temp);// æ›´æ–°temp
 		}
 	}
 

@@ -167,13 +167,13 @@ public class MyMenuServiceImpl implements MyMenuService {
 	}
 
 	public PageResult getMyMenuList(long userId, int pageNo, int pageSize) {
-		// ¼ÆËã×ÜÊı
+		// è®¡ç®—æ€»æ•°
 		PageResult pager = new PageResult();
 		MyMenuQuery query = new MyMenuQuery();
 		query.userId(userId);
 
 		int count = this.count(query);
-		if (count == 0) {// ½á¹û¼¯Îª¿Õ
+		if (count == 0) {// ç»“æœé›†ä¸ºç©º
 			pager.setPageSize(pageSize);
 			return pager;
 		}
@@ -191,26 +191,26 @@ public class MyMenuServiceImpl implements MyMenuService {
 	}
 
 	/**
-	 * ÅÅĞò
+	 * æ’åº
 	 * 
 	 * @param bean
 	 *            MyMenu
 	 * @param operate
-	 *            int ²Ù×÷
+	 *            int æ“ä½œ
 	 */
 	@Transactional
 	public void sort(MyMenu bean, int operate) {
 		if (bean == null)
 			return;
-		if (operate == SysConstants.SORT_PREVIOUS) {// Ç°ÒÆ
+		if (operate == SysConstants.SORT_PREVIOUS) {// å‰ç§»
 			sortByPrevious(bean);
-		} else if (operate == SysConstants.SORT_FORWARD) {// ºóÒÆ
+		} else if (operate == SysConstants.SORT_FORWARD) {// åç§»
 			sortByForward(bean);
 		}
 	}
 
 	/**
-	 * ÏòÇ°ÒÆ¶¯ÅÅĞò
+	 * å‘å‰ç§»åŠ¨æ’åº
 	 * 
 	 * @param bean
 	 */
@@ -218,42 +218,42 @@ public class MyMenuServiceImpl implements MyMenuService {
 		MyMenuQuery query = new MyMenuQuery();
 		query.setUserId(bean.getUserId());
 
-		// ²éÕÒÇ°Ò»¸ö¶ÔÏó
+		// æŸ¥æ‰¾å‰ä¸€ä¸ªå¯¹è±¡
 		// String query =
 		// "from MyMenu a where a.userId=? and a.sort>? order by a.sort asc";
 		List<MyMenu> list = this.list(query);
-		if (list != null && list.size() > 0) {// ÓĞ¼ÇÂ¼
+		if (list != null && list.size() > 0) {// æœ‰è®°å½•
 			MyMenu temp = (MyMenu) list.get(0);
 			int i = bean.getSort();
 			bean.setSort(temp.getSort());
-			this.update(bean);// ¸üĞÂbean
+			this.update(bean);// æ›´æ–°bean
 
 			temp.setSort(i);
-			this.update(temp);// ¸üĞÂtemp
+			this.update(temp);// æ›´æ–°temp
 
 		}
 	}
 
 	/**
-	 * ÏòºóÒÆ¶¯ÅÅĞò
+	 * å‘åç§»åŠ¨æ’åº
 	 * 
 	 * @param bean
 	 */
 	private void sortByForward(MyMenu bean) {
 		MyMenuQuery query = new MyMenuQuery();
 		query.setUserId(bean.getUserId());
-		// ²éÕÒºóÒ»¸ö¶ÔÏó
+		// æŸ¥æ‰¾åä¸€ä¸ªå¯¹è±¡
 		// String query =
 		// "from MyMenu a where a.userId=? and a.sort<? order by a.sort desc";
 		List<MyMenu> list = this.list(query);
-		if (list != null && list.size() > 0) {// ÓĞ¼ÇÂ¼
+		if (list != null && list.size() > 0) {// æœ‰è®°å½•
 			MyMenu temp = (MyMenu) list.get(0);
 			int i = bean.getSort();
 			bean.setSort(temp.getSort());
-			this.update(bean);// ¸üĞÂbean
+			this.update(bean);// æ›´æ–°bean
 
 			temp.setSort(i);
-			this.update(temp);// ¸üĞÂtemp
+			this.update(temp);// æ›´æ–°temp
 
 		}
 	}

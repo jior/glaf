@@ -50,13 +50,13 @@ import com.glaf.jbpm.el.DefaultExpressionEvaluator;
 import com.glaf.jbpm.util.Constant;
 
 /**
- * ¶¯Ì¬ÈÎÎñ²úÉú×¢ÒâÊÂÏî£ºĞèÒª½«task-node½ÚµãµÄcreate-tasksµÄÊôĞÔ¸Ä³Écreate-tasks="false" ÀıÈç£º
- * <task-node name="²É¹º²¿²¿³¤ÉóÅú" create-tasks="false"><br>
+ * åŠ¨æ€ä»»åŠ¡äº§ç”Ÿæ³¨æ„äº‹é¡¹ï¼šéœ€è¦å°†task-nodeèŠ‚ç‚¹çš„create-tasksçš„å±æ€§æ”¹æˆcreate-tasks="false" ä¾‹å¦‚ï¼š
+ * <task-node name="é‡‡è´­éƒ¨éƒ¨é•¿å®¡æ‰¹" create-tasks="false"><br>
  * <event type="node-enter"><br>
  * <action ref-name="taskinstance_role07x"/><br>
  * </event><br>
- * <task name="task07x" description="²É¹º²¿²¿³¤ÉóÅú" ></task><br>
- * <transition name="tr410" to="²É¹º²¿²¿³¤ÉóÅúÍ¨¹ı£¿"></transition><br>
+ * <task name="task07x" description="é‡‡è´­éƒ¨éƒ¨é•¿å®¡æ‰¹" ></task><br>
+ * <transition name="tr410" to="é‡‡è´­éƒ¨éƒ¨é•¿å®¡æ‰¹é€šè¿‡ï¼Ÿ"></transition><br>
  * </task-node><br>
  */
 public class SqlMapTaskInstanceComplexAction implements ActionHandler {
@@ -66,28 +66,28 @@ public class SqlMapTaskInstanceComplexAction implements ActionHandler {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * ¶¯Ì¬ÉèÖÃµÄ²ÎÓëÕßµÄ²ÎÊıÃû£¬»·¾³±äÁ¿¿ÉÒÔÍ¨¹ıcontextInstance.getVariable()È¡µÃ
-	 * ÀıÈç£ºcontextInstance.getVariable("SendDocAuditor");
+	 * åŠ¨æ€è®¾ç½®çš„å‚ä¸è€…çš„å‚æ•°åï¼Œç¯å¢ƒå˜é‡å¯ä»¥é€šè¿‡contextInstance.getVariable()å–å¾—
+	 * ä¾‹å¦‚ï¼šcontextInstance.getVariable("SendDocAuditor");
 	 */
 	protected String dynamicActors;
 
 	/**
-	 * ÃèÊö
+	 * æè¿°
 	 */
 	protected String description;
 
 	/**
-	 * Èç¹û±í´ïÊ½²»Îª¿Õ£¬ÔòÆä¼ÆËã½á¹û±ØĞëÎªtrue²ÅÖ´ĞĞÈÎÎñ·ÖÅÉ¡£
+	 * å¦‚æœè¡¨è¾¾å¼ä¸ä¸ºç©ºï¼Œåˆ™å…¶è®¡ç®—ç»“æœå¿…é¡»ä¸ºtrueæ‰æ‰§è¡Œä»»åŠ¡åˆ†æ´¾ã€‚
 	 */
 	protected String expression;
 
 	/**
-	 * ²¿ÃÅ±àºÅ»ò±í´ïÊ½
+	 * éƒ¨é—¨ç¼–å·æˆ–è¡¨è¾¾å¼
 	 */
 	protected String deptId;
 
 	/**
-	 * ²¿ÃÅ¼¯ºÏ <br>
+	 * éƒ¨é—¨é›†åˆ <br>
 	 * <deptIds><br>
 	 * <element>310</element><br>
 	 * <element>303</element><br>
@@ -96,12 +96,12 @@ public class SqlMapTaskInstanceComplexAction implements ActionHandler {
 	protected List<Object> deptIds;
 
 	/**
-	 * ½ÇÉ«±àºÅ»ò±í´ïÊ½
+	 * è§’è‰²ç¼–å·æˆ–è¡¨è¾¾å¼
 	 */
 	protected String roleId;
 
 	/**
-	 * ½ÇÉ«¼¯ºÏ <br>
+	 * è§’è‰²é›†åˆ <br>
 	 * <roleIds><br>
 	 * <element>R001</element><br>
 	 * <element>R002</element><br>
@@ -110,48 +110,48 @@ public class SqlMapTaskInstanceComplexAction implements ActionHandler {
 	protected List<Object> roleIds;
 
 	/**
-	 * SqlMap²éÑ¯Óï¾ä±àºÅ
+	 * SqlMapæŸ¥è¯¢è¯­å¥ç¼–å·
 	 */
 	protected String queryId;
 
 	/**
-	 * ¶ÔÏó±àºÅ»ò±í´ïÊ½
+	 * å¯¹è±¡ç¼–å·æˆ–è¡¨è¾¾å¼
 	 */
 	protected String objectId;
 
 	/**
-	 * ¶ÔÏóÖµ»ò±í´ïÊ½
+	 * å¯¹è±¡å€¼æˆ–è¡¨è¾¾å¼
 	 */
 	protected String objectValue;
 
 	/**
-	 * ¶¯Ì¬ÉèÖÃµÄ²ÎÓë²¿ÃÅ±àºÅµÄ²ÎÊıÃû£¬»·¾³±äÁ¿¿ÉÒÔÍ¨¹ıcontextInstance.getVariable()È¡µÃ
-	 * ÀıÈç£ºcontextInstance.getVariable("deptIds");
+	 * åŠ¨æ€è®¾ç½®çš„å‚ä¸éƒ¨é—¨ç¼–å·çš„å‚æ•°åï¼Œç¯å¢ƒå˜é‡å¯ä»¥é€šè¿‡contextInstance.getVariable()å–å¾—
+	 * ä¾‹å¦‚ï¼šcontextInstance.getVariable("deptIds");
 	 */
 	protected String dynamicDeptIds;
 
 	/**
-	 * ×ªÒÆÂ·¾¶µÄÃû³Æ
+	 * è½¬ç§»è·¯å¾„çš„åç§°
 	 */
 	protected String transitionName;
 
 	/**
-	 * ÈÎÎñÃû³Æ
+	 * ä»»åŠ¡åç§°
 	 */
 	protected String taskName;
 
 	/**
-	 * Èç¹û¶à¸öÉóÅúÕßÖ»ÒªÓĞÒ»¸öÍ¨¹ı¾Í¿ÉÒÔµÄ£¬ÉèÖÃ¸ÃÖµÎªtrue
+	 * å¦‚æœå¤šä¸ªå®¡æ‰¹è€…åªè¦æœ‰ä¸€ä¸ªé€šè¿‡å°±å¯ä»¥çš„ï¼Œè®¾ç½®è¯¥å€¼ä¸ºtrue
 	 */
 	protected boolean isPooled;
 
 	/**
-	 * ¸ù¾İ±í´ïÊ½¾ö¶¨isPooledÊÇ·ñÎªtrue
+	 * æ ¹æ®è¡¨è¾¾å¼å†³å®šisPooledæ˜¯å¦ä¸ºtrue
 	 */
 	protected String pooledExpression;
 
 	/**
-	 * Èç¹û²»ÄÜ»ñÈ¡ÈÎÎñ²ÎÓëÕßÊÇ·ñÀë¿ª±¾½Úµã£¨ÈÎÎñ½Úµã£©
+	 * å¦‚æœä¸èƒ½è·å–ä»»åŠ¡å‚ä¸è€…æ˜¯å¦ç¦»å¼€æœ¬èŠ‚ç‚¹ï¼ˆä»»åŠ¡èŠ‚ç‚¹ï¼‰
 	 */
 	protected boolean leaveNodeIfActorNotAvailable;
 
@@ -199,7 +199,7 @@ public class SqlMapTaskInstanceComplexAction implements ActionHandler {
 		}
 
 		if (!executable) {
-			logger.debug("±í´ïÊ½¼ÆËãºóÈ¡ÖµÎªfalse£¬²»Ö´ĞĞºóĞø¶¯×÷¡£");
+			logger.debug("è¡¨è¾¾å¼è®¡ç®—åå–å€¼ä¸ºfalseï¼Œä¸æ‰§è¡Œåç»­åŠ¨ä½œã€‚");
 			return;
 		}
 
@@ -231,7 +231,7 @@ public class SqlMapTaskInstanceComplexAction implements ActionHandler {
 		List<String> actorIds = new java.util.ArrayList<String>();
 
 		/**
-		 * Èç¹û¶¯Ì¬Ö¸¶¨¶à¸ö²¿ÃÅ
+		 * å¦‚æœåŠ¨æ€æŒ‡å®šå¤šä¸ªéƒ¨é—¨
 		 */
 		if (StringUtils.isNotEmpty(dynamicDeptIds)) {
 			String text = (String) ctx.getVariable(dynamicDeptIds);
@@ -245,10 +245,10 @@ public class SqlMapTaskInstanceComplexAction implements ActionHandler {
 					params.put("roleIds", roleIds);
 				}
 
-				logger.debug("´¦Àí¶à¸ö²¿ÃÅ:" + dptIds);
+				logger.debug("å¤„ç†å¤šä¸ªéƒ¨é—¨:" + dptIds);
 
 				/**
-				 * ÒÀ´Î´¦Àí¶à¸ö²¿ÃÅ
+				 * ä¾æ¬¡å¤„ç†å¤šä¸ªéƒ¨é—¨
 				 */
 				for (String dptId : dptIds) {
 					if (StringUtils.isNotEmpty(dptId)) {
@@ -258,7 +258,7 @@ public class SqlMapTaskInstanceComplexAction implements ActionHandler {
 						try {
 							actors = container.getList(ctx.getJbpmContext()
 									.getConnection(), queryId, params);
-							logger.debug(dptId + "µÄÈËÔ±:" + actors);
+							logger.debug(dptId + "çš„äººå‘˜:" + actors);
 						} catch (Exception ex) {
 							logger.error("params:" + params);
 							logger.error(ex);

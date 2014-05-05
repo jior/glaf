@@ -21,49 +21,49 @@ package com.glaf.core.base;
 public interface ModuleAccess extends Accessable {
 
 	/**
-	 * »ñÈ¡»ù´¡´úÂë
+	 * è·å–åŸºç¡€ä»£ç 
 	 * 
 	 * @return
 	 */
 	String getBaseCode();
 
 	/**
-	 * »ñÈ¡Ö÷¼ü
+	 * è·å–ä¸»é”®
 	 * 
 	 * @return
 	 */
 	String getId();
 
 	/**
-	 * »ñÈ¡Ä¿±êID
+	 * è·å–ç›®æ ‡ID
 	 * 
 	 * @return
 	 */
 	String getObjectId();
 
 	/**
-	 * »ñÈ¡Ä¿±êÖµ
+	 * è·å–ç›®æ ‡å€¼
 	 * 
 	 * @return
 	 */
 	String getObjectValue();
 
 	/**
-	 * ²Ù×÷£¨ĞÂÔöcreate£¬ĞŞ¸Äupdate£¬É¾³ıdelete£¬²é¿´view£¬ÉóºËaudit£¬´òÓ¡print£¬µ¼³öexport£©
+	 * æ“ä½œï¼ˆæ–°å¢createï¼Œä¿®æ”¹updateï¼Œåˆ é™¤deleteï¼ŒæŸ¥çœ‹viewï¼Œå®¡æ ¸auditï¼Œæ‰“å°printï¼Œå¯¼å‡ºexportï¼‰
 	 */
 	String getOperation();
 
 	/**
-	 * ·ÃÎÊÄ¿±ê£¨ÓÃ»§¡¢²¿ÃÅ¡¢½ÇÉ«»òÉÏ¼¶£©
+	 * è®¿é—®ç›®æ ‡ï¼ˆç”¨æˆ·ã€éƒ¨é—¨ã€è§’è‰²æˆ–ä¸Šçº§ï¼‰
 	 */
 	String getTarget();
 
 	/**
-	 * ·ÃÎÊÄ¿±êÀàĞÍ<br/>
-	 * 0-ÓÃ»§<br/>
-	 * 1-²¿ÃÅ<br/>
-	 * 2-½ÇÉ«<br/>
-	 * 3-ÉÏ¼¶<br/>
+	 * è®¿é—®ç›®æ ‡ç±»å‹<br/>
+	 * 0-ç”¨æˆ·<br/>
+	 * 1-éƒ¨é—¨<br/>
+	 * 2-è§’è‰²<br/>
+	 * 3-ä¸Šçº§<br/>
 	 */
 	int getTargetType();
 

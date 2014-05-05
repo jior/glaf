@@ -119,7 +119,7 @@ public class MxSystemPropertyController {
 
 			SystemProperty prop = new SystemProperty();
 			prop.setName("serviceUrl");
-			prop.setTitle("·şÎñµØÖ·");
+			prop.setTitle("æœåŠ¡åœ°å€");
 			prop.setValue(RequestUtils.getServiceUrl(request));
 			prop.setCategory("SYS");
 			prop.setLocked(0);
@@ -159,7 +159,7 @@ public class MxSystemPropertyController {
 
 			SystemProperty prop = new SystemProperty();
 			prop.setName("serviceUrl");
-			prop.setTitle("·şÎñµØÖ·");
+			prop.setTitle("æœåŠ¡åœ°å€");
 			prop.setValue(RequestUtils.getServiceUrl(request));
 			prop.setCategory("SYS");
 			prop.setLocked(0);
@@ -170,7 +170,7 @@ public class MxSystemPropertyController {
 			SystemProperties.reload();
 			SystemConfig.reload();
 			MessageProperties.reload();
-			return ResponseUtils.responseJsonResult(true, "±£´æ³É¹¦£¡");
+			return ResponseUtils.responseJsonResult(true, "ä¿å­˜æˆåŠŸï¼");
 		}
 		return ResponseUtils.responseJsonResult(false);
 	}

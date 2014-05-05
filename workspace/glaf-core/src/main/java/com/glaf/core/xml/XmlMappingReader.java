@@ -122,14 +122,14 @@ public class XmlMappingReader {
 		field.setCurrency(elem.attributeValue("currency"));
 
 		/**
-		 * Èç¹ûÊÇÕ¼Î»·û£¬Ôò²»´æ´¢¸Ã×Ö¶Î
+		 * å¦‚æœæ˜¯å ä½ç¬¦ï¼Œåˆ™ä¸å­˜å‚¨è¯¥å­—æ®µ
 		 */
 		if ("true".equals(elem.attributeValue("temporary"))) {
 			field.setTemporary(true);
 		}
 
 		/**
-		 * Èç¹ûÊÇ±ØĞë×Ö¶Î
+		 * å¦‚æœæ˜¯å¿…é¡»å­—æ®µ
 		 */
 		if ("true".equals(elem.attributeValue("required"))) {
 			field.setRequired(true);

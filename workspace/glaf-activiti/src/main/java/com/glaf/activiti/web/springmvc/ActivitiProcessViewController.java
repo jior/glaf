@@ -156,12 +156,12 @@ public class ActivitiProcessViewController {
 								.append("').store('tip:title', '")
 								.append(title).append('\'')
 								.append(").store('tip:text', '")
-								.append("<br/><b>¿ªÊ¼Ê±¼ä:</b> ")
+								.append("<br/><b>å¼€å§‹æ—¶é—´:</b> ")
 								.append(DateUtils.getDateTime(startDate))
-								.append("<br/><b>½áÊøÊ±¼ä:</b> ")
+								.append("<br/><b>ç»“æŸæ—¶é—´:</b> ")
 								.append(DateUtils.getDateTime(endDate));
 						if (activityInstance.getAssignee() != null) {
-							buffer.append("<br/><b>Ö´ĞĞÈË:</b> ").append(
+							buffer.append("<br/><b>æ‰§è¡Œäºº:</b> ").append(
 									activityInstance.getAssignee());
 						}
 						buffer.append("');</script>");
@@ -198,10 +198,10 @@ public class ActivitiProcessViewController {
 									.append("').store('tip:title', '")
 									.append(title).append('\'')
 									.append(").store('tip:text', '")
-									.append("<br/><b>¿ªÊ¼Ê±¼ä:</b> ")
+									.append("<br/><b>å¼€å§‹æ—¶é—´:</b> ")
 									.append(DateUtils.getDateTime(startDate));
 							if (activityInstance.getAssignee() != null) {
-								buffer.append("<br/><b>Ö´ĞĞÈË:</b> ").append(
+								buffer.append("<br/><b>æ‰§è¡Œäºº:</b> ").append(
 										activityInstance.getAssignee());
 							}
 							buffer.append("');</script>");

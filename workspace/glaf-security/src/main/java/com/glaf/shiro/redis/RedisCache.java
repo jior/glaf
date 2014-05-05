@@ -65,7 +65,7 @@ public class RedisCache<K, V> implements Cache<K, V> {
 	}
 	
 	/**
-	 * Í¨¹ıÒ»¸öJedisManagerÊµÀı¹¹ÔìRedisCache
+	 * é€šè¿‡ä¸€ä¸ªJedisManagerå®ä¾‹æ„é€ RedisCache
 	 */
 	public RedisCache(RedisManager cache){
 		 if (cache == null) {
@@ -90,7 +90,7 @@ public class RedisCache<K, V> implements Cache<K, V> {
 	}
 	
 	/**
-	 * »ñµÃbyte[]ĞÍµÄkey
+	 * è·å¾—byte[]å‹çš„key
 	 * @param key
 	 * @return
 	 */
@@ -105,7 +105,7 @@ public class RedisCache<K, V> implements Cache<K, V> {
  	
 	@Override
 	public V get(K key) throws CacheException {
-		logger.debug("¸ù¾İkey´ÓRedisÖĞ»ñÈ¡¶ÔÏó key [" + key + "]");
+		logger.debug("æ ¹æ®keyä»Redisä¸­è·å–å¯¹è±¡ key [" + key + "]");
 		try {
 			if (key == null) {
 	            return null;
@@ -123,7 +123,7 @@ public class RedisCache<K, V> implements Cache<K, V> {
 
 	@Override
 	public V put(K key, V value) throws CacheException {
-		logger.debug("¸ù¾İkey´Ó´æ´¢ key [" + key + "]");
+		logger.debug("æ ¹æ®keyä»å­˜å‚¨ key [" + key + "]");
 		 try {
 			 	cache.set(getByteKey(key), SerializerUtils.serialize(value));
 	            return value;
@@ -134,7 +134,7 @@ public class RedisCache<K, V> implements Cache<K, V> {
 
 	@Override
 	public V remove(K key) throws CacheException {
-		logger.debug("´ÓredisÖĞÉ¾³ı key [" + key + "]");
+		logger.debug("ä»redisä¸­åˆ é™¤ key [" + key + "]");
 		try {
             V previous = get(key);
             cache.del(getByteKey(key));
@@ -146,7 +146,7 @@ public class RedisCache<K, V> implements Cache<K, V> {
 
 	@Override
 	public void clear() throws CacheException {
-		logger.debug("´ÓredisÖĞÉ¾³ıËùÓĞÔªËØ");
+		logger.debug("ä»redisä¸­åˆ é™¤æ‰€æœ‰å…ƒç´ ");
 		try {
             cache.flushDB();
         } catch (Throwable t) {

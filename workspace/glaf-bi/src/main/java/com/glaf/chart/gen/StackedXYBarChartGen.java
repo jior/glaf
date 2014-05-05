@@ -45,16 +45,16 @@ public class StackedXYBarChartGen implements ChartGen {
 	public static void main(String[] paramArrayOfString) {
 		StackedXYBarChartGen chartDemo = new StackedXYBarChartGen();
 		Chart chartModel = new Chart();
-		chartModel.setChartFont("ËÎÌå");
+		chartModel.setChartFont("å®‹ä½“");
 		chartModel.setChartFontSize(12);
 		chartModel.setChartHeight(500);
 		chartModel.setChartWidth(1500);
-		chartModel.setChartTitle("¶Ñ»ıÌõĞÎÍ¼");
+		chartModel.setChartTitle("å †ç§¯æ¡å½¢å›¾");
 		chartModel.setImageType("png");
 		chartModel.setChartName("stackedxybar");
 		chartModel.setChartType("stackedxybar");
-		chartModel.setCoordinateX("ÈÕÆÚ");
-		chartModel.setCoordinateY("Á¿²ú");
+		chartModel.setCoordinateX("æ—¥æœŸ");
+		chartModel.setCoordinateY("é‡äº§");
 		java.util.Random rand = new java.util.Random();
 		for (int i = 2011; i <= 2030; i++) {
 			ColumnModel cell = new ColumnModel();

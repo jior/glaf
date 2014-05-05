@@ -82,7 +82,7 @@ public class PurchaseitemController {
 			ex.printStackTrace();
 			logger.error(ex.getMessage());
 			ModelAndView mav = new ModelAndView();
-			mav.addObject("message", "É¾³ıÊ§°Ü¡£");
+			mav.addObject("message", "åˆ é™¤å¤±è´¥ã€‚");
 			return mav;
 		}
 		return this.list(request, modelMap);
@@ -152,7 +152,7 @@ public class PurchaseitemController {
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
 		/**
-		 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+		 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 		 */
 		if (!loginContext.isSystemAdministrator()) {
 			String actorId = loginContext.getActorId();
@@ -229,7 +229,7 @@ public class PurchaseitemController {
 	}
 
 	/**
-	 * ±£´æ
+	 * ä¿å­˜
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -264,7 +264,7 @@ public class PurchaseitemController {
 			ex.printStackTrace();
 			logger.error(ex.getMessage());
 			ModelAndView mav = new ModelAndView();
-			mav.addObject("message", "±£´æÊ§°Ü¡£");
+			mav.addObject("message", "ä¿å­˜å¤±è´¥ã€‚");
 			return mav;
 		}
 

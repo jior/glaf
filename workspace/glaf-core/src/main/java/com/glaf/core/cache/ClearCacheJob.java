@@ -30,7 +30,7 @@ public class ClearCacheJob implements Job {
 	protected final static Log logger = LogFactory.getLog(ClearCacheJob.class);
 
 	private static final int MAX_AVAILABLE = 1;
-	// ½«ĞÅºÅÁ¿³õÊ¼»¯Îª 1£¬Ê¹µÃËüÔÚÊ¹ÓÃÊ±×î¶àÖ»ÓĞÒ»¸ö¿ÉÓÃµÄĞí¿É£¬´Ó¶ø¿ÉÓÃ×÷Ò»¸öÏà»¥ÅÅ³âµÄËø¡£
+	// å°†ä¿¡å·é‡åˆå§‹åŒ–ä¸º 1ï¼Œä½¿å¾—å®ƒåœ¨ä½¿ç”¨æ—¶æœ€å¤šåªæœ‰ä¸€ä¸ªå¯ç”¨çš„è®¸å¯ï¼Œä»è€Œå¯ç”¨ä½œä¸€ä¸ªç›¸äº’æ’æ–¥çš„é”ã€‚
 	private final Semaphore semaphore = new Semaphore(MAX_AVAILABLE, true);
 
 	public ClearCacheJob() {

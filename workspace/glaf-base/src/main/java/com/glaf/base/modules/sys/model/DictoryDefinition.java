@@ -43,19 +43,19 @@ public class DictoryDefinition implements Serializable, JSONable,
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * ÁĞÃû
+	 * åˆ—å
 	 */
 	@Column(name = "COLUMNNAME", length = 50)
 	protected String columnName;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY", length = 50)
 	protected String createBy;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE")
@@ -66,61 +66,61 @@ public class DictoryDefinition implements Serializable, JSONable,
 	protected long id;
 
 	/**
-	 * Êı¾İ³¤¶È
+	 * æ•°æ®é•¿åº¦
 	 */
 	@Column(name = "LENGTH")
 	protected int length;
 
 	/**
-	 * Ãû³Æ
+	 * åç§°
 	 */
 	@Column(name = "NAME", length = 50)
 	protected String name;
 
 	/**
-	 * ½Úµã±àºÅ
+	 * èŠ‚ç‚¹ç¼–å·
 	 */
 	@Column(name = "NODEID")
 	protected long nodeId;
 
 	/**
-	 * ±ØÌîÏî
+	 * å¿…å¡«é¡¹
 	 */
 	@Column(name = "REQUIRED")
 	protected int required;
 
 	/**
-	 * Ë³ĞòºÅ
+	 * é¡ºåºå·
 	 */
 	@Column(name = "SORT")
 	protected int sort;
 
 	/**
-	 * Ä¿±ê
+	 * ç›®æ ‡
 	 */
 	@Column(name = "TARGET", length = 100)
 	protected String target;
 
 	/**
-	 * ±êÌâ
+	 * æ ‡é¢˜
 	 */
 	@Column(name = "TITLE", length = 250)
 	protected String title;
 
 	/**
-	 * Êı¾İÀàĞÍ
+	 * æ•°æ®ç±»å‹
 	 */
 	@Column(name = "TYPE", length = 50)
 	protected String type;
 
 	/**
-	 * ĞŞ¸ÄÈË
+	 * ä¿®æ”¹äºº
 	 */
 	@Column(name = "UPDATEBY", length = 50)
 	protected String updateBy;
 
 	/**
-	 * ĞŞ¸ÄÈÕÆÚ
+	 * ä¿®æ”¹æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "UPDATEDATE")

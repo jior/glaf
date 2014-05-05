@@ -49,13 +49,13 @@ import com.glaf.jbpm.el.DefaultExpressionEvaluator;
 import com.glaf.jbpm.util.Constant;
 
 /**
- * ¶¯Ì¬ÈÎÎñ²úÉú×¢ÒâÊÂÏî£ºĞèÒª½«task-node½ÚµãµÄcreate-tasksµÄÊôĞÔ¸Ä³Écreate-tasks="false" ÀıÈç£º
- * <task-node name="²É¹º²¿²¿³¤ÉóÅú" create-tasks="false"><br>
+ * åŠ¨æ€ä»»åŠ¡äº§ç”Ÿæ³¨æ„äº‹é¡¹ï¼šéœ€è¦å°†task-nodeèŠ‚ç‚¹çš„create-tasksçš„å±æ€§æ”¹æˆcreate-tasks="false" ä¾‹å¦‚ï¼š
+ * <task-node name="é‡‡è´­éƒ¨éƒ¨é•¿å®¡æ‰¹" create-tasks="false"><br>
  * <event type="node-enter"><br>
  * <action ref-name="taskinstance_role07x"/><br>
  * </event><br>
- * <task name="task07x" description="²É¹º²¿²¿³¤ÉóÅú" ></task><br>
- * <transition name="tr410" to="²É¹º²¿²¿³¤ÉóÅúÍ¨¹ı£¿"></transition><br>
+ * <task name="task07x" description="é‡‡è´­éƒ¨éƒ¨é•¿å®¡æ‰¹" ></task><br>
+ * <transition name="tr410" to="é‡‡è´­éƒ¨éƒ¨é•¿å®¡æ‰¹é€šè¿‡ï¼Ÿ"></transition><br>
  * </task-node><br>
  */
 public class SqlMapMultiTaskInstanceAction implements ActionHandler {
@@ -65,22 +65,22 @@ public class SqlMapMultiTaskInstanceAction implements ActionHandler {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * ÃèÊö
+	 * æè¿°
 	 */
 	protected String description;
 
 	/**
-	 * Èç¹û±í´ïÊ½²»Îª¿Õ£¬ÔòÆä¼ÆËã½á¹û±ØĞëÎªtrue²ÅÖ´ĞĞÈÎÎñ·ÖÅÉ¡£
+	 * å¦‚æœè¡¨è¾¾å¼ä¸ä¸ºç©ºï¼Œåˆ™å…¶è®¡ç®—ç»“æœå¿…é¡»ä¸ºtrueæ‰æ‰§è¡Œä»»åŠ¡åˆ†æ´¾ã€‚
 	 */
 	protected String expression;
 
 	/**
-	 * ²¿ÃÅ±àºÅ»ò±í´ïÊ½
+	 * éƒ¨é—¨ç¼–å·æˆ–è¡¨è¾¾å¼
 	 */
 	protected String deptId;
 
 	/**
-	 * ½ÇÉ«¼¯ºÏ <br>
+	 * è§’è‰²é›†åˆ <br>
 	 * <roleIds><br>
 	 * <element>R001</element><br>
 	 * <element>R002</element><br>
@@ -89,27 +89,27 @@ public class SqlMapMultiTaskInstanceAction implements ActionHandler {
 	protected List<Object> roleIds;
 
 	/**
-	 * SqlMap²éÑ¯Óï¾ä±àºÅ
+	 * SqlMapæŸ¥è¯¢è¯­å¥ç¼–å·
 	 */
 	protected String queryId;
 
 	/**
-	 * ×ªÒÆÂ·¾¶µÄÃû³Æ
+	 * è½¬ç§»è·¯å¾„çš„åç§°
 	 */
 	protected String transitionName;
 
 	/**
-	 * ÈÎÎñÃû³Æ
+	 * ä»»åŠ¡åç§°
 	 */
 	protected String taskName;
 
 	/**
-	 * Èç¹û¶à¸öÉóÅúÕßÖ»ÒªÓĞÒ»¸öÍ¨¹ı¾Í¿ÉÒÔµÄ£¬ÉèÖÃ¸ÃÖµÎªtrue
+	 * å¦‚æœå¤šä¸ªå®¡æ‰¹è€…åªè¦æœ‰ä¸€ä¸ªé€šè¿‡å°±å¯ä»¥çš„ï¼Œè®¾ç½®è¯¥å€¼ä¸ºtrue
 	 */
 	protected boolean isPooled;
 
 	/**
-	 * Èç¹û²»ÄÜ»ñÈ¡ÈÎÎñ²ÎÓëÕßÊÇ·ñÀë¿ª±¾½Úµã£¨ÈÎÎñ½Úµã£©
+	 * å¦‚æœä¸èƒ½è·å–ä»»åŠ¡å‚ä¸è€…æ˜¯å¦ç¦»å¼€æœ¬èŠ‚ç‚¹ï¼ˆä»»åŠ¡èŠ‚ç‚¹ï¼‰
 	 */
 	protected boolean leaveNodeIfActorNotAvailable;
 
@@ -155,14 +155,14 @@ public class SqlMapMultiTaskInstanceAction implements ActionHandler {
 		}
 
 		if (!executable) {
-			logger.debug("±í´ïÊ½¼ÆËãºóÈ¡ÖµÎªfalse£¬²»Ö´ĞĞºóĞø¶¯×÷¡£");
+			logger.debug("è¡¨è¾¾å¼è®¡ç®—åå–å€¼ä¸ºfalseï¼Œä¸æ‰§è¡Œåç»­åŠ¨ä½œã€‚");
 			return;
 		}
 
 		boolean exists = false;
 
 		/**
-		 * ´ÓÊı¾İ¿âÖĞ¸ù¾İ²éÑ¯Ìõ¼ş²éÕÒ²ÎÓëÕß
+		 * ä»æ•°æ®åº“ä¸­æ ¹æ®æŸ¥è¯¢æ¡ä»¶æŸ¥æ‰¾å‚ä¸è€…
 		 */
 		if (StringUtils.isNotEmpty(queryId)) {
 			if (LogUtils.isDebug()) {

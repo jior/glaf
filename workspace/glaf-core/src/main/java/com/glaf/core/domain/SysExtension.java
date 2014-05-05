@@ -36,19 +36,19 @@ public class SysExtension implements Serializable {
 	protected Long id;
 
 	/**
-	 * 业务标识
+	 * 涓氬姟鏍囪瘑
 	 */
 	@Column(name = "BUSINESS_KEY", length = 200, nullable = false)
 	protected String businessKey;
 
 	/**
-	 * 业务标识
+	 * 涓氬姟鏍囪瘑
 	 */
 	@Column(name = "SERVICE_KEY", length = 50, nullable = false)
 	protected String serviceKey;
 
 	/**
-	 * type_cd(数据类型，取值：STRING, DATE, LONG, DOUBLE)
+	 * type_cd(鏁版嵁绫诲瀷锛屽彇鍊硷細STRING, DATE, LONG, DOUBLE)
 	 */
 	@Column(name = "TYPE_CD", length = 6)
 	protected String typeCd;

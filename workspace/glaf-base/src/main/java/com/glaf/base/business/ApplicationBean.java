@@ -36,7 +36,7 @@ public class ApplicationBean {
 	}
 
 	/**
-	 * »ñÈ¡ÓÃ»§²Ëµ¥Ö®Javascript¶ÔÏó
+	 * è·å–ç”¨æˆ·èœå•ä¹‹Javascriptå¯¹è±¡
 	 * 
 	 * @param parent
 	 * @param userId
@@ -104,12 +104,12 @@ public class ApplicationBean {
 	}
 
 	/**
-	 * »ñÈ¡ÓÃ»§²Ëµ¥Ö®Json¶ÔÏó
+	 * è·å–ç”¨æˆ·èœå•ä¹‹Jsonå¯¹è±¡
 	 * 
 	 * @param parent
-	 *            ¸¸½Úµã±àºÅ
+	 *            çˆ¶èŠ‚ç‚¹ç¼–å·
 	 * @param userId
-	 *            ÓÃ»§µÇÂ¼ÕËºÅ
+	 *            ç”¨æˆ·ç™»å½•è´¦å·
 	 * @return
 	 */
 	public JSONArray getUserMenu(long parent, String userId) {

@@ -22,27 +22,27 @@ import java.util.*;
 
 public class MailStatus {
 
-	public final static int NEW = 0; // ĞÂÓÊ¼ş
+	public final static int NEW = 0; // æ–°é‚®ä»¶
 
-	public final static int HAS_READ = 1; // ÒÑ¶ÁÓÊ¼ş
+	public final static int HAS_READ = 1; // å·²è¯»é‚®ä»¶
 
-	public final static int DRAFT = 2; // ²İ¸å
+	public final static int DRAFT = 2; // è‰ç¨¿
 
-	public final static int HAS_SENT = 3; // ÒÑ·¢ÓÊ¼ş
+	public final static int HAS_SENT = 3; // å·²å‘é‚®ä»¶
 
-	public final static int SEND_FAILED = 4; // ·¢ËÍÊ§°Ü
+	public final static int SEND_FAILED = 4; // å‘é€å¤±è´¥
 
-	public final static int RUBBISH = 5; // ·ÏÆúÓÊ¼ş
+	public final static int RUBBISH = 5; // åºŸå¼ƒé‚®ä»¶
 
 	protected static Map<Integer, String> names = new java.util.HashMap<Integer, String>();
 
 	static {
-		names.put(NEW, "ĞÂÓÊ¼ş");
-		names.put(HAS_READ, "ÒÑ¶ÁÓÊ¼ş");
-		names.put(DRAFT, "²İ¸å");
-		names.put(HAS_SENT, "ÒÑ·¢ÓÊ¼ş");
-		names.put(SEND_FAILED, "·¢ËÍÊ§°Ü");
-		names.put(RUBBISH, "·ÏÆúÓÊ¼ş");
+		names.put(NEW, "æ–°é‚®ä»¶");
+		names.put(HAS_READ, "å·²è¯»é‚®ä»¶");
+		names.put(DRAFT, "è‰ç¨¿");
+		names.put(HAS_SENT, "å·²å‘é‚®ä»¶");
+		names.put(SEND_FAILED, "å‘é€å¤±è´¥");
+		names.put(RUBBISH, "åºŸå¼ƒé‚®ä»¶");
 	}
 
 	private MailStatus() {

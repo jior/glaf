@@ -46,7 +46,7 @@ public class JbpmTaskDAO {
 	protected static final Log logger = LogFactory.getLog(JbpmTaskDAO.class);
 
 	/**
-	 * »ñÈ¡È«²¿ÓÃ»§µÄ´ı°ìÈÎÎñ£¬ÓÃÓÚÏûÏ¢ÏµÍ³µÄ´ß°ì¡£
+	 * è·å–å…¨éƒ¨ç”¨æˆ·çš„å¾…åŠä»»åŠ¡ï¼Œç”¨äºæ¶ˆæ¯ç³»ç»Ÿçš„å‚¬åŠã€‚
 	 * 
 	 * @param jbpmContext
 	 * @return
@@ -58,7 +58,7 @@ public class JbpmTaskDAO {
 	}
 
 	/**
-	 * »ñÈ¡ÓÃ»§ÒÑ¾­´¦Àí¹ıµÄÁ÷³ÌÊµÀı±àºÅ
+	 * è·å–ç”¨æˆ·å·²ç»å¤„ç†è¿‡çš„æµç¨‹å®ä¾‹ç¼–å·
 	 * 
 	 * @param paramMap
 	 * @return
@@ -83,7 +83,7 @@ public class JbpmTaskDAO {
 	}
 
 	/**
-	 * »ñÈ¡ÒÑ¾­Íê³ÉÁËµÄÈÎÎñÊµÀı
+	 * è·å–å·²ç»å®Œæˆäº†çš„ä»»åŠ¡å®ä¾‹
 	 * 
 	 * @param jbpmContext
 	 * @param paramMap
@@ -711,7 +711,7 @@ public class JbpmTaskDAO {
 	}
 
 	/**
-	 * »ñÈ¡ÓÃ»§ÒÑ¾­´¦Àí¹ıµÄÁ÷³ÌÊµÀı±àºÅ
+	 * è·å–ç”¨æˆ·å·²ç»å¤„ç†è¿‡çš„æµç¨‹å®ä¾‹ç¼–å·
 	 * 
 	 * @param query
 	 * @return
@@ -736,7 +736,7 @@ public class JbpmTaskDAO {
 	}
 
 	/**
-	 * »ñÈ¡ÓÃ»§ÒÑ¾­´¦Àí¹ıµÄÈÎÎñ
+	 * è·å–ç”¨æˆ·å·²ç»å¤„ç†è¿‡çš„ä»»åŠ¡
 	 * 
 	 * @param query
 	 * @return

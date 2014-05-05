@@ -38,19 +38,19 @@ public class Attachment implements Serializable, JSONable {
 	protected long id;
 
 	/**
-	 * ÒıÓÃID
+	 * å¼•ç”¨ID
 	 */
 	@Column(name = "REFERID")
 	protected long referId;
 
 	/**
-	 * ÒıÓÃÀàĞÍ
+	 * å¼•ç”¨ç±»å‹
 	 */
 	@Column(name = "REFERTYPE")
 	protected int referType;
 
 	/**
-	 * Ãû³Æ
+	 * åç§°
 	 */
 	@Column(name = "NAME", length = 250)
 	protected String name;
@@ -62,14 +62,14 @@ public class Attachment implements Serializable, JSONable {
 	protected String url;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE")
 	protected Date createDate;
 
 	/**
-	 * ´´½¨ÈË±àºÅ
+	 * åˆ›å»ºäººç¼–å·
 	 */
 	@Column(name = "CREATEID")
 	protected long createId;

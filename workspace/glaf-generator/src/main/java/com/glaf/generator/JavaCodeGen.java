@@ -105,7 +105,7 @@ public class JavaCodeGen {
 			f0.setName("status");
 			f0.setColumnName("STATUS_");
 			f0.setEnglishTitle("status");
-			f0.setTitle("ÒµÎñ×´Ì¬");
+			f0.setTitle("ä¸šåŠ¡çŠ¶æ€");
 			f0.setType("Integer");
 			classDefinition.addField(f0);
 
@@ -113,7 +113,7 @@ public class JavaCodeGen {
 			f1.setName("processName");
 			f1.setColumnName("PROCESSNAME_");
 			f1.setEnglishTitle("processName");
-			f1.setTitle("Á÷³ÌÃû³Æ");
+			f1.setTitle("æµç¨‹åç§°");
 			f1.setLength(100);
 			f1.setType("String");
 			classDefinition.addField(f1);
@@ -122,7 +122,7 @@ public class JavaCodeGen {
 			f2.setName("processInstanceId");
 			f2.setColumnName("PROCESSINSTANCEID_");
 			f2.setEnglishTitle("processInstanceId");
-			f2.setTitle("Á÷³ÌÊµÀı±àºÅ");
+			f2.setTitle("æµç¨‹å®ä¾‹ç¼–å·");
 			f2.setType("Long");
 			classDefinition.addField(f2);
 
@@ -130,7 +130,7 @@ public class JavaCodeGen {
 			f3.setName("wfStatus");
 			f3.setColumnName("WFSTATUS_");
 			f3.setEnglishTitle("wfStatus");
-			f3.setTitle("¹¤×÷Á÷×´Ì¬");
+			f3.setTitle("å·¥ä½œæµçŠ¶æ€");
 			f3.setType("Integer");
 			classDefinition.addField(f3);
 
@@ -138,7 +138,7 @@ public class JavaCodeGen {
 			f4.setName("wfStartDate");
 			f4.setColumnName("WFSTARTDATE_");
 			f4.setEnglishTitle("wfStartDate");
-			f4.setTitle("¹¤×÷Á÷Æô¶¯ÈÕÆÚ");
+			f4.setTitle("å·¥ä½œæµå¯åŠ¨æ—¥æœŸ");
 			f4.setType("Date");
 			classDefinition.addField(f4);
 
@@ -146,7 +146,7 @@ public class JavaCodeGen {
 			f5.setName("wfEndDate");
 			f5.setColumnName("WFENDDATE_");
 			f5.setEnglishTitle("wfEndDate");
-			f5.setTitle("¹¤×÷Á÷½áÊøÈÕÆÚ");
+			f5.setTitle("å·¥ä½œæµç»“æŸæ—¥æœŸ");
 			f5.setType("Date");
 			classDefinition.addField(f5);
 
@@ -157,7 +157,7 @@ public class JavaCodeGen {
 			idField.setName("id");
 			idField.setColumnName("ID_");
 			idField.setEnglishTitle("Id");
-			idField.setTitle("Ö÷¼ü");
+			idField.setTitle("ä¸»é”®");
 			idField.setType("Long");
 			classDefinition.setIdField(idField);
 
@@ -165,7 +165,7 @@ public class JavaCodeGen {
 			f1.setName("parentId");
 			f1.setColumnName("PARENTID_");
 			f1.setEnglishTitle("parentId");
-			f1.setTitle("¸¸½Úµã±àºÅ");
+			f1.setTitle("çˆ¶èŠ‚ç‚¹ç¼–å·");
 			f1.setType("Long");
 			classDefinition.addField(f1);
 
@@ -173,7 +173,7 @@ public class JavaCodeGen {
 			f2.setName("code");
 			f2.setColumnName("CODE_");
 			f2.setEnglishTitle("Code");
-			f2.setTitle("±àÂë");
+			f2.setTitle("ç¼–ç ");
 			f2.setType("String");
 			classDefinition.addField(f2);
 
@@ -181,7 +181,7 @@ public class JavaCodeGen {
 			f7.setName("discriminator");
 			f7.setColumnName("DISCRIMINATOR_");
 			f7.setEnglishTitle("discriminator");
-			f7.setTitle("±êÊ¶·û");
+			f7.setTitle("æ ‡è¯†ç¬¦");
 			f7.setType("String");
 			classDefinition.addField(f7);
 
@@ -189,7 +189,7 @@ public class JavaCodeGen {
 			f8.setName("description");
 			f8.setColumnName("DESCRIPTION_");
 			f8.setEnglishTitle("description");
-			f8.setTitle("ÃèÊö");
+			f8.setTitle("æè¿°");
 			f8.setType("String");
 			classDefinition.addField(f8);
 
@@ -197,7 +197,7 @@ public class JavaCodeGen {
 			f9.setName("icon");
 			f9.setColumnName("ICON_");
 			f9.setEnglishTitle("icon");
-			f9.setTitle("Í¼±ê");
+			f9.setTitle("å›¾æ ‡");
 			f9.setType("String");
 			classDefinition.addField(f9);
 
@@ -205,7 +205,7 @@ public class JavaCodeGen {
 			f92.setName("iconCls");
 			f92.setColumnName("ICONCLS_");
 			f92.setEnglishTitle("iconCls");
-			f92.setTitle("Í¼±êÑùÊ½");
+			f92.setTitle("å›¾æ ‡æ ·å¼");
 			f92.setType("String");
 			classDefinition.addField(f92);
 
@@ -213,7 +213,7 @@ public class JavaCodeGen {
 			f10.setName("locked");
 			f10.setColumnName("LOCKED_");
 			f10.setEnglishTitle("locked");
-			f10.setTitle("Ëø¶¨±êÊ¶");
+			f10.setTitle("é”å®šæ ‡è¯†");
 			f10.setType("Integer");
 			classDefinition.addField(f10);
 
@@ -221,7 +221,7 @@ public class JavaCodeGen {
 			f11.setName("sortNo");
 			f11.setColumnName("SORTNO_");
 			f11.setEnglishTitle("sortNo");
-			f11.setTitle("Ë³ĞòºÅ");
+			f11.setTitle("é¡ºåºå·");
 			f11.setType("Integer");
 			classDefinition.addField(f11);
 
@@ -229,7 +229,7 @@ public class JavaCodeGen {
 			f12.setName("name");
 			f12.setColumnName("NAME_");
 			f12.setEnglishTitle("name");
-			f12.setTitle("Ãû³Æ");
+			f12.setTitle("åç§°");
 			f12.setType("String");
 			classDefinition.addField(f12);
 
@@ -237,7 +237,7 @@ public class JavaCodeGen {
 			f13.setName("treeId");
 			f13.setColumnName("TREEID_");
 			f13.setEnglishTitle("treeId");
-			f13.setTitle("Ê÷±àºÅ");
+			f13.setTitle("æ ‘ç¼–å·");
 			f13.setType("String");
 			classDefinition.addField(f13);
 
@@ -245,7 +245,7 @@ public class JavaCodeGen {
 			f14.setName("url");
 			f14.setColumnName("URL_");
 			f14.setEnglishTitle("url");
-			f14.setTitle("Á´½ÓµØÖ·");
+			f14.setTitle("é“¾æ¥åœ°å€");
 			f14.setType("String");
 			classDefinition.addField(f14);
 
@@ -255,7 +255,7 @@ public class JavaCodeGen {
 		f3.setName("createBy");
 		f3.setColumnName("CREATEBY_");
 		f3.setEnglishTitle("createBy");
-		f3.setTitle("´´½¨ÈË");
+		f3.setTitle("åˆ›å»ºäºº");
 		f3.setType("String");
 		f3.setLength(50);
 		//classDefinition.addField(f3);
@@ -264,7 +264,7 @@ public class JavaCodeGen {
 		f4.setName("createDate");
 		f4.setColumnName("CREATEDATE_");
 		f4.setEnglishTitle("createDate");
-		f4.setTitle("´´½¨ÈÕÆÚ");
+		f4.setTitle("åˆ›å»ºæ—¥æœŸ");
 		f4.setType("Date");
 		//classDefinition.addField(f4);
 
@@ -272,7 +272,7 @@ public class JavaCodeGen {
 		f5.setName("updateDate");
 		f5.setColumnName("UPDATEDATE_");
 		f5.setEnglishTitle("updateDate");
-		f5.setTitle("ĞŞ¸ÄÈÕÆÚ");
+		f5.setTitle("ä¿®æ”¹æ—¥æœŸ");
 		f5.setType("Date");
 		//classDefinition.addField(f5);
 
@@ -280,7 +280,7 @@ public class JavaCodeGen {
 		f6.setName("updateBy");
 		f6.setColumnName("UPDATEBY_");
 		f6.setEnglishTitle("updateBy");
-		f6.setTitle("ĞŞ¸ÄÈË");
+		f6.setTitle("ä¿®æ”¹äºº");
 		f6.setType("String");
 		f6.setLength(50);
 		//classDefinition.addField(f6);

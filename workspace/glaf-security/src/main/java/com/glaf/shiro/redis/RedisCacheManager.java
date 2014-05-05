@@ -64,7 +64,7 @@ public class RedisCacheManager implements CacheManager {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <K, V> Cache<K, V> getCache(String name) throws CacheException {
-		logger.debug("»ñÈ¡Ãû³ÆÎª: " + name + " µÄRedisCacheÊµÀı");
+		logger.debug("è·å–åç§°ä¸º: " + name + " çš„RedisCacheå®ä¾‹");
 
 		Cache cache = caches.get(name);
 

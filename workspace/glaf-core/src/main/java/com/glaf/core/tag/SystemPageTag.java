@@ -125,7 +125,7 @@ public class SystemPageTag extends TagSupport {
 			totalPageCount = 0;
 		}
 		String pageLabel = prefix + Paging.PAGENO_PARAMNAME + suffix;
-		// ÓÃÓÚÏòformÀïĞ´²ÎÊıµÄjavascript
+		// ç”¨äºå‘formé‡Œå†™å‚æ•°çš„javascript
 		buffer.append("\n\n<script language=\"javascript\">\n\n")
 				.append("function jumpUp").append(prefix).append(suffix)
 				.append("(maxPage,num){\n").append("     var a = ")
@@ -134,12 +134,12 @@ public class SystemPageTag extends TagSupport {
 				.append("     for(i=0;i<a.length;i++) { \n")
 				.append("     var c=a.charAt(i);\n")
 				.append("     if(c < \"0\" || c>\"9\"){\n")
-				.append("     alert(\"ÇëÊäÈëÕıÈ·µÄÕûÊı!\");\n").append("     ")
+				.append("     alert(\"è¯·è¾“å…¥æ­£ç¡®çš„æ•´æ•°!\");\n").append("     ")
 				.append("document.").append(form).append('.').append(pageLabel)
 				.append(".select();\n").append("      return false;\n")
 				.append("         }\n").append("     } \n")
 				.append("  if (a<=0 || a>maxPage || maxPage<=0){\n")
-				.append("     alert(\"ÇëÊäÈëÕıÈ·Ò³Âë!!\");\n").append("     ")
+				.append("     alert(\"è¯·è¾“å…¥æ­£ç¡®é¡µç !!\");\n").append("     ")
 				.append("document.").append(form).append('.').append(pageLabel)
 				.append(".select();\n").append("     return false;\n")
 				.append("     }\n\n").append("     __go2page(num);\n")
@@ -148,41 +148,41 @@ public class SystemPageTag extends TagSupport {
 				.append(prefix).append(Paging.PAGENO_PARAMNAME)
 				.append(".value=num;\n").append("     document.").append(form)
 				.append(".submit();\n").append("}\n\n").append("\n</script>\n");
-		// Ò³ÂëµÄhtml´úÂë
+		// é¡µç çš„htmlä»£ç 
 		final String blank = "&nbsp;";
 		buffer.append("\n<span>\n");
 
 		if (page.getCurrentPage() == 1 || page.getMaxPageRecordCount() == 0) {
-			buffer.append("Ê×Ò³").append(blank).append('|').append(blank)
-					.append("ÉÏÒ³");
+			buffer.append("é¦–é¡µ").append(blank).append('|').append(blank)
+					.append("ä¸Šé¡µ");
 		} else {
-			buffer.append("<a href=\"javascript:__go2page(1);\">Ê×Ò³</a>")
+			buffer.append("<a href=\"javascript:__go2page(1);\">é¦–é¡µ</a>")
 					.append(blank).append('|').append(blank)
 					.append("<a href=\"javascript:__go2page(")
-					.append(page.getCurrentPage() - 1).append(");\">ÉÏÒ³</a>");
+					.append(page.getCurrentPage() - 1).append(");\">ä¸Šé¡µ</a>");
 		}
 		buffer.append(blank).append('|').append(blank);
 		if (page.getCurrentPage() == totalPageCount
 				|| page.getMaxPageRecordCount() == 0) {
-			buffer.append("ÏÂÒ³").append(blank).append('|').append(blank)
-					.append("Î²Ò³");
+			buffer.append("ä¸‹é¡µ").append(blank).append('|').append(blank)
+					.append("å°¾é¡µ");
 		} else {
 			buffer.append("<a href=\"javascript:__go2page(")
-					.append(page.getCurrentPage() + 1).append(");\">ÏÂÒ³</a>")
+					.append(page.getCurrentPage() + 1).append(");\">ä¸‹é¡µ</a>")
 					.append(blank).append('|').append(blank)
 					.append("<a href=\"javascript:__go2page(")
-					.append(totalPageCount).append(");\">Î²Ò³</a>");
+					.append(totalPageCount).append(");\">å°¾é¡µ</a>");
 		}
 		buffer.append(blank)
 				.append('|')
 				.append(blank)
-				.append("×ªµ½µÚ <input type=\"text\" id=\"")
+				.append("è½¬åˆ°ç¬¬ <input type=\"text\" id=\"")
 				.append(pageLabel)
 				.append("\" name=\"")
 				.append(pageLabel)
 				.append("\"class=\"x-small-text x-decimal input-mini\" height=\"10\" size=\"5\" value=\"")
 				.append(page.getCurrentPage() > 0 ? page.getCurrentPage() + ""
-						: "").append("\">&nbsp;Ò³ ");
+						: "").append("\">&nbsp;é¡µ ");
 		if (StringUtils.isNotEmpty(this.getImagePath())) {
 			buffer.append(
 					"\n<img src=\""
@@ -196,12 +196,12 @@ public class SystemPageTag extends TagSupport {
 		buffer.append("</span>");
 		buffer.append("\n<span align=\"right\">&nbsp;&nbsp;&nbsp;&nbsp;");
 		if (showCount && page.getTotal() > 0) {
-			buffer.append('¹²').append(page.getTotal()).append("Ìõ¼ÇÂ¼")
+			buffer.append('å…±').append(page.getTotal()).append("æ¡è®°å½•")
 					.append(blank);
-			buffer.append("Ã¿Ò³").append(page.getPageSize()).append("Ìõ¼ÇÂ¼")
+			buffer.append("æ¯é¡µ").append(page.getPageSize()).append("æ¡è®°å½•")
 					.append(blank);
-			buffer.append('µÚ').append(page.getCurrentPage()).append('/')
-					.append(totalPageCount).append('Ò³').append(blank);
+			buffer.append('ç¬¬').append(page.getCurrentPage()).append('/')
+					.append(totalPageCount).append('é¡µ').append(blank);
 		}
 		buffer.append("</span>");
 

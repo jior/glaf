@@ -228,13 +228,13 @@ public class MxQueryResource {
 
 			if (!DBUtils.isLegalQuerySql(query.getSql())) {
 				return ResponseUtils.responseJsonResult(false,
-						"SQL²éÑ¯·Ç·¨£¬°üº¬²»ºÏ·¨Ö¸Áî£¡");
+						"SQLæŸ¥è¯¢éæ³•ï¼ŒåŒ…å«ä¸åˆæ³•æŒ‡ä»¤ï¼");
 			}
 			if (StringUtils.containsIgnoreCase(query.getSql(), "UserInfo")
 					|| StringUtils
 							.containsIgnoreCase(query.getSql(), "MX_USER")) {
 				return ResponseUtils.responseJsonResult(false,
-						"SQL²éÑ¯·Ç·¨£¬²»ÔÊĞí·ÃÎÊÓÃ»§ĞÅÏ¢±í£¡");
+						"SQLæŸ¥è¯¢éæ³•ï¼Œä¸å…è®¸è®¿é—®ç”¨æˆ·ä¿¡æ¯è¡¨ï¼");
 			}
 
 			if (StringUtils.isNotEmpty(query.getTargetTableName())) {
@@ -242,13 +242,13 @@ public class MxQueryResource {
 				tableName = tableName.toLowerCase();
 				if (tableName.length() > 26) {
 					return ResponseUtils.responseJsonResult(false,
-							"Ä¿±ê±í³¤¶È²»ÄÜ³¬¹ı26¸ö×Ö·û£¡");
+							"ç›®æ ‡è¡¨é•¿åº¦ä¸èƒ½è¶…è¿‡26ä¸ªå­—ç¬¦ï¼");
 				}
 				if (StringUtils.startsWith(tableName, "mx_")
 						|| StringUtils.startsWith(tableName, "sys_")
 						|| StringUtils.startsWith(tableName, "jbpm_")
 						|| StringUtils.startsWith(tableName, "act_")) {
-					return ResponseUtils.responseJsonResult(false, "Ä¿±ê±í²»ÕıÈ·£¡");
+					return ResponseUtils.responseJsonResult(false, "ç›®æ ‡è¡¨ä¸æ­£ç¡®ï¼");
 				}
 			}
 
@@ -258,7 +258,7 @@ public class MxQueryResource {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				return ResponseUtils
-						.responseJsonResult(false, "²éÑ¯Ê§°Ü£¬SQLÓï¾ä²»ÕıÈ·£¡");
+						.responseJsonResult(false, "æŸ¥è¯¢å¤±è´¥ï¼ŒSQLè¯­å¥ä¸æ­£ç¡®ï¼");
 			}
 
 			if (StringUtils.isNotEmpty(query.getTargetTableName())) {

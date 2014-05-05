@@ -82,10 +82,10 @@ public class SysSchedulerResource {
 			}
 		}
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"scheduler.modify_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"scheduler.modify_failure"));
 		}
@@ -129,10 +129,10 @@ public class SysSchedulerResource {
 		}
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"scheduler.modify_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"scheduler.modify_failure"));
 		}
@@ -175,10 +175,10 @@ public class SysSchedulerResource {
 		}
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"scheduler.modify_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"scheduler.modify_failure"));
 		}

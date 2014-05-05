@@ -135,10 +135,10 @@ public class MultiDBNativeCmdStartup implements Bootstrap {
 								props.put(DBConfiguration.JDBC_NAME, name);
 
 								/**
-								 * ¼ì²éÁ¬½ÓĞÅÏ¢£¬Èç¹ûÕıÈ·£¬±£´æÅäÖÃ
+								 * æ£€æŸ¥è¿æ¥ä¿¡æ¯ï¼Œå¦‚æœæ­£ç¡®ï¼Œä¿å­˜é…ç½®
 								 */
 								if (DBConnectionFactory.checkConnection(props)) {
-									logger.debug("×¼±¸Ö´ĞĞ¸üĞÂ½Å±¾......");
+									logger.debug("å‡†å¤‡æ‰§è¡Œæ›´æ–°è„šæœ¬......");
 									DBNativeCmdThread thread = new DBNativeCmdThread(
 											cmd, props);
 									ThreadFactory.run(thread);

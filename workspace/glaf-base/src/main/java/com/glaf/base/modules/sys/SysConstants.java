@@ -19,39 +19,39 @@
 package com.glaf.base.modules.sys;
 
 public class SysConstants {
-	// ÊÇ·ñÊ§Ğ§
-	public static int BLOCKED_0 = 0; // ·ñ
+	// æ˜¯å¦å¤±æ•ˆ
+	public static int BLOCKED_0 = 0; // å¦
 
-	public static int BLOCKED_1 = 1; // ÊÇ
+	public static int BLOCKED_1 = 1; // æ˜¯
 
-	public static String BRANCH_ADMIN = "BranchAdmin";// ·Ö¼¶¹ÜÀíÔ±½ÇÉ«´úÂë
+	public static String BRANCH_ADMIN = "BranchAdmin";// åˆ†çº§ç®¡ç†å‘˜è§’è‰²ä»£ç 
 
-	public static String DEPT_LEVEL = "DeptLevel";// ²¿ÃÅ²ã¼¶´úÂë£¬È¡ÖµÎªSYS_DICTORY±íµÄext11
+	public static String DEPT_LEVEL = "DeptLevel";// éƒ¨é—¨å±‚çº§ä»£ç ï¼Œå–å€¼ä¸ºSYS_DICTORYè¡¨çš„ext11
 
-	// ²¿ÃÅ×´Ì¬
-	public static Integer DEPT_STATUS_0 = Integer.valueOf(0); // ÓĞĞ§
-	public static Integer DEPT_STATUS_1 = Integer.valueOf(1); // Ê§Ğ§
+	// éƒ¨é—¨çŠ¶æ€
+	public static Integer DEPT_STATUS_0 = Integer.valueOf(0); // æœ‰æ•ˆ
+	public static Integer DEPT_STATUS_1 = Integer.valueOf(1); // å¤±æ•ˆ
 
-	// ÓÃ»§sessionÃû³Æ
+	// ç”¨æˆ·sessionåç§°
 	public static String LOGIN = "SYS_LOGIN_USER";
 
 	public static String MENU = "SYS_LOGIN_MENU";
 
-	public static int SORT_FORWARD = 1;// ºóÒÆ
+	public static int SORT_FORWARD = 1;// åç§»
 
-	public static int SORT_PREVIOUS = 0;// Ç°ÒÆ
+	public static int SORT_PREVIOUS = 0;// å‰ç§»
 
-	public static String TREE_APP = "02";// Ä£¿é½á¹¹Ê÷±àºÅ
+	public static String TREE_APP = "02";// æ¨¡å—ç»“æ„æ ‘ç¼–å·
 
-	public static String TREE_BASE = "01";// »ù´¡Êı¾İ½á¹¹Ê÷±àºÅ
+	public static String TREE_BASE = "01";// åŸºç¡€æ•°æ®ç»“æ„æ ‘ç¼–å·
 
-	public static String TREE_DEPT = "012";// ²¿ÃÅ½á¹¹Ê÷±àºÅ
+	public static String TREE_DEPT = "012";// éƒ¨é—¨ç»“æ„æ ‘ç¼–å·
 
-	public static String TREE_DICTORY = "011";// Êı¾İ×Öµä½á¹¹Ê÷±àºÅ
+	public static String TREE_DICTORY = "011";// æ•°æ®å­—å…¸ç»“æ„æ ‘ç¼–å·
 
-	public static int TREE_ROOT = 1;// Ä¿Â¼¸ù½Úµã
+	public static int TREE_ROOT = 1;// ç›®å½•æ ¹èŠ‚ç‚¹
 
-	public static String USER_HEADSHIP = "UserHeadship";// ÓÃ»§Ö°Î»´úÂë£¬È¡ÖµÎªSYS_DICTORY±íµÄcode
+	public static String USER_HEADSHIP = "UserHeadship";// ç”¨æˆ·èŒä½ä»£ç ï¼Œå–å€¼ä¸ºSYS_DICTORYè¡¨çš„code
 
-	public static String USER_ACCOUNTTYPE = "accountType";// ÓÃ»§ÊôĞÔ£¬È¡ÖµÎªSYS_DICTORY±íµÄcode
+	public static String USER_ACCOUNTTYPE = "accountType";// ç”¨æˆ·å±æ€§ï¼Œå–å€¼ä¸ºSYS_DICTORYè¡¨çš„code
 }

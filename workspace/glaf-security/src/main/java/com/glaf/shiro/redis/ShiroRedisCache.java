@@ -42,7 +42,7 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 
 	@Override
 	public void clear() throws CacheException {
-		logger.debug("´ÓredisÖĞÉ¾³ıËùÓĞÔªËØ");
+		logger.debug("ä»redisä¸­åˆ é™¤æ‰€æœ‰å…ƒç´ ");
 		try {
 			cacheable.remove(getByteName());
 		} catch (Throwable t) {
@@ -52,7 +52,7 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 
 	@Override
 	public V get(K key) throws CacheException {
-		logger.debug("¸ù¾İkey´ÓRedisÖĞ»ñÈ¡¶ÔÏó key [" + key + "]");
+		logger.debug("æ ¹æ®keyä»Redisä¸­è·å–å¯¹è±¡ key [" + key + "]");
 		try {
 			if (key == null) {
 				return null;
@@ -68,7 +68,7 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 	}
 
 	/**
-	 * »ñµÃbyte[]ĞÍµÄkey
+	 * è·å¾—byte[]å‹çš„key
 	 * 
 	 * @param key
 	 * @return
@@ -106,7 +106,7 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 
 	@Override
 	public V put(K key, V value) throws CacheException {
-		logger.debug("¸ù¾İkey´Ó´æ´¢ key [" + key + "]");
+		logger.debug("æ ¹æ®keyä»å­˜å‚¨ key [" + key + "]");
 		try {
 			cacheable.updateHashCache(getByteName(), getByteKey(key),
 					SerializerUtils.serialize(value), null);
@@ -118,7 +118,7 @@ public class ShiroRedisCache<K, V> implements Cache<K, V> {
 
 	@Override
 	public V remove(K key) throws CacheException {
-		logger.debug("´ÓredisÖĞÉ¾³ı key [" + key + "]");
+		logger.debug("ä»redisä¸­åˆ é™¤ key [" + key + "]");
 		try {
 			V previous = get(key);
 			cacheable.deleteHashCache(getByteName(), getByteKey(key));

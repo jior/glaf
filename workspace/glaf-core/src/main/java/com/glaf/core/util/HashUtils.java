@@ -1,18 +1,18 @@
 package com.glaf.core.util;
 
 /**
- * HashËã·¨´óÈ«<br>
- * ÍÆ¼öÊ¹ÓÃFNV1Ëã·¨
+ * Hashç®—æ³•å¤§å…¨<br>
+ * æ¨èä½¿ç”¨FNV1ç®—æ³•
  */
 public class HashUtils {
 	/**
-	 * ¼Ó·¨hash
+	 * åŠ æ³•hash
 	 * 
 	 * @param key
-	 *            ×Ö·û´®
+	 *            å­—ç¬¦ä¸²
 	 * @param prime
-	 *            Ò»¸öÖÊÊı
-	 * @return hash½á¹û
+	 *            ä¸€ä¸ªè´¨æ•°
+	 * @return hashç»“æœ
 	 */
 	public static int additiveHash(String key, int prime) {
 		int hash, i;
@@ -22,13 +22,13 @@ public class HashUtils {
 	}
 
 	/**
-	 * Ğı×ªhash
+	 * æ—‹è½¬hash
 	 * 
 	 * @param key
-	 *            ÊäÈë×Ö·û´®
+	 *            è¾“å…¥å­—ç¬¦ä¸²
 	 * @param prime
-	 *            ÖÊÊı
-	 * @return hashÖµ
+	 *            è´¨æ•°
+	 * @return hashå€¼
 	 */
 	public static int rotatingHash(String key, int prime) {
 		int hash, i;
@@ -38,21 +38,21 @@ public class HashUtils {
 		// return (hash ^ (hash>>10) ^ (hash>>20));
 	}
 
-	// Ìæ´ú£º
-	// Ê¹ÓÃ£ºhash = (hash ^ (hash>>10) ^ (hash>>20)) & mask;
-	// Ìæ´ú£ºhash %= prime;
+	// æ›¿ä»£ï¼š
+	// ä½¿ç”¨ï¼šhash = (hash ^ (hash>>10) ^ (hash>>20)) & mask;
+	// æ›¿ä»£ï¼šhash %= prime;
 
 	/**
-	 * MASKÖµ£¬Ëæ±ãÕÒÒ»¸öÖµ£¬×îºÃÊÇÖÊÊı
+	 * MASKå€¼ï¼Œéšä¾¿æ‰¾ä¸€ä¸ªå€¼ï¼Œæœ€å¥½æ˜¯è´¨æ•°
 	 */
 	static int M_MASK = 0x8765fed1;
 
 	/**
-	 * Ò»´ÎÒ»¸öhash
+	 * ä¸€æ¬¡ä¸€ä¸ªhash
 	 * 
 	 * @param key
-	 *            ÊäÈë×Ö·û´®
-	 * @return Êä³öhashÖµ
+	 *            è¾“å…¥å­—ç¬¦ä¸²
+	 * @return è¾“å‡ºhashå€¼
 	 */
 	public static int oneByOneHash(String key) {
 		int hash, i;
@@ -72,10 +72,10 @@ public class HashUtils {
 	 * Bernstein's hash
 	 * 
 	 * @param key
-	 *            ÊäÈë×Ö½ÚÊı×é
+	 *            è¾“å…¥å­—èŠ‚æ•°ç»„
 	 * @param level
-	 *            ³õÊ¼hash³£Á¿
-	 * @return ½á¹ûhash
+	 *            åˆå§‹hashå¸¸é‡
+	 * @return ç»“æœhash
 	 */
 	public static int bernstein(String key) {
 		int hash = 0;
@@ -96,7 +96,7 @@ public class HashUtils {
 	// return (hash);
 	// }
 
-	// // CRC Hashing£¬¼ÆËãcrc,¾ßÌå´úÂë¼ûÆäËû
+	// // CRC Hashingï¼Œè®¡ç®—crc,å…·ä½“ä»£ç è§å…¶ä»–
 	// ub4 crc(char *key, ub4 len, ub4 mask, ub4 tab[256])
 	// {
 	// ub4 hash, i;
@@ -143,19 +143,19 @@ public class HashUtils {
 	}
 
 	// LOOKUP3
-	// ¼ûBob Jenkins(3).cÎÄ¼ş
+	// è§Bob Jenkins(3).cæ–‡ä»¶
 
-	// 32Î»FNVËã·¨
+	// 32ä½FNVç®—æ³•
 	static int M_SHIFT = 0;
 
 	 
 
 	/**
-	 * ¸Ä½øµÄ32Î»FNVËã·¨1
+	 * æ”¹è¿›çš„32ä½FNVç®—æ³•1
 	 * 
 	 * @param data
-	 *            Êı×é
-	 * @return intÖµ
+	 *            æ•°ç»„
+	 * @return intå€¼
 	 */
 	public static int FNVHash1(byte[] data) {
 		final int p = 16777619;
@@ -171,11 +171,11 @@ public class HashUtils {
 	}
 
 	/**
-	 * ¸Ä½øµÄ32Î»FNVËã·¨1
+	 * æ”¹è¿›çš„32ä½FNVç®—æ³•1
 	 * 
 	 * @param data
-	 *            ×Ö·û´®
-	 * @return intÖµ
+	 *            å­—ç¬¦ä¸²
+	 * @return intå€¼
 	 */
 	public static int FNVHash1(String data) {
 		final int p = 16777619;
@@ -191,7 +191,7 @@ public class HashUtils {
 	}
 
 	/**
-	 * Thomas WangµÄËã·¨£¬ÕûÊıhash
+	 * Thomas Wangçš„ç®—æ³•ï¼Œæ•´æ•°hash
 	 */
 	public static int intHash(int key) {
 		key += ~(key << 15);
@@ -204,10 +204,10 @@ public class HashUtils {
 	}
 
 	/**
-	 * RSËã·¨hash
+	 * RSç®—æ³•hash
 	 * 
 	 * @param str
-	 *            ×Ö·û´®
+	 *            å­—ç¬¦ä¸²
 	 */
 	public static int RSHash(String str) {
 		int b = 378551;
@@ -225,7 +225,7 @@ public class HashUtils {
 	/* End Of RS Hash Function */
 
 	/**
-	 * JSËã·¨
+	 * JSç®—æ³•
 	 */
 	public static int JSHash(String str) {
 		int hash = 1315423911;
@@ -240,7 +240,7 @@ public class HashUtils {
 	/* End Of JS Hash Function */
 
 	/**
-	 * PJWËã·¨
+	 * PJWç®—æ³•
 	 */
 	public static int PJWHash(String str) {
 		int BitsInUnsignedInt = 32;
@@ -264,7 +264,7 @@ public class HashUtils {
 	/* End Of P. J. Weinberger Hash Function */
 
 	/**
-	 * ELFËã·¨
+	 * ELFç®—æ³•
 	 */
 	public static int ELFHash(String str) {
 		int hash = 0;
@@ -284,7 +284,7 @@ public class HashUtils {
 	/* End Of ELF Hash Function */
 
 	/**
-	 * BKDRËã·¨
+	 * BKDRç®—æ³•
 	 */
 	public static int BKDRHash(String str) {
 		int seed = 131; // 31 131 1313 13131 131313 etc..
@@ -300,7 +300,7 @@ public class HashUtils {
 	/* End Of BKDR Hash Function */
 
 	/**
-	 * SDBMËã·¨
+	 * SDBMç®—æ³•
 	 */
 	public static int SDBMHash(String str) {
 		int hash = 0;
@@ -315,7 +315,7 @@ public class HashUtils {
 	/* End Of SDBM Hash Function */
 
 	/**
-	 * DJBËã·¨
+	 * DJBç®—æ³•
 	 */
 	public static int DJBHash(String str) {
 		int hash = 5381;
@@ -330,7 +330,7 @@ public class HashUtils {
 	/* End Of DJB Hash Function */
 
 	/**
-	 * DEKËã·¨
+	 * DEKç®—æ³•
 	 */
 	public static int DEKHash(String str) {
 		int hash = str.length();
@@ -345,7 +345,7 @@ public class HashUtils {
 	/* End Of DEK Hash Function */
 
 	/**
-	 * APËã·¨
+	 * APç®—æ³•
 	 */
 	public static int APHash(String str) {
 		int hash = 0;
@@ -362,7 +362,7 @@ public class HashUtils {
 	/* End Of AP Hash Function */
 
 	/**
-	 * JAVA×Ô¼º´øµÄËã·¨
+	 * JAVAè‡ªå·±å¸¦çš„ç®—æ³•
 	 */
 	public static int java(String str) {
 		int h = 0;
@@ -375,7 +375,7 @@ public class HashUtils {
 	}
 
 	/**
-	 * »ìºÏhashËã·¨£¬Êä³ö64Î»µÄÖµ
+	 * æ··åˆhashç®—æ³•ï¼Œè¾“å‡º64ä½çš„å€¼
 	 */
 	public static long mixHash(String str) {
 		long hash = str.hashCode();

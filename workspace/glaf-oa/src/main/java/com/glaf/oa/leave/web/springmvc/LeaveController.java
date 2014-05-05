@@ -71,10 +71,10 @@ public class LeaveController {
 		ctx.setActorId(actorId);
 		ctx.setProcessName(processName);
 		String opinion = request.getParameter("approveOpinion");
-		ctx.setOpinion(opinion);// ÉóÅúÒâ¼û
+		ctx.setOpinion(opinion);// å®¡æ‰¹æ„è§
 
 		/**
-		 * ¹¤×÷Á÷¿ØÖÆ²ÎÊı
+		 * å·¥ä½œæµæ§åˆ¶å‚æ•°
 		 */
 		Collection<DataField> datafields = new ArrayList<DataField>();
 
@@ -82,14 +82,14 @@ public class LeaveController {
 		datafield1.setName("rowId");
 		datafield1.setValue(leave.getLeaveid());
 
-		// ¼¯ÍÅÈËÁ¦×ÊÔ´²¿
+		// é›†å›¢äººåŠ›èµ„æºéƒ¨
 		SysDepartment sysDepartment1 = BaseDataManager.getInstance()
 				.getSysDepartmentService().findByCode("JT03");
 		DataField datafield2 = new DataField();
 		datafield2.setName("deptId01");
 		datafield2.setValue(sysDepartment1.getId());
 
-		// ÓÃ»§Ö°Î»ÊôĞÔ£¬ÊÇ·ñÊÇ²¿ÃÅ¾­ÀíÒÔÏÂ
+		// ç”¨æˆ·èŒä½å±æ€§ï¼Œæ˜¯å¦æ˜¯éƒ¨é—¨ç»ç†ä»¥ä¸‹
 		SysUser syuser = BaseDataManager.getInstance().getSysUserService()
 				.findByAccount(leave.getAppuser());
 		int heapShipType = Integer.parseInt(BaseDataManager.getInstance()
@@ -98,19 +98,19 @@ public class LeaveController {
 		datafield3.setName("heapShipType");
 		datafield3.setValue(heapShipType);
 
-		// ²¿ÃÅ¾­Àí
+		// éƒ¨é—¨ç»ç†
 		DataField datafield4 = new DataField();
 		datafield4.setName("deptId02");
 		datafield4.setValue(syuser.getDeptId());
 
-		// ¼¯ÍÅÁìµ¼£¨¼¯ÍÅ¸±×Ü£©
+		// é›†å›¢é¢†å¯¼ï¼ˆé›†å›¢å‰¯æ€»ï¼‰
 		SysDepartment sysdepartMem2 = BaseDataManager.getInstance()
 				.getSysDepartmentService().findByCode("JT");
 		DataField datafield5 = new DataField();
 		datafield5.setName("deptId03");
 		datafield5.setValue(sysdepartMem2.getId());
 
-		// ĞĞÕş²ÆÎñ
+		// è¡Œæ”¿è´¢åŠ¡
 		SysDepartment sysdepartMemTemp = BaseDataManager.getInstance()
 				.getSysDepartmentService().findById(syuser.getDeptId());
 		SysDepartment sysdepartMem3 = BaseDataManager.getInstance()
@@ -145,7 +145,7 @@ public class LeaveController {
 			processInstanceId = leave.getProcessinstanceid();
 			ctx.setProcessInstanceId(processInstanceId);
 			isOK = ProcessContainer.getContainer().completeTask(ctx);
-			logger.info("workflow ÖĞ");
+			logger.info("workflow ä¸­");
 		} else {
 			processInstanceId = ProcessContainer.getContainer().startProcess(
 					ctx);
@@ -171,7 +171,7 @@ public class LeaveController {
 				if (x != 0L) {
 					Leave leave = leaveService.getLeave(x);
 					/**
-					 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+					 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 					 */
 					if (leave != null) {
 						// leave.setDeleteFlag(1);
@@ -193,7 +193,7 @@ public class LeaveController {
 		} else if (leaveid != null) {
 			Leave leave = leaveService.getLeave(leaveid);
 			/**
-			 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+			 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 			 */
 			if (leave != null) {
 				if (leave.getStatus() == 0 || leave.getStatus() == 3) {
@@ -286,7 +286,7 @@ public class LeaveController {
 		List<String> actorIds = new ArrayList<String>();
 
 		/**
-		 * Ò³Ãæ³õÊ¼»¯Ä¬ÈÏÊÇ´ıÉóºË×´Ì¬
+		 * é¡µé¢åˆå§‹åŒ–é»˜è®¤æ˜¯å¾…å®¡æ ¸çŠ¶æ€
 		 */
 		if (null == query.getWorkedProcessFlag()
 				|| "".equals(query.getWorkedProcessFlag())) {
@@ -349,9 +349,9 @@ public class LeaveController {
 					JSONObject rowJSON = new JSONObject();
 
 					if ("WD".equals(query.getWorkedProcessFlag())) {
-						rowJSON.put("strstauts", "Î´ÉóºË");
+						rowJSON.put("strstauts", "æœªå®¡æ ¸");
 					} else if ("PD".equals(query.getWorkedProcessFlag())) {
-						rowJSON.put("strstauts", "ÒÑÉóºË");
+						rowJSON.put("strstauts", "å·²å®¡æ ¸");
 					}
 
 					rowJSON.put("leaveid", leave.getLeaveid());
@@ -696,7 +696,7 @@ public class LeaveController {
 		Long leaveid = RequestUtils.getLong(request, "leaveid");
 		if (leaveid != 0L) {
 			Leave leave = leaveService.getLeave(leaveid);
-			// Ìí¼ÓÌá½»ÒµÎñÂß¼­
+			// æ·»åŠ æäº¤ä¸šåŠ¡é€»è¾‘
 			if (leave.getStatus() == 1) {
 				if (leave.getProcessinstanceid() != null) {
 					returnFlag = completeTask(leave, 1, request);
@@ -785,7 +785,7 @@ public class LeaveController {
 		query.setLoginContext(loginContext);
 
 		if (areaRole.equals("1")) {
-			// ²éÑ¯ËùÓĞ£¬²»ÉèÖÃ²ÎÊı
+			// æŸ¥è¯¢æ‰€æœ‰ï¼Œä¸è®¾ç½®å‚æ•°
 		} else {
 			SysDepartment sysDepartment = BaseDataManager.getInstance()
 					.getSysDepartmentService().findById(user.getDeptId());
@@ -981,7 +981,7 @@ public class LeaveController {
 		ctx.setActorId(leave.getAppuser());
 		ctx.setProcessName(processName);
 		/**
-		 * ¹¤×÷Á÷¿ØÖÆ²ÎÊı
+		 * å·¥ä½œæµæ§åˆ¶å‚æ•°
 		 */
 		Collection<DataField> datafields = new ArrayList<DataField>();
 
@@ -989,14 +989,14 @@ public class LeaveController {
 		datafield1.setName("rowId");
 		datafield1.setValue(leave.getLeaveid());
 
-		// ¼¯ÍÅÈËÁ¦×ÊÔ´²¿
+		// é›†å›¢äººåŠ›èµ„æºéƒ¨
 		SysDepartment sysDepartment1 = BaseDataManager.getInstance()
 				.getSysDepartmentService().findByCode("JT03");
 		DataField datafield2 = new DataField();
 		datafield2.setName("deptId01");
 		datafield2.setValue(sysDepartment1.getId());
 
-		// ÓÃ»§Ö°Î»ÊôĞÔ£¬ÊÇ·ñÊÇ²¿ÃÅ¾­ÀíÒÔÏÂ
+		// ç”¨æˆ·èŒä½å±æ€§ï¼Œæ˜¯å¦æ˜¯éƒ¨é—¨ç»ç†ä»¥ä¸‹
 		SysUser syuser = BaseDataManager.getInstance().getSysUserService()
 				.findByAccount(leave.getAppuser());
 		int heapShipType = Integer.parseInt(BaseDataManager.getInstance()
@@ -1005,19 +1005,19 @@ public class LeaveController {
 		datafield3.setName("heapShipType");
 		datafield3.setValue(heapShipType);
 
-		// ²¿ÃÅ¾­Àí
+		// éƒ¨é—¨ç»ç†
 		DataField datafield4 = new DataField();
 		datafield4.setName("deptId02");
 		datafield4.setValue(syuser.getDeptId());
 
-		// ¼¯ÍÅÁìµ¼£¨¼¯ÍÅ¸±×Ü£©
+		// é›†å›¢é¢†å¯¼ï¼ˆé›†å›¢å‰¯æ€»ï¼‰
 		SysDepartment sysdepartMem2 = BaseDataManager.getInstance()
 				.getSysDepartmentService().findByCode("JT");
 		DataField datafield5 = new DataField();
 		datafield5.setName("deptId03");
 		datafield5.setValue(sysdepartMem2.getId());
 
-		// ĞĞÕş²ÆÎñ
+		// è¡Œæ”¿è´¢åŠ¡
 		SysDepartment sysdepartMemTemp = BaseDataManager.getInstance()
 				.getSysDepartmentService().findById(syuser.getDeptId());
 		SysDepartment sysdepartMem3 = BaseDataManager.getInstance()
@@ -1048,7 +1048,7 @@ public class LeaveController {
 			processInstanceId = leave.getProcessinstanceid();
 			ctx.setProcessInstanceId(processInstanceId);
 			isOK = ProcessContainer.getContainer().completeTask(ctx);
-			logger.info("workflow ÖĞ");
+			logger.info("workflow ä¸­");
 		} else {
 			processInstanceId = ProcessContainer.getContainer().startProcess(
 					ctx);
@@ -1098,7 +1098,7 @@ public class LeaveController {
 				String x = token.nextToken();
 				if (StringUtils.isNotEmpty(x)) {
 					Leave leave = leaveService.getLeave(Long.valueOf(x));
-					// Ìí¼ÓÌá½»ÒµÎñÂß¼­
+					// æ·»åŠ æäº¤ä¸šåŠ¡é€»è¾‘
 					if (leave.getStatus() == 1) {
 						if (leave.getProcessinstanceid() != null
 								&& leave.getProcessinstanceid() != 0L) {
@@ -1113,7 +1113,7 @@ public class LeaveController {
 			}
 		} else if (leaveid != null) {
 			Leave leave = leaveService.getLeave(Long.valueOf(leaveid));
-			// Ìí¼ÓÌá½»ÒµÎñÂß¼­
+			// æ·»åŠ æäº¤ä¸šåŠ¡é€»è¾‘
 			if (leave.getStatus() == 1) {
 				if (leave.getProcessinstanceid() != null
 						&& leave.getProcessinstanceid() != 0) {

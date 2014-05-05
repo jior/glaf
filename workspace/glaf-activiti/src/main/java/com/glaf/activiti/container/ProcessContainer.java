@@ -91,14 +91,14 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * Íê³ÉÈÎÎñ
+	 * å®Œæˆä»»åŠ¡
 	 * 
 	 * @param actorId
 	 * @param params
 	 * @return
 	 */
 	public boolean completeTask(ProcessContext ctx) {
-		// È·±£Ã¿¸öÁ÷³Ì¶ÔÃ¿¸öÒµÎñµ¥¾İÔÚÍ¬Ò»Ê±¿ÌÖ»ÄÜÆô¶¯Ò»¸öÊµÀı
+		// ç¡®ä¿æ¯ä¸ªæµç¨‹å¯¹æ¯ä¸ªä¸šåŠ¡å•æ®åœ¨åŒä¸€æ—¶åˆ»åªèƒ½å¯åŠ¨ä¸€ä¸ªå®ä¾‹
 		String cacheKey = "x_";
 		if (StringUtils.isNotEmpty(ctx.getProcessInstanceId())) {
 			cacheKey += "pid_" + ctx.getProcessInstanceId();
@@ -145,7 +145,7 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * ¹ıÂËÈÎÎñ
+	 * è¿‡æ»¤ä»»åŠ¡
 	 * 
 	 * @param actorId
 	 * @param rows
@@ -162,7 +162,7 @@ public class ProcessContainer {
 				// logger.debug(item.getProcessDescription() + "\t"
 				// + item.getTaskDescription() + "\t" + item.getActorId());
 				/**
-				 * Èç¹ûÊÇËû±¾ÈËµÄÈÎÎñ¾ÍÖ±½Ó´¦Àí
+				 * å¦‚æœæ˜¯ä»–æœ¬äººçš„ä»»åŠ¡å°±ç›´æ¥å¤„ç†
 				 */
 				if (StringUtils.equals(actorId, item.getActorId())) {
 					taskItems.add(item);
@@ -181,24 +181,24 @@ public class ProcessContainer {
 								continue;
 							}
 							/**
-							 * ÅĞ¶ÏÊÇ·ñÎªÄ³¸ö´úÀíÈËµÄÈÎÎñ
+							 * åˆ¤æ–­æ˜¯å¦ä¸ºæŸä¸ªä»£ç†äººçš„ä»»åŠ¡
 							 */
 							if (!StringUtils.equals(item.getActorId(),
 									agent.getAssignFrom())) {
 								continue;
 							}
 							switch (agent.getAgentType()) {
-							case 0:// È«¾Ö´úÀí
+							case 0:// å…¨å±€ä»£ç†
 								taskItems.add(item);
 								break;
-							case 1:// Á÷³Ì´úÀí
+							case 1:// æµç¨‹ä»£ç†
 								if (StringUtils.equalsIgnoreCase(
 										agent.getProcessName(),
 										item.getProcessName())) {
 									taskItems.add(item);
 								}
 								break;
-							case 2:// Ö¸¶¨Á÷³ÌÈÎÎñ´úÀí
+							case 2:// æŒ‡å®šæµç¨‹ä»»åŠ¡ä»£ç†
 								if (StringUtils.equalsIgnoreCase(
 										agent.getProcessName(),
 										item.getProcessName())
@@ -220,7 +220,7 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * ¹ıÂËÈÎÎñ
+	 * è¿‡æ»¤ä»»åŠ¡
 	 * 
 	 * @param actorId
 	 * @param rows
@@ -233,7 +233,7 @@ public class ProcessContainer {
 		// + item.getTaskDescription() + "\t" + item.getActorId());
 		TaskItem taskItem = null;
 		/**
-		 * Èç¹ûÊÇËû±¾ÈËµÄÈÎÎñ¾ÍÖ±½Ó´¦Àí
+		 * å¦‚æœæ˜¯ä»–æœ¬äººçš„ä»»åŠ¡å°±ç›´æ¥å¤„ç†
 		 */
 		if (StringUtils.equals(actorId, item.getActorId())) {
 			taskItem = item;
@@ -251,23 +251,23 @@ public class ProcessContainer {
 						continue;
 					}
 					/**
-					 * ÅĞ¶ÏÊÇ·ñÎªÄ³¸ö´úÀíÈËµÄÈÎÎñ
+					 * åˆ¤æ–­æ˜¯å¦ä¸ºæŸä¸ªä»£ç†äººçš„ä»»åŠ¡
 					 */
 					if (!StringUtils.equals(item.getActorId(),
 							agent.getAssignFrom())) {
 						continue;
 					}
 					switch (agent.getAgentType()) {
-					case 0:// È«¾Ö´úÀí
+					case 0:// å…¨å±€ä»£ç†
 						taskItem = item;
 						break;
-					case 1:// Á÷³Ì´úÀí
+					case 1:// æµç¨‹ä»£ç†
 						if (StringUtils.equalsIgnoreCase(
 								agent.getProcessName(), item.getProcessName())) {
 							taskItem = item;
 						}
 						break;
-					case 2:// Ö¸¶¨Á÷³ÌÈÎÎñ´úÀí
+					case 2:// æŒ‡å®šæµç¨‹ä»»åŠ¡ä»£ç†
 						if (StringUtils.equalsIgnoreCase(
 								agent.getProcessName(), item.getProcessName())
 								&& StringUtils
@@ -298,10 +298,10 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * »ñÈ¡Î¯ÍĞÈË±àºÅ¼¯ºÏ
+	 * è·å–å§”æ‰˜äººç¼–å·é›†åˆ
 	 * 
 	 * @param assignTo
-	 *            ÊÜÍĞÈË±àºÅ
+	 *            å—æ‰˜äººç¼–å·
 	 * @return
 	 */
 	public List<String> getAgentIds(String assignTo) {
@@ -310,10 +310,10 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * »ñÈ¡Î¯ÍĞÈË¶ÔÏó¼¯ºÏ
+	 * è·å–å§”æ‰˜äººå¯¹è±¡é›†åˆ
 	 * 
 	 * @param assignTo
-	 *            ÊÜÍĞÈË±àºÅ
+	 *            å—æ‰˜äººç¼–å·
 	 * @return
 	 */
 	public List<Agent> getAgents(String assignTo) {
@@ -322,7 +322,7 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * »ñÈ¡È«²¿ÓÃ»§µÄ´ı°ìÈÎÎñ£¬ÓÃÓÚÏûÏ¢ÏµÍ³µÄ´ß°ì¡£
+	 * è·å–å…¨éƒ¨ç”¨æˆ·çš„å¾…åŠä»»åŠ¡ï¼Œç”¨äºæ¶ˆæ¯ç³»ç»Ÿçš„å‚¬åŠã€‚
 	 * 
 	 * @return
 	 */
@@ -346,7 +346,7 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÁ÷³ÌÊµÀıËùÓĞµÄÈÎÎñ£¨°üº¬ÒÑ¾­´¦ÀíµÄÈÎÎñºÍ»¹Î´´¦ÀíµÄÈÎÎñ£©
+	 * è·å–æŸä¸ªæµç¨‹å®ä¾‹æ‰€æœ‰çš„ä»»åŠ¡ï¼ˆåŒ…å«å·²ç»å¤„ç†çš„ä»»åŠ¡å’Œè¿˜æœªå¤„ç†çš„ä»»åŠ¡ï¼‰
 	 * 
 	 * @param processInstanceId
 	 * @return
@@ -369,7 +369,7 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * »ñÈ¡È«²¿×îĞÂµÄÁ÷³Ì¶¨Òå
+	 * è·å–å…¨éƒ¨æœ€æ–°çš„æµç¨‹å®šä¹‰
 	 * 
 	 * @return
 	 */
@@ -382,7 +382,7 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * ¸ù¾İÁ÷³Ì¶¨Òå±àºÅ»ñÈ¡Á÷³Ì¶¨Òå
+	 * æ ¹æ®æµç¨‹å®šä¹‰ç¼–å·è·å–æµç¨‹å®šä¹‰
 	 * 
 	 * @param processDefinitionId
 	 * @return
@@ -397,7 +397,7 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * ¸ù¾İÁ÷³ÌÊµÀı±àºÅ»ñÈ¡Á÷³ÌÊµÀı
+	 * æ ¹æ®æµç¨‹å®ä¾‹ç¼–å·è·å–æµç¨‹å®ä¾‹
 	 * 
 	 * @param processInstanceId
 	 * @return
@@ -412,7 +412,7 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * ¸ù¾İÁ÷³ÌÃû³Æ»ñÈ¡Á÷³ÌÊµÀı
+	 * æ ¹æ®æµç¨‹åç§°è·å–æµç¨‹å®ä¾‹
 	 * 
 	 * @param processDefinitionKey
 	 * @param start
@@ -432,7 +432,7 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * »ñÈ¡Ä³Ğ©ÓÃ»§µÄÈÎÎñµÄÁ÷³ÌÊµÀı±àºÅ
+	 * è·å–æŸäº›ç”¨æˆ·çš„ä»»åŠ¡çš„æµç¨‹å®ä¾‹ç¼–å·
 	 * 
 	 * @param actorIds
 	 * @return
@@ -458,7 +458,7 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§µÄÈÎÎñµÄÁ÷³ÌÊµÀı±àºÅ
+	 * è·å–æŸä¸ªç”¨æˆ·çš„ä»»åŠ¡çš„æµç¨‹å®ä¾‹ç¼–å·
 	 * 
 	 * @param actorId
 	 * @return
@@ -481,7 +481,7 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÁ÷³ÌÖ¸¶¨ÓÃ»§´ı°ìµÄÁ÷³ÌÊµÀı±àºÅ
+	 * è·å–æŸä¸ªæµç¨‹æŒ‡å®šç”¨æˆ·å¾…åŠçš„æµç¨‹å®ä¾‹ç¼–å·
 	 * 
 	 * @param actorId
 	 * @return
@@ -506,7 +506,7 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÁ÷³ÌÈÎÎñµÄÁ÷³ÌÊµÀı±àºÅ
+	 * è·å–æŸä¸ªæµç¨‹ä»»åŠ¡çš„æµç¨‹å®ä¾‹ç¼–å·
 	 * 
 	 * @param processDefinitionKey
 	 * @return
@@ -531,7 +531,7 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * »ñÈ¡Ä³Ğ©ÓÃ»§µÄÈÎÎñÊµÀı±àºÅ
+	 * è·å–æŸäº›ç”¨æˆ·çš„ä»»åŠ¡å®ä¾‹ç¼–å·
 	 * 
 	 * @param actorIds
 	 * @return
@@ -555,7 +555,7 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§µÄÈÎÎñÊµÀı±àºÅ
+	 * è·å–æŸä¸ªç”¨æˆ·çš„ä»»åŠ¡å®ä¾‹ç¼–å·
 	 * 
 	 * @param actorId
 	 * @return
@@ -579,7 +579,7 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÁ÷³ÌµÄÈÎÎñÁ÷³ÌÊµÀı±àºÅ
+	 * è·å–æŸä¸ªæµç¨‹çš„ä»»åŠ¡æµç¨‹å®ä¾‹ç¼–å·
 	 * 
 	 * @param processName
 	 * @return
@@ -608,7 +608,7 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§Ä³¸öÁ÷³ÌµÄÈÎÎñÊµÀı±àºÅ
+	 * è·å–æŸä¸ªç”¨æˆ·æŸä¸ªæµç¨‹çš„ä»»åŠ¡å®ä¾‹ç¼–å·
 	 * 
 	 * @param processName
 	 * @param actorId
@@ -650,7 +650,7 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÁ÷³ÌÖ¸¶¨ÓÃ»§µÄ´ı°ìÈÎÎñ
+	 * è·å–æŸä¸ªæµç¨‹æŒ‡å®šç”¨æˆ·çš„å¾…åŠä»»åŠ¡
 	 * 
 	 * @param processDefinitionKey
 	 * @param actorId
@@ -699,15 +699,15 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§´ı´¦ÀíµÄÁ÷³ÌÈÎÎñÊµÀı±àºÅ
+	 * è·å–æŸä¸ªç”¨æˆ·å¾…å¤„ç†çš„æµç¨‹ä»»åŠ¡å®ä¾‹ç¼–å·
 	 * 
 	 * @param actorId
-	 * @return ´ı´¦ÀíµÄÈÎÎñÊµÀı±àºÅµÄ¼¯ºÏ
+	 * @return å¾…å¤„ç†çš„ä»»åŠ¡å®ä¾‹ç¼–å·çš„é›†åˆ
 	 */
 	public List<String> getTaskInstanceIds(String actorId) {
 		List<String> taskIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
 		try {
-			// »ñÈ¡´úÀíÈËµÄÈÎÎñÊµÀı
+			// è·å–ä»£ç†äººçš„ä»»åŠ¡å®ä¾‹
 			List<String> agentIds = this.getAgentIds(actorId);
 
 			List<String> actorIds = new java.util.concurrent.CopyOnWriteArrayList<String>();
@@ -754,7 +754,7 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * ¸ù¾İÈÎÎñÊµÀı±àºÅ»ñÈ¡ÈÎÎñ
+	 * æ ¹æ®ä»»åŠ¡å®ä¾‹ç¼–å·è·å–ä»»åŠ¡
 	 * 
 	 * @param taskId
 	 * @param actorId
@@ -794,7 +794,7 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * ¸ù¾İÈÎÎñÊµÀı±àºÅ»ñÈ¡ÈÎÎñ
+	 * æ ¹æ®ä»»åŠ¡å®ä¾‹ç¼–å·è·å–ä»»åŠ¡
 	 * 
 	 * @param processInstanceId
 	 * @param actorId
@@ -837,7 +837,7 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * »ñÈ¡¶à¸ö²ÎÓëÕßµÄ´ı°ìÈÎÎñ
+	 * è·å–å¤šä¸ªå‚ä¸è€…çš„å¾…åŠä»»åŠ¡
 	 * 
 	 * @param actorIds
 	 * @return
@@ -856,7 +856,7 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * »ñÈ¡ÓÃ»§µÄÈÎÎñÁĞ±í
+	 * è·å–ç”¨æˆ·çš„ä»»åŠ¡åˆ—è¡¨
 	 * 
 	 * @param actorId
 	 * @return
@@ -886,7 +886,7 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÁ÷³ÌÖ¸¶¨ÓÃ»§µÄ´ı°ìÈÎÎñ
+	 * è·å–æŸä¸ªæµç¨‹æŒ‡å®šç”¨æˆ·çš„å¾…åŠä»»åŠ¡
 	 * 
 	 * @param actorId
 	 * @param processInstanceId
@@ -933,7 +933,7 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * ¸ù¾İÁ÷³ÌÊµÀı±àºÅ»ñÈ¡ÓÃ»§µÄÈÎÎñÊµÀı
+	 * æ ¹æ®æµç¨‹å®ä¾‹ç¼–å·è·å–ç”¨æˆ·çš„ä»»åŠ¡å®ä¾‹
 	 * 
 	 * @param processInstanceId
 	 * @return
@@ -957,7 +957,7 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * ¸ù¾İÁ÷³ÌÊµÀı±àºÅ»ñÈ¡ÓÃ»§µÄÈÎÎñÊµÀı
+	 * æ ¹æ®æµç¨‹å®ä¾‹ç¼–å·è·å–ç”¨æˆ·çš„ä»»åŠ¡å®ä¾‹
 	 * 
 	 * @param processInstanceIds
 	 * @return
@@ -1003,15 +1003,15 @@ public class ProcessContainer {
 	}
 
 	/**
-	 * Æô¶¯Á÷³Ì
+	 * å¯åŠ¨æµç¨‹
 	 * 
 	 * @param ctx
-	 *            Á÷³ÌÉÏÏÂÎÄ
+	 *            æµç¨‹ä¸Šä¸‹æ–‡
 	 * 
 	 * @return
 	 */
 	public String startProcess(ProcessContext ctx) {
-		// È·±£Ã¿¸öÁ÷³Ì¶ÔÃ¿¸öÒµÎñµ¥¾İÔÚÍ¬Ò»Ê±¿ÌÖ»ÄÜÆô¶¯Ò»¸öÊµÀı
+		// ç¡®ä¿æ¯ä¸ªæµç¨‹å¯¹æ¯ä¸ªä¸šåŠ¡å•æ®åœ¨åŒä¸€æ—¶åˆ»åªèƒ½å¯åŠ¨ä¸€ä¸ªå®ä¾‹
 		String cacheKey = ctx.getProcessName() + "_" + ctx.getBusinessKey();
 		String processInstanceId = null;
 		try {

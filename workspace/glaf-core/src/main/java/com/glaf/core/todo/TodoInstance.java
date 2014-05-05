@@ -39,57 +39,57 @@ public class TodoInstance implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * ²ÎÓëÕß
+	 * å‚ä¸è€…
 	 */
 	@Column(name = "actorId")
 	protected String actorId;
 
 	/**
-	 * ²ÎÓëÕßĞÕÃû
+	 * å‚ä¸è€…å§“å
 	 */
 	@Column(name = "actorName")
 	protected String actorName;
 
 	/**
-	 * ±¨¾¯ÈÕÆÚ
+	 * æŠ¥è­¦æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "alarmDate")
 	protected Date alarmDate;
 
 	/**
-	 * Ó¦ÓÃ±àºÅ
+	 * åº”ç”¨ç¼–å·
 	 */
 	@Column(name = "appId")
 	protected Long appId;
 
 	/**
-	 * ÄÚÈİ
+	 * å†…å®¹
 	 */
 	@Column(name = "content")
 	protected String content;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "createDate")
 	protected Date createDate;
 
 	/**
-	 * ²¿ÃÅ±àºÅ
+	 * éƒ¨é—¨ç¼–å·
 	 */
 	@Column(name = "deptId")
 	protected Long deptId;
 
 	/**
-	 * ²¿ÃÅÃû³Æ
+	 * éƒ¨é—¨åç§°
 	 */
 	@Column(name = "deptName")
 	protected String deptName;
 
 	/**
-	 * ½áÊøÈÕÆÚ
+	 * ç»“æŸæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "endDate")
@@ -100,13 +100,13 @@ public class TodoInstance implements Serializable, JSONable {
 	protected Long id;
 
 	/**
-	 * Á´½Ó
+	 * é“¾æ¥
 	 */
 	@Column(name = "link_")
 	protected String link;
 
 	/**
-	 * Á´½ÓÀàĞÍ
+	 * é“¾æ¥ç±»å‹
 	 */
 	@Column(name = "linkType")
 	protected String linkType;
@@ -115,38 +115,38 @@ public class TodoInstance implements Serializable, JSONable {
 	protected String listLink;
 
 	/**
-	 * Ä£¿é±àºÅ
+	 * æ¨¡å—ç¼–å·
 	 */
 	@Column(name = "moduleId")
 	protected Long moduleId;
 
 	/**
-	 * À©Õ¹Ãû
+	 * æ‰©å±•å
 	 */
 	@Column(name = "objectId")
 	protected String objectId;
 
 	/**
-	 * ¿ØÖÆÖµ
+	 * æ§åˆ¶å€¼
 	 */
 	@Column(name = "objectValue")
 	protected String objectValue;
 
 	/**
-	 * ¹ıÆÚÈÕÆÚ
+	 * è¿‡æœŸæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "pastDueDate")
 	protected Date pastDueDate;
 
 	/**
-	 * Á÷³ÌÊµÀı±àºÅ
+	 * æµç¨‹å®ä¾‹ç¼–å·
 	 */
 	@Column(name = "processInstanceId")
 	protected String processInstanceId;
 
 	/**
-	 * Ìá¹©Õß
+	 * æä¾›è€…
 	 */
 	@Column(name = "provider")
 	protected String provider;
@@ -164,25 +164,25 @@ public class TodoInstance implements Serializable, JSONable {
 	protected Integer qtyRedWarn;
 
 	/**
-	 * ½ÇÉ«´úÂë
+	 * è§’è‰²ä»£ç 
 	 */
 	@Column(name = "roleCode")
 	protected String roleCode;
 
 	/**
-	 * ½ÇÉ«±àºÅ
+	 * è§’è‰²ç¼–å·
 	 */
 	@Column(name = "roleId")
 	protected Long roleId;
 
 	/**
-	 * ÒµÎñ±àºÅ
+	 * ä¸šåŠ¡ç¼–å·
 	 */
 	@Column(name = "rowId_")
 	protected String rowId;
 
 	/**
-	 * ¿ªÊ¼ÈÕÆÚ
+	 * å¼€å§‹æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "startDate")
@@ -192,13 +192,13 @@ public class TodoInstance implements Serializable, JSONable {
 	protected Integer status;
 
 	/**
-	 * ÈÎÎñÊµÀı±àºÅ
+	 * ä»»åŠ¡å®ä¾‹ç¼–å·
 	 */
 	@Column(name = "taskInstanceId")
 	protected String taskInstanceId;
 
 	/**
-	 * Ö÷Ìâ
+	 * ä¸»é¢˜
 	 */
 	@Column(name = "title")
 	protected String title;
@@ -207,13 +207,13 @@ public class TodoInstance implements Serializable, JSONable {
 	protected Todo todo;
 
 	/**
-	 * TODO¶¨Òå±àºÅ
+	 * TODOå®šä¹‰ç¼–å·
 	 */
 	@Column(name = "todoId")
 	protected Long todoId;
 
 	/**
-	 * °æ±¾
+	 * ç‰ˆæœ¬
 	 */
 	@Column(name = "versionNo")
 	protected Long versionNo;

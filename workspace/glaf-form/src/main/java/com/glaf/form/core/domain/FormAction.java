@@ -46,62 +46,62 @@ public class FormAction implements Serializable, JSONable {
 	protected String id;
 
 	/**
-	 * Ãû³Æ
+	 * åç§°
 	 */
 	@Column(name = "NAME_")
 	protected String name;
 
 	/**
-	 * Ö÷Ìâ
+	 * ä¸»é¢˜
 	 */
 	@Column(name = "TITLE_")
 	protected String title;
 
 	/**
-	 * ¶¯×÷µØÖ·
+	 * åŠ¨ä½œåœ°å€
 	 */
 	@Column(name = "URL_")
 	protected String url;
 
 	/**
-	 * ¶¯×÷´¦ÀíÆ÷
+	 * åŠ¨ä½œå¤„ç†å™¨
 	 */
 	@Column(name = "PROVIDER_")
 	protected String provider;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY_")
 	protected String createBy;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_")
 	protected Date createDate;
 
 	/**
-	 * ÃèÊö
+	 * æè¿°
 	 */
 	@Column(name = "DESCRIPTION_")
 	protected String description;
 
 	/**
-	 * »î¶¯»·½Ú
+	 * æ´»åŠ¨ç¯èŠ‚
 	 */
 	@Column(name = "ACTIVITY_")
 	protected String activity;
 
 	/**
-	 * ±íµ¥Ãû³Æ
+	 * è¡¨å•åç§°
 	 */
 	@Column(name = "FORMNAME_")
 	protected String formName;
 
 	/**
-	 * Ó¦ÓÃ±àºÅ
+	 * åº”ç”¨ç¼–å·
 	 */
 	@Column(name = "APPID_")
 	protected String appId;

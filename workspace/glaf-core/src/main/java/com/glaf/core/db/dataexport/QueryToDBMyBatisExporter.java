@@ -68,18 +68,18 @@ public class QueryToDBMyBatisExporter {
 	}
 
 	/**
-	 * µ¼³ö±íÊı¾İ
+	 * å¯¼å‡ºè¡¨æ•°æ®
 	 * 
 	 * @param systemName
-	 *            ÏµÍ³Ãû³Æ
+	 *            ç³»ç»Ÿåç§°
 	 * @param dbtype
-	 *            µ¼³öÊı¾İ¿âÀàĞÍ
+	 *            å¯¼å‡ºæ•°æ®åº“ç±»å‹
 	 * @param dbPath
-	 *            µ¼³öÊı¾İ¿âÂ·¾¶
+	 *            å¯¼å‡ºæ•°æ®åº“è·¯å¾„
 	 * @param tableName
-	 *            Ä¿±ê±íÃû³Æ
+	 *            ç›®æ ‡è¡¨åç§°
 	 * @param querySQL
-	 *            ²éÑ¯SQL
+	 *            æŸ¥è¯¢SQL
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void exportTable(String systemName, String dbtype, String dbPath,
@@ -121,9 +121,9 @@ public class QueryToDBMyBatisExporter {
 				int columnCount = rsmd.getColumnCount();
 				List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
 				for (int i = 0; i < columnCount; i++) {
-					// È¡µÃÃ¿ÁĞµÄÁĞÃû£¬ÁĞ±êÇ©×÷ÎªÁĞÃû
+					// å–å¾—æ¯åˆ—çš„åˆ—åï¼Œåˆ—æ ‡ç­¾ä½œä¸ºåˆ—å
 					String columnName = rsmd.getColumnLabel(i + 1);
-					// È¡µÃÃ¿ÁĞµÄÀàĞÍ
+					// å–å¾—æ¯åˆ—çš„ç±»å‹
 					int typeCode = rsmd.getColumnType(i + 1);
 					ColumnDefinition column = new ColumnDefinition();
 					column.setName(StringTools.lower(StringTools
@@ -167,7 +167,7 @@ public class QueryToDBMyBatisExporter {
 					String javaType = c.getJavaType();
 					if ("Blob".equals(javaType)) {
 						/**
-						 * ÓĞ¶ş½øÖÆÁ÷µÄÇé¿ö£¬Ã¿Ò³È¡Êı²»ÄÜÌ«´ó
+						 * æœ‰äºŒè¿›åˆ¶æµçš„æƒ…å†µï¼Œæ¯é¡µå–æ•°ä¸èƒ½å¤ªå¤§
 						 */
 						pageSize = 5;
 					}

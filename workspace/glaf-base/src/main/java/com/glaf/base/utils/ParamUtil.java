@@ -32,7 +32,7 @@ import com.glaf.core.util.DateUtils;
  * Title: ParamUtil.java
  * </p>
  * <p>
- * Description: Ò³Ãæ²ÎÊı×Ö¶Î´¦Àí¹¤¾ß
+ * Description: é¡µé¢å‚æ•°å­—æ®µå¤„ç†å·¥å…·
  * </p>
  */
 public class ParamUtil {
@@ -173,15 +173,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * »ñÈ¡×Ö¶ÎÖµ
+	 * è·å–å­—æ®µå€¼
 	 * 
 	 * @param request
-	 *            HttpServletRequest request¶ÔÏó
+	 *            HttpServletRequest requestå¯¹è±¡
 	 * @param param
-	 *            String ²ÎÊı
+	 *            String å‚æ•°
 	 * @param defaultValue
-	 *            String È±Ê¡Öµ
-	 * @return String ·µ»ØÖµ£¬È±Ê¡Îª¿Õ
+	 *            String ç¼ºçœå€¼
+	 * @return String è¿”å›å€¼ï¼Œç¼ºçœä¸ºç©º
 	 */
 	public static String getParameter(HttpServletRequest request, String param,
 			String defaultValue) {
@@ -199,28 +199,28 @@ public class ParamUtil {
 	}
 
 	/**
-	 * »ñÈ¡×Ö¶ÎÖµ
+	 * è·å–å­—æ®µå€¼
 	 * 
 	 * @param request
-	 *            HttpServletRequest request¶ÔÏó
+	 *            HttpServletRequest requestå¯¹è±¡
 	 * @param param
-	 *            String ²ÎÊı
-	 * @return String ·µ»ØÖµ£¬È±Ê¡Îª¿Õ
+	 *            String å‚æ•°
+	 * @return String è¿”å›å€¼ï¼Œç¼ºçœä¸ºç©º
 	 */
 	public static String getParameter(HttpServletRequest request, String param) {
 		return getParameter(request, param, "");
 	}
 
 	/**
-	 * »ñÈ¡×Ö¶ÎÖµ
+	 * è·å–å­—æ®µå€¼
 	 * 
 	 * @param request
-	 *            HttpServletRequest request¶ÔÏó
+	 *            HttpServletRequest requestå¯¹è±¡
 	 * @param param
-	 *            String ²ÎÊı
+	 *            String å‚æ•°
 	 * @param value
-	 *            String ±È½ÏÖµ
-	 * @return boolean ºÍ±È½ÏÖµÏàÍ¬Ôò·µ»Øtrue£¬·ñÔò·µ»Øfalse
+	 *            String æ¯”è¾ƒå€¼
+	 * @return boolean å’Œæ¯”è¾ƒå€¼ç›¸åŒåˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›false
 	 */
 	public static boolean getBooleanParameter(HttpServletRequest request,
 			String param, String value) {
@@ -233,15 +233,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * »ñÈ¡intĞÍ×Ö¶ÎÖµ
+	 * è·å–intå‹å­—æ®µå€¼
 	 * 
 	 * @param request
-	 *            HttpServletRequest request¶ÔÏó
+	 *            HttpServletRequest requestå¯¹è±¡
 	 * @param param
-	 *            String ²ÎÊı
+	 *            String å‚æ•°
 	 * @param defaultNum
-	 *            int È±Ê¡Öµ
-	 * @return int ·µ»ØÖµ
+	 *            int ç¼ºçœå€¼
+	 * @return int è¿”å›å€¼
 	 */
 	public static int getIntParameter(HttpServletRequest request, String param,
 			int defaultNum) {
@@ -259,7 +259,7 @@ public class ParamUtil {
 	}
 
 	/**
-	 * »ñÈ¡longĞÍ×Ö¶ÎÖµ
+	 * è·å–longå‹å­—æ®µå€¼
 	 * 
 	 * @param request
 	 * @param param
@@ -282,15 +282,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * »ñÈ¡attribute×Ö¶ÎÖµ
+	 * è·å–attributeå­—æ®µå€¼
 	 * 
 	 * @param request
-	 *            HttpServletRequest request¶ÔÏó
+	 *            HttpServletRequest requestå¯¹è±¡
 	 * @param param
-	 *            String ²ÎÊı
+	 *            String å‚æ•°
 	 * @param defaultValue
-	 *            String È±Ê¡Öµ
-	 * @return String ·µ»ØÖµ
+	 *            String ç¼ºçœå€¼
+	 * @return String è¿”å›å€¼
 	 */
 	public static String getAttribute(HttpServletRequest request, String param,
 			String defaultValue) {
@@ -305,28 +305,28 @@ public class ParamUtil {
 	}
 
 	/**
-	 * »ñÈ¡attribute×Ö¶ÎÖµ
+	 * è·å–attributeå­—æ®µå€¼
 	 * 
 	 * @param request
-	 *            HttpServletRequest request¶ÔÏó
+	 *            HttpServletRequest requestå¯¹è±¡
 	 * @param param
-	 *            String ²ÎÊı
-	 * @return String ·µ»ØÖµ
+	 *            String å‚æ•°
+	 * @return String è¿”å›å€¼
 	 */
 	public static String getAttribute(HttpServletRequest request, String param) {
 		return getAttribute(request, param, "");
 	}
 
 	/**
-	 * »ñÈ¡attribute×Ö¶ÎÖµ
+	 * è·å–attributeå­—æ®µå€¼
 	 * 
 	 * @param request
-	 *            HttpServletRequest request¶ÔÏó
+	 *            HttpServletRequest requestå¯¹è±¡
 	 * @param param
-	 *            String ²ÎÊı
+	 *            String å‚æ•°
 	 * @param value
-	 *            String ±È½ÏÖµ
-	 * @return boolean ºÍ±È½ÏÖµÏàÍ¬Ôò·µ»Øtrue£¬·ñÔò·µ»Øfalse
+	 *            String æ¯”è¾ƒå€¼
+	 * @return boolean å’Œæ¯”è¾ƒå€¼ç›¸åŒåˆ™è¿”å›trueï¼Œå¦åˆ™è¿”å›false
 	 */
 	public static boolean getBooleanAttribute(HttpServletRequest request,
 			String param, String value) {
@@ -339,15 +339,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * »ñÈ¡intĞÍattribute×Ö¶ÎÖµ
+	 * è·å–intå‹attributeå­—æ®µå€¼
 	 * 
 	 * @param request
-	 *            HttpServletRequest request¶ÔÏó
+	 *            HttpServletRequest requestå¯¹è±¡
 	 * @param param
-	 *            String ²ÎÊı
+	 *            String å‚æ•°
 	 * @param defaultNum
-	 *            int È±Ê¡Öµ
-	 * @return int ·µ»ØÖµ
+	 *            int ç¼ºçœå€¼
+	 * @return int è¿”å›å€¼
 	 */
 	public static int getIntAttribute(HttpServletRequest request, String param,
 			int defaultNum) {
@@ -365,7 +365,7 @@ public class ParamUtil {
 	}
 
 	/**
-	 * »ñÈ¡Êı×é
+	 * è·å–æ•°ç»„
 	 * 
 	 * @param request
 	 * @param param
@@ -377,7 +377,7 @@ public class ParamUtil {
 	}
 
 	/**
-	 * »ñÈ¡Êı×é
+	 * è·å–æ•°ç»„
 	 * 
 	 * @param request
 	 * @param param
@@ -397,7 +397,7 @@ public class ParamUtil {
 	}
 
 	/**
-	 * »ñÈ¡Êı×é
+	 * è·å–æ•°ç»„
 	 * 
 	 * @param request
 	 * @param param
@@ -417,15 +417,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * »ñÈ¡doubleĞÍ×Ö¶ÎÖµ
+	 * è·å–doubleå‹å­—æ®µå€¼
 	 * 
 	 * @param request
-	 *            HttpServletRequest request¶ÔÏó
+	 *            HttpServletRequest requestå¯¹è±¡
 	 * @param param
-	 *            String ²ÎÊı
+	 *            String å‚æ•°
 	 * @param defaultNum
-	 *            double È±Ê¡Öµ
-	 * @return int ·µ»ØÖµ
+	 *            double ç¼ºçœå€¼
+	 * @return int è¿”å›å€¼
 	 */
 	public static double getDoubleParameter(HttpServletRequest request,
 			String param, double defaultNum) {
@@ -443,7 +443,7 @@ public class ParamUtil {
 	}
 
 	/**
-	 * »ñÈ¡ÈÕÆÚ²ÎÊı
+	 * è·å–æ—¥æœŸå‚æ•°
 	 * 
 	 * @param request
 	 * @param param
@@ -466,15 +466,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * »ñÈ¡floatĞÍ×Ö¶ÎÖµ
+	 * è·å–floatå‹å­—æ®µå€¼
 	 * 
 	 * @param request
-	 *            HttpServletRequest request¶ÔÏó
+	 *            HttpServletRequest requestå¯¹è±¡
 	 * @param param
-	 *            String ²ÎÊı
+	 *            String å‚æ•°
 	 * @param defaultNum
-	 *            float È±Ê¡Öµ
-	 * @return int ·µ»ØÖµ
+	 *            float ç¼ºçœå€¼
+	 * @return int è¿”å›å€¼
 	 */
 	public static float getFloatParameter(HttpServletRequest request,
 			String param, float defaultNum) {

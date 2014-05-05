@@ -173,26 +173,26 @@ public class SysFunctionServiceImpl implements SysFunctionService {
 	}
 
 	/**
-	 * ÅÅĞò
+	 * æ’åº
 	 * 
 	 * @param bean
 	 *            SysFunction
 	 * @param operate
-	 *            int ²Ù×÷
+	 *            int æ“ä½œ
 	 */
 	@Transactional
 	public void sort(SysFunction bean, int operate) {
 		if (bean == null)
 			return;
-		if (operate == SysConstants.SORT_PREVIOUS) {// Ç°ÒÆ
+		if (operate == SysConstants.SORT_PREVIOUS) {// å‰ç§»
 			sortByPrevious(bean);
-		} else if (operate == SysConstants.SORT_FORWARD) {// ºóÒÆ
+		} else if (operate == SysConstants.SORT_FORWARD) {// åç§»
 			sortByForward(bean);
 		}
 	}
 
 	/**
-	 * ÏòºóÒÆ¶¯ÅÅĞò
+	 * å‘åç§»åŠ¨æ’åº
 	 * 
 	 * @param bean
 	 */
@@ -201,21 +201,21 @@ public class SysFunctionServiceImpl implements SysFunctionService {
 		query.appId(Long.valueOf(bean.getAppId()));
 		query.setSortLessThan(bean.getSort());
 		query.setOrderBy(" E.SORT desc ");
-		// ²éÕÒÇ°Ò»¸ö¶ÔÏó
+		// æŸ¥æ‰¾å‰ä¸€ä¸ªå¯¹è±¡
 		List<SysFunction> list = this.list(query);
-		if (list != null && list.size() > 0) {// ÓĞ¼ÇÂ¼
+		if (list != null && list.size() > 0) {// æœ‰è®°å½•
 			SysFunction temp = (SysFunction) list.get(0);
 			int i = bean.getSort();
 			bean.setSort(temp.getSort());
-			this.update(bean);// ¸üĞÂbean
+			this.update(bean);// æ›´æ–°bean
 
 			temp.setSort(i);
-			this.update(temp);// ¸üĞÂtemp
+			this.update(temp);// æ›´æ–°temp
 		}
 	}
 
 	/**
-	 * ÏòÇ°ÒÆ¶¯ÅÅĞò
+	 * å‘å‰ç§»åŠ¨æ’åº
 	 * 
 	 * @param bean
 	 */
@@ -224,16 +224,16 @@ public class SysFunctionServiceImpl implements SysFunctionService {
 		query.appId(Long.valueOf(bean.getAppId()));
 		query.setSortGreaterThan(bean.getSort());
 		query.setOrderBy(" E.SORT asc ");
-		// ²éÕÒÇ°Ò»¸ö¶ÔÏó
+		// æŸ¥æ‰¾å‰ä¸€ä¸ªå¯¹è±¡
 		List<SysFunction> list = this.list(query);
-		if (list != null && list.size() > 0) {// ÓĞ¼ÇÂ¼
+		if (list != null && list.size() > 0) {// æœ‰è®°å½•
 			SysFunction temp = (SysFunction) list.get(0);
 			int i = bean.getSort();
 			bean.setSort(temp.getSort());
-			this.update(bean);// ¸üĞÂbean
+			this.update(bean);// æ›´æ–°bean
 
 			temp.setSort(i);
-			this.update(temp);// ¸üĞÂtemp
+			this.update(temp);// æ›´æ–°temp
 		}
 	}
 

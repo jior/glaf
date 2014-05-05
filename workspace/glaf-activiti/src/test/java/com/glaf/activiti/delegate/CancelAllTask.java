@@ -42,17 +42,17 @@ public class CancelAllTask implements ActivityBehavior {
 	protected final static Log logger = LogFactory.getLog(CancelAllTask.class);
 
 	/**
-	 * Ìõ¼ş±í´ïÊ½
+	 * æ¡ä»¶è¡¨è¾¾å¼
 	 */
 	protected Expression conditionExpression;
 
 	/**
-	 * ×ª³öÂ·¾¶±äÁ¿
+	 * è½¬å‡ºè·¯å¾„å˜é‡
 	 */
 	protected Expression outcomeVar;
 
 	/**
-	 * °üº¬µÄÈÎÎñÃû³Æ£¬¶à¸öÈÎÎñÖ®¼äÓÃ°ë½ÇµÄ¶ººÅ¸ô¿ª
+	 * åŒ…å«çš„ä»»åŠ¡åç§°ï¼Œå¤šä¸ªä»»åŠ¡ä¹‹é—´ç”¨åŠè§’çš„é€—å·éš”å¼€
 	 */
 	protected Expression includes;
 
@@ -76,7 +76,7 @@ public class CancelAllTask implements ActivityBehavior {
 		}
 
 		if (!executable) {
-			logger.debug("±í´ïÊ½¼ÆËãºóÈ¡ÖµÎªfalse£¬²»Ö´ĞĞºóĞø¶¯×÷¡£");
+			logger.debug("è¡¨è¾¾å¼è®¡ç®—åå–å€¼ä¸ºfalseï¼Œä¸æ‰§è¡Œåç»­åŠ¨ä½œã€‚");
 			return;
 		}
 

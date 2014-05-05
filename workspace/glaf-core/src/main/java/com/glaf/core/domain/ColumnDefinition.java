@@ -36,7 +36,7 @@ import com.glaf.core.base.FieldDefinition;
 import com.glaf.core.domain.util.ColumnDefinitionJsonFactory;
 
 /**
- * Êı¾İ×Ö¶Î¶¨Òå
+ * æ•°æ®å­—æ®µå®šä¹‰
  * 
  */
 @Entity
@@ -48,7 +48,7 @@ public class ColumnDefinition implements
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Êı¾İ¿âÖĞ±íµÄ±ğÃû
+	 * æ•°æ®åº“ä¸­è¡¨çš„åˆ«å
 	 */
 	@Column(name = "ALIAS_", length = 50)
 	protected String alias;
@@ -57,13 +57,13 @@ public class ColumnDefinition implements
 	protected String align;
 
 	/**
-	 * Êı¾İ¿â×Ö¶Î±êÇ©
+	 * æ•°æ®åº“å­—æ®µæ ‡ç­¾
 	 */
 	@Column(name = "COLUMNLABEL_", length = 50)
 	protected String columnLabel;
 
 	/**
-	 * Êı¾İ¿â×Ö¶ÎÃû³Æ
+	 * æ•°æ®åº“å­—æ®µåç§°
 	 */
 	@Column(name = "COLUMNNAME_", length = 50)
 	protected String columnName;
@@ -72,7 +72,7 @@ public class ColumnDefinition implements
 	protected String dataCode;
 
 	/**
-	 * Êı¾İ¿âÀàĞÍ
+	 * æ•°æ®åº“ç±»å‹
 	 */
 	@javax.persistence.Transient
 	protected int dataType;
@@ -81,19 +81,19 @@ public class ColumnDefinition implements
 	protected Date dateValue;
 
 	/**
-	 * Ä¬ÈÏÖµ
+	 * é»˜è®¤å€¼
 	 */
 	@Column(name = "DEFAULTVALUE_", length = 200)
 	protected String defaultValue;
 
 	/**
-	 * ¼ø±ğÀàĞÍ,C-Êı¾İ¿â×Ö¶Î£¬P-²éÑ¯²ÎÊı
+	 * é‰´åˆ«ç±»å‹,C-æ•°æ®åº“å­—æ®µï¼ŒP-æŸ¥è¯¢å‚æ•°
 	 */
 	@Column(name = "DISCRIMINATOR_", length = 10)
 	protected String discriminator;
 
 	/**
-	 * ÏÔÊ¾ÀàĞÍ 0-²»ÏÔÊ¾£¬1-±íµ¥£¬2-±íµ¥¼°ÁĞ±í
+	 * æ˜¾ç¤ºç±»å‹ 0-ä¸æ˜¾ç¤ºï¼Œ1-è¡¨å•ï¼Œ2-è¡¨å•åŠåˆ—è¡¨
 	 */
 	@Column(name = "DISPLAYTYPE_")
 	protected int displayType;
@@ -105,25 +105,25 @@ public class ColumnDefinition implements
 	protected String editableField;
 
 	/**
-	 * ENGLISH±êÌâ
+	 * ENGLISHæ ‡é¢˜
 	 */
 	@Column(name = "ENGLISHTITLE_", length = 100)
 	protected String englishTitle;
 
 	/**
-	 * ÏÔÊ¾¸ñÊ½
+	 * æ˜¾ç¤ºæ ¼å¼
 	 */
 	@Column(name = "FORMATTER_", length = 200)
 	protected String formatter;
 
 	/**
-	 * ¹«Ê½
+	 * å…¬å¼
 	 */
 	@Column(name = "FORMULA_", length = 200)
 	protected String formula;
 
 	/**
-	 * ÊÇ·ñ¶³½áÁĞ
+	 * æ˜¯å¦å†»ç»“åˆ—
 	 */
 	@Column(name = "FROZEN_", length = 10)
 	protected String frozenField;
@@ -132,20 +132,20 @@ public class ColumnDefinition implements
 	protected String height;
 
 	/**
-	 * ÊÇ·ñÒş²ØÁĞ
+	 * æ˜¯å¦éšè—åˆ—
 	 */
 	@Column(name = "HIDDEN_", length = 10)
 	protected String hiddenField;
 
 	/**
-	 * Ö÷¼ü
+	 * ä¸»é”®
 	 */
 	@Id
 	@Column(name = "ID_", length = 100, nullable = false)
 	protected String id;
 
 	/**
-	 * ÊäÈëÀàĞÍ£¨ÎÄ±¾¿ò¡¢ÊıÖµÊäÈë¡¢ÈÕÆÚÊäÈë¡¢ÏÂÀ­ÁĞ±í¡¢¸´Ñ¡¿ò£©
+	 * è¾“å…¥ç±»å‹ï¼ˆæ–‡æœ¬æ¡†ã€æ•°å€¼è¾“å…¥ã€æ—¥æœŸè¾“å…¥ã€ä¸‹æ‹‰åˆ—è¡¨ã€å¤é€‰æ¡†ï¼‰
 	 */
 	@Column(name = "INPUTTYPE_", length = 50)
 	protected String inputType;
@@ -154,19 +154,19 @@ public class ColumnDefinition implements
 	protected int intValue;
 
 	/**
-	 * ²ÎÊıÊÇ·ñÎª¼¯ºÏÀàĞÍ
+	 * å‚æ•°æ˜¯å¦ä¸ºé›†åˆç±»å‹
 	 */
 	@Column(name = "ISCOLLECTION_", length = 10)
 	protected String isCollectionField;
 
 	/**
-	 * JavaÀàĞÍ
+	 * Javaç±»å‹
 	 */
 	@Column(name = "JAVATYPE_", length = 20)
 	protected String javaType;
 
 	/**
-	 * ×Ö¶Î³¤¶È
+	 * å­—æ®µé•¿åº¦
 	 */
 	@Column(name = "LENGTH_")
 	protected int length;
@@ -184,43 +184,43 @@ public class ColumnDefinition implements
 	protected String mask;
 
 	/**
-	 * ÊôĞÔÃû³Æ
+	 * å±æ€§åç§°
 	 */
 	@Column(name = "NAME_", length = 50)
 	protected String name;
 
 	/**
-	 * ÊÇ·ñÎª¿Õ
+	 * æ˜¯å¦ä¸ºç©º
 	 */
 	@Column(name = "NULL_", length = 10)
 	protected String nullableField = "1";
 
 	/**
-	 * ×Ö¶ÎË³ĞòºÅ
+	 * å­—æ®µé¡ºåºå·
 	 */
 	@Column(name = "ORDINAL_")
 	protected int ordinal;
 
 	/**
-	 * ×Ö¶Î¾«¶È
+	 * å­—æ®µç²¾åº¦
 	 */
 	@Column(name = "PRECISION_")
 	protected int precision;
 
 	/**
-	 * ÊÇ·ñÖ÷¼ü
+	 * æ˜¯å¦ä¸»é”®
 	 */
 	@Column(name = "PRIMARYKEY_", length = 10)
 	protected String primaryKeyField;
 
 	/**
-	 * ²éÑ¯±àºÅ
+	 * æŸ¥è¯¢ç¼–å·
 	 */
 	@Column(name = "QUERYID_", length = 50, nullable = true)
 	protected String queryId;
 
 	/**
-	 * ÕıÔò±í´ïÊ½
+	 * æ­£åˆ™è¡¨è¾¾å¼
 	 */
 	@Column(name = "REGEX_", length = 100)
 	protected String regex;
@@ -233,19 +233,19 @@ public class ColumnDefinition implements
 	protected String renderType;
 
 	/**
-	 * ÊÇ·ñ±ØÌî
+	 * æ˜¯å¦å¿…å¡«
 	 */
 	@Column(name = "required", length = 10)
 	protected String requiredField = "0";
 
 	/**
-	 * ÊÇ·ñ¿Éµ÷ÕûÁĞ¿í
+	 * æ˜¯å¦å¯è°ƒæ•´åˆ—å®½
 	 */
 	@Column(name = "RESIZABLE_", length = 10)
 	protected String resizableField;
 
 	/**
-	 * Ğ¡ÊıÎ»Êı
+	 * å°æ•°ä½æ•°
 	 */
 	@Column(name = "SCALE_")
 	protected int scale;
@@ -254,13 +254,13 @@ public class ColumnDefinition implements
 	protected String searchableField;
 
 	/**
-	 * ÊÇ·ñ¿ÉÅÅĞò
+	 * æ˜¯å¦å¯æ’åº
 	 */
 	@Column(name = "SORTABLE_", length = 10)
 	protected String sortableField;
 
 	/**
-	 * ÅÅĞòÀàĞÍ int-ÕûĞÎ¡¢number-ÊıÖµ¡¢date-ÈÕÆÚÊ±¼ä
+	 * æ’åºç±»å‹ int-æ•´å½¢ã€number-æ•°å€¼ã€date-æ—¥æœŸæ—¶é—´
 	 */
 	@Column(name = "SORTTYPE_", length = 50)
 	protected String sortType;
@@ -269,13 +269,13 @@ public class ColumnDefinition implements
 	protected String stringValue;
 
 	/**
-	 * »ã×Ü±í´ïÊ½
+	 * æ±‡æ€»è¡¨è¾¾å¼
 	 */
 	@Column(name = "SUMMARYEXPR_", length = 200)
 	protected String summaryExpr;
 
 	/**
-	 * »ã×ÜÀàĞÍ£¬sum-ÇóºÍ¡¢count-Ëã¸öÊı
+	 * æ±‡æ€»ç±»å‹ï¼Œsum-æ±‚å’Œã€count-ç®—ä¸ªæ•°
 	 */
 	@Column(name = "SUMMARYTYPE_", length = 50)
 	protected String summaryType;
@@ -284,37 +284,37 @@ public class ColumnDefinition implements
 	protected String systemFlag;
 
 	/**
-	 * ±íÃû
+	 * è¡¨å
 	 */
 	@Column(name = "TABLENAME_", length = 50, nullable = true)
 	protected String tableName;
 
 	/**
-	 * Ä¿±êID
+	 * ç›®æ ‡ID
 	 */
 	@Column(name = "TARGETID_", length = 50, nullable = true)
 	protected String targetId;
 
 	/**
-	 * ÏÂÀ­ÁĞ±íµÄÎÄ±¾×Ö¶Î
+	 * ä¸‹æ‹‰åˆ—è¡¨çš„æ–‡æœ¬å­—æ®µ
 	 */
 	@Column(name = "TEXTFIELD_", length = 50)
 	protected String textField;
 
 	/**
-	 * ±êÌâ
+	 * æ ‡é¢˜
 	 */
 	@Column(name = "TITLE_", length = 100)
 	protected String title;
 
 	/**
-	 * ÔÚÁĞÍ·²¿ÏÔÊ¾µÄÌáÊ¾ÎÄ×Ö
+	 * åœ¨åˆ—å¤´éƒ¨æ˜¾ç¤ºçš„æç¤ºæ–‡å­—
 	 */
 	@Column(name = "TOOLTIP_", length = 100)
 	protected String tooltip;
 
 	/**
-	 * ×ª»»Æ÷
+	 * è½¬æ¢å™¨
 	 */
 	@Column(name = "TRANSLATOR_", length = 100)
 	protected String translator;
@@ -326,13 +326,13 @@ public class ColumnDefinition implements
 	protected String updatableField;
 
 	/**
-	 * ÏÂÀ­ÁĞ±íµÄÈ¡ÊıURL
+	 * ä¸‹æ‹‰åˆ—è¡¨çš„å–æ•°URL
 	 */
 	@Column(name = "URL_", length = 250)
 	protected String url;
 
 	/**
-	 * ÑéÖ¤ÀàĞÍ
+	 * éªŒè¯ç±»å‹
 	 */
 	@Column(name = "VALIDTYPE_", length = 50)
 	protected String validType;
@@ -344,7 +344,7 @@ public class ColumnDefinition implements
 	protected String valueExpression;
 
 	/**
-	 * ÏÂÀ­ÁĞ±íµÄÖµ×Ö¶Î
+	 * ä¸‹æ‹‰åˆ—è¡¨çš„å€¼å­—æ®µ
 	 */
 	@Column(name = "VALUEFIELD_", length = 50)
 	protected String valueField;

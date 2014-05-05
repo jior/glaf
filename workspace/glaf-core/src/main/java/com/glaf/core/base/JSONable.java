@@ -23,7 +23,7 @@ import com.alibaba.fastjson.JSONObject;
 public interface JSONable {
 
 	/**
-	 * ½«json×ª»»³É¶ÔÏó
+	 * å°†jsonè½¬æ¢æˆå¯¹è±¡
 	 * 
 	 * @param jsonObject
 	 * @return
@@ -31,7 +31,7 @@ public interface JSONable {
 	Object jsonToObject(JSONObject jsonObject);
 
 	/**
-	 * ×ª»»ÎªJSON¶ÔÏó
+	 * è½¬æ¢ä¸ºJSONå¯¹è±¡
 	 * 
 	 * @return
 	 */

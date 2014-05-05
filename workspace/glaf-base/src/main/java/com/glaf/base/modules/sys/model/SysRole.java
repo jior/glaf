@@ -43,32 +43,32 @@ public class SysRole implements Serializable, JSONable {
 	protected long id;
 
 	/**
-	 * ±àÂë
+	 * ç¼–ç 
 	 */
 	@Column(name = "CODE", length = 50)
 	protected String code;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY", length = 50)
 	protected String createBy;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE")
 	protected Date createDate;
 
 	/**
-	 * ÃèÊö
+	 * æè¿°
 	 */
 	@Column(name = "ROLEDESC", length = 500)
 	protected String desc;
 
 	/**
-	 * Ãû³Æ
+	 * åç§°
 	 */
 	@Column(name = "NAME", length = 100)
 	protected String name;
@@ -77,19 +77,19 @@ public class SysRole implements Serializable, JSONable {
 	protected long nodeId;
 
 	/**
-	 * ĞòºÅ
+	 * åºå·
 	 */
 	@Column(name = "SORT")
 	protected int sort;
 
 	/**
-	 * ĞŞ¸ÄÈË
+	 * ä¿®æ”¹äºº
 	 */
 	@Column(name = "UPDATEBY", length = 50)
 	protected String updateBy;
 
 	/**
-	 * ĞŞ¸ÄÈÕÆÚ
+	 * ä¿®æ”¹æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "UPDATEDATE")

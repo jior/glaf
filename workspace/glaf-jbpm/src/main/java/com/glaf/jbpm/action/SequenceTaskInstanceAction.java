@@ -39,12 +39,12 @@ import com.glaf.jbpm.el.DefaultExpressionEvaluator;
 import com.glaf.jbpm.util.Constant;
 
 /**
- * Ë³ĞòÈÎÎñÊµÀı´¦ÀíÆ÷<br/>
- * ¼ÙÉèÊÇA½ÚµãÀïµÄtask02ÈÎÎñ£¬¼ÙÉèÈı¸ö¾­Àí·Ö±ğÊÇX,Y,Z ¼ÙÉèµ±Ç°ÉèÖÃµÄÓÅÏÈ¼¶ÊÇY,Z,X¡£<br/>
- * Ê×ÏÈ°ÑAµÄcreate-tasks="false", È»ºó¼Ónode-enterÊÂ¼ş<br/>
- * ÔÚÊÂ¼şÀïÏÈ´´½¨µÚÒ»¸ö¹ØÓÚtask02µÄtaskInstance,ÔÚ´´½¨ÈÎÎñÊ±¿ÉÒÔ¶Á³öÕâ¸ötaskInstanceµÄËùÓĞÖ´ĞĞÈË ¼´Y,Z,X¡£<br/>
- * ×î³õÖ»´´½¨YµÄtaskInstance£¬ ´ËÊ±Ö»ÓĞY¿ÉÒÔÉóÅúÈÎÎñtask02¡£ <br/>
- * µ±YÉóÅúÍêÖ®ºó ÔÚtask02ÉÏ¼ÓÒ»¸ötask-endÊÂ¼ş£¬ È»ºó´´½¨ZµÄtaskInstance£¬ÒÀ´ÎÀàÍÆ¡£<br/>
+ * é¡ºåºä»»åŠ¡å®ä¾‹å¤„ç†å™¨<br/>
+ * å‡è®¾æ˜¯AèŠ‚ç‚¹é‡Œçš„task02ä»»åŠ¡ï¼Œå‡è®¾ä¸‰ä¸ªç»ç†åˆ†åˆ«æ˜¯X,Y,Z å‡è®¾å½“å‰è®¾ç½®çš„ä¼˜å…ˆçº§æ˜¯Y,Z,Xã€‚<br/>
+ * é¦–å…ˆæŠŠAçš„create-tasks="false", ç„¶ååŠ node-enteräº‹ä»¶<br/>
+ * åœ¨äº‹ä»¶é‡Œå…ˆåˆ›å»ºç¬¬ä¸€ä¸ªå…³äºtask02çš„taskInstance,åœ¨åˆ›å»ºä»»åŠ¡æ—¶å¯ä»¥è¯»å‡ºè¿™ä¸ªtaskInstanceçš„æ‰€æœ‰æ‰§è¡Œäºº å³Y,Z,Xã€‚<br/>
+ * æœ€åˆåªåˆ›å»ºYçš„taskInstanceï¼Œ æ­¤æ—¶åªæœ‰Yå¯ä»¥å®¡æ‰¹ä»»åŠ¡task02ã€‚ <br/>
+ * å½“Yå®¡æ‰¹å®Œä¹‹å åœ¨task02ä¸ŠåŠ ä¸€ä¸ªtask-endäº‹ä»¶ï¼Œ ç„¶ååˆ›å»ºZçš„taskInstanceï¼Œä¾æ¬¡ç±»æ¨ã€‚<br/>
  * 
  */
 public class SequenceTaskInstanceAction implements ActionHandler {
@@ -52,33 +52,33 @@ public class SequenceTaskInstanceAction implements ActionHandler {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Í¨¹ıÅĞ¶ÏÌõ¼ş
+	 * é€šè¿‡åˆ¤æ–­æ¡ä»¶
 	 */
 	protected String expression;
 
 	/**
-	 * ¶¯Ì¬ÉèÖÃµÄ²ÎÓëÕßµÄ²ÎÊıÃû£¬»·¾³±äÁ¿¿ÉÒÔÍ¨¹ıcontextInstance.getVariable()È¡µÃ
-	 * ÀıÈç£ºcontextInstance.getVariable("DeptAuditor");
+	 * åŠ¨æ€è®¾ç½®çš„å‚ä¸è€…çš„å‚æ•°åï¼Œç¯å¢ƒå˜é‡å¯ä»¥é€šè¿‡contextInstance.getVariable()å–å¾—
+	 * ä¾‹å¦‚ï¼šcontextInstance.getVariable("DeptAuditor");
 	 */
 	protected String dynamicActors;
 
 	/**
-	 * ÈÎÎñÃû³Æ
+	 * ä»»åŠ¡åç§°
 	 */
 	protected String taskName;
 
 	/**
-	 * ×ªÒÆÂ·¾¶µÄÃû³Æ
+	 * è½¬ç§»è·¯å¾„çš„åç§°
 	 */
 	protected String transitionName;
 
 	/**
-	 * Èç¹ûÓĞÒ»¸ö²»Í¨¹ıÔòÀë¿ª±¾½Úµã£¨Ò»Æ±·ñ¾ö»¹ÊÇÓÉ×îºóÉóÅúÈË¾ö¶¨£©
+	 * å¦‚æœæœ‰ä¸€ä¸ªä¸é€šè¿‡åˆ™ç¦»å¼€æœ¬èŠ‚ç‚¹ï¼ˆä¸€ç¥¨å¦å†³è¿˜æ˜¯ç”±æœ€åå®¡æ‰¹äººå†³å®šï¼‰
 	 */
 	protected boolean leaveNodeIfActorNotAgree;
 
 	/**
-	 * Èç¹û²»ÄÜ»ñÈ¡ÈÎÎñ²ÎÓëÕßÊÇ·ñÀë¿ª±¾½Úµã£¨ÈÎÎñ½Úµã£©
+	 * å¦‚æœä¸èƒ½è·å–ä»»åŠ¡å‚ä¸è€…æ˜¯å¦ç¦»å¼€æœ¬èŠ‚ç‚¹ï¼ˆä»»åŠ¡èŠ‚ç‚¹ï¼‰
 	 */
 	protected boolean leaveNodeIfActorNotAvailable;
 
@@ -114,7 +114,7 @@ public class SequenceTaskInstanceAction implements ActionHandler {
 		}
 
 		/**
-		 * ¼ÙÈçÓĞÒ»¸öÈËÉóºË²»Í¨¹ı²¢ÇÒÉèÖÃÁËÒ»Æ±·ñ¾ö
+		 * å‡å¦‚æœ‰ä¸€ä¸ªäººå®¡æ ¸ä¸é€šè¿‡å¹¶ä¸”è®¾ç½®äº†ä¸€ç¥¨å¦å†³
 		 */
 		if ((!isAgree) && leaveNodeIfActorNotAgree) {
 			if (StringUtils.isNotEmpty(transitionName)) {

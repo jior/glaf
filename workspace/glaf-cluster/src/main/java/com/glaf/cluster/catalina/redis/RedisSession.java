@@ -88,13 +88,13 @@ public class RedisSession extends StandardSession {
 					}
 
 					value = _manager.deserialize(bytesValue);
-					super.setAttribute(name, value, false); // ÊôĞÔÌí¼Óµ½±¾µØµÄattributesÖĞ.
+					super.setAttribute(name, value, false); // å±æ€§æ·»åŠ åˆ°æœ¬åœ°çš„attributesä¸­.
 
 					return value;
 				} else {
 					return value;
 				}
-			} else { // ²»ÊÇstickySessionEnabled,ÄÇÃ´Ã¿´Î¶¼Òª´ÓredisÀï»ñÈ¡ÊôĞÔÖµ.
+			} else { // ä¸æ˜¯stickySessionEnabled,é‚£ä¹ˆæ¯æ¬¡éƒ½è¦ä»redisé‡Œè·å–å±æ€§å€¼.
 				byte[] bytesValue = _manager.jedisHget(
 						RedisManager.TOMCAT_SESSION_PREFIX + this.id, name);
 				if (bytesValue == null) {
@@ -165,7 +165,7 @@ public class RedisSession extends StandardSession {
 		if (_manager.debugEnabled) {
 			log.info("id=" + this.id + ",notify=" + notify);
 		}
-		super.expire(notify); // ÔÚexpireÀï¾Í»áÇå¿Õµ±Ç°sessionµÄËùÓĞÊôĞÔ
+		super.expire(notify); // åœ¨expireé‡Œå°±ä¼šæ¸…ç©ºå½“å‰sessionçš„æ‰€æœ‰å±æ€§
 
 		if (!_manager.isInitialized()) {
 			return;

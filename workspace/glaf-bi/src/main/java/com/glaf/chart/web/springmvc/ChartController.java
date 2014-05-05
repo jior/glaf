@@ -346,7 +346,7 @@ public class ChartController {
 		String querySQL = request.getParameter("querySQL");
 		if (StringUtils.isNotEmpty(querySQL)) {
 			if (!DBUtils.isLegalQuerySql(querySQL)) {
-				throw new RuntimeException("SQL查询不合法！");
+				throw new RuntimeException("SQL鏌ヨ涓嶅悎娉曪紒");
 			}
 		}
 
@@ -382,7 +382,7 @@ public class ChartController {
 			String querySQL = request.getParameter("querySQL");
 			if (StringUtils.isNotEmpty(querySQL)) {
 				if (!DBUtils.isLegalQuerySql(querySQL)) {
-					throw new RuntimeException("SQL查询不合法！");
+					throw new RuntimeException("SQL鏌ヨ涓嶅悎娉曪紒");
 				}
 			}
 

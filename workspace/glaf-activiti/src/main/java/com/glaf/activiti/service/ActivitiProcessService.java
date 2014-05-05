@@ -28,7 +28,7 @@ import com.glaf.activiti.model.ProcessContext;
 public interface ActivitiProcessService {
 
 	/**
-	 * ÎªÖ¸¶¨ÈÎÎñÌí¼ÓºòÑ¡×é
+	 * ä¸ºæŒ‡å®šä»»åŠ¡æ·»åŠ å€™é€‰ç»„
 	 * 
 	 * @param taskId
 	 * @param groupId
@@ -36,7 +36,7 @@ public interface ActivitiProcessService {
 	void addCandidateGroup(String taskId, String groupId);
 
 	/**
-	 * ÎªÖ¸¶¨ÈÎÎñÌí¼ÓºòÑ¡ÓÃ»§
+	 * ä¸ºæŒ‡å®šä»»åŠ¡æ·»åŠ å€™é€‰ç”¨æˆ·
 	 * 
 	 * @param taskId
 	 * @param actorId
@@ -44,7 +44,7 @@ public interface ActivitiProcessService {
 	void addCandidateUser(String taskId, String actorId);
 
 	/**
-	 * ÎªÖ¸¶¨ÈÎÎñÌí¼Ó×é
+	 * ä¸ºæŒ‡å®šä»»åŠ¡æ·»åŠ ç»„
 	 * 
 	 * @param taskId
 	 * @param groupId
@@ -54,7 +54,7 @@ public interface ActivitiProcessService {
 			String identityLinkType);
 
 	/**
-	 * ÎªÖ¸¶¨ÈÎÎñÌí¼ÓÓÃ»§
+	 * ä¸ºæŒ‡å®šä»»åŠ¡æ·»åŠ ç”¨æˆ·
 	 * 
 	 * @param taskId
 	 * @param userId
@@ -64,80 +64,80 @@ public interface ActivitiProcessService {
 			String identityLinkType);
 
 	/**
-	 * ·ÖÅäÈÎÎñ¸øÖ¸¶¨ÈË
+	 * åˆ†é…ä»»åŠ¡ç»™æŒ‡å®šäºº
 	 * 
 	 * @param taskId
-	 *            ÈÎÎñ±àºÅ
+	 *            ä»»åŠ¡ç¼–å·
 	 * @param actorId
-	 *            ÓÃ»§±àºÅ
+	 *            ç”¨æˆ·ç¼–å·
 	 */
 	void claimTask(String taskId, String actorId);
 
 	/**
-	 * Íê³ÉÈÎÎñ
+	 * å®Œæˆä»»åŠ¡
 	 * 
 	 * @param ctx
 	 */
 	void completeTask(ProcessContext ctx);
 
 	/**
-	 * Íê³ÉÈÎÎñ
+	 * å®Œæˆä»»åŠ¡
 	 * 
 	 * @param taskId
-	 *            ÈÎÎñ±àºÅ
+	 *            ä»»åŠ¡ç¼–å·
 	 */
 	void completeTask(String taskId);
 
 	/**
-	 * Íê³ÉÈÎÎñ
+	 * å®Œæˆä»»åŠ¡
 	 * 
 	 * @param taskId
-	 *            ÈÎÎñ±àºÅ
+	 *            ä»»åŠ¡ç¼–å·
 	 * @param variables
-	 *            ±äÁ¿¼¯
+	 *            å˜é‡é›†
 	 */
 	void completeTask(String taskId, Map<String, Object> variables);
 
 	/**
-	 * Íê³ÉÈÎÎñ
+	 * å®Œæˆä»»åŠ¡
 	 * 
 	 * @param actorId
-	 *            ÓÃ»§±àºÅ
+	 *            ç”¨æˆ·ç¼–å·
 	 * @param taskId
-	 *            ÈÎÎñ±àºÅ
+	 *            ä»»åŠ¡ç¼–å·
 	 * 
 	 * @param variables
-	 *            ±äÁ¿¼¯
+	 *            å˜é‡é›†
 	 */
 	void completeTask(String actorId, String taskId,
 			Map<String, Object> variables);
 
 	/**
-	 * É¾³ıÁ÷³ÌÊµÀı
+	 * åˆ é™¤æµç¨‹å®ä¾‹
 	 * 
 	 * @param processInstanceId
-	 *            Á÷³ÌÊµÀı±àºÅ
+	 *            æµç¨‹å®ä¾‹ç¼–å·
 	 */
 	void deleteProcessInstance(String processInstanceId, String deleteReason);
 
 	/**
-	 * É¾³ıÈÎÎñÊµÀı
+	 * åˆ é™¤ä»»åŠ¡å®ä¾‹
 	 * 
 	 * @param taskId
-	 *            ÈÎÎñÊµÀı±àºÅ
+	 *            ä»»åŠ¡å®ä¾‹ç¼–å·
 	 */
 	void deleteTask(String taskId);
 
 	/**
-	 * É¾³ıÈÎÎñÊµÀı
+	 * åˆ é™¤ä»»åŠ¡å®ä¾‹
 	 * 
 	 * @param taskIds
-	 *            ÈÎÎñÊµÀı±àºÅ¼¯ºÏ
+	 *            ä»»åŠ¡å®ä¾‹ç¼–å·é›†åˆ
 	 */
 	void deleteTasks(List<String> taskIds);
 
 	/**
-	 * ÖØĞÂÖ¸ÅÉÈÎÎñ´¦ÀíÈË
+	 * é‡æ–°æŒ‡æ´¾ä»»åŠ¡å¤„ç†äºº
 	 * 
 	 * @param taskId
 	 * @param actorId
@@ -145,7 +145,7 @@ public interface ActivitiProcessService {
 	void setAssignee(String taskId, String actorId);
 
 	/**
-	 * ÉèÖÃÈÎÎñÓÅÏÈ¼¶
+	 * è®¾ç½®ä»»åŠ¡ä¼˜å…ˆçº§
 	 * 
 	 * @param taskId
 	 * @param priority
@@ -153,29 +153,29 @@ public interface ActivitiProcessService {
 	void setPriority(String taskId, int priority);
 
 	/**
-	 * ·¢Ö´ĞĞĞÅºÅ
+	 * å‘æ‰§è¡Œä¿¡å·
 	 * 
 	 * @param executionId
 	 */
 	void signal(String executionId);
 
 	/**
-	 * Æô¶¯Á÷³Ì
+	 * å¯åŠ¨æµç¨‹
 	 * 
 	 * @param ctx
-	 *            Á÷³ÌÉÏÏÂÎÄ
+	 *            æµç¨‹ä¸Šä¸‹æ–‡
 	 * 
 	 * @return
 	 */
 	String startProcess(ProcessContext ctx);
 
 	/**
-	 * Æô¶¯Á÷³Ì
+	 * å¯åŠ¨æµç¨‹
 	 * 
 	 * @param actorId
-	 *            ²ÎÓëÕß
+	 *            å‚ä¸è€…
 	 * @param processDefinitionKey
-	 *            Á÷³Ì¶¨ÒåÃû
+	 *            æµç¨‹å®šä¹‰å
 	 * @return
 	 */
 	ProcessInstance startProcessInstanceByKey(String actorId,
@@ -184,11 +184,11 @@ public interface ActivitiProcessService {
 	/**
 	 * 
 	 * @param actorId
-	 *            ²ÎÓëÕß
+	 *            å‚ä¸è€…
 	 * @param processDefinitionKey
-	 *            Á÷³Ì¶¨ÒåÃû
+	 *            æµç¨‹å®šä¹‰å
 	 * @param variables
-	 *            ±äÁ¿¼¯
+	 *            å˜é‡é›†
 	 * @return
 	 */
 	ProcessInstance startProcessInstanceByKey(String actorId,
@@ -197,11 +197,11 @@ public interface ActivitiProcessService {
 	/**
 	 * 
 	 * @param actorId
-	 *            ²ÎÓëÕß
+	 *            å‚ä¸è€…
 	 * @param processDefinitionKey
-	 *            Á÷³Ì¶¨ÒåÃû
+	 *            æµç¨‹å®šä¹‰å
 	 * @param businessKey
-	 *            ÒµÎñÖ÷¼ü
+	 *            ä¸šåŠ¡ä¸»é”®
 	 * @return
 	 */
 	ProcessInstance startProcessInstanceByKey(String actorId,
@@ -210,13 +210,13 @@ public interface ActivitiProcessService {
 	/**
 	 * 
 	 * @param actorId
-	 *            ²ÎÓëÕß
+	 *            å‚ä¸è€…
 	 * @param processDefinitionKey
-	 *            Á÷³Ì¶¨ÒåÃû
+	 *            æµç¨‹å®šä¹‰å
 	 * @param businessKey
-	 *            ÒµÎñÖ÷¼ü
+	 *            ä¸šåŠ¡ä¸»é”®
 	 * @param variables
-	 *            ±äÁ¿¼¯
+	 *            å˜é‡é›†
 	 * @return
 	 */
 	ProcessInstance startProcessInstanceByKey(String actorId,

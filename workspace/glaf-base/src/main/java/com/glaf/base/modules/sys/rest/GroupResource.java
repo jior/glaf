@@ -78,7 +78,7 @@ public class GroupResource {
 	protected SysUserService sysUserService;
 
 	/**
-	 * 批量删除信息
+	 * 鎵归噺鍒犻櫎淇℃伅
 	 * 
 	 * @param request
 	 * @param uriInfo
@@ -100,16 +100,16 @@ public class GroupResource {
 		}
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// 成功
+		if (ret) {// 鎴愬姛
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"group.delete_success"));
-		} else {// 失败
+		} else {// 澶辫触
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"group.delete_failure"));
 		}
 		MessageUtils.addMessages(request, messages);
 
-		// 显示列表页面
+		// 鏄剧ず鍒楄〃椤甸潰
 		return new ModelAndView("show_json_msg");
 	}
 
@@ -333,7 +333,7 @@ public class GroupResource {
 	}
 
 	/**
-	 * 提交增加信息
+	 * 鎻愪氦澧炲姞淇℃伅
 	 * 
 	 * @param request
 	 * @param uriInfo
@@ -362,16 +362,16 @@ public class GroupResource {
 		}
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
+		if (ret) {// 淇濆瓨鎴愬姛
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"group.add_success"));
-		} else {// 保存失败
+		} else {// 淇濆瓨澶辫触
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"group.add_failure"));
 		}
 		MessageUtils.addMessages(request, messages);
 
-		// 显示列表页面
+		// 鏄剧ず鍒楄〃椤甸潰
 		return new ModelAndView("show_json_msg");
 	}
 
@@ -401,7 +401,7 @@ public class GroupResource {
 	}
 
 	/**
-	 * 提交修改信息
+	 * 鎻愪氦淇敼淇℃伅
 	 * 
 	 * @param request
 	 * @param uriInfo
@@ -429,15 +429,15 @@ public class GroupResource {
 		}
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
+		if (ret) {// 淇濆瓨鎴愬姛
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"group.modify_success"));
-		} else {// 保存失败
+		} else {// 淇濆瓨澶辫触
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"group.modify_failure"));
 		}
 		MessageUtils.addMessages(request, messages);
-		// 显示列表页面
+		// 鏄剧ず鍒楄〃椤甸潰
 		return new ModelAndView("show_json_msg");
 	}
 

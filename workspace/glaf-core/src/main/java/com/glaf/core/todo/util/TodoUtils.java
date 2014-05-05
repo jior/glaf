@@ -45,14 +45,14 @@ public class TodoUtils {
 			if (date != null) {
 				now = date.getTime();
 			}
-			if (now > limit) {// 超过期限
+			if (now > limit) {// 瓒呰繃鏈熼檺
 				if ((now - limit) > todo.getXb() * DateUtils.HOUR) {
 					status = PAST_DUE_STATUS;
 				} else {
 					status = CAUTION_STATUS;
 				}
 			} else {
-				// 未到期限
+				// 鏈埌鏈熼檺
 				if ((limit - DateUtils.HOUR
 						* (todo.getLimitDay() * 24 - todo.getXa())) > now) {
 					status = CAUTION_STATUS;

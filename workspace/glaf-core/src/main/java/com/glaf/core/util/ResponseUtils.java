@@ -159,7 +159,7 @@ public class ResponseUtils {
 	}
 
 	/**
-	 * ·µ»ØÏìÓ¦µÄ½á¹û£¬¸ù¾İÏµÍ³Ä¬ÈÏÅäÖÃ·µ»Ø
+	 * è¿”å›å“åº”çš„ç»“æœï¼Œæ ¹æ®ç³»ç»Ÿé»˜è®¤é…ç½®è¿”å›
 	 * 
 	 * @param success
 	 * @return
@@ -174,10 +174,10 @@ public class ResponseUtils {
 	}
 
 	/**
-	 * ·µ»ØÏìÓ¦µÄ½á¹û
+	 * è¿”å›å“åº”çš„ç»“æœ
 	 * 
 	 * @param responseDataType
-	 *            json»òxml£¬Ä¬ÈÏÊÇjson¸ñÊ½
+	 *            jsonæˆ–xmlï¼Œé»˜è®¤æ˜¯jsonæ ¼å¼
 	 * @param success
 	 * @return
 	 */

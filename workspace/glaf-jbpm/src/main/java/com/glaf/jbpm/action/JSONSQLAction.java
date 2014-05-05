@@ -107,7 +107,7 @@ public class JSONSQLAction implements ActionHandler {
 		}
 
 		if (!executable) {
-			logger.debug("±í´ïÊ½¼ÆËãºóÈ¡ÖµÎªfalse£¬²»Ö´ĞĞºóĞø¶¯×÷¡£");
+			logger.debug("è¡¨è¾¾å¼è®¡ç®—åå–å€¼ä¸ºfalseï¼Œä¸æ‰§è¡Œåç»­åŠ¨ä½œã€‚");
 			return;
 		}
 

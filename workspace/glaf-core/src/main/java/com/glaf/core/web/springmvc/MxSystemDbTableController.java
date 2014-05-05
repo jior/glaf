@@ -669,7 +669,7 @@ public class MxSystemDbTableController {
 		List<ColumnDefinition> columns = null;
 		try {
 			/**
-			 * ±£Ö¤ÏµÍ³°²È«ĞÔ²»µÃĞŞ¸ÄÏµÍ³±í¼°¹¤×÷Á÷µÄÊı¾İ
+			 * ä¿è¯ç³»ç»Ÿå®‰å…¨æ€§ä¸å¾—ä¿®æ”¹ç³»ç»Ÿè¡¨åŠå·¥ä½œæµçš„æ•°æ®
 			 */
 			if (StringUtils.isNotEmpty(tableName)
 					&& !rejects.contains(tableName.toUpperCase())

@@ -628,10 +628,10 @@ public class ReflectUtils {
 			ParameterizedType parameterizedType = ((ParameterizedType) cls
 					.getGenericInterfaces()[0]);
 			Object genericClass = parameterizedType.getActualTypeArguments()[i];
-			if (genericClass instanceof ParameterizedType) { // ´¦Àí¶à¼¶·ºĞÍ
+			if (genericClass instanceof ParameterizedType) { // å¤„ç†å¤šçº§æ³›å‹
 				return (Class<?>) ((ParameterizedType) genericClass)
 						.getRawType();
-			} else if (genericClass instanceof GenericArrayType) { // ´¦ÀíÊı×é·ºĞÍ
+			} else if (genericClass instanceof GenericArrayType) { // å¤„ç†æ•°ç»„æ³›å‹
 				return (Class<?>) ((GenericArrayType) genericClass)
 						.getGenericComponentType();
 			} else {
@@ -943,15 +943,15 @@ public class ReflectUtils {
 	}
 
 	/**
-	 * ¼ì²é¶ÔÏóÊÇ·ñÊÇÖ¸¶¨½Ó¿ÚµÄÊµÏÖ¡£
+	 * æ£€æŸ¥å¯¹è±¡æ˜¯å¦æ˜¯æŒ‡å®šæ¥å£çš„å®ç°ã€‚
 	 * <p>
-	 * ²»»á´¥·¢µ½Ö¸¶¨½Ó¿ÚµÄ{@link Class}£¬ËùÒÔÈç¹ûClassLoaderÖĞÃ»ÓĞÖ¸¶¨½Ó¿ÚÀàÊ±£¬Ò²²»»á³ö´í¡£
+	 * ä¸ä¼šè§¦å‘åˆ°æŒ‡å®šæ¥å£çš„{@link Class}ï¼Œæ‰€ä»¥å¦‚æœClassLoaderä¸­æ²¡æœ‰æŒ‡å®šæ¥å£ç±»æ—¶ï¼Œä¹Ÿä¸ä¼šå‡ºé”™ã€‚
 	 * 
 	 * @param obj
-	 *            Òª¼ì²éµÄ¶ÔÏó
+	 *            è¦æ£€æŸ¥çš„å¯¹è±¡
 	 * @param interfaceClazzName
-	 *            Ö¸¶¨µÄ½Ó¿ÚÃû
-	 * @return ·µ»Ø{@code true}£¬Èç¹û¶ÔÏóÊµÏÖÁËÖ¸¶¨½Ó¿Ú£»·ñÔò·µ»Ø{@code false}¡£
+	 *            æŒ‡å®šçš„æ¥å£å
+	 * @return è¿”å›{@code true}ï¼Œå¦‚æœå¯¹è±¡å®ç°äº†æŒ‡å®šæ¥å£ï¼›å¦åˆ™è¿”å›{@code false}ã€‚
 	 */
 	public static boolean isInstance(Object obj, String interfaceClazzName) {
 		for (Class<?> clazz = obj.getClass(); clazz != null

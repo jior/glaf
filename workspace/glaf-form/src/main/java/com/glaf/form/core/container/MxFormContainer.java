@@ -42,7 +42,7 @@ public class MxFormContainer {
 	}
 
 	/**
-	 * ɾ������ʵ������
+	 * 删除表单实例数据
 	 * 
 	 */
 	public void deleteDataModel(String appId, Collection<String> businessKeys) {
@@ -50,7 +50,7 @@ public class MxFormContainer {
 	}
 
 	/**
-	 * ���ݱ���ʵ����Ż�ȡ����ʵ������
+	 * 根据表单实例编号获取表单实例数据
 	 * 
 	 * @param appId
 	 * @param id
@@ -61,7 +61,7 @@ public class MxFormContainer {
 	}
 
 	/**
-	 * ���ݱ���ʵ����Ż�ȡ����ʵ������
+	 * 根据表单实例编号获取表单实例数据
 	 * 
 	 * @param app_name
 	 * @param id
@@ -74,7 +74,7 @@ public class MxFormContainer {
 	}
 
 	/**
-	 * ���ݱ���ʵ����Ż�ȡ����ʵ������
+	 * 根据表单实例编号获取表单实例数据
 	 * 
 	 * @param appId
 	 * @param businessKey
@@ -85,12 +85,12 @@ public class MxFormContainer {
 	}
 
 	/**
-	 * ���ݲ�����ȡʵ�������б�
+	 * 根据参数获取实例数据列表
 	 * 
 	 * @param appId
-	 *            Ӧ�ñ��
+	 *            应用编号
 	 * @param query
-	 *            ��ѯ������
+	 *            查询上下文
 	 * @return
 	 */
 	public Paging getPageDataModel(String appId, DataModelQuery query) {
@@ -98,12 +98,12 @@ public class MxFormContainer {
 	}
 
 	/**
-	 * �������ʵ������<br>
-	 * ��Ҫ���������ݱ�������ʹӿͻ��˻�ȡ���û��������ݽ���������װ���γɱ�������ʵ�������ݱ���ʵ����Ϣ����������ݡ�<br>
-	 * �ڴ������ݹ�����Ϊ�˱������ݴ�������Ĵ����������ݶ�ʧ���������Ҫ���ӿͻ����������Ϣ���浽�ļ�ϵͳ���Ա��պ�ʹ�á�
+	 * 保存表单实例数据<br>
+	 * 主要操作：根据表单定义和从客户端获取的用户输入数据进行数据组装，形成表单数据实例，根据表单实例信息保存表单数据。<br>
+	 * 在处理数据过程中为了避免数据处理程序的错误引起数据丢失的情况，需要将从客户端输入的信息保存到文件系统中以便日后使用。
 	 * 
 	 * @param appId
-	 *            Ӧ�ñ��
+	 *            应用编号
 	 * @param formContext
 	 */
 	public void saveDataModel(String appId, FormContext formContext) {
@@ -111,12 +111,12 @@ public class MxFormContainer {
 	}
 
 	/**
-	 * �������ʵ������<br>
-	 * ��Ҫ���������ݱ�������ʹӿͻ��˻�ȡ���û��������ݽ���������װ���γɱ�������ʵ�������ݱ���ʵ����Ϣ����������ݡ�<br>
-	 * �ڴ������ݹ�����Ϊ�˱������ݴ�������Ĵ����������ݶ�ʧ���������Ҫ���ӿͻ����������Ϣ���浽�ļ�ϵͳ���Ա��պ�ʹ�á�
+	 * 保存表单实例数据<br>
+	 * 主要操作：根据表单定义和从客户端获取的用户输入数据进行数据组装，形成表单数据实例，根据表单实例信息保存表单数据。<br>
+	 * 在处理数据过程中为了避免数据处理程序的错误引起数据丢失的情况，需要将从客户端输入的信息保存到文件系统中以便日后使用。
 	 * 
 	 * @param appId
-	 *            Ӧ�ñ��
+	 *            应用编号
 	 * @param formContext
 	 */
 	public void updateDataModel(String appId, FormContext formContext) {

@@ -43,18 +43,18 @@ public class SummationLineChartGen implements ChartGen {
 	public static void main(String[] paramArrayOfString) {
 		SummationLineChartGen chartDemo = new SummationLineChartGen();
 		Chart chartModel = new Chart();
-		chartModel.setChartFont("ËÎÌå");
+		chartModel.setChartFont("å®‹ä½“");
 		chartModel.setChartFontSize(25);
 		chartModel.setChartHeight(800);
 		chartModel.setChartWidth(1800);
-		chartModel.setChartTitleFont("ËÎÌå");
+		chartModel.setChartTitleFont("å®‹ä½“");
 		chartModel.setChartTitleFontSize(72);
-		chartModel.setChartTitle("Éú²úÏÂÏßÇ÷ÊÆÍ¼");
+		chartModel.setChartTitle("ç”Ÿäº§ä¸‹çº¿è¶‹åŠ¿å›¾");
 		chartModel.setImageType("png");
 		chartModel.setChartName("line");
 		chartModel.setChartType("line");
-		chartModel.setCoordinateX("ÈÕÆÚ");
-		chartModel.setCoordinateY("Á¿²ú");
+		chartModel.setCoordinateX("æ—¥æœŸ");
+		chartModel.setCoordinateY("é‡äº§");
 		java.util.Random rand = new java.util.Random();
 
 		for (int i = 1; i <= 30; i++) {
@@ -145,7 +145,7 @@ public class SummationLineChartGen implements ChartGen {
 		localLineAndShapeRenderer.setBaseShapesVisible(true);
 		localLineAndShapeRenderer.setDrawOutlines(true);
 		localLineAndShapeRenderer.setUseFillPaint(true);
-		localLineAndShapeRenderer.setBaseItemLabelsVisible(true);// ÏÔÊ¾ÊıÖµ
+		localLineAndShapeRenderer.setBaseItemLabelsVisible(true);// æ˜¾ç¤ºæ•°å€¼
 		localLineAndShapeRenderer.setBaseFillPaint(Color.white);
 
 		Color[] color = new Color[8];

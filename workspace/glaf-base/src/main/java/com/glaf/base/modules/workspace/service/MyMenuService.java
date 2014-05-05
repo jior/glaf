@@ -31,7 +31,7 @@ import com.glaf.core.util.PageResult;
 public interface MyMenuService {
 
 	/**
-	 * ±£´æĞÂÔöĞÅÏ¢
+	 * ä¿å­˜æ–°å¢ä¿¡æ¯
 	 * 
 	 * @param myMenu
 	 * @return
@@ -40,7 +40,7 @@ public interface MyMenuService {
 	boolean create(MyMenu bean);
 
 	/**
-	 * µ¥ÏîÉ¾³ı
+	 * å•é¡¹åˆ é™¤
 	 * 
 	 * @param id
 	 *            int
@@ -50,7 +50,7 @@ public interface MyMenuService {
 	boolean delete(long id);
 
 	/**
-	 * µ¥ÏîÉ¾³ı
+	 * å•é¡¹åˆ é™¤
 	 * 
 	 * @param myMenu
 	 * @return
@@ -59,7 +59,7 @@ public interface MyMenuService {
 	boolean delete(MyMenu myMenu);
 
 	/**
-	 * ÅúÁ¿É¾³ı
+	 * æ‰¹é‡åˆ é™¤
 	 * 
 	 * @param c
 	 * @return
@@ -68,7 +68,7 @@ public interface MyMenuService {
 	boolean deleteAll(Collection c);
 
 	/**
-	 * »ñÈ¡¶ÔÏó
+	 * è·å–å¯¹è±¡
 	 * 
 	 * @param id
 	 * @return
@@ -76,7 +76,7 @@ public interface MyMenuService {
 	MyMenu find(long id);
 
 	/**
-	 * »ñÈ¡ÁĞ±í(°´ĞòÁĞºÅ¡¢±àºÅÅÅĞò)
+	 * è·å–åˆ—è¡¨(æŒ‰åºåˆ—å·ã€ç¼–å·æ’åº)
 	 * 
 	 * @param userId
 	 * @return
@@ -84,7 +84,7 @@ public interface MyMenuService {
 	List<MyMenu> getMyMenuList(long userId);
 
 	/**
-	 * »ñÈ¡ÁĞ±í(°´ĞòÁĞºÅ¡¢±àºÅÅÅĞò)
+	 * è·å–åˆ—è¡¨(æŒ‰åºåˆ—å·ã€ç¼–å·æ’åº)
 	 * 
 	 * @param userId
 	 * @param pageNo
@@ -94,18 +94,18 @@ public interface MyMenuService {
 	PageResult getMyMenuList(long userId, int pageNo, int pageSize);
 
 	/**
-	 * ÅÅĞò
+	 * æ’åº
 	 * 
 	 * @param bean
 	 *            MyMenu
 	 * @param operate
-	 *            int ²Ù×÷
+	 *            int æ“ä½œ
 	 */
 	@Transactional
 	void sort(MyMenu bean, int operate);
 
 	/**
-	 * ¸üĞÂĞÅÏ¢
+	 * æ›´æ–°ä¿¡æ¯
 	 * 
 	 * @param myMenu
 	 * @return

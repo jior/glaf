@@ -29,7 +29,7 @@ import com.glaf.core.query.*;
 public interface ITableDefinitionService {
 
 	/**
-	 * É¾³ıÁĞ¶¨Òå
+	 * åˆ é™¤åˆ—å®šä¹‰
 	 * 
 	 * @param columnId
 	 */
@@ -37,7 +37,7 @@ public interface ITableDefinitionService {
 	void deleteColumn(String columnId);
 
 	/**
-	 * É¾³ı±í¶¨Òå¼°¹ÜÀí²éÑ¯
+	 * åˆ é™¤è¡¨å®šä¹‰åŠç®¡ç†æŸ¥è¯¢
 	 * 
 	 * @param tableName
 	 */
@@ -52,7 +52,7 @@ public interface ITableDefinitionService {
 	ColumnDefinition getColumnDefinition(String columnId);
 
 	/**
-	 * ¸ù¾İ±íÃû»ñÈ¡±í¶ÔÏó
+	 * æ ¹æ®è¡¨åè·å–è¡¨å¯¹è±¡
 	 * 
 	 * @return
 	 */
@@ -63,14 +63,14 @@ public interface ITableDefinitionService {
 	List<ColumnDefinition> getColumnDefinitionsByTargetId(String targetId);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
 	int getTableDefinitionCountByQueryCriteria(TableDefinitionQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */
@@ -78,7 +78,7 @@ public interface ITableDefinitionService {
 			int pageSize, TableDefinitionQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼ÁĞ±í
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•åˆ—è¡¨
 	 * 
 	 * @return
 	 */
@@ -87,7 +87,7 @@ public interface ITableDefinitionService {
 	List<TableDefinition> getTableColumnsCount(TableDefinitionQuery query);
 
 	/**
-	 * ±£´æ±í¶¨ÒåĞÅÏ¢
+	 * ä¿å­˜è¡¨å®šä¹‰ä¿¡æ¯
 	 * 
 	 * @return
 	 */
@@ -95,7 +95,7 @@ public interface ITableDefinitionService {
 	void save(TableDefinition tableDefinition);
 
 	/**
-	 * ±£´æ×Ö¶ÎĞÅÏ¢
+	 * ä¿å­˜å­—æ®µä¿¡æ¯
 	 * 
 	 * @param tableName
 	 * @param columnDefinition
@@ -104,7 +104,7 @@ public interface ITableDefinitionService {
 	void saveColumn(String tableName, ColumnDefinition columnDefinition);
 	
 	/**
-	 * ±£´æÁĞ¶¨ÒåĞÅÏ¢
+	 * ä¿å­˜åˆ—å®šä¹‰ä¿¡æ¯
 	 * @param targetId
 	 * @param columnDefinitions
 	 */
@@ -112,7 +112,7 @@ public interface ITableDefinitionService {
 	void saveColumns(String targetId, List<ColumnDefinition> columnDefinitions);
 
 	/**
-	 * ±£´æ¶¨Òå
+	 * ä¿å­˜å®šä¹‰
 	 * 
 	 * @param tableName
 	 * @param rows

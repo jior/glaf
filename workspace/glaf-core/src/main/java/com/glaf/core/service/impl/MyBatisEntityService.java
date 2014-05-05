@@ -66,7 +66,7 @@ public class MyBatisEntityService implements EntityService {
 	}
 
 	/**
-	 * ²éÑ¯
+	 * æŸ¥è¯¢
 	 * 
 	 * @param queryId
 	 * @param params

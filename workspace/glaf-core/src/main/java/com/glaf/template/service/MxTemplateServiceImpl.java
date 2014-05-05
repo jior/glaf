@@ -138,7 +138,7 @@ public class MxTemplateServiceImpl implements ITemplateService {
 				template.setData(blobData.getData());
 				logger.debug("blobData:" + blobData.getFilename());
 				/**
-				 * µ±ÎÄ¼þÀàÐÍÊÇÎÄ±¾²¢ÇÒÐ¡ÓÚ512KÊÇ²ÅÌí¼Óµ½»º´æ
+				 * å½“æ–‡ä»¶ç±»åž‹æ˜¯æ–‡æœ¬å¹¶ä¸”å°äºŽ512Kæ˜¯æ‰æ·»åŠ åˆ°ç¼“å­˜
 				 */
 				if (template.getFileType() > 20 && template.getFileType() < 100) {
 					template.setContent(new String(blobData.getData()));

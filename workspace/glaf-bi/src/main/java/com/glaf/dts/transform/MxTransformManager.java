@@ -94,11 +94,11 @@ public class MxTransformManager {
 				logger.debug("####parentId:" + query.getParentId());
 				if (query.getParentId() != null) {
 					/***
-					 * Ö»ÓĞµ±¸¸²éÑ¯ÓĞ·µ»Ø½á¹û²Å½øĞĞµ±Ç°²éÑ¯
+					 * åªæœ‰å½“çˆ¶æŸ¥è¯¢æœ‰è¿”å›ç»“æœæ‰è¿›è¡Œå½“å‰æŸ¥è¯¢
 					 */
 					if (resultList != null && !resultList.isEmpty()) {
 						/**
-						 * Èç¹ûÓĞ¸¸½Úµã£¬½«¸¸½ÚµãµÄ½á¹û×÷Îªµ±Ç°½ÚµãµÄ²ÎÊıÖ´ĞĞ²éÑ¯
+						 * å¦‚æœæœ‰çˆ¶èŠ‚ç‚¹ï¼Œå°†çˆ¶èŠ‚ç‚¹çš„ç»“æœä½œä¸ºå½“å‰èŠ‚ç‚¹çš„å‚æ•°æ‰§è¡ŒæŸ¥è¯¢
 						 */
 						logger.debug("###########get result list###########");
 
@@ -110,7 +110,7 @@ public class MxTransformManager {
 					}
 				} else {
 					/**
-					 * Èç¹ûÃ»ÓĞ¸¸½Úµã£¬ËµÃ÷ÒÑ¾­ÊÇ¸ù½Úµã£¬¿ÉÒÔÖ±½Óµ÷ÓÃ½á¹û×÷Îª·µ»ØÖµ
+					 * å¦‚æœæ²¡æœ‰çˆ¶èŠ‚ç‚¹ï¼Œè¯´æ˜å·²ç»æ˜¯æ ¹èŠ‚ç‚¹ï¼Œå¯ä»¥ç›´æ¥è°ƒç”¨ç»“æœä½œä¸ºè¿”å›å€¼
 					 */
 					logger.debug("--------get result list---------");
 					resultList = this.prepare(query);
@@ -398,24 +398,24 @@ public class MxTransformManager {
 	}
 
 	/**
-	 * ´«µİÊı¾İ
+	 * ä¼ é€’æ•°æ®
 	 * 
 	 * @param query
-	 *            ²éÑ¯
+	 *            æŸ¥è¯¢
 	 * @param target
-	 *            Ä¿±ê±í(Êı¾İ²Ö¿âÖĞµÄÊÂÊµ±í)
+	 *            ç›®æ ‡è¡¨(æ•°æ®ä»“åº“ä¸­çš„äº‹å®è¡¨)
 	 */
 	public void transform(QueryDefinition query, TableDefinition target) {
 		this.transformInner(query, target);
 	}
 
 	/**
-	 * ´«µİÊı¾İ
+	 * ä¼ é€’æ•°æ®
 	 * 
 	 * @param queryId
-	 *            ²éÑ¯±àºÅ
+	 *            æŸ¥è¯¢ç¼–å·
 	 * @param targetTable
-	 *            Ä¿±ê±í(Êı¾İ²Ö¿âÖĞµÄÊÂÊµ±í)
+	 *            ç›®æ ‡è¡¨(æ•°æ®ä»“åº“ä¸­çš„äº‹å®è¡¨)
 	 */
 	public void transform(String queryId, String targetTable) {
 		TableDefinition target = tableDefinitionService
@@ -426,12 +426,12 @@ public class MxTransformManager {
 	}
 
 	/**
-	 * ´«µİÊı¾İ
+	 * ä¼ é€’æ•°æ®
 	 * 
 	 * @param query
-	 *            ²éÑ¯
+	 *            æŸ¥è¯¢
 	 * @param target
-	 *            Ä¿±ê±í(Êı¾İ²Ö¿âÖĞµÄÊÂÊµ±í)
+	 *            ç›®æ ‡è¡¨(æ•°æ®ä»“åº“ä¸­çš„äº‹å®è¡¨)
 	 */
 	protected void transformInner(QueryDefinition query, TableDefinition target) {
 		query = this.fill(query.getId(), null);
@@ -471,7 +471,7 @@ public class MxTransformManager {
 				task.setStatus(0);
 				task.setQueryId(query.getId());
 				task.setTableName(query.getTargetTableName());
-				task.setTitle(query.getTitle() + " ÈÎÎñ " + execution);
+				task.setTitle(query.getTitle() + " ä»»åŠ¡ " + execution);
 				task.setSortNo(execution);
 				JsonFactory f = new JsonFactory();
 				ObjectMapper mapper = new ObjectMapper(f);
@@ -495,12 +495,12 @@ public class MxTransformManager {
 	}
 
 	/**
-	 * ´«µİÊı¾İ
+	 * ä¼ é€’æ•°æ®
 	 * 
 	 * @param query
-	 *            ²éÑ¯
+	 *            æŸ¥è¯¢
 	 * @param target
-	 *            Ä¿±ê±í(Êı¾İ²Ö¿âÖĞµÄÊÂÊµ±í)
+	 *            ç›®æ ‡è¡¨(æ•°æ®ä»“åº“ä¸­çš„äº‹å®è¡¨)
 	 */
 	protected void transformSingle(QueryDefinition query,
 			TableDefinition target, Map<String, Object> paramMap) {
@@ -514,7 +514,7 @@ public class MxTransformManager {
 		task.setId(taskId);
 		task.setStatus(0);
 		task.setQueryId(query.getId());
-		task.setTitle(query.getTitle() + " ÈÎÎñ ");
+		task.setTitle(query.getTitle() + " ä»»åŠ¡ ");
 		task.setSortNo(0);
 		JsonFactory f = new JsonFactory();
 		ObjectMapper mapper = new ObjectMapper(f);
@@ -538,7 +538,7 @@ public class MxTransformManager {
 	}
 
 	/**
-	 * ½«Ä³¸ö±íµÄÈ«²¿²éÑ¯³éÈ¡Êı¾İµ½¸Ã±í
+	 * å°†æŸä¸ªè¡¨çš„å…¨éƒ¨æŸ¥è¯¢æŠ½å–æ•°æ®åˆ°è¯¥è¡¨
 	 * 
 	 * @param tableName
 	 */
@@ -556,7 +556,7 @@ public class MxTransformManager {
 			}
 
 			/**
-			 * Èç¹û±í¶¨ÒåÖĞÖ¸¶¨ÁË³éÈ¡Ä³Ğ©²éÑ¯£¬¾Í³éÈ¡¹ØÁª²éÑ¯µÄÊı¾İµ½Ä¿±ê±í
+			 * å¦‚æœè¡¨å®šä¹‰ä¸­æŒ‡å®šäº†æŠ½å–æŸäº›æŸ¥è¯¢ï¼Œå°±æŠ½å–å…³è”æŸ¥è¯¢çš„æ•°æ®åˆ°ç›®æ ‡è¡¨
 			 */
 			if (tableDefinition != null
 					&& StringUtils.isNotEmpty(tableDefinition

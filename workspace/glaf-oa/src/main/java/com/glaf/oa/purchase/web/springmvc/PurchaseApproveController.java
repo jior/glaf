@@ -87,7 +87,7 @@ public class PurchaseApproveController {
 	}
 
 	/**
-	 * ÉóºË¶¯×÷
+	 * å®¡æ ¸åŠ¨ä½œ
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -98,7 +98,7 @@ public class PurchaseApproveController {
 			ModelMap modelMap) {
 		try {
 			String purchaseIds = request.getParameter("purchaseIds");
-			if (StringUtils.isNotEmpty(purchaseIds)) {// purchaseids²»ÎªnullÊ±
+			if (StringUtils.isNotEmpty(purchaseIds)) {// purchaseidsä¸ä¸ºnullæ—¶
 				StringTokenizer token = new StringTokenizer(purchaseIds, ",");
 				while (token.hasMoreTokens()) {
 					String x = token.nextToken();
@@ -123,18 +123,18 @@ public class PurchaseApproveController {
 			ex.printStackTrace();
 			logger.error(ex);
 			ModelAndView mav = new ModelAndView();
-			mav.addObject("message", "ÉóºËÒì³£¡£");
+			mav.addObject("message", "å®¡æ ¸å¼‚å¸¸ã€‚");
 			return mav;
 		}
 		return null;
 	}
 
 	/**
-	 * ¹¤×÷Á÷ÉóÅú
+	 * å·¥ä½œæµå®¡æ‰¹
 	 * 
 	 * @param purchase
 	 * @param flag
-	 *            0Í¬Òâ 1²»Í¬Òâ
+	 *            0åŒæ„ 1ä¸åŒæ„
 	 * @param request
 	 * @return
 	 */
@@ -144,34 +144,34 @@ public class PurchaseApproveController {
 		String actorId = user.getActorId();
 		String processName = "PurchaseProcess";
 
-		// »ñÈ¡µÇÂ¼ÓÃ»§²¿ÃÅ
+		// è·å–ç™»å½•ç”¨æˆ·éƒ¨é—¨
 		long deptId01 = user.getDeptId();
-		// ¸ù¾İÓÃ»§²¿ÃÅid »ñÈ¡Õû¸ö²¿ÃÅµÄ¶ÔÏó£¨GZ01£©
+		// æ ¹æ®ç”¨æˆ·éƒ¨é—¨id è·å–æ•´ä¸ªéƒ¨é—¨çš„å¯¹è±¡ï¼ˆGZ01ï¼‰
 		SysDepartment curdept = sysDepartmentService.findById(deptId01);
 
-		// ¸ù¾İ²¿ÃÅCODE(ÀıÈçGZ01)½ØÈ¡Ç°2Î» ×÷ÎªµØÇø
+		// æ ¹æ®éƒ¨é—¨CODE(ä¾‹å¦‚GZ01)æˆªå–å‰2ä½ ä½œä¸ºåœ°åŒº
 		String curAreadeptCode = curdept.getCode().substring(0, 2);
-		// ¸ù¾İcode »ñÈ¡ µØÇø²¿ÃÅ¶ÔÏó£¨GZ06£©ĞĞÕş
+		// æ ¹æ®code è·å– åœ°åŒºéƒ¨é—¨å¯¹è±¡ï¼ˆGZ06ï¼‰è¡Œæ”¿
 		SysDepartment HRdept = sysDepartmentService.findByCode(curAreadeptCode
 				+ "06");
-		// ¸ù¾İcode »ñÈ¡ µØÇø²¿ÃÅ¶ÔÏó£¨GZ£©
+		// æ ¹æ®code è·å– åœ°åŒºéƒ¨é—¨å¯¹è±¡ï¼ˆGZï¼‰
 		SysDepartment curAreadept = sysDepartmentService
 				.findByCode(curAreadeptCode);
 
-		// »ñÈ¡¼¯ÍÅ²¿ÃÅ¶ÔÏó£¨JT£©
+		// è·å–é›†å›¢éƒ¨é—¨å¯¹è±¡ï¼ˆJTï¼‰
 		SysDepartment sysdeptMem = sysDepartmentService.findByCode("JT");
 
 		ProcessContext ctx = new ProcessContext();
-		ctx.setRowId(purchase.getPurchaseid());// ±íid
-		ctx.setActorId(actorId);// ÓÃ»§ÉóÅúÕß
-		ctx.setProcessName(processName);// Á÷³ÌÃû³Æ
+		ctx.setRowId(purchase.getPurchaseid());// è¡¨id
+		ctx.setActorId(actorId);// ç”¨æˆ·å®¡æ‰¹è€…
+		ctx.setProcessName(processName);// æµç¨‹åç§°
 		String opinion = request.getParameter("approveOpinion");
-		ctx.setOpinion(opinion);// ÉóÅúÒâ¼û
+		ctx.setOpinion(opinion);// å®¡æ‰¹æ„è§
 
-		Collection<DataField> dataFields = new ArrayList<DataField>();// ²ÎÊı
+		Collection<DataField> dataFields = new ArrayList<DataField>();// å‚æ•°
 
 		DataField dataField = new DataField();
-		dataField.setName("isAgree");// ÊÇ·ñÍ¨¹ıÉóÅú
+		dataField.setName("isAgree");// æ˜¯å¦é€šè¿‡å®¡æ‰¹
 		if (flag == 0) {
 			dataField.setValue("true");
 		} else {
@@ -179,25 +179,25 @@ public class PurchaseApproveController {
 		}
 		dataFields.add(dataField);
 
-		// ÓÃ»§ÏúÊÛ²¿ÃÅ£¨ÈçGZ01£©
+		// ç”¨æˆ·é”€å”®éƒ¨é—¨ï¼ˆå¦‚GZ01ï¼‰
 		DataField datafield1 = new DataField();
 		datafield1.setName("deptId01");
 		datafield1.setValue(user.getDeptId());
 		dataFields.add(datafield1);
 
-		// ÓÃ»§µØÇø²¿ÃÅ£¨ÈçGZ06£©ĞĞÕş²¿ÃÅ
+		// ç”¨æˆ·åœ°åŒºéƒ¨é—¨ï¼ˆå¦‚GZ06ï¼‰è¡Œæ”¿éƒ¨é—¨
 		DataField datafield4 = new DataField();
 		datafield4.setName("deptId02");
 		datafield4.setValue(HRdept.getId());
 		dataFields.add(datafield4);
 
-		// ÓÃ»§µØÇø²¿ÃÅ£¨ÈçGZ£©
+		// ç”¨æˆ·åœ°åŒºéƒ¨é—¨ï¼ˆå¦‚GZï¼‰
 		DataField datafield5 = new DataField();
 		datafield5.setName("deptId03");
 		datafield5.setValue(curAreadept.getId());
 		dataFields.add(datafield5);
 
-		// ¼¯ÍÅ(JT)
+		// é›†å›¢(JT)
 		DataField datafield2 = new DataField();
 		datafield2.setName("deptId04");
 		datafield2.setValue(sysdeptMem.getId());
@@ -239,10 +239,10 @@ public class PurchaseApproveController {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		PurchaseQuery query = new PurchaseQuery();
 		Tools.populate(query, params);
-		query.setActorId(loginContext.getActorId());// Ö»ÄÜ²éÕÒ×Ô¼º
+		query.setActorId(loginContext.getActorId());// åªèƒ½æŸ¥æ‰¾è‡ªå·±
 		query.setLoginContext(loginContext);
 		/**
-		 * ²éÑ¯Ìõ¼ş
+		 * æŸ¥è¯¢æ¡ä»¶
 		 */
 		query.setPurchasenoLike(ParamUtils.getString(params, "purchaseNoLike"));
 		query.setAppuser(ParamUtils.getString(params, "appuser"));
@@ -254,7 +254,7 @@ public class PurchaseApproveController {
 		query.setArea(ParamUtils.getString(params, "area"));
 		query.setCompany(ParamUtils.getString(params, "company"));
 		query.setDept(ParamUtils.getString(params, "dept"));
-		// ²éÑ¯status 0ÎªÈ«²¿ 1ÎªÎ´ÉóÅú 2ÎªÒÑÉóÅú Ä¬ÈÏÏÔÊ¾Î´ÉóÅúµÄµ¥
+		// æŸ¥è¯¢status 0ä¸ºå…¨éƒ¨ 1ä¸ºæœªå®¡æ‰¹ 2ä¸ºå·²å®¡æ‰¹ é»˜è®¤æ˜¾ç¤ºæœªå®¡æ‰¹çš„å•
 		query.setStatus(ParamUtils.getIntValue(params, "status"));
 		if (StringUtils.isEmpty(request.getParameter("status"))) {
 			query.setStatus(1);

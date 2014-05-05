@@ -30,22 +30,22 @@ import com.glaf.mail.query.MailItemQuery;
 public interface MailDataFacede {
 
 	/**
-	 * Ìí¼Ó´æ´¢ÓÊ¼şĞÅÏ¢µÄÊı¾İ±í
+	 * æ·»åŠ å­˜å‚¨é‚®ä»¶ä¿¡æ¯çš„æ•°æ®è¡¨
 	 * 
 	 * @param dataTable
-	 *            ±íÃû³Æ
+	 *            è¡¨åç§°
 	 * @param storage
-	 *            ´æ´¢ÀàĞÍ
+	 *            å­˜å‚¨ç±»å‹
 	 */
 	void addDataTable(String dataTable, MailStorage strorage);
 
 	/**
-	 * Ö´ĞĞÍ³¼Æ
+	 * æ‰§è¡Œç»Ÿè®¡
 	 */
 	void executeCount();
 
 	/**
-	 * »ñÈ¡ÓÊ¼şÕÊ»§½ÓÊÕ×´¿ö»ã×Ü
+	 * è·å–é‚®ä»¶å¸æˆ·æ¥æ”¶çŠ¶å†µæ±‡æ€»
 	 * 
 	 * @param query
 	 * @return
@@ -53,7 +53,7 @@ public interface MailDataFacede {
 	List<MailCount> getMailAccountReceiveStatusCount(MailItemQuery query);
 
 	/**
-	 * »ñÈ¡ÓÊ¼şÕÊ»§·¢ËÍ×´¿ö»ã×Ü
+	 * è·å–é‚®ä»¶å¸æˆ·å‘é€çŠ¶å†µæ±‡æ€»
 	 * 
 	 * @param query
 	 * @return
@@ -61,7 +61,7 @@ public interface MailDataFacede {
 	List<MailCount> getMailAccountSendStatusCount(MailItemQuery query);
 
 	/**
-	 * ¸ù¾İÌõ¼ş»ñÈ¡ÓÊ¼ş×ÜÊı
+	 * æ ¹æ®æ¡ä»¶è·å–é‚®ä»¶æ€»æ•°
 	 * 
 	 * @param query
 	 * @return
@@ -69,7 +69,7 @@ public interface MailDataFacede {
 	int getMailCount(MailItemQuery query);
 
 	/**
-	 * »ñÈ¡ÓÊ¼şĞÅÏ¢
+	 * è·å–é‚®ä»¶ä¿¡æ¯
 	 * 
 	 * @param taskId
 	 * @param itemId
@@ -78,7 +78,7 @@ public interface MailDataFacede {
 	MailItem getMailItem(String taskId, String itemId);
 
 	/**
-	 * »ñÈ¡Ä³¸öÈÎÎñµÄÓÊ¼şÁĞ±í
+	 * è·å–æŸä¸ªä»»åŠ¡çš„é‚®ä»¶åˆ—è¡¨
 	 * 
 	 * @param query
 	 * @return
@@ -86,7 +86,7 @@ public interface MailDataFacede {
 	List<MailItem> getMailItems(MailItemQuery query);
 
 	/**
-	 * »ñÈ¡ÓÊ¼ş½ÓÊÕ×´¿ö»ã×Ü
+	 * è·å–é‚®ä»¶æ¥æ”¶çŠ¶å†µæ±‡æ€»
 	 * 
 	 * @param query
 	 * @return
@@ -94,7 +94,7 @@ public interface MailDataFacede {
 	List<MailCount> getMailReceiveStatusCount(MailItemQuery query);
 
 	/**
-	 * »ñÈ¡ÓÊ¼ş·¢ËÍ×´¿ö»ã×Ü
+	 * è·å–é‚®ä»¶å‘é€çŠ¶å†µæ±‡æ€»
 	 * 
 	 * @param query
 	 * @return
@@ -102,7 +102,7 @@ public interface MailDataFacede {
 	List<MailCount> getMailSendStatusCount(MailItemQuery query);
 
 	/**
-	 * ±£´æÄ³¸öÈÎÎñµÄÓÊ¼ş
+	 * ä¿å­˜æŸä¸ªä»»åŠ¡çš„é‚®ä»¶
 	 * 
 	 * @param taskId
 	 * @param mailAddresses
@@ -111,24 +111,24 @@ public interface MailDataFacede {
 	void saveMails(String taskId, List<String> mailAddresses);
 
 	/**
-	 * ½«ËùÓĞÈÎÎñ¼Óµ½µ÷¶È
+	 * å°†æ‰€æœ‰ä»»åŠ¡åŠ åˆ°è°ƒåº¦
 	 */
 	void scheduleAllTasks();
 
 	/**
-	 * ½«ËùÓĞÈÎÎñµÄÖ¸¶¨´ı·¢ËÍÓÊ¼ş¼ÇÂ¼¼Óµ½µ÷¶È
+	 * å°†æ‰€æœ‰ä»»åŠ¡çš„æŒ‡å®šå¾…å‘é€é‚®ä»¶è®°å½•åŠ åˆ°è°ƒåº¦
 	 */
 	void scheduleMailItems();
 
 	/**
-	 * ·¢ËÍÓÊ¼ş
+	 * å‘é€é‚®ä»¶
 	 * 
 	 * @param taskId
 	 */
 	void sendTaskMails(String taskId);
 
 	/**
-	 * ·¢ËÍÓÊ¼ş
+	 * å‘é€é‚®ä»¶
 	 * 
 	 * @param taskId
 	 * @param itemId
@@ -136,7 +136,7 @@ public interface MailDataFacede {
 	void sendMail(String taskId, String itemId);
 
 	/**
-	 * ¸üĞÂÓÊ¼şĞÅÏ¢
+	 * æ›´æ–°é‚®ä»¶ä¿¡æ¯
 	 * 
 	 * @param taskId
 	 * @param item

@@ -48,7 +48,7 @@ public class IdentityFactory {
 			.getLog(IdentityFactory.class);
 
 	/**
-	 * ÑéÖ¤ÓÃ»§ÃûÃÜÂëÊÇ·ñÕıÈ·
+	 * éªŒè¯ç”¨æˆ·åå¯†ç æ˜¯å¦æ­£ç¡®
 	 * 
 	 * @param actorId
 	 * @param password
@@ -70,10 +70,10 @@ public class IdentityFactory {
 	}
 
 	/**
-	 * »ñÈ¡Î¯ÍĞÈË±àºÅ¼¯ºÏ
+	 * è·å–å§”æ‰˜äººç¼–å·é›†åˆ
 	 * 
 	 * @param assignTo
-	 *            ÊÜÍĞÈË±àºÅ
+	 *            å—æ‰˜äººç¼–å·
 	 * @return
 	 */
 	public static List<String> getAgentIds(String assignTo) {
@@ -87,7 +87,7 @@ public class IdentityFactory {
 						continue;
 					}
 					switch (agent.getAgentType()) {
-					case 0:// È«¾Ö´úÀí
+					case 0:// å…¨å±€ä»£ç†
 						agentIds.add(agent.getAssignFrom());
 						break;
 					default:
@@ -100,10 +100,10 @@ public class IdentityFactory {
 	}
 
 	/**
-	 * »ñÈ¡Î¯ÍĞÈË¶ÔÏó¼¯ºÏ
+	 * è·å–å§”æ‰˜äººå¯¹è±¡é›†åˆ
 	 * 
 	 * @param assignTo
-	 *            ÊÜÍĞÈË±àºÅ
+	 *            å—æ‰˜äººç¼–å·
 	 * @return
 	 */
 	public static List<Agent> getAgents(String assignTo) {
@@ -117,7 +117,7 @@ public class IdentityFactory {
 						continue;
 					}
 					switch (agent.getAgentType()) {
-					case 0:// È«¾Ö´úÀí
+					case 0:// å…¨å±€ä»£ç†
 						agents.add(agent);
 						break;
 					default:
@@ -150,7 +150,7 @@ public class IdentityFactory {
 	}
 
 	/**
-	 * »ñÈ¡È«²¿²¿ÃÅMap
+	 * è·å–å…¨éƒ¨éƒ¨é—¨Map
 	 * 
 	 * @return
 	 */
@@ -176,7 +176,7 @@ public class IdentityFactory {
 	}
 
 	/**
-	 * »ñÈ¡µÇÂ¼ÓÃ»§ĞÅÏ¢
+	 * è·å–ç™»å½•ç”¨æˆ·ä¿¡æ¯
 	 * 
 	 * @param actorId
 	 * @return
@@ -184,13 +184,13 @@ public class IdentityFactory {
 	public static LoginContext getLoginContext(String actorId) {
 		LoginHandler loginHandler = null;
 		/**
-		 * »ñÈ¡SpringÈİÆ÷ÖĞ¶¨ÒåµÄµÇÂ¼Handler£¬¸ÃHandler±ØĞëÊµÏÖLoginHandler½Ó¿Ú
+		 * è·å–Springå®¹å™¨ä¸­å®šä¹‰çš„ç™»å½•Handlerï¼Œè¯¥Handlerå¿…é¡»å®ç°LoginHandleræ¥å£
 		 */
 		if (ContextFactory.hasBean("loginHandler")) {
 			loginHandler = ContextFactory.getBean("loginHandler");
 			if (loginHandler != null) {
 				/**
-				 * »ñÈ¡×Ô¶¨ÒåµÄµÇÂ¼ÉÏÏÂÎÄ
+				 * è·å–è‡ªå®šä¹‰çš„ç™»å½•ä¸Šä¸‹æ–‡
 				 */
 				return loginHandler.getLoginContext(actorId);
 			}
@@ -207,7 +207,7 @@ public class IdentityFactory {
 			List<String> roles = new java.util.ArrayList<String>();
 
 			/**
-			 * »ñÈ¡±¾ÈËµÄ½ÇÉ«È¨ÏŞ
+			 * è·å–æœ¬äººçš„è§’è‰²æƒé™
 			 */
 			List<String> list = getUserRoleCodes(actorId);
 			if (list != null && !list.isEmpty()) {
@@ -215,7 +215,7 @@ public class IdentityFactory {
 			}
 
 			/**
-			 * »ñÈ¡´úÀíÈËµÄ½ÇÉ«È¨ÏŞ
+			 * è·å–ä»£ç†äººçš„è§’è‰²æƒé™
 			 */
 			List<String> agentIds = getAgentIds(actorId);
 			if (agentIds != null && !agentIds.isEmpty()) {
@@ -239,7 +239,7 @@ public class IdentityFactory {
 	}
 
 	/**
-	 * »ñÈ¡È«²¿ÓÃ»§Map
+	 * è·å–å…¨éƒ¨ç”¨æˆ·Map
 	 * 
 	 * @return
 	 */
@@ -258,7 +258,7 @@ public class IdentityFactory {
 	}
 
 	/**
-	 * »ñÈ¡È«²¿½ÇÉ«Map
+	 * è·å–å…¨éƒ¨è§’è‰²Map
 	 * 
 	 * @return
 	 */
@@ -300,7 +300,7 @@ public class IdentityFactory {
 	}
 
 	/**
-	 * ¸ù¾İÓÃ»§Ãû»ñÈ¡ÓÃ»§¶ÔÏó
+	 * æ ¹æ®ç”¨æˆ·åè·å–ç”¨æˆ·å¯¹è±¡
 	 * 
 	 * @param actorId
 	 * @return
@@ -321,7 +321,7 @@ public class IdentityFactory {
 	}
 
 	/**
-	 * ¸ù¾İÓÃ»§ID»ñÈ¡ÓÃ»§¶ÔÏó
+	 * æ ¹æ®ç”¨æˆ·IDè·å–ç”¨æˆ·å¯¹è±¡
 	 * 
 	 * @param userId
 	 * @return
@@ -343,7 +343,7 @@ public class IdentityFactory {
 	}
 
 	/**
-	 * »ñÈ¡È«²¿ÓÃ»§Map
+	 * è·å–å…¨éƒ¨ç”¨æˆ·Map
 	 * 
 	 * @return
 	 */

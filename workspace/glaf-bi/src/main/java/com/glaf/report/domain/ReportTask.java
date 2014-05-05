@@ -40,69 +40,69 @@ public class ReportTask implements Serializable {
 	protected String id;
 
 	/**
-	 * ±¨±í¼¯±àºÅ
+	 * æŠ¥è¡¨é›†ç¼–å·
 	 */
 	@Column(name = "REPORTIDS_", length = 500)
 	protected String reportIds;
 
 	/**
-	 * Ãû³Æ
+	 * åç§°
 	 */
 	@Column(name = "NAME_", length = 50)
 	protected String name;
 
 	/**
-	 * ±êÌâ
+	 * æ ‡é¢˜
 	 */
 	@Column(name = "SUBJECT_", length = 200)
 	protected String subject;
 
 	/**
-	 * ÓÊ¼ş½ÓÊÕÈË
+	 * é‚®ä»¶æ¥æ”¶äºº
 	 */
 	@Column(name = "MAILRECIPIENT_", length = 500)
 	protected String mailRecipient;
 
 	/**
-	 * ÊÖ»ú½ÓÊÕÈË
+	 * æ‰‹æœºæ¥æ”¶äºº
 	 */
 	@Column(name = "MOBILERECIPIENT_", length = 500)
 	protected String mobileRecipient;
 
 	/**
-	 * ·¢ËÍ±êÌâ
+	 * å‘é€æ ‡é¢˜
 	 */
 	@Column(name = "SENDTITLE_", length = 200)
 	protected String sendTitle;
 
 	/**
-	 * ·¢ËÍÄÚÈİ
+	 * å‘é€å†…å®¹
 	 */
 	@Lob
 	@Column(name = "SENDCONTENT_", length = 2000)
 	protected String sendContent;
 
 	/**
-	 * µ÷¶È±í´ïÊ½
+	 * è°ƒåº¦è¡¨è¾¾å¼
 	 */
 	@Column(name = "CRONEXPRESSION_", length = 50)
 	protected String cronExpression;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_")
 	protected Date createDate;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
 
 	/**
-	 * ÊÇ·ñÆôÓÃ
+	 * æ˜¯å¦å¯ç”¨
 	 */
 	@Column(name = "ENABLEFLAG_", length = 1)
 	protected String enableFlag;

@@ -32,7 +32,7 @@ import com.glaf.core.util.PageResult;
 public interface DictoryService {
 
 	/**
-	 * ±£´æ
+	 * ä¿å­˜
 	 * 
 	 * @param bean
 	 *            Dictory
@@ -42,7 +42,7 @@ public interface DictoryService {
 	boolean create(Dictory bean);
 
 	/**
-	 * É¾³ı
+	 * åˆ é™¤
 	 * 
 	 * @param bean
 	 *            Dictory
@@ -52,7 +52,7 @@ public interface DictoryService {
 	boolean delete(Dictory bean);
 
 	/**
-	 * É¾³ı
+	 * åˆ é™¤
 	 * 
 	 * @param id
 	 *            int
@@ -62,7 +62,7 @@ public interface DictoryService {
 	boolean delete(long id);
 
 	/**
-	 * ÅúÁ¿É¾³ı
+	 * æ‰¹é‡åˆ é™¤
 	 * 
 	 * @param ids
 	 * @return
@@ -71,7 +71,7 @@ public interface DictoryService {
 	boolean deleteAll(long[] ids);
 
 	/**
-	 * »ñÈ¡¶ÔÏó
+	 * è·å–å¯¹è±¡
 	 * 
 	 * @param id
 	 * @return
@@ -79,14 +79,14 @@ public interface DictoryService {
 	Dictory find(long id);
 
 	/**
-	 * »ñÈ¡È«²¿»ù´¡Êı¾İµÄ·ÖÀàÊ÷
+	 * è·å–å…¨éƒ¨åŸºç¡€æ•°æ®çš„åˆ†ç±»æ ‘
 	 * 
 	 * @return
 	 */
 	List<SysTree> getAllCategories();
 
 	/**
-	 * ·µ»ØÄ³·ÖÀàÏÂµÄËùÓĞ×ÖµäÁĞ±í
+	 * è¿”å›æŸåˆ†ç±»ä¸‹çš„æ‰€æœ‰å­—å…¸åˆ—è¡¨
 	 * 
 	 * @param parent
 	 * @return
@@ -94,7 +94,7 @@ public interface DictoryService {
 	List<Dictory> getAvailableDictoryList(long parent);
 	
 	/**
-	 * ·µ»ØÄ³·ÖÀàÏÂµÄËùÓĞ×ÖµäÁĞ±í
+	 * è¿”å›æŸåˆ†ç±»ä¸‹çš„æ‰€æœ‰å­—å…¸åˆ—è¡¨
 	 * 
 	 * @param nodeCode
 	 * @return
@@ -102,7 +102,7 @@ public interface DictoryService {
 	List<Dictory> getDictoryList(String nodeCode);
 
 	/**
-	 * ¸ù¾İIDÄÃcode
+	 * æ ¹æ®IDæ‹¿code
 	 * 
 	 * @param id
 	 * @return
@@ -110,14 +110,14 @@ public interface DictoryService {
 	String getCodeById(long id);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
 	int getDictoryCountByQueryCriteria(DictoryQuery query);
 
 	/**
-	 * »ñÈ¡·ÖÒ³ÁĞ±í
+	 * è·å–åˆ†é¡µåˆ—è¡¨
 	 * 
 	 * @param pageNo
 	 * @param pageSize
@@ -126,7 +126,7 @@ public interface DictoryService {
 	PageResult getDictoryList(int pageNo, int pageSize);
 
 	/**
-	 * ·µ»ØÄ³·ÖÀàÏÂµÄËùÓĞ×ÖµäÁĞ±í
+	 * è¿”å›æŸåˆ†ç±»ä¸‹çš„æ‰€æœ‰å­—å…¸åˆ—è¡¨
 	 * 
 	 * @param parent
 	 * @return
@@ -134,7 +134,7 @@ public interface DictoryService {
 	List<Dictory> getDictoryList(long parent);
 
 	/**
-	 * °´ÀàĞÍºÅËÑË÷ÁĞ±í
+	 * æŒ‰ç±»å‹å·æœç´¢åˆ—è¡¨
 	 * 
 	 * @param parent
 	 * @param pageNo
@@ -144,7 +144,7 @@ public interface DictoryService {
 	PageResult getDictoryList(long parent, int pageNo, int pageSize);
 
 	/**
-	 * Ö÷ÒªÓÃÔÚ»ñµÃºËËãÏîÄ¿µÄ¼üÖµ¶Ô
+	 * ä¸»è¦ç”¨åœ¨è·å¾—æ ¸ç®—é¡¹ç›®çš„é”®å€¼å¯¹
 	 * 
 	 * @param list
 	 * @param purchaseId
@@ -153,7 +153,7 @@ public interface DictoryService {
 	Map<String, String> getDictoryMap(List<Dictory> list, long purchaseId);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */
@@ -161,18 +161,18 @@ public interface DictoryService {
 			DictoryQuery query);
 
 	/**
-	 * ÅÅĞò
+	 * æ’åº
 	 * 
 	 * @param bean
 	 *            Dictory
 	 * @param operate
-	 *            int ²Ù×÷
+	 *            int æ“ä½œ
 	 */
 	@Transactional
 	void sort(long parent, Dictory bean, int operate);
 
 	/**
-	 * ¸üĞÂ
+	 * æ›´æ–°
 	 * 
 	 * @param bean
 	 *            Dictory

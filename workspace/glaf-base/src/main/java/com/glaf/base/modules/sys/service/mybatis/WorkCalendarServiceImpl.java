@@ -184,11 +184,11 @@ public class WorkCalendarServiceImpl implements WorkCalendarService {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(startDate);
 
-		// °´ÕÕ¼ä¸ôÌìÊı,Ñ­»·
+		// æŒ‰ç…§é—´éš”å¤©æ•°,å¾ªç¯
 		for (int i = 1; i <= interval; i++) {
 			cal.add(Calendar.DAY_OF_MONTH, 1);
 			Date nextDate = cal.getTime();
-			if (noneWorkDays.contains(nextDate)) {// ÏÂÒ»ÌìÊÇ·Ç¹¤×÷ÈÕ,ÔòÍùºóÒÆ
+			if (noneWorkDays.contains(nextDate)) {// ä¸‹ä¸€å¤©æ˜¯éå·¥ä½œæ—¥,åˆ™å¾€åç§»
 				return getWorkDate(nextDate, interval + 1 - i, noneWorkDays);
 			}
 		}
@@ -208,7 +208,7 @@ public class WorkCalendarServiceImpl implements WorkCalendarService {
 
 		List<Date> noneWorkDays = new java.util.ArrayList<Date>();
 
-		// È¡Á¬Ğø2¸öÔÂµÄ·Ç¹¤×÷ÈÕ
+		// å–è¿ç»­2ä¸ªæœˆçš„éå·¥ä½œæ—¥
 		List<Integer> list = getWorkDateList(year, month + 1);
 		if (list != null) {
 			Iterator<Integer> iter = list.iterator();

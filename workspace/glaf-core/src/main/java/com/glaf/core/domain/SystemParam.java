@@ -47,75 +47,75 @@ public class SystemParam implements Serializable, JSONable {
 	protected String id;
 
 	/**
-	 * Ä£¿é±êÊ¶ºÅ
+	 * æ¨¡å—æ ‡è¯†å·
 	 */
 	@Column(name = "service_key", length = 50, nullable = false)
 	protected String serviceKey;
 
 	/**
-	 * ÒµÎñ±êÊ¶
+	 * ä¸šåŠ¡æ ‡è¯†
 	 */
 	@Column(name = "business_key", length = 200, nullable = false)
 	protected String businessKey;
 
 	/**
-	 * Àà±ğ
+	 * ç±»åˆ«
 	 */
 	@Column(name = "type_cd", length = 20, nullable = false)
 	protected String typeCd;
 
 	/**
-	 * keyÃû³Æ
+	 * keyåç§°
 	 */
 	@Column(name = "key_name", length = 50, nullable = false)
 	protected String keyName;
 
 	/**
-	 * ±êÌâ
+	 * æ ‡é¢˜
 	 */
 	@Column(name = "title", length = 200)
 	protected String title;
 
 	/**
-	 * Êı¾İÀàĞÍ
+	 * æ•°æ®ç±»å‹
 	 */
 	@Column(name = "java_type", length = 20, nullable = false)
 	protected String javaType;
 
 	/**
-	 * ×Ö·û´®Öµ
+	 * å­—ç¬¦ä¸²å€¼
 	 */
 	@Column(name = "string_val", length = 2000)
 	protected String stringVal;
 
 	/**
-	 * ³¬³¤ÎÄ±¾Öµ
+	 * è¶…é•¿æ–‡æœ¬å€¼
 	 */
 	@Lob
 	@Column(name = "text_val")
 	protected String textVal;
 
 	/**
-	 * ÈÕÆÚÖµ
+	 * æ—¥æœŸå€¼
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "date_val")
 	protected Date dateVal;
 
 	/**
-	 * ÕûĞÍÖµ
+	 * æ•´å‹å€¼
 	 */
 	@Column(name = "int_val")
 	protected Integer intVal;
 
 	/**
-	 * ³¤ÕûĞÍÖµ
+	 * é•¿æ•´å‹å€¼
 	 */
 	@Column(name = "long_val")
 	protected Long longVal;
 
 	/**
-	 * Ë«¾«¶ÈĞÍÖµ
+	 * åŒç²¾åº¦å‹å€¼
 	 */
 	@Column(name = "double_val")
 	protected Double doubleVal;

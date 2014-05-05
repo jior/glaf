@@ -130,9 +130,9 @@ public class FileUploadServlet extends HttpServlet {
 		InputStream inputStream = null;
 		try {
 			DiskFileItemFactory diskFactory = new DiskFileItemFactory();
-			// threshold ¼«ÏŞ¡¢ÁÙ½çÖµ£¬¼´Ó²ÅÌ»º´æ 8M
+			// threshold æé™ã€ä¸´ç•Œå€¼ï¼Œå³ç¡¬ç›˜ç¼“å­˜ 8M
 			diskFactory.setSizeThreshold(8 * FileUtils.MB_SIZE);
-			// repository ÁÙÊ±ÎÄ¼şÄ¿Â¼
+			// repository ä¸´æ—¶æ–‡ä»¶ç›®å½•
 			diskFactory.setRepository(new File(rootDir + "/temp"));
 			ServletFileUpload upload = new ServletFileUpload(diskFactory);
 			int maxUploadSize = conf.getInt(serviceKey + ".maxUploadSize", 0);
@@ -154,7 +154,7 @@ public class FileUploadServlet extends HttpServlet {
 				while (iter.hasNext()) {
 					FileItemStream item = iter.next();
 					if (!item.isFormField()) {
-						// Ã¿ÌìÉÏ´«µÄÎÄ¼ş¸ù¾İÈÕÆÚ´æ·ÅÔÚ²»Í¬µÄÎÄ¼ş¼Ğ
+						// æ¯å¤©ä¸Šä¼ çš„æ–‡ä»¶æ ¹æ®æ—¥æœŸå­˜æ”¾åœ¨ä¸åŒçš„æ–‡ä»¶å¤¹
 						String autoCreatedDateDirByParttern = "yyyy/MM/dd";
 						String autoCreatedDateDir = DateFormatUtils.format(
 								new java.util.Date(),

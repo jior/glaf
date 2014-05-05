@@ -23,7 +23,7 @@ import java.io.*;
 public class SerializerUtils {
 
 	/**
-	 * ½«¶ÔÏóĞòÁĞ»¯Îª×Ö½ÚÁ÷
+	 * å°†å¯¹è±¡åºåˆ—åŒ–ä¸ºå­—èŠ‚æµ
 	 * 
 	 * @param object
 	 * @return
@@ -65,7 +65,7 @@ public class SerializerUtils {
 	}
 
 	/**
-	 * ½«×Ö½ÚÁ÷·´ĞòÁĞ»¯Îª¶ÔÏó
+	 * å°†å­—èŠ‚æµååºåˆ—åŒ–ä¸ºå¯¹è±¡
 	 * 
 	 * @param data
 	 * @return

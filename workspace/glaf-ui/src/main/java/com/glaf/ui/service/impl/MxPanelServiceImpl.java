@@ -93,7 +93,7 @@ public class MxPanelServiceImpl implements PanelService {
 	}
 
 	/**
-	 * »ñÈ¡ÓÃ»§×Ô¶¨ÒåÃæ°å
+	 * è·å–ç”¨æˆ·è‡ªå®šä¹‰é¢æ¿
 	 * 
 	 * @return
 	 */
@@ -112,7 +112,7 @@ public class MxPanelServiceImpl implements PanelService {
 	}
 
 	/**
-	 * »ñÈ¡ÏµÍ³Ãæ°å
+	 * è·å–ç³»ç»Ÿé¢æ¿
 	 * 
 	 * @return
 	 */

@@ -21,27 +21,27 @@ package com.glaf.core.message;
 public final class MessageType {
 
 	/**
-	 * µç×ÓÓÊ¼ş
+	 * ç”µå­é‚®ä»¶
 	 */
 	public final static String MAIL_MESSAGE = "mail";
 
 	/**
-	 * ÊÖ»ú¶ÌĞÅ
+	 * æ‰‹æœºçŸ­ä¿¡
 	 */
 	public final static String SMS_MESSAGE = "sms";
 
 	/**
-	 * ÏµÍ³¶ÌÏûÏ¢
+	 * ç³»ç»ŸçŸ­æ¶ˆæ¯
 	 */
 	public final static String SYSTEM_MESSAGE = "system";
 
 	/**
-	 * ¼´Ê±ĞÅÏ¢
+	 * å³æ—¶ä¿¡æ¯
 	 */
 	public final static String IM_MESSAGE = "im";
 
 	/**
-	 * ÏµÍ³Ä¬ÈÏµÄ
+	 * ç³»ç»Ÿé»˜è®¤çš„
 	 */
 	public final static String DEFAULT_MESSAGE = "default";
 

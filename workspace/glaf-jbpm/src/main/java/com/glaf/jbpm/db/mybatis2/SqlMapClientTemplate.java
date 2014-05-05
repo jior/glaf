@@ -191,7 +191,7 @@ public class SqlMapClientTemplate extends JdbcAccessor implements
 						executor.delete(statementId, parameter);
 					}
 					batch++;
-					// Ã¿500ÌõÅúÁ¿Ìá½»Ò»´Î¡£
+					// æ¯500æ¡æ‰¹é‡æäº¤ä¸€æ¬¡ã€‚
 					if (batch == 500) {
 						executor.executeBatch();
 						batch = 0;

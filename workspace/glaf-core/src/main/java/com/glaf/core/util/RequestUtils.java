@@ -237,7 +237,7 @@ public class RequestUtils {
 	}
 
 	/**
-	 * ´ÓrequestÖĞ»ñÈ¡boolean²ÎÊı
+	 * ä»requestä¸­è·å–booleanå‚æ•°
 	 * 
 	 * @param request
 	 * @param paramName
@@ -322,7 +322,7 @@ public class RequestUtils {
 	}
 
 	/**
-	 * ´ÓrequestÖĞ»ñÈ¡date²ÎÊı
+	 * ä»requestä¸­è·å–dateå‚æ•°
 	 * 
 	 * @param request
 	 * @param paramName
@@ -341,7 +341,7 @@ public class RequestUtils {
 	}
 
 	/**
-	 * ´ÓrequestÖĞ»ñÈ¡double²ÎÊı
+	 * ä»requestä¸­è·å–doubleå‚æ•°
 	 * 
 	 * @param request
 	 * @param paramName
@@ -352,7 +352,7 @@ public class RequestUtils {
 	}
 
 	/**
-	 * ´ÓrequestÖĞ»ñÈ¡double²ÎÊı
+	 * ä»requestä¸­è·å–doubleå‚æ•°
 	 * 
 	 * @param request
 	 * @param paramName
@@ -369,7 +369,7 @@ public class RequestUtils {
 	}
 
 	/**
-	 * ´ÓrequestÖĞ»ñÈ¡int²ÎÊı
+	 * ä»requestä¸­è·å–intå‚æ•°
 	 * 
 	 * @param request
 	 * @param paramName
@@ -380,7 +380,7 @@ public class RequestUtils {
 	}
 
 	/**
-	 * ´ÓrequestÖĞ»ñÈ¡int²ÎÊı
+	 * ä»requestä¸­è·å–intå‚æ•°
 	 * 
 	 * @param request
 	 * @param paramName
@@ -397,7 +397,7 @@ public class RequestUtils {
 	}
 
 	/**
-	 * ´ÓrequestÖĞ»ñÈ¡int²ÎÊı
+	 * ä»requestä¸­è·å–intå‚æ•°
 	 * 
 	 * @param request
 	 * @param paramName
@@ -409,7 +409,7 @@ public class RequestUtils {
 	}
 
 	/**
-	 * ´ÓrequestÖĞ»ñÈ¡int²ÎÊı
+	 * ä»requestä¸­è·å–intå‚æ•°
 	 * 
 	 * @param request
 	 * @param paramName
@@ -426,7 +426,7 @@ public class RequestUtils {
 	}
 
 	/**
-	 * »ñÈ¡Web¿Í»§¶ËµÄÕæÊµIPµØÖ·
+	 * è·å–Webå®¢æˆ·ç«¯çš„çœŸå®IPåœ°å€
 	 * 
 	 * @param request
 	 * @return
@@ -465,7 +465,7 @@ public class RequestUtils {
 	}
 
 	/**
-	 * ´ÓrequestÖĞ»ñÈ¡long²ÎÊı
+	 * ä»requestä¸­è·å–longå‚æ•°
 	 * 
 	 * @param request
 	 * @param paramName
@@ -476,7 +476,7 @@ public class RequestUtils {
 	}
 
 	/**
-	 * ´ÓrequestÖĞ»ñÈ¡long²ÎÊı
+	 * ä»requestä¸­è·å–longå‚æ•°
 	 * 
 	 * @param request
 	 * @param paramName
@@ -493,13 +493,13 @@ public class RequestUtils {
 	}
 
 	/**
-	 * ´ÓrequestÖĞ·â×°Ò»¸ö¶ÔÏó
+	 * ä»requestä¸­å°è£…ä¸€ä¸ªå¯¹è±¡
 	 * 
 	 * @param pRequest
-	 *            request¶ÔÏó
+	 *            requestå¯¹è±¡
 	 * @param pModel
-	 *            ·â×°¶ÔÏóµÄÀà
-	 * @return ³¬Àà
+	 *            å°è£…å¯¹è±¡çš„ç±»
+	 * @return è¶…ç±»
 	 * @throws InputInvalidException
 	 */
 	public static Object getParameter(HttpServletRequest request, Object object)
@@ -533,7 +533,7 @@ public class RequestUtils {
 	}
 
 	/**
-	 * ´ÓrequestÖĞ»ñÈ¡²ÎÊı
+	 * ä»requestä¸­è·å–å‚æ•°
 	 * 
 	 * @param request
 	 * @param name
@@ -565,7 +565,7 @@ public class RequestUtils {
 	}
 
 	/**
-	 * ´ÓrequestÖĞ»ñÈ¡²ÎÊı
+	 * ä»requestä¸­è·å–å‚æ•°
 	 * 
 	 * @param request
 	 * @return
@@ -604,7 +604,7 @@ public class RequestUtils {
 	}
 
 	/**
-	 * ´ÓrequestÖĞ»ñÈ¡²ÎÊı
+	 * ä»requestä¸­è·å–å‚æ•°
 	 * 
 	 * @param request
 	 * @return
@@ -631,7 +631,7 @@ public class RequestUtils {
 	}
 
 	/**
-	 * ´ÓrequestÖĞ»ñÈ¡²ÎÊı
+	 * ä»requestä¸­è·å–å‚æ•°
 	 * 
 	 * @param request
 	 * @return
@@ -668,7 +668,7 @@ public class RequestUtils {
 	}
 
 	/**
-	 * ´ÓrequestÖĞ»ñÈ¡²ÎÊı
+	 * ä»requestä¸­è·å–å‚æ•°
 	 * 
 	 * @param request
 	 * @return
@@ -742,7 +742,7 @@ public class RequestUtils {
 	}
 
 	/**
-	 * ´ÓrequestÖĞ»ñÈ¡²ÎÊı
+	 * ä»requestä¸­è·å–å‚æ•°
 	 * 
 	 * @param request
 	 * @return
@@ -847,7 +847,7 @@ public class RequestUtils {
 	}
 
 	/**
-	 * ´ÓrequestÖĞ»ñÈ¡×Ö·û´®²ÎÊı
+	 * ä»requestä¸­è·å–å­—ç¬¦ä¸²å‚æ•°
 	 * 
 	 * @param request
 	 * @param paramName
@@ -863,7 +863,7 @@ public class RequestUtils {
 	}
 
 	/**
-	 * ´ÓrequestÖĞ»ñÈ¡×Ö·û´®²ÎÊı
+	 * ä»requestä¸­è·å–å­—ç¬¦ä¸²å‚æ•°
 	 * 
 	 * @param request
 	 * @param paramName
@@ -880,7 +880,7 @@ public class RequestUtils {
 	}
 
 	/**
-	 * »ñÈ¡²ÎÊıÖµ
+	 * è·å–å‚æ•°å€¼
 	 * 
 	 * @param request
 	 * @param name
@@ -958,7 +958,7 @@ public class RequestUtils {
 	}
 
 	/**
-	 * ÉèÖÃ²ÎÊı
+	 * è®¾ç½®å‚æ•°
 	 * 
 	 * @param request
 	 */

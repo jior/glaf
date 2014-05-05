@@ -28,7 +28,7 @@ import org.I0Itec.zkclient.exception.ZkNoNodeException;
 import org.I0Itec.zkclient.exception.ZkNodeExistsException;
 
 /**
- * 与zk交互的工具类
+ * 涓巣k浜や簰鐨勫伐鍏风被
  * 
  */
 public class ZKClientUtils {

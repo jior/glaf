@@ -79,13 +79,13 @@ public class ZipUtils {
 
 	/**
 	 * 
-	 * °ÑÎÄ¼şÑ¹Ëõ³Ézip¸ñÊ½
+	 * æŠŠæ–‡ä»¶å‹ç¼©æˆzipæ ¼å¼
 	 * 
 	 * @param files
-	 *            ĞèÒªÑ¹ËõµÄÎÄ¼ş
+	 *            éœ€è¦å‹ç¼©çš„æ–‡ä»¶
 	 * 
 	 * @param zipFilePath
-	 *            Ñ¹ËõºóµÄzipÎÄ¼şÂ·¾¶ ,Èç"/var/data/aa.zip";
+	 *            å‹ç¼©åçš„zipæ–‡ä»¶è·¯å¾„ ,å¦‚"/var/data/aa.zip";
 	 */
 	public static void compressFile(File[] files, String zipFilePath) {
 		if (files != null && files.length > 0) {
@@ -144,13 +144,13 @@ public class ZipUtils {
 
 	/**
 	 * 
-	 * °ÑzipÎÄ¼ş½âÑ¹µ½Ö¸¶¨µÄÎÄ¼ş¼Ğ
+	 * æŠŠzipæ–‡ä»¶è§£å‹åˆ°æŒ‡å®šçš„æ–‡ä»¶å¤¹
 	 * 
 	 * @param zipFilePath
-	 *            zipÎÄ¼şÂ·¾¶, Èç "/var/data/aa.zip"
+	 *            zipæ–‡ä»¶è·¯å¾„, å¦‚ "/var/data/aa.zip"
 	 * 
 	 * @param saveFileDir
-	 *            ½âÑ¹ºóµÄÎÄ¼ş´æ·ÅÂ·¾¶, Èç"/var/test/"
+	 *            è§£å‹åçš„æ–‡ä»¶å­˜æ”¾è·¯å¾„, å¦‚"/var/test/"
 	 */
 	public static void decompressZip(String zipFilePath, String saveFileDir) {
 		if (isEndsWithZip(zipFilePath)) {
@@ -357,10 +357,10 @@ public class ZipUtils {
 
 	/**
 	 * 
-	 * ÅĞ¶ÏÎÄ¼şÃûÊÇ·ñÒÔ.zipÎªºó×º
+	 * åˆ¤æ–­æ–‡ä»¶åæ˜¯å¦ä»¥.zipä¸ºåç¼€
 	 * 
 	 * @param fileName
-	 *            ĞèÒªÅĞ¶ÏµÄÎÄ¼şÃû
+	 *            éœ€è¦åˆ¤æ–­çš„æ–‡ä»¶å
 	 * 
 	 * @return
 	 */

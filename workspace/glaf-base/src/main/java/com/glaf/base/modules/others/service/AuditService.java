@@ -29,7 +29,7 @@ import com.glaf.base.modules.sys.model.SysUser;
 public interface AuditService {
 
 	/**
-	 * ±£´æ
+	 * ä¿å­˜
 	 * 
 	 * @param bean
 	 *            Audit
@@ -39,7 +39,7 @@ public interface AuditService {
 	boolean create(Audit bean);
 
 	/**
-	 * ¸üĞÂ
+	 * æ›´æ–°
 	 * 
 	 * @param bean
 	 *            Audit
@@ -49,7 +49,7 @@ public interface AuditService {
 	boolean update(Audit bean);
 
 	/**
-	 * É¾³ı
+	 * åˆ é™¤
 	 * 
 	 * @param bean
 	 *            Audit
@@ -59,7 +59,7 @@ public interface AuditService {
 	boolean delete(Audit bean);
 
 	/**
-	 * É¾³ı
+	 * åˆ é™¤
 	 * 
 	 * @param id
 	 *            int
@@ -69,7 +69,7 @@ public interface AuditService {
 	boolean delete(long id);
 
 	/**
-	 * ÅúÁ¿É¾³ı
+	 * æ‰¹é‡åˆ é™¤
 	 * 
 	 * @param ids
 	 * @return
@@ -78,7 +78,7 @@ public interface AuditService {
 	boolean deleteAll(long[] ids);
 
 	/**
-	 * »ñÈ¡¶ÔÏó
+	 * è·å–å¯¹è±¡
 	 * 
 	 * @param id
 	 * @return
@@ -86,7 +86,7 @@ public interface AuditService {
 	Audit findById(long id);
 
 	/**
-	 * ·µ»ØËùÓĞÉóÅúÁĞ±í£¬·Ötype
+	 * è¿”å›æ‰€æœ‰å®¡æ‰¹åˆ—è¡¨ï¼Œåˆ†type
 	 * 
 	 * @param referId
 	 * @param referType
@@ -95,7 +95,7 @@ public interface AuditService {
 	List<Audit> getAuditList(long referId, int referType);
 
 	/**
-	 * ·µ»Ø²É¹ºÉêÇëµÄËùÓĞÉóÅúÁĞ±í(ĞÂÔö£¬±ä¸ü£¬ÍËµ¥ÖØÌá£¬·ÏÖ¹)
+	 * è¿”å›é‡‡è´­ç”³è¯·çš„æ‰€æœ‰å®¡æ‰¹åˆ—è¡¨(æ–°å¢ï¼Œå˜æ›´ï¼Œé€€å•é‡æï¼ŒåºŸæ­¢)
 	 * 
 	 * @param referId
 	 * @param referType
@@ -104,7 +104,7 @@ public interface AuditService {
 	List<Audit> getAuditList(long referId, String referTypes);
 
 	/**
-	 * ·µ»ØËùÓĞÉóÅúÁĞ±í×îÖÕÉóÅúÈËÁĞ±í£¨È¥³ıÖØ¸´£©
+	 * è¿”å›æ‰€æœ‰å®¡æ‰¹åˆ—è¡¨æœ€ç»ˆå®¡æ‰¹äººåˆ—è¡¨ï¼ˆå»é™¤é‡å¤ï¼‰
 	 * 
 	 * @param referId
 	 * @param referType
@@ -113,7 +113,7 @@ public interface AuditService {
 	List<Audit> getAuditUserList(long referId, int referType);
 
 	/**
-	 * ·µ»Ø²¿ÃÅ×îºóÒ»´ÎµÄÉóÅú¼ÇÂ¼
+	 * è¿”å›éƒ¨é—¨æœ€åä¸€æ¬¡çš„å®¡æ‰¹è®°å½•
 	 * 
 	 * @param referId
 	 * @param referType
@@ -123,7 +123,7 @@ public interface AuditService {
 	List<Audit> getAuditDeptList(long referId, int referType, long deptId);
 
 	/**
-	 * ´´½¨ÉóÅú¼ÇÂ¼
+	 * åˆ›å»ºå®¡æ‰¹è®°å½•
 	 * 
 	 * @param user
 	 * @param referId
@@ -135,7 +135,7 @@ public interface AuditService {
 	boolean saveAudit(SysUser user, long referId, int referType, boolean confirm);
 
 	/**
-	 * ·µ»Ø×îºóÒ»¸ö²»Í¨¹ıµÄÉóÅú¼ÇÂ¼
+	 * è¿”å›æœ€åä¸€ä¸ªä¸é€šè¿‡çš„å®¡æ‰¹è®°å½•
 	 * 
 	 * @param referId
 	 * @param referType

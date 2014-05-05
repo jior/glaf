@@ -65,7 +65,7 @@ public class TravelpersonnelController {
 					Travelpersonnel travelpersonnel = travelpersonnelService
 							.getTravelpersonnel(Long.valueOf(x));
 					/**
-					 * 此处业务逻辑需自行调整
+					 * 姝ゅ涓氬姟閫昏緫闇�鑷璋冩暣
 					 */
 					if (travelpersonnel != null) {
 						// travelpersonnel.setDeleteFlag(1);
@@ -77,7 +77,7 @@ public class TravelpersonnelController {
 			Travelpersonnel travelpersonnel = travelpersonnelService
 					.getTravelpersonnel(personnelid);
 			/**
-			 * 此处业务逻辑需自行调整
+			 * 姝ゅ涓氬姟閫昏緫闇�鑷璋冩暣
 			 */
 			if (travelpersonnel != null) {
 				// travelpersonnel.setDeleteFlag(1);

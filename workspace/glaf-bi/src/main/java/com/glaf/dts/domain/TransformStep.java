@@ -36,7 +36,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.util.DateUtils;
 
 /**
- * ´«µİ»î¶¯²½Öè¶¨Òå
+ * ä¼ é€’æ´»åŠ¨æ­¥éª¤å®šä¹‰
  * 
  * @author jior2008@gmail.com
  * 
@@ -48,63 +48,63 @@ public class TransformStep implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Ö÷¼ü
+	 * ä¸»é”®
 	 */
 	@Id
 	@Column(name = "ID_", length = 50)
 	protected String id;
 
 	/**
-	 * »î¶¯±àºÅ
+	 * æ´»åŠ¨ç¼–å·
 	 */
 	@Column(name = "ACTIVITYID_", length = 50)
 	protected String activityId;
 
 	/**
-	 * ²éÑ¯¼¯±àºÅ
+	 * æŸ¥è¯¢é›†ç¼–å·
 	 */
 	@Column(name = "QUERYID_", length = 50)
 	protected String queryId;
 
 	/**
-	 * Ö÷Ìâ
+	 * ä¸»é¢˜
 	 */
 	@Column(name = "TITLE_")
 	protected String title;
 
 	/**
-	 * ÃèÊö
+	 * æè¿°
 	 */
 	@Column(name = "DESCRIPTION_", length = 500)
 	protected String description;
 
 	/**
-	 * ÓÅÏÈ¼¶(¼¶±ğµÍµÄÏÈÖ´ĞĞ£¬¼´°´ÕÕ´ÓµÍµ½¸ßµÄË³ĞòÖ´ĞĞ,ÓÅÏÈ¼¶ÏàÍ¬µÄÍ¬²½Ö´ĞĞ)
+	 * ä¼˜å…ˆçº§(çº§åˆ«ä½çš„å…ˆæ‰§è¡Œï¼Œå³æŒ‰ç…§ä»ä½åˆ°é«˜çš„é¡ºåºæ‰§è¡Œ,ä¼˜å…ˆçº§ç›¸åŒçš„åŒæ­¥æ‰§è¡Œ)
 	 */
 	@Column(name = "PRIORITY_")
 	protected int priority;
 
 	/**
-	 * ´´½¨Ê±¼ä
+	 * åˆ›å»ºæ—¶é—´
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATETIME_", updatable = false)
 	protected Date createTime;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY_", updatable = false)
 	protected String createBy;
 
 	/**
-	 * ÊÇ·ñËø¶¨
+	 * æ˜¯å¦é”å®š
 	 */
 	@Column(name = "LOCKED_")
 	protected int locked;
 
 	/**
-	 * ĞŞ¶©°æ±¾
+	 * ä¿®è®¢ç‰ˆæœ¬
 	 */
 	@Column(name = "REVISION_")
 	protected int revision;

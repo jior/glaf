@@ -68,27 +68,27 @@ public class MxDataTransferResource {
 		JSONArray array = new JSONArray();
 		JSONObject json = new JSONObject();
 		json.put("code", "Integer");
-		json.put("text", "ÕûÊıĞÍ");
+		json.put("text", "æ•´æ•°å‹");
 		array.add(json);
 
 		JSONObject json2 = new JSONObject();
 		json2.put("code", "Long");
-		json2.put("text", "³¤ÕûÊıĞÍ");
+		json2.put("text", "é•¿æ•´æ•°å‹");
 		array.add(json2);
 
 		JSONObject json3 = new JSONObject();
 		json3.put("code", "Double");
-		json3.put("text", "ÊıÖµĞÍ");
+		json3.put("text", "æ•°å€¼å‹");
 		array.add(json3);
 
 		JSONObject json4 = new JSONObject();
 		json4.put("code", "Date");
-		json4.put("text", "ÈÕÆÚĞÍ");
+		json4.put("text", "æ—¥æœŸå‹");
 		array.add(json4);
 
 		JSONObject json5 = new JSONObject();
 		json5.put("code", "String");
-		json5.put("text", "×Ö·û´®ĞÍ");
+		json5.put("text", "å­—ç¬¦ä¸²å‹");
 		array.add(json5);
 
 		return array.toString().getBytes("UTF-8");
@@ -130,27 +130,27 @@ public class MxDataTransferResource {
 		JSONArray array = new JSONArray();
 		JSONObject json = new JSONObject();
 		json.put("code", "#{id}");
-		json.put("text", "×ÔÔö³¤ID");
+		json.put("text", "è‡ªå¢é•¿ID");
 		array.add(json);
 
 		JSONObject json2 = new JSONObject();
 		json2.put("code", "#{seqNo}");
-		json2.put("text", "ĞòºÅ");
+		json2.put("text", "åºå·");
 		array.add(json2);
 
 		JSONObject json3 = new JSONObject();
 		json3.put("code", "#{now}");
-		json3.put("text", "µ±Ç°ÈÕÆÚ");
+		json3.put("text", "å½“å‰æ—¥æœŸ");
 		array.add(json3);
 
 		JSONObject json4 = new JSONObject();
 		json4.put("code", "#{uuid}");
-		json4.put("text", "32Î»UUID");
+		json4.put("text", "32ä½UUID");
 		array.add(json4);
 
 		JSONObject json5 = new JSONObject();
 		json5.put("code", "X");
-		json5.put("text", "ÎŞ");
+		json5.put("text", "æ— ");
 		array.add(json5);
 
 		return array.toString().getBytes("UTF-8");

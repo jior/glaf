@@ -86,7 +86,7 @@ public class SysDepartmentController {
 	protected SysTreeService sysTreeService;
 
 	/**
-	 * ÅúÁ¿É¾³ıĞÅÏ¢
+	 * æ‰¹é‡åˆ é™¤ä¿¡æ¯
 	 * 
 	 * 
 	 * 
@@ -103,16 +103,16 @@ public class SysDepartmentController {
 		ret = sysDepartmentService.deleteAll(id);
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"department.delete_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"department.delete_failure"));
 		}
 		MessageUtils.addMessages(request, messages);
 
-		// ÏÔÊ¾ÁĞ±íÒ³Ãæ
+		// æ˜¾ç¤ºåˆ—è¡¨é¡µé¢
 		return new ModelAndView("show_msg2", modelMap);
 	}
 
@@ -142,7 +142,7 @@ public class SysDepartmentController {
 	}
 
 	/**
-	 * ÏÔÊ¾±à¼­Ò³Ãæ
+	 * æ˜¾ç¤ºç¼–è¾‘é¡µé¢
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -171,12 +171,12 @@ public class SysDepartmentController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		// ÏÔÊ¾ÁĞ±íÒ³Ãæ
+		// æ˜¾ç¤ºåˆ—è¡¨é¡µé¢
 		return new ModelAndView("/modules/sys/dept/edit", modelMap);
 	}
 
 	/**
-	 * ÏÔÊ¾ÏÂ¼¶²¿ÃÅ½Úµã
+	 * æ˜¾ç¤ºä¸‹çº§éƒ¨é—¨èŠ‚ç‚¹
 	 * 
 	 * 
 	 * 
@@ -201,7 +201,7 @@ public class SysDepartmentController {
 	}
 
 	/**
-	 * ÏÔÊ¾ÏÂ¼¶ËùÓĞ²¿ÃÅ½Úµã,°üÀ¨ÎŞĞ§µÄ²¿ÃÅ
+	 * æ˜¾ç¤ºä¸‹çº§æ‰€æœ‰éƒ¨é—¨èŠ‚ç‚¹,åŒ…æ‹¬æ— æ•ˆçš„éƒ¨é—¨
 	 * 
 	 * 
 	 * 
@@ -328,7 +328,7 @@ public class SysDepartmentController {
 	}
 
 	/**
-	 * ÏÔÊ¾Ôö¼ÓÒ³Ãæ
+	 * æ˜¾ç¤ºå¢åŠ é¡µé¢
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -351,7 +351,7 @@ public class SysDepartmentController {
 	}
 
 	/**
-	 * ÏÔÊ¾ĞŞ¸ÄÒ³Ãæ
+	 * æ˜¾ç¤ºä¿®æ”¹é¡µé¢
 	 * 
 	 * 
 	 * @param form
@@ -383,7 +383,7 @@ public class SysDepartmentController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		// ÏÔÊ¾ÁĞ±íÒ³Ãæ
+		// æ˜¾ç¤ºåˆ—è¡¨é¡µé¢
 		return new ModelAndView("/modules/sys/dept/dept_modify", modelMap);
 	}
 
@@ -460,7 +460,7 @@ public class SysDepartmentController {
 	}
 
 	/**
-	 * Ìá½»Ôö¼ÓĞÅÏ¢
+	 * æäº¤å¢åŠ ä¿¡æ¯
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -468,7 +468,7 @@ public class SysDepartmentController {
 	 */
 	@RequestMapping(params = "method=saveAdd")
 	public ModelAndView saveAdd(HttpServletRequest request, ModelMap modelMap) {
-		// Ôö¼Ó²¿ÃÅÊ±£¬Í¬Ê±ÒªÔö¼Ó¶ÔÓ¦½Úµã
+		// å¢åŠ éƒ¨é—¨æ—¶ï¼ŒåŒæ—¶è¦å¢åŠ å¯¹åº”èŠ‚ç‚¹
 		SysDepartment bean = new SysDepartment();
 		bean.setName(ParamUtil.getParameter(request, "name"));
 		bean.setDesc(ParamUtil.getParameter(request, "desc"));
@@ -495,10 +495,10 @@ public class SysDepartmentController {
 		boolean ret = sysDepartmentService.create(bean);
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"department.add_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"department.add_failure"));
 		}
@@ -508,7 +508,7 @@ public class SysDepartmentController {
 	}
 
 	/**
-	 * Ìá½»ĞŞ¸ÄĞÅÏ¢
+	 * æäº¤ä¿®æ”¹ä¿¡æ¯
 	 * 
 	 * 
 	 * @param form
@@ -551,16 +551,16 @@ public class SysDepartmentController {
 			}
 		}
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"department.modify_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"department.modify_failure"));
 		}
 		MessageUtils.addMessages(request, messages);
 
-		// ÏÔÊ¾ÁĞ±íÒ³Ãæ
+		// æ˜¾ç¤ºåˆ—è¡¨é¡µé¢
 		return new ModelAndView("show_msg", modelMap);
 	}
 
@@ -595,7 +595,7 @@ public class SysDepartmentController {
 	}
 
 	/**
-	 * ÏÔÊ¾ËùÓĞ²¿ÃÅµÄ²Ëµ¥Ñ¡ÔñÒ³Ãæ
+	 * æ˜¾ç¤ºæ‰€æœ‰éƒ¨é—¨çš„èœå•é€‰æ‹©é¡µé¢
 	 * 
 	 * 
 	 * 
@@ -621,12 +621,12 @@ public class SysDepartmentController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		// ÏÔÊ¾ÁĞ±íÒ³Ãæ
+		// æ˜¾ç¤ºåˆ—è¡¨é¡µé¢
 		return forward;
 	}
 
 	/**
-	 * ÏÔÊ¾ËùÓĞÁĞ±í
+	 * æ˜¾ç¤ºæ‰€æœ‰åˆ—è¡¨
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -658,7 +658,7 @@ public class SysDepartmentController {
 	}
 
 	/**
-	 * ÏÔÊ¾²Ëµ¥Ñ¡ÔñÒ³Ãæ
+	 * æ˜¾ç¤ºèœå•é€‰æ‹©é¡µé¢
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -691,12 +691,12 @@ public class SysDepartmentController {
 		String url = ParamUtil.getParameter(request, "url");
 		request.setAttribute("url", url);
 
-		// ÏÔÊ¾ÁĞ±íÒ³Ãæ
+		// æ˜¾ç¤ºåˆ—è¡¨é¡µé¢
 		return forward;
 	}
 
 	/**
-	 * ÏÔÊ¾¿ò¼ÜÒ³Ãæ
+	 * æ˜¾ç¤ºæ¡†æ¶é¡µé¢
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -713,12 +713,12 @@ public class SysDepartmentController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		// ÏÔÊ¾ÁĞ±íÒ³Ãæ
+		// æ˜¾ç¤ºåˆ—è¡¨é¡µé¢
 		return new ModelAndView("/modules/sys/dept/dept_frame", modelMap);
 	}
 
 	/**
-	 * ÏÔÊ¾ËùÓĞÁĞ±í
+	 * æ˜¾ç¤ºæ‰€æœ‰åˆ—è¡¨
 	 * 
 	 * @param request
 	 * @param modelMap

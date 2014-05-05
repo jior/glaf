@@ -69,7 +69,7 @@ public class MxJbpmTakeTaskController {
 		String processName = null;
 		if (taskInstanceId != null && StringUtils.isNotEmpty(actorId)) {
 			/**
-			 * ¸ù¾İÈÎÎñÊµÀı±àºÅºÍÓÃ»§±àºÅ»ñÈ¡´ı°ìÈÎÎñ
+			 * æ ¹æ®ä»»åŠ¡å®ä¾‹ç¼–å·å’Œç”¨æˆ·ç¼–å·è·å–å¾…åŠä»»åŠ¡
 			 */
 			taskItem = container.getTaskItem(taskInstanceId, actorId);
 			if (taskItem != null) {
@@ -81,7 +81,7 @@ public class MxJbpmTakeTaskController {
 			}
 		} else if (processInstanceId != null && StringUtils.isNotEmpty(actorId)) {
 			/**
-			 * ¸ù¾İÁ÷³ÌÊµÀı±àºÅºÍÓÃ»§±àºÅ»ñÈ¡´ı°ìÈÎÎñ
+			 * æ ¹æ®æµç¨‹å®ä¾‹ç¼–å·å’Œç”¨æˆ·ç¼–å·è·å–å¾…åŠä»»åŠ¡
 			 */
 			taskItem = container.getMinTaskItem(actorId, processInstanceId);
 			if (taskItem != null) {
@@ -92,7 +92,7 @@ public class MxJbpmTakeTaskController {
 		}
 
 		/**
-		 * Èç¹û´æÔÚ´ı°ìÈÎÎñ²¢ÇÒ¿ÉÒÔÌá½»ÉóºË
+		 * å¦‚æœå­˜åœ¨å¾…åŠä»»åŠ¡å¹¶ä¸”å¯ä»¥æäº¤å®¡æ ¸
 		 */
 		if (canSubmit && taskInstanceId != null) {
 			String routeMode = CustomProperties.getString(processName
@@ -116,7 +116,7 @@ public class MxJbpmTakeTaskController {
 		}
 
 		/**
-		 * ¼ÓÔØÀúÊ·ÉóºËÒâ¼û
+		 * åŠ è½½å†å²å®¡æ ¸æ„è§
 		 */
 		if (processInstanceId != null) {
 			List<ActivityInstance> ActivityInstances = container
@@ -125,9 +125,9 @@ public class MxJbpmTakeTaskController {
 		}
 
 		/**
-		 * Èç¹ûÅäÖÃÁËÄ£°å£¬Ôò¸ù¾İÄ£°å¶¨Òå½øĞĞÏìÓ¦<br>
-		 * Ä£°å¶¨Òå±àºÅ¹æÔòÊÇ¡°Á÷³ÌÃû³Æ_take_template¡±£¬Ò²¿ÉÒÔÊÇÈ«¾ÖµÄjbpm_take_template£¬
-		 * ¶¨ÒåÔÚWEB-INF\conf\extensionÄ¿Â¼ÏÂµÄÈÎºÎÊôĞÔÎÄ¼ş¾ù¿É¡£
+		 * å¦‚æœé…ç½®äº†æ¨¡æ¿ï¼Œåˆ™æ ¹æ®æ¨¡æ¿å®šä¹‰è¿›è¡Œå“åº”<br>
+		 * æ¨¡æ¿å®šä¹‰ç¼–å·è§„åˆ™æ˜¯â€œæµç¨‹åç§°_take_templateâ€ï¼Œä¹Ÿå¯ä»¥æ˜¯å…¨å±€çš„jbpm_take_templateï¼Œ
+		 * å®šä¹‰åœ¨WEB-INF\conf\extensionç›®å½•ä¸‹çš„ä»»ä½•å±æ€§æ–‡ä»¶å‡å¯ã€‚
 		 */
 		String templateId = ParamUtils.getString(paramMap, "z_templateId");
 

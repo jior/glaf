@@ -21,7 +21,7 @@ package com.glaf.core.message;
 public final class MessageStatus {
 
 	/**
-	 * ĞÂÏûÏ¢
+	 * æ–°æ¶ˆæ¯
 	 */
 	public final static int NEW = 0;
 
@@ -32,23 +32,23 @@ public final class MessageStatus {
 	public final static int DRAFT = 2;
 
 	/**
-	 * ÒÑÔÄ¶Á
+	 * å·²é˜…è¯»
 	 */
 	public final static int HAS_READ = 1;
 
 	/**
-	 * ÒÑ·¢ËÍ
+	 * å·²å‘é€
 	 */
 	public final static int HAS_SENT = 3;
 
 	/**
-	 * ·¢ËÍÊ§°Ü
+	 * å‘é€å¤±è´¥
 	 */
 
 	public final static int SEND_FAILED = 4;
 
 	/**
-	 * ·ÏÆúÏûÏ¢
+	 * åºŸå¼ƒæ¶ˆæ¯
 	 */
 	public final static int RUBBISH = 5;
 

@@ -172,7 +172,7 @@ public class MxMailServiceImpl implements IMailService {
 	}
 
 	/**
-	 * ·¢ËÍÓÊ¼ş
+	 * å‘é€é‚®ä»¶
 	 * 
 	 * @param mail
 	 * @return
@@ -183,12 +183,12 @@ public class MxMailServiceImpl implements IMailService {
 	}
 
 	/**
-	 * ·¢ËÍÓÊ¼ş
+	 * å‘é€é‚®ä»¶
 	 * 
 	 * @param mail
-	 *            ÓÊ¼ş¶ÔÏó
+	 *            é‚®ä»¶å¯¹è±¡
 	 * @param dataMap
-	 *            ²ÎÊı¼¯
+	 *            å‚æ•°é›†
 	 * @return
 	 */
 	@Transactional

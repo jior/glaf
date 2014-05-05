@@ -72,7 +72,7 @@ public class EncryptorFactory {
 			String decryptedText = cryptor.decrypt(encryptedText);
 			System.out.println("DeCrypted text " + decryptedText);
 			long ms = System.currentTimeMillis() - start;
-			System.out.println("总共用时:" + (ms) + " 毫秒.");
+			System.out.println("鎬诲叡鐢ㄦ椂:" + (ms) + " 姣.");
 		}
 	}
 }

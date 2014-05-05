@@ -119,13 +119,13 @@ public class BaseQuery extends AbstractQuery<Object> {
 
 			if (isFilterPermission) {
 				/**
-				 * ÓÃ»§¿ÉÒÔ·ÃÎÊµÄÊı¾İÊÇÄ£¿é·ÃÎÊÊı¾İ+ĞĞÊı¾İ
+				 * ç”¨æˆ·å¯ä»¥è®¿é—®çš„æ•°æ®æ˜¯æ¨¡å—è®¿é—®æ•°æ®+è¡Œæ•°æ®
 				 */
 				// ///////////////////////////////////////////////////////
-				// Ä£¿é·ÃÎÊÈ¨ÏŞ
+				// æ¨¡å—è®¿é—®æƒé™
 				// ///////////////////////////////////////////////////////
 				/**
-				 * ·ÃÎÊÓÃ»§
+				 * è®¿é—®ç”¨æˆ·
 				 */
 				if (loginContext.getActorId() != null) {
 
@@ -133,7 +133,7 @@ public class BaseQuery extends AbstractQuery<Object> {
 				}
 
 				/**
-				 * ·ÃÎÊ²¿ÃÅ
+				 * è®¿é—®éƒ¨é—¨
 				 */
 				if (loginContext.getDeptId() != 0) {
 

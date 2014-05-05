@@ -44,19 +44,19 @@ public class Main extends JFrame {
 		appConfig.setVisible(true);
 		sc.init();
 		sc.setSize(430, 550);
-		sc.setTitle("ÅäÖÃ¹¤¾ß");
+		sc.setTitle("é…ç½®å·¥å…·");
 		sc.setLocationRelativeTo(null);
 		sc.setVisible(true);
 	}
 
-	// ³õÊ¼»¯Æ¤·ô
+	// åˆå§‹åŒ–çš®è‚¤
 	public void initskin() {
 		try {
 			UIManager
 					.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
 
 		} catch (Exception e) {
-			System.out.println("×°ÔØÆ¤·ô´íÎó" + e);
+			System.out.println("è£…è½½çš®è‚¤é”™è¯¯" + e);
 		}
 	}
 
@@ -67,7 +67,7 @@ public class Main extends JFrame {
 		MainMenu menu = new MainMenu();
 		this.setJMenuBar(menu);
 
-		// ±êÇ©Ãæ°å£¬ËùÓĞµÄÏÔÊ¾½çÃæ¶¼·ÅÔÚtab±êÇ©ÀïÃæ
+		// æ ‡ç­¾é¢æ¿ï¼Œæ‰€æœ‰çš„æ˜¾ç¤ºç•Œé¢éƒ½æ”¾åœ¨tabæ ‡ç­¾é‡Œé¢
 		MainTabPanel mainTabPanel = new MainTabPanel();
 		// this.getContentPane().add(mainTabPanel,BorderLayout.CENTER);
 		getContentPane().add(mainTabPanel,

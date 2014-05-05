@@ -67,7 +67,7 @@ public class MxUploadController {
 	public ModelAndView main(HttpServletRequest request, ModelMap modelMap) {
 		String serviceKey = request.getParameter("serviceKey");
 		if (StringUtils.isEmpty(serviceKey)) {
-			modelMap.put("error_message", "ÄúÃ»ÓĞÌá¹©±ØÒªµÄĞÅÏ¢£¬serviceKeyÊÇ±ØĞëµÄ£¡");
+			modelMap.put("error_message", "æ‚¨æ²¡æœ‰æä¾›å¿…è¦çš„ä¿¡æ¯ï¼ŒserviceKeyæ˜¯å¿…é¡»çš„ï¼");
 			return new ModelAndView("/error");
 		}
 
@@ -108,15 +108,15 @@ public class MxUploadController {
 					String subject = request.getParameter("subject");
 					dataFile.setName(subject);
 
-					message = "²Ù×÷³É¹¦£¡";
+					message = "æ“ä½œæˆåŠŸï¼";
 				} else {
-					message = "ÎŞĞŞ¸ÄÈ¨ÏŞ£¡";
+					message = "æ— ä¿®æ”¹æƒé™ï¼";
 				}
 			} else {
-				message = "ÎÄ¼ş²»´æÔÚ£¡";
+				message = "æ–‡ä»¶ä¸å­˜åœ¨ï¼";
 			}
 		} catch (Exception ex) {
-			message = "²Ù×÷Ê§°Ü£¡";
+			message = "æ“ä½œå¤±è´¥ï¼";
 		}
 
 		String responseDataType = request.getParameter("responseDataType");
@@ -154,15 +154,15 @@ public class MxUploadController {
 						dataFile.getCreateBy())
 						|| loginContext.isSystemAdministrator()) {
 					blobService.deleteBlobByFileId(fileId);
-					message = "É¾³ı³É¹¦£¡";
+					message = "åˆ é™¤æˆåŠŸï¼";
 				} else {
-					message = "ÎŞÉ¾³ıÈ¨ÏŞ£¡";
+					message = "æ— åˆ é™¤æƒé™ï¼";
 				}
 			} else {
-				message = "ÎÄ¼ş²»´æÔÚ£¡";
+				message = "æ–‡ä»¶ä¸å­˜åœ¨ï¼";
 			}
 		} catch (Exception ex) {
-			message = "²Ù×÷Ê§°Ü£¡";
+			message = "æ“ä½œå¤±è´¥ï¼";
 		}
 
 		String responseDataType = request.getParameter("responseDataType");
@@ -196,7 +196,7 @@ public class MxUploadController {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String serviceKey = request.getParameter("serviceKey");
 		if (StringUtils.isEmpty(serviceKey)) {
-			modelMap.put("error_message", "ÄúÃ»ÓĞÌá¹©±ØÒªµÄĞÅÏ¢£¬serviceKeyÊÇ±ØĞëµÄ£¡");
+			modelMap.put("error_message", "æ‚¨æ²¡æœ‰æä¾›å¿…è¦çš„ä¿¡æ¯ï¼ŒserviceKeyæ˜¯å¿…é¡»çš„ï¼");
 			return new ModelAndView("/error");
 		}
 		Map<String, Object> paramMap = RequestUtils.getParameterMap(request);
@@ -241,7 +241,7 @@ public class MxUploadController {
 			}
 		} catch (Exception ex) {
 			logger.debug(ex);
-			modelMap.put("error_message", "²»ÄÜ»ñÈ¡ÎÄ¼şĞÅÏ¢¡£");
+			modelMap.put("error_message", "ä¸èƒ½è·å–æ–‡ä»¶ä¿¡æ¯ã€‚");
 			return new ModelAndView("/error");
 		}
 
@@ -265,7 +265,7 @@ public class MxUploadController {
 
 		String serviceKey = req.getParameter("serviceKey");
 		if (StringUtils.isEmpty(serviceKey)) {
-			modelMap.put("error_message", "ÄúÃ»ÓĞÌá¹©±ØÒªµÄĞÅÏ¢£¬serviceKeyÊÇ±ØĞëµÄ£¡");
+			modelMap.put("error_message", "æ‚¨æ²¡æœ‰æä¾›å¿…è¦çš„ä¿¡æ¯ï¼ŒserviceKeyæ˜¯å¿…é¡»çš„ï¼");
 			return new ModelAndView("/error");
 		}
 

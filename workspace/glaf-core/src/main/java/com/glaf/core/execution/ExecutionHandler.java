@@ -21,7 +21,7 @@ package com.glaf.core.execution;
 public interface ExecutionHandler {
 
 	/**
-	 * Ö´ÐÐÒµÎñÂß¼­
+	 * æ‰§è¡Œä¸šåŠ¡é€»è¾‘
 	 */
 	void execute(String content);
 }

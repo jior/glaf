@@ -30,7 +30,7 @@ import com.glaf.template.Template;
 public interface ITemplateService {
 
 	/**
-	 * 删除模板
+	 * 鍒犻櫎妯℃澘
 	 * 
 	 * @param templateId
 	 */
@@ -38,14 +38,14 @@ public interface ITemplateService {
 	void deleteTemplate(String templateId);
 
 	/**
-	 * 获取全部模板
+	 * 鑾峰彇鍏ㄩ儴妯℃澘
 	 * 
 	 * @return
 	 */
 	Map<String, Template> getAllTemplate();
 
 	/**
-	 * 获取模板
+	 * 鑾峰彇妯℃澘
 	 * 
 	 * @param templateId
 	 * @return
@@ -53,14 +53,14 @@ public interface ITemplateService {
 	Template getTemplate(String templateId);
 
 	/**
-	 * 根据查询参数获取记录总数
+	 * 鏍规嵁鏌ヨ鍙傛暟鑾峰彇璁板綍鎬绘暟
 	 * 
 	 * @return
 	 */
 	int getTemplateCountByQueryCriteria(TemplateQuery query);
 
 	/**
-	 * 根据条件获取模板
+	 * 鏍规嵁鏉′欢鑾峰彇妯℃澘
 	 * 
 	 * @param query
 	 * @return
@@ -68,7 +68,7 @@ public interface ITemplateService {
 	List<Template> getTemplates(TemplateQuery query);
 
 	/**
-	 * 根据查询参数获取一页的数据
+	 * 鏍规嵁鏌ヨ鍙傛暟鑾峰彇涓�椤电殑鏁版嵁
 	 * 
 	 * @return
 	 */
@@ -76,13 +76,13 @@ public interface ITemplateService {
 			TemplateQuery query);
 
 	/**
-	 * 批量导入模板
+	 * 鎵归噺瀵煎叆妯℃澘
 	 */
 	@Transactional
 	void installAllTemplates();
 
 	/**
-	 * 保持模板
+	 * 淇濇寔妯℃澘
 	 * 
 	 * @param template
 	 */

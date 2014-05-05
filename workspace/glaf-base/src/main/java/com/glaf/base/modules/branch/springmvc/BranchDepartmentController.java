@@ -218,7 +218,7 @@ public class BranchDepartmentController {
 	}
 
 	/**
-	 * ÏÔÊ¾Ôö¼ÓÒ³Ãæ
+	 * æ˜¾ç¤ºå¢åŠ é¡µé¢
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -242,7 +242,7 @@ public class BranchDepartmentController {
 	}
 
 	/**
-	 * ÏÔÊ¾ĞŞ¸ÄÒ³Ãæ
+	 * æ˜¾ç¤ºä¿®æ”¹é¡µé¢
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -273,12 +273,12 @@ public class BranchDepartmentController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		// ÏÔÊ¾ÁĞ±íÒ³Ãæ
+		// æ˜¾ç¤ºåˆ—è¡¨é¡µé¢
 		return new ModelAndView("/modules/branch/dept/dept_modify", modelMap);
 	}
 
 	/**
-	 * Ìá½»Ôö¼ÓĞÅÏ¢
+	 * æäº¤å¢åŠ ä¿¡æ¯
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -298,10 +298,10 @@ public class BranchDepartmentController {
 		}
 
 		/**
-		 * ±£Ö¤Ìí¼ÓµÄ²¿ÃÅÊÇ·Ö¼¶¹ÜÀíÔ±¹ÜÏ½µÄ²¿ÃÅ
+		 * ä¿è¯æ·»åŠ çš„éƒ¨é—¨æ˜¯åˆ†çº§ç®¡ç†å‘˜ç®¡è¾–çš„éƒ¨é—¨
 		 */
 		if (loginContext.isSystemAdministrator() || nodeIds.contains(parentId)) {
-			// Ôö¼Ó²¿ÃÅÊ±£¬Í¬Ê±ÒªÔö¼Ó¶ÔÓ¦½Úµã
+			// å¢åŠ éƒ¨é—¨æ—¶ï¼ŒåŒæ—¶è¦å¢åŠ å¯¹åº”èŠ‚ç‚¹
 			SysDepartment bean = new SysDepartment();
 			bean.setName(ParamUtil.getParameter(request, "name"));
 			bean.setDesc(ParamUtil.getParameter(request, "desc"));
@@ -323,10 +323,10 @@ public class BranchDepartmentController {
 			ret = sysDepartmentService.create(bean);
 
 			ViewMessages messages = new ViewMessages();
-			if (ret) {// ±£´æ³É¹¦
+			if (ret) {// ä¿å­˜æˆåŠŸ
 				messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 						"department.add_success"));
-			} else {// ±£´æÊ§°Ü
+			} else {// ä¿å­˜å¤±è´¥
 				messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 						"department.add_failure"));
 			}
@@ -337,7 +337,7 @@ public class BranchDepartmentController {
 	}
 
 	/**
-	 * Ìá½»ĞŞ¸ÄĞÅÏ¢
+	 * æäº¤ä¿®æ”¹ä¿¡æ¯
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -360,7 +360,7 @@ public class BranchDepartmentController {
 			}
 
 			/**
-			 * ±£Ö¤Ìí¼ÓµÄ²¿ÃÅÊÇ·Ö¼¶¹ÜÀíÔ±¹ÜÏ½µÄ²¿ÃÅ
+			 * ä¿è¯æ·»åŠ çš„éƒ¨é—¨æ˜¯åˆ†çº§ç®¡ç†å‘˜ç®¡è¾–çš„éƒ¨é—¨
 			 */
 			if (loginContext.isSystemAdministrator()
 					|| nodeIds.contains(parentId)) {
@@ -387,16 +387,16 @@ public class BranchDepartmentController {
 			}
 		}
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"department.modify_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"department.modify_failure"));
 		}
 		MessageUtils.addMessages(request, messages);
 
-		// ÏÔÊ¾ÁĞ±íÒ³Ãæ
+		// æ˜¾ç¤ºåˆ—è¡¨é¡µé¢
 		return new ModelAndView("show_msg", modelMap);
 	}
 
@@ -422,7 +422,7 @@ public class BranchDepartmentController {
 	}
 
 	/**
-	 * ÏÔÊ¾ËùÓĞÁĞ±í
+	 * æ˜¾ç¤ºæ‰€æœ‰åˆ—è¡¨
 	 * 
 	 * @param request
 	 * @param modelMap

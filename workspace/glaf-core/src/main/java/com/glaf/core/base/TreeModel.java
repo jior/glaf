@@ -28,7 +28,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * 
- * ½ÚµãÊ÷Ä£ĞÍ
+ * èŠ‚ç‚¹æ ‘æ¨¡å‹
  * 
  */
 
@@ -36,21 +36,21 @@ public interface TreeModel extends Serializable,
 		java.lang.Comparable<TreeModel> {
 
 	/**
-	 * Ìí¼Ó×Ó½Úµã
+	 * æ·»åŠ å­èŠ‚ç‚¹
 	 * 
 	 * @param treeModel
 	 */
 	void addChild(TreeModel treeModel);
 
 	/**
-	 * ·µ»Ø×Ó½Úµã
+	 * è¿”å›å­èŠ‚ç‚¹
 	 * 
 	 * @return
 	 */
 	List<TreeModel> getChildren();
 
 	/**
-	 * ´úÂë
+	 * ä»£ç 
 	 * 
 	 * @return
 	 */
@@ -71,7 +71,7 @@ public interface TreeModel extends Serializable,
 	String getIconCls();
 
 	/**
-	 * Ö÷¼ü
+	 * ä¸»é”®
 	 * 
 	 * @return
 	 */
@@ -82,28 +82,28 @@ public interface TreeModel extends Serializable,
 	int getLocked();
 
 	/**
-	 * Ãû³Æ
+	 * åç§°
 	 * 
 	 * @return
 	 */
 	String getName();
 
 	/**
-	 * ¸¸½Úµã
+	 * çˆ¶èŠ‚ç‚¹
 	 * 
 	 * @return
 	 */
 	TreeModel getParent();
 
 	/**
-	 * ¸¸½Úµã±àºÅ
+	 * çˆ¶èŠ‚ç‚¹ç¼–å·
 	 * 
 	 * @return
 	 */
 	long getParentId();
 
 	/**
-	 * »ñÈ¡Ë³ĞòºÅ
+	 * è·å–é¡ºåºå·
 	 * 
 	 * @return
 	 */
@@ -120,7 +120,7 @@ public interface TreeModel extends Serializable,
 	boolean isChecked();
 
 	/**
-	 * É¾³ı×Ó½Úµã
+	 * åˆ é™¤å­èŠ‚ç‚¹
 	 * 
 	 */
 	void removeChild(TreeModel treeModel);
@@ -128,7 +128,7 @@ public interface TreeModel extends Serializable,
 	void setChecked(boolean checked);
 
 	/**
-	 * ÉèÖÃ×Ó½Úµã
+	 * è®¾ç½®å­èŠ‚ç‚¹
 	 * 
 	 */
 	void setChildren(List<TreeModel> children);

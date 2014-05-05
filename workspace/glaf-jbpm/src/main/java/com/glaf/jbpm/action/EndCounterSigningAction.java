@@ -45,7 +45,7 @@ public class EndCounterSigningAction implements ActionHandler {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * ÊÇ·ñ·¢ĞÅºÅ
+	 * æ˜¯å¦å‘ä¿¡å·
 	 */
 	private boolean signal;
 
@@ -97,7 +97,7 @@ public class EndCounterSigningAction implements ActionHandler {
 		}
 
 		if (!executable) {
-			logger.debug("±í´ïÊ½¼ÆËãºóÈ¡ÖµÎªfalse£¬²»Ö´ĞĞºóĞø¶¯×÷¡£");
+			logger.debug("è¡¨è¾¾å¼è®¡ç®—åå–å€¼ä¸ºfalseï¼Œä¸æ‰§è¡Œåç»­åŠ¨ä½œã€‚");
 			return;
 		}
 

@@ -29,13 +29,13 @@ import com.glaf.core.query.BlobItemQuery;
 
 /**
  * 
- * ×Ö½ÚÁ÷·şÎñ ±¾·şÎñÀàÌá¹©×Ö½ÚÁ÷µÄ´´½¨¡¢ĞŞ¸Ä¡¢É¾³ı¡¢¸´ÖÆ¼°²éÑ¯·şÎñ
+ * å­—èŠ‚æµæœåŠ¡ æœ¬æœåŠ¡ç±»æä¾›å­—èŠ‚æµçš„åˆ›å»ºã€ä¿®æ”¹ã€åˆ é™¤ã€å¤åˆ¶åŠæŸ¥è¯¢æœåŠ¡
  */
 @Transactional(readOnly = true)
 public interface IBlobService {
 
 	/**
-	 * ¸´ÖÆ×Ö½ÚÁ÷
+	 * å¤åˆ¶å­—èŠ‚æµ
 	 * 
 	 * @param sourceId
 	 * @param destId
@@ -44,7 +44,7 @@ public interface IBlobService {
 	void copyBlob(String sourceId, String destId);
 
 	/**
-	 * ¸ù¾İÎÄ¼ş±àºÅÉ¾³ıÊı¾İ
+	 * æ ¹æ®æ–‡ä»¶ç¼–å·åˆ é™¤æ•°æ®
 	 * 
 	 * @param fileId
 	 */
@@ -52,7 +52,7 @@ public interface IBlobService {
 	void deleteBlobByFileId(String fileId);
 
 	/**
-	 * ¸ù¾İ×ÊÔ´±àºÅÉ¾³ıÊı¾İ
+	 * æ ¹æ®èµ„æºç¼–å·åˆ é™¤æ•°æ®
 	 * 
 	 * @param businessKey
 	 */
@@ -60,7 +60,7 @@ public interface IBlobService {
 	void deleteBlobByBusinessKey(String businessKey);
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ıÊı¾İ
+	 * æ ¹æ®ä¸»é”®åˆ é™¤æ•°æ®
 	 * 
 	 * @param id
 	 */
@@ -68,7 +68,7 @@ public interface IBlobService {
 	void deleteById(String id);
 
 	/**
-	 * ¸ù¾İÎÄ¼ş±àºÅ»ñÈ¡Êı¾İ(²»°üº¬×Ö½ÚÁ÷)
+	 * æ ¹æ®æ–‡ä»¶ç¼–å·è·å–æ•°æ®(ä¸åŒ…å«å­—èŠ‚æµ)
 	 * 
 	 * @param fileId
 	 * @return
@@ -76,7 +76,7 @@ public interface IBlobService {
 	DataFile getBlobByFileId(String fileId);
 
 	/**
-	 * ¸ù¾İÎÄ¼şÃû³Æ»ñÈ¡Êı¾İ(²»°üº¬×Ö½ÚÁ÷)
+	 * æ ¹æ®æ–‡ä»¶åç§°è·å–æ•°æ®(ä¸åŒ…å«å­—èŠ‚æµ)
 	 * 
 	 * @param filename
 	 * @return
@@ -84,7 +84,7 @@ public interface IBlobService {
 	DataFile getBlobByFilename(String filename);
 
 	/**
-	 * ¸ù¾İÎÄ¼ş±àºÅ»ñÈ¡Êı¾İ(°üº¬×Ö½ÚÁ÷)
+	 * æ ¹æ®æ–‡ä»¶ç¼–å·è·å–æ•°æ®(åŒ…å«å­—èŠ‚æµ)
 	 * 
 	 * @param fileId
 	 * @return
@@ -92,7 +92,7 @@ public interface IBlobService {
 	DataFile getBlobWithBytesByFileId(String fileId);
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡Êı¾İ(²»°üº¬×Ö½ÚÁ÷)
+	 * æ ¹æ®ä¸»é”®è·å–æ•°æ®(ä¸åŒ…å«å­—èŠ‚æµ)
 	 * 
 	 * @param id
 	 * @return
@@ -100,7 +100,7 @@ public interface IBlobService {
 	DataFile getBlobById(String id);
 
 	/**
-	 * ¸ù¾İ²ÎÊı»ñÈ¡Êı¾İ(²»°üº¬×Ö½ÚÁ÷)
+	 * æ ¹æ®å‚æ•°è·å–æ•°æ®(ä¸åŒ…å«å­—èŠ‚æµ)
 	 * 
 	 * @param paramMap
 	 * @return
@@ -108,7 +108,7 @@ public interface IBlobService {
 	List<DataFile> getBlobList(BlobItemQuery query);
 
 	/**
-	 * ¸ù¾İ×ÊÔ´±àºÅ»ñÈ¡Êı¾İ(²»°üº¬×Ö½ÚÁ÷)
+	 * æ ¹æ®èµ„æºç¼–å·è·å–æ•°æ®(ä¸åŒ…å«å­—èŠ‚æµ)
 	 * 
 	 * @param businessKey
 	 * @return
@@ -116,7 +116,7 @@ public interface IBlobService {
 	List<DataFile> getBlobList(String businessKey);
 
 	/**
-	 * ¸ù¾İÎÄ¼ş±àºÅ»ñÈ¡×Ö½ÚÁ÷
+	 * æ ¹æ®æ–‡ä»¶ç¼–å·è·å–å­—èŠ‚æµ
 	 * 
 	 * @param fileId
 	 * @return
@@ -124,7 +124,7 @@ public interface IBlobService {
 	InputStream getInputStreamByFileId(String fileId);
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡×Ö½ÚÁ÷
+	 * æ ¹æ®ä¸»é”®è·å–å­—èŠ‚æµ
 	 * 
 	 * @param id
 	 * @return
@@ -132,7 +132,7 @@ public interface IBlobService {
 	InputStream getInputStreamById(String id);
 
 	/**
-	 * ¸ù¾İ²ÎÊı»ñÈ¡×î´óÊı¾İ(²»°üº¬×Ö½ÚÁ÷)
+	 * æ ¹æ®å‚æ•°è·å–æœ€å¤§æ•°æ®(ä¸åŒ…å«å­—èŠ‚æµ)
 	 * 
 	 * @param paramMap
 	 * @return
@@ -140,7 +140,7 @@ public interface IBlobService {
 	DataFile getMaxBlob(BlobItemQuery query);
 
 	/**
-	 * ¸ù¾İ×ÊÔ´±àºÅ»ñÈ¡×î´óÊı¾İ(²»°üº¬×Ö½ÚÁ÷)
+	 * æ ¹æ®èµ„æºç¼–å·è·å–æœ€å¤§æ•°æ®(ä¸åŒ…å«å­—èŠ‚æµ)
 	 * 
 	 * @param businessKey
 	 * @return
@@ -148,7 +148,7 @@ public interface IBlobService {
 	DataFile getMaxBlob(String businessKey);
 
 	/**
-	 * ¸ù¾İ×ÊÔ´±àºÅ»ñÈ¡×î´óÊı¾İ
+	 * æ ¹æ®èµ„æºç¼–å·è·å–æœ€å¤§æ•°æ®
 	 * 
 	 * @param businessKey
 	 * @return
@@ -156,7 +156,7 @@ public interface IBlobService {
 	DataFile getMaxBlobWithBytes(String businessKey);
 
 	/**
-	 * ĞÂÔö¼ÇÂ¼
+	 * æ–°å¢è®°å½•
 	 * 
 	 * @param blobData
 	 */
@@ -164,17 +164,17 @@ public interface IBlobService {
 	void insertBlob(DataFile blobData);
 
 	/**
-	 * ½«¼ÇÂ¼±ê¼ÇÎªÕıÊ½
+	 * å°†è®°å½•æ ‡è®°ä¸ºæ­£å¼
 	 * 
-	 * @param createBy ´´½¨Õß
-	 * @param serviceKey ·şÎñ±êÊ¶
-	 * @param businessKey ÒµÎñ±êÊ¶
+	 * @param createBy åˆ›å»ºè€…
+	 * @param serviceKey æœåŠ¡æ ‡è¯†
+	 * @param businessKey ä¸šåŠ¡æ ‡è¯†
 	 */
 	@Transactional
 	void makeMark(String createBy, String serviceKey, String businessKey);
 
 	/**
-	 * ÅúÁ¿±£´æ¼ÇÂ¼
+	 * æ‰¹é‡ä¿å­˜è®°å½•
 	 * 
 	 * @param dataList
 	 */
@@ -182,7 +182,7 @@ public interface IBlobService {
 	void saveAll(List<DataFile> dataList);
 
 	/**
-	 * ÅúÁ¿±£´æ¼ÇÂ¼
+	 * æ‰¹é‡ä¿å­˜è®°å½•
 	 * 
 	 * @param dataMap
 	 */
@@ -190,7 +190,7 @@ public interface IBlobService {
 	void saveAll(Map<String, DataFile> dataMap);
 
 	/**
-	 * ĞŞ¸Ä¼ÇÂ¼£¨²»°üº¬×Ö½ÚÁ÷£©
+	 * ä¿®æ”¹è®°å½•ï¼ˆä¸åŒ…å«å­—èŠ‚æµï¼‰
 	 * 
 	 * @param model
 	 */
@@ -198,7 +198,7 @@ public interface IBlobService {
 	void updateBlob(DataFile model);
 
 	/**
-	 * ĞŞ¸Ä¼ÇÂ¼ÖĞµÄÎÄ¼şÄÚÈİ£¨½öĞŞ¸Ä×Ö½ÚÁ÷£©
+	 * ä¿®æ”¹è®°å½•ä¸­çš„æ–‡ä»¶å†…å®¹ï¼ˆä»…ä¿®æ”¹å­—èŠ‚æµï¼‰
 	 * 
 	 * @param model
 	 */

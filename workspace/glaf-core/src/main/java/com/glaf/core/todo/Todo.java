@@ -42,32 +42,32 @@ public class Todo implements java.io.Serializable, Comparable<Todo>, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Ö÷¼ü
+	 * ä¸»é”®
 	 */
 	@Id
 	@Column(name = "id", nullable = false)
 	protected Long id;
 
 	/**
-	 * ´úÂë
+	 * ä»£ç 
 	 */
 	@Column(name = "code", length = 50)
 	protected String code;
 
 	/**
-	 * Ä£¿é±àºÅ
+	 * æ¨¡å—ç¼–å·
 	 */
 	@Column(name = "moduleId", length = 50)
 	protected Long moduleId;
 
 	/**
-	 * Ä£¿éÃû³Æ
+	 * æ¨¡å—åç§°
 	 */
 	@Column(name = "moduleName", length = 50)
 	protected String moduleName;
 
 	/**
-	 * ½ÇÉ«±àºÅ
+	 * è§’è‰²ç¼–å·
 	 */
 	@Column(name = "roleId")
 	protected Long roleId;
@@ -76,7 +76,7 @@ public class Todo implements java.io.Serializable, Comparable<Todo>, JSONable {
 	protected String roleCode;
 
 	/**
-	 * ½ÇÉ«Ãû³Æ
+	 * è§’è‰²åç§°
 	 */
 	@Column(name = "roleName", length = 50)
 	protected String roleName;
@@ -91,91 +91,91 @@ public class Todo implements java.io.Serializable, Comparable<Todo>, JSONable {
 	protected String deptName;
 
 	/**
-	 * ÆÚÏŞ
+	 * æœŸé™
 	 */
 	@Column(name = "limitDay")
 	protected int limitDay;
 
 	/**
-	 * a Ğ¡Ê±
+	 * a å°æ—¶
 	 */
 	@Column(name = "xa")
 	protected int xa;
 
 	/**
-	 * Ğ¡Ê±
+	 * å°æ—¶
 	 */
 	@Column(name = "xb")
 	protected int xb;
 
 	/**
-	 * ±êÌâ
+	 * æ ‡é¢˜
 	 */
 	@Column(name = "title")
 	protected String title;
 
 	/**
-	 * ÄÚÈİ
+	 * å†…å®¹
 	 */
 	@Column(name = "content")
 	protected String content;
 
 	/**
-	 * Á´½ÓµØÖ·
+	 * é“¾æ¥åœ°å€
 	 */
 	@Column(name = "link")
 	protected String link;
 
 	/**
-	 * ÁĞ±íÁ´½ÓµØÖ·
+	 * åˆ—è¡¨é“¾æ¥åœ°å€
 	 */
 	@Column(name = "listLink")
 	protected String listLink;
 
 	/**
-	 * È«²¿Êı¾İµÄÁ´½ÓµØÖ·
+	 * å…¨éƒ¨æ•°æ®çš„é“¾æ¥åœ°å€
 	 */
 	@Column(name = "allListLink")
 	protected String allListLink;
 
 	/**
-	 * Á´½ÓÀà±ğ
+	 * é“¾æ¥ç±»åˆ«
 	 */
 	@Column(name = "linkType", length = 50)
 	protected String linkType;
 
 	/**
-	 * Á÷³ÌÃû³Æ
+	 * æµç¨‹åç§°
 	 */
 	@Column(name = "processName", length = 50)
 	protected String processName;
 
 	/**
-	 * ÈÎÎñÃû³Æ
+	 * ä»»åŠ¡åç§°
 	 */
 	@Column(name = "taskName", length = 50)
 	protected String taskName;
 
 	/**
-	 * TODOÌá¹©Õß
+	 * TODOæä¾›è€…
 	 */
 	@Column(name = "provider", length = 50)
 	protected String provider;
 
 	/**
-	 * ¶ÔÏó±àºÅ
+	 * å¯¹è±¡ç¼–å·
 	 */
 	@Column(name = "objectId")
 	protected String objectId;
 
 	/**
-	 * ¶ÔÏóÖµ
+	 * å¯¹è±¡å€¼
 	 */
 	@Column(name = "objectValue")
 	protected String objectValue;
 
 	/**
-	 * ÊÇ·ñÆôÓÃ¡£0£­ÆôÓÃ¡¢1£­½ûÓÃ
+	 * æ˜¯å¦å¯ç”¨ã€‚0ï¼å¯ç”¨ã€1ï¼ç¦ç”¨
 	 */
 	@Column(name = "enableFlag")
 	protected int enableFlag;

@@ -100,7 +100,7 @@ public class CacheFactory {
 			Future<Object> result = pool.submit(task);
 			long start = System.currentTimeMillis();
 
-			// Èç¹ûÐèÒªµÈ´ýÖ´ÐÐ½á¹û
+			// å¦‚æžœéœ€è¦ç­‰å¾…æ‰§è¡Œç»“æžœ
 			if (waitFor) {
 				while (true) {
 					if (System.currentTimeMillis() - start > 2000) {
@@ -174,7 +174,7 @@ public class CacheFactory {
 		try {
 			Future<String> result = pool.submit(task);
 			long start = System.currentTimeMillis();
-			// Èç¹ûÐèÒªµÈ´ýÖ´ÐÐ½á¹û
+			// å¦‚æžœéœ€è¦ç­‰å¾…æ‰§è¡Œç»“æžœ
 			if (waitFor) {
 				while (true) {
 					if (System.currentTimeMillis() - start > 2000) {

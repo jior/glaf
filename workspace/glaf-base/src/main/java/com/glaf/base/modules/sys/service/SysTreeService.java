@@ -32,7 +32,7 @@ import com.glaf.core.util.PageResult;
 public interface SysTreeService {
 
 	/**
-	 * ±£´æ
+	 * ä¿å­˜
 	 * 
 	 * @param bean
 	 *            SysTree
@@ -41,7 +41,7 @@ public interface SysTreeService {
 	@Transactional
 	boolean create(SysTree bean);
 	/**
-	 * É¾³ı
+	 * åˆ é™¤
 	 * 
 	 * @param id
 	 *            int
@@ -50,7 +50,7 @@ public interface SysTreeService {
 	@Transactional
 	boolean delete(long id);
 	/**
-	 * É¾³ı
+	 * åˆ é™¤
 	 * 
 	 * @param bean
 	 *            SysTree
@@ -60,7 +60,7 @@ public interface SysTreeService {
 	boolean delete(SysTree bean);
 
 	/**
-	 * ÅúÁ¿É¾³ı
+	 * æ‰¹é‡åˆ é™¤
 	 * 
 	 * @param ids
 	 * @return
@@ -69,7 +69,7 @@ public interface SysTreeService {
 	boolean deleteAll(long[] ids);
 
 	/**
-	 * »ñÈ¡¶ÔÏó
+	 * è·å–å¯¹è±¡
 	 * 
 	 * @param id
 	 * @return
@@ -77,7 +77,7 @@ public interface SysTreeService {
 	SysTree findById(long id);
 
 	/**
-	 * °´Ãû³Æ²éÕÒ¶ÔÏó
+	 * æŒ‰åç§°æŸ¥æ‰¾å¯¹è±¡
 	 * 
 	 * @param name
 	 *            String
@@ -86,19 +86,19 @@ public interface SysTreeService {
 	SysTree findByName(String name);
 
 	/**
-	 * »ñÈ¡È«²¿ÁĞ±í
+	 * è·å–å…¨éƒ¨åˆ—è¡¨
 	 * 
 	 * @return List
 	 */
 	List<SysTree> getAllSysTreeList();
 
 	/**
-	 * »ñÈ¡È«²¿ÁĞ±í
+	 * è·å–å…¨éƒ¨åˆ—è¡¨
 	 * 
 	 * @param parent
-	 *            int ¸¸ID
+	 *            int çˆ¶ID
 	 * @param status
-	 *            int ×´Ì¬
+	 *            int çŠ¶æ€
 	 * @return List
 	 */
 	List<SysTree> getAllSysTreeListForDept(long parent, int status);
@@ -106,7 +106,7 @@ public interface SysTreeService {
 	List<SysTree> getAllSysTreeListForDeptNoSort(long parent, int status);
 
 	/**
-	 * »ñÈ¡Ó¦ÓÃÄ£¿éÊ÷ĞÍ½á¹¹
+	 * è·å–åº”ç”¨æ¨¡å—æ ‘å‹ç»“æ„
 	 * 
 	 * @param query
 	 * @return
@@ -114,7 +114,7 @@ public interface SysTreeService {
 	List<SysTree> getApplicationSysTrees(SysTreeQuery query);
 
 	/**
-	 * »ñÈ¡²¿ÃÅÊ÷ĞÍ½á¹¹
+	 * è·å–éƒ¨é—¨æ ‘å‹ç»“æ„
 	 * 
 	 * @param query
 	 * @return
@@ -122,7 +122,7 @@ public interface SysTreeService {
 	List<SysTree> getDepartmentSysTrees(SysTreeQuery query);
 
 	/**
-	 * »ñÈ¡×ÖµäÊ÷ĞÍ½á¹¹
+	 * è·å–å­—å…¸æ ‘å‹ç»“æ„
 	 * 
 	 * @param query
 	 * @return
@@ -130,12 +130,12 @@ public interface SysTreeService {
 	List<SysTree> getDictorySysTrees(SysTreeQuery query);
 
 	/**
-	 * »ñÈ¡¹ØÁª±íÊ÷ĞÍ½á¹¹
+	 * è·å–å…³è”è¡¨æ ‘å‹ç»“æ„
 	 * 
 	 * @param relationTable
-	 *            ±íÃû
+	 *            è¡¨å
 	 * @param relationColumn
-	 *            ¹ØÁª×Ö¶ÎÃû
+	 *            å…³è”å­—æ®µå
 	 * @param query
 	 * @return
 	 */
@@ -143,7 +143,7 @@ public interface SysTreeService {
 			String relationColumn, SysTreeQuery query);
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§Ä³¸ö½ÇÉ«µÄÊ÷½Úµã
+	 * è·å–æŸä¸ªç”¨æˆ·æŸä¸ªè§’è‰²çš„æ ‘èŠ‚ç‚¹
 	 * 
 	 * @param query
 	 * @return
@@ -151,7 +151,7 @@ public interface SysTreeService {
 	List<SysTree> getRoleUserTrees(SysUserQuery query);
 
 	/**
-	 * »ñÈ¡Ê÷ĞÍÁĞ±í
+	 * è·å–æ ‘å‹åˆ—è¡¨
 	 * 
 	 * @param parent
 	 *            int
@@ -160,7 +160,7 @@ public interface SysTreeService {
 	void getSysTree(List<SysTree> tree, long parentId, int deep);
 
 	/**
-	 * °´Ê÷±àºÅ»ñÈ¡Ê÷½Úµã
+	 * æŒ‰æ ‘ç¼–å·è·å–æ ‘èŠ‚ç‚¹
 	 * 
 	 * @param tree
 	 * @return SysTree
@@ -168,14 +168,14 @@ public interface SysTreeService {
 	SysTree getSysTreeByCode(String code);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
 	int getSysTreeCountByQueryCriteria(SysTreeQuery query);
 
 	/**
-	 * »ñÈ¡È«²¿ÁĞ±í
+	 * è·å–å…¨éƒ¨åˆ—è¡¨
 	 * 
 	 * @param parent
 	 *            int
@@ -184,7 +184,7 @@ public interface SysTreeService {
 	List<SysTree> getSysTreeList(long parentId);
 
 	/**
-	 * »ñÈ¡·ÖÒ³ÁĞ±í
+	 * è·å–åˆ†é¡µåˆ—è¡¨
 	 * 
 	 * @param parent
 	 *            int
@@ -197,18 +197,18 @@ public interface SysTreeService {
 	PageResult getSysTreeList(long parentId, int pageNo, int pageSize);
 
 	/**
-	 * »ñÈ¡È«²¿ÁĞ±í
+	 * è·å–å…¨éƒ¨åˆ—è¡¨
 	 * 
 	 * @param parent
-	 *            int ¸¸ID
+	 *            int çˆ¶ID
 	 * @param status
-	 *            int ×´Ì¬
+	 *            int çŠ¶æ€
 	 * @return List
 	 */
 	List<SysTree> getSysTreeListForDept(long parentId, int status);
 
 	/**
-	 * »ñÈ¡¸¸½ÚµãÁĞ±í£¬Èç:¸ùÄ¿Â¼>A>A1>A11
+	 * è·å–çˆ¶èŠ‚ç‚¹åˆ—è¡¨ï¼Œå¦‚:æ ¹ç›®å½•>A>A1>A11
 	 * 
 	 * @param tree
 	 * @param int id
@@ -216,7 +216,7 @@ public interface SysTreeService {
 	void getSysTreeParent(List<SysTree> tree, long id);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */
@@ -224,18 +224,18 @@ public interface SysTreeService {
 			SysTreeQuery query);
 
 	/**
-	 * ÅÅĞò
+	 * æ’åº
 	 * 
 	 * @param bean
 	 *            SysTree
 	 * @param operate
-	 *            int ²Ù×÷
+	 *            int æ“ä½œ
 	 */
 	@Transactional
 	void sort(long parent, SysTree bean, int operate);
 
 	/**
-	 * ¸üĞÂ
+	 * æ›´æ–°
 	 * 
 	 * @param bean
 	 *            SysTree
@@ -245,7 +245,7 @@ public interface SysTreeService {
 	boolean update(SysTree bean);
 
 	/**
-	 * ¸üĞÂÊ÷µÄtreeId×Ö¶Î
+	 * æ›´æ–°æ ‘çš„treeIdå­—æ®µ
 	 * 
 	 * @param treeMap
 	 */
@@ -253,7 +253,7 @@ public interface SysTreeService {
 	void updateTreeIds();
 
 	/**
-	 * ¸üĞÂÖ¸¶¨Ê÷µÄtreeId×Ö¶Î
+	 * æ›´æ–°æŒ‡å®šæ ‘çš„treeIdå­—æ®µ
 	 * 
 	 * @param treeMap
 	 */

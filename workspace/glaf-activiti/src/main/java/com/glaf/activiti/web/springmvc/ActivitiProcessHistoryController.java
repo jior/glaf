@@ -115,13 +115,13 @@ public class ActivitiProcessHistoryController {
 		}
 
 		Map<String, Object> pageInfo = new java.util.HashMap<String, Object>();
-		// µ±Ç°Ò³ÊıÉèÖÃ
+		// å½“å‰é¡µæ•°è®¾ç½®
 		pageInfo.put("startIndex", start);
 
-		// Ã¿Ò³¼ÇÂ¼Êı
+		// æ¯é¡µè®°å½•æ•°
 		pageInfo.put("pageSize", limit);
 
-		// ×ÜÊı¾İÁ¿ÉèÖÃ
+		// æ€»æ•°æ®é‡è®¾ç½®
 		pageInfo.put("totalRecords", total);
 		pageInfo.put("records", list);
 

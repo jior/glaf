@@ -36,64 +36,64 @@ public class BaseMessage implements MessageProvider {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Ö÷¼ü
+	 * ä¸»é”®
 	 */
 
 	protected String id;
 
 	/**
-	 * ÏûÏ¢±àºÅ£¬32Î»UUID
+	 * æ¶ˆæ¯ç¼–å·ï¼Œ32ä½UUID
 	 */
 	protected String messageId;
 
 	/**
-	 * ×ÊÔ´±àºÅ
+	 * èµ„æºç¼–å·
 	 */
 	protected String businessKey;
 
 	/**
-	 * ÏûÏ¢ÀàĞÍ
+	 * æ¶ˆæ¯ç±»å‹
 	 */
 	protected String messageType;
 
 	/**
-	 * ÏûÏ¢´æ·ÅÎ»ÖÃ <br>
-	 * ·¢¼şÏä(S)¡¢ÊÕ¼şÏä(R)¡¢±£´æÏä(T)¡¢·Ï¼şÏä(W)
+	 * æ¶ˆæ¯å­˜æ”¾ä½ç½® <br>
+	 * å‘ä»¶ç®±(S)ã€æ”¶ä»¶ç®±(R)ã€ä¿å­˜ç®±(T)ã€åºŸä»¶ç®±(W)
 	 */
 	protected String messageBox;
 
 	/**
-	 * ÏûÏ¢Ä£°å±àºÅ
+	 * æ¶ˆæ¯æ¨¡æ¿ç¼–å·
 	 */
 	protected String templateId;
 
 	/**
-	 * Ö÷Ìâ
+	 * ä¸»é¢˜
 	 */
 	protected String subject;
 
 	/**
-	 * ÄÚÈİ
+	 * å†…å®¹
 	 */
 	protected String content;
 
 	/**
-	 * ·¢ËÍÕß±àºÅ
+	 * å‘é€è€…ç¼–å·
 	 */
 	protected String senderId;
 
 	/**
-	 * ·¢ËÍÕß
+	 * å‘é€è€…
 	 */
 	protected String senderName;
 
 	/**
-	 * ½ÓÊÕÕß±àºÅ
+	 * æ¥æ”¶è€…ç¼–å·
 	 */
 	protected String receiverId;
 
 	/**
-	 * ½ÓÊÕÕß
+	 * æ¥æ”¶è€…
 	 */
 	protected String receiverName;
 
@@ -102,37 +102,37 @@ public class BaseMessage implements MessageProvider {
 	protected String objectValue;
 
 	/**
-	 * ÏûÏ¢×´Ì¬
+	 * æ¶ˆæ¯çŠ¶æ€
 	 */
 	protected int status;
 
 	/**
-	 * É¾³ı±ê¼Ç
+	 * åˆ é™¤æ ‡è®°
 	 */
 	protected int deleteFlag;
 
 	/**
-	 * ´´½¨Õß±àºÅ
+	 * åˆ›å»ºè€…ç¼–å·
 	 */
 	protected String createBy;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	protected Date createDate;
 
 	/**
-	 * ×îºóÒ»´Î²é¿´ÈÕÆÚ
+	 * æœ€åä¸€æ¬¡æŸ¥çœ‹æ—¥æœŸ
 	 */
 	protected Date lastViewDate;
 
 	/**
-	 * ×îºóÒ»´Î²é¿´IPµØÖ·
+	 * æœ€åä¸€æ¬¡æŸ¥çœ‹IPåœ°å€
 	 */
 	protected String lastViewIP;
 
 	/**
-	 * Ïà¹Ø¸½¼ş
+	 * ç›¸å…³é™„ä»¶
 	 */
 	protected Collection<DataFile> dataFiles = new HashSet<DataFile>();
 

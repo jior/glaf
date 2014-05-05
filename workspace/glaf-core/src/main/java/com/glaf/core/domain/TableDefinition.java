@@ -39,7 +39,7 @@ import com.glaf.core.domain.util.ColumnDefinitionJsonFactory;
 import com.glaf.core.domain.util.TableDefinitionJsonFactory;
 
 /**
- * Êı¾İ±í¶¨Òå
+ * æ•°æ®è¡¨å®šä¹‰
  * 
  * @author joy
  * 
@@ -55,7 +55,7 @@ public class TableDefinition implements java.io.Serializable,
 	protected int addType;
 
 	/**
-	 * ¾ÛºÏÖ÷¼üÁĞ¼¯
+	 * èšåˆä¸»é”®åˆ—é›†
 	 */
 	@Column(name = "AGGREGATIONKEYS_", length = 500)
 	protected String aggregationKeys;
@@ -70,26 +70,26 @@ public class TableDefinition implements java.io.Serializable,
 	protected List<ColumnDefinition> columns = new java.util.ArrayList<ColumnDefinition>();
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
 
 	/**
-	 * ´´½¨Ê±¼ä
+	 * åˆ›å»ºæ—¶é—´
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATETIME_")
 	protected Date createTime;
 
 	/**
-	 * ¼¶ÁªÉ¾³ı
+	 * çº§è”åˆ é™¤
 	 */
 	@Column(name = "DELETECASCADE_")
 	protected int deleteCascade;
 
 	/**
-	 * ÊÇ·ñÉ¾³ı×¥È¡Êı¾İ
+	 * æ˜¯å¦åˆ é™¤æŠ“å–æ•°æ®
 	 */
 	@Column(name = "DELETEFETCH_", length = 1)
 	protected String deleteFetch;
@@ -98,19 +98,19 @@ public class TableDefinition implements java.io.Serializable,
 	protected int deleteFlag;
 
 	/**
-	 * ÃèÊö
+	 * æè¿°
 	 */
 	@Column(name = "DESCRIPTION_", length = 500)
 	protected String description;
 
 	/**
-	 * ÏÔÊ¾ÀàĞÍ form,grid,tree,treegrid
+	 * æ˜¾ç¤ºç±»å‹ form,grid,tree,treegrid
 	 */
 	@Column(name = "DISPLAYTYPE_", length = 50)
 	protected String displayType;
 
 	/**
-	 * ±êÌâ
+	 * æ ‡é¢˜
 	 */
 	@Column(name = "ENGLISHTITLE_")
 	protected String englishTitle;
@@ -122,7 +122,7 @@ public class TableDefinition implements java.io.Serializable,
 	protected ColumnDefinition idColumn;
 
 	/**
-	 * ¼¶Áª²åÈë
+	 * çº§è”æ’å…¥
 	 */
 	@Column(name = "INSERTCASCADE_")
 	protected int insertCascade;
@@ -134,19 +134,19 @@ public class TableDefinition implements java.io.Serializable,
 	protected String isSubTable;
 
 	/**
-	 * ÊÇ·ñĞèÒªJBPM¹¤×÷Á÷Ö§³Ö
+	 * æ˜¯å¦éœ€è¦JBPMå·¥ä½œæµæ”¯æŒ
 	 */
 	@Transient
 	protected boolean jbpmSupport;
 
 	/**
-	 * ÊÇ·ñËø¶¨
+	 * æ˜¯å¦é”å®š
 	 */
 	@Column(name = "LOCKED_")
 	protected int locked;
 
 	/**
-	 * Ä£¿éÃû³Æ
+	 * æ¨¡å—åç§°
 	 */
 	@javax.persistence.Transient
 	protected String moduleName;
@@ -161,13 +161,13 @@ public class TableDefinition implements java.io.Serializable,
 	protected List<QueryDefinition> queries = new java.util.ArrayList<QueryDefinition>();
 
 	/**
-	 * ×éºÏ²éÑ¯µÄ²éÑ¯±àºÅ
+	 * ç»„åˆæŸ¥è¯¢çš„æŸ¥è¯¢ç¼–å·
 	 */
 	@Column(name = "QUERYIDS_", length = 500)
 	protected String queryIds;
 
 	/**
-	 * ĞŞ¶©°æ±¾
+	 * ä¿®è®¢ç‰ˆæœ¬
 	 */
 	@Column(name = "REVISION_")
 	protected int revision;
@@ -182,20 +182,20 @@ public class TableDefinition implements java.io.Serializable,
 	protected String systemFlag;
 
 	/**
-	 * ±íÃû
+	 * è¡¨å
 	 */
 	@Id
 	@Column(name = "TABLENAME_", length = 50)
 	protected String tableName;
 
 	/**
-	 * ÊÇ·ñÁÙÊ±±í
+	 * æ˜¯å¦ä¸´æ—¶è¡¨
 	 */
 	@Column(name = "TEMPORARYFLAG_", length = 1)
 	protected String temporaryFlag;
 
 	/**
-	 * ±êÌâ
+	 * æ ‡é¢˜
 	 */
 	@Column(name = "TITLE_")
 	protected String title;
@@ -204,19 +204,19 @@ public class TableDefinition implements java.io.Serializable,
 	protected String topId;
 
 	/**
-	 * ÊÇ·ñÊ÷ĞÍ½á¹¹
+	 * æ˜¯å¦æ ‘å‹ç»“æ„
 	 */
 	@Transient
 	protected boolean treeSupport;
 
 	/**
-	 * ±íÀàĞÍ
+	 * è¡¨ç±»å‹
 	 */
 	@Column(name = "TYPE_", length = 50)
 	protected String type;
 
 	/**
-	 * ¼¶Áª¸üĞÂ
+	 * çº§è”æ›´æ–°
 	 */
 	@Column(name = "UPDATECASCADE_")
 	protected int updateCascade;

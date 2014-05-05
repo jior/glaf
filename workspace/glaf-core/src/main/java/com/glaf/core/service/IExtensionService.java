@@ -29,14 +29,14 @@ import com.glaf.core.domain.SysDataTable;
 public interface IExtensionService {
 
 	/**
-	 * »ñÈ¡À©Õ¹Ä£¿é
+	 * è·å–æ‰©å±•æ¨¡å—
 	 * 
 	 * @return
 	 */
 	List<SysDataTable> getExtensionModules();
 
 	/**
-	 * »ñÈ¡À©Õ¹Ä£¿éµÄÊäÈë×Ö¶ÎÁĞ±í
+	 * è·å–æ‰©å±•æ¨¡å—çš„è¾“å…¥å­—æ®µåˆ—è¡¨
 	 * 
 	 * @param serviceKey
 	 * @return
@@ -52,7 +52,7 @@ public interface IExtensionService {
 	Map<String, Object> getDataMap(String serviceKey, String businessKey);
 
 	/**
-	 * ±£´æÊı¾İ
+	 * ä¿å­˜æ•°æ®
 	 * 
 	 * @param serviceKey
 	 * @param businessKey

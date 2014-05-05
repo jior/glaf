@@ -27,7 +27,7 @@ import com.glaf.core.security.LoginContext;
 public interface IEntryService {
 
 	/**
-	 * É¾³ı¼ÇÂ¼
+	 * åˆ é™¤è®°å½•
 	 * 
 	 * @param rowId
 	 */
@@ -35,7 +35,7 @@ public interface IEntryService {
 	void deleteEntityEntry(String rowId);
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡ÊµÌå·ÃÎÊÏî
+	 * æ ¹æ®ä¸»é”®è·å–å®ä½“è®¿é—®é¡¹
 	 * 
 	 * @param rowId
 	 * @return
@@ -43,7 +43,7 @@ public interface IEntryService {
 	EntityEntry getEntityEntry(String rowId);
 
 	/**
-	 * ¸ù¾İ½Úµã±àºÅ¼°·ÃÎÊKey»ñÈ¡ÊµÌå·ÃÎÊÏî
+	 * æ ¹æ®èŠ‚ç‚¹ç¼–å·åŠè®¿é—®Keyè·å–å®ä½“è®¿é—®é¡¹
 	 * 
 	 * @param nodeId
 	 * @param entryKey
@@ -52,35 +52,35 @@ public interface IEntryService {
 	EntityEntry getEntityEntry(long nodeId, String entryKey);
 
 	/**
-	 * ¸ù¾İ²ÎÊı»ñÈ¡ÊµÌå·ÃÎÊÏî
+	 * æ ¹æ®å‚æ•°è·å–å®ä½“è®¿é—®é¡¹
 	 * 
 	 * @param moduleId
-	 *            Ä£¿é±àºÅ
+	 *            æ¨¡å—ç¼–å·
 	 * @param entityId
-	 *            ÊµÌå±àºÅ
+	 *            å®ä½“ç¼–å·
 	 * @param entryKey
-	 *            ÊµÌåKey
+	 *            å®ä½“Key
 	 * @return
 	 */
 	EntityEntry getEntityEntry(String moduleId, String entityId, String entryKey);
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§ÄÜ·ÃÎÊµÄ¼ÇÂ¼¼¯ºÏ
+	 * è·å–æŸä¸ªç”¨æˆ·èƒ½è®¿é—®çš„è®°å½•é›†åˆ
 	 * 
 	 * 
 	 * @param loginContext
-	 *            ÓÃ»§ÉÏÏÂÎÄ
+	 *            ç”¨æˆ·ä¸Šä¸‹æ–‡
 	 * @param moduleId
-	 *            Ä£¿é±êÊ¶
+	 *            æ¨¡å—æ ‡è¯†
 	 * @param entryKey
-	 *            È¨ÏŞ
+	 *            æƒé™
 	 * @return
 	 */
 	List<String> getEntityIds(LoginContext loginContext, String moduleId,
 			String entryKey);
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§Ä³¸öÄ£¿éµÄ·ÃÎÊÈ¨ÏŞ
+	 * è·å–æŸä¸ªç”¨æˆ·æŸä¸ªæ¨¡å—çš„è®¿é—®æƒé™
 	 * 
 	 * @param loginContext
 	 * @param moduleId
@@ -89,46 +89,46 @@ public interface IEntryService {
 	List<String> getEntryKeys(LoginContext loginContext, String moduleId);
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§ÄÜ·ÃÎÊµÄ½Úµã¼¯ºÏ
+	 * è·å–æŸä¸ªç”¨æˆ·èƒ½è®¿é—®çš„èŠ‚ç‚¹é›†åˆ
 	 * 
 	 * @param loginContext
-	 *            ÓÃ»§ÉÏÏÂÎÄ
+	 *            ç”¨æˆ·ä¸Šä¸‹æ–‡
 	 * @return
 	 */
 	List<TreeModel> getTreeModels(LoginContext loginContext);
 
 	/**
-	 * ¼ì²éÄ³¸öÓÃ»§ÊÇ·ñÓĞÄ³¸ö·ÖÀàµÄÄ³¸öÈ¨ÏŞ
+	 * æ£€æŸ¥æŸä¸ªç”¨æˆ·æ˜¯å¦æœ‰æŸä¸ªåˆ†ç±»çš„æŸä¸ªæƒé™
 	 * 
 	 * @param loginContext
-	 *            ÓÃ»§ÉÏÏÂÎÄ
+	 *            ç”¨æˆ·ä¸Šä¸‹æ–‡
 	 * @param nodeId
-	 *            ·ÖÀà±àºÅ
+	 *            åˆ†ç±»ç¼–å·
 	 * @param permKey
-	 *            È¨ÏŞµã
+	 *            æƒé™ç‚¹
 	 * @return
 	 */
 	boolean hasPermission(LoginContext loginContext, long nodeId, String permKey);
 
 	/**
-	 * ¼ì²éÄ³¸öÓÃ»§ÊÇ·ñÓĞÄ³¸ö¼ÇÂ¼µÄÄ³¸öÈ¨ÏŞ
+	 * æ£€æŸ¥æŸä¸ªç”¨æˆ·æ˜¯å¦æœ‰æŸä¸ªè®°å½•çš„æŸä¸ªæƒé™
 	 * 
 	 * @param loginContext
-	 *            ÓÃ»§ÉÏÏÂÎÄ
+	 *            ç”¨æˆ·ä¸Šä¸‹æ–‡
 	 * @param moduleId
-	 *            Ä£¿é±êÊ¶
+	 *            æ¨¡å—æ ‡è¯†
 	 * @param entityId
-	 *            ¼ÇÂ¼±àºÅ
+	 *            è®°å½•ç¼–å·
 	 * 
 	 * @param permKey
-	 *            È¨ÏŞµã
+	 *            æƒé™ç‚¹
 	 * @return
 	 */
 	boolean hasPermission(LoginContext loginContext, String moduleId,
 			String entityId, String permKey);
 
 	/**
-	 * ±£´æ¼ÇÂ¼
+	 * ä¿å­˜è®°å½•
 	 * 
 	 * @param entityEntry
 	 */

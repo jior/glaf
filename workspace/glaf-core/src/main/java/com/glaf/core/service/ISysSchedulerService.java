@@ -28,7 +28,7 @@ import com.glaf.core.base.Scheduler;
 public interface ISysSchedulerService {
 
 	/**
-	 * É¾³ıµ÷¶ÈÈÎÎñ
+	 * åˆ é™¤è°ƒåº¦ä»»åŠ¡
 	 * 
 	 * @param scheduler
 	 */
@@ -36,14 +36,14 @@ public interface ISysSchedulerService {
 	void deleteScheduler(String taskId);
 
 	/**
-	 * »ñÈ¡È«²¿µ÷¶ÈÈÎÎñ
+	 * è·å–å…¨éƒ¨è°ƒåº¦ä»»åŠ¡
 	 * 
 	 * @return
 	 */
 	List<Scheduler> getAllSchedulers();
 
 	/**
-	 * ¸ù¾İÈÎÎñ±àºÅ»ñÈ¡µ÷¶ÈÈÎÎñ
+	 * æ ¹æ®ä»»åŠ¡ç¼–å·è·å–è°ƒåº¦ä»»åŠ¡
 	 * 
 	 * @param taskId
 	 * @return
@@ -51,7 +51,7 @@ public interface ISysSchedulerService {
 	Scheduler getSchedulerByTaskId(String taskId);
 
 	/**
-	 * ¸ù¾İÈÎÎñÀàĞÍ»ñÈ¡µ÷¶ÈÈÎÎñ
+	 * æ ¹æ®ä»»åŠ¡ç±»å‹è·å–è°ƒåº¦ä»»åŠ¡
 	 * 
 	 * @param taskType
 	 * @return
@@ -59,7 +59,7 @@ public interface ISysSchedulerService {
 	List<Scheduler> getSchedulers(String taskType);
 
 	/**
-	 * »ñÈ¡ÓÃ»§×ÔĞĞ¶¨ÒåµÄµ÷¶ÈÈÎÎñ
+	 * è·å–ç”¨æˆ·è‡ªè¡Œå®šä¹‰çš„è°ƒåº¦ä»»åŠ¡
 	 * 
 	 * @param createBy
 	 * @return
@@ -67,7 +67,7 @@ public interface ISysSchedulerService {
 	List<Scheduler> getUserSchedulers(String createBy);
 
 	/**
-	 * Ëø¶¨µ÷¶ÈÈÎÎñ
+	 * é”å®šè°ƒåº¦ä»»åŠ¡
 	 * 
 	 * @param taskId
 	 * @param locked
@@ -76,7 +76,7 @@ public interface ISysSchedulerService {
 	void locked(String taskId, int locked);
 
 	/**
-	 * ±£´æµ÷¶ÈÈÎÎñ
+	 * ä¿å­˜è°ƒåº¦ä»»åŠ¡
 	 * 
 	 * @param model
 	 */
@@ -84,7 +84,7 @@ public interface ISysSchedulerService {
 	void save(Scheduler model);
 
 	/**
-	 * ĞŞ¸Äµ÷¶ÈÈÎÎñ
+	 * ä¿®æ”¹è°ƒåº¦ä»»åŠ¡
 	 * 
 	 * @param model
 	 */

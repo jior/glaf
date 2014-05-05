@@ -66,7 +66,7 @@ public class IdentityChooseController {
 	protected SysRoleService sysRoleService;
 
 	/**
-	 * ÏÔÊ¾Ñ¡Ôñ²¿ÃÅÒ³Ãæ
+	 * æ˜¾ç¤ºé€‰æ‹©éƒ¨é—¨é¡µé¢
 	 * 
 	 * @param modelMap
 	 * @param request
@@ -82,7 +82,7 @@ public class IdentityChooseController {
 			return new ModelAndView(x_view, modelMap);
 		}
 		int selectType = RequestUtils.getInt(request, "selectType", 0);
-		if(selectType==1){//±íÊ¾µ¯³öµ¥Ñ¡ÓÃ»§½çÃæ
+		if(selectType==1){//è¡¨ç¤ºå¼¹å‡ºå•é€‰ç”¨æˆ·ç•Œé¢
 			return new ModelAndView("/modules/base/choose/choose_depts_radio", modelMap);
 		}else{
 			return new ModelAndView("/modules/base/choose/choose_depts", modelMap);
@@ -90,7 +90,7 @@ public class IdentityChooseController {
 	}
 
 	/**
-	 * ÏÔÊ¾Ñ¡Ôñ½ÇÉ«Ò³Ãæ
+	 * æ˜¾ç¤ºé€‰æ‹©è§’è‰²é¡µé¢
 	 * 
 	 * @param modelMap
 	 * @param request
@@ -115,7 +115,7 @@ public class IdentityChooseController {
 	}
 
 	/**
-	 * ÏÔÊ¾Ñ¡Ôñ²¿ÃÅÒ³Ãæ
+	 * æ˜¾ç¤ºé€‰æ‹©éƒ¨é—¨é¡µé¢
 	 * 
 	 * @param modelMap
 	 * @param request
@@ -134,7 +134,7 @@ public class IdentityChooseController {
 	}
 
 	/**
-	 * ÏÔÊ¾Ñ¡ÔñÓÃ»§Ò³Ãæ
+	 * æ˜¾ç¤ºé€‰æ‹©ç”¨æˆ·é¡µé¢
 	 * 
 	 * @param modelMap
 	 * @param request
@@ -150,7 +150,7 @@ public class IdentityChooseController {
 			return new ModelAndView(x_view, modelMap);
 		}
 		int selectType = RequestUtils.getInt(request, "selectType", 0);
-		if(selectType==1){//±íÊ¾µ¯³öµ¥Ñ¡ÓÃ»§½çÃæ
+		if(selectType==1){//è¡¨ç¤ºå¼¹å‡ºå•é€‰ç”¨æˆ·ç•Œé¢
 			return new ModelAndView("/modules/base/choose/choose_users_radio", modelMap);
 		}else{
 			return new ModelAndView("/modules/base/choose/choose_users", modelMap);

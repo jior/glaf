@@ -373,12 +373,12 @@ public class DBUtils {
 	}
 
 	/**
-	 * ´´½¨Êı¾İ¿â±í£¬Èç¹ûÒÑ¾­´æÔÚ£¬Ôò²»ÖØ½¨
+	 * åˆ›å»ºæ•°æ®åº“è¡¨ï¼Œå¦‚æœå·²ç»å­˜åœ¨ï¼Œåˆ™ä¸é‡å»º
 	 * 
 	 * @param connection
-	 *            JDBCÁ¬½Ó
+	 *            JDBCè¿æ¥
 	 * @param tableDefinition
-	 *            ±í¶¨Òå
+	 *            è¡¨å®šä¹‰
 	 */
 	public static void createTable(Connection connection,
 			TableDefinition tableDefinition) {
@@ -430,12 +430,12 @@ public class DBUtils {
 	}
 
 	/**
-	 * ´´½¨Êı¾İ¿â±í£¬Èç¹ûÒÑ¾­´æÔÚ£¬ÔòÉ¾³ıÖØ½¨
+	 * åˆ›å»ºæ•°æ®åº“è¡¨ï¼Œå¦‚æœå·²ç»å­˜åœ¨ï¼Œåˆ™åˆ é™¤é‡å»º
 	 * 
 	 * @param connection
-	 *            JDBCÁ¬½Ó
+	 *            JDBCè¿æ¥
 	 * @param tableDefinition
-	 *            ±í¶¨Òå
+	 *            è¡¨å®šä¹‰
 	 */
 	public static void dropAndCreateTable(Connection connection,
 			TableDefinition tableDefinition) {
@@ -450,18 +450,18 @@ public class DBUtils {
 	}
 
 	/**
-	 * Èç¹ûÒÑ¾­´æÔÚ£¬ÔòÉ¾³ı
+	 * å¦‚æœå·²ç»å­˜åœ¨ï¼Œåˆ™åˆ é™¤
 	 * 
 	 * @param connection
-	 *            JDBCÁ¬½Ó
+	 *            JDBCè¿æ¥
 	 * @param tableDefinition
-	 *            ±í¶¨Òå
+	 *            è¡¨å®šä¹‰
 	 */
 	public static void dropTable(Connection connection, String tableName) {
 		logger.info("check table:" + tableName);
 		if (tableExists(connection, tableName)) {
 			/**
-			 * Ö»ÄÜÔÚ¿ª·¢Ä£Ê½ÏÂ²ÅÄÜÉ¾³ı±í
+			 * åªèƒ½åœ¨å¼€å‘æ¨¡å¼ä¸‹æ‰èƒ½åˆ é™¤è¡¨
 			 */
 			String dbType = DBConnectionFactory.getDatabaseType(connection);
 			if (System.getProperty("devMode") != null
@@ -2331,7 +2331,7 @@ public class DBUtils {
 				if (dataMap.get(temp) != null) {
 					Object value = dataMap.get(temp);
 					/**
-					 * Èç¹ûÊÇCollection²ÎÊı£¬±ØĞëÖÁÉÙÓĞÒ»¸öÖµ
+					 * å¦‚æœæ˜¯Collectionå‚æ•°ï¼Œå¿…é¡»è‡³å°‘æœ‰ä¸€ä¸ªå€¼
 					 */
 					if (value != null && value instanceof Collection) {
 						Collection<?> coll = (Collection<?>) value;
@@ -2437,7 +2437,7 @@ public class DBUtils {
 	}
 
 	/**
-	 * ÅĞ¶Ï±íÊÇ·ñÒÑ¾­´æÔÚ
+	 * åˆ¤æ–­è¡¨æ˜¯å¦å·²ç»å­˜åœ¨
 	 * 
 	 * @param systemName
 	 * @param tableName

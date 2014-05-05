@@ -23,7 +23,7 @@ import org.jfree.chart.JFreeChart;
 import com.glaf.chart.domain.Chart;
 
 /**
- * 图像生成接口
+ * 鍥惧儚鐢熸垚鎺ュ彛
  * 
  * @author joy
  * 
@@ -33,7 +33,7 @@ public interface ChartGen {
 	/**
 	 * 
 	 * @param chartModel
-	 *            图形对象
+	 *            鍥惧舰瀵硅薄
 	 */
 	JFreeChart createChart(Chart chartModel);
 

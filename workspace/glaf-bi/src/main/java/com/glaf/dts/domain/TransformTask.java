@@ -43,65 +43,65 @@ public class TransformTask implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Ö÷¼ü
+	 * ä¸»é”®
 	 */
 	@Id
 	@Column(name = "ID_", length = 50)
 	protected String id;
 
 	/**
-	 * »î¶¯±àºÅ
+	 * æ´»åŠ¨ç¼–å·
 	 */
 	@Column(name = "ACTIVITYID_", length = 50)
 	protected String activityId;
 
 	/**
-	 * ²½Öè±àºÅ
+	 * æ­¥éª¤ç¼–å·
 	 */
 	@Column(name = "STEPID_", length = 50)
 	protected String stepId;
 
 	/**
-	 * ²éÑ¯±àºÅ
+	 * æŸ¥è¯¢ç¼–å·
 	 */
 	@Column(name = "QUERYID_", length = 50)
 	protected String queryId;
 
 	/**
-	 * ±íÃû
+	 * è¡¨å
 	 */
 	@Column(name = "TABLENAME_", length = 50)
 	protected String tableName;
 
 	/**
-	 * Ö÷Ìâ
+	 * ä¸»é¢˜
 	 */
 	@Column(name = "TITLE_")
 	protected String title;
 
 	/**
-	 * ²éÑ¯²ÎÊı
+	 * æŸ¥è¯¢å‚æ•°
 	 */
 	@Lob
 	@Column(name = "PARAMETER_")
 	protected String parameter;
 
 	/**
-	 * ¿ªÊ¼Ê±¼ä
+	 * å¼€å§‹æ—¶é—´
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "STARTTIME_")
 	protected Date startTime;
 
 	/**
-	 * ½áÊøÊ±¼ä
+	 * ç»“æŸæ—¶é—´
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "ENDTIME_")
 	protected Date endTime;
 
 	/**
-	 * Ë³ĞòºÅ
+	 * é¡ºåºå·
 	 */
 	@Column(name = "SORTNO_")
 	protected int sortNo;
@@ -109,13 +109,13 @@ public class TransformTask implements java.io.Serializable {
 	@Column(name = "DURATION_")
 	protected long duration;
 	/**
-	 * ×´Ì¬£¬0-´ú±íÎ´Ö´ĞĞ£¬1-Ö´ĞĞÖĞ£¬2-´¦Àí´íÎó£¬9-´¦Àí³É¹¦
+	 * çŠ¶æ€ï¼Œ0-ä»£è¡¨æœªæ‰§è¡Œï¼Œ1-æ‰§è¡Œä¸­ï¼Œ2-å¤„ç†é”™è¯¯ï¼Œ9-å¤„ç†æˆåŠŸ
 	 */
 	@Column(name = "STATUS_")
 	protected int status;
 
 	/**
-	 * ³ö´íºóµÄÖØÊÔ´ÎÊı
+	 * å‡ºé”™åçš„é‡è¯•æ¬¡æ•°
 	 */
 	@Column(name = "RETRYTIMES_")
 	protected int retryTimes;

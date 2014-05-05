@@ -83,7 +83,7 @@ public class EntityDefinitionController {
 					EntityDefinition entityDefinition = entityDefinitionService
 							.getEntityDefinition(x);
 					/**
-					 * �˴�ҵ���߼������е���
+					 * 此处业务逻辑需自行调整
 					 */
 					if (entityDefinition != null
 							&& (StringUtils.equals(
@@ -99,7 +99,7 @@ public class EntityDefinitionController {
 			EntityDefinition entityDefinition = entityDefinitionService
 					.getEntityDefinition(rowId);
 			/**
-			 * �˴�ҵ���߼������е���
+			 * 此处业务逻辑需自行调整
 			 */
 			if (entityDefinition != null
 					&& (StringUtils.equals(entityDefinition.getCreateBy(),
@@ -150,10 +150,10 @@ public class EntityDefinitionController {
 		}
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ����ɹ�
+		if (ret) {// 保存成功
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"entity.save_success"));
-		} else {// ����ʧ��
+		} else {// 保存失败
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"entity.save_failure"));
 		}
@@ -221,7 +221,7 @@ public class EntityDefinitionController {
 		Tools.populate(query, params);
 		query.deleteFlag(0);
 		/**
-		 * �˴�ҵ���߼������е���
+		 * 此处业务逻辑需自行调整
 		 */
 		if (!loginContext.isSystemAdministrator()) {
 			String actorId = loginContext.getActorId();

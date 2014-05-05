@@ -44,12 +44,12 @@ public class JoinAction implements ActionHandler {
 	protected String expression;
 
 	/**
-	 * °üº¬µÄÈÎÎñÃû³Æ£¬¶à¸öÈÎÎñÖ®¼äÓÃ°ë½ÇµÄ¶ººÅ¸ô¿ª
+	 * åŒ…å«çš„ä»»åŠ¡åç§°ï¼Œå¤šä¸ªä»»åŠ¡ä¹‹é—´ç”¨åŠè§’çš„é€—å·éš”å¼€
 	 */
 	protected String includes;
 
 	/**
-	 * ÅÅ³ıµÄÈÎÎñÃû³Æ£¬¶à¸öÈÎÎñÖ®¼äÓÃ°ë½ÇµÄ¶ººÅ¸ô¿ª
+	 * æ’é™¤çš„ä»»åŠ¡åç§°ï¼Œå¤šä¸ªä»»åŠ¡ä¹‹é—´ç”¨åŠè§’çš„é€—å·éš”å¼€
 	 */
 	protected String excludes;
 
@@ -95,7 +95,7 @@ public class JoinAction implements ActionHandler {
 		}
 
 		if (!executable) {
-			logger.debug("±í´ïÊ½¼ÆËãºóÈ¡ÖµÎªfalse£¬²»Ö´ĞĞºóĞø¶¯×÷¡£");
+			logger.debug("è¡¨è¾¾å¼è®¡ç®—åå–å€¼ä¸ºfalseï¼Œä¸æ‰§è¡Œåç»­åŠ¨ä½œã€‚");
 			return;
 		}
 

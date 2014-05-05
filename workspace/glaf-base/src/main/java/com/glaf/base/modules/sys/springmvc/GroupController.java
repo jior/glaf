@@ -78,7 +78,7 @@ public class GroupController {
 	protected SysUserService sysUserService;
 
 	/**
-	 * ÅúÁ¿É¾³ıĞÅÏ¢
+	 * æ‰¹é‡åˆ é™¤ä¿¡æ¯
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -98,21 +98,21 @@ public class GroupController {
 		}
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ³É¹¦
+		if (ret) {// æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"group.delete_success"));
-		} else {// Ê§°Ü
+		} else {// å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"group.delete_failure"));
 		}
 		MessageUtils.addMessages(request, messages);
 
-		// ÏÔÊ¾ÁĞ±íÒ³Ãæ
+		// æ˜¾ç¤ºåˆ—è¡¨é¡µé¢
 		return new ModelAndView("show_msg2", modelMap);
 	}
 
 	/**
-	 * ÏÔÊ¾Èº×éÓÃ»§Ò³Ãæ
+	 * æ˜¾ç¤ºç¾¤ç»„ç”¨æˆ·é¡µé¢
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -126,12 +126,12 @@ public class GroupController {
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
-		// ÏÔÊ¾Èº×éÓÃ»§Ò³Ãæ
+		// æ˜¾ç¤ºç¾¤ç»„ç”¨æˆ·é¡µé¢
 		return new ModelAndView("/modules/base/group/group_users", modelMap);
 	}
 
 	/**
-	 * ÏÔÊ¾Èº×éÓÃ»§Ò³Ãæ
+	 * æ˜¾ç¤ºç¾¤ç»„ç”¨æˆ·é¡µé¢
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -146,7 +146,7 @@ public class GroupController {
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
-		// ÏÔÊ¾Èº×éÓÃ»§Ò³Ãæ
+		// æ˜¾ç¤ºç¾¤ç»„ç”¨æˆ·é¡µé¢
 		return new ModelAndView("/modules/base/group/groupLeaders", modelMap);
 	}
 
@@ -313,7 +313,7 @@ public class GroupController {
 	}
 
 	/**
-	 * ÏÔÊ¾Ôö¼ÓÒ³Ãæ
+	 * æ˜¾ç¤ºå¢åŠ é¡µé¢
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -328,12 +328,12 @@ public class GroupController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		// ÏÔÊ¾ÁĞ±íÒ³Ãæ
+		// æ˜¾ç¤ºåˆ—è¡¨é¡µé¢
 		return new ModelAndView("/modules/base/group/group_add", modelMap);
 	}
 
 	/**
-	 * ÏÔÊ¾ĞŞ¸ÄÒ³Ãæ
+	 * æ˜¾ç¤ºä¿®æ”¹é¡µé¢
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -352,12 +352,12 @@ public class GroupController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		// ÏÔÊ¾ÁĞ±íÒ³Ãæ
+		// æ˜¾ç¤ºåˆ—è¡¨é¡µé¢
 		return new ModelAndView("/modules/base/group/group_modify", modelMap);
 	}
 
 	/**
-	 * Ìá½»Ôö¼ÓĞÅÏ¢
+	 * æäº¤å¢åŠ ä¿¡æ¯
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -382,16 +382,16 @@ public class GroupController {
 		}
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"group.add_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"group.add_failure"));
 		}
 		MessageUtils.addMessages(request, messages);
 
-		// ÏÔÊ¾ÁĞ±íÒ³Ãæ
+		// æ˜¾ç¤ºåˆ—è¡¨é¡µé¢
 		return new ModelAndView("show_msg", modelMap);
 	}
 
@@ -448,7 +448,7 @@ public class GroupController {
 	}
 
 	/**
-	 * Ìá½»ĞŞ¸ÄĞÅÏ¢
+	 * æäº¤ä¿®æ”¹ä¿¡æ¯
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -472,15 +472,15 @@ public class GroupController {
 		}
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"group.modify_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"group.modify_failure"));
 		}
 		MessageUtils.addMessages(request, messages);
-		// ÏÔÊ¾ÁĞ±íÒ³Ãæ
+		// æ˜¾ç¤ºåˆ—è¡¨é¡µé¢
 		return new ModelAndView("show_msg", modelMap);
 	}
 
@@ -500,7 +500,7 @@ public class GroupController {
 	}
 
 	/**
-	 * ÏÔÊ¾ËùÓĞÁĞ±í
+	 * æ˜¾ç¤ºæ‰€æœ‰åˆ—è¡¨
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -523,7 +523,7 @@ public class GroupController {
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
-		// ÏÔÊ¾ÁĞ±íÒ³Ãæ
+		// æ˜¾ç¤ºåˆ—è¡¨é¡µé¢
 		return new ModelAndView("/modules/base/group/group_list", modelMap);
 	}
 

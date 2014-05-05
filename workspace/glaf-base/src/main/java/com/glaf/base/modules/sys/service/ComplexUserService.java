@@ -30,7 +30,7 @@ import com.glaf.core.base.TreeModel;
 public interface ComplexUserService {
 
 	/**
-	 * ´´½¨ÓÃ»§
+	 * åˆ›å»ºç”¨æˆ·
 	 * 
 	 * @param user
 	 * @param roleCodes
@@ -40,7 +40,7 @@ public interface ComplexUserService {
 	boolean createUser(SysUser user, List<String> roleCodes);
 
 	/**
-	 * »ñÈ¡ÓÃ»§¹ÜÀíµÄ·ÖÖ§»ú¹¹(sys_treeµÄ·â×°)
+	 * è·å–ç”¨æˆ·ç®¡ç†çš„åˆ†æ”¯æœºæ„(sys_treeçš„å°è£…)
 	 * 
 	 * @param actorId
 	 * @return
@@ -48,7 +48,7 @@ public interface ComplexUserService {
 	List<TreeModel> getUserManageBranch(String actorId);
 	
 	/**
-	 * »ñÈ¡ÓÃ»§¹ÜÀíµÄ·ÖÖ§»ú¹¹(SYS_DEPARTMENTµÄ·â×°)
+	 * è·å–ç”¨æˆ·ç®¡ç†çš„åˆ†æ”¯æœºæ„(SYS_DEPARTMENTçš„å°è£…)
 	 * 
 	 * @param actorId
 	 * @return
@@ -56,7 +56,7 @@ public interface ComplexUserService {
 	List<SysDepartment> getUserManageDeptments(String actorId);
 
 	/**
-	 * »ñÈ¡ÓÃ»§¹ÜÀíµÄ·ÖÖ§»ú¹¹µÄ±àºÅ¼¯ºÏ(sys_treeµÄid·â×°)
+	 * è·å–ç”¨æˆ·ç®¡ç†çš„åˆ†æ”¯æœºæ„çš„ç¼–å·é›†åˆ(sys_treeçš„idå°è£…)
 	 * 
 	 * @param actorId
 	 * @return

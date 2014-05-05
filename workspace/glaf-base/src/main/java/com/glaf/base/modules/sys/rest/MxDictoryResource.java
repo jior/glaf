@@ -123,7 +123,7 @@ public class MxDictoryResource {
 				Dictory dicEmpty = new Dictory();
 				dicEmpty.setId(0);
 				dicEmpty.setNodeId(0L);
-				dicEmpty.setName("-ÇëÑ¡Ôñ-");
+				dicEmpty.setName("-è¯·é€‰æ‹©-");
 				dicEmpty.setCode("");
 				dicEmpty.setValue("");
 				dicEmpty.setDesc("");

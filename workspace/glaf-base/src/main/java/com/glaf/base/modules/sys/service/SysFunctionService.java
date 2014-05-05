@@ -28,7 +28,7 @@ import com.glaf.base.modules.sys.model.SysFunction;
 public interface SysFunctionService {
 
 	/**
-	 * 保存
+	 * 淇濆瓨
 	 * 
 	 * @param bean
 	 *            SysFunction
@@ -38,7 +38,7 @@ public interface SysFunctionService {
 	boolean create(SysFunction bean);
 
 	/**
-	 * 更新
+	 * 鏇存柊
 	 * 
 	 * @param bean
 	 *            SysFunction
@@ -48,7 +48,7 @@ public interface SysFunctionService {
 	boolean update(SysFunction bean);
 
 	/**
-	 * 删除
+	 * 鍒犻櫎
 	 * 
 	 * @param bean
 	 *            SysFunction
@@ -58,7 +58,7 @@ public interface SysFunctionService {
 	boolean delete(SysFunction bean);
 
 	/**
-	 * 删除
+	 * 鍒犻櫎
 	 * 
 	 * @param id
 	 *            int
@@ -68,7 +68,7 @@ public interface SysFunctionService {
 	boolean delete(long id);
 
 	/**
-	 * 批量删除
+	 * 鎵归噺鍒犻櫎
 	 * 
 	 * @param ids
 	 * @return
@@ -77,7 +77,7 @@ public interface SysFunctionService {
 	boolean deleteAll(long[] ids);
 
 	/**
-	 * 获取对象
+	 * 鑾峰彇瀵硅薄
 	 * 
 	 * @param id
 	 * @return
@@ -85,7 +85,7 @@ public interface SysFunctionService {
 	SysFunction findById(long id);
 
 	/**
-	 * 获取列表
+	 * 鑾峰彇鍒楄〃
 	 * 
 	 * @param appId
 	 *            int
@@ -94,19 +94,19 @@ public interface SysFunctionService {
 	List<SysFunction> getSysFunctionList(long appId);
 
 	/**
-	 * 获取全部列表
+	 * 鑾峰彇鍏ㄩ儴鍒楄〃
 	 * 
 	 * @return List
 	 */
 	List<SysFunction> getSysFunctionList();
 
 	/**
-	 * 排序
+	 * 鎺掑簭
 	 * 
 	 * @param bean
 	 *            SysFunction
 	 * @param operate
-	 *            int 操作
+	 *            int 鎿嶄綔
 	 */
 	@Transactional
 	void sort(SysFunction bean, int operate);

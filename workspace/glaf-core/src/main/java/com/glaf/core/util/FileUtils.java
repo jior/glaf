@@ -46,12 +46,12 @@ public class FileUtils {
 	public final static String newline = System.getProperty("line.separator");
 
 	/**
-	 * ¿½±´ÎÄ¼ş
+	 * æ‹·è´æ–‡ä»¶
 	 * 
 	 * @param src
-	 *            Ô´ÎÄ¼ş
+	 *            æºæ–‡ä»¶
 	 * @param dest
-	 *            Ä¿±êÎÄ¼ş
+	 *            ç›®æ ‡æ–‡ä»¶
 	 */
 	public static void copy(String src, String dest) throws IOException {
 		String path = "";
@@ -70,7 +70,7 @@ public class FileUtils {
 	}
 
 	/**
-	 * ¿½±´ÎÄ¼ş
+	 * æ‹·è´æ–‡ä»¶
 	 * 
 	 * @param sourceFile
 	 * @param destinationFile
@@ -82,10 +82,10 @@ public class FileUtils {
 	}
 
 	/**
-	 * É¾³ıÎÄ¼ş
+	 * åˆ é™¤æ–‡ä»¶
 	 * 
 	 * @param filename
-	 *            ÎÄ¼şÃû
+	 *            æ–‡ä»¶å
 	 * @throws Exception
 	 */
 	public static void deleteFile(String filename) {
@@ -170,7 +170,7 @@ public class FileUtils {
 	}
 
 	/**
-	 * ½«ÎÄ¼ş×ª»»Îª×Ö½ÚÁ÷
+	 * å°†æ–‡ä»¶è½¬æ¢ä¸ºå­—èŠ‚æµ
 	 * 
 	 * @param stream
 	 * @return
@@ -213,7 +213,7 @@ public class FileUtils {
 	}
 
 	/**
-	 * ½«ÎÄ¼ş×ª»»Îª×Ö½ÚÁ÷
+	 * å°†æ–‡ä»¶è½¬æ¢ä¸ºå­—èŠ‚æµ
 	 * 
 	 * @param stream
 	 * @return
@@ -226,7 +226,7 @@ public class FileUtils {
 	}
 
 	/**
-	 * »ñÈ¡´ÅÅÌ·ÖÇø¿Õ¼äÊ¹ÓÃÂÊ
+	 * è·å–ç£ç›˜åˆ†åŒºç©ºé—´ä½¿ç”¨ç‡
 	 */
 	public static double getDiskPartitionSpaceUsedPercent(final String path) {
 		if (null == path || path.isEmpty())

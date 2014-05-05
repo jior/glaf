@@ -25,7 +25,7 @@ public class JbpmConfiguration {
 
 	public void config() {
 		/**
-		 * 判断是否自动同步Hibernate配置文件
+		 * 鍒ゆ柇鏄惁鑷姩鍚屾Hibernate閰嶇疆鏂囦欢
 		 */
 		if (conf.getBoolean("jbpm.hibernate.jdbc.sync", false)) {
 			Properties properties = DBConfiguration

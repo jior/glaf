@@ -34,12 +34,12 @@ import com.glaf.core.util.PageResult;
 public interface SysUserRoleService {
 
 	/**
-	 * ÊÚÈ¨
+	 * æˆæƒ
 	 * 
 	 * @param fromUser
-	 *            SysUser ÊÚÈ¨ÈË
+	 *            SysUser æˆæƒäºº
 	 * @param toUser
-	 *            SysUser ±»ÊÚÈ¨ÈË
+	 *            SysUser è¢«æˆæƒäºº
 	 * @param startDate
 	 *            String
 	 * @param endDate
@@ -51,7 +51,7 @@ public interface SysUserRoleService {
 			String processDescriptions);
 
 	/**
-	 * ±£´æ
+	 * ä¿å­˜
 	 * 
 	 * @param bean
 	 *            SysUserRole
@@ -61,7 +61,7 @@ public interface SysUserRoleService {
 	boolean create(SysUserRole bean);
 
 	/**
-	 * É¾³ı
+	 * åˆ é™¤
 	 * 
 	 * @param id
 	 *            int
@@ -71,7 +71,7 @@ public interface SysUserRoleService {
 	boolean delete(long id);
 
 	/**
-	 * É¾³ı
+	 * åˆ é™¤
 	 * 
 	 * @param bean
 	 *            SysUserRole
@@ -81,7 +81,7 @@ public interface SysUserRoleService {
 	boolean delete(SysUserRole bean);
 
 	/**
-	 * »ñÈ¡¶ÔÏó
+	 * è·å–å¯¹è±¡
 	 * 
 	 * @param id
 	 *            long
@@ -97,7 +97,7 @@ public interface SysUserRoleService {
 	PageResult getAllAuthorizedUser(Map<String, String> filter);
 
 	/**
-	 * »ñÈ¡Ä³¸ö²¿ÃÅ¼°ËùÓĞÏÂ¼¶²¿ÃÅµÄÄ³¸ö½ÇÉ«µÄÓÃ»§
+	 * è·å–æŸä¸ªéƒ¨é—¨åŠæ‰€æœ‰ä¸‹çº§éƒ¨é—¨çš„æŸä¸ªè§’è‰²çš„ç”¨æˆ·
 	 * 
 	 * @param deptId
 	 * @param roleId
@@ -106,7 +106,7 @@ public interface SysUserRoleService {
 	List<SysUser> getChildrenMembershipUsers(long deptId, long roleId);
 
 	/**
-	 * »ñÈ¡Ä³¸ö²¿ÃÅÄ³¸ö½ÇÉ«µÄÓÃ»§
+	 * è·å–æŸä¸ªéƒ¨é—¨æŸä¸ªè§’è‰²çš„ç”¨æˆ·
 	 * 
 	 * @param deptId
 	 * @param roleId
@@ -115,7 +115,7 @@ public interface SysUserRoleService {
 	List<SysUser> getMembershipUsers(long deptId, long roleId);
 
 	/**
-	 * »ñÈ¡¶à¸ö²¿ÃÅÄ³¸ö½ÇÉ«µÄÓÃ»§
+	 * è·å–å¤šä¸ªéƒ¨é—¨æŸä¸ªè§’è‰²çš„ç”¨æˆ·
 	 * 
 	 * @param deptIds
 	 * @param roleId
@@ -124,7 +124,7 @@ public interface SysUserRoleService {
 	List<SysUser> getMembershipUsers(List<Long> deptIds, long roleId);
 
 	/**
-	 * Ä³ÈËÒÑÊÚÈ¨µÄÓÃ»§ÁĞ±í
+	 * æŸäººå·²æˆæƒçš„ç”¨æˆ·åˆ—è¡¨
 	 * 
 	 * @param user
 	 *            SysUser
@@ -133,12 +133,12 @@ public interface SysUserRoleService {
 	List getAuthorizedUser(SysUser user);
 
 	/**
-	 * »ñÈ¡ÓÃ»§ËùÓĞµÄÉóÅú¹¤×÷Á÷
+	 * è·å–ç”¨æˆ·æ‰€æœ‰çš„å®¡æ‰¹å·¥ä½œæµ
 	 */
 	List getProcessByUser(SysUser user);
 
 	/**
-	 * È¡±¾²¿ÃÅÏÂµÄÎ´ÊÚÈ¨ÓÃ»§ÁĞ±í£¨³ıÁË×Ô¼º¡¢ÒÑÊÚÈ¨ÓÃ»§£©
+	 * å–æœ¬éƒ¨é—¨ä¸‹çš„æœªæˆæƒç”¨æˆ·åˆ—è¡¨ï¼ˆé™¤äº†è‡ªå·±ã€å·²æˆæƒç”¨æˆ·ï¼‰
 	 * 
 	 * @param user
 	 *            SysUser
@@ -147,7 +147,7 @@ public interface SysUserRoleService {
 	List getUnAuthorizedUser(SysUser user);
 
 	/**
-	 * ¹¤×÷Á÷ÊÚÈ¨
+	 * å·¥ä½œæµæˆæƒ
 	 * 
 	 * @param fromUser
 	 * @param toUser
@@ -157,7 +157,7 @@ public interface SysUserRoleService {
 			String endDate, int mark, String processNames);
 
 	/**
-	 * ÅĞ¶ÏÊÇ·ñÒÑ¾­ÊÚÈ¨ÁË
+	 * åˆ¤æ–­æ˜¯å¦å·²ç»æˆæƒäº†
 	 * 
 	 * @param fromUserId
 	 *            long
@@ -171,18 +171,18 @@ public interface SysUserRoleService {
 	void removeAgent(SysUser fromUser, SysUser toUser);
 
 	/**
-	 * È¡ÏûÊÚÈ¨
+	 * å–æ¶ˆæˆæƒ
 	 * 
 	 * @param fromUser
-	 *            SysUser ÊÚÈ¨ÈË
+	 *            SysUser æˆæƒäºº
 	 * @param toUser
-	 *            SysUser ±»ÊÚÈ¨ÈË
+	 *            SysUser è¢«æˆæƒäºº
 	 */
 	@Transactional
 	boolean removeRole(long fromUserId, long toUserId);
 
 	/**
-	 * ¶¨Ê±ÅúÁ¿É¾³ı¹ıÆÚ´úÀíµÄÈ¨ÏŞ
+	 * å®šæ—¶æ‰¹é‡åˆ é™¤è¿‡æœŸä»£ç†çš„æƒé™
 	 * 
 	 * @return
 	 */
@@ -190,7 +190,7 @@ public interface SysUserRoleService {
 	public boolean removeRoles();
 
 	/**
-	 * ¸üĞÂ
+	 * æ›´æ–°
 	 * 
 	 * @param bean
 	 *            SysUserRole

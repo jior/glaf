@@ -50,7 +50,7 @@ public class JobHelper {
 			JobInstance job = getJobService().getJobInstanceByJobKey(jobKey);
 			if (job != null && !getJobService().jobCompleted(jobKey)) {
 				version = job.getVersion();
-				// 如果Job已经存在并且还没有完成，不创建新任务实例
+				// 濡傛灉Job宸茬粡瀛樺湪骞朵笖杩樻病鏈夊畬鎴愶紝涓嶅垱寤烘柊浠诲姟瀹炰緥
 				return;
 			}
 			if (job == null) {

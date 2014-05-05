@@ -98,7 +98,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 			sysTreeService.create(bean.getNode());
 			bean.setNodeId(bean.getNode().getId());
 		}
-		bean.setSort((int) bean.getId());// ÉèÖÃÅÅĞòºÅÎª¸Õ²åÈëµÄidÖµ
+		bean.setSort((int) bean.getId());// è®¾ç½®æ’åºå·ä¸ºåˆšæ’å…¥çš„idå€¼
 		bean.setCreateDate(new Date());
 		sysApplicationMapper.insertSysApplication(bean);
 		ret = true;
@@ -149,7 +149,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	}
 
 	/**
-	 * °´±àÂë²éÕÒ¶ÔÏó
+	 * æŒ‰ç¼–ç æŸ¥æ‰¾å¯¹è±¡
 	 * 
 	 * @param code
 	 *            String
@@ -195,7 +195,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	}
 
 	/**
-	 * ¸ù¾İ½Úµã±àºÅ²éÕÒ¶ÔÏó
+	 * æ ¹æ®èŠ‚ç‚¹ç¼–å·æŸ¥æ‰¾å¯¹è±¡
 	 * 
 	 * @param nodeId
 	 * @return
@@ -266,12 +266,12 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	}
 
 	public PageResult getApplicationList(long parentId, int pageNo, int pageSize) {
-		// ¼ÆËã×ÜÊı
+		// è®¡ç®—æ€»æ•°
 		PageResult pager = new PageResult();
 		SysApplicationQuery query = new SysApplicationQuery();
 		query.parentId(Long.valueOf(parentId));
 		int count = this.count(query);
-		if (count == 0) {// ½á¹û¼¯Îª¿Õ
+		if (count == 0) {// ç»“æœé›†ä¸ºç©º
 			pager.setPageSize(pageSize);
 			return pager;
 		}
@@ -320,7 +320,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 						sonNode = getApplicationList((int) bean.getId());
 					}
 				}
-				if (sonNode != null && sonNode.size() > 0) {// ÓĞ×Ó²Ëµ¥
+				if (sonNode != null && sonNode.size() > 0) {// æœ‰å­èœå•
 					menu.append("<ul>");
 					menu.append(getMenu(bean.getId(), user));
 					menu.append("</ul>");
@@ -377,10 +377,10 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸ö·ÖÀàÏÂµÄÈ«²¿·ÖÀà½Úµã
+	 * è·å–æŸä¸ªåˆ†ç±»ä¸‹çš„å…¨éƒ¨åˆ†ç±»èŠ‚ç‚¹
 	 * 
 	 * @param parentId
-	 *            ¸¸½Úµã±àºÅ
+	 *            çˆ¶èŠ‚ç‚¹ç¼–å·
 	 * @return
 	 */
 	public List<TreeModel> getTreeModels(long parentId) {
@@ -399,12 +399,12 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	}
 
 	/**
-	 * »ñÈ¡ÓÃ»§Ä³¸ö·ÖÀàÏÂµÄÈ«²¿·ÖÀà½Úµã
+	 * è·å–ç”¨æˆ·æŸä¸ªåˆ†ç±»ä¸‹çš„å…¨éƒ¨åˆ†ç±»èŠ‚ç‚¹
 	 * 
 	 * @param parentId
-	 *            ¸¸½Úµã±àºÅ
+	 *            çˆ¶èŠ‚ç‚¹ç¼–å·
 	 * @param userId
-	 *            ÓÃ»§µÇÂ¼ÕËºÅ
+	 *            ç”¨æˆ·ç™»å½•è´¦å·
 	 * @return
 	 */
 	public List<TreeModel> getTreeModels(long parentId, String actorId) {
@@ -461,7 +461,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 								continue;
 							}
 							switch (agent.getAgentType()) {
-							case 0:// È«¾Ö´úÀí
+							case 0:// å…¨å±€ä»£ç†
 								actorIds.add(agent.getAssignFrom());
 								break;
 							default:
@@ -527,7 +527,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 					} else {
 						childrenNodes = getAccessAppList(bean.getId(), user);
 					}
-					if (childrenNodes != null && childrenNodes.size() > 0) {// ÓĞ×Ó²Ëµ¥
+					if (childrenNodes != null && childrenNodes.size() > 0) {// æœ‰å­èœå•
 						JSONArray children = this.getUserMenu(bean.getId(),
 								user);
 						item.put("children", children);
@@ -577,7 +577,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 					} else {
 						childrenNodes = getAccessAppList(bean.getId(), user);
 					}
-					if (childrenNodes != null && childrenNodes.size() > 0) {// ÓĞ×Ó²Ëµ¥
+					if (childrenNodes != null && childrenNodes.size() > 0) {// æœ‰å­èœå•
 						JSONArray children = this.getUserMenu(bean.getId(),
 								user);
 						item.put("children", children);
@@ -631,7 +631,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 				} else {
 					childrenNodes = getAccessAppList(bean.getId(), user);
 				}
-				if (childrenNodes != null && childrenNodes.size() > 0) {// ÓĞ×Ó²Ëµ¥
+				if (childrenNodes != null && childrenNodes.size() > 0) {// æœ‰å­èœå•
 					this.loadChildrenTreeModels(treeModels, bean.getId(), user);
 				}
 				treeModels.add(treeModel);
@@ -689,17 +689,17 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	public void sort(long parent, SysApplication bean, int operate) {
 		if (bean == null)
 			return;
-		if (operate == SysConstants.SORT_PREVIOUS) {// Ç°ÒÆ
-			logger.debug("Ç°ÒÆ:" + bean.getName());
+		if (operate == SysConstants.SORT_PREVIOUS) {// å‰ç§»
+			logger.debug("å‰ç§»:" + bean.getName());
 			sortByPrevious(parent, bean);
-		} else if (operate == SysConstants.SORT_FORWARD) {// ºóÒÆ
+		} else if (operate == SysConstants.SORT_FORWARD) {// åç§»
 			sortByForward(parent, bean);
-			logger.debug("ºóÒÆ:" + bean.getName());
+			logger.debug("åç§»:" + bean.getName());
 		}
 	}
 
 	/**
-	 * ÏòºóÒÆ¶¯ÅÅĞò
+	 * å‘åç§»åŠ¨æ’åº
 	 * 
 	 * @param bean
 	 */
@@ -710,17 +710,17 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		query.setOrderBy(" E.SORT desc ");
 
 		List<SysApplication> list = this.list(query);
-		if (list != null && list.size() > 0) {// ÓĞ¼ÇÂ¼
+		if (list != null && list.size() > 0) {// æœ‰è®°å½•
 			SysApplication temp = (SysApplication) list.get(0);
 			int sort = bean.getSort();
 			bean.setSort(temp.getSort() - 1);
-			this.update(bean);// ¸üĞÂbean
+			this.update(bean);// æ›´æ–°bean
 			SysTree node = sysTreeService.findById(bean.getNodeId());
 			node.setSort(bean.getSort());
 			sysTreeService.update(node);
 
 			temp.setSort(sort + 1);
-			this.update(temp);// ¸üĞÂtemp
+			this.update(temp);// æ›´æ–°temp
 			node = sysTreeService.findById(temp.getNodeId());
 			node.setSort(temp.getSort());
 			sysTreeService.update(node);
@@ -728,12 +728,12 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	}
 
 	/**
-	 * ÏòÇ°ÒÆ¶¯ÅÅĞò
+	 * å‘å‰ç§»åŠ¨æ’åº
 	 * 
 	 * @param bean
 	 */
 	private void sortByPrevious(long parentId, SysApplication bean) {
-		// ²éÕÒÇ°Ò»¸ö¶ÔÏó
+		// æŸ¥æ‰¾å‰ä¸€ä¸ªå¯¹è±¡
 
 		SysApplicationQuery query = new SysApplicationQuery();
 		query.parentId(Long.valueOf(parentId));
@@ -741,17 +741,17 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		query.setOrderBy(" E.SORT asc ");
 
 		List<SysApplication> list = this.list(query);
-		if (list != null && list.size() > 0) {// ÓĞ¼ÇÂ¼
+		if (list != null && list.size() > 0) {// æœ‰è®°å½•
 			SysApplication temp = (SysApplication) list.get(0);
 			int sort = bean.getSort();
 			bean.setSort(temp.getSort() + 1);
-			this.update(bean);// ¸üĞÂbean
+			this.update(bean);// æ›´æ–°bean
 			SysTree node = sysTreeService.findById(bean.getNodeId());
 			node.setSort(bean.getSort());
 			sysTreeService.update(node);
 
 			temp.setSort(sort - 1);
-			this.update(temp);// ¸üĞÂtemp
+			this.update(temp);// æ›´æ–°temp
 			node = sysTreeService.findById(temp.getNodeId());
 			node.setSort(temp.getSort());
 			sysTreeService.update(node);

@@ -58,7 +58,7 @@ public class StringTemplateLoader implements TemplateLoader {
 
 	public static void main(String[] args) throws Exception {
 		Configuration cfg = new Configuration();
-		cfg.setTemplateLoader(new StringTemplateLoader("»¶Ó­£º${user}"));
+		cfg.setTemplateLoader(new StringTemplateLoader("æ¬¢è¿Žï¼š${user}"));
 		cfg.setDefaultEncoding("UTF-8");
 
 		Template template = cfg.getTemplate("");

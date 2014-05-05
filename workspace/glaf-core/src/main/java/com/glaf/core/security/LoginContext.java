@@ -30,9 +30,9 @@ import com.glaf.core.base.JSONable;
 import com.glaf.core.identity.User;
 
 /**
- * °²È«ÉÏÏÂÎÄ <br/>
- * ±¾¶ÔÏó°üº¬ÓÃ»§»ù±¾ĞÅÏ¢£¬½ÇÉ«ĞÅÏ¢£¬È¨ÏŞµãĞÅÏ¢£¬ÓÃ»§ÏÂÊôĞÅÏ¢ <br/>
- * ÓÃ»§µÇÂ¼ÏµÍ³Ê±ÒÑ¾­·Åµ½HTTP»á»°ÖĞ
+ * å®‰å…¨ä¸Šä¸‹æ–‡ <br/>
+ * æœ¬å¯¹è±¡åŒ…å«ç”¨æˆ·åŸºæœ¬ä¿¡æ¯ï¼Œè§’è‰²ä¿¡æ¯ï¼Œæƒé™ç‚¹ä¿¡æ¯ï¼Œç”¨æˆ·ä¸‹å±ä¿¡æ¯ <br/>
+ * ç”¨æˆ·ç™»å½•ç³»ç»Ÿæ—¶å·²ç»æ”¾åˆ°HTTPä¼šè¯ä¸­
  */
 public class LoginContext implements java.io.Serializable, Cloneable, JSONable {
 
@@ -49,62 +49,62 @@ public class LoginContext implements java.io.Serializable, Cloneable, JSONable {
 	public final static int USER = 0;
 
 	/**
-	 * ´úÀíÈË±àºÅ¼¯ºÏ
+	 * ä»£ç†äººç¼–å·é›†åˆ
 	 */
 	protected Collection<String> agents = new HashSet<String>();
 
 	/**
-	 * µ±Ç°·ÃÎÊ¼¶±ğ
+	 * å½“å‰è®¿é—®çº§åˆ«
 	 */
 	protected int currentAccessLevel;
 
 	/**
-	 * ²¿ÃÅ±àºÅ
+	 * éƒ¨é—¨ç¼–å·
 	 */
 	protected Long deptId;
 
 	/**
-	 * ¹¦ÄÜ¼¯ºÏ
+	 * åŠŸèƒ½é›†åˆ
 	 */
 	protected Collection<String> functions = new HashSet<String>();
 
 	/**
-	 * ¹Û²ìÕß¼¯ºÏ
+	 * è§‚å¯Ÿè€…é›†åˆ
 	 */
 	protected Collection<String> observers = new HashSet<String>();
 
 	/**
-	 * È¨ÏŞµã¼¯ºÏ
+	 * æƒé™ç‚¹é›†åˆ
 	 */
 	protected Collection<String> permissions = new HashSet<String>();
 
 	/**
-	 * ½ÇÉ«±àºÅ¼¯ºÏ
+	 * è§’è‰²ç¼–å·é›†åˆ
 	 */
 	protected Collection<Long> roleIds = new HashSet<Long>();
 
 	/**
-	 * ½ÇÉ«´úÂë¼¯ºÏ
+	 * è§’è‰²ä»£ç é›†åˆ
 	 */
 	protected Collection<String> roles = new HashSet<String>();
 
 	/**
-	 * Æ¤·ô
+	 * çš®è‚¤
 	 */
 	protected String skin;
 
 	/**
-	 * ×Ó²¿ÃÅ±àºÅ
+	 * å­éƒ¨é—¨ç¼–å·
 	 */
 	protected Collection<Long> subDeptIds = new HashSet<Long>();
 
 	/**
-	 * ÓÃ»§ÏµÍ³
+	 * ç”¨æˆ·ç³»ç»Ÿ
 	 */
 	protected int systemType;
 
 	/**
-	 * µÇÂ¼ÓÃ»§
+	 * ç™»å½•ç”¨æˆ·
 	 */
 	protected User user;
 

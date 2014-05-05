@@ -64,7 +64,7 @@ public class MessageController {
 	private SysUserService sysUserService;
 
 	/**
-	 * ÅúÁ¿É¾³ıÏûÏ¢
+	 * æ‰¹é‡åˆ é™¤æ¶ˆæ¯
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -81,7 +81,7 @@ public class MessageController {
 		if (id != null) {
 			for (int i = 0; i < id.length; i++) {
 				Message bean = messageService.find((long) id[i]);
-				// ÅĞ¶ÏÊÇ·ñÊÇ×Ô¼ºµÄÏûÏ¢
+				// åˆ¤æ–­æ˜¯å¦æ˜¯è‡ªå·±çš„æ¶ˆæ¯
 				if (bean == null || bean.getRecver().getId() != user.getId()) {
 					ret = false;
 				} else {
@@ -93,20 +93,20 @@ public class MessageController {
 		}
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// É¾³ı³É¹¦
+		if (ret) {// åˆ é™¤æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"message.delete_success"));
-		} else {// É¾³ıÊ§°Ü
+		} else {// åˆ é™¤å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"message.delete_failure"));
 		}
 		MessageUtils.addMessages(request, messages);
-		// ÏÔÊ¾É¾³ıºóÒ³Ãæ
+		// æ˜¾ç¤ºåˆ é™¤åé¡µé¢
 		return new ModelAndView("show_msg", modelMap);
 	}
 
 	/**
-	 * ÏÔÊ¾ÊÕ¼şÏäÁĞ±í
+	 * æ˜¾ç¤ºæ”¶ä»¶ç®±åˆ—è¡¨
 	 * 
 	 * @param mapping
 	 * @param actionForm
@@ -130,13 +130,13 @@ public class MessageController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		// ÏÔÊ¾ÁĞ±íÒ³Ãæ
+		// æ˜¾ç¤ºåˆ—è¡¨é¡µé¢
 		return new ModelAndView("/modules/workspace/message/indexList",
 				modelMap);
 	}
 
 	/**
-	 * ÏÔÊ¾·¢ËÍÏûÏ¢Ò³Ãæ
+	 * æ˜¾ç¤ºå‘é€æ¶ˆæ¯é¡µé¢
 	 * 
 	 * @param mapping
 	 * @param actionForm
@@ -162,7 +162,7 @@ public class MessageController {
 	}
 
 	/**
-	 * ·¢ËÍÏµÍ³ĞÅÏ¢ºÍEmail
+	 * å‘é€ç³»ç»Ÿä¿¡æ¯å’ŒEmail
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -178,11 +178,11 @@ public class MessageController {
 
 		String recverIds = ParamUtil.getParameter(request, "recverIds");
 		String recverName = ParamUtil.getParameter(request, "recverName");
-		// ÓÃ»§»ò²¿ÃÅ
+		// ç”¨æˆ·æˆ–éƒ¨é—¨
 		int recverType = ParamUtil.getIntParameter(request, "recverType", 0);
 
-		int sysType = ParamUtil.getIntParameter(request, "sysType", 1);// 0£ºÎªÏµÍ³¾¯¸æ
-																		// 1£ºÎªÏµÍ³ÏûÏ¢
+		int sysType = ParamUtil.getIntParameter(request, "sysType", 1);// 0ï¼šä¸ºç³»ç»Ÿè­¦å‘Š
+																		// 1ï¼šä¸ºç³»ç»Ÿæ¶ˆæ¯
 		MailMessage mailMessage = new MailMessage();
 		if (user.getEmail() != null) {
 			mailMessage.setFrom(user.getEmail());
@@ -251,14 +251,14 @@ public class MessageController {
 		bean.setContent(formBean.getContent());
 		bean.setSender(user);
 		bean.setSenderId(user.getId());
-		bean.setCategory(0);// ÊÕ¼şÏä
+		bean.setCategory(0);// æ”¶ä»¶ç®±
 		bean.setReaded(0);
 		bean.setCreateDate(new Date());
 
-		int type = 1;// ÓÃ»§ÏûÏ¢
+		int type = 1;// ç”¨æˆ·æ¶ˆæ¯
 		if (bean.getSender().getId() == 0
 				|| StringUtils.equals(user.getAccount(), "10000")) {
-			type = 0;// ÏµÍ³ÏûÏ¢
+			type = 0;// ç³»ç»Ÿæ¶ˆæ¯
 		}
 		bean.setType(type);
 
@@ -293,25 +293,25 @@ public class MessageController {
 				}
 			}
 		} else {
-			// Èç¹û·¢ËÍÓÊ¼ş£¬±£´æ¸ÃĞÅÏ¢¼´¿É
+			// å¦‚æœå‘é€é‚®ä»¶ï¼Œä¿å­˜è¯¥ä¿¡æ¯å³å¯
 			bean.setRecver(user);
 			bean.setRecverId(user.getId());
 			bean.setRecverList(recverName);
-			bean.setCategory(1);// ·¢¼şÏä
+			bean.setCategory(1);// å‘ä»¶ç®±
 			bean.setReaded(0);
 			ret = messageService.saveOrUpdate(bean);
 		}
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"message.send_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"message.send_failure"));
 		}
 		MessageUtils.addMessages(request, messages);
-		// ÏÔÊ¾Ìá½»ºóÒ³Ãæ
+		// æ˜¾ç¤ºæäº¤åé¡µé¢
 		return new ModelAndView("show_msg", modelMap);
 	}
 
@@ -326,7 +326,7 @@ public class MessageController {
 	}
 
 	/**
-	 * ÏÔÊ¾ÏûÏ¢ĞÅÏ¢
+	 * æ˜¾ç¤ºæ¶ˆæ¯ä¿¡æ¯
 	 * 
 	 * @param mapping
 	 * @param actionForm
@@ -348,13 +348,13 @@ public class MessageController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		// ÏÔÊ¾ÏûÏ¢Ò³Ãæ
+		// æ˜¾ç¤ºæ¶ˆæ¯é¡µé¢
 		return new ModelAndView("/modules/workspace/message/message_detail",
 				modelMap);
 	}
 
 	/**
-	 * ÏÔÊ¾ÊÕ¼şÏäÁĞ±í
+	 * æ˜¾ç¤ºæ”¶ä»¶ç®±åˆ—è¡¨
 	 * 
 	 * @param mapping
 	 * @param actionForm
@@ -385,13 +385,13 @@ public class MessageController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		// ÏÔÊ¾ÁĞ±íÒ³Ãæ
+		// æ˜¾ç¤ºåˆ—è¡¨é¡µé¢
 		return new ModelAndView("/modules/workspace/message/message_list",
 				modelMap);
 	}
 
 	/**
-	 * ÏÔÊ¾·¢¼şÏäÁĞ±í
+	 * æ˜¾ç¤ºå‘ä»¶ç®±åˆ—è¡¨
 	 * 
 	 * @param mapping
 	 * @param actionForm
@@ -422,7 +422,7 @@ public class MessageController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		// ÏÔÊ¾ÁĞ±íÒ³Ãæ
+		// æ˜¾ç¤ºåˆ—è¡¨é¡µé¢
 		return new ModelAndView(
 				"/modules/workspace/message/message_sended_list", modelMap);
 	}

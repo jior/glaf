@@ -64,15 +64,15 @@ public class TransformTable {
 	}
 
 	/**
-	 * ´´½¨Êı¾İ¿â±í£¬Èç¹ûÒÑ¾­´æÔÚ£¬ÔòĞŞ¸Ä±í½á¹¹
+	 * åˆ›å»ºæ•°æ®åº“è¡¨ï¼Œå¦‚æœå·²ç»å­˜åœ¨ï¼Œåˆ™ä¿®æ”¹è¡¨ç»“æ„
 	 * 
 	 * @param tableDefinition
-	 *            ±í¶¨Òå
+	 *            è¡¨å®šä¹‰
 	 */
 	public void createOrAlterTable(TableDefinition tableDefinition) {
 		ColumnDefinition column = new ColumnDefinition();
 		column.setName("id");
-		column.setTitle("ÏµÍ³ÄÚÖÃÖ÷¼ü");
+		column.setTitle("ç³»ç»Ÿå†…ç½®ä¸»é”®");
 		column.setColumnName("ID");
 		column.setJavaType("String");
 		column.setLength(50);
@@ -82,7 +82,7 @@ public class TransformTable {
 		tableDefinition.setIdColumn(column);
 
 		ColumnDefinition column4 = new ColumnDefinition();
-		column4.setTitle("¾ÛºÏÖ÷¼ü");
+		column4.setTitle("èšåˆä¸»é”®");
 		column4.setName("aggregationKey");
 		column4.setColumnName("AGGREGATIONKEY");
 		column4.setJavaType("String");
@@ -184,7 +184,7 @@ public class TransformTable {
 				List<Map<String, Object>> rows = getTablePageService()
 						.getListData(sql, params);
 				if (rows != null && !rows.isEmpty()) {
-					logger.debug(q.getTitle() + " ²éÑ¯½á¹û£º" + rows.size());
+					logger.debug(q.getTitle() + " æŸ¥è¯¢ç»“æœï¼š" + rows.size());
 					Set<String> cols = new HashSet<String>();
 					for (Map<String, Object> dataMap : rows) {
 						sb.delete(0, sb.length());
@@ -200,7 +200,7 @@ public class TransformTable {
 								continue;
 							}
 							/**
-							 * ²»È¡ÏµÍ³ÄÚÖÃ±äÁ¿
+							 * ä¸å–ç³»ç»Ÿå†…ç½®å˜é‡
 							 */
 							if (cols.contains(key.toLowerCase())) {
 								continue;
@@ -253,7 +253,7 @@ public class TransformTable {
 						// logger.debug(sb.toString());
 
 						/**
-						 * ´¦ÀíÆäÖĞÒ»Ìõ¼ÇÂ¼
+						 * å¤„ç†å…¶ä¸­ä¸€æ¡è®°å½•
 						 */
 						if (sb.toString().endsWith("_")) {
 							sb.delete(sb.length() - 1, sb.length());
@@ -281,7 +281,7 @@ public class TransformTable {
 
 							for (ColumnModel cell : cellModelList) {
 								/**
-								 * È·±£Êı¾İ±íÖĞ¶¨ÒåÁË¸ÃÁĞ
+								 * ç¡®ä¿æ•°æ®è¡¨ä¸­å®šä¹‰äº†è¯¥åˆ—
 								 */
 								if (columnMap.get(cell.getColumnName()
 										.toLowerCase()) != null) {
@@ -299,13 +299,13 @@ public class TransformTable {
 
 			ColumnModel column1 = new ColumnModel();
 			column1.setName("id");
-			column1.setTitle("ÏµÍ³ÄÚÖÃÖ÷¼ü");
+			column1.setTitle("ç³»ç»Ÿå†…ç½®ä¸»é”®");
 			column1.setColumnName("ID");
 			column1.setJavaType("String");
 			column1.setValueExpression(ExpressionConstants.ID_EXPRESSION);
 
 			ColumnModel column4 = new ColumnModel();
-			column4.setTitle("¾ÛºÏÖ÷¼ü");
+			column4.setTitle("èšåˆä¸»é”®");
 			column4.setName("aggregationKey");
 			column4.setColumnName("AGGREGATIONKEY");
 			column4.setJavaType("String");
@@ -364,7 +364,7 @@ public class TransformTable {
 				List<Map<String, Object>> rows = getTablePageService()
 						.getListData(sql, params);
 				if (rows != null && !rows.isEmpty()) {
-					logger.debug(queryDefinition.getTitle() + " ²éÑ¯½á¹û£º"
+					logger.debug(queryDefinition.getTitle() + " æŸ¥è¯¢ç»“æœï¼š"
 							+ rows.size());
 					Set<String> cols = new HashSet<String>();
 					for (Map<String, Object> dataMap : rows) {
@@ -381,7 +381,7 @@ public class TransformTable {
 								continue;
 							}
 							/**
-							 * ²»È¡ÏµÍ³ÄÚÖÃ±äÁ¿
+							 * ä¸å–ç³»ç»Ÿå†…ç½®å˜é‡
 							 */
 							if (cols.contains(key.toLowerCase())) {
 								continue;
@@ -431,7 +431,7 @@ public class TransformTable {
 						}
 
 						/**
-						 * ´¦ÀíÆäÖĞÒ»Ìõ¼ÇÂ¼
+						 * å¤„ç†å…¶ä¸­ä¸€æ¡è®°å½•
 						 */
 						if (sb.toString().endsWith("_")) {
 							sb.delete(sb.length() - 1, sb.length());
@@ -459,7 +459,7 @@ public class TransformTable {
 
 							for (ColumnModel cell : cellModelList) {
 								/**
-								 * È·±£Êı¾İ±íÖĞ¶¨ÒåÁË¸ÃÁĞ
+								 * ç¡®ä¿æ•°æ®è¡¨ä¸­å®šä¹‰äº†è¯¥åˆ—
 								 */
 								if (columnMap.get(cell.getColumnName()
 										.toLowerCase()) != null) {

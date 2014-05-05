@@ -45,84 +45,84 @@ public class InputDefinition implements Serializable, JSONable {
 	protected String id;
 
 	/**
-	 * Ä£¿é±êÊ¶ºÅ
+	 * æ¨¡å—æ ‡è¯†å·
 	 */
 	@Column(name = "service_key", length = 50, nullable = false)
 	protected String serviceKey;
 
 	/**
-	 * ·ÖÀàÂë
+	 * åˆ†ç±»ç 
 	 */
 	@Column(name = "type_cd", length = 20, nullable = false)
 	protected String typeCd;
 
 	/**
-	 * ·ÖÀà±êÌâ
+	 * åˆ†ç±»æ ‡é¢˜
 	 */
 	@Column(name = "type_title", length = 200)
 	protected String typeTitle;
 
 	/**
-	 * keyÃû³Æ
+	 * keyåç§°
 	 */
 	@Column(name = "key_name", length = 50, nullable = false)
 	protected String keyName;
 
 	/**
-	 * Êı¾İÀàĞÍ
+	 * æ•°æ®ç±»å‹
 	 */
 	@Column(name = "java_type", length = 20, nullable = false)
 	protected String javaType;
 
 	/**
-	 * ±êÌâ
+	 * æ ‡é¢˜
 	 */
 	@Column(name = "title", length = 200, nullable = false)
 	protected String title;
 
 	/**
-	 * ÊäÈëÀàĞÍ£¬easyui¶ÔÓ¦µÄÊäÈë×é¼ş <br>
-	 * text£¨ÎÄ±¾ÊäÈë£©<br>
-	 * datebox£¨ÈÕÆÚÊäÈë£©<br>
-	 * numberbox£¨ÊıÖµÊäÈë£©<br>
-	 * combobox£¨ÏÂÀ­ÁĞ±íÊäÈë£©<br>
-	 * checkbox£¨¸´Ñ¡¿òÊäÈë£©<br>
+	 * è¾“å…¥ç±»å‹ï¼Œeasyuiå¯¹åº”çš„è¾“å…¥ç»„ä»¶ <br>
+	 * textï¼ˆæ–‡æœ¬è¾“å…¥ï¼‰<br>
+	 * dateboxï¼ˆæ—¥æœŸè¾“å…¥ï¼‰<br>
+	 * numberboxï¼ˆæ•°å€¼è¾“å…¥ï¼‰<br>
+	 * comboboxï¼ˆä¸‹æ‹‰åˆ—è¡¨è¾“å…¥ï¼‰<br>
+	 * checkboxï¼ˆå¤é€‰æ¡†è¾“å…¥ï¼‰<br>
 	 */
 	@Column(name = "input_type", length = 50)
 	protected String inputType;
 
 	/**
-	 * ÏÂÀ­ÁĞ±íµÄÖµ×Ö¶Î
+	 * ä¸‹æ‹‰åˆ—è¡¨çš„å€¼å­—æ®µ
 	 */
 	@Column(name = "value_field", length = 50)
 	protected String valueField;
 
 	/**
-	 * ÏÂÀ­ÁĞ±íµÄÎÄ±¾×Ö¶Î
+	 * ä¸‹æ‹‰åˆ—è¡¨çš„æ–‡æœ¬å­—æ®µ
 	 */
 	@Column(name = "text_field", length = 50)
 	protected String textField;
 
 	/**
-	 * ÏÂÀ­ÁĞ±íµÄÈ¡ÊıURL
+	 * ä¸‹æ‹‰åˆ—è¡¨çš„å–æ•°URL
 	 */
 	@Column(name = "url", length = 250)
 	protected String url;
 
 	/**
-	 * ÑéÖ¤ÀàĞÍ
+	 * éªŒè¯ç±»å‹
 	 */
 	@Column(name = "valid_type", length = 50)
 	protected String validType;
 
 	/**
-	 * ÊÇ·ñ±ØÌî
+	 * æ˜¯å¦å¿…å¡«
 	 */
 	@Column(name = "required", length = 10)
 	protected String required;
 
 	/**
-	 * ³õÊ¼Öµ
+	 * åˆå§‹å€¼
 	 */
 	@Column(name = "init_value", length = 500)
 	protected String initValue;

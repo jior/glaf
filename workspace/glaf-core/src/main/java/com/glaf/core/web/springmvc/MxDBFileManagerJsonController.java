@@ -125,11 +125,11 @@ public class MxDBFileManagerJsonController {
 
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 
-		// Í¼Æ¬À©Õ¹Ãû
+		// å›¾ç‰‡æ‰©å±•å
 		String[] fileTypes = new String[] { "gif", "jpg", "jpeg", "png", "bmp",
 				"swf" };
 
-		// ÅÅĞòĞÎÊ½£¬name or size or type
+		// æ’åºå½¢å¼ï¼Œname or size or type
 		String order = request.getParameter("order") != null ? request
 				.getParameter("order").toLowerCase() : "filename";
 
@@ -157,7 +157,7 @@ public class MxDBFileManagerJsonController {
 
 		List<DataFile> dataFiles = blobService.getBlobList(query);
 
-		// ±éÀúÄ¿Â¼È¡µÄÎÄ¼şĞÅÏ¢
+		// éå†ç›®å½•å–çš„æ–‡ä»¶ä¿¡æ¯
 		List<Hashtable<?, ?>> fileList = new java.util.ArrayList<Hashtable<?, ?>>();
 		if (dataFiles != null && !dataFiles.isEmpty()) {
 			for (DataFile file : dataFiles) {

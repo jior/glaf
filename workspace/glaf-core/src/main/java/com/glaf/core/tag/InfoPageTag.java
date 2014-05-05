@@ -133,7 +133,7 @@ public class InfoPageTag extends TagSupport {
 			currPage = totalPage;
 		}
 		String pageLabel = prefix + "__go2PageNo" + suffix;
-		// ÓÃÓÚÏòformÀïĞ´²ÎÊıµÄjavascript
+		// ç”¨äºå‘formé‡Œå†™å‚æ•°çš„javascript
 		buffer.append("\n\n<SCRIPT LANGUAGE=javascript>\n\n")
 				.append("function jumpUp").append(prefix).append(suffix)
 				.append("(maxPage,num){\n").append("     var a = ")
@@ -142,12 +142,12 @@ public class InfoPageTag extends TagSupport {
 				.append("     for(i=0;i<a.length;i++) { \n")
 				.append("     var c=a.charAt(i);\n")
 				.append("     if(c < \"0\" || c>\"9\"){\n")
-				.append("     alert(\"ÇëÊäÈëÕıÈ·µÄÕûÊı!\");\n").append("     ")
+				.append("     alert(\"è¯·è¾“å…¥æ­£ç¡®çš„æ•´æ•°!\");\n").append("     ")
 				.append("document.").append(form).append('.').append(pageLabel)
 				.append(".select();\n").append("      return false;\n")
 				.append("         }\n").append("     } \n")
 				.append("  if (a<=0 || a>maxPage || maxPage<=0){\n")
-				.append("     alert(\"ÇëÊäÈëÕıÈ·Ò³Âë!!\");\n").append("     ")
+				.append("     alert(\"è¯·è¾“å…¥æ­£ç¡®é¡µç !!\");\n").append("     ")
 				.append("document.").append(form).append('.').append(pageLabel)
 				.append(".select();\n").append("     return false;\n")
 				.append("     }\n\n").append("     __go2page(num);\n")
@@ -163,17 +163,17 @@ public class InfoPageTag extends TagSupport {
 			buffer.append(
 					"\n        <a class=\"page-numbers\" href=\"javascript:__go2page(1);\"><img src=\"")
 					.append(imagePath)
-					.append("/page_first.gif\" title=\"µÚÒ»Ò³\"></a>");
+					.append("/page_first.gif\" title=\"ç¬¬ä¸€é¡µ\"></a>");
 
 			if (currPage - 1 > 0) {
 				buffer.append(
 						"\n        <a class=\"page-numbers\" href=\"javascript:__go2page(")
 						.append(currPage - 1).append(");\"><img src=\"")
 						.append(imagePath)
-						.append("/page_previous.gif\" title=\"Ç°Ò»Ò³\"></a>");
+						.append("/page_previous.gif\" title=\"å‰ä¸€é¡µ\"></a>");
 			} else {
 				buffer.append("\n       <img src=\"").append(imagePath)
-						.append("/page_previous.gif\" title=\"Ç°Ò»Ò³\">");
+						.append("/page_previous.gif\" title=\"å‰ä¸€é¡µ\">");
 			}
 
 			if (totalPage > 10) {
@@ -260,17 +260,17 @@ public class InfoPageTag extends TagSupport {
 						"\n        <a class=\"page-numbers\" href=\"javascript:__go2page(")
 						.append(currPage + 1).append(");\"><img src=\"")
 						.append(imagePath)
-						.append("/page_next.gif\" title=\"ÏÂÒ»Ò³\"></a>");
+						.append("/page_next.gif\" title=\"ä¸‹ä¸€é¡µ\"></a>");
 			} else {
 				buffer.append("\n       <img src=\"").append(imagePath)
-						.append("/page_next.gif\" title=\"ÏÂÒ»Ò³\">");
+						.append("/page_next.gif\" title=\"ä¸‹ä¸€é¡µ\">");
 			}
 
 			buffer.append(
 					"\n        <a class=\"page-numbers\" href=\"javascript:__go2page(")
 					.append(totalPage).append(");\"><img src=\"")
 					.append(imagePath)
-					.append("/page_last.gif\" title=\"×îºóÒ»Ò³\"></a>");
+					.append("/page_last.gif\" title=\"æœ€åä¸€é¡µ\"></a>");
 
 			buffer.append("\n    </div>");
 			// buffer.append("\n</div>");

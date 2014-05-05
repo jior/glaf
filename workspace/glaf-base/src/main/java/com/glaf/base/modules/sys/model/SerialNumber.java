@@ -45,26 +45,26 @@ public class SerialNumber implements Serializable, JSONable {
 	protected long id;
 
 	/**
-	 * 模块编号
+	 * 妯″潡缂栧彿
 	 */
 	@Column(name = "moduleNo", length = 50)
 	protected String moduleNo;
 
 	/**
-	 * 日期
+	 * 鏃ユ湡
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "lastDate")
 	protected Date lastDate;
 
 	/**
-	 * 间隔
+	 * 闂撮殧
 	 */
 	@Column(name = "intervelNo")
 	protected int intervelNo;
 
 	/**
-	 * 当前序号
+	 * 褰撳墠搴忓彿
 	 */
 	@Column(name = "currentSerail")
 	protected int currentSerail;

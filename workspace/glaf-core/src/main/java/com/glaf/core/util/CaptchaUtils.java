@@ -30,20 +30,20 @@ import javax.imageio.ImageIO;
 
 public class CaptchaUtils {
 
-	// Ëæ»ú²úÉúµÄ×Ö·û´®
+	// éšæœºäº§ç”Ÿçš„å­—ç¬¦ä¸²
 	private static final String RANDOM_STRS = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
 
-	private static final String FONT_NAME = "Consolas";// ×ÖÌå
+	private static final String FONT_NAME = "Consolas";// å­—ä½“
 
-	private static final int FONT_SIZE = 24;// ×ÖÌå´óĞ¡
+	private static final int FONT_SIZE = 24;// å­—ä½“å¤§å°
 
-	private static int width = 85;// Í¼Æ¬¿í
+	private static int width = 85;// å›¾ç‰‡å®½
 
-	private static int height = 25;// Í¼Æ¬¸ß
+	private static int height = 25;// å›¾ç‰‡é«˜
 
-	private static int lineNum = 155;// ¸ÉÈÅÏßÊıÁ¿
+	private static int lineNum = 155;// å¹²æ‰°çº¿æ•°é‡
 
-	private static int strNum = 4;// Ëæ»ú²úÉú×Ö·ûÊıÁ¿
+	private static int strNum = 4;// éšæœºäº§ç”Ÿå­—ç¬¦æ•°é‡
 
 	private static Random random = new Random();
 
@@ -52,7 +52,7 @@ public class CaptchaUtils {
 	}
 
 	/**
-	 * »æÖÆ¸ÉÈÅÏß
+	 * ç»˜åˆ¶å¹²æ‰°çº¿
 	 */
 	private static void drowLine(Graphics g) {
 		int x = random.nextInt(width);
@@ -63,7 +63,7 @@ public class CaptchaUtils {
 	}
 
 	/**
-	 * »æÖÆ×Ö·û´®
+	 * ç»˜åˆ¶å­—ç¬¦ä¸²
 	 */
 	private static String drowString(Graphics g, int i) {
 		g.setColor(new Color(20 + random.nextInt(110),
@@ -75,23 +75,23 @@ public class CaptchaUtils {
 	}
 
 	/**
-	 * Éú³ÉËæ»úÍ¼Æ¬
+	 * ç”Ÿæˆéšæœºå›¾ç‰‡
 	 */
 	public static BufferedImage genRandomCodeImage(StringBuffer randomCode) {
-		// BufferedImageÀàÊÇ¾ßÓĞ»º³åÇøµÄImageÀà
+		// BufferedImageç±»æ˜¯å…·æœ‰ç¼“å†²åŒºçš„Imageç±»
 		BufferedImage image = new BufferedImage(width, height,
 				BufferedImage.TYPE_INT_RGB);
-		// »ñÈ¡Graphics¶ÔÏó,±ãÓÚ¶ÔÍ¼Ïñ½øĞĞ¸÷ÖÖ»æÖÆ²Ù×÷
+		// è·å–Graphicså¯¹è±¡,ä¾¿äºå¯¹å›¾åƒè¿›è¡Œå„ç§ç»˜åˆ¶æ“ä½œ
 		Graphics g = image.getGraphics();
 		g.setColor(getRandColor(200, 250));
 		g.fillRect(0, 0, width, height);
 		g.setColor(getRandColor(160, 200));
 
-		// »æÖÆ¸ÉÈÅÏß
+		// ç»˜åˆ¶å¹²æ‰°çº¿
 		for (int i = 0; i <= lineNum; i++) {
 			drowLine(g);
 		}
-		// »æÖÆËæ»ú×Ö·û
+		// ç»˜åˆ¶éšæœºå­—ç¬¦
 		g.setFont(new Font(FONT_NAME, Font.PLAIN, FONT_SIZE));
 
 		for (int i = 0; i < strNum; i++) {
@@ -102,7 +102,7 @@ public class CaptchaUtils {
 	}
 
 	/**
-	 * ¸ø¶¨·¶Î§»ñµÃËæ»úÑÕÉ«
+	 * ç»™å®šèŒƒå›´è·å¾—éšæœºé¢œè‰²
 	 */
 	private static Color getRandColor(int fc, int bc) {
 		Random random = new Random();
@@ -119,7 +119,7 @@ public class CaptchaUtils {
 	}
 
 	/**
-	 * »ñÈ¡Ëæ»úµÄ×Ö·û
+	 * è·å–éšæœºçš„å­—ç¬¦
 	 */
 	private static String getRandomString(int num) {
 		return String.valueOf(RANDOM_STRS.charAt(num));
@@ -130,7 +130,7 @@ public class CaptchaUtils {
 		BufferedImage image = CaptchaUtils.genRandomCodeImage(code);
 		System.out.println("random code = " + code);
 		try {
-			// ½«ÄÚ´æÖĞµÄÍ¼Æ¬Í¨¹ıÁ÷¶¯ĞÎÊ½Êä³öµ½¿Í»§¶Ë
+			// å°†å†…å­˜ä¸­çš„å›¾ç‰‡é€šè¿‡æµåŠ¨å½¢å¼è¾“å‡ºåˆ°å®¢æˆ·ç«¯
 			ImageIO.write(image, "JPEG", new FileOutputStream(new File(
 					"random-code.jpg")));
 		} catch (Exception e) {

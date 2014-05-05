@@ -54,7 +54,7 @@ public class SysFunctionController {
 	private SysFunctionService sysFunctionService;
 
 	/**
-	 * ÅúÁ¿É¾³ıĞÅÏ¢
+	 * æ‰¹é‡åˆ é™¤ä¿¡æ¯
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -69,10 +69,10 @@ public class SysFunctionController {
 		ret = sysFunctionService.deleteAll(id);
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"function.delete_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"function.delete_failure"));
 		}
@@ -81,7 +81,7 @@ public class SysFunctionController {
 	}
 
 	/**
-	 * Ìá½»Ôö¼ÓĞÅÏ¢
+	 * æäº¤å¢åŠ ä¿¡æ¯
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -98,20 +98,20 @@ public class SysFunctionController {
 		boolean ret = sysFunctionService.create(bean);
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"function.add_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"function.add_failure"));
 		}
 		MessageUtils.addMessages(request, messages);
-		// ÏÔÊ¾Ìá½»ºóÒ³Ãæ
+		// æ˜¾ç¤ºæäº¤åé¡µé¢
 		return new ModelAndView("show_msg2", modelMap);
 	}
 
 	/**
-	 * Ìá½»ĞŞ¸ÄĞÅÏ¢
+	 * æäº¤ä¿®æ”¹ä¿¡æ¯
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -126,15 +126,15 @@ public class SysFunctionController {
 		boolean ret = sysFunctionService.update(bean);
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"function.modify_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"function.modify_failure"));
 		}
 		MessageUtils.addMessages(request, messages);
-		// ÏÔÊ¾Ìá½»ºóÒ³Ãæ
+		// æ˜¾ç¤ºæäº¤åé¡µé¢
 		return new ModelAndView("show_msg2", modelMap);
 	}
 
@@ -150,7 +150,7 @@ public class SysFunctionController {
 	}
 
 	/**
-	 * ÏÔÊ¾¶ÔÓ¦Ä£¿éÏÂÃæµÄ¹¦ÄÜÁĞ±í
+	 * æ˜¾ç¤ºå¯¹åº”æ¨¡å—ä¸‹é¢çš„åŠŸèƒ½åˆ—è¡¨
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -169,7 +169,7 @@ public class SysFunctionController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		// ÏÔÊ¾ÁĞ±íÒ³Ãæ
+		// æ˜¾ç¤ºåˆ—è¡¨é¡µé¢
 		return new ModelAndView("/modules/sys/function/function_list", modelMap);
 	}
 

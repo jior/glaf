@@ -62,7 +62,7 @@ public class DistrictEntity implements java.io.Serializable, JSONable {
 	protected int sortNo;
 
 	/**
-	 * ÊÇ·ñÆôÓÃ
+	 * æ˜¯å¦å¯ç”¨
 	 */
 	@Column(name = "LOCKED_")
 	protected int locked;

@@ -78,7 +78,7 @@ public final class ContextFactory {
 	}
 
 	public static void reload() {
-		logger.info("×°ÔØÅäÖÃÎÄ¼ş......");
+		logger.info("è£…è½½é…ç½®æ–‡ä»¶......");
 		if (ctx == null) {
 			try {
 				if (StringUtils.isNotEmpty(conf.get("spring-config"))) {

@@ -41,42 +41,42 @@ public class EntryPoint implements java.io.Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Ö÷¼ü
+	 * ä¸»é”®
 	 */
 	@Id
 	@Column(name = "ID_", length = 50, nullable = false)
 	protected String id;
 
 	/**
-	 * ½Úµã±àºÅ
+	 * èŠ‚ç‚¹ç¼–å·
 	 */
 	@Basic
 	@Column(name = "NODEID_")
 	protected Long nodeId;
 
 	/**
-	 * ÊµÌå±àºÅ
+	 * å®ä½“ç¼–å·
 	 */
 	@Basic
 	@Column(name = "ENTITYID_", length = 50)
 	protected String entityId;
 
 	/**
-	 * ÊµÌåKey
+	 * å®ä½“Key
 	 */
 	@Basic
 	@Column(name = "ENTRYKEY_", length = 50)
 	protected String entryKey;
 
 	/**
-	 * Ãû³Æ
+	 * åç§°
 	 */
 	@Basic
 	@Column(name = "NAME_", length = 50)
 	protected String name;
 
 	/**
-	 * Öµ
+	 * å€¼
 	 */
 	@Basic
 	@Column(name = "VALUE_", length = 500)

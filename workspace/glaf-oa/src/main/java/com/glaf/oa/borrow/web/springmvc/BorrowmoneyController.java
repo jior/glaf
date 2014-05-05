@@ -74,7 +74,7 @@ public class BorrowmoneyController {
 					Borrowmoney borrowmoney = borrowmoneyService
 							.getBorrowmoney(Long.valueOf(x));
 					/**
-					 * �˴�ҵ���߼������е���
+					 * 此处业务逻辑需自行调整
 					 */
 					if (borrowmoney != null
 							&& (StringUtils.equals(borrowmoney.getCreateBy(),
@@ -88,7 +88,7 @@ public class BorrowmoneyController {
 			Borrowmoney borrowmoney = borrowmoneyService.getBorrowmoney(Long
 					.valueOf(borrowmoneyid));
 			/**
-			 * �˴�ҵ���߼������е���
+			 * 此处业务逻辑需自行调整
 			 */
 			if (borrowmoney != null
 					&& (StringUtils.equals(borrowmoney.getCreateBy(),
@@ -162,7 +162,7 @@ public class BorrowmoneyController {
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
 		/**
-		 * �˴�ҵ���߼������е���
+		 * 此处业务逻辑需自行调整
 		 */
 		if (!loginContext.isSystemAdministrator()) {
 			String actorId = loginContext.getActorId();

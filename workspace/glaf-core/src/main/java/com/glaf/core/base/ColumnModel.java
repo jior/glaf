@@ -35,21 +35,21 @@ public class ColumnModel implements java.io.Serializable,
 	protected String columnName;
 
 	/**
-	 * »õ±Ò¸ñÊ½
+	 * è´§å¸æ ¼å¼
 	 */
 	protected String currency;
 
 	protected Date dateValue;
 
 	/**
-	 * Ğ¡ÊıÎ»Êı
+	 * å°æ•°ä½æ•°
 	 */
 	protected int decimal;
 
 	protected Double doubleValue;
 
 	/**
-	 * Êı¾İ¸ñÊ½£¬Èç¹ûÊÇÈÕÆÚ£¬ĞèÒªÖ¸¶¨¸ñÊ½£¬ÈçYYYYMMDD
+	 * æ•°æ®æ ¼å¼ï¼Œå¦‚æœæ˜¯æ—¥æœŸï¼Œéœ€è¦æŒ‡å®šæ ¼å¼ï¼Œå¦‚YYYYMMDD
 	 */
 	protected String format;
 
@@ -58,36 +58,36 @@ public class ColumnModel implements java.io.Serializable,
 	protected String javaType;
 
 	/**
-	 * ³¤¶È
+	 * é•¿åº¦
 	 */
 	protected int length;
 
 	protected Long longValue;
 
 	/**
-	 * Ó³ÉäÃû³Æ
+	 * æ˜ å°„åç§°
 	 */
 	protected String mapping;
 
 	/**
-	 * JavaÊôĞÔÃû³Æ
+	 * Javaå±æ€§åç§°
 	 */
 	protected String name;
 
 	/**
-	 * È¡ÊıÎ»ÖÃ£¬csv»òExcelµ¥Ôª¸ñµÄÎ»ÖÃ£¨´Ó1¿ªÊ¼£©
+	 * å–æ•°ä½ç½®ï¼Œcsvæˆ–Excelå•å…ƒæ ¼çš„ä½ç½®ï¼ˆä»1å¼€å§‹ï¼‰
 	 */
 	protected int position;
 
 	/**
-	 * ¾«¶È
+	 * ç²¾åº¦
 	 */
 	protected int precision;
 
 	protected boolean required;
 
 	/**
-	 * ´Î±êÌâ
+	 * æ¬¡æ ‡é¢˜
 	 */
 	protected String secondTitle;
 
@@ -100,24 +100,24 @@ public class ColumnModel implements java.io.Serializable,
 	protected boolean temporary;
 
 	/**
-	 * ±êÌâ
+	 * æ ‡é¢˜
 	 */
 	protected String title;
 
 	/**
-	 * È¥µôÊ×Î²¿Õ¸ñ
+	 * å»æ‰é¦–å°¾ç©ºæ ¼
 	 */
 	protected String trimType;
 
 	/**
-	 * Êı¾İÀàĞÍ:String,Boolean,Integer,Double,Long,Date
+	 * æ•°æ®ç±»å‹:String,Boolean,Integer,Double,Long,Date
 	 */
 	protected String type;
 
 	protected Object value;
 
 	/**
-	 * È¡Öµ±í´ïÊ½
+	 * å–å€¼è¡¨è¾¾å¼
 	 */
 	protected String valueExpression;
 

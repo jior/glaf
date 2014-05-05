@@ -29,7 +29,7 @@ import com.glaf.core.query.TreeModelQuery;
 public interface ITreeModelService {
 
 	/**
-	 * »ñÈ¡Ä³¸ö½ÚµãµÄËùÓĞ×æÏÈ½Úµã
+	 * è·å–æŸä¸ªèŠ‚ç‚¹çš„æ‰€æœ‰ç¥–å…ˆèŠ‚ç‚¹
 	 * 
 	 * @param treeId
 	 * @return
@@ -37,7 +37,7 @@ public interface ITreeModelService {
 	List<TreeModel> getAncestorTreeModels(long id);
 
 	/**
-	 * »ñÈ¡Ä³¸ö½ÚµãµÄËùÓĞ×ÓËï½Úµã
+	 * è·å–æŸä¸ªèŠ‚ç‚¹çš„æ‰€æœ‰å­å­™èŠ‚ç‚¹
 	 * 
 	 * @param treeId
 	 * @return
@@ -45,7 +45,7 @@ public interface ITreeModelService {
 	List<TreeModel> getChildrenTreeModels(long id);
 
 	/**
-	 * »ñÈ¡Ä³¸ö½ÚµãÏÂµÄ×Ó½Úµã
+	 * è·å–æŸä¸ªèŠ‚ç‚¹ä¸‹çš„å­èŠ‚ç‚¹
 	 * 
 	 * @param treeId
 	 * @return
@@ -53,7 +53,7 @@ public interface ITreeModelService {
 	List<TreeModel> getSubTreeModels(long id);
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡Ê÷½Úµã
+	 * æ ¹æ®ä¸»é”®è·å–æ ‘èŠ‚ç‚¹
 	 * 
 	 * @param treeId
 	 * @return
@@ -61,7 +61,7 @@ public interface ITreeModelService {
 	TreeModel getTreeModel(long id);
 
 	/**
-	 * ¸ù¾İ±àÂë»ñÈ¡Ê÷½Úµã
+	 * æ ¹æ®ç¼–ç è·å–æ ‘èŠ‚ç‚¹
 	 * 
 	 * @param code
 	 * @return
@@ -69,14 +69,14 @@ public interface ITreeModelService {
 	TreeModel getTreeModelByCode(String code);
 
 	/**
-	 * »ñÈ¡Ê÷ĞÍ½á¹¹
+	 * è·å–æ ‘å‹ç»“æ„
 	 * 
 	 * @return
 	 */
 	List<TreeModel> getTreeModels();
 
 	/**
-	 * »ñÈ¡Ê÷ĞÍ½á¹¹
+	 * è·å–æ ‘å‹ç»“æ„
 	 * 
 	 * @param parameter
 	 * @return
@@ -84,7 +84,7 @@ public interface ITreeModelService {
 	List<TreeModel> getTreeModels(TreeModelQuery query);
 
 	/**
-	 * »ñÈ¡Ä³¸ö½ÚµãµÄËùÓĞ×ÓËï½Úµã
+	 * è·å–æŸä¸ªèŠ‚ç‚¹çš„æ‰€æœ‰å­å­™èŠ‚ç‚¹
 	 * 
 	 * @param treeId
 	 * @return
@@ -92,7 +92,7 @@ public interface ITreeModelService {
 	TreeModel getTreeModelWithAllChildren(long id);
 
 	/**
-	 * ±£´æ½Úµã
+	 * ä¿å­˜èŠ‚ç‚¹
 	 * 
 	 * @param treeModel
 	 */
@@ -100,7 +100,7 @@ public interface ITreeModelService {
 	void save(TreeModel treeModel);
 
 	/**
-	 * ±£´æ½Úµã
+	 * ä¿å­˜èŠ‚ç‚¹
 	 * 
 	 * @param treeModels
 	 */

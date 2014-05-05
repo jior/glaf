@@ -34,28 +34,28 @@ public interface DistrictService {
 	void deleteById(long id);
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡Ò»Ìõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®è·å–ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */
 	DistrictEntity getDistrict(Long id);
 	
 	/**
-	 * ¸ù¾İ±àÂë»ñÈ¡Ò»Ìõ¼ÇÂ¼
+	 * æ ¹æ®ç¼–ç è·å–ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */
 	DistrictEntity getDistrictByCode(String code);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
 	int getDistrictCountByQueryCriteria(DistrictQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */
@@ -67,7 +67,7 @@ public interface DistrictService {
 	List<TreeModel> getDistrictTreeModels(TreeModelQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼ÁĞ±í
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•åˆ—è¡¨
 	 * 
 	 * @return
 	 */
@@ -76,7 +76,7 @@ public interface DistrictService {
 	List<DistrictEntity>  getDistrictList(long parentId);
 
 	/**
-	 * ±£´æÒ»Ìõ¼ÇÂ¼
+	 * ä¿å­˜ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */

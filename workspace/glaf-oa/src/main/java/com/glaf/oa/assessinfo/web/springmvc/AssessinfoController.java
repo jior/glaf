@@ -79,7 +79,7 @@ public class AssessinfoController {
 			Assessinfo assessinfo = assessinfoService.getAssessinfo(Long
 					.valueOf(indexid));
 			/**
-			 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+			 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 			 */
 			if (assessinfo != null
 					&& (StringUtils.equals(assessinfo.getCreateBy(),
@@ -154,7 +154,7 @@ public class AssessinfoController {
 		// query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
 		/**
-		 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+		 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 		 */
 		// if(!loginContext.isSystemAdministrator()){
 		// String actorId = loginContext.getActorId();
@@ -312,7 +312,7 @@ public class AssessinfoController {
 	}
 
 	/**
-	 * Ñ¡ÔñÖ¸±ê
+	 * é€‰æ‹©æŒ‡æ ‡
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -325,7 +325,7 @@ public class AssessinfoController {
 			throws IOException {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		if (loginContext == null) {
-			return "ÇëÖØĞÂµÇÂ¼".getBytes("utf-8");
+			return "è¯·é‡æ–°ç™»å½•".getBytes("utf-8");
 		}
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		AssessinfoQuery query = new AssessinfoQuery();

@@ -54,12 +54,12 @@ public class SystemProperty implements Serializable, JSONable {
 	protected String category;
 
 	/**
-	 * ÊäÈëÀàĞÍ£¬easyui¶ÔÓ¦µÄÊäÈë×é¼ş <br>
-	 * text£¨ÎÄ±¾ÊäÈë£©<br>
-	 * datebox£¨ÈÕÆÚÊäÈë£©<br>
-	 * numberbox£¨ÊıÖµÊäÈë£©<br>
-	 * combobox£¨ÏÂÀ­ÁĞ±íÊäÈë£©<br>
-	 * checkbox£¨¸´Ñ¡¿òÊäÈë£©<br>
+	 * è¾“å…¥ç±»å‹ï¼Œeasyuiå¯¹åº”çš„è¾“å…¥ç»„ä»¶ <br>
+	 * textï¼ˆæ–‡æœ¬è¾“å…¥ï¼‰<br>
+	 * dateboxï¼ˆæ—¥æœŸè¾“å…¥ï¼‰<br>
+	 * numberboxï¼ˆæ•°å€¼è¾“å…¥ï¼‰<br>
+	 * comboboxï¼ˆä¸‹æ‹‰åˆ—è¡¨è¾“å…¥ï¼‰<br>
+	 * checkboxï¼ˆå¤é€‰æ¡†è¾“å…¥ï¼‰<br>
 	 */
 	@Column(name = "INPUTTYPE_", length = 50)
 	protected String inputType;

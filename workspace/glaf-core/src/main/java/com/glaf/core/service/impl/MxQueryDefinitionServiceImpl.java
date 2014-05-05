@@ -104,7 +104,7 @@ public class MxQueryDefinitionServiceImpl implements IQueryDefinitionService {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÄ¿±ê±íµÄÈ«²¿²éÑ¯
+	 * è·å–æŸä¸ªç›®æ ‡è¡¨çš„å…¨éƒ¨æŸ¥è¯¢
 	 * 
 	 * @param targetTableName
 	 * @return
@@ -116,7 +116,7 @@ public class MxQueryDefinitionServiceImpl implements IQueryDefinitionService {
 	}
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
@@ -125,7 +125,7 @@ public class MxQueryDefinitionServiceImpl implements IQueryDefinitionService {
 	}
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */
@@ -138,7 +138,7 @@ public class MxQueryDefinitionServiceImpl implements IQueryDefinitionService {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸ö²éÑ¯µÄÈ«²¿×æÏÈ²éÑ¯,²éÑ¯×Ó½ÚµãÏÈÈëÕ»£¬²éÑ¯¸¸½ÚµãºóÈëÕ»
+	 * è·å–æŸä¸ªæŸ¥è¯¢çš„å…¨éƒ¨ç¥–å…ˆæŸ¥è¯¢,æŸ¥è¯¢å­èŠ‚ç‚¹å…ˆå…¥æ ˆï¼ŒæŸ¥è¯¢çˆ¶èŠ‚ç‚¹åå…¥æ ˆ
 	 * 
 	 * @param queryId
 	 * @return

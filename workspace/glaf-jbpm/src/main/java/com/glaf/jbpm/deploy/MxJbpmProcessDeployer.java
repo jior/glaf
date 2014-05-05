@@ -91,7 +91,7 @@ public class MxJbpmProcessDeployer {
 						String ret = formatter.format(new Date());
 						String filename = SystemProperties.getConfigRootPath()
 								+ "/deploy/" + processName + ret + ".zip";
-						// 保存原始文件
+						// 淇濆瓨鍘熷鏂囦欢
 						FileUtils.save(filename, zipBytes);
 					} catch (Exception ex) {
 						if (LogUtils.isDebug()) {
@@ -104,7 +104,7 @@ public class MxJbpmProcessDeployer {
 							encoding);
 					zipMap.put("processdefinition.xml", pdBytes);
 
-					// 重新打包修改过的流程定义文件
+					// 閲嶆柊鎵撳寘淇敼杩囩殑娴佺▼瀹氫箟鏂囦欢
 					byte[] newZipBytes = ZipUtils.toZipBytes(zipMap);
 					zipInputStream = new ZipInputStream(
 							new ByteArrayInputStream(newZipBytes));
@@ -136,7 +136,7 @@ public class MxJbpmProcessDeployer {
 						String filename = SystemProperties.getConfigRootPath()
 								+ "/deploy/" + processName + ret
 								+ "_repack.zip";
-						// 保存修改过的流程定义文件
+						// 淇濆瓨淇敼杩囩殑娴佺▼瀹氫箟鏂囦欢
 						FileUtils.save(filename, newZipBytes);
 					} catch (Exception ex) {
 						if (LogUtils.isDebug()) {

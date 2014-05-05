@@ -126,7 +126,7 @@ public class PurchaseitemServiceImpl implements PurchaseitemService {
 	}
 
 	/**
-	 * 更新价格
+	 * 鏇存柊浠锋牸
 	 * 
 	 * @param purchaseid
 	 */

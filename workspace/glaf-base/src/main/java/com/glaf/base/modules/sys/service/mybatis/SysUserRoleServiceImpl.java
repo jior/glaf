@@ -100,7 +100,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		if (fromUser == null || toUser == null || fromUserId == toUserId) {
 			return ret;
 		}
-		// È¡³öÊÚÈ¨ÈËfromUserµÄ½ÇÉ«¼¯ºÏ
+		// å–å‡ºæˆæƒäººfromUserçš„è§’è‰²é›†åˆ
 		SysUserRoleQuery query = new SysUserRoleQuery();
 		query.userId(fromUserId);
 		query.authorized(0);
@@ -110,7 +110,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 			SysUserRole userRole = (SysUserRole) iter.next();
 			logger.debug("##" + userRole.getUserId() + ":"
 					+ userRole.getDeptRoleId());
-			// ÊÚ¸ø±»ÊÚÈ¨ÈË
+			// æˆç»™è¢«æˆæƒäºº
 			SysUserRole bean = new SysUserRole();
 			bean.setId(this.idGenerator.nextId());
 			bean.setAuthorizeFrom(fromUser.getId());
@@ -122,7 +122,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 			bean.setAvailDateEnd(DateUtils.toDate(endDate));
 			bean.setProcessDescription(processDescriptions);
 			if (mark == 1) {
-				bean.setProcessDescription("È«¾Ö´úÀí");
+				bean.setProcessDescription("å…¨å±€ä»£ç†");
 			}
 
 			bean.setCreateDate(new Date());
@@ -131,7 +131,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 			sysUserRoleMapper.insertSysUserRole(bean);
 
 		}
-		// Ôö¼Ó¹¤×÷Á÷
+		// å¢åŠ å·¥ä½œæµ
 		insertAgent(fromUser, toUser, startDate, endDate, mark, processNames);
 		return true;
 	}
@@ -216,11 +216,11 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 			query.setAvailDateEndLessThanOrEqual(DateUtils.toDate(endDate));
 		}
 
-		// ¼ÆËã×ÜÊı
+		// è®¡ç®—æ€»æ•°
 		PageResult pager = new PageResult();
 
 		int count = sysUserMapper.getCountAuthorizedUsers(query);
-		if (count == 0) {// ½á¹û¼¯Îª¿Õ
+		if (count == 0) {// ç»“æœé›†ä¸ºç©º
 			pager.setPageSize(pageSize);
 			return pager;
 		}
@@ -371,12 +371,12 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		logger.info("name:" + user.getName());
 		user = sysUserService.findById(user.getId());
 
-		// È¡ËùÔÚ²¿ÃÅ,ÅĞ¶ÏÊÇ·ñ»¹ÓĞÏÂ¼¶²¿ÃÅ
+		// å–æ‰€åœ¨éƒ¨é—¨,åˆ¤æ–­æ˜¯å¦è¿˜æœ‰ä¸‹çº§éƒ¨é—¨
 		SysDepartment dept = user.getDepartment();
 		logger.info("dept:" + dept.getName());
 		List<SysUser> list = sysUserService.getSysUserList((int) dept.getId());
 
-		// Ñ­»·È¡¸÷²¿ÃÅÓÃ»§
+		// å¾ªç¯å–å„éƒ¨é—¨ç”¨æˆ·
 		List<SysDepartment> deptList = sysDepartmentService
 				.getSysDepartmentList((int) dept.getId());
 		Iterator<SysDepartment> iter = deptList.iterator();
@@ -385,9 +385,9 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 			logger.info("dept:" + dept2.getName());
 			list.addAll(sysUserService.getSysUserList((int) dept2.getId()));
 		}
-		// ³ıÈ¥×Ô¼º
+		// é™¤å»è‡ªå·±
 		list.remove(user);
-		// ³ıÈ¥ÒÑÊÚÈ¨ÓÃ»§
+		// é™¤å»å·²æˆæƒç”¨æˆ·
 		list.removeAll(getAuthorizedUser(user));
 
 		return list;
@@ -425,7 +425,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		if (endDate.length() == 10) {
 			endDate += " 23:59:59";
 		}
-		if (mark == 1) {// È«¾Ö´úÀí
+		if (mark == 1) {// å…¨å±€ä»£ç†
 			TableModel table = new TableModel();
 			table.setTableName("SYS_AGENT");
 			table.addStringColumn("ID_",
@@ -497,7 +497,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		if (fromUser == null || toUser == null)
 			return ret;
 
-		// È¡³ö±»ÊÚÈ¨ÈËtoUserµÄ½ÇÉ«¼¯ºÏ
+		// å–å‡ºè¢«æˆæƒäººtoUserçš„è§’è‰²é›†åˆ
 		SysUserRoleQuery query = new SysUserRoleQuery();
 		query.userId(toUser.getId());
 
@@ -505,12 +505,12 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		Iterator<SysUserRole> iter = userRoles.iterator();
 		while (iter.hasNext()) {
 			SysUserRole userRole = (SysUserRole) iter.next();
-			// ÅĞ¶ÏÊÇ·ñÊÇÊÚÈ¨ÈË
+			// åˆ¤æ–­æ˜¯å¦æ˜¯æˆæƒäºº
 			if (userRole.getAuthorizeFrom() != 0) {
-				delete(userRole);// É¾³ıÈ¨ÏŞ
+				delete(userRole);// åˆ é™¤æƒé™
 			}
 		}
-		// É¾³ı¹¤×÷Á÷ÊÚÈ¨
+		// åˆ é™¤å·¥ä½œæµæˆæƒ
 		removeAgent(fromUser, toUser);
 		return true;
 	}
@@ -521,7 +521,7 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 		query.availDateEndLessThanOrEqual(new Date());
 		query.authorized(1);
 
-		// È¡³ö±»ÊÚÈ¨ÈËtoUserµÄ½ÇÉ«¼¯ºÏ
+		// å–å‡ºè¢«æˆæƒäººtoUserçš„è§’è‰²é›†åˆ
 		List<SysUserRole> userRoles = this.list(query);
 		Iterator<SysUserRole> iter = userRoles.iterator();
 		while (iter.hasNext()) {
@@ -529,13 +529,13 @@ public class SysUserRoleServiceImpl implements SysUserRoleService {
 			long fromUserId = userRole.getAuthorizeFrom();
 			SysUser fromUser = sysUserService.findById(fromUserId);
 			SysUser toUser = userRole.getUser();
-			// ÅĞ¶ÏÊÇ·ñÊÇÊÚÈ¨ÈË
+			// åˆ¤æ–­æ˜¯å¦æ˜¯æˆæƒäºº
 			logger.info("toUser:" + toUser.getName() + ",fromUser:"
 					+ fromUser.getName() + ",remove role:"
 					+ userRole.getDeptRole().getRole().getName()
 					+ ",availDateEnd=" + userRole.getAvailDateEnd());
-			delete(userRole);// É¾³ıÈ¨ÏŞ
-			removeAgent(fromUser, toUser);// É¾³ı¹¤×÷Á÷
+			delete(userRole);// åˆ é™¤æƒé™
+			removeAgent(fromUser, toUser);// åˆ é™¤å·¥ä½œæµ
 		}
 		return true;
 	}

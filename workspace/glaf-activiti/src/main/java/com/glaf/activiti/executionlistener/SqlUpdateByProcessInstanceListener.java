@@ -47,17 +47,17 @@ public class SqlUpdateByProcessInstanceListener implements ExecutionListener {
 			.getLog(SqlUpdateByProcessInstanceListener.class);
 
 	/**
-	 * ±íÃû³Æ£¬ÀıÈç£ºsys_log
+	 * è¡¨åç§°ï¼Œä¾‹å¦‚ï¼šsys_log
 	 */
 	protected Expression table;
 
 	/**
-	 * Á÷³ÌÊµÀı±£´æ×Ö¶Î£¨ÒµÎñ±íÁ÷³ÌÊµÀı±àºÅµÄÊı¾İ¿â×Ö¶ÎÃû³Æ£©
+	 * æµç¨‹å®ä¾‹ä¿å­˜å­—æ®µï¼ˆä¸šåŠ¡è¡¨æµç¨‹å®ä¾‹ç¼–å·çš„æ•°æ®åº“å­—æ®µåç§°ï¼‰
 	 */
 	protected Expression processInstanceField;
 
 	/**
-	 * ×Ö¶ÎJSON¶¨Òå£¬ÀıÈç£º
+	 * å­—æ®µJSONå®šä¹‰ï¼Œä¾‹å¦‚ï¼š
 	 * {"account":"#{actorId}","ip":"#{ip}","createtime":"#{now}","operate":
 	 * "#{operate}","flag":"#{flag}"}
 	 */

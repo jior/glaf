@@ -54,7 +54,7 @@ public class SecurityUtils {
 	}
 
 	/**
-	 * ¶şĞĞÖÆ×ª×Ö·û´®
+	 * äºŒè¡Œåˆ¶è½¬å­—ç¬¦ä¸²
 	 * 
 	 * @param b
 	 * @return
@@ -73,13 +73,13 @@ public class SecurityUtils {
 	}
 
 	/**
-	 * DESËã·¨£¬½âÃÜ
+	 * DESç®—æ³•ï¼Œè§£å¯†
 	 * 
 	 * @param data
-	 *            ´ı½âÃÜ×Ö·û´®
+	 *            å¾…è§£å¯†å­—ç¬¦ä¸²
 	 * @param key
-	 *            ½âÃÜË½Ô¿£¬³¤¶È²»ÄÜ¹»Ğ¡ÓÚ8Î»
-	 * @return ½âÃÜºóµÄ×Ö·û´®
+	 *            è§£å¯†ç§é’¥ï¼Œé•¿åº¦ä¸èƒ½å¤Ÿå°äº8ä½
+	 * @return è§£å¯†åçš„å­—ç¬¦ä¸²
 	 */
 	public static String decode(String key, String data) {
 		if (data == null) {
@@ -88,7 +88,7 @@ public class SecurityUtils {
 		try {
 			DESKeySpec dks = new DESKeySpec(key.getBytes());
 			SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
-			// keyµÄ³¤¶È²»ÄÜ¹»Ğ¡ÓÚ8Î»×Ö½Ú
+			// keyçš„é•¿åº¦ä¸èƒ½å¤Ÿå°äº8ä½å­—èŠ‚
 			Key secretKey = keyFactory.generateSecret(dks);
 			Cipher cipher = Cipher.getInstance(ALGORITHM_DES);
 			IvParameterSpec iv = new IvParameterSpec("12345678".getBytes());
@@ -101,13 +101,13 @@ public class SecurityUtils {
 	}
 
 	/**
-	 * DESËã·¨£¬¼ÓÃÜ
+	 * DESç®—æ³•ï¼ŒåŠ å¯†
 	 * 
 	 * @param data
-	 *            ´ı¼ÓÃÜ×Ö·û´®
+	 *            å¾…åŠ å¯†å­—ç¬¦ä¸²
 	 * @param key
-	 *            ¼ÓÃÜË½Ô¿£¬³¤¶È²»ÄÜ¹»Ğ¡ÓÚ8Î»
-	 * @return ¼ÓÃÜºóµÄ×Ö·û´®
+	 *            åŠ å¯†ç§é’¥ï¼Œé•¿åº¦ä¸èƒ½å¤Ÿå°äº8ä½
+	 * @return åŠ å¯†åçš„å­—ç¬¦ä¸²
 	 */
 	public static String encode(String key, String data) {
 		if (data == null) {
@@ -116,7 +116,7 @@ public class SecurityUtils {
 		try {
 			DESKeySpec dks = new DESKeySpec(key.getBytes());
 			SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
-			// keyµÄ³¤¶È²»ÄÜ¹»Ğ¡ÓÚ8Î»×Ö½Ú
+			// keyçš„é•¿åº¦ä¸èƒ½å¤Ÿå°äº8ä½å­—èŠ‚
 			Key secretKey = keyFactory.generateSecret(dks);
 			Cipher cipher = Cipher.getInstance(ALGORITHM_DES);
 			IvParameterSpec iv = new IvParameterSpec("12345678".getBytes());
@@ -130,15 +130,15 @@ public class SecurityUtils {
 	}
 
 	/**
-	 * ÓÃ·¢ËÍ·¢·½¹«Ô¿¼ÓÃÜÇ°ÃæÓÃµÄ¼ÓÃÜÓÃ¶Ô³ÆÃÜÔ¿,ĞÎ³ÉÊı×ÖĞÅ·â
+	 * ç”¨å‘é€å‘æ–¹å…¬é’¥åŠ å¯†å‰é¢ç”¨çš„åŠ å¯†ç”¨å¯¹ç§°å¯†é’¥,å½¢æˆæ•°å­—ä¿¡å°
 	 * 
 	 * @param ctx
-	 *            ÉÏÏÂÎÄ»·¾³
+	 *            ä¸Šä¸‹æ–‡ç¯å¢ƒ
 	 * @param symmetryKey
-	 *            ¶Ô³ÆÃÜÔ¿
+	 *            å¯¹ç§°å¯†é’¥
 	 * @param pubKey
-	 *            ¹«Ô¿
-	 * @return String(¾­base64±àÂë)
+	 *            å…¬é’¥
+	 * @return String(ç»base64ç¼–ç )
 	 */
 	public static String generateDigitalEnvelope(SecurityContext ctx,
 			Key symmetryKey, byte[] pubKey) {
@@ -171,10 +171,10 @@ public class SecurityUtils {
 	}
 
 	/**
-	 * Éú³É¶Ô³Æ¼ÓÃÜÓÃÃÜÔ¿
+	 * ç”Ÿæˆå¯¹ç§°åŠ å¯†ç”¨å¯†é’¥
 	 * 
 	 * @param ctx
-	 *            ÉÏÏÂÎÄ»·¾³
+	 *            ä¸Šä¸‹æ–‡ç¯å¢ƒ
 	 * @return key
 	 */
 	public static Key generateSecretKey(SecurityContext ctx) {
@@ -192,9 +192,9 @@ public class SecurityUtils {
 	}
 
 	/**
-	 * ´Ó¿Í»§¶ËµÄkeystoreµÃµ½Ö¤Êé
+	 * ä»å®¢æˆ·ç«¯çš„keystoreå¾—åˆ°è¯ä¹¦
 	 * 
-	 * @return X509Certificate Ö¤Êé
+	 * @return X509Certificate è¯ä¹¦
 	 */
 	public static X509Certificate getCertFromKeystore(
 			InputStream keystoreInputStream, String alias, String password) {
@@ -210,9 +210,9 @@ public class SecurityUtils {
 	}
 
 	/**
-	 * ´Ó¿Í»§¶ËµÄkeystoreµÃµ½Ë½Ô¿
+	 * ä»å®¢æˆ·ç«¯çš„keystoreå¾—åˆ°ç§é’¥
 	 * 
-	 * @return key Ë½Ô¿
+	 * @return key ç§é’¥
 	 */
 	public static Key getPrivateKeyFromKeystore(InputStream ksInputStream,
 			String password, String alias) {
@@ -240,15 +240,15 @@ public class SecurityUtils {
 	}
 
 	/**
-	 * ½ÓÊÕ·½ÓÃ×Ô¼ºµÄË½Ô¿½â¿ªÊı×ÖĞÅ·â£¬µÃµ½¶Ô³ÆÃÜÔ¿
+	 * æ¥æ”¶æ–¹ç”¨è‡ªå·±çš„ç§é’¥è§£å¼€æ•°å­—ä¿¡å°ï¼Œå¾—åˆ°å¯¹ç§°å¯†é’¥
 	 * 
 	 * @param ctx
-	 *            ÉÏÏÂÎÄ»·¾³
+	 *            ä¸Šä¸‹æ–‡ç¯å¢ƒ
 	 * @param envelope
-	 *            Êı×ÖĞÅ·â
+	 *            æ•°å­—ä¿¡å°
 	 * @param privateKey
-	 *            Ë½Ô¿
-	 * @return key ¶Ô³ÆÃÜÔ¿
+	 *            ç§é’¥
+	 * @return key å¯¹ç§°å¯†é’¥
 	 */
 	public static Key openDigitalEnvelope(SecurityContext ctx, String envelope,
 			Key privateKey) {
@@ -271,15 +271,15 @@ public class SecurityUtils {
 	}
 
 	/**
-	 * ÓÃË½Ô¿¶Ô´ıÇ©ÃûÄÚÈİ½øĞĞÇ©Ãû£¬ĞÎ³ÉÇ©ÃûÁ÷¡£
+	 * ç”¨ç§é’¥å¯¹å¾…ç­¾åå†…å®¹è¿›è¡Œç­¾åï¼Œå½¢æˆç­¾åæµã€‚
 	 * 
 	 * @param ctx
-	 *            ÉÏÏÂÎÄ»·¾³
+	 *            ä¸Šä¸‹æ–‡ç¯å¢ƒ
 	 * @param content
-	 *            ´ıÇ©ÃûÄÚÈİ
+	 *            å¾…ç­¾åå†…å®¹
 	 * @param privateKey
-	 *            Ë½Ô¿
-	 * @return byte[] Ç©ÃûÁ÷
+	 *            ç§é’¥
+	 * @return byte[] ç­¾åæµ
 	 */
 	public static byte[] sign(SecurityContext ctx, byte[] content,
 			Key privateKey) {
@@ -297,15 +297,15 @@ public class SecurityUtils {
 	}
 
 	/**
-	 * ½øĞĞ¶Ô³Æ½âÃÜ
+	 * è¿›è¡Œå¯¹ç§°è§£å¯†
 	 * 
 	 * @param ctx
-	 *            ÉÏÏÂÎÄ»·¾³
+	 *            ä¸Šä¸‹æ–‡ç¯å¢ƒ
 	 * @param cipherContent
-	 *            ´ı½âÃÜÃÜÎÄ¡£
+	 *            å¾…è§£å¯†å¯†æ–‡ã€‚
 	 * @param key
-	 *            ÃÜÔ¿
-	 * @return byte[] ½âÃÜºóÃ÷ÎÄ
+	 *            å¯†é’¥
+	 * @return byte[] è§£å¯†åæ˜æ–‡
 	 * 
 	 */
 	public static byte[] symmetryDecrypt(SecurityContext ctx,
@@ -325,15 +325,15 @@ public class SecurityUtils {
 	}
 
 	/**
-	 * ½øĞĞ¶Ô³Æ¼ÓÃÜ
+	 * è¿›è¡Œå¯¹ç§°åŠ å¯†
 	 * 
 	 * @param ctx
-	 *            ÉÏÏÂÎÄ»·¾³
+	 *            ä¸Šä¸‹æ–‡ç¯å¢ƒ
 	 * @param content
-	 *            ´ı¼ÓÃÜÃ÷ÎÄ¡£
+	 *            å¾…åŠ å¯†æ˜æ–‡ã€‚
 	 * @param key
-	 *            ¼ÓÃÜÃÜÔ¿
-	 * @return byte[] ¼ÓÃÜºóÃÜÎÄ
+	 *            åŠ å¯†å¯†é’¥
+	 * @return byte[] åŠ å¯†åå¯†æ–‡
 	 */
 	public static byte[] symmetryEncrypt(SecurityContext ctx, byte[] content,
 			Key key) {
@@ -352,16 +352,16 @@ public class SecurityUtils {
 	}
 
 	/**
-	 * ¹«Ô¿ÑéÖ¤Ç©Ãû
+	 * å…¬é’¥éªŒè¯ç­¾å
 	 * 
 	 * @param ctx
-	 *            ÉÏÏÂÎÄ»·¾³
+	 *            ä¸Šä¸‹æ–‡ç¯å¢ƒ
 	 * @param source
-	 *            Ô­ÎÄ
+	 *            åŸæ–‡
 	 * @param signed
-	 *            Ç©ÃûĞÅÏ¢
+	 *            ç­¾åä¿¡æ¯
 	 * @param pubKey
-	 *            ¹«Ô¿
+	 *            å…¬é’¥
 	 * @return boolean
 	 */
 	public static boolean verify(SecurityContext ctx, byte[] source,
@@ -393,7 +393,7 @@ public class SecurityUtils {
 			System.out.println(SecurityUtils.decode(key, enc_data));
 		}
 		long times = System.currentTimeMillis() - start;
-		System.out.println("×Ü¹²ºÄÊ±(ºÁÃë):" + times);
+		System.out.println("æ€»å…±è€—æ—¶(æ¯«ç§’):" + times);
 	}
 
 }

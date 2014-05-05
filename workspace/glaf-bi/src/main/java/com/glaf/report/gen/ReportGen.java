@@ -25,11 +25,11 @@ import com.glaf.report.domain.Report;
 public interface ReportGen {
 
 	/**
-	 * ¸ù¾İ±¨±í¶¨ÒåÉú³É±¨±í
+	 * æ ¹æ®æŠ¥è¡¨å®šä¹‰ç”ŸæˆæŠ¥è¡¨
 	 * 
 	 * @param report
 	 * @param params
-	 * @return ±¨±í×Ö½ÚÁ÷
+	 * @return æŠ¥è¡¨å­—èŠ‚æµ
 	 */
 	byte[] createReport(Report report, Map<String, Object> params);
 

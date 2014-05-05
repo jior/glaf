@@ -147,7 +147,7 @@ public class MxBlobServiceImpl implements IBlobService {
 	}
 
 	/**
-	 * 根据文件名称获取数据(不包含字节流)
+	 * 鏍规嵁鏂囦欢鍚嶇О鑾峰彇鏁版嵁(涓嶅寘鍚瓧鑺傛祦)
 	 * 
 	 * @param filename
 	 * @return

@@ -164,7 +164,7 @@ public class DatabaseConfig {
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			throw new RuntimeException("²»ÄÜÁ¬½ÓÊı¾İ¿â£¬Çë¼ì²éÖ÷»ú¡¢Êı¾İ¿âÃû³Æ¼°ÓÃ»§ÃûÃÜÂëÊÇ·ñÕıÈ·", ex);
+			throw new RuntimeException("ä¸èƒ½è¿æ¥æ•°æ®åº“ï¼Œè¯·æ£€æŸ¥ä¸»æœºã€æ•°æ®åº“åç§°åŠç”¨æˆ·åå¯†ç æ˜¯å¦æ­£ç¡®", ex);
 		} finally {
 			try {
 				if (con != null) {
@@ -182,11 +182,11 @@ public class DatabaseConfig {
 		Properties properties = null;
 		FileInputStream inputStream = null;
 		try {
-			setFileWritable(filename); // ÉèÖÃ¿É¶ÁĞ´
+			setFileWritable(filename); // è®¾ç½®å¯è¯»å†™
 			inputStream = new FileInputStream(filename);
 			properties = PropertiesLoader.loadProperties(inputStream);
 		} catch (IOException ex) {
-			throw new RuntimeException("²»ÄÜ¶ÁÈ¡jdbcÅäÖÃÎÄ¼ş", ex);
+			throw new RuntimeException("ä¸èƒ½è¯»å–jdbcé…ç½®æ–‡ä»¶", ex);
 		}
 
 		if (database.getType() != null) {
@@ -222,7 +222,7 @@ public class DatabaseConfig {
 		try {
 			ConfigTools.save(filename, properties);
 		} catch (IOException ex) {
-			throw new RuntimeException("²»ÄÜ±£´æjdbcÅäÖÃÎÄ¼ş", ex);
+			throw new RuntimeException("ä¸èƒ½ä¿å­˜jdbcé…ç½®æ–‡ä»¶", ex);
 		}
 
 	}
@@ -233,11 +233,11 @@ public class DatabaseConfig {
 		Properties properties = null;
 		FileInputStream inputStream = null;
 		try {
-			setFileWritable(filename); // ÉèÖÃ¿É¶ÁĞ´
+			setFileWritable(filename); // è®¾ç½®å¯è¯»å†™
 			inputStream = new FileInputStream(filename);
 			properties = PropertiesLoader.loadProperties(inputStream);
 		} catch (IOException ex) {
-			throw new RuntimeException("²»ÄÜ¶ÁÈ¡HibernateÅäÖÃÎÄ¼ş", ex);
+			throw new RuntimeException("ä¸èƒ½è¯»å–Hibernateé…ç½®æ–‡ä»¶", ex);
 		}
 
 		if (database.getDialect() != null) {
@@ -301,7 +301,7 @@ public class DatabaseConfig {
 		try {
 			ConfigTools.save(filename, properties);
 		} catch (IOException ex) {
-			throw new RuntimeException("²»ÄÜ±£´æHibernateÅäÖÃÎÄ¼ş", ex);
+			throw new RuntimeException("ä¸èƒ½ä¿å­˜Hibernateé…ç½®æ–‡ä»¶", ex);
 		}
 
 	}
@@ -310,14 +310,14 @@ public class DatabaseConfig {
 		try {
 			File file = new File(fileName);
 			if (file.canWrite() == false) {
-				file.setWritable(true); // Õâ¸ö·½·¨ÔÚJDK1.6²ÅÓĞ
+				file.setWritable(true); // è¿™ä¸ªæ–¹æ³•åœ¨JDK1.6æ‰æœ‰
 			}
 		} catch (Exception re) {
-			throw new RuntimeException("ÅäÖÃÎÄ¼ş²»ÄÜÖ´ĞĞ¸üĞÂ²Ù×÷£¬ÇëÈ¥µôÎÄ¼şµÄÖ»¶ÁÊôĞÔ", re);
+			throw new RuntimeException("é…ç½®æ–‡ä»¶ä¸èƒ½æ‰§è¡Œæ›´æ–°æ“ä½œï¼Œè¯·å»æ‰æ–‡ä»¶çš„åªè¯»å±æ€§", re);
 		}
 	}
 
-	// ¶¯Ì¬¼ÓÔØjar°ü
+	// åŠ¨æ€åŠ è½½jaråŒ…
 	private static class JarLoader extends URLClassLoader {
 		private JarLoader() {
 			super(new URL[0], ClassLoader.getSystemClassLoader());

@@ -49,13 +49,13 @@ public class RedisManager extends StandardManager {
 
 	protected boolean debugEnabled = false;
 
-	protected String debug = "false"; // ÊÇ·ñ´ò¿ªµ÷ÊÔÄ£Ê½
+	protected String debug = "false"; // æ˜¯å¦æ‰“å¼€è°ƒè¯•æ¨¡å¼
 
 	protected boolean stickySessionEnabled = true;
 
-	protected String stickySession = "true"; // ÊÇ·ñ´ò¿ª»á»°Õ³Á¬Ä£Ê½
+	protected String stickySession = "true"; // æ˜¯å¦æ‰“å¼€ä¼šè¯ç²˜è¿æ¨¡å¼
 
-	protected String serverlist = "127.0.0.1:6379"; // ÓÃ¶ººÅ(,)·Ö¸ôµÄ"ip:port"ÁĞ±í
+	protected String serverlist = "127.0.0.1:6379"; // ç”¨é€—å·(,)åˆ†éš”çš„"ip:port"åˆ—è¡¨
 
 	protected String minConn = "5";
 
@@ -105,7 +105,7 @@ public class RedisManager extends StandardManager {
 				_shardedPool = null;
 				try {
 					myPool.destroy();
-					log.info("Ïú»ÙRedisManager:" + this.toString());
+					log.info("é”€æ¯RedisManager:" + this.toString());
 				} catch (Exception ex) {
 					log.error("error:", ex);
 				}
@@ -116,7 +116,7 @@ public class RedisManager extends StandardManager {
 				_pool = null;
 				try {
 					myPool.destroy();
-					log.info("Ïú»ÙRedisManager:" + this.toString());
+					log.info("é”€æ¯RedisManager:" + this.toString());
 				} catch (Exception ex) {
 					log.error("error:", ex);
 				}
@@ -144,10 +144,10 @@ public class RedisManager extends StandardManager {
 		if (!this.isInitialized()) {
 			return session;
 		}
-		if (session == null && id != null) { // ËµÃ÷sessionÓĞ¿ÉÄÜÔÚÁíÒ»¸ö½ÚµãÉÏ
+		if (session == null && id != null) { // è¯´æ˜sessionæœ‰å¯èƒ½åœ¨å¦ä¸€ä¸ªèŠ‚ç‚¹ä¸Š
 			try {
 				boolean idExists = jedisExists(TOMCAT_SESSION_PREFIX + id);
-				if (idExists) { // RedisÀïÓĞSession ID
+				if (idExists) { // Redisé‡Œæœ‰Session ID
 					if (this.debugEnabled) {
 						log.info("cached found and local not! id=" + id);
 					}
@@ -174,7 +174,7 @@ public class RedisManager extends StandardManager {
 	}
 
 	/**
-	 * ÊÇ·ñ´ò¿ªµ÷ÊÔÄ£Ê½
+	 * æ˜¯å¦æ‰“å¼€è°ƒè¯•æ¨¡å¼
 	 * 
 	 * @return the debug
 	 */
@@ -202,7 +202,7 @@ public class RedisManager extends StandardManager {
 	}
 
 	/**
-	 * ¼ä½Ó±»createSession()µ÷ÓÃ.
+	 * é—´æ¥è¢«createSession()è°ƒç”¨.
 	 */
 	@Override
 	protected StandardSession getNewSession() {
@@ -211,7 +211,7 @@ public class RedisManager extends StandardManager {
 	}
 
 	/**
-	 * the list of all cache servers;ÓÃ¶ººÅ(,)·Ö¸ôµÄ"ip:port"ÁĞ±í
+	 * the list of all cache servers;ç”¨é€—å·(,)åˆ†éš”çš„"ip:port"åˆ—è¡¨
 	 * 
 	 * @return
 	 */
@@ -229,7 +229,7 @@ public class RedisManager extends StandardManager {
 	}
 
 	/**
-	 * ÊÇ·ñ´ò¿ª»á»°Õ³Á¬Ä£Ê½
+	 * æ˜¯å¦æ‰“å¼€ä¼šè¯ç²˜è¿æ¨¡å¼
 	 * 
 	 * @return the stickySession
 	 */
@@ -254,10 +254,10 @@ public class RedisManager extends StandardManager {
 						poolConfig.setTestOnReturn(false);
 						poolConfig.setTestWhileIdle(true);
 						poolConfig
-								.setMinEvictableIdleTimeMillis(1000L * 60L * 10L); // ¿ÕÏĞ¶ÔÏó,¿ÕÏĞ¶à³¤Ê±¼ä»á±»ÇıÖğ³ö³ØÀï
+								.setMinEvictableIdleTimeMillis(1000L * 60L * 10L); // ç©ºé—²å¯¹è±¡,ç©ºé—²å¤šé•¿æ—¶é—´ä¼šè¢«é©±é€å‡ºæ± é‡Œ
 						poolConfig
-								.setTimeBetweenEvictionRunsMillis(1000L * 30L); // ÇıÖğÏß³Ì30ÃëÖ´ĞĞÒ»´Î
-						poolConfig.setNumTestsPerEvictionRun(-1); // -1,±íÊ¾ÔÚÇıÖğÏß³ÌÖ´ĞĞÊ±,²âÊÔËùÓĞµÄ¿ÕÏĞ¶ÔÏó
+								.setTimeBetweenEvictionRunsMillis(1000L * 30L); // é©±é€çº¿ç¨‹30ç§’æ‰§è¡Œä¸€æ¬¡
+						poolConfig.setNumTestsPerEvictionRun(-1); // -1,è¡¨ç¤ºåœ¨é©±é€çº¿ç¨‹æ‰§è¡Œæ—¶,æµ‹è¯•æ‰€æœ‰çš„ç©ºé—²å¯¹è±¡
 
 						String[] servers = serverlist.split(",");
 						java.util.List<JedisShardInfo> shards = new java.util.ArrayList<JedisShardInfo>(
@@ -279,16 +279,16 @@ public class RedisManager extends StandardManager {
 									.getHost(), shards.get(0).getPort(), shards
 									.get(0).getTimeout(), shards.get(0)
 									.getPassword());
-							log.info("Ê¹ÓÃ:JedisPool");
+							log.info("ä½¿ç”¨:JedisPool");
 						} else {
 							_shardedPool = new ShardedJedisPool(poolConfig,
 									shards);
-							log.info("Ê¹ÓÃ:ShardedJedisPool");
+							log.info("ä½¿ç”¨:ShardedJedisPool");
 						}
 
 						initialized = true;
 						log.info("RedisShards:" + shards.toString());
-						log.info("³õÊ¼»¯RedisManager:" + this.toString());
+						log.info("åˆå§‹åŒ–RedisManager:" + this.toString());
 					} catch (Exception ex) {
 						log.error("error:", ex);
 					}
@@ -533,7 +533,7 @@ public class RedisManager extends StandardManager {
 	}
 
 	/**
-	 * ÊÇ·ñ´ò¿ªµ÷ÊÔÄ£Ê½
+	 * æ˜¯å¦æ‰“å¼€è°ƒè¯•æ¨¡å¼
 	 * 
 	 * @param debug
 	 *            the debug to set
@@ -565,7 +565,7 @@ public class RedisManager extends StandardManager {
 	}
 
 	/**
-	 * the list of all cache servers;ÓÃ¶ººÅ(,)·Ö¸ôµÄ"ip:port"ÁĞ±í
+	 * the list of all cache servers;ç”¨é€—å·(,)åˆ†éš”çš„"ip:port"åˆ—è¡¨
 	 * 
 	 * @param serverlist
 	 */
@@ -584,7 +584,7 @@ public class RedisManager extends StandardManager {
 	}
 
 	/**
-	 * ÊÇ·ñ´ò¿ª»á»°Õ³Á¬Ä£Ê½
+	 * æ˜¯å¦æ‰“å¼€ä¼šè¯ç²˜è¿æ¨¡å¼
 	 * 
 	 * @param stickySession
 	 *            the stickySession to set

@@ -20,19 +20,19 @@ package com.glaf.base.modules;
 
 public class Constants {
 
-	public static final int PAGE_SIZE = 10;// È±Ê¡Ò³Ãæ´óĞ¡
+	public static final int PAGE_SIZE = 10;// ç¼ºçœé¡µé¢å¤§å°
 
 	public static final String SYS_DEPTS = "SYS_DEPTS";
 	public static final String SYS_FUNCTIONS = "SYS_FUNCTIONS";
 	public static final String SYS_SUBJECTS = "SYS_SUBJECTS";
 	public static final String SYS_USERS = "SYS_USERS";
 
-	public static final String TREE_APP = "02";// Ä£¿é½á¹¹Ê÷±àºÅ
-	public static final String TREE_BASE = "01";// »ù´¡Êı¾İ½á¹¹Ê÷±àºÅ
-	public static final String TREE_DEPT = "012";// ²¿ÃÅ½á¹¹Ê÷±àºÅ
-	public static final String TREE_DICTORY = "011";// Êı¾İ×Öµä½á¹¹Ê÷±àºÅ
+	public static final String TREE_APP = "02";// æ¨¡å—ç»“æ„æ ‘ç¼–å·
+	public static final String TREE_BASE = "01";// åŸºç¡€æ•°æ®ç»“æ„æ ‘ç¼–å·
+	public static final String TREE_DEPT = "012";// éƒ¨é—¨ç»“æ„æ ‘ç¼–å·
+	public static final String TREE_DICTORY = "011";// æ•°æ®å­—å…¸ç»“æ„æ ‘ç¼–å·
 
-	public static final int TREE_ROOT = 1;// Ä¿Â¼¸ù½Úµã
+	public static final int TREE_ROOT = 1;// ç›®å½•æ ¹èŠ‚ç‚¹
 	public static final String UPLOAD_DIR = "/WEB-INF/upload/files/";
 
 }

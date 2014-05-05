@@ -32,69 +32,69 @@ import com.glaf.form.core.domain.FormLink;
 public interface FormLinkService {
 
 	/**
-	 * »ñÈ¡Ó¦ÓÃ¹ØÁªµÄ×ÓÓ¦ÓÃ¼¯ºÏ
+	 * è·å–åº”ç”¨å…³è”çš„å­åº”ç”¨é›†åˆ
 	 * 
 	 * @param app_name
-	 *            Ó¦ÓÃÃû³Æ
+	 *            åº”ç”¨åç§°
 	 * @param rows
 	 */
 	List<FormApplication> getChildrenApplications(String app_name);
 
 	/**
-	 * »ñÈ¡Ó¦ÓÃ¹ØÁª±íµ¥¶¨Òå
+	 * è·å–åº”ç”¨å…³è”è¡¨å•å®šä¹‰
 	 * 
 	 * @param app_name
-	 *            Ó¦ÓÃÃû³Æ
+	 *            åº”ç”¨åç§°
 	 * @param rows
 	 */
 	List<FormDefinition> getChildrenFormDefinitionReference(String app_name);
 
 	/**
-	 * »ñÈ¡Ó¦ÓÃ¹ØÁª±íµ¥¶¨Òå
+	 * è·å–åº”ç”¨å…³è”è¡¨å•å®šä¹‰
 	 * 
 	 * @param app_name
-	 *            Ó¦ÓÃÃû³Æ
+	 *            åº”ç”¨åç§°
 	 * @param rows
 	 */
 	List<FormDefinition> getFormDefinitions(String app_name);
 
 	/**
-	 * »ñÈ¡Ó¦ÓÃ¹ØÁª±íµ¥
+	 * è·å–åº”ç”¨å…³è”è¡¨å•
 	 * 
 	 * @param applicationName
-	 *            Ó¦ÓÃÃû³Æ
+	 *            åº”ç”¨åç§°
 	 * @param childName
-	 *            ×ÓÓ¦ÓÃÃû³Æ
+	 *            å­åº”ç”¨åç§°
 	 * @param rows
 	 */
 	FormLink getFormLink(String applicationName, String childName);
 
 	/**
-	 * »ñÈ¡Ó¦ÓÃ¹ØÁª±íµ¥
+	 * è·å–åº”ç”¨å…³è”è¡¨å•
 	 * 
 	 * @param app_name
-	 *            Ó¦ÓÃÃû³Æ
+	 *            åº”ç”¨åç§°
 	 * @param rows
 	 */
 	List<FormLink> getFormLinks(String app_name);
 
 	/**
-	 * ¸ù¾İ²ÎÊı»ñÈ¡ÊµÀıÊı¾İÁĞ±í
+	 * æ ¹æ®å‚æ•°è·å–å®ä¾‹æ•°æ®åˆ—è¡¨
 	 * 
 	 * @param formLink
-	 *            ¹ØÁª±íµ¥
+	 *            å…³è”è¡¨å•
 	 * 
 	 * @param query
-	 *            ²éÑ¯ÉÏÏÂÎÄ
+	 *            æŸ¥è¯¢ä¸Šä¸‹æ–‡
 	 * @return
 	 */
 	Paging getPageDataModel(FormLink formLink, DataModelQuery query);
 
 	/**
-	 * ±£´æÓ¦ÓÃ¹ØÁª±íµ¥
+	 * ä¿å­˜åº”ç”¨å…³è”è¡¨å•
 	 * 
 	 * @param app_name
-	 *            Ó¦ÓÃÃû³Æ
+	 *            åº”ç”¨åç§°
 	 * @param rows
 	 */
 	@Transactional

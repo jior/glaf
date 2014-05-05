@@ -41,7 +41,7 @@ public class TestServiceImpl implements TestService {
 		user.setAccount("user1");
 		user.setActorId("user1");
 		user.setCode("user1");
-		user.setName("ÓÃ»§1");
+		user.setName("ç”¨æˆ·1");
 		user.setBlocked(0);
 		user.setDeptId(6);
 		user.setLocked(0);
@@ -49,7 +49,7 @@ public class TestServiceImpl implements TestService {
 
 		SysRole bean = new SysRole();
 		bean.setCode("role01");
-		bean.setName("½ÇÉ«01");
+		bean.setName("è§’è‰²01");
 		bean.setNodeId(0);
 		bean.setDesc("xxxxxxx");
 		bean.setSort(0);
@@ -57,9 +57,9 @@ public class TestServiceImpl implements TestService {
 		sysRoleService.create(bean);
 
 		SysRole bean2 = new SysRole();
-		bean2.setId(1);// ²åÈëÒÑ¾­´æÔÚµÄ½ÇÉ«ID£¬±Ø¶¨Å×³öÒì³£
+		bean2.setId(1);// æ’å…¥å·²ç»å­˜åœ¨çš„è§’è‰²IDï¼Œå¿…å®šæŠ›å‡ºå¼‚å¸¸
 		bean2.setCode("role02");
-		bean2.setName("½ÇÉ«2");
+		bean2.setName("è§’è‰²2");
 		bean2.setNodeId(0);
 		bean2.setDesc("zzzzzzzzzz");
 		bean2.setSort(0);
@@ -73,7 +73,7 @@ public class TestServiceImpl implements TestService {
 		user.setAccount("user1");
 		user.setActorId("user1");
 		user.setCode("user1");
-		user.setName("ÓÃ»§1");
+		user.setName("ç”¨æˆ·1");
 		user.setBlocked(0);
 		user.setDeptId(6);
 		user.setLocked(0);
@@ -81,7 +81,7 @@ public class TestServiceImpl implements TestService {
 
 		SysRole bean = new SysRole();
 		bean.setCode("role01");
-		bean.setName("½ÇÉ«01");
+		bean.setName("è§’è‰²01");
 		bean.setNodeId(0);
 		bean.setDesc("xxxxxxx");
 		bean.setSort(0);
@@ -95,7 +95,7 @@ public class TestServiceImpl implements TestService {
 		user.setAccount("user1");
 		user.setActorId("user1");
 		user.setCode("user1");
-		user.setName("ÓÃ»§1");
+		user.setName("ç”¨æˆ·1");
 		user.setBlocked(0);
 		user.setDeptId(6);
 		user.setLocked(0);
@@ -104,7 +104,7 @@ public class TestServiceImpl implements TestService {
 		try {
 			SysRole bean = new SysRole();
 			bean.setCode("role01");
-			bean.setName("½ÇÉ«01");
+			bean.setName("è§’è‰²01");
 			bean.setNodeId(0);
 			bean.setDesc("xxxxxxx");
 			bean.setSort(0);

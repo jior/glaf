@@ -42,8 +42,8 @@ import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.UUID32;
 
 /**
- * Title: ºóÌ¨·şÎñ<br/>
- * Description: Îª¿Í»§¶ËÌá¹©ÉÏ´«¼°ÎÄ¼ş´«Êä×´Ì¬²éÑ¯·şÎñ<br/>
+ * Title: åå°æœåŠ¡<br/>
+ * Description: ä¸ºå®¢æˆ·ç«¯æä¾›ä¸Šä¼ åŠæ–‡ä»¶ä¼ è¾“çŠ¶æ€æŸ¥è¯¢æœåŠ¡<br/>
  */
 
 public class FileUploadBackGroundServlet extends HttpServlet {
@@ -61,7 +61,7 @@ public class FileUploadBackGroundServlet extends HttpServlet {
 	}
 
 	/**
-	 * É¾³ıÒÑ¾­ÉÏ´«µÄÎÄ¼ş
+	 * åˆ é™¤å·²ç»ä¸Šä¼ çš„æ–‡ä»¶
 	 */
 	private void deleteUploadedFile(HttpServletRequest request) {
 		FileUploadStatus satusBean = FileMgmtFactory.getStatusBean(request);
@@ -70,7 +70,7 @@ public class FileUploadBackGroundServlet extends HttpServlet {
 			fileInfo.getFile().delete();
 		}
 		satusBean.getUploadFileUrlList().clear();
-		satusBean.setStatus("É¾³ıÒÑÉÏ´«µÄÎÄ¼ş");
+		satusBean.setStatus("åˆ é™¤å·²ä¸Šä¼ çš„æ–‡ä»¶");
 		FileMgmtFactory.saveStatusBean(request, satusBean);
 	}
 
@@ -112,11 +112,11 @@ public class FileUploadBackGroundServlet extends HttpServlet {
 	}
 
 	/**
-	 * ³õÊ¼»¯ÎÄ¼şÉÏ´«×´Ì¬Bean
+	 * åˆå§‹åŒ–æ–‡ä»¶ä¸Šä¼ çŠ¶æ€Bean
 	 */
 	private FileUploadStatus initStatusBean(HttpServletRequest request) {
 		FileUploadStatus satusBean = new FileUploadStatus();
-		satusBean.setStatus("ÕıÔÚ×¼±¸´¦Àí");
+		satusBean.setStatus("æ­£åœ¨å‡†å¤‡å¤„ç†");
 		satusBean.setUploadTotalSize(request.getContentLength());
 		satusBean.setProcessStartTime(System.currentTimeMillis());
 		satusBean.setBaseDir(getUploadDir());
@@ -124,7 +124,7 @@ public class FileUploadBackGroundServlet extends HttpServlet {
 	}
 
 	/**
-	 * ´¦ÀíÈ¡ÏûÎÄ¼şÉÏ´«
+	 * å¤„ç†å–æ¶ˆæ–‡ä»¶ä¸Šä¼ 
 	 */
 	private void processCancelFileUpload(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
@@ -135,7 +135,7 @@ public class FileUploadBackGroundServlet extends HttpServlet {
 	}
 
 	/**
-	 * ´¦ÀíÏÂÔØ
+	 * å¤„ç†ä¸‹è½½
 	 */
 	private void processDownload(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
@@ -155,7 +155,7 @@ public class FileUploadBackGroundServlet extends HttpServlet {
 	}
 
 	/**
-	 * ´¦ÀíÎÄ¼şÉÏ´«
+	 * å¤„ç†æ–‡ä»¶ä¸Šä¼ 
 	 */
 	private void processFileUpload(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -170,28 +170,28 @@ public class FileUploadBackGroundServlet extends HttpServlet {
 		}
 		maxUploadSize = maxUploadSize * FileUtils.MB_SIZE;
 		DiskFileItemFactory factory = new DiskFileItemFactory();
-		// ÉèÖÃÄÚ´æ»º³åÇø£¬³¬¹ıºóĞ´ÈëÁÙÊ±ÎÄ¼ş
+		// è®¾ç½®å†…å­˜ç¼“å†²åŒºï¼Œè¶…è¿‡åå†™å…¥ä¸´æ—¶æ–‡ä»¶
 		factory.setSizeThreshold(204800);
 		File tempDir = new File(getUploadDir() + "/temp");
 		if (!tempDir.exists()) {
 			tempDir.mkdir();
 		}
 
-		// ÉèÖÃÁÙÊ±ÎÄ¼ş´æ´¢Î»ÖÃ
+		// è®¾ç½®ä¸´æ—¶æ–‡ä»¶å­˜å‚¨ä½ç½®
 		factory.setRepository(tempDir);
 		ServletFileUpload upload = new ServletFileUpload(factory);
-		// ÉèÖÃµ¥¸öÎÄ¼şµÄ×î´óÉÏ´«Öµ
+		// è®¾ç½®å•ä¸ªæ–‡ä»¶çš„æœ€å¤§ä¸Šä¼ å€¼
 		upload.setFileSizeMax(maxUploadSize);
-		// ÉèÖÃÕû¸örequestµÄ×î´óÖµ
+		// è®¾ç½®æ•´ä¸ªrequestçš„æœ€å¤§å€¼
 		upload.setSizeMax(maxUploadSize);
 		upload.setProgressListener(new FileUploadListener(request));
 		upload.setHeaderEncoding("UTF-8");
-		// ±£´æ³õÊ¼»¯ºóµÄFileUploadStatus Bean
+		// ä¿å­˜åˆå§‹åŒ–åçš„FileUploadStatus Bean
 		FileMgmtFactory.saveStatusBean(request, initStatusBean(request));
 
 		try {
 			List<?> items = upload.parseRequest(request);
-			// »ñµÃ·µ»Øurl
+			// è·å¾—è¿”å›url
 			for (int i = 0; i < items.size(); i++) {
 				FileItem item = (FileItem) items.get(i);
 				if (item.isFormField()) {
@@ -199,25 +199,25 @@ public class FileUploadBackGroundServlet extends HttpServlet {
 					break;
 				}
 			}
-			// ÎÄ¼ş´¢´æÄ¿Â¼
+			// æ–‡ä»¶å‚¨å­˜ç›®å½•
 			String uploadDir = com.glaf.base.utils.StringUtil
 					.createDir(getUploadDir());
-			// ´¦ÀíÎÄ¼şÉÏ´«
+			// å¤„ç†æ–‡ä»¶ä¸Šä¼ 
 			for (int i = 0; i < items.size(); i++) {
 				FileItem item = (FileItem) items.get(i);
-				// È¡ÏûÉÏ´«
+				// å–æ¶ˆä¸Šä¼ 
 				if (FileMgmtFactory.getStatusBean(request).getCancel()) {
 					deleteUploadedFile(request);
 					break;
 				} else if (!item.isFormField() && item.getName().length() > 0) {
-					logger.debug("Ô­Ê¼ÎÄ¼ş£º" + item.getName());
-					// ±£´æÎÄ¼ş
+					logger.debug("åŸå§‹æ–‡ä»¶ï¼š" + item.getName());
+					// ä¿å­˜æ–‡ä»¶
 					String fileId = UUID32.getUUID();
 					String path = uploadDir + FileUtils.sp + fileId;
 					File uploadedFile = new File(new File(getUploadDir(),
 							uploadDir), fileId);
 					item.write(uploadedFile);
-					// ¸üĞÂÉÏ´«ÎÄ¼şÁĞ±í
+					// æ›´æ–°ä¸Šä¼ æ–‡ä»¶åˆ—è¡¨
 					FileUploadStatus satusBean = FileMgmtFactory
 							.getStatusBean(request);
 					FileInfo fileInfo = new FileInfo();
@@ -234,9 +234,9 @@ public class FileUploadBackGroundServlet extends HttpServlet {
 			}
 
 		} catch (FileUploadException ex) {
-			uploadExceptionHandle(request, "ÉÏ´«ÎÄ¼şÊ±·¢Éú´íÎó:" + ex.getMessage());
+			uploadExceptionHandle(request, "ä¸Šä¼ æ–‡ä»¶æ—¶å‘ç”Ÿé”™è¯¯:" + ex.getMessage());
 		} catch (Exception ex) {
-			uploadExceptionHandle(request, "±£´æÉÏ´«ÎÄ¼şÊ±·¢Éú´íÎó:" + ex.getMessage());
+			uploadExceptionHandle(request, "ä¿å­˜ä¸Šä¼ æ–‡ä»¶æ—¶å‘ç”Ÿé”™è¯¯:" + ex.getMessage());
 		}
 		String forwardURL = request.getParameter("forwardURL");
 		if (StringUtils.isEmpty(forwardURL)) {
@@ -246,7 +246,7 @@ public class FileUploadBackGroundServlet extends HttpServlet {
 	}
 
 	/**
-	 * »ØÓ¦ÉÏ´«×´Ì¬²éÑ¯
+	 * å›åº”ä¸Šä¼ çŠ¶æ€æŸ¥è¯¢
 	 */
 	private void responseStatusQuery(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
@@ -257,11 +257,11 @@ public class FileUploadBackGroundServlet extends HttpServlet {
 	}
 
 	/**
-	 * ÉÏ´«¹ı³ÌÖĞ³ö´í´¦Àí
+	 * ä¸Šä¼ è¿‡ç¨‹ä¸­å‡ºé”™å¤„ç†
 	 */
 	private void uploadExceptionHandle(HttpServletRequest request, String errMsg)
 			throws ServletException, IOException {
-		// Ê×ÏÈÉ¾³ıÒÑ¾­ÉÏ´«µÄÎÄ¼ş
+		// é¦–å…ˆåˆ é™¤å·²ç»ä¸Šä¼ çš„æ–‡ä»¶
 		deleteUploadedFile(request);
 		FileUploadStatus satusBean = FileMgmtFactory.getStatusBean(request);
 		satusBean.setStatus(errMsg);

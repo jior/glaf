@@ -66,7 +66,7 @@ public class OptionalController {
 					Optional optional = optionalService.getOptional(Integer
 							.valueOf(x));
 					/**
-					 * �˴�ҵ���߼������е���
+					 * 此处业务逻辑需自行调整
 					 */
 					optionalService.deleteById(Integer.valueOf(x));
 					if (optional != null
@@ -81,7 +81,7 @@ public class OptionalController {
 			Optional optional = optionalService.getOptional(Integer
 					.valueOf(optionalId));
 			/**
-			 * �˴�ҵ���߼������е���
+			 * 此处业务逻辑需自行调整
 			 */
 
 			optionalService.deleteById(Integer.valueOf(optionalId));
@@ -158,7 +158,7 @@ public class OptionalController {
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
 		/**
-		 * �˴�ҵ���߼������е���
+		 * 此处业务逻辑需自行调整
 		 */
 		if (!loginContext.isSystemAdministrator()) {
 

@@ -81,10 +81,10 @@ public class SealController {
 		String processName = "Sealprocess";
 		ProcessContext ctx = new ProcessContext();
 		ctx.setRowId(seal.getSealid());
-		// »ñÈ¡ÉêÇëÈË
+		// è·å–ç”³è¯·äºº
 		User user = sysUserService.findByAccount(seal.getAppuser());
 
-		// »ñÈ¡²Ù×÷Õß
+		// è·å–æ“ä½œè€…
 		User opUser = RequestUtils.getUser(request);
 		if (seal.getWfstatus() == -5555) {
 			ctx.setActorId(seal.getAppuser());
@@ -98,20 +98,20 @@ public class SealController {
 			ctx.setOpinion(opinion);
 		}
 		/**
-		 * ¹¤×÷Á÷¿ØÖÆ²ÎÊı
+		 * å·¥ä½œæµæ§åˆ¶å‚æ•°
 		 */
 		Collection<DataField> datafields = new ArrayList<DataField>();
-		// »ñÈ¡ ²¿ÃÅ½Úµã
+		// è·å– éƒ¨é—¨èŠ‚ç‚¹
 		long deptId02 = user.getDeptId();
 		SysDepartment curdept = sysDepartmentService.findById(deptId02);
-		// »ñÈ¡µ±µØ²¿ÃÅ½Úµã
+		// è·å–å½“åœ°éƒ¨é—¨èŠ‚ç‚¹
 		String curAreadeptCode = curdept.getCode().substring(0, 2);
 		SysDepartment curAreadept = sysDepartmentService
 				.findByCode(curAreadeptCode);
-		// »ñÈ¡¼¯ÍÅ½Úµã
+		// è·å–é›†å›¢èŠ‚ç‚¹
 		SysDepartment sysdeptMem = sysDepartmentService.findByCode("JT");
 
-		// »ñÈ¡µ±µØĞĞÕş²¿ÃÅ
+		// è·å–å½“åœ°è¡Œæ”¿éƒ¨é—¨
 		SysDepartment admindept = sysDepartmentService
 				.findByCode(curAreadeptCode + "06");
 		DataField datafield1 = new DataField();
@@ -155,7 +155,7 @@ public class SealController {
 					.longValue()));
 
 			isOK = ProcessContainer.getContainer().completeTask(ctx);
-			logger.info("workflow ÖĞ");
+			logger.info("workflow ä¸­");
 		} else {
 			long processInstanceId = ProcessContainer.getContainer()
 					.startProcess(ctx);
@@ -181,7 +181,7 @@ public class SealController {
 				if (StringUtils.isNotEmpty(x)) {
 					Seal seal = sealService.getSeal(Long.valueOf(x));
 					/**
-					 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+					 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 					 */
 					if (seal != null
 							&& (StringUtils.equals(seal.getCreateBy(),
@@ -202,7 +202,7 @@ public class SealController {
 		} else if (sealid != null) {
 			Seal seal = sealService.getSeal(Long.valueOf(sealid));
 			/**
-			 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+			 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 			 */
 			if (seal != null
 					&& (StringUtils.equals(seal.getCreateBy(),
@@ -249,7 +249,7 @@ public class SealController {
 			seal = new Seal();
 			long deptId01 = user.getDeptId();
 			SysDepartment curdept = sysDepartmentService.findById(deptId01);
-			// »ñÈ¡µ±µØ²¿ÃÅ½Úµã
+			// è·å–å½“åœ°éƒ¨é—¨èŠ‚ç‚¹
 			String curAreadeptCode = curdept.getCode().substring(0, 2);
 
 			seal.setArea(curAreadeptCode);
@@ -308,7 +308,7 @@ public class SealController {
 		query.setLoginContext(loginContext);
 		List<String> actorIds = new ArrayList<String>();
 
-		// ÓÉÓÚÒ³ÃæÊäÈëµÄÈÕÆÚÃ»ÓĞÊ±·ÖÃë£¬²éÕÒ·¶Î§µÄÊ±ºò»ñÈ¡²»µ½×îºóÒ»ÌìµÄ¼ÇÂ¼,ÈËÎªÉèÖÃ
+		// ç”±äºé¡µé¢è¾“å…¥çš„æ—¥æœŸæ²¡æœ‰æ—¶åˆ†ç§’ï¼ŒæŸ¥æ‰¾èŒƒå›´çš„æ—¶å€™è·å–ä¸åˆ°æœ€åä¸€å¤©çš„è®°å½•,äººä¸ºè®¾ç½®
 		if (null != query.getAppdateLessThanOrEqual()) {
 			Date appdateLessThanOrEqual = query.getAppdateLessThanOrEqual();
 			// appdateLessThanOrEqual.setHours(23);
@@ -317,7 +317,7 @@ public class SealController {
 			query.setAppdateLessThanOrEqual(appdateLessThanOrEqual);
 		}
 		/**
-		 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+		 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 		 */
 
 		if (null == query.getWorkedProcessFlag()
@@ -387,7 +387,7 @@ public class SealController {
 								.getStringValue(seal.getCompany(),
 										seal.getArea());
 						seal.setCompany(companyname_CN);
-						// ÓÃ»§Ãû´¦Àí
+						// ç”¨æˆ·åå¤„ç†
 						String appusername = BaseDataManager.getInstance()
 								.getStringValue(seal.getAppuser(), "SYS_USERS");
 						seal.setAppuser(appusername);
@@ -396,7 +396,7 @@ public class SealController {
 						seal.setAppuser(appuser);
 						seal.setCompany(companyname);
 					}
-					// Ó¡ÕÂÀàĞÍ
+					// å°ç« ç±»å‹
 					String[] sealtypes = seal.getSealtype().split(",");
 					String sealtypes_CH = "";
 					for (int i = 0; i < sealtypes.length; i++) {
@@ -473,7 +473,7 @@ public class SealController {
 		long deptId01 = user.getDeptId();
 		SysDepartment curdept = sysDepartmentService.findById(deptId01);
 
-		// ÓÉÓÚÒ³ÃæÊäÈëµÄÈÕÆÚÃ»ÓĞÊ±·ÖÃë£¬²éÕÒ·¶Î§µÄÊ±ºò»ñÈ¡²»µ½×îºóÒ»ÌìµÄ¼ÇÂ¼,ÈËÎªÉèÖÃ
+		// ç”±äºé¡µé¢è¾“å…¥çš„æ—¥æœŸæ²¡æœ‰æ—¶åˆ†ç§’ï¼ŒæŸ¥æ‰¾èŒƒå›´çš„æ—¶å€™è·å–ä¸åˆ°æœ€åä¸€å¤©çš„è®°å½•,äººä¸ºè®¾ç½®
 		if (null != query.getAppdateLessThanOrEqual()) {
 			Date appdateLessThanOrEqual = query.getAppdateLessThanOrEqual();
 			query.setAppdateLessThanOrEqual(appdateLessThanOrEqual);
@@ -555,7 +555,7 @@ public class SealController {
 								.getStringValue(seal.getCompany(),
 										seal.getArea());
 						seal.setCompany(companyname_CN);
-						// ÓÃ»§Ãû´¦Àí
+						// ç”¨æˆ·åå¤„ç†
 						String appusername = BaseDataManager.getInstance()
 								.getStringValue(seal.getAppuser(), "SYS_USERS");
 						seal.setAppuser(appusername);
@@ -564,7 +564,7 @@ public class SealController {
 						seal.setAppuser(appuser);
 						seal.setCompany(companyname);
 					}
-					// Ó¡ÕÂÀàĞÍ
+					// å°ç« ç±»å‹
 					String[] sealtypes = seal.getSealtype().split(",");
 					String sealtypes_CH = "";
 					for (int i = 0; i < sealtypes.length; i++) {
@@ -759,14 +759,14 @@ public class SealController {
 		seal.setRemark(request.getParameter("remark"));
 		seal.setMoney(RequestUtils.getDouble(request, "money"));
 
-		// ĞÂÔö´¦Àí
+		// æ–°å¢å¤„ç†
 		if (null == seal.getSealid()) {
 			seal.setCreateBy(actorId);
 			seal.setCreateDate(new Date());
 			seal.setAppdate(new Date());
 			seal.setStatus(0);
 		}
-		// ĞŞ¸Ä´¦Àí
+		// ä¿®æ”¹å¤„ç†
 		else {
 			seal.setUpdateBy(user.getActorId());
 			seal.setUpdateDate(new Date());
@@ -817,14 +817,14 @@ public class SealController {
 			seal.setNum(RequestUtils.getInt(request, "num"));
 			seal.setRemark(request.getParameter("remark"));
 			seal.setMoney(RequestUtils.getDouble(request, "money"));
-			// ĞÂÔö´¦Àí
+			// æ–°å¢å¤„ç†
 			if (null == seal.getSealid()) {
 				seal.setCreateBy(actorId);
 				seal.setCreateDate(new Date());
 				seal.setAppdate(new Date());
 				seal.setStatus(0);
 			}
-			// ĞŞ¸Ä´¦Àí
+			// ä¿®æ”¹å¤„ç†
 			else {
 				seal.setUpdateBy(user.getActorId());
 				seal.setUpdateDate(new Date());
@@ -875,20 +875,20 @@ public class SealController {
 		ctx.setActorId(actorId);
 		ctx.setProcessName(processName);
 		/**
-		 * ¹¤×÷Á÷¿ØÖÆ²ÎÊı
+		 * å·¥ä½œæµæ§åˆ¶å‚æ•°
 		 */
 		Collection<DataField> datafields = new ArrayList<DataField>();
-		// »ñÈ¡ ²¿ÃÅ½Úµã
+		// è·å– éƒ¨é—¨èŠ‚ç‚¹
 		long deptId02 = user.getDeptId();
 		SysDepartment curdept = sysDepartmentService.findById(deptId02);
-		// »ñÈ¡µ±µØ²¿ÃÅ½Úµã
+		// è·å–å½“åœ°éƒ¨é—¨èŠ‚ç‚¹
 		String curAreadeptCode = curdept.getCode().substring(0, 2);
 		SysDepartment curAreadept = sysDepartmentService
 				.findByCode(curAreadeptCode);
-		// »ñÈ¡¼¯ÍÅ½Úµã
+		// è·å–é›†å›¢èŠ‚ç‚¹
 		SysDepartment sysdeptMem = sysDepartmentService.findByCode("JT");
 
-		// »ñÈ¡µ±µØĞĞÕş²¿ÃÅ
+		// è·å–å½“åœ°è¡Œæ”¿éƒ¨é—¨
 		SysDepartment admindept = sysDepartmentService
 				.findByCode(curAreadeptCode + "06");
 		DataField datafield1 = new DataField();
@@ -922,7 +922,7 @@ public class SealController {
 		if (seal.getProcessinstanceid() != null && seal.getWfstatus() != 9999
 				&& seal.getWfstatus() != null) {
 			isOK = ProcessContainer.getContainer().completeTask(ctx);
-			logger.info("workflow ÖĞ");
+			logger.info("workflow ä¸­");
 		} else {
 			long processInstanceId = ProcessContainer.getContainer()
 					.startProcess(ctx);
@@ -965,7 +965,7 @@ public class SealController {
 		} else if (sealid != null) {
 			Seal seal = sealService.getSeal(Long.valueOf(sealid));
 			/**
-			 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+			 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 			 */
 
 			if (seal != null) {

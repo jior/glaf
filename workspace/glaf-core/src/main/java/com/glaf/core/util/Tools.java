@@ -241,7 +241,7 @@ public class Tools {
 							+ i));
 		}
 		long times = System.currentTimeMillis() - start;
-		System.out.println("×Ü¹²ºÄÊ±(ºÁÃë):" + times);
+		System.out.println("æ€»å…±è€—æ—¶(æ¯«ç§’):" + times);
 	}
 
 }

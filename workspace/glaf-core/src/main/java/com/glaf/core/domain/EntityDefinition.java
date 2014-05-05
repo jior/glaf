@@ -42,19 +42,19 @@ public class EntityDefinition implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * ¾ÛºÏÖ÷¼ü
+	 * èšåˆä¸»é”®
 	 */
 	@Column(name = "AGGREGATIONKEYS_", length = 200)
 	protected String aggregationKeys;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_")
@@ -64,7 +64,7 @@ public class EntityDefinition implements Serializable, JSONable {
 	protected byte[] data;
 
 	/**
-	 * ÎÄ¼şÄÚÈİ
+	 * æ–‡ä»¶å†…å®¹
 	 */
 	@Lob
 	@Column(name = "FILECONTENT_")
@@ -74,7 +74,7 @@ public class EntityDefinition implements Serializable, JSONable {
 	protected String filename;
 
 	/**
-	 * ÎÄ¼şÇ°×º
+	 * æ–‡ä»¶å‰ç¼€
 	 */
 	@Column(name = "FILEPREFIX_", length = 200)
 	protected String filePrefix;
@@ -84,79 +84,79 @@ public class EntityDefinition implements Serializable, JSONable {
 	protected String id;
 
 	/**
-	 * ÊÇ·ñÖ»×öInsert
+	 * æ˜¯å¦åªåšInsert
 	 */
 	@Column(name = "INSERTONLY_", length = 20)
 	protected String insertOnly;
 
 	/**
-	 * ÀàĞÍ
+	 * ç±»å‹
 	 */
 	@Column(name = "JAVATYPE_", length = 200)
 	protected String javaType;
 
 	/**
-	 * Ãû³Æ
+	 * åç§°
 	 */
 	@Column(name = "NAME_", length = 100)
 	protected String name;
 
 	/**
-	 * ½Úµã±àºÅ
+	 * èŠ‚ç‚¹ç¼–å·
 	 */
 	@Column(name = "NODEID_")
 	protected Long nodeId;
 
 	/**
-	 * ½âÎöÀàĞÍ
+	 * è§£æç±»å‹
 	 */
 	@Column(name = "PARSETYPE_", length = 20)
 	protected String parseType;
 
 	/**
-	 * Ö÷¼ü
+	 * ä¸»é”®
 	 */
 	@Column(name = "primaryKey", length = 50)
 	protected String primaryKey;
 
 	/**
-	 * ¿ªÊ¼ĞĞ
+	 * å¼€å§‹è¡Œ
 	 */
 	@Column(name = "STARTROW_")
 	protected Integer startRow;
 
 	/**
-	 * ½áÊø´ÊÌõ
+	 * ç»“æŸè¯æ¡
 	 */
 	@Column(name = "STOPWORD_")
 	protected String stopWord;
 
 	/**
-	 * Êı¾İ±í
+	 * æ•°æ®è¡¨
 	 */
 	@Column(name = "TABLENAME_", length = 50)
 	protected String tablename;
 
 	/**
-	 * ±êÌâ
+	 * æ ‡é¢˜
 	 */
 	@Column(name = "TITLE_", length = 200)
 	protected String title;
 
 	/**
-	 * ÀàĞÍ
+	 * ç±»å‹
 	 */
 	@Column(name = "TYPE_", length = 50)
 	protected String type;
 
 	/**
-	 * ĞŞ¸ÄÈË
+	 * ä¿®æ”¹äºº
 	 */
 	@Column(name = "UPDATEBY_", length = 50)
 	protected String updateBy;
 
 	/**
-	 * ĞŞ¸ÄÈÕÆÚ
+	 * ä¿®æ”¹æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "UPDATEDATE_")

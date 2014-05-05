@@ -85,7 +85,7 @@ public class BranchDeptRoleController {
 	}
 
 	/**
-	 * ÏÔÊ¾ËùÓĞÁĞ±í
+	 * æ˜¾ç¤ºæ‰€æœ‰åˆ—è¡¨
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -111,7 +111,7 @@ public class BranchDeptRoleController {
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
-		// ÏÔÊ¾ÁĞ±íÒ³Ãæ
+		// æ˜¾ç¤ºåˆ—è¡¨é¡µé¢
 		return new ModelAndView("/modules/branch/deptRole/deptRole_list",
 				modelMap);
 	}

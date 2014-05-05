@@ -111,7 +111,7 @@ public class MxSystemTemplateController {
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
 		/**
-		 * 此处业务逻辑需自行调整
+		 * 姝ゅ涓氬姟閫昏緫闇�鑷璋冩暣
 		 */
 		if (!loginContext.isSystemAdministrator()) {
 			String actorId = loginContext.getActorId();
@@ -323,7 +323,7 @@ public class MxSystemTemplateController {
 	}
 
 	/**
-	 * 显示框架页面
+	 * 鏄剧ず妗嗘灦椤甸潰
 	 * 
 	 * @param mapping
 	 * @param request

@@ -29,7 +29,7 @@ import com.glaf.core.query.*;
 public interface IQueryDefinitionService {
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ı¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®åˆ é™¤è®°å½•
 	 * 
 	 * @return
 	 */
@@ -37,14 +37,14 @@ public interface IQueryDefinitionService {
 	void deleteById(String id);
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡Ò»Ìõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®è·å–ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */
 	QueryDefinition getQueryDefinition(String queryId);
 
 	/**
-	 * ¸ù¾İÃû³Æ»ñÈ¡²éÑ¯¶¨Òå
+	 * æ ¹æ®åç§°è·å–æŸ¥è¯¢å®šä¹‰
 	 * 
 	 * @param serviceKey
 	 * @return
@@ -52,21 +52,21 @@ public interface IQueryDefinitionService {
 	QueryDefinition getQueryDefinitionByName(String serviceKey);
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡Ò»Ìõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®è·å–ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */
 	QueryDefinition getQueryDefinitionWithColumns(String queryId);
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡Ò»Ìõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®è·å–ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */
 	QueryDefinition getQueryDefinitionWithParameters(String queryId);
 
 	/**
-	 * »ñÈ¡Ä³¸öÄ¿±ê±íµÄÈ«²¿²éÑ¯
+	 * è·å–æŸä¸ªç›®æ ‡è¡¨çš„å…¨éƒ¨æŸ¥è¯¢
 	 * 
 	 * @param targetTableName
 	 * @return
@@ -74,14 +74,14 @@ public interface IQueryDefinitionService {
 	List<QueryDefinition> getQueryDefinitionByTableName(String targetTableName);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
 	int getQueryDefinitionCountByQueryCriteria(QueryDefinitionQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */
@@ -89,7 +89,7 @@ public interface IQueryDefinitionService {
 			int pageSize, QueryDefinitionQuery query);
 
 	/**
-	 * »ñÈ¡Ä³¸ö²éÑ¯µÄÈ«²¿×æÏÈ²éÑ¯,²éÑ¯×Ó½ÚµãÏÈÈëÕ»£¬²éÑ¯¸¸½ÚµãºóÈëÕ»
+	 * è·å–æŸä¸ªæŸ¥è¯¢çš„å…¨éƒ¨ç¥–å…ˆæŸ¥è¯¢,æŸ¥è¯¢å­èŠ‚ç‚¹å…ˆå…¥æ ˆï¼ŒæŸ¥è¯¢çˆ¶èŠ‚ç‚¹åå…¥æ ˆ
 	 * 
 	 * @param queryId
 	 * @return
@@ -97,7 +97,7 @@ public interface IQueryDefinitionService {
 	Stack<QueryDefinition> getQueryDefinitionStack(String queryId);
 
 	/**
-	 * »ñÈ¡Ä³¸ö²éÑ¯µÄÈ«²¿×æÏÈ²éÑ¯
+	 * è·å–æŸä¸ªæŸ¥è¯¢çš„å…¨éƒ¨ç¥–å…ˆæŸ¥è¯¢
 	 * 
 	 * @param queryId
 	 * @return
@@ -105,7 +105,7 @@ public interface IQueryDefinitionService {
 	QueryDefinition getQueryDefinitionWithAncestors(String queryId);
 
 	/**
-	 * ÊÇ·ñÓĞ×Ó½Úµã
+	 * æ˜¯å¦æœ‰å­èŠ‚ç‚¹
 	 * 
 	 * @param queryId
 	 * @return
@@ -113,14 +113,14 @@ public interface IQueryDefinitionService {
 	boolean hasChildren(String queryId);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼ÁĞ±í
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•åˆ—è¡¨
 	 * 
 	 * @return
 	 */
 	List<QueryDefinition> list(QueryDefinitionQuery query);
 
 	/**
-	 * ±£´æÒ»Ìõ¼ÇÂ¼
+	 * ä¿å­˜ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */

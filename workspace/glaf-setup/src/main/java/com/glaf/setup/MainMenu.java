@@ -33,9 +33,9 @@ public class MainMenu extends JMenuBar {
 
 	public MainMenu() {
 
-		// �ļ��˵�
-		JMenu fileMenu = new JMenu("�ļ�");
-		JMenuItem exitMenuItem = new JMenuItem("�˳�ϵͳ");
+		// 文件菜单
+		JMenu fileMenu = new JMenu("文件");
+		JMenuItem exitMenuItem = new JMenuItem("退出系统");
 		exitMenuItem.setAccelerator(KeyStroke.getKeyStroke('E', Toolkit
 				.getDefaultToolkit().getMenuShortcutKeyMask(), false));
 		exitMenuItem.addActionListener(new ActionListener() {

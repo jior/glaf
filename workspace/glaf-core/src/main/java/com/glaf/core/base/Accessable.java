@@ -27,56 +27,56 @@ public interface Accessable extends java.io.Serializable {
 	public final static String OP_ALL = "*";
 
 	/**
-	 * ²Ù×÷£¨Ôö¼Ó¡¢É¾³ı¡¢ĞŞ¸Ä¡¢²éÑ¯£©
+	 * æ“ä½œï¼ˆå¢åŠ ã€åˆ é™¤ã€ä¿®æ”¹ã€æŸ¥è¯¢ï¼‰
 	 * 
 	 * @return
 	 */
 	String getOperation();
 
 	/**
-	 * ·şÎñ±êÊ¶
+	 * æœåŠ¡æ ‡è¯†
 	 * 
 	 * @return
 	 */
 	String getServiceKey();
 
 	/**
-	 * ·ÃÎÊÄ¿±ê£¨ÓÃ»§¡¢½ÇÉ«¡¢»ú¹¹¡¢ÉÏÏÂ¼¶¡¢¹Û²ìÕßµÈ£©
+	 * è®¿é—®ç›®æ ‡ï¼ˆç”¨æˆ·ã€è§’è‰²ã€æœºæ„ã€ä¸Šä¸‹çº§ã€è§‚å¯Ÿè€…ç­‰ï¼‰
 	 * 
 	 * @return
 	 */
 	String getTarget();
 
 	/**
-	 * ·ÃÎÊÄ¿±êÀàĞÍ
+	 * è®¿é—®ç›®æ ‡ç±»å‹
 	 * 
 	 * @return
 	 */
 	int getTargetType();
 
 	/**
-	 * ÉèÖÃ²Ù×÷
+	 * è®¾ç½®æ“ä½œ
 	 * 
 	 * @return
 	 */
 	void setOperation(String operation);
 
 	/**
-	 * ÉèÖÃ·şÎñ±êÊ¶
+	 * è®¾ç½®æœåŠ¡æ ‡è¯†
 	 * 
 	 * @return
 	 */
 	void setServiceKey(String serviceKey);
 
 	/**
-	 * ÉèÖÃ·ÃÎÊÄ¿±ê
+	 * è®¾ç½®è®¿é—®ç›®æ ‡
 	 * 
 	 * @return
 	 */
 	void setTarget(String target);
 
 	/**
-	 * ÉèÖÃ·ÃÎÊÄ¿±êÀàĞÍ
+	 * è®¾ç½®è®¿é—®ç›®æ ‡ç±»å‹
 	 * 
 	 * @return
 	 */

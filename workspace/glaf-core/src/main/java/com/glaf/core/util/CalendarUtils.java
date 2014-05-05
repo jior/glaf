@@ -38,14 +38,14 @@ import com.glaf.core.service.ISystemParamService;
 
 public class CalendarUtils {
 
-	public static final String DEFAULT_PRODUCTION_LINE = "LINE_1";// Éú²úÏßÄ¬ÈÏÖµ
+	public static final String DEFAULT_PRODUCTION_LINE = "LINE_1";// ç”Ÿäº§çº¿é»˜è®¤å€¼
 
 	static int endTime = 0;
 
 	protected static final Logger logger = LoggerFactory
 			.getLogger(CalendarUtils.class);
 
-	protected static int mode = 0; // 0±íÊ¾Ä¬ÈÏÔç°àÊ±¼äÎªµ±ÈÕ 1±íÊ¾Ä¬ÈÏÔç°àÊ±¼äÎªÇ°ÈÕ
+	protected static int mode = 0; // 0è¡¨ç¤ºé»˜è®¤æ—©ç­æ—¶é—´ä¸ºå½“æ—¥ 1è¡¨ç¤ºé»˜è®¤æ—©ç­æ—¶é—´ä¸ºå‰æ—¥
 
 	protected static int startTime = 0;
 
@@ -54,7 +54,7 @@ public class CalendarUtils {
 	protected static volatile ISystemParamService systemParamService;
 
 	/**
-	 * µÃµ½¼¸ÌìºóµÄÊ±¼ä
+	 * å¾—åˆ°å‡ å¤©åŽçš„æ—¶é—´
 	 * 
 	 * @param date
 	 * @param day
@@ -68,7 +68,7 @@ public class CalendarUtils {
 	}
 
 	/**
-	 * µÃµ½¼¸ÌìÇ°µÄÊ±¼ä
+	 * å¾—åˆ°å‡ å¤©å‰çš„æ—¶é—´
 	 * 
 	 * @param date
 	 * @param day
@@ -82,9 +82,9 @@ public class CalendarUtils {
 	}
 
 	/**
-	 * ¸ù¾Ýµ±Ç°Ê±¼äºÍÇÚ´ÎÉèÖÃÊ±¼ä»ñÈ¡Ôç£¬Íí°à 1±íÊ¾Ôç°à£¬2±íÊ¾Íí°à£¬-1±íÊ¾È¡²»µ½´Î
+	 * æ ¹æ®å½“å‰æ—¶é—´å’Œå‹¤æ¬¡è®¾ç½®æ—¶é—´èŽ·å–æ—©ï¼Œæ™šç­ 1è¡¨ç¤ºæ—©ç­ï¼Œ2è¡¨ç¤ºæ™šç­ï¼Œ-1è¡¨ç¤ºå–ä¸åˆ°æ¬¡
 	 * 
-	 * @return ×Ö·û´®
+	 * @return å­—ç¬¦ä¸²
 	 */
 	public static String getDutyCalendar() {
 		Date date = new Date();
@@ -92,9 +92,9 @@ public class CalendarUtils {
 	}
 
 	/**
-	 * ¸ù¾Ýµ±Ç°Ê±¼äºÍÇÚ´ÎÉèÖÃÊ±¼ä»ñÈ¡Ôç£¬Íí°à 1±íÊ¾Ôç°à£¬2±íÊ¾Íí°à£¬-1±íÊ¾È¡²»µ½´Î
+	 * æ ¹æ®å½“å‰æ—¶é—´å’Œå‹¤æ¬¡è®¾ç½®æ—¶é—´èŽ·å–æ—©ï¼Œæ™šç­ 1è¡¨ç¤ºæ—©ç­ï¼Œ2è¡¨ç¤ºæ™šç­ï¼Œ-1è¡¨ç¤ºå–ä¸åˆ°æ¬¡
 	 * 
-	 * @return ×Ö·û´®
+	 * @return å­—ç¬¦ä¸²
 	 */
 	public static String getDutyCalendar(Date date) {
 		String dutyCalendar = "-1";
@@ -133,7 +133,7 @@ public class CalendarUtils {
 	}
 
 	/**
-	 * È¡ÏÂ¸öÔÂ¹¤×÷ÈÕ¼¯ºÏ
+	 * å–ä¸‹ä¸ªæœˆå·¥ä½œæ—¥é›†åˆ
 	 * 
 	 * @param date
 	 * @param productionLine
@@ -148,7 +148,7 @@ public class CalendarUtils {
 		query.setYear(cal.get(Calendar.YEAR));
 		query.setMonth(cal.get(Calendar.MONTH) + 1);
 		query.setProductionLine(productionLine);
-		query.setIsFreeDay(0);// 0±íÊ¾¹¤×÷ÈÕ£¬1±íÊ¾ÐÝÏ¢ÈÕ
+		query.setIsFreeDay(0);// 0è¡¨ç¤ºå·¥ä½œæ—¥ï¼Œ1è¡¨ç¤ºä¼‘æ¯æ—¥
 		query.setOrderBy(" E.WORKDATE_ ");
 		return getSysCalendarService().list(query);
 	}
@@ -162,7 +162,7 @@ public class CalendarUtils {
 	}
 
 	/**
-	 * È¡ÏÂÖÜ¹¤×÷ÈÕ¼¯ºÏ
+	 * å–ä¸‹å‘¨å·¥ä½œæ—¥é›†åˆ
 	 * 
 	 * @param date
 	 * @param productionLine
@@ -176,7 +176,7 @@ public class CalendarUtils {
 		SysCalendarQuery query = new SysCalendarQuery();
 		query.setWeek(cal.get(Calendar.WEEK_OF_YEAR));
 		query.setProductionLine(productionLine);
-		query.setIsFreeDay(0);// 0±íÊ¾¹¤×÷ÈÕ£¬1±íÊ¾ÐÝÏ¢ÈÕ
+		query.setIsFreeDay(0);// 0è¡¨ç¤ºå·¥ä½œæ—¥ï¼Œ1è¡¨ç¤ºä¼‘æ¯æ—¥
 		query.setWorkDateGreaterThanOrEqual(date);
 		query.setOrderBy(" E.WORKDATE_ ");
 		return getSysCalendarService().list(query);
@@ -201,7 +201,7 @@ public class CalendarUtils {
 	}
 
 	/**
-	 * »ñÈ¡¶ÔÓ¦ÈÕÆÚµÄµ±Ç°¹¤×÷ÈÕ
+	 * èŽ·å–å¯¹åº”æ—¥æœŸçš„å½“å‰å·¥ä½œæ—¥
 	 * 
 	 * @return
 	 */
@@ -211,22 +211,22 @@ public class CalendarUtils {
 		cal.setTime(date);
 
 		int nowtime = cal.get(Calendar.HOUR) * 100 + cal.get(Calendar.MINUTE);
-		if (startTime > endTime) { // ¿ªÊ¼Ê±¼ä´óÓÚ½áÊøÊ±¼äÈç 23:30 ~ 13:30
+		if (startTime > endTime) { // å¼€å§‹æ—¶é—´å¤§äºŽç»“æŸæ—¶é—´å¦‚ 23:30 ~ 13:30
 			switch (mode) {
-			case 0: // 0±íÊ¾Ä¬ÈÏÔç°àÊ±¼äÎªµ±ÈÕ
+			case 0: // 0è¡¨ç¤ºé»˜è®¤æ—©ç­æ—¶é—´ä¸ºå½“æ—¥
 				break;
-			case 1: // 1±íÊ¾Ä¬ÈÏÔç°àÊ±¼äÎªÇ°ÈÕ
+			case 1: // 1è¡¨ç¤ºé»˜è®¤æ—©ç­æ—¶é—´ä¸ºå‰æ—¥
 				if (nowtime > startTime && nowtime <= 2359)
 					date = getDateAfter(date, 1);
 				break;
 			}
-		} else { // ¿ªÊ¼Ê±¼ä´óÓÚ½áÊøÊ±¼äÈç 7:30 ~ 16:30
+		} else { // å¼€å§‹æ—¶é—´å¤§äºŽç»“æŸæ—¶é—´å¦‚ 7:30 ~ 16:30
 			switch (mode) {
-			case 0: // 0±íÊ¾Ä¬ÈÏÔç°àÊ±¼äÎªµ±ÈÕ
+			case 0: // 0è¡¨ç¤ºé»˜è®¤æ—©ç­æ—¶é—´ä¸ºå½“æ—¥
 				if (nowtime >= 0 && nowtime < startTime)
 					date = getDateBefore(date, 1);
 				break;
-			case 1: // 1±íÊ¾Ä¬ÈÏÔç°àÊ±¼äÎªÇ°ÈÕ
+			case 1: // 1è¡¨ç¤ºé»˜è®¤æ—©ç­æ—¶é—´ä¸ºå‰æ—¥
 				break;
 			}
 		}
@@ -234,7 +234,7 @@ public class CalendarUtils {
 	}
 
 	/**
-	 * »ñÈ¡µ±Ç°Ê±¼äµÄ¹¤×÷ÈÕ
+	 * èŽ·å–å½“å‰æ—¶é—´çš„å·¥ä½œæ—¥
 	 * 
 	 * @return
 	 */
@@ -276,11 +276,11 @@ public class CalendarUtils {
 		String submarr2[] = marr[1].split(":");
 		maxtime = Integer.parseInt((new StringBuilder(String
 				.valueOf(submarr2[0]))).append(submarr2[1]).toString());
-		if (maxtime >= mintime) { // °´½áÊøÊ±¼ä´óÓÚ¿ªÊ¼Ê±¼ä
+		if (maxtime >= mintime) { // æŒ‰ç»“æŸæ—¶é—´å¤§äºŽå¼€å§‹æ—¶é—´
 			if (nowtime >= mintime && nowtime < maxtime) {
 				rst = true;
 			}
-		} else { // ½áÊøÊ±¼äÐ¡ÓÚ¿ªÊ¼Ê±¼ä
+		} else { // ç»“æŸæ—¶é—´å°äºŽå¼€å§‹æ—¶é—´
 			if (nowtime >= mintime && nowtime <= 2359)
 				rst = true;
 			if (nowtime >= 0 && nowtime <= maxtime)
@@ -290,7 +290,7 @@ public class CalendarUtils {
 	}
 
 	/**
-	 * ÅÐ¶ÏÈÕÆÚÊÇ·ñÎª¹¤×÷ÈÕÀú
+	 * åˆ¤æ–­æ—¥æœŸæ˜¯å¦ä¸ºå·¥ä½œæ—¥åŽ†
 	 * 
 	 * @param date
 	 * @return
@@ -300,7 +300,7 @@ public class CalendarUtils {
 	}
 
 	/**
-	 * ÅÐ¶ÏÈÕÆÚÊÇ·ñÎª¹¤×÷ÈÕÀú
+	 * åˆ¤æ–­æ—¥æœŸæ˜¯å¦ä¸ºå·¥ä½œæ—¥åŽ†
 	 * 
 	 * @param date
 	 * @return
@@ -310,7 +310,7 @@ public class CalendarUtils {
 	}
 
 	/**
-	 * ÅÐ¶ÏÈÕÆÚÊÇ·ñÎª¹¤×÷ÈÕÀú
+	 * åˆ¤æ–­æ—¥æœŸæ˜¯å¦ä¸ºå·¥ä½œæ—¥åŽ†
 	 * 
 	 * @param date
 	 * @return

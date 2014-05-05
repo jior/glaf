@@ -22,31 +22,31 @@ import java.util.Map;
 
 public class BaseRMB {
 
-	private static String points[] = { "½Ç", "·Ö" };
+	private static String points[] = { "è§’", "åˆ†" };
 
-	private static String zero2nine[] = { "Áã", "Ò¼", "·¡", "Èş", "ËÁ", "Îé", "Â½",
-			"Æâ", "°Æ", "¾Á" };
+	private static String zero2nine[] = { "é›¶", "å£¹", "è´°", "å", "è‚†", "ä¼", "é™†",
+			"æŸ’", "æŒ", "ç–" };
 
-	private static String unit[][] = { { "Ô²", "Íò", "ÒÚ" }, { "", "Ê°", "°Û", "Çª" } };
+	private static String unit[][] = { { "åœ†", "ä¸‡", "äº¿" }, { "", "æ‹¾", "ä½°", "ä»Ÿ" } };
 
 	private static Map<String, Object> map = new HashMap<String, Object>();
 
 	/**
-	 * Êı×Ö×ªÈËÃñ±Ò´óĞ´
+	 * æ•°å­—è½¬äººæ°‘å¸å¤§å†™
 	 * 
 	 * @param n
 	 * @return
 	 */
 	public static String upperRMB(double n) {
-		String head = n < 0 ? "¸º" : "";
+		String head = n < 0 ? "è´Ÿ" : "";
 		n = Math.abs(n);
 		String s = "";
 		for (int i = 0; i < points.length; i++) {
 			s += (zero2nine[(int) (Math.floor(n * 10 * Math.pow(10, i)) % 10)] + points[i])
-					.replaceAll("(Áã.)+", "");
+					.replaceAll("(é›¶.)+", "");
 		}
 		if (s.length() < 1) {
-			s = "Õû";
+			s = "æ•´";
 		}
 		int integerPart = (int) Math.floor(n);
 		for (int i = 0; i < unit[0].length && integerPart > 0; i++) {
@@ -55,12 +55,12 @@ public class BaseRMB {
 				p = zero2nine[integerPart % 10] + unit[1][j] + p;
 				integerPart = integerPart / 10;
 			}
-			s = p.replaceAll("(Áã.)*Áã$", "").replaceAll("^$", "Áã") + unit[0][i]
+			s = p.replaceAll("(é›¶.)*é›¶$", "").replaceAll("^$", "é›¶") + unit[0][i]
 					+ s;
 		}
 		return head
-				+ s.replaceAll("(Áã.)*ÁãÔ²", "Ô²").replaceFirst("(Áã.)+", "")
-						.replaceAll("(Áã.)+", "Áã").replaceAll("^Õû$", "ÁãÔ²Õû");
+				+ s.replaceAll("(é›¶.)*é›¶åœ†", "åœ†").replaceFirst("(é›¶.)+", "")
+						.replaceAll("(é›¶.)+", "é›¶").replaceAll("^æ•´$", "é›¶åœ†æ•´");
 	}
 
 	public static void main(String[] args) {

@@ -36,7 +36,7 @@ public class DTreeHelper {
 	}
 
 	/**
-	 * 输出dtree树的脚本
+	 * 杈撳嚭dtree鏍戠殑鑴氭湰
 	 * 
 	 * @param components
 	 * @return
@@ -46,7 +46,7 @@ public class DTreeHelper {
 	}
 
 	/**
-	 * 输出dtree树的脚本
+	 * 杈撳嚭dtree鏍戠殑鑴氭湰
 	 * 
 	 * @param components
 	 * @return

@@ -125,9 +125,9 @@ public class AntUtils {
 			}
 			List<String> fileList = getFileList(path);
 			FileOutputStream fout = new FileOutputStream(zipFile);
-			// Ê¹ÓÃÊä³öÁ÷¼ì²é
+			// ä½¿ç”¨è¾“å‡ºæµæ£€æŸ¥
 			CheckedOutputStream cos = new CheckedOutputStream(fout, new CRC32());
-			// ÉùÃ÷Êä³özipÁ÷
+			// å£°æ˜è¾“å‡ºzipæµ
 			ZipOutputStream zipOutputStream = new ZipOutputStream(
 					new BufferedOutputStream(cos));
 			InputStream in = null;
@@ -164,9 +164,9 @@ public class AntUtils {
 	}
 
 	public static void main(String args[]) {
-		// Ñ¹ËõÎÄ¼şµÄ±£´æÂ·¾¶
+		// å‹ç¼©æ–‡ä»¶çš„ä¿å­˜è·¯å¾„
 		String zipFile = args[0];
-		// Ñ¹ËõÎÄ¼şÄ¿Â¼
+		// å‹ç¼©æ–‡ä»¶ç›®å½•
 		String filepath = args[1];
 		AntUtils.zip(zipFile, filepath);
 	}

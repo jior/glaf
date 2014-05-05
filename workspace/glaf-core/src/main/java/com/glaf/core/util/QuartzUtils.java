@@ -69,7 +69,7 @@ public class QuartzUtils {
 	}
 
 	/**
-	 * Æô¶¯µ÷¶ÈÈÎÎñ
+	 * å¯åŠ¨è°ƒåº¦ä»»åŠ¡
 	 * 
 	 * @param taskId
 	 */
@@ -243,7 +243,7 @@ public class QuartzUtils {
 	}
 
 	/**
-	 * ¹Ø±ÕÈ«²¿µ÷¶ÈÈÎÎñ£¬Í¬Ê±¹Ø±Õµ÷¶ÈÒıÇæQuartz¡£
+	 * å…³é—­å…¨éƒ¨è°ƒåº¦ä»»åŠ¡ï¼ŒåŒæ—¶å…³é—­è°ƒåº¦å¼•æ“Quartzã€‚
 	 */
 	public static void shutdown() {
 		List<Scheduler> list = getSysSchedulerService().getAllSchedulers();
@@ -270,7 +270,7 @@ public class QuartzUtils {
 	}
 
 	/**
-	 * Æô¶¯È«²¿µ÷¶ÈÈÎÎñ
+	 * å¯åŠ¨å…¨éƒ¨è°ƒåº¦ä»»åŠ¡
 	 */
 	public static void startup() {
 		if (getQuartzScheduler() != null) {
@@ -291,7 +291,7 @@ public class QuartzUtils {
 	}
 
 	/**
-	 * Í£Ö¹µ÷¶ÈÈÎÎñ
+	 * åœæ­¢è°ƒåº¦ä»»åŠ¡
 	 * 
 	 * @param taskId
 	 */
@@ -322,7 +322,7 @@ public class QuartzUtils {
 	}
 
 	/**
-	 * Í£Ö¹È«²¿µ÷¶ÈÈÎÎñ£¬µ«²»¹Ø±Õµ÷¶ÈÒıÇæQuartz¡£
+	 * åœæ­¢å…¨éƒ¨è°ƒåº¦ä»»åŠ¡ï¼Œä½†ä¸å…³é—­è°ƒåº¦å¼•æ“Quartzã€‚
 	 */
 	public static void stopAll() {
 		List<Scheduler> list = getSysSchedulerService().getAllSchedulers();

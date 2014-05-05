@@ -45,7 +45,7 @@ public class FormDataExporterFactory {
 	}
 
 	/**
-	 * Í¨¹ıÄ£°å»ñÈ¡½âÎö½Ó¿ÚÊµÏÖÀà
+	 * é€šè¿‡æ¨¡æ¿è·å–è§£ææ¥å£å®ç°ç±»
 	 * 
 	 * @param template
 	 * @return
@@ -57,7 +57,7 @@ public class FormDataExporterFactory {
 	}
 
 	/**
-	 * ¸ù¾İÄ£°åÀàĞÍµ¼³öÊı¾İ
+	 * æ ¹æ®æ¨¡æ¿ç±»å‹å¯¼å‡ºæ•°æ®
 	 * 
 	 * @param templateType
 	 * @param formContext

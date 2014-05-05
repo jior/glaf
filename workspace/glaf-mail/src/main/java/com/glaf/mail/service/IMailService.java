@@ -48,7 +48,7 @@ public interface IMailService {
 	void saveMail(Mail mail);
 
 	/**
-	 * ·¢ËÍÓÊ¼ş
+	 * å‘é€é‚®ä»¶
 	 * 
 	 * @param mail
 	 * @return
@@ -57,19 +57,19 @@ public interface IMailService {
 	boolean send(Mail mail);
 
 	/**
-	 * ·¢ËÍÓÊ¼ş
+	 * å‘é€é‚®ä»¶
 	 * 
 	 * @param mail
-	 *            ÓÊ¼ş¶ÔÏó
+	 *            é‚®ä»¶å¯¹è±¡
 	 * @param dataMap
-	 *            ²ÎÊı¼¯
+	 *            å‚æ•°é›†
 	 * @return
 	 */
 	@Transactional
 	boolean send(Mail mail, Map<String, Object> dataMap);
 
 	/**
-	 * ¸üĞÂÓÊ¼ş×´Ì¬
+	 * æ›´æ–°é‚®ä»¶çŠ¶æ€
 	 * @param mail
 	 */
 	@Transactional

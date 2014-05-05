@@ -46,7 +46,7 @@ public class TodoController {
 	private TodoService todoService;
 
 	/**
-	 * 显示TODO列表
+	 * 鏄剧ずTODO鍒楄〃
 	 * 
 	 * @return
 	 */
@@ -59,7 +59,7 @@ public class TodoController {
 	}
 
 	/**
-	 * 显示TODO列表
+	 * 鏄剧ずTODO鍒楄〃
 	 * 
 	 * @return
 	 */
@@ -77,7 +77,7 @@ public class TodoController {
 	}
 
 	/**
-	 * 显示TODO列表
+	 * 鏄剧ずTODO鍒楄〃
 	 * 
 	 * @return
 	 */
@@ -90,7 +90,7 @@ public class TodoController {
 	}
 
 	/**
-	 * 显示TODO列表
+	 * 鏄剧ずTODO鍒楄〃
 	 * 
 	 * @return
 	 */

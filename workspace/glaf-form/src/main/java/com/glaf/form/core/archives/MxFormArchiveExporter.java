@@ -64,7 +64,7 @@ import com.glaf.form.core.xml.*;
 public class MxFormArchiveExporter {
 
 	/**
-	 * µ¼³öÈ«²¿Ó¦ÓÃ°ü
+	 * å¯¼å‡ºå…¨éƒ¨åº”ç”¨åŒ…
 	 * 
 	 * @return
 	 * @throws Exception
@@ -216,9 +216,9 @@ public class MxFormArchiveExporter {
 							}
 							if (task.getDescription() != null) {
 								subject = subject + task.getDescription()
-										+ "ÉĞÎ´Íê³É£¡";
+										+ "å°šæœªå®Œæˆï¼";
 							} else {
-								subject = subject + task.getName() + "ÉĞÎ´Íê³É£¡";
+								subject = subject + task.getName() + "å°šæœªå®Œæˆï¼";
 							}
 							Todo todo = new Todo();
 							todo.setTaskName(task.getName());

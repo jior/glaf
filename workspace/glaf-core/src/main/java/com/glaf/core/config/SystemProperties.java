@@ -62,7 +62,7 @@ public class SystemProperties {
 	}
 
 	/**
-	 * ·µ»ØwebÓ¦ÓÃµÄWEB-INFÄ¿Â¼µÄÈ«Â·¾¶
+	 * è¿”å›webåº”ç”¨çš„WEB-INFç›®å½•çš„å…¨è·¯å¾„
 	 * 
 	 * @return
 	 */
@@ -82,7 +82,7 @@ public class SystemProperties {
 	}
 
 	/**
-	 * »ñÈ¡ÎÄ¼ş´æ´¢¸ùÂ·¾¶
+	 * è·å–æ–‡ä»¶å­˜å‚¨æ ¹è·¯å¾„
 	 * 
 	 * @return
 	 */

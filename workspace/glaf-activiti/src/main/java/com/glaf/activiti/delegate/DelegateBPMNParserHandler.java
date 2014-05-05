@@ -48,7 +48,7 @@ public class DelegateBPMNParserHandler extends UserTaskParseHandler {
 						.getListenerFactory()
 						.createDelegateExpressionTaskListener(activitiListener));
 
-		// candidateuser 或者group 包含被代理人 , 则添加代理人为candidateuser
+		// candidateuser 鎴栬�単roup 鍖呭惈琚唬鐞嗕汉 , 鍒欐坊鍔犱唬鐞嗕汉涓篶andidateuser
 		ActivitiListener delegateActivitiCandidateListener = new ActivitiListener();
 		delegateActivitiCandidateListener
 				.setEvent(TaskListener.EVENTNAME_CREATE);

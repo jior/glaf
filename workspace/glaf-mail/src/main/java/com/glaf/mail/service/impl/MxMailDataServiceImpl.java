@@ -188,7 +188,7 @@ public class MxMailDataServiceImpl implements IMailDataService {
 	}
 
 	/**
-	 * 更新邮件信息
+	 * 鏇存柊閭欢淇℃伅
 	 * 
 	 * @param taskId
 	 * @param item

@@ -23,22 +23,22 @@ public class FileUploadListener implements ProgressListener {
 	}
 
 	/**
-	 * ¸üĞÂ×´Ì¬
+	 * æ›´æ–°çŠ¶æ€
 	 */
 	public void update(long pBytesRead, long pContentLength, int pItems) {
 		FileUploadStatus statusBean = FileMgmtFactory.getStatusBean(request);
 		statusBean.setUploadTotalSize(pContentLength);
-		// ¶ÁÈ¡Íê³É
+		// è¯»å–å®Œæˆ
 		if (pContentLength == -1) {
-			statusBean.setStatus("Íê³É¶Ô" + pItems + "¸öÎÄ¼şµÄ¶ÁÈ¡,¶ÁÈ¡ÁË " + pBytesRead
+			statusBean.setStatus("å®Œæˆå¯¹" + pItems + "ä¸ªæ–‡ä»¶çš„è¯»å–,è¯»å–äº† " + pBytesRead
 					+ " bytes.");
 			statusBean.setReadTotalSize(pBytesRead);
 			statusBean.setSuccessUploadFileCount(pItems);
 			statusBean.setProcessEndTime(System.currentTimeMillis());
 			statusBean.setProcessRunningTime(statusBean.getProcessEndTime());
-			// ¶ÁÈ¡ÖĞ
+			// è¯»å–ä¸­
 		} else {
-			statusBean.setStatus("µ±Ç°ÕıÔÚ´¦ÀíµÚ" + pItems + "¸öÎÄ¼ş,ÒÑ¾­¶ÁÈ¡ÁË " + pBytesRead
+			statusBean.setStatus("å½“å‰æ­£åœ¨å¤„ç†ç¬¬" + pItems + "ä¸ªæ–‡ä»¶,å·²ç»è¯»å–äº† " + pBytesRead
 					+ " / " + pContentLength + " bytes.");
 			statusBean.setReadTotalSize(pBytesRead);
 			statusBean.setCurrentUploadFileNum(pItems);

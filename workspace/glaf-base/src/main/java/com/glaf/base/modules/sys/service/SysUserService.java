@@ -34,7 +34,7 @@ import com.glaf.core.util.PageResult;
 public interface SysUserService {
 
 	/**
-	 * ±£´æ
+	 * ä¿å­˜
 	 * 
 	 * @param bean
 	 *            SysUser
@@ -44,7 +44,7 @@ public interface SysUserService {
 	boolean create(SysUser bean);
 
 	/**
-	 * É¾³ı
+	 * åˆ é™¤
 	 * 
 	 * @param id
 	 *            int
@@ -54,7 +54,7 @@ public interface SysUserService {
 	boolean delete(long id);
 
 	/**
-	 * É¾³ı
+	 * åˆ é™¤
 	 * 
 	 * @param bean
 	 *            SysUser
@@ -64,7 +64,7 @@ public interface SysUserService {
 	boolean delete(SysUser bean);
 
 	/**
-	 * ÅúÁ¿É¾³ı
+	 * æ‰¹é‡åˆ é™¤
 	 * 
 	 * @param id
 	 * @return
@@ -73,7 +73,7 @@ public interface SysUserService {
 	boolean deleteAll(long[] id);
 
 	/**
-	 * É¾³ı²¿ÃÅ½ÇÉ«ÓÃ»§
+	 * åˆ é™¤éƒ¨é—¨è§’è‰²ç”¨æˆ·
 	 * 
 	 * @param deptRole
 	 * @param userIds
@@ -82,7 +82,7 @@ public interface SysUserService {
 	void deleteRoleUsers(SysDeptRole deptRole, long[] userIds);
 
 	/**
-	 * °´Ãû³Æ²éÕÒ¶ÔÏó
+	 * æŒ‰åç§°æŸ¥æ‰¾å¯¹è±¡
 	 * 
 	 * @param name
 	 *            String
@@ -91,7 +91,7 @@ public interface SysUserService {
 	SysUser findByAccount(String account);
 
 	/**
-	 * °´Ãû³Æ²éÕÒ¶ÔÏó
+	 * æŒ‰åç§°æŸ¥æ‰¾å¯¹è±¡
 	 * 
 	 * @param name
 	 *            String
@@ -100,7 +100,7 @@ public interface SysUserService {
 	SysUser findByAccountWithAll(String account);
 
 	/**
-	 * »ñÈ¡¶ÔÏó
+	 * è·å–å¯¹è±¡
 	 * 
 	 * @param id
 	 * @return
@@ -108,7 +108,7 @@ public interface SysUserService {
 	SysUser findById(long id);
 
 	/**
-	 * °´ÓÊÏä²éÕÒ¶ÔÏó
+	 * æŒ‰é‚®ç®±æŸ¥æ‰¾å¯¹è±¡
 	 * 
 	 * @param mail
 	 *            String
@@ -117,7 +117,7 @@ public interface SysUserService {
 	SysUser findByMail(String mail);
 
 	/**
-	 * °´ÊÖ»ú²éÕÒ¶ÔÏó
+	 * æŒ‰æ‰‹æœºæŸ¥æ‰¾å¯¹è±¡
 	 * 
 	 * @param mobile
 	 *            String
@@ -128,7 +128,7 @@ public interface SysUserService {
 	int getCountDeptUsers(String searchWord);
 
 	/**
-	 * ¸ù¾İ¹Ø¼ü×Ö²éÑ¯²¿ÃÅÓÃ»§ĞÅÏ¢
+	 * æ ¹æ®å…³é”®å­—æŸ¥è¯¢éƒ¨é—¨ç”¨æˆ·ä¿¡æ¯
 	 * 
 	 * @param searchWord
 	 *           
@@ -143,7 +143,7 @@ public interface SysUserService {
 	List<SysUser> getDeptUsers(String searchWord, int pageNo, int pageSize);
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§µÄÉÏ¼¶
+	 * è·å–æŸä¸ªç”¨æˆ·çš„ä¸Šçº§
 	 * 
 	 * @param account
 	 * @return
@@ -151,7 +151,7 @@ public interface SysUserService {
 	List<SysUser> getSuperiors(String account);
 
 	/**
-	 * ²éÕÒ¹©Ó¦ÉÌÓÃ»§ flag = true ±íÊ¾¸ÃÓÃ»§´æÔÚ£¬·ñÔòÎª²»´æÔÚ
+	 * æŸ¥æ‰¾ä¾›åº”å•†ç”¨æˆ· flag = true è¡¨ç¤ºè¯¥ç”¨æˆ·å­˜åœ¨ï¼Œå¦åˆ™ä¸ºä¸å­˜åœ¨
 	 * 
 	 * @param supplierNo
 	 * @return
@@ -159,14 +159,14 @@ public interface SysUserService {
 	List<SysUser> getSupplierUser(String supplierNo);
 	
     /**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
 	int getSysUserCountByQueryCriteria(SysUserQuery query);
     
     /**
-	 * »ñÈ¡ÁĞ±í
+	 * è·å–åˆ—è¡¨
 	 * 
 	 * @param deptId
 	 *            int
@@ -175,7 +175,7 @@ public interface SysUserService {
 	List<SysUser> getSysUserList();
 	
 	/**
-	 * »ñÈ¡ÁĞ±í
+	 * è·å–åˆ—è¡¨
 	 * 
 	 * @param deptId
 	 *            int
@@ -184,7 +184,7 @@ public interface SysUserService {
 	List<SysUser> getSysUserList(long deptId);
 
 	/**
-	 * »ñÈ¡ÌØ¶¨²¿ÃÅµÄÔ±¹¤Êı¾İ¼¯ ·ÖÒ³ÁĞ±í
+	 * è·å–ç‰¹å®šéƒ¨é—¨çš„å‘˜å·¥æ•°æ®é›† åˆ†é¡µåˆ—è¡¨
 	 * 
 	 * @param deptId
 	 *            int
@@ -197,7 +197,7 @@ public interface SysUserService {
 	PageResult getSysUserList(long deptId, int pageNo, int pageSize);
 
 	/**
-	 * ²éÑ¯»ñÈ¡sysUserÁĞ±í
+	 * æŸ¥è¯¢è·å–sysUseråˆ—è¡¨
 	 * 
 	 * @param deptId
 	 * @param fullName
@@ -209,14 +209,14 @@ public interface SysUserService {
 			int pageSize);
 
 	/**
-	 * »ñÈ¡ÁĞ±í
+	 * è·å–åˆ—è¡¨
 	 * 
 	 */
 	PageResult getSysUserList(long deptId, String userName, String account,
 			int pageNo, int pageSize);
 
 	/**
-	 * »ñÈ¡Ä³¸öÓ¦ÓÃµÄÈ¨ÏŞÓÃ»§
+	 * è·å–æŸä¸ªåº”ç”¨çš„æƒé™ç”¨æˆ·
 	 * 
 	 * @param appId
 	 * @return
@@ -228,7 +228,7 @@ public interface SysUserService {
 	List<SysUser> getSysUsersByDeptRoleId(Long deptRoleId);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */
@@ -236,7 +236,7 @@ public interface SysUserService {
 			SysUserQuery query);
 
 	/**
-	 * »ñÈ¡Ä³¸ö½ÇÉ«´úÂëµÄÓÃ»§
+	 * è·å–æŸä¸ªè§’è‰²ä»£ç çš„ç”¨æˆ·
 	 * 
 	 * @param roleCode
 	 * @return
@@ -244,7 +244,7 @@ public interface SysUserService {
 	List<SysUser> getSysUsersByRoleCode(String roleCode);
 
 	/**
-	 * »ñÈ¡ÁĞ±í
+	 * è·å–åˆ—è¡¨
 	 * 
 	 * @param deptId
 	 *            int
@@ -253,7 +253,7 @@ public interface SysUserService {
 	List<SysUser> getSysUserWithDeptList();
 	
 	/**
-	 * »ñÈ¡ÓÃ»§ĞÅÏ¢
+	 * è·å–ç”¨æˆ·ä¿¡æ¯
 	 * @return
 	 */
 	Map<String, String> getUserMap();
@@ -262,7 +262,7 @@ public interface SysUserService {
 	String getSysUserPasswordByAccount(String account);
 
 	/**
-	 * ÆäÓÃ»§È¨ÏŞ
+	 * å…¶ç”¨æˆ·æƒé™
 	 * 
 	 * @param user
 	 * @return
@@ -270,7 +270,7 @@ public interface SysUserService {
 	SysUser getUserPrivileges(SysUser user);
 
 	/**
-	 * »ñÈ¡Ä³Ğ©ÓÃ»§µÄ½ÇÉ«
+	 * è·å–æŸäº›ç”¨æˆ·çš„è§’è‰²
 	 * 
 	 * @param actorIds
 	 * @return
@@ -285,7 +285,7 @@ public interface SysUserService {
 	Set<SysDeptRole> getUserRoles(SysUser user);
 
 	/**
-	 * ¸üĞÂ
+	 * æ›´æ–°
 	 * 
 	 * @param bean
 	 *            SysUser
@@ -295,14 +295,14 @@ public interface SysUserService {
 	boolean update(SysUser bean);
 
 	/**
-	 * ÉèÖÃÓÃ»§È¨ÏŞ
+	 * è®¾ç½®ç”¨æˆ·æƒé™
 	 * 
 	 * @param user
-	 *            ÏµÍ³ÓÃ»§
+	 *            ç³»ç»Ÿç”¨æˆ·
 	 * @param delRoles
-	 *            ÒªÉ¾³ıµÄÓÃ»§È¨ÏŞ
+	 *            è¦åˆ é™¤çš„ç”¨æˆ·æƒé™
 	 * @param newRoles
-	 *            ÒªÔö¼ÓµÄÓÃ»§È¨ÏŞ
+	 *            è¦å¢åŠ çš„ç”¨æˆ·æƒé™
 	 */
 	@Transactional
 	boolean updateRole(SysUser user, Set<SysDeptRole> delRoles,

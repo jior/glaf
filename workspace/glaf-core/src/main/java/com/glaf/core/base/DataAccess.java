@@ -21,35 +21,35 @@ package com.glaf.core.base;
 public interface DataAccess extends Accessable {
 
 	/**
-	 * »ñÈ¡»ù´¡´úÂë
+	 * è·å–åŸºç¡€ä»£ç 
 	 * 
 	 * @return
 	 */
 	String getBaseCode();
 
 	/**
-	 * »ñÈ¡Êı¾İÊµÀı±àºÅ
+	 * è·å–æ•°æ®å®ä¾‹ç¼–å·
 	 * 
 	 * @return
 	 */
 	String getBusinessKey();
 
 	/**
-	 * »ñÈ¡Ö÷¼ü
+	 * è·å–ä¸»é”®
 	 * 
 	 * @return
 	 */
 	String getId();
 
 	/**
-	 * »ñÈ¡Ä¿±êID
+	 * è·å–ç›®æ ‡ID
 	 * 
 	 * @return
 	 */
 	String getObjectId();
 
 	/**
-	 * »ñÈ¡Ä¿±êÖµ
+	 * è·å–ç›®æ ‡å€¼
 	 * 
 	 * @return
 	 */

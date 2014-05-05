@@ -125,9 +125,9 @@ public class JpdlXmlReader {
 					model.setProcessName(processName);
 					model.setModuleName(moduleName);
 					model.setTitle(moduleName + " "
-							+ elem.attributeValue("description") + "ÉĞÎ´Íê³É£¡");
+							+ elem.attributeValue("description") + "å°šæœªå®Œæˆï¼");
 					model.setContent(moduleName + " "
-							+ elem.attributeValue("description") + "ÉĞÎ´Íê³É£¡");
+							+ elem.attributeValue("description") + "å°šæœªå®Œæˆï¼");
 					model.setCode(processName + "_" + taskName);
 					model.setTaskName(taskName);
 					model.setProvider("jbpm");

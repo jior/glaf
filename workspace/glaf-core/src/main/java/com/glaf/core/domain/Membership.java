@@ -46,62 +46,62 @@ public class Membership implements Serializable, JSONable {
 	protected Long id;
 
 	/**
-	 * ÓÃ»§ÕËºÅ
+	 * ç”¨æˆ·è´¦å·
 	 */
 	@Column(name = "ACTORID_")
 	protected String actorId;
 
 	/**
-	 * À©Õ¹ÊôĞÔ
+	 * æ‰©å±•å±æ€§
 	 */
 	@Column(name = "ATTRIBUTE_")
 	protected String attribute;
 
 	/**
-	 * ĞŞ¸ÄÈË
+	 * ä¿®æ”¹äºº
 	 */
 	@Column(name = "MODIFYBY_")
 	protected String modifyBy;
 
 	/**
-	 * ĞŞ¸ÄÈÕÆÚ
+	 * ä¿®æ”¹æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "MODIFYDATE_")
 	protected Date modifyDate;
 
 	/**
-	 * ½Úµã±àºÅ
+	 * èŠ‚ç‚¹ç¼–å·
 	 */
 	@Column(name = "NODEID_")
 	protected Long nodeId;
 
 	/**
-	 * Ä¿±êId
+	 * ç›®æ ‡Id
 	 */
 	@Column(name = "OBJECTID_")
 	protected String objectId;
 
 	/**
-	 * Ä¿±êÖµ
+	 * ç›®æ ‡å€¼
 	 */
 	@Column(name = "OBJECTVALUE_")
 	protected String objectValue;
 
 	/**
-	 * ½ÇÉ«±àºÅ
+	 * è§’è‰²ç¼–å·
 	 */
 	@Column(name = "ROLEID_")
 	protected Long roleId;
 
 	/**
-	 * ÉÏ¼¶Áìµ¼
+	 * ä¸Šçº§é¢†å¯¼
 	 */
 	@Column(name = "SUPERIORID_")
 	protected String superiorId;
 
 	/**
-	 * ÀàĞÍ
+	 * ç±»å‹
 	 */
 	@Column(name = "TYPE_", nullable = false)
 	protected String type;

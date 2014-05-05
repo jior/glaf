@@ -77,11 +77,11 @@ public class PaymentController {
 	}
 
 	/**
-	 * ¹¤×÷Á÷ÉóÅú
+	 * å·¥ä½œæµå®¡æ‰¹
 	 * 
 	 * @param purchase
 	 * @param flag
-	 *            0Í¬Òâ 1²»Í¬Òâ
+	 *            0åŒæ„ 1ä¸åŒæ„
 	 * @param request
 	 * @return
 	 */
@@ -94,48 +94,48 @@ public class PaymentController {
 		User appUser = BaseDataManager.getInstance().getSysUserService()
 				.findByAccount(payment.getAppuser());
 
-		// ¸ù¾İÓÃ»§²¿ÃÅid »ñÈ¡Õû¸ö²¿ÃÅµÄ¶ÔÏó£¨GZ01£©
+		// æ ¹æ®ç”¨æˆ·éƒ¨é—¨id è·å–æ•´ä¸ªéƒ¨é—¨çš„å¯¹è±¡ï¼ˆGZ01ï¼‰
 		SysDepartment curdept = sysDepartmentService.findById(appUser
 				.getDeptId());
 
-		// ¸ù¾İ²¿ÃÅCODE(ÀıÈçGZ01)½ØÈ¡Ç°2Î» ×÷ÎªµØÇø
+		// æ ¹æ®éƒ¨é—¨CODE(ä¾‹å¦‚GZ01)æˆªå–å‰2ä½ ä½œä¸ºåœ°åŒº
 		String curAreadeptCode = curdept.getCode().substring(0, 2);
 		String endOfCode = "";
 		if (curdept.getCode().length() == 4) {
 			endOfCode = curdept.getCode().substring(2);
 		}
 
-		// ¸ù¾İcode »ñÈ¡ µØÇø²¿ÃÅ¶ÔÏó£¨GZ06£©ĞĞÕş
+		// æ ¹æ®code è·å– åœ°åŒºéƒ¨é—¨å¯¹è±¡ï¼ˆGZ06ï¼‰è¡Œæ”¿
 		SysDepartment HRdept = sysDepartmentService.findByCode(curAreadeptCode
 				+ "06");
-		// ¸ù¾İcode »ñÈ¡ µØÇø²¿ÃÅ¶ÔÏó£¨GZ£©
+		// æ ¹æ®code è·å– åœ°åŒºéƒ¨é—¨å¯¹è±¡ï¼ˆGZï¼‰
 		SysDepartment curAreadept = sysDepartmentService
 				.findByCode(curAreadeptCode);
 
-		// »ñÈ¡¼¯ÍÅ²¿ÃÅ¶ÔÏó£¨JT£©
+		// è·å–é›†å›¢éƒ¨é—¨å¯¹è±¡ï¼ˆJTï¼‰
 		SysDepartment sysdeptMem = sysDepartmentService.findByCode("JT");
 
-		// »ñÈ¡¼¯ÍÅ²¿ÃÅ²¿ÃÅ¶ÔÏó£¨JTxx£©
+		// è·å–é›†å›¢éƒ¨é—¨éƒ¨é—¨å¯¹è±¡ï¼ˆJTxxï¼‰
 		SysDepartment sysdeptMemDept = sysDepartmentService.findByCode("JT"
 				+ endOfCode);
 
 		ProcessContext ctx = new ProcessContext();
-		ctx.setRowId(payment.getPaymentid());// ±íid
+		ctx.setRowId(payment.getPaymentid());// è¡¨id
 
 		if (payment.getWfstatus() == -5555) {
 			ctx.setActorId(payment.getAppuser());
 		} else {
-			ctx.setActorId(actorId);// ÓÃ»§ÉóÅúÕß
+			ctx.setActorId(actorId);// ç”¨æˆ·å®¡æ‰¹è€…
 		}
 
-		ctx.setProcessName(processName);// Á÷³ÌÃû³Æ
+		ctx.setProcessName(processName);// æµç¨‹åç§°
 		String opinion = request.getParameter("approveOpinion");
-		ctx.setOpinion(opinion);// ÉóÅúÒâ¼û
+		ctx.setOpinion(opinion);// å®¡æ‰¹æ„è§
 
-		Collection<DataField> dataFields = new ArrayList<DataField>();// ²ÎÊı
+		Collection<DataField> dataFields = new ArrayList<DataField>();// å‚æ•°
 
 		DataField dataField = new DataField();
-		dataField.setName("isAgree");// ÊÇ·ñÍ¨¹ıÉóÅú
+		dataField.setName("isAgree");// æ˜¯å¦é€šè¿‡å®¡æ‰¹
 		if (flag == 0) {
 			dataField.setValue("true");
 		} else {
@@ -143,31 +143,31 @@ public class PaymentController {
 		}
 		dataFields.add(dataField);
 
-		// »á¼Æ £¨XX06£©
+		// ä¼šè®¡ ï¼ˆXX06ï¼‰
 		DataField datafield1 = new DataField();
 		datafield1.setName("deptId01");
 		datafield1.setValue(HRdept.getId());
 		dataFields.add(datafield1);
 
-		// ²¿ÃÅÖ÷¹Ü/¾­Àí
+		// éƒ¨é—¨ä¸»ç®¡/ç»ç†
 		DataField datafield4 = new DataField();
 		datafield4.setName("deptId02");
 		datafield4.setValue(appUser.getDeptId());
 		dataFields.add(datafield4);
 
-		// ÓÃ»§µØÇø²¿ÃÅ£¨ÈçGZ£©
+		// ç”¨æˆ·åœ°åŒºéƒ¨é—¨ï¼ˆå¦‚GZï¼‰
 		DataField datafield5 = new DataField();
 		datafield5.setName("deptId03");
 		datafield5.setValue(curAreadept.getId());
 		dataFields.add(datafield5);
 
-		// ¼¯ÍÅ²¿ÃÅ(JTxx)
+		// é›†å›¢éƒ¨é—¨(JTxx)
 		DataField datafield2 = new DataField();
 		datafield2.setName("deptId04");
 		datafield2.setValue(sysdeptMemDept.getId());
 		dataFields.add(datafield2);
 
-		// ¼¯ÍÅ(JT)
+		// é›†å›¢(JT)
 		DataField datafield6 = new DataField();
 		datafield6.setName("deptId05");
 		datafield6.setValue(sysdeptMem.getId());
@@ -214,7 +214,7 @@ public class PaymentController {
 					Payment payment = paymentService
 							.getPayment(Long.valueOf(x));
 					/**
-					 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+					 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 					 */
 					if (payment != null
 							&& (StringUtils.equals(payment.getCreateBy(),
@@ -237,7 +237,7 @@ public class PaymentController {
 			Payment payment = paymentService
 					.getPayment(Long.valueOf(paymentid));
 			/**
-			 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+			 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 			 */
 			if (payment != null
 					&& (StringUtils.equals(payment.getCreateBy(),
@@ -275,7 +275,7 @@ public class PaymentController {
 		Payment payment = paymentService.getPayment(RequestUtils.getLong(
 				request, "paymentid"));
 		if (payment != null) {
-			// ÓÃ»§Ãû´¦Àí
+			// ç”¨æˆ·åå¤„ç†
 			String appusername = BaseDataManager.getInstance().getStringValue(
 					payment.getAppuser(), "SYS_USERS");
 			request.setAttribute("appusername", appusername);
@@ -286,7 +286,7 @@ public class PaymentController {
 			payment = new Payment();
 			long deptId01 = user.getDeptId();
 			SysDepartment curdept = sysDepartmentService.findById(deptId01);
-			// »ñÈ¡µ±µØ²¿ÃÅ½Úµã
+			// è·å–å½“åœ°éƒ¨é—¨èŠ‚ç‚¹
 			String curAreadeptCode = curdept.getCode().substring(0, 2);
 
 			payment.setArea(curAreadeptCode);
@@ -341,9 +341,9 @@ public class PaymentController {
 		List<String> actorIds = new ArrayList<String>();
 
 		/**
-		 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+		 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 		 */
-		// ÓÉÓÚÒ³ÃæÊäÈëµÄÈÕÆÚÃ»ÓĞÊ±·ÖÃë£¬²éÕÒ·¶Î§µÄÊ±ºò»ñÈ¡²»µ½×îºóÒ»ÌìµÄ¼ÇÂ¼,ÈËÎªÉèÖÃ
+		// ç”±äºé¡µé¢è¾“å…¥çš„æ—¥æœŸæ²¡æœ‰æ—¶åˆ†ç§’ï¼ŒæŸ¥æ‰¾èŒƒå›´çš„æ—¶å€™è·å–ä¸åˆ°æœ€åä¸€å¤©çš„è®°å½•,äººä¸ºè®¾ç½®
 		if (null != query.getAppdateLessThanOrEqual()) {
 			Date appdateLessThanOrEqual = query.getAppdateLessThanOrEqual();
 			// appdateLessThanOrEqual.setHours(23);
@@ -424,12 +424,12 @@ public class PaymentController {
 										payment.getArea());
 						payment.setCompany(companyname_CN);
 						payment.setArea(area_CN);
-						// ÓÃ»§Ãû´¦Àí
+						// ç”¨æˆ·åå¤„ç†
 						String appusername = BaseDataManager.getInstance()
 								.getStringValue(payment.getAppuser(),
 										"SYS_USERS");
 						payment.setAppuser(appusername);
-						// ²¿ÃÅÃû³Æ´¦Àí
+						// éƒ¨é—¨åç§°å¤„ç†
 						String dept = BaseDataManager.getInstance()
 								.getStringValue(payment.getDept(), "SYS_DEPTS");
 						payment.setDept(dept);
@@ -507,9 +507,9 @@ public class PaymentController {
 		long deptId01 = user.getDeptId();
 		SysDepartment curdept = sysDepartmentService.findById(deptId01);
 		/**
-		 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+		 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 		 */
-		// ÓÉÓÚÒ³ÃæÊäÈëµÄÈÕÆÚÃ»ÓĞÊ±·ÖÃë£¬²éÕÒ·¶Î§µÄÊ±ºò»ñÈ¡²»µ½×îºóÒ»ÌìµÄ¼ÇÂ¼,ÈËÎªÉèÖÃ
+		// ç”±äºé¡µé¢è¾“å…¥çš„æ—¥æœŸæ²¡æœ‰æ—¶åˆ†ç§’ï¼ŒæŸ¥æ‰¾èŒƒå›´çš„æ—¶å€™è·å–ä¸åˆ°æœ€åä¸€å¤©çš„è®°å½•,äººä¸ºè®¾ç½®
 		if (null != query.getAppdateLessThanOrEqual()) {
 			Date appdateLessThanOrEqual = query.getAppdateLessThanOrEqual();
 			// appdateLessThanOrEqual.setHours(23);
@@ -602,12 +602,12 @@ public class PaymentController {
 										payment.getArea());
 						payment.setCompany(companyname_CN);
 						payment.setArea(area_CN);
-						// ÓÃ»§Ãû´¦Àí
+						// ç”¨æˆ·åå¤„ç†
 						String appusername = BaseDataManager.getInstance()
 								.getStringValue(payment.getAppuser(),
 										"SYS_USERS");
 						payment.setAppuser(appusername);
-						// ²¿ÃÅÃû³Æ´¦Àí
+						// éƒ¨é—¨åç§°å¤„ç†
 						String dept = BaseDataManager.getInstance()
 								.getStringValue(payment.getDept(), "SYS_DEPTS");
 						payment.setDept(dept);
@@ -677,7 +677,7 @@ public class PaymentController {
 		Payment payment = paymentService.getPayment(RequestUtils.getLong(
 				request, "paymentid"));
 		if (payment != null) {
-			// ÓÃ»§Ãû´¦Àí
+			// ç”¨æˆ·åå¤„ç†
 			String appusername = BaseDataManager.getInstance().getStringValue(
 					payment.getAppuser(), "SYS_USERS");
 			request.setAttribute("appusername", appusername);
@@ -742,7 +742,7 @@ public class PaymentController {
 	}
 
 	/**
-	 * Á÷³Ì´ò»Ø
+	 * æµç¨‹æ‰“å›
 	 * 
 	 * @param request
 	 * @return
@@ -762,7 +762,7 @@ public class PaymentController {
 					Payment payment = paymentService
 							.getPayment(Long.valueOf(x));
 					/**
-					 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+					 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 					 */
 					if (payment != null) {
 						if (null != payment.getProcessinstanceid()
@@ -776,7 +776,7 @@ public class PaymentController {
 			Payment payment = paymentService
 					.getPayment(Long.valueOf(paymentid));
 			/**
-			 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+			 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 			 */
 			if (payment != null) {
 				if (null != payment.getProcessinstanceid()
@@ -937,7 +937,7 @@ public class PaymentController {
 	}
 
 	/**
-	 * Æô¶¯¹¤×÷Á÷
+	 * å¯åŠ¨å·¥ä½œæµ
 	 * 
 	 * @param budget
 	 * @param request
@@ -946,15 +946,15 @@ public class PaymentController {
 	private boolean startProcess(Payment payment, HttpServletRequest request) {
 		String processName = "PaymentProcess";
 
-		// »ñÈ¡µÇÂ¼ÓÃ»§²¿ÃÅ
+		// è·å–ç™»å½•ç”¨æˆ·éƒ¨é—¨
 		User appUser = BaseDataManager.getInstance().getSysUserService()
 				.findByAccount(payment.getAppuser());
 
-		// ¸ù¾İÓÃ»§²¿ÃÅid »ñÈ¡Õû¸ö²¿ÃÅµÄ¶ÔÏó£¨GZ01£©
+		// æ ¹æ®ç”¨æˆ·éƒ¨é—¨id è·å–æ•´ä¸ªéƒ¨é—¨çš„å¯¹è±¡ï¼ˆGZ01ï¼‰
 		SysDepartment curdept = sysDepartmentService.findById(appUser
 				.getDeptId());
 
-		// ¸ù¾İ²¿ÃÅCODE(ÀıÈçGZ01)½ØÈ¡Ç°2Î» ×÷ÎªµØÇø
+		// æ ¹æ®éƒ¨é—¨CODE(ä¾‹å¦‚GZ01)æˆªå–å‰2ä½ ä½œä¸ºåœ°åŒº
 		String curAreadeptCode = curdept.getCode().substring(0, 2);
 
 		String endOfCode = "";
@@ -962,52 +962,52 @@ public class PaymentController {
 			endOfCode = curdept.getCode().substring(2);
 		}
 
-		// ¸ù¾İcode »ñÈ¡ µØÇø²¿ÃÅ¶ÔÏó£¨GZ06£©ĞĞÕş
+		// æ ¹æ®code è·å– åœ°åŒºéƒ¨é—¨å¯¹è±¡ï¼ˆGZ06ï¼‰è¡Œæ”¿
 		SysDepartment HRdept = sysDepartmentService.findByCode(curAreadeptCode
 				+ "06");
-		// ¸ù¾İcode »ñÈ¡ µØÇø²¿ÃÅ¶ÔÏó£¨GZ£©
+		// æ ¹æ®code è·å– åœ°åŒºéƒ¨é—¨å¯¹è±¡ï¼ˆGZï¼‰
 		SysDepartment curAreadept = sysDepartmentService
 				.findByCode(curAreadeptCode);
 
-		// »ñÈ¡¼¯ÍÅ²¿ÃÅ¶ÔÏó£¨JT£©
+		// è·å–é›†å›¢éƒ¨é—¨å¯¹è±¡ï¼ˆJTï¼‰
 		SysDepartment sysdeptMem = sysDepartmentService.findByCode("JT");
 
-		// »ñÈ¡¼¯ÍÅ²¿ÃÅ²¿ÃÅ¶ÔÏó£¨JTxx£©
+		// è·å–é›†å›¢éƒ¨é—¨éƒ¨é—¨å¯¹è±¡ï¼ˆJTxxï¼‰
 		SysDepartment sysdeptMemDept = sysDepartmentService.findByCode("JT"
 				+ endOfCode);
 
 		ProcessContext ctx = new ProcessContext();
-		ctx.setRowId(payment.getPaymentid());// ±íid
-		ctx.setActorId(appUser.getActorId());// ÓÃ»§ÉóÅúÕß
-		ctx.setProcessName(processName);// Á÷³ÌÃû³Æ
+		ctx.setRowId(payment.getPaymentid());// è¡¨id
+		ctx.setActorId(appUser.getActorId());// ç”¨æˆ·å®¡æ‰¹è€…
+		ctx.setProcessName(processName);// æµç¨‹åç§°
 
-		Collection<DataField> dataFields = new ArrayList<DataField>();// ²ÎÊı
+		Collection<DataField> dataFields = new ArrayList<DataField>();// å‚æ•°
 
-		// »á¼Æ £¨XX06£©
+		// ä¼šè®¡ ï¼ˆXX06ï¼‰
 		DataField datafield1 = new DataField();
 		datafield1.setName("deptId01");
 		datafield1.setValue(HRdept.getId());
 		dataFields.add(datafield1);
 
-		// ²¿ÃÅÖ÷¹Ü/¾­Àí
+		// éƒ¨é—¨ä¸»ç®¡/ç»ç†
 		DataField datafield4 = new DataField();
 		datafield4.setName("deptId02");
 		datafield4.setValue(appUser.getDeptId());
 		dataFields.add(datafield4);
 
-		// ÓÃ»§µØÇø²¿ÃÅ£¨ÈçGZ£©
+		// ç”¨æˆ·åœ°åŒºéƒ¨é—¨ï¼ˆå¦‚GZï¼‰
 		DataField datafield5 = new DataField();
 		datafield5.setName("deptId03");
 		datafield5.setValue(curAreadept.getId());
 		dataFields.add(datafield5);
 
-		// ¼¯ÍÅ²¿ÃÅ(JTxx)
+		// é›†å›¢éƒ¨é—¨(JTxx)
 		DataField datafield2 = new DataField();
 		datafield2.setName("deptId04");
 		datafield2.setValue(sysdeptMemDept.getId());
 		dataFields.add(datafield2);
 
-		// ¼¯ÍÅ(JT)
+		// é›†å›¢(JT)
 		DataField datafield6 = new DataField();
 		datafield6.setName("deptId05");
 		datafield6.setValue(sysdeptMem.getId());
@@ -1019,7 +1019,7 @@ public class PaymentController {
 		dataFields.add(datafield3);
 
 		// DataField dataField = new DataField();
-		// dataField.setName("isAgree");// ÊÇ·ñÍ¨¹ıÉóÅú
+		// dataField.setName("isAgree");// æ˜¯å¦é€šè¿‡å®¡æ‰¹
 		// dataField.setValue("true");
 		// dataFields.add(dataField);
 
@@ -1046,7 +1046,7 @@ public class PaymentController {
 	}
 
 	/**
-	 * ÁĞ±íÓÃ»§Ìá½»Á÷³Ì¼°Á÷³ÌÉóÅú
+	 * åˆ—è¡¨ç”¨æˆ·æäº¤æµç¨‹åŠæµç¨‹å®¡æ‰¹
 	 * 
 	 * @param request
 	 * @return
@@ -1066,7 +1066,7 @@ public class PaymentController {
 					Payment payment = paymentService
 							.getPayment(Long.valueOf(x));
 					/**
-					 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+					 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 					 */
 					if (payment != null) {
 						if (null != payment.getProcessinstanceid()
@@ -1087,7 +1087,7 @@ public class PaymentController {
 			Payment payment = paymentService
 					.getPayment(Long.valueOf(paymentid));
 			/**
-			 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+			 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 			 */
 			if (payment != null) {
 				if (null != payment.getProcessinstanceid()

@@ -166,14 +166,14 @@ public class DruidConnectionProvider implements ConnectionProvider {
 			ds.setInitialSize(initialPoolSize);
 			ds.setMinIdle(minPoolSize);
 			ds.setMaxActive(maxPoolSize);
-			ds.setMaxWait(60 * 1000L);// 60Ãë
+			ds.setMaxWait(60 * 1000L);// 60ç§’
 
 			ds.setDefaultAutoCommit(true);
 			ds.setTestOnReturn(false);
 			ds.setTestOnBorrow(false);
-			ds.setLogAbandoned(true);// ½«µ±Ç°¹Ø±Õ¶¯×÷¼ÇÂ¼µ½ÈÕÖ¾
-			ds.setRemoveAbandoned(true);// ¶ÔÓÚ³¤Ê±¼ä²»Ê¹ÓÃµÄÁ¬½ÓÇ¿ÖÆ¹Ø±Õ
-			ds.setRemoveAbandonedTimeout(1800);// ³¬¹ı30·ÖÖÓ¿ªÊ¼¹Ø±Õ¿ÕÏĞÁ¬½Ó
+			ds.setLogAbandoned(true);// å°†å½“å‰å…³é—­åŠ¨ä½œè®°å½•åˆ°æ—¥å¿—
+			ds.setRemoveAbandoned(true);// å¯¹äºé•¿æ—¶é—´ä¸ä½¿ç”¨çš„è¿æ¥å¼ºåˆ¶å…³é—­
+			ds.setRemoveAbandonedTimeout(1800);// è¶…è¿‡30åˆ†é’Ÿå¼€å§‹å…³é—­ç©ºé—²è¿æ¥
 
 			ds.setTimeBetweenEvictionRunsMillis(((long) idleTestPeriod) * 1000L);
 			ds.setMaxOpenPreparedStatements(maxStatements);

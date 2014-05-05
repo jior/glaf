@@ -84,7 +84,7 @@ public class ChartResource {
 		String querySQL = request.getParameter("querySQL");
 		if (StringUtils.isNotEmpty(querySQL)) {
 			if (!DBUtils.isLegalQuerySql(querySQL)) {
-				return ResponseUtils.responseJsonResult(false, "SQL查询不合法！");
+				return ResponseUtils.responseJsonResult(false, "SQL鏌ヨ涓嶅悎娉曪紒");
 			}
 			Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 
@@ -127,7 +127,7 @@ public class ChartResource {
 				result.put("total", rows.size());
 			}
 		} else {
-			return ResponseUtils.responseJsonResult(false, "SQL查询不合法！");
+			return ResponseUtils.responseJsonResult(false, "SQL鏌ヨ涓嶅悎娉曪紒");
 		}
 
 		return result.toString().getBytes("UTF-8");
@@ -283,9 +283,9 @@ public class ChartResource {
 		String querySQL = request.getParameter("querySQL");
 		if (StringUtils.isNotEmpty(querySQL)) {
 			if (!DBUtils.isLegalQuerySql(querySQL)) {
-				return ResponseUtils.responseJsonResult(false, "SQL查询不合法！");
+				return ResponseUtils.responseJsonResult(false, "SQL鏌ヨ涓嶅悎娉曪紒");
 			}
-			// 增加检查SQL查询是否正确的逻辑
+			// 澧炲姞妫�鏌QL鏌ヨ鏄惁姝ｇ‘鐨勯�昏緫
 		}
 
 		chart.setQuerySQL(querySQL);

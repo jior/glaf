@@ -26,32 +26,32 @@ public class ReportDefinition implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * ±¨±í¶¨ÒåÎ¨Ò»±êÊ¶£¬È«¾ÖÎ¨Ò»
+	 * æŠ¥è¡¨å®šä¹‰å”¯ä¸€æ ‡è¯†ï¼Œå…¨å±€å”¯ä¸€
 	 */
 	protected String reportId;
 
 	/**
-	 * Ä£°åID£¬Èç¹ûÊ¹ÓÃÁËÄ£°å·şÎñ£¬¿ÉÒÔ±êÊ¶Ò»¸öÈ«¾ÖµÄÄ£°å¡£
+	 * æ¨¡æ¿IDï¼Œå¦‚æœä½¿ç”¨äº†æ¨¡æ¿æœåŠ¡ï¼Œå¯ä»¥æ ‡è¯†ä¸€ä¸ªå…¨å±€çš„æ¨¡æ¿ã€‚
 	 */
 	protected String templateId;
 
 	/**
-	 * Ä£°åÎÄ¼ş
+	 * æ¨¡æ¿æ–‡ä»¶
 	 */
 	protected String templateFile;
 
 	/**
-	 * Ä£°å×Ö½ÚÁ÷
+	 * æ¨¡æ¿å­—èŠ‚æµ
 	 */
 	protected byte[] data;
 
 	/**
-	 * ±¨±íÊı¾İ¼¯£¬±¨±íÖĞÓÃµ½µÄÊı¾İ¼¯ºÏ
+	 * æŠ¥è¡¨æ•°æ®é›†ï¼ŒæŠ¥è¡¨ä¸­ç”¨åˆ°çš„æ•°æ®é›†åˆ
 	 */
 	protected List<ReportDataSet> dataSetList = new java.util.ArrayList<ReportDataSet>();
 
 	/**
-	 * ±¨±íÊôĞÔ¶¨Òå£¬Ö÷ÒªÓÃÓÚ×Ô¶¨Òå´¦Àí³ÌĞò
+	 * æŠ¥è¡¨å±æ€§å®šä¹‰ï¼Œä¸»è¦ç”¨äºè‡ªå®šä¹‰å¤„ç†ç¨‹åº
 	 */
 	protected Map<String, Object> properties = new java.util.HashMap<String, Object>();
 

@@ -36,7 +36,7 @@ import com.glaf.form.core.query.FormDefinitionQuery;
 public interface FormDataService {
 
 	/**
-	 * É¾³ıÒÑ¾­·ÏÆúµÄ±íµ¥¶¨Òå
+	 * åˆ é™¤å·²ç»åºŸå¼ƒçš„è¡¨å•å®šä¹‰
 	 * 
 	 * @param formName
 	 */
@@ -44,26 +44,26 @@ public interface FormDataService {
 	void deleteAllFormDefinitions(String formName);
 
 	/**
-	 * É¾³ı±íµ¥ÊµÀıÊı¾İ
+	 * åˆ é™¤è¡¨å•å®ä¾‹æ•°æ®
 	 * 
 	 * @param appId
-	 *            Ó¦ÓÃ±àºÅ
+	 *            åº”ç”¨ç¼–å·
 	 * @param businessKeys
 	 */
 	@Transactional
 	void deleteDataModel(String appId, Collection<String> businessKeys);
 
 	/**
-	 * É¾³ı±íµ¥Ó¦ÓÃÊµÀı
+	 * åˆ é™¤è¡¨å•åº”ç”¨å®ä¾‹
 	 * 
 	 * @param appId
-	 *            Ó¦ÓÃ±àºÅ
+	 *            åº”ç”¨ç¼–å·
 	 */
 	@Transactional
 	void deleteFormApplication(String appId);
 
 	/**
-	 * É¾³ıÒÑ¾­·ÏÆúµÄ±íµ¥¶¨Òå
+	 * åˆ é™¤å·²ç»åºŸå¼ƒçš„è¡¨å•å®šä¹‰
 	 * 
 	 * @param formName
 	 */
@@ -71,73 +71,73 @@ public interface FormDataService {
 	void deleteFormDefinitionByName(String formName);
 
 	/**
-	 * ¸ù¾İ±íµ¥ÊµÀı±àºÅ»ñÈ¡±íµ¥ÊµÀıÊı¾İ
+	 * æ ¹æ®è¡¨å•å®ä¾‹ç¼–å·è·å–è¡¨å•å®ä¾‹æ•°æ®
 	 * 
 	 * @param appId
-	 *            Ó¦ÓÃ±àºÅ
+	 *            åº”ç”¨ç¼–å·
 	 * @param id
 	 * @return
 	 */
 	DataModel getDataModel(String appId, Long id);
 
 	/**
-	 * ¸ù¾İ±íµ¥ÊµÀı±àºÅ»ñÈ¡±íµ¥ÊµÀıÊı¾İ
+	 * æ ¹æ®è¡¨å•å®ä¾‹ç¼–å·è·å–è¡¨å•å®ä¾‹æ•°æ®
 	 * 
 	 * @param app_name
-	 *            Ó¦ÓÃÃû³Æ
+	 *            åº”ç”¨åç§°
 	 * @param id
 	 * @return
 	 */
 	DataModel getDataModelByAppName(String app_name, Long id);
 
 	/**
-	 * ¸ù¾İ±íµ¥ÒµÎñ±àºÅ»ñÈ¡±íµ¥ÊµÀıÊı¾İ
+	 * æ ¹æ®è¡¨å•ä¸šåŠ¡ç¼–å·è·å–è¡¨å•å®ä¾‹æ•°æ®
 	 * 
 	 * @param appId
-	 *            Ó¦ÓÃ±àºÅ
+	 *            åº”ç”¨ç¼–å·
 	 * @param businessKey
 	 * @return
 	 */
 	DataModel getDataModelByBusinessKey(String appId, String businessKey);
 
 	/**
-	 * ¸ù¾İ±àºÅ»ñÈ¡Ó¦ÓÃ¶¨ÒåĞÅÏ¢
+	 * æ ¹æ®ç¼–å·è·å–åº”ç”¨å®šä¹‰ä¿¡æ¯
 	 * 
 	 * @param appId
-	 *            Ó¦ÓÃ±àºÅ
+	 *            åº”ç”¨ç¼–å·
 	 * @return
 	 */
 	FormApplication getFormApplication(String appId);
 
 	/**
-	 * ¸ù¾İÃû³Æ»ñÈ¡Ó¦ÓÃ¶¨ÒåĞÅÏ¢
+	 * æ ¹æ®åç§°è·å–åº”ç”¨å®šä¹‰ä¿¡æ¯
 	 * 
 	 * @param name
-	 *            Ó¦ÓÃÃû³Æ
+	 *            åº”ç”¨åç§°
 	 * @return
 	 */
 	FormApplication getFormApplicationByName(String name);
 
 	/**
-	 * ¸ù¾İ±íµ¥Ãû³Æ»ñÈ¡±íµ¥¶¨ÒåĞÅÏ¢
+	 * æ ¹æ®è¡¨å•åç§°è·å–è¡¨å•å®šä¹‰ä¿¡æ¯
 	 * 
 	 * @param formDefinitionId
-	 *            ±íµ¥¶¨Òå±àºÅ
+	 *            è¡¨å•å®šä¹‰ç¼–å·
 	 * @return
 	 */
 	FormDefinition getFormDefinition(String formDefinitionId);
 
 	/**
-	 * ¸ù¾İ±íµ¥Ãû³Æ»ñÈ¡±íµ¥¶¨ÒåĞÅÏ¢
+	 * æ ¹æ®è¡¨å•åç§°è·å–è¡¨å•å®šä¹‰ä¿¡æ¯
 	 * 
 	 * @param name
-	 *            ±íµ¥Ãû³Æ
+	 *            è¡¨å•åç§°
 	 * @return
 	 */
 	FormDefinition getLatestFormDefinition(String name);
 
 	/**
-	 * ¸ù¾İÌõ¼ş»ñÈ¡×îĞÂ°æ±¾µÄ±íµ¥¶¨ÒåĞÅÏ¢
+	 * æ ¹æ®æ¡ä»¶è·å–æœ€æ–°ç‰ˆæœ¬çš„è¡¨å•å®šä¹‰ä¿¡æ¯
 	 * 
 	 * @param query
 	 * @return
@@ -145,7 +145,7 @@ public interface FormDataService {
 	List<FormDefinition> getLatestFormDefinitions(FormDefinitionQuery query);
 
 	/**
-	 * »ñÈ¡Ò»Ò³±íµ¥Ó¦ÓÃĞÅÏ¢
+	 * è·å–ä¸€é¡µè¡¨å•åº”ç”¨ä¿¡æ¯
 	 * 
 	 * @param query
 	 * @return
@@ -153,18 +153,18 @@ public interface FormDataService {
 	Paging getPageApplication(FormApplicationQuery query);
 
 	/**
-	 * ¸ù¾İ²ÎÊı»ñÈ¡ÊµÀıÊı¾İÁĞ±í
+	 * æ ¹æ®å‚æ•°è·å–å®ä¾‹æ•°æ®åˆ—è¡¨
 	 * 
 	 * @param appId
-	 *            Ó¦ÓÃ±àºÅ
+	 *            åº”ç”¨ç¼–å·
 	 * @param query
-	 *            ²éÑ¯ÉÏÏÂÎÄ
+	 *            æŸ¥è¯¢ä¸Šä¸‹æ–‡
 	 * @return
 	 */
 	Paging getPageDataModel(String appId, DataModelQuery query);
 
 	/**
-	 * »ñÈ¡Ò»Ò³±íµ¥¶ÔÏó
+	 * è·å–ä¸€é¡µè¡¨å•å¯¹è±¡
 	 * 
 	 * @param query
 	 * @return
@@ -172,19 +172,19 @@ public interface FormDataService {
 	Paging getPageFormDefinition(FormDefinitionQuery query);
 
 	/**
-	 * ±£´æ±íµ¥ÊµÀıÊı¾İ<br>
-	 * Ö÷Òª²Ù×÷£º¸ù¾İ±íµ¥¶¨ÒåºÍ´Ó¿Í»§¶Ë»ñÈ¡µÄÓÃ»§ÊäÈëÊı¾İ½øĞĞÊı¾İ×é×°£¬ĞÎ³É±íµ¥Êı¾İÊµÀı£¬¸ù¾İ±íµ¥ÊµÀıĞÅÏ¢±£´æ±íµ¥Êı¾İ¡£<br>
-	 * ÔÚ´¦ÀíÊı¾İ¹ı³ÌÖĞÎªÁË±ÜÃâÊı¾İ´¦Àí³ÌĞòµÄ´íÎóÒıÆğÊı¾İ¶ªÊ§µÄÇé¿ö£¬ĞèÒª½«´Ó¿Í»§¶ËÊäÈëµÄĞÅÏ¢±£´æµ½ÎÄ¼şÏµÍ³ÖĞÒÔ±ãÈÕºóÊ¹ÓÃ¡£
+	 * ä¿å­˜è¡¨å•å®ä¾‹æ•°æ®<br>
+	 * ä¸»è¦æ“ä½œï¼šæ ¹æ®è¡¨å•å®šä¹‰å’Œä»å®¢æˆ·ç«¯è·å–çš„ç”¨æˆ·è¾“å…¥æ•°æ®è¿›è¡Œæ•°æ®ç»„è£…ï¼Œå½¢æˆè¡¨å•æ•°æ®å®ä¾‹ï¼Œæ ¹æ®è¡¨å•å®ä¾‹ä¿¡æ¯ä¿å­˜è¡¨å•æ•°æ®ã€‚<br>
+	 * åœ¨å¤„ç†æ•°æ®è¿‡ç¨‹ä¸­ä¸ºäº†é¿å…æ•°æ®å¤„ç†ç¨‹åºçš„é”™è¯¯å¼•èµ·æ•°æ®ä¸¢å¤±çš„æƒ…å†µï¼Œéœ€è¦å°†ä»å®¢æˆ·ç«¯è¾“å…¥çš„ä¿¡æ¯ä¿å­˜åˆ°æ–‡ä»¶ç³»ç»Ÿä¸­ä»¥ä¾¿æ—¥åä½¿ç”¨ã€‚
 	 * 
 	 * @param appId
-	 *            Ó¦ÓÃ±àºÅ
+	 *            åº”ç”¨ç¼–å·
 	 * @param formContext
 	 */
 	@Transactional
 	void saveDataModel(String appId, FormContext formContext);
 
 	/**
-	 * ±£´æ±íµ¥Ó¦ÓÃĞÅÏ¢
+	 * ä¿å­˜è¡¨å•åº”ç”¨ä¿¡æ¯
 	 * 
 	 * @param formApplication
 	 */
@@ -192,29 +192,29 @@ public interface FormDataService {
 	void saveFormApplication(FormApplication formApplication);
 
 	/**
-	 * ±£´æ¶à¸ö±íµ¥Ó¦ÓÃĞÅÏ¢
+	 * ä¿å­˜å¤šä¸ªè¡¨å•åº”ç”¨ä¿¡æ¯
 	 * 
 	 */
 	@Transactional
 	void saveFormApplications(List<FormApplication> apps);
 
 	/**
-	 * ±£´æ±íµ¥¶¨ÒåĞÅÏ¢ <br>
-	 * Ö÷Òª²Ù×÷£º±£´æ±íµ¥¶¨ÒåµÄ»ù±¾ÊôĞÔ£¬½ÚµãĞÅÏ¢¼°¸üĞÂ±íµ¥µÄÊı¾İ¿â½á¹¹
+	 * ä¿å­˜è¡¨å•å®šä¹‰ä¿¡æ¯ <br>
+	 * ä¸»è¦æ“ä½œï¼šä¿å­˜è¡¨å•å®šä¹‰çš„åŸºæœ¬å±æ€§ï¼ŒèŠ‚ç‚¹ä¿¡æ¯åŠæ›´æ–°è¡¨å•çš„æ•°æ®åº“ç»“æ„
 	 * 
 	 * @param formDefinition
-	 *            ±íµ¥¶¨ÒåĞÅÏ¢
+	 *            è¡¨å•å®šä¹‰ä¿¡æ¯
 	 */
 	@Transactional
 	void saveFormDefinition(FormDefinition formDefinition);
 
 	/**
-	 * ±£´æ±íµ¥ÊµÀıÊı¾İ<br>
-	 * Ö÷Òª²Ù×÷£º¸ù¾İ±íµ¥¶¨ÒåºÍ´Ó¿Í»§¶Ë»ñÈ¡µÄÓÃ»§ÊäÈëÊı¾İ½øĞĞÊı¾İ×é×°£¬ĞÎ³É±íµ¥Êı¾İÊµÀı£¬¸ù¾İ±íµ¥ÊµÀıĞÅÏ¢±£´æ±íµ¥Êı¾İ¡£<br>
-	 * ÔÚ´¦ÀíÊı¾İ¹ı³ÌÖĞÎªÁË±ÜÃâÊı¾İ´¦Àí³ÌĞòµÄ´íÎóÒıÆğÊı¾İ¶ªÊ§µÄÇé¿ö£¬ĞèÒª½«´Ó¿Í»§¶ËÊäÈëµÄĞÅÏ¢±£´æµ½ÎÄ¼şÏµÍ³ÖĞÒÔ±ãÈÕºóÊ¹ÓÃ¡£
+	 * ä¿å­˜è¡¨å•å®ä¾‹æ•°æ®<br>
+	 * ä¸»è¦æ“ä½œï¼šæ ¹æ®è¡¨å•å®šä¹‰å’Œä»å®¢æˆ·ç«¯è·å–çš„ç”¨æˆ·è¾“å…¥æ•°æ®è¿›è¡Œæ•°æ®ç»„è£…ï¼Œå½¢æˆè¡¨å•æ•°æ®å®ä¾‹ï¼Œæ ¹æ®è¡¨å•å®ä¾‹ä¿¡æ¯ä¿å­˜è¡¨å•æ•°æ®ã€‚<br>
+	 * åœ¨å¤„ç†æ•°æ®è¿‡ç¨‹ä¸­ä¸ºäº†é¿å…æ•°æ®å¤„ç†ç¨‹åºçš„é”™è¯¯å¼•èµ·æ•°æ®ä¸¢å¤±çš„æƒ…å†µï¼Œéœ€è¦å°†ä»å®¢æˆ·ç«¯è¾“å…¥çš„ä¿¡æ¯ä¿å­˜åˆ°æ–‡ä»¶ç³»ç»Ÿä¸­ä»¥ä¾¿æ—¥åä½¿ç”¨ã€‚
 	 * 
 	 * @param appId
-	 *            Ó¦ÓÃ±àºÅ
+	 *            åº”ç”¨ç¼–å·
 	 * @param formContext
 	 */
 	@Transactional

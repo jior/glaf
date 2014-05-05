@@ -34,10 +34,10 @@ public class Main {
 		Marshaller marshaller = jc.createMarshaller();
 
 		ObjectFactory of = new ObjectFactory();
-		// ±íµ¥È«¾Ö¶¨Òå
+		// è¡¨å•å…¨å±€å®šä¹‰
 		FormDefinitionType fdt = of.createFormDefinitionType();
 		fdt.setName("GoodsApply");
-		fdt.setTitle("ÎïÆ·Éê¹ºµ¥");
+		fdt.setTitle("ç‰©å“ç”³è´­å•");
 		fdt.setX(0);
 		fdt.setY(0);
 		fdt.setWidth(775);
@@ -45,10 +45,10 @@ public class Main {
 		fdt.setRows(12);
 		fdt.setColumns(31);
 
-		// Ìí¼ÓÈ«¾ÖÊÂ¼ş
+		// æ·»åŠ å…¨å±€äº‹ä»¶
 		EventType et1 = of.createEventType();
 		et1.setType("javascript");
-		// ¸øÌí¼ÓÊÂ¼ş½Å±¾
+		// ç»™æ·»åŠ äº‹ä»¶è„šæœ¬
 		ScriptType ct1 = of.createScriptType();
 		ct1.setType("onload");
 		ct1.setExpression("javascript:sumXY('num5','price5','money5');");
@@ -60,44 +60,44 @@ public class Main {
 		// ct2.setExpression("javascript:sumXY('num5','price5','money5');");
 		ct2.setLang("javascript");
 		ct2.setRunat("cilent");
-		ct2.setExpression("function firm(){if(confirm(\"ÄãÈ·ÈÏÒªÀë¿ª£¿\")){   location.href=\"http:\\\\www.baidu.com\";  }}");
+		ct2.setExpression("function firm(){if(confirm(\"ä½ ç¡®è®¤è¦ç¦»å¼€ï¼Ÿ\")){   location.href=\"http:\\\\www.baidu.com\";  }}");
 		fdt.getScript().add(ct2);
 
-		// ¿Ø¼ş
+		// æ§ä»¶
 		NodeType nt = of.createNodeType();
 		nt.setNodeType("label");
-		nt.setTitle("ÎïÆ·Éê¹ºµ¥£¨°ì¹«ÓÃÆ·¡¢ÀñÆ·¡¢ºÄ²Ä£©");
+		nt.setTitle("ç‰©å“ç”³è´­å•ï¼ˆåŠå…¬ç”¨å“ã€ç¤¼å“ã€è€—æï¼‰");
 		nt.setForeground("#3366FF");
 
-		// ¸ø¿Ø¼şÌí¼ÓÊÂ¼ş£¬ÊÂ¼ş¿É¶à¸ö
+		// ç»™æ§ä»¶æ·»åŠ äº‹ä»¶ï¼Œäº‹ä»¶å¯å¤šä¸ª
 		EventType et = of.createEventType();
 		et.setType("javascript");
 		nt.getEvent().add(et);
-		// ¸øÌí¼ÓÊÂ¼ş½Å±¾
+		// ç»™æ·»åŠ äº‹ä»¶è„šæœ¬
 		ScriptType ct = of.createScriptType();
 		ct.setType("onblur");
 		ct.setExpression("javascript:sumXY('num5','price5','money5');");
 		et.getScript().add(ct);
 
-		// Ìí¼Óproperties
+		// æ·»åŠ properties
 
 		PropertyType pt = of.createPropertyType();
 		pt.setName("num5");
-		pt.setValue("$N{N:\"num5\",width:145,onblur:\"javascript:sumXY('num5','price5','money5');\",T:\"ÊıÁ¿\",maxLength:4}");
+		pt.setValue("$N{N:\"num5\",width:145,onblur:\"javascript:sumXY('num5','price5','money5');\",T:\"æ•°é‡\",maxLength:4}");
 
 		nt.getProperty().add(pt);
 
 		fdt.getNode().add(nt);
 
-		// ¿Ø¼ş
+		// æ§ä»¶
 		NodeType nt2 = of.createNodeType();
 		nt2.setName("subject");
 		nt2.setNodeType("textfield");
-		nt2.setTitle("Ö÷Ìâ");
+		nt2.setTitle("ä¸»é¢˜");
 		nt2.setForeground("#3366FF");
 		fdt.getNode().add(nt2);
 
-		// Éú³ÉÎÄ¼ş
+		// ç”Ÿæˆæ–‡ä»¶
 		JAXBElement<?> jaxbElement = of.createFormDefinition(fdt);
 		File f = new File("./GoodsApply.fdl.xml");
 		if (!f.exists()) {
@@ -110,7 +110,7 @@ public class Main {
 		marshaller.marshal(jaxbElement, new FileOutputStream(f));
 		// System.out.println("aaaaaa:" + marshaller.JAXB_FORMATTED_OUTPUT);
 
-		// ½âÎöxmlÎÄ¼ş
+		// è§£æxmlæ–‡ä»¶
 
 		JAXBElement<?> customerE = (JAXBElement<?>) u.unmarshal(new File(
 				"./GoodsApply.fdl.xml"));

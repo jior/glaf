@@ -71,7 +71,7 @@ public class JbpmProcessManager {
 	}
 
 	/**
-	 * ÖĞÖ¹Á÷³Ì/½áÊøÁ÷³Ì
+	 * ä¸­æ­¢æµç¨‹/ç»“æŸæµç¨‹
 	 * 
 	 * @param ctx
 	 * @return
@@ -109,7 +109,7 @@ public class JbpmProcessManager {
 				while (iterator.hasNext()) {
 					TaskInstance ti = iterator.next();
 					if (!ti.hasEnded()) {
-						// ½«ÒÑ¾­·ÖÅÉµÄÈÎÎñÈ¡Ïû
+						// å°†å·²ç»åˆ†æ´¾çš„ä»»åŠ¡å–æ¶ˆ
 						ti.setSignalling(false);
 						ti.suspend();
 						jbpmContext.save(ti);
@@ -126,7 +126,7 @@ public class JbpmProcessManager {
 	}
 
 	/**
-	 * Íê³ÉÈÎÎñ
+	 * å®Œæˆä»»åŠ¡
 	 * 
 	 * @param ctx
 	 */
@@ -383,7 +383,7 @@ public class JbpmProcessManager {
 	}
 
 	/**
-	 * ¸ù¾İ²éÑ¯Ìõ¼ş»ñÈ¡Ò»Ò³µÄÁ÷³ÌÊµÀı
+	 * æ ¹æ®æŸ¥è¯¢æ¡ä»¶è·å–ä¸€é¡µçš„æµç¨‹å®ä¾‹
 	 * 
 	 * @param jbpmContext
 	 * @param pageNo
@@ -526,13 +526,13 @@ public class JbpmProcessManager {
 	}
 
 	/**
-	 * »Ö¸´¹ÒÆğµÄÁ÷³Ì£¬ÈÎÎñºÍ¶¨Ê±Æ÷ÖØĞÂ¿ªÊ¼¡£
+	 * æ¢å¤æŒ‚èµ·çš„æµç¨‹ï¼Œä»»åŠ¡å’Œå®šæ—¶å™¨é‡æ–°å¼€å§‹ã€‚
 	 * 
 	 * @param processInstanceId
 	 */
 	public void resume(JbpmContext jbpmContext, Long processInstanceId) {
 		if (processInstanceId != null && processInstanceId > 0) {
-			logger.debug("×¼±¸»Ö¸´µÄÁ÷³ÌÊµÀı±àºÅ£º" + processInstanceId);
+			logger.debug("å‡†å¤‡æ¢å¤çš„æµç¨‹å®ä¾‹ç¼–å·ï¼š" + processInstanceId);
 			ProcessInstance processInstance = jbpmContext
 					.loadProcessInstanceForUpdate(processInstanceId);
 			if (processInstance.hasEnded()) {
@@ -540,7 +540,7 @@ public class JbpmProcessManager {
 						+ processInstance.getId() + "' has ended");
 			}
 			/**
-			 * Ö»°ÑÎ´´¦ÀíÍêµÄÈÎÎñ»Ö¸´
+			 * åªæŠŠæœªå¤„ç†å®Œçš„ä»»åŠ¡æ¢å¤
 			 */
 			TaskMgmtInstance tmi = processInstance.getTaskMgmtInstance();
 			Collection<TaskInstance> taskInstances = tmi.getTaskInstances();
@@ -549,7 +549,7 @@ public class JbpmProcessManager {
 				while (iter.hasNext()) {
 					TaskInstance taskInstance = iter.next();
 					if (!taskInstance.hasEnded()) {
-						logger.debug("ÕıÔÚ»Ö¸´ÈÎÎñ:" + taskInstance.getDescription());
+						logger.debug("æ­£åœ¨æ¢å¤ä»»åŠ¡:" + taskInstance.getDescription());
 						taskInstance.resume();
 					}
 				}
@@ -566,7 +566,7 @@ public class JbpmProcessManager {
 	}
 
 	/**
-	 * Æô¶¯Á÷³Ì
+	 * å¯åŠ¨æµç¨‹
 	 * 
 	 * @param ctx
 	 * @return
@@ -697,13 +697,13 @@ public class JbpmProcessManager {
 	}
 
 	/**
-	 * ¹ÒÆğÄ³¸öÁ÷³ÌµÄÈ«²¿ÈÎÎñ¡£
+	 * æŒ‚èµ·æŸä¸ªæµç¨‹çš„å…¨éƒ¨ä»»åŠ¡ã€‚
 	 * 
 	 * @param processInstanceId
 	 */
 	public void suspend(JbpmContext jbpmContext, Long processInstanceId) {
 		if (processInstanceId != null && processInstanceId > 0) {
-			logger.debug("×¼±¸¹ÒÆğµÄÁ÷³ÌÊµÀı±àºÅ£º" + processInstanceId);
+			logger.debug("å‡†å¤‡æŒ‚èµ·çš„æµç¨‹å®ä¾‹ç¼–å·ï¼š" + processInstanceId);
 			ProcessInstance processInstance = jbpmContext
 					.loadProcessInstanceForUpdate(processInstanceId);
 			if (processInstance.hasEnded()) {
@@ -711,7 +711,7 @@ public class JbpmProcessManager {
 						+ processInstance.getId() + "' has ended");
 			}
 			/**
-			 * Ö»°ÑÈÎÎñ¹ÒÆğ
+			 * åªæŠŠä»»åŠ¡æŒ‚èµ·
 			 */
 			TaskMgmtInstance tmi = processInstance.getTaskMgmtInstance();
 			Collection<TaskInstance> taskInstances = tmi.getTaskInstances();
@@ -720,7 +720,7 @@ public class JbpmProcessManager {
 				while (iter.hasNext()) {
 					TaskInstance taskInstance = iter.next();
 					if (taskInstance.isOpen()) {
-						logger.debug("ÕıÔÚ¹ÒÆğÈÎÎñ:" + taskInstance.getDescription());
+						logger.debug("æ­£åœ¨æŒ‚èµ·ä»»åŠ¡:" + taskInstance.getDescription());
 						taskInstance.suspend();
 					}
 				}

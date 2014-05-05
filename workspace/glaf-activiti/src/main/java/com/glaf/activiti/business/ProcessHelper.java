@@ -33,7 +33,7 @@ public class ProcessHelper {
 	protected static final Log logger = LogFactory.getLog(ProcessHelper.class);
 
 	/**
-	 * ½«È«²¿Á÷³ÌÍ¼µ¼³öµ½Ó²ÅÌ
+	 * å°†å…¨éƒ¨æµç¨‹å›¾å¯¼å‡ºåˆ°ç¡¬ç›˜
 	 * 
 	 * @param repositoryService
 	 * @param exportDir
@@ -54,7 +54,7 @@ public class ProcessHelper {
 	}
 
 	/**
-	 * ½«È«²¿Á÷³ÌÍ¼µ¼³öµ½Ó²ÅÌ
+	 * å°†å…¨éƒ¨æµç¨‹å›¾å¯¼å‡ºåˆ°ç¡¬ç›˜
 	 * 
 	 * @param repositoryService
 	 * @param exportDir
@@ -66,9 +66,9 @@ public class ProcessHelper {
 	}
 
 	/**
-	 * µ¼³öÍ¼Æ¬ÎÄ¼şµ½Ó²ÅÌ
+	 * å¯¼å‡ºå›¾ç‰‡æ–‡ä»¶åˆ°ç¡¬ç›˜
 	 * 
-	 * @return ÎÄ¼şµÄÈ«Â·¾¶
+	 * @return æ–‡ä»¶çš„å…¨è·¯å¾„
 	 */
 	public String exportDiagramToFile(RepositoryService repositoryService,
 			ProcessDefinition processDefinition, String exportDir) {
@@ -86,9 +86,9 @@ public class ProcessHelper {
 		String diagramPath = diagramDir + "_" + diagramResourceName;
 		File file = new File(diagramPath);
 
-		// ÎÄ¼ş´æÔÚÍË³ö
+		// æ–‡ä»¶å­˜åœ¨é€€å‡º
 		if (file.exists()) {
-			// ÎÄ¼ş´óĞ¡ÏàÍ¬Ê±Ö±½Ó·µ»Ø·ñÔòÖØĞÂ´´½¨ÎÄ¼ş(¿ÉÄÜËğ»µ)
+			// æ–‡ä»¶å¤§å°ç›¸åŒæ—¶ç›´æ¥è¿”å›å¦åˆ™é‡æ–°åˆ›å»ºæ–‡ä»¶(å¯èƒ½æŸå)
 			logger.debug("diagram exist, ignore... : " + diagramPath);
 			return diagramPath;
 		} else {

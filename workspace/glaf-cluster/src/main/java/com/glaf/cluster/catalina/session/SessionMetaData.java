@@ -4,21 +4,21 @@ import java.io.Serializable;
 
 public class SessionMetaData implements Serializable {
 	private static final long serialVersionUID = -1L;
-	/** sessionµÄid */
+	/** sessionçš„id */
 	private String id;
-	/** sessionµÄ´´½¨Ê±¼ä */
+	/** sessionçš„åˆ›å»ºæ—¶é—´ */
 	private Long createTime;
-	/** sessionµÄ×î´ó¿ÕÏĞÊ±¼ä */
+	/** sessionçš„æœ€å¤§ç©ºé—²æ—¶é—´ */
 	private Long maxIdle;
-	/** sessionµÄ×îºóÒ»´Î·ÃÎÊÊ±¼ä */
+	/** sessionçš„æœ€åä¸€æ¬¡è®¿é—®æ—¶é—´ */
 	private Long lastAccessTime;
-	/** ÊÇ·ñ¿ÉÓÃ */
+	/** æ˜¯å¦å¯ç”¨ */
 	private Boolean validate = false;
-	/** µ±Ç°°æ±¾ */
+	/** å½“å‰ç‰ˆæœ¬ */
 	private int version = 0;
 
 	/**
-	 * ¹¹Ôì·½·¨
+	 * æ„é€ æ–¹æ³•
 	 */
 	public SessionMetaData() {
 		this.createTime = System.currentTimeMillis();

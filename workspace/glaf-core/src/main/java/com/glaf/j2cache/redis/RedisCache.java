@@ -31,7 +31,7 @@ import com.glaf.j2cache.CacheException;
 import com.glaf.core.util.SerializationUtils;
 
 /**
- * Redis »º´æÊµÏÖ
+ * Redis ç¼“å­˜å®ç°
  * 
  * @author oschina.net
  */
@@ -45,7 +45,7 @@ public class RedisCache implements Cache {
 	}
 
 	/**
-	 * Éú³É»º´æµÄ key
+	 * ç”Ÿæˆç¼“å­˜çš„ key
 	 * 
 	 * @param key
 	 * @return

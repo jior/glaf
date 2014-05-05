@@ -44,73 +44,73 @@ public class Report implements Serializable, JSONable {
 	protected Long nodeId;
 
 	/**
-	 * ²éÑ¯Êı¾İ¼¯
+	 * æŸ¥è¯¢æ•°æ®é›†
 	 */
 	@Column(name = "QUERYIDS_", length = 500)
 	protected String queryIds;
 
 	/**
-	 * Í¼±í¼¯
+	 * å›¾è¡¨é›†
 	 */
 	@Column(name = "CHARTIDS_", length = 500)
 	protected String chartIds;
 
 	/**
-	 * Ãû³Æ
+	 * åç§°
 	 */
 	@Column(name = "NAME_", length = 200)
 	protected String name;
 
 	/**
-	 * ±êÌâ
+	 * æ ‡é¢˜
 	 */
 	@Column(name = "SUBJECT_", length = 250)
 	protected String subject;
 
 	/**
-	 * ±¨±íÀàĞÍ
+	 * æŠ¥è¡¨ç±»å‹
 	 */
 	@Column(name = "TYPE_", length = 50)
 	protected String type;
 
 	/**
-	 * ±¨±íÃû³Æ
+	 * æŠ¥è¡¨åç§°
 	 */
 	@Column(name = "REPORTNAME_", length = 200)
 	protected String reportName;
 
 	/**
-	 * ±¨±íÉú³É¸ñÊ½
+	 * æŠ¥è¡¨ç”Ÿæˆæ ¼å¼
 	 */
 	@Column(name = "REPORTFORMAT_", length = 50)
 	protected String reportFormat;
 
 	/**
-	 * ±¨±íÄ£°å
+	 * æŠ¥è¡¨æ¨¡æ¿
 	 */
 	@Column(name = "REPORTTEMPLATE_", length = 200)
 	protected String reportTemplate;
 
 	/**
-	 * ±¨±í±êÌâÈÕÆÚ
+	 * æŠ¥è¡¨æ ‡é¢˜æ—¥æœŸ
 	 */
 	@Column(name = "REPORTTITLEDATE_", length = 50)
 	protected String reportTitleDate;
 
 	/**
-	 * ±¨±íÄêÔÂ
+	 * æŠ¥è¡¨å¹´æœˆ
 	 */
 	@Column(name = "REPORTMONTH_", length = 50)
 	protected String reportMonth;
 
 	/**
-	 * ±¨±íÄêÔÂÈÕ²ÎÊı
+	 * æŠ¥è¡¨å¹´æœˆæ—¥å‚æ•°
 	 */
 	@Column(name = "REPORTDATEYYYYMMDD_", length = 50)
 	protected String reportDateYYYYMMDD;
 
 	/**
-	 * ±¨±íJSON¸ñÊ½²ÎÊı
+	 * æŠ¥è¡¨JSONæ ¼å¼å‚æ•°
 	 */
 	@Lob
 	@Column(name = "JSONPARAMETER_", length = 500)
@@ -120,47 +120,47 @@ public class Report implements Serializable, JSONable {
 	protected String textTitle;
 
 	/**
-	 * ·¢ËÍÄÚÈİ
+	 * å‘é€å†…å®¹
 	 */
 	@Lob
 	@Column(name = "TEXTCONTENT_", length = 500)
 	protected String textContent;
 
 	/**
-	 * ÓÊ¼ş½ÓÊÕÈË
+	 * é‚®ä»¶æ¥æ”¶äºº
 	 */
 	@Lob
 	@Column(name = "MAILRECIPIENT_", length = 500)
 	protected String mailRecipient;
 
 	/**
-	 * ÊÖ»ú½ÓÊÕÈË
+	 * æ‰‹æœºæ¥æ”¶äºº
 	 */
 	@Lob
 	@Column(name = "MOBILERECIPIENT_", length = 500)
 	protected String mobileRecipient;
 
 	/**
-	 * µ÷¶È±í´ïÊ½
+	 * è°ƒåº¦è¡¨è¾¾å¼
 	 */
 	@Column(name = "CRONEXPRESSION_", length = 50)
 	protected String cronExpression;
 
 	/**
-	 * ÊÇ·ñÆôÓÃ
+	 * æ˜¯å¦å¯ç”¨
 	 */
 	@Column(name = "ENABLEFLAG_", length = 1)
 	protected String enableFlag;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_")
 	protected Date createDate;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;

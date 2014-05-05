@@ -75,7 +75,7 @@ public class AssessscoreController {
 					Assessscore assessscore = assessscoreService
 							.getAssessscore(Long.valueOf(x));
 					/**
-					 * �˴�ҵ���߼������е���
+					 * 此处业务逻辑需自行调整
 					 */
 					if (assessscore != null
 							&& (StringUtils.equals(assessscore.getCreateBy(),
@@ -90,7 +90,7 @@ public class AssessscoreController {
 			Assessscore assessscore = assessscoreService.getAssessscore(Long
 					.valueOf(scoreid));
 			/**
-			 * �˴�ҵ���߼������е���
+			 * 此处业务逻辑需自行调整
 			 */
 			if (assessscore != null
 					&& (StringUtils.equals(assessscore.getCreateBy(),
@@ -164,7 +164,7 @@ public class AssessscoreController {
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
 		/**
-		 * �˴�ҵ���߼������е���
+		 * 此处业务逻辑需自行调整
 		 */
 		if (!loginContext.isSystemAdministrator()) {
 			String actorId = loginContext.getActorId();

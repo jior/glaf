@@ -29,7 +29,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 
 /**
- * ¿ÉÒÔ°´ÕÕ²»Í¬µÄÔËĞĞÄ£Ê½ÆôÓÃÏàÓ¦µÄÅäÖÃ
+ * å¯ä»¥æŒ‰ç…§ä¸åŒçš„è¿è¡Œæ¨¡å¼å¯ç”¨ç›¸åº”çš„é…ç½®
  * 
  */
 public class MutilPropertyPlaceholderConfigurer extends
@@ -44,7 +44,7 @@ public class MutilPropertyPlaceholderConfigurer extends
 
 	public static final String RUN_MODE = "run.mode";
 
-	// »º´æËùÓĞµÄÊôĞÔÅäÖÃ
+	// ç¼“å­˜æ‰€æœ‰çš„å±æ€§é…ç½®
 	private Properties properties;
 
 	@Override
@@ -60,7 +60,7 @@ public class MutilPropertyPlaceholderConfigurer extends
 	}
 
 	/**
-	 * ¿ª·Å´Ë·½·¨¸øĞèÒªµÄÒµÎñ
+	 * å¼€æ”¾æ­¤æ–¹æ³•ç»™éœ€è¦çš„ä¸šåŠ¡
 	 * 
 	 * @param key
 	 * @return
@@ -72,9 +72,9 @@ public class MutilPropertyPlaceholderConfigurer extends
 	@Override
 	protected Properties mergeProperties() throws IOException {
 		Properties mergeProperties = super.mergeProperties();
-		// ¸ù¾İÂ·ÓÉÔ­Ôò£¬ÌáÈ¡×îÖÕÉúĞ§µÄproperties
+		// æ ¹æ®è·¯ç”±åŸåˆ™ï¼Œæå–æœ€ç»ˆç”Ÿæ•ˆçš„properties
 		this.properties = new Properties();
-		// »ñÈ¡Â·ÓÉ¹æÔò,ÏµÍ³ÊôĞÔÉèÖÃmodeÓÅÏÈ
+		// è·å–è·¯ç”±è§„åˆ™,ç³»ç»Ÿå±æ€§è®¾ç½®modeä¼˜å…ˆ
 		String mode = System.getProperty(RUN_MODE);
 		if (StringUtils.isEmpty(mode)) {
 			String str = mergeProperties.getProperty(RUN_MODE);

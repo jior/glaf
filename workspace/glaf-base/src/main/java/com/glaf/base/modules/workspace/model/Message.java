@@ -41,7 +41,7 @@ public class Message implements Serializable, JSONable {
 	protected long id;
 
 	/**
-	 * ÏûÏ¢ÀàĞÍ
+	 * æ¶ˆæ¯ç±»å‹
 	 */
 	@Column(name = "TYPE")
 	protected int type;
@@ -51,51 +51,51 @@ public class Message implements Serializable, JSONable {
 	protected int sysType;
 
 	/**
-	 * ½ÓÊÕÈËÁĞ±í
+	 * æ¥æ”¶äººåˆ—è¡¨
 	 */
 	@Column(name = "RECVERLIST", length = 500)
 	protected String recverList;
 
 	/**
-	 * ±êÌâ
+	 * æ ‡é¢˜
 	 */
 	@Column(name = "TITLE", length = 250)
 	protected String title;
 
 	/**
-	 * ÄÚÈİ
+	 * å†…å®¹
 	 */
 	@Lob
 	@Column(name = "CONTENT", length = 2000)
 	protected String content;
 
 	/**
-	 * ´´½¨Ê±¼ä
+	 * åˆ›å»ºæ—¶é—´
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE")
 	protected Date createDate;
 
 	/**
-	 * ÒÑ¶Á±ê¼Ç
+	 * å·²è¯»æ ‡è®°
 	 */
 	@Column(name = "READED")
 	protected int readed;
 
 	/**
-	 * ·ÖÀà
+	 * åˆ†ç±»
 	 */
 	@Column(name = "CATEGORY")
 	protected int category;
 
 	/**
-	 * ·¢ËÍÕß
+	 * å‘é€è€…
 	 */
 	@Column(name = "SENDER")
 	protected long senderId;
 
 	/**
-	 * ½ÓÊÕÕß
+	 * æ¥æ”¶è€…
 	 */
 	@Column(name = "RECVER")
 	protected long recverId;

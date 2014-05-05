@@ -28,12 +28,12 @@ public class MailDataSet implements java.io.Serializable {
 	protected MailTemplate mailDefinition;
 
 	/**
-	 * ÓÊ¼ş½á¹û¼¯
+	 * é‚®ä»¶ç»“æœé›†
 	 */
 	protected List<MailRowSet> rowSetList = new java.util.ArrayList<MailRowSet>();
 
 	/**
-	 * ÓÊ¼şÊôĞÔ¶¨Òå£¬Ö÷ÒªÓÃÓÚ×Ô¶¨Òå´¦Àí³ÌĞò
+	 * é‚®ä»¶å±æ€§å®šä¹‰ï¼Œä¸»è¦ç”¨äºè‡ªå®šä¹‰å¤„ç†ç¨‹åº
 	 */
 	protected Map<String, Object> properties = new java.util.HashMap<String, Object>();
 

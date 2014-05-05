@@ -47,38 +47,38 @@ public class MailPathSender implements Serializable {
 	protected String id;
 
 	/**
-	 * ÈÎÎñ±àºÅ
+	 * ä»»åŠ¡ç¼–å·
 	 */
 	@Column(name = "TASKID_", length = 50)
 	protected String taskId;
 
 	/**
-	 * Ãû³Æ
+	 * åç§°
 	 */
 	@Column(name = "NAME_", length = 50)
 	protected String name;
 
 	/**
-	 * ±êÌâ
+	 * æ ‡é¢˜
 	 */
 	@Column(name = "SUBJECT_", length = 250)
 	protected String subject;
 
 	/**
-	 * ÓÊ¼şÀàĞÍ
+	 * é‚®ä»¶ç±»å‹
 	 */
 	@Column(name = "TYPE_", length = 50)
 	protected String type;
 
 	/**
-	 * ÎÄ¼şÂ·¾¶£¬¶à¸öÒÔ¶ººÅ¸ô¿ª
+	 * æ–‡ä»¶è·¯å¾„ï¼Œå¤šä¸ªä»¥é€—å·éš”å¼€
 	 */
 	@Lob
 	@Column(name = "MAILFILEPATH_", length = 2000)
 	protected String mailFilePath;
 
 	/**
-	 * JSON¸ñÊ½²ÎÊı
+	 * JSONæ ¼å¼å‚æ•°
 	 */
 	@Lob
 	@Column(name = "JSONPARAMETER_", length = 500)
@@ -88,71 +88,71 @@ public class MailPathSender implements Serializable {
 	protected String textTitle;
 
 	/**
-	 * ·¢ËÍÄÚÈİ
+	 * å‘é€å†…å®¹
 	 */
 	@Lob
 	@Column(name = "TEXTCONTENT_", length = 500)
 	protected String textContent;
 
 	/**
-	 * ÓÊ¼ş½ÓÊÕÈË
+	 * é‚®ä»¶æ¥æ”¶äºº
 	 */
 	@Lob
 	@Column(name = "MAILRECIPIENT_", length = 500)
 	protected String mailRecipient;
 
 	/**
-	 * ÊÖ»ú½ÓÊÕÈË
+	 * æ‰‹æœºæ¥æ”¶äºº
 	 */
 	@Lob
 	@Column(name = "MOBILERECIPIENT_", length = 500)
 	protected String mobileRecipient;
 
 	/**
-	 * µ÷¶È±í´ïÊ½
+	 * è°ƒåº¦è¡¨è¾¾å¼
 	 */
 	@Column(name = "CRONEXPRESSION_", length = 50)
 	protected String cronExpression;
 
 	/**
-	 * ÊÇ·ñÆôÓÃ
+	 * æ˜¯å¦å¯ç”¨
 	 */
 	@Column(name = "ENABLEFLAG_", length = 1)
 	protected String enableFlag;
 
 	/**
-	 * ÊÇ·ñÑ¹Ëõ
+	 * æ˜¯å¦å‹ç¼©
 	 */
 	@Column(name = "COMPRESSFLAG_", length = 1)
 	protected String compressFlag;
 
 	/**
-	 * °üº¬ÎÄ¼şµÄÀ©Õ¹ÃûÁĞ±í£¬ÒÔ¶ººÅ·Ö¸ô
+	 * åŒ…å«æ–‡ä»¶çš„æ‰©å±•ååˆ—è¡¨ï¼Œä»¥é€—å·åˆ†éš”
 	 */
 	@Column(name = "INCLUDES_", length = 200)
 	protected String includes;
 
 	/**
-	 * ÅÅ³ıÎÄ¼şµÄÀ©Õ¹ÃûÁĞ±í£¬ÒÔ¶ººÅ·Ö¸ô
+	 * æ’é™¤æ–‡ä»¶çš„æ‰©å±•ååˆ—è¡¨ï¼Œä»¥é€—å·åˆ†éš”
 	 */
 	@Column(name = "EXCLUDES_", length = 200)
 	protected String excludes;
 
 	/**
-	 * ´óĞ¡
+	 * å¤§å°
 	 */
 	@Column(name = "SIZE_")
 	protected int size;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_")
 	protected Date createDate;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;

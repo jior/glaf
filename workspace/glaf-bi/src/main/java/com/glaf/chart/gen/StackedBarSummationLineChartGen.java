@@ -55,18 +55,18 @@ public class StackedBarSummationLineChartGen implements ChartGen {
 	public static void main(String[] paramArrayOfString) {
 		StackedBarSummationLineChartGen chartDemo = new StackedBarSummationLineChartGen();
 		Chart chartModel = new Chart();
-		chartModel.setChartFont("ËÎÌå");
+		chartModel.setChartFont("å®‹ä½“");
 		chartModel.setChartFontSize(25);
 		chartModel.setChartHeight(544);
 		chartModel.setChartWidth(1566);
-		chartModel.setChartTitle("¶Ñ»ıÌõĞÎÍ¼");
-		chartModel.setChartTitleFont("ËÎÌå");
+		chartModel.setChartTitle("å †ç§¯æ¡å½¢å›¾");
+		chartModel.setChartTitleFont("å®‹ä½“");
 		chartModel.setChartTitleFontSize(72);
 		chartModel.setImageType("png");
 		chartModel.setChartName("stackedbar");
 		chartModel.setChartType("stackedbar");
-		chartModel.setCoordinateX("ÈÕÆÚ");
-		chartModel.setCoordinateY("Á¿²ú");
+		chartModel.setCoordinateX("æ—¥æœŸ");
+		chartModel.setCoordinateY("é‡äº§");
 		java.util.Random rand = new java.util.Random();
 
 		for (int i = 1; i <= 30; i++) {
@@ -147,14 +147,14 @@ public class StackedBarSummationLineChartGen implements ChartGen {
 		color[6] = Color.yellow;
 		color[7] = Color.green;
 
-		// ÉèÖÃÖù×ÓÉÏ±ÈÀıÊıÖµµÄÏÔÊ¾£¬Èç¹û°´ÕÕÄ¬ÈÏ·½Ê½ÏÔÊ¾£¬ÊıÖµÎª·½ÏòÕı³£ÏÔÊ¾
-		// ÉèÖÃÖù×ÓÉÏÏÔÊ¾µÄÊı¾İĞı×ª90¶È,×îºóÒ»¸ö²ÎÊıÎªĞı×ªµÄ½Ç¶ÈÖµ/3.14
+		// è®¾ç½®æŸ±å­ä¸Šæ¯”ä¾‹æ•°å€¼çš„æ˜¾ç¤ºï¼Œå¦‚æœæŒ‰ç…§é»˜è®¤æ–¹å¼æ˜¾ç¤ºï¼Œæ•°å€¼ä¸ºæ–¹å‘æ­£å¸¸æ˜¾ç¤º
+		// è®¾ç½®æŸ±å­ä¸Šæ˜¾ç¤ºçš„æ•°æ®æ—‹è½¬90åº¦,æœ€åä¸€ä¸ªå‚æ•°ä¸ºæ—‹è½¬çš„è§’åº¦å€¼/3.14
 		ItemLabelPosition itemLabelPosition = new ItemLabelPosition(
 				ItemLabelAnchor.CENTER, TextAnchor.CENTER, TextAnchor.CENTER,
 				-1.57D);
 
-		// ÏÂÃæµÄÉèÖÃÊÇÎªÁË½â¾ö£¬µ±Öù×ÓµÄ±ÈÀı¹ıĞ¡£¬¶øµ¼ÖÂ±íÊ¾¸ÃÖù×Ó±ÈÀıµÄÊıÖµÎŞ·¨ÏÔÊ¾µÄÎÊÌâ
-		// ÉèÖÃ²»ÄÜÔÚÖù×ÓÉÏÕı³£ÏÔÊ¾µÄÄÇĞ©ÊıÖµµÄÏÔÊ¾·½Ê½£¬½«ÕâĞ©ÊıÖµÏÔÊ¾ÔÚÖù×ÓÍâÃæ
+		// ä¸‹é¢çš„è®¾ç½®æ˜¯ä¸ºäº†è§£å†³ï¼Œå½“æŸ±å­çš„æ¯”ä¾‹è¿‡å°ï¼Œè€Œå¯¼è‡´è¡¨ç¤ºè¯¥æŸ±å­æ¯”ä¾‹çš„æ•°å€¼æ— æ³•æ˜¾ç¤ºçš„é—®é¢˜
+		// è®¾ç½®ä¸èƒ½åœ¨æŸ±å­ä¸Šæ­£å¸¸æ˜¾ç¤ºçš„é‚£äº›æ•°å€¼çš„æ˜¾ç¤ºæ–¹å¼ï¼Œå°†è¿™äº›æ•°å€¼æ˜¾ç¤ºåœ¨æŸ±å­å¤–é¢
 		ItemLabelPosition itemLabelPositionFallback = new ItemLabelPosition(
 				ItemLabelAnchor.OUTSIDE12, TextAnchor.BASELINE_LEFT,
 				TextAnchor.HALF_ASCENT_LEFT, -1.57D);
@@ -173,19 +173,19 @@ public class StackedBarSummationLineChartGen implements ChartGen {
 						true);
 			} else {
 				localExtendedStackedBarRenderer.setSeriesItemLabelFont(i,
-						new Font("ËÎÌå", Font.PLAIN, 16));
+						new Font("å®‹ä½“", Font.PLAIN, 16));
 				localExtendedStackedBarRenderer.setSeriesItemLabelsVisible(i,
 						true);
 			}
 			localExtendedStackedBarRenderer.setSeriesPaint(i, color[i]);
-			// ÉèÖÃÕı³£ÏÔÊ¾µÄÖù×ÓlabelµÄposition
+			// è®¾ç½®æ­£å¸¸æ˜¾ç¤ºçš„æŸ±å­labelçš„position
 			localExtendedStackedBarRenderer.setSeriesPositiveItemLabelPosition(
 					i, itemLabelPosition);
 			localExtendedStackedBarRenderer.setSeriesNegativeItemLabelPosition(
 					i, itemLabelPosition);
 		}
 
-		// ÉèÖÃ²»ÄÜÕı³£ÏÔÊ¾µÄÖù×ÓlabelµÄposition
+		// è®¾ç½®ä¸èƒ½æ­£å¸¸æ˜¾ç¤ºçš„æŸ±å­labelçš„position
 		localExtendedStackedBarRenderer
 				.setPositiveItemLabelPositionFallback(itemLabelPositionFallback);
 		localExtendedStackedBarRenderer
@@ -207,7 +207,7 @@ public class StackedBarSummationLineChartGen implements ChartGen {
 		localLineAndShapeRenderer.setBaseShapesVisible(true);
 		localLineAndShapeRenderer.setDrawOutlines(true);
 		localLineAndShapeRenderer.setUseFillPaint(true);
-		localLineAndShapeRenderer.setBaseItemLabelsVisible(true);// ÏÔÊ¾ÊıÖµ
+		localLineAndShapeRenderer.setBaseItemLabelsVisible(true);// æ˜¾ç¤ºæ•°å€¼
 
 		for (int i = 0; i <= 6; i++) {
 			localLineAndShapeRenderer.setSeriesPaint(i, color[i]);
@@ -224,7 +224,7 @@ public class StackedBarSummationLineChartGen implements ChartGen {
 				localLineAndShapeRenderer.setSeriesItemLabelsVisible(i, true);
 			} else {
 				localLineAndShapeRenderer.setSeriesItemLabelFont(i, new Font(
-						"ËÎÌå", Font.PLAIN, 16));
+						"å®‹ä½“", Font.PLAIN, 16));
 				localLineAndShapeRenderer.setSeriesItemLabelsVisible(i, true);
 			}
 		}
@@ -269,13 +269,13 @@ public class StackedBarSummationLineChartGen implements ChartGen {
 						Font.PLAIN, chartModel.getChartFontSize()));
 			}
 		} else {
-			domainAxis.setLabelFont(new Font("ËÎÌå", Font.PLAIN, 16));
-			domainAxis.setTickLabelFont(new Font("ËÎÌå", Font.PLAIN, 16));
-			rangeAxis.setLabelFont(new Font("ËÎÌå", Font.PLAIN, 16));
-			rangeAxis.setTickLabelFont(new Font("ËÎÌå", Font.PLAIN, 16));
+			domainAxis.setLabelFont(new Font("å®‹ä½“", Font.PLAIN, 16));
+			domainAxis.setTickLabelFont(new Font("å®‹ä½“", Font.PLAIN, 16));
+			rangeAxis.setLabelFont(new Font("å®‹ä½“", Font.PLAIN, 16));
+			rangeAxis.setTickLabelFont(new Font("å®‹ä½“", Font.PLAIN, 16));
 			if (rangeAxis1 != null) {
-				rangeAxis1.setLabelFont(new Font("ËÎÌå", Font.PLAIN, 16));
-				rangeAxis1.setTickLabelFont(new Font("ËÎÌå", Font.PLAIN, 16));
+				rangeAxis1.setLabelFont(new Font("å®‹ä½“", Font.PLAIN, 16));
+				rangeAxis1.setTickLabelFont(new Font("å®‹ä½“", Font.PLAIN, 16));
 			}
 		}
 		JFreeChart localJFreeChart = new JFreeChart(localCategoryPlot);
@@ -286,7 +286,7 @@ public class StackedBarSummationLineChartGen implements ChartGen {
 					Font.PLAIN, chartModel.getChartFontSize()));
 
 		} else
-			localLegendTitle.setItemFont(new Font("ËÎÌå", Font.PLAIN, 16));
+			localLegendTitle.setItemFont(new Font("å®‹ä½“", Font.PLAIN, 16));
 
 		TextTitle texttile = new TextTitle(chartModel.getChartTitle(),
 				new Font(chartModel.getChartTitleFont(), Font.PLAIN,

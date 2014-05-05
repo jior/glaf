@@ -64,7 +64,7 @@ public class AttachmentController {
 	private AttachmentService attachmentService;
 
 	/**
-	 * Ìá½»É¾³ı
+	 * æäº¤åˆ é™¤
 	 * 
 	 * @return
 	 */
@@ -95,10 +95,10 @@ public class AttachmentController {
 
 		ViewMessages messages = new ViewMessages();
 
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"attach.del_success"));
-		} else { // É¾³ıÊ§°Ü
+		} else { // åˆ é™¤å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"attach.del_failure"));
 		}
@@ -107,7 +107,7 @@ public class AttachmentController {
 	}
 
 	/**
-	 * ÏÂÔØ¸½¼ş
+	 * ä¸‹è½½é™„ä»¶
 	 * 
 	 */
 	@RequestMapping(params = "method=download")
@@ -130,7 +130,7 @@ public class AttachmentController {
 	}
 
 	/**
-	 * ±£´æ¸½¼ş
+	 * ä¿å­˜é™„ä»¶
 	 * 
 	 */
 	@RequestMapping(params = "method=save")
@@ -155,7 +155,7 @@ public class AttachmentController {
 	}
 
 	/**
-	 * ±£´æ¸½¼ş
+	 * ä¿å­˜é™„ä»¶
 	 * 
 	 */
 	@RequestMapping(params = "method=saveAdd")
@@ -183,7 +183,7 @@ public class AttachmentController {
 	}
 
 	/**
-	 * ÏÔÊ¾¸½¼şÊıÁ¿Ò³Ãæ
+	 * æ˜¾ç¤ºé™„ä»¶æ•°é‡é¡µé¢
 	 * 
 	 * @return
 	 */
@@ -212,7 +212,7 @@ public class AttachmentController {
 	}
 
 	/**
-	 * ÏÔÊ¾¸½¼şÁĞ±í
+	 * æ˜¾ç¤ºé™„ä»¶åˆ—è¡¨
 	 * 
 	 * @param mapping
 	 * @param request
@@ -233,7 +233,7 @@ public class AttachmentController {
 	}
 
 	/**
-	 * ÏÔÊ¾¸½¼şÁĞ±í
+	 * æ˜¾ç¤ºé™„ä»¶åˆ—è¡¨
 	 * 
 	 * @param mapping
 	 * @param request
@@ -274,7 +274,7 @@ public class AttachmentController {
 	}
 
 	/**
-	 * ÏÔÊ¾¸½¼şÁĞ±í ºÏÍ¬Òâ¼û½»Á÷Ìí¼Ó¸½¼ş,Ö»ÓĞÉÏ´«Õß²ÅÄÜÉ¾³ı¸½¼ş
+	 * æ˜¾ç¤ºé™„ä»¶åˆ—è¡¨ åˆåŒæ„è§äº¤æµæ·»åŠ é™„ä»¶,åªæœ‰ä¸Šä¼ è€…æ‰èƒ½åˆ é™¤é™„ä»¶
 	 * 
 	 * @return
 	 */
@@ -296,7 +296,7 @@ public class AttachmentController {
 	}
 
 	/**
-	 * ÏÔÊ¾¸½¼şÁĞ±í
+	 * æ˜¾ç¤ºé™„ä»¶åˆ—è¡¨
 	 * 
 	 * @return
 	 */
@@ -323,7 +323,7 @@ public class AttachmentController {
 	}
 
 	/**
-	 * ÏÔÊ¾¸½¼şÉÏ´«Ò³Ãæ
+	 * æ˜¾ç¤ºé™„ä»¶ä¸Šä¼ é¡µé¢
 	 * 
 	 * @param modelMap
 	 * @param request
@@ -336,7 +336,7 @@ public class AttachmentController {
 	}
 
 	/**
-	 * ÏÔÊ¾¸½¼şÉÏ´«Ò³Ãæ
+	 * æ˜¾ç¤ºé™„ä»¶ä¸Šä¼ é¡µé¢
 	 * 
 	 * @param modelMap
 	 * @param request

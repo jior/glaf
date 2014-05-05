@@ -50,7 +50,7 @@ public class AuditController {
 	private AuditService auditService;
 
 	/**
-	 * ÏÔÊ¾ÉóÅúÒâ¼ûÒ³Ãæ
+	 * æ˜¾ç¤ºå®¡æ‰¹æ„è§é¡µé¢
 	 * 
 	 * @param mapping
 	 * @param request
@@ -84,7 +84,7 @@ public class AuditController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		// ÏÔÊ¾ĞŞ¸ÄÒ³Ãæ
+		// æ˜¾ç¤ºä¿®æ”¹é¡µé¢
 		return new ModelAndView("/modules/others/audit/audit_comment", modelMap);
 	}
 
@@ -105,7 +105,7 @@ public class AuditController {
 					"audit.failure"));
 		}
 		MessageUtils.addMessages(request, messages);
-		// ÏÔÊ¾ĞŞ¸ÄÒ³Ãæ
+		// æ˜¾ç¤ºä¿®æ”¹é¡µé¢
 		return new ModelAndView("show_msg", modelMap);
 	}
 
@@ -115,7 +115,7 @@ public class AuditController {
 	}
 
 	/**
-	 * ÏÔÊ¾ÉóÅúÒâ¼ûÁĞ±í
+	 * æ˜¾ç¤ºå®¡æ‰¹æ„è§åˆ—è¡¨
 	 * 
 	 * @param mapping
 	 * @param request
@@ -128,7 +128,7 @@ public class AuditController {
 		int referType = ParamUtil.getIntParameter(request, "referType", 0);
 		String type = ParamUtil.getParameter(request, "type", "");
 
-		// referType=>0£­ĞÂÔö,1£­±ä¸ü,2£­·ÏÖ¹,34£­ÍËµ¥ÖØÌá
+		// referType=>0ï¼æ–°å¢,1ï¼å˜æ›´,2ï¼åºŸæ­¢,34ï¼é€€å•é‡æ
 		if (type.equals("purchase")) {
 			request.setAttribute("list",
 					auditService.getAuditList(referId, "0,1,2,34"));
@@ -142,12 +142,12 @@ public class AuditController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		// ÏÔÊ¾ĞŞ¸ÄÒ³Ãæ
+		// æ˜¾ç¤ºä¿®æ”¹é¡µé¢
 		return new ModelAndView("/modules/others/audit/audit_list", modelMap);
 	}
 
 	/**
-	 * ÏÔÊ¾ÉóÅúÒâ¼ûÁĞ±í
+	 * æ˜¾ç¤ºå®¡æ‰¹æ„è§åˆ—è¡¨
 	 * 
 	 * @param mapping
 	 * @param request
@@ -161,7 +161,7 @@ public class AuditController {
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
-		// ÏÔÊ¾Ò³Ãæ
+		// æ˜¾ç¤ºé¡µé¢
 		return new ModelAndView("/modules/others/audit/showList2", modelMap);
 	}
 }

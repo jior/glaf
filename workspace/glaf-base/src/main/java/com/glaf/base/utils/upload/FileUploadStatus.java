@@ -15,29 +15,29 @@ package com.glaf.base.utils.upload;
 import java.util.*;
  
 public class FileUploadStatus {
-	// ÉÏ´«baseÄ¿Â¼
+	// ä¸Šä¼ baseç›®å½•
 	private String baseDir = "";
-	// È¡ÏûÉÏ´«
+	// å–æ¶ˆä¸Šä¼ 
 	private boolean cancel = false;
-	// µ±Ç°ÉÏ´«ÎÄ¼şºÅ
+	// å½“å‰ä¸Šä¼ æ–‡ä»¶å·
 	private int currentUploadFileNum = 0;
-	// ´¦ÀíÖÕÖ¹Ê±¼ä
+	// å¤„ç†ç»ˆæ­¢æ—¶é—´
 	private long processEndTime = 0l;
-	// ´¦ÀíÖ´ĞĞÊ±¼ä
+	// å¤„ç†æ‰§è¡Œæ—¶é—´
 	private long processRunningTime = 0l;
-	// ´¦ÀíÆğÊ¼Ê±¼ä
+	// å¤„ç†èµ·å§‹æ—¶é—´
 	private long processStartTime = 0l;
-	// ¶ÁÈ¡ÉÏ´«×ÜÁ¿
+	// è¯»å–ä¸Šä¼ æ€»é‡
 	private long readTotalSize = 0;
-	// ×´Ì¬
+	// çŠ¶æ€
 	private String status = "";
-	// ³É¹¦¶ÁÈ¡ÉÏ´«ÎÄ¼şÊı
+	// æˆåŠŸè¯»å–ä¸Šä¼ æ–‡ä»¶æ•°
 	private int successUploadFileCount = 0;
-	// ÉÏ´«ÓÃ»§µØÖ·
+	// ä¸Šä¼ ç”¨æˆ·åœ°å€
 	private String uploadAddr;
-	// ÉÏ´«ÎÄ¼şURLÁĞ±í
+	// ä¸Šä¼ æ–‡ä»¶URLåˆ—è¡¨
 	private List<FileInfo> uploadFileUrlList = new java.util.concurrent.CopyOnWriteArrayList<FileInfo>();
-	// ÉÏ´«×ÜÁ¿
+	// ä¸Šä¼ æ€»é‡
 	private long uploadTotalSize = 0;
 
 	public FileUploadStatus() {

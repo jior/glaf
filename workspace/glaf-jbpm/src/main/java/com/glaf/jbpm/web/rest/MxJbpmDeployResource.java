@@ -112,17 +112,17 @@ public class MxJbpmDeployResource {
 		Map<String, Object> jsonMap = new java.util.HashMap<String, Object>();
 		if (status_code == 200) {
 			jsonMap.put("statusCode", 200);
-			jsonMap.put("message", "·¢²¼³É¹¦£¡");
+			jsonMap.put("message", "å‘å¸ƒæˆåŠŸï¼");
 		} else if (status_code == 401) {
 			jsonMap.put("statusCode", 401);
-			jsonMap.put("message", "Ã»ÓĞ·¢²¼È¨ÏŞ£¡");
+			jsonMap.put("message", "æ²¡æœ‰å‘å¸ƒæƒé™ï¼");
 		} else if (status_code == 500) {
 			jsonMap.put("statusCode", 500);
-			jsonMap.put("message", "·¢²¼Ê§°Ü£¬ÏêÏ¸ĞÅÏ¢Çë²Î¿¼·şÎñÆ÷ÈÕÖ¾£¡");
+			jsonMap.put("message", "å‘å¸ƒå¤±è´¥ï¼Œè¯¦ç»†ä¿¡æ¯è¯·å‚è€ƒæœåŠ¡å™¨æ—¥å¿—ï¼");
 			jsonMap.put("cause", cause);
 		} else {
 			jsonMap.put("statusCode", status_code);
-			jsonMap.put("message", "Î´µÇÂ¼»ò»á»°ÒÑ¾­¹ıÆÚ£¬ÇëÖØĞÂµÇÂ¼ºóÔÙ·ÃÎÊ£¡");
+			jsonMap.put("message", "æœªç™»å½•æˆ–ä¼šè¯å·²ç»è¿‡æœŸï¼Œè¯·é‡æ–°ç™»å½•åå†è®¿é—®ï¼");
 		}
 
 		JSONObject jsonObject = new JSONObject(jsonMap);

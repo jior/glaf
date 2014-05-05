@@ -62,10 +62,10 @@ public class ImportAndFetchDataJob implements Job {
 				TextFileImporter imp = new TextFileImporter();
 				imp.importData();
 				success = true;
-				logger.info("ÒÑ¾­³É¹¦µ¼ÈëÊı¾İµ½»ù´¡±í¡£");
+				logger.info("å·²ç»æˆåŠŸå¯¼å…¥æ•°æ®åˆ°åŸºç¡€è¡¨ã€‚");
 			} catch (Exception ex) {
 				ex.printStackTrace();
-				logger.error("µ¼ÈëÊı¾İµ½»ù´¡±íÊ§°Ü£¬ÇëÔÙ´ÎÖØÊÔ¡£");
+				logger.error("å¯¼å…¥æ•°æ®åˆ°åŸºç¡€è¡¨å¤±è´¥ï¼Œè¯·å†æ¬¡é‡è¯•ã€‚");
 			}
 		}
 
@@ -75,7 +75,7 @@ public class ImportAndFetchDataJob implements Job {
 		List<TableDefinition> tables = tableDefinitionService.list(query);
 		if (tables != null && !tables.isEmpty()) {
 			/**
-			 * °´ÕÕ±í¶¨ÒåµÄÈ¡ÊıË³ĞòÅÅĞò
+			 * æŒ‰ç…§è¡¨å®šä¹‰çš„å–æ•°é¡ºåºæ’åº
 			 */
 			Collections.sort(tables);
 			int counterOK = 0;
@@ -89,11 +89,11 @@ public class ImportAndFetchDataJob implements Job {
 						manager.transformTable(tableDefinition.getTableName());
 						success = true;
 						counterOK = counterOK + 1;
-						logger.info(tableDefinition.getTableName() + "ÒÑ¾­³É¹¦³éÈ¡¡£");
+						logger.info(tableDefinition.getTableName() + "å·²ç»æˆåŠŸæŠ½å–ã€‚");
 						Thread.sleep(200);
 					} catch (Exception ex) {
 						ex.printStackTrace();
-						logger.error(tableDefinition.getTableName() + "³éÈ¡Ê§°Ü¡£");
+						logger.error(tableDefinition.getTableName() + "æŠ½å–å¤±è´¥ã€‚");
 					}
 				}
 			}
@@ -103,9 +103,9 @@ public class ImportAndFetchDataJob implements Job {
 		}
 
 		if (execOK) {
-			logger.info("³éÈ¡Êı¾İÒÑ¾­³É¹¦¡£");
+			logger.info("æŠ½å–æ•°æ®å·²ç»æˆåŠŸã€‚");
 		} else {
-			logger.info("³éÈ¡Êı¾İÊ§°Ü¡£");
+			logger.info("æŠ½å–æ•°æ®å¤±è´¥ã€‚");
 		}
 		return execOK;
 	}

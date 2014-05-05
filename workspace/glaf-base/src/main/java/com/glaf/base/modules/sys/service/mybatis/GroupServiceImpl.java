@@ -99,14 +99,14 @@ public class GroupServiceImpl implements GroupService {
 
 	public PageResult getGroupList(String type, String createBy, int pageNo,
 			int pageSize) {
-		// ¼ÆËã×ÜÊı
+		// è®¡ç®—æ€»æ•°
 		PageResult pager = new PageResult();
 		GroupQuery query = new GroupQuery();
 		query.setType(type);
 		query.setCreateBy(createBy);
 
 		int count = this.count(query);
-		if (count == 0) {// ½á¹û¼¯Îª¿Õ
+		if (count == 0) {// ç»“æœé›†ä¸ºç©º
 			pager.setPageSize(pageSize);
 			return pager;
 		}
@@ -132,7 +132,7 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	/**
-	 * Í¨¹ıÓÃ»§ÕËºÅ»ñÈ¡Èº×é
+	 * é€šè¿‡ç”¨æˆ·è´¦å·è·å–ç¾¤ç»„
 	 * 
 	 * @param userId
 	 * @return
@@ -142,7 +142,7 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	/**
-	 * Í¨¹ıÓÃ»§ÕËºÅ¼°×éÀàĞÍ»ñÈ¡Èº×é
+	 * é€šè¿‡ç”¨æˆ·è´¦å·åŠç»„ç±»å‹è·å–ç¾¤ç»„
 	 * 
 	 * @param userId
 	 * @param type
@@ -165,7 +165,7 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	/**
-	 * ¸ù¾İÈº×éÃû³Æ¼°ÀàĞÍ»ñÈ¡Èº×éÓÃ»§
+	 * æ ¹æ®ç¾¤ç»„åç§°åŠç±»å‹è·å–ç¾¤ç»„ç”¨æˆ·
 	 * 
 	 * @param groupName
 	 * @param groupType
@@ -208,7 +208,7 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	/**
-	 * ±£´æÈº×éÓÃ»§
+	 * ä¿å­˜ç¾¤ç»„ç”¨æˆ·
 	 * 
 	 * @param groupId
 	 * @param userIds
@@ -227,7 +227,7 @@ public class GroupServiceImpl implements GroupService {
 	}
 	
 	/**
-	 * ±£´æÈº×éÓÃ»§
+	 * ä¿å­˜ç¾¤ç»„ç”¨æˆ·
 	 * 
 	 * @param groupId
 	 * @param userIds
@@ -277,26 +277,26 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	/**
-	 * ÅÅĞò
+	 * æ’åº
 	 * 
 	 * @param bean
 	 *            Group
 	 * @param operate
-	 *            int ²Ù×÷
+	 *            int æ“ä½œ
 	 */
 	@Transactional
 	public void sort(Group bean, int operate) {
 		if (bean == null)
 			return;
-		if (operate == SysConstants.SORT_PREVIOUS) {// Ç°ÒÆ
+		if (operate == SysConstants.SORT_PREVIOUS) {// å‰ç§»
 			sortByPrevious(bean);
-		} else if (operate == SysConstants.SORT_FORWARD) {// ºóÒÆ
+		} else if (operate == SysConstants.SORT_FORWARD) {// åç§»
 			sortByForward(bean);
 		}
 	}
 
 	/**
-	 * ÏòºóÒÆ¶¯ÅÅĞò
+	 * å‘åç§»åŠ¨æ’åº
 	 * 
 	 * @param bean
 	 */
@@ -305,35 +305,35 @@ public class GroupServiceImpl implements GroupService {
 		query.setSortLessThan(bean.getSort());
 		query.setOrderBy(" E.SORT desc ");
 		List<Group> list = this.list(query);
-		if (list != null && list.size() > 0) {// ÓĞ¼ÇÂ¼
+		if (list != null && list.size() > 0) {// æœ‰è®°å½•
 			Group temp = (Group) list.get(0);
 			int i = bean.getSort();
 			bean.setSort(temp.getSort());
-			this.update(bean);// ¸üĞÂbean
+			this.update(bean);// æ›´æ–°bean
 
 			temp.setSort(i);
-			this.update(temp);// ¸üĞÂtemp
+			this.update(temp);// æ›´æ–°temp
 		}
 	}
 
 	/**
-	 * ÏòÇ°ÒÆ¶¯ÅÅĞò
+	 * å‘å‰ç§»åŠ¨æ’åº
 	 * 
 	 * @param bean
 	 */
 	private void sortByPrevious(Group bean) {
 		GroupQuery query = new GroupQuery();
 		query.setSortGreaterThan(bean.getSort());
-		// ²éÕÒÇ°Ò»¸ö¶ÔÏó
+		// æŸ¥æ‰¾å‰ä¸€ä¸ªå¯¹è±¡
 		List<Group> list = this.list(query);
-		if (list != null && list.size() > 0) {// ÓĞ¼ÇÂ¼
+		if (list != null && list.size() > 0) {// æœ‰è®°å½•
 			Group temp = (Group) list.get(0);
 			int i = bean.getSort();
 			bean.setSort(temp.getSort());
-			this.update(bean);// ¸üĞÂbean
+			this.update(bean);// æ›´æ–°bean
 
 			temp.setSort(i);
-			this.update(temp);// ¸üĞÂtemp
+			this.update(temp);// æ›´æ–°temp
 		}
 	}
 

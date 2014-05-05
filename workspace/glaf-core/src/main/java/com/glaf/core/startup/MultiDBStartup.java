@@ -130,7 +130,7 @@ public class MultiDBStartup implements Bootstrap {
 										+ props.getProperty(DBConfiguration.JDBC_URL));
 
 								/**
-								 * ¼ì²éÁ¬½ÓĞÅÏ¢£¬Èç¹ûÕıÈ·£¬±£´æÅäÖÃ
+								 * æ£€æŸ¥è¿æ¥ä¿¡æ¯ï¼Œå¦‚æœæ­£ç¡®ï¼Œä¿å­˜é…ç½®
 								 */
 								if (DBConnectionFactory.checkConnection(props)) {
 									String filename = SystemProperties
@@ -141,8 +141,8 @@ public class MultiDBStartup implements Bootstrap {
 											+ name
 											+ ".properties";
 									PropertiesUtils.save(filename, props);
-									logger.info("³É¹¦±£´æÊı¾İ¿âÅäÖÃÎÄ¼ş:" + filename);
-									logger.debug("×¼±¸Ö´ĞĞ¸üĞÂSQL......");
+									logger.info("æˆåŠŸä¿å­˜æ•°æ®åº“é…ç½®æ–‡ä»¶:" + filename);
+									logger.debug("å‡†å¤‡æ‰§è¡Œæ›´æ–°SQL......");
 									DBUpdateThread thread = new DBUpdateThread(
 											props);
 									ThreadFactory.run(thread);

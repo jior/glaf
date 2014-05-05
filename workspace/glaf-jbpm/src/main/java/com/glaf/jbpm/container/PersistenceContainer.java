@@ -53,7 +53,7 @@ public class PersistenceContainer {
 	}
 
 	/**
-	 * É¾³ı³Ö¾Ã»¯¶ÔÏó
+	 * åˆ é™¤æŒä¹…åŒ–å¯¹è±¡
 	 * 
 	 * @param model
 	 */
@@ -75,7 +75,7 @@ public class PersistenceContainer {
 	}
 
 	/**
-	 * ÅúÁ¿É¾³ı³Ö¾Ã»¯¶ÔÏó
+	 * æ‰¹é‡åˆ é™¤æŒä¹…åŒ–å¯¹è±¡
 	 * 
 	 * @param rows
 	 */
@@ -97,12 +97,12 @@ public class PersistenceContainer {
 	}
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡³Ö¾Ã»¯¶ÔÏó
+	 * æ ¹æ®ä¸»é”®è·å–æŒä¹…åŒ–å¯¹è±¡
 	 * 
 	 * @param clazz
-	 *            ÀàÃû
+	 *            ç±»å
 	 * @param persistId
-	 *            Ö÷¼üÖµ
+	 *            ä¸»é”®å€¼
 	 * @return
 	 */
 	public Object getPersistObject(Class<?> clazz,
@@ -123,7 +123,7 @@ public class PersistenceContainer {
 	}
 
 	/**
-	 * ±£´æ³Ö¾Ã»¯¶ÔÏó
+	 * ä¿å­˜æŒä¹…åŒ–å¯¹è±¡
 	 * 
 	 * @param model
 	 */
@@ -145,7 +145,7 @@ public class PersistenceContainer {
 	}
 
 	/**
-	 * ÅúÁ¿±£´æ³Ö¾Ã»¯¶ÔÏó
+	 * æ‰¹é‡ä¿å­˜æŒä¹…åŒ–å¯¹è±¡
 	 * 
 	 * @param rows
 	 */
@@ -167,7 +167,7 @@ public class PersistenceContainer {
 	}
 
 	/**
-	 * ¸üĞÂ³Ö¾Ã»¯¶ÔÏó
+	 * æ›´æ–°æŒä¹…åŒ–å¯¹è±¡
 	 * 
 	 * @param model
 	 */
@@ -189,7 +189,7 @@ public class PersistenceContainer {
 	}
 
 	/**
-	 * ÅúÁ¿¸üĞÂ³Ö¾Ã»¯¶ÔÏó
+	 * æ‰¹é‡æ›´æ–°æŒä¹…åŒ–å¯¹è±¡
 	 * 
 	 * @param rows
 	 */

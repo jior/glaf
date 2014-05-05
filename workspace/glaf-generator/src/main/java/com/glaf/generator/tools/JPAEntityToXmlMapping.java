@@ -273,7 +273,7 @@ public class JPAEntityToXmlMapping {
 			String toFile = "./codegen/jpa/mapping/"
 					+ classDefinition.getClassName() + ".mapping.xml";
 			FileUtils.save(toFile, bytes);
-			System.out.println("文件保存到：" + toFile);
+			System.out.println("鏂囦欢淇濆瓨鍒帮細" + toFile);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

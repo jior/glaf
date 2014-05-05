@@ -28,7 +28,7 @@ import java.util.Properties;
 public interface CacheProvider {
 
 	/**
-	 * »º´æµÄ±êÊ¶Ãû³Æ
+	 * ç¼“å­˜çš„æ ‡è¯†åç§°
 	 * 
 	 * @return
 	 */

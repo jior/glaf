@@ -22,7 +22,7 @@ import com.glaf.mail.domain.MailStorage;
 
 public interface StorageCreator {
 	/**
-	 * ´´½¨ÓÊ¼þ´æ´¢
+	 * åˆ›å»ºé‚®ä»¶å­˜å‚¨
 	 * @param storage
 	 * @throws Exception
 	 */

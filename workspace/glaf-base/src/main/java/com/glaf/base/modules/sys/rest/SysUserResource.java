@@ -80,7 +80,7 @@ public class SysUserResource {
 	protected SysUserService sysUserService;
 
 	/**
-	 * Ôö¼Ó½ÇÉ«ÓÃ»§
+	 * å¢åŠ è§’è‰²ç”¨æˆ·
 	 * 
 	 * @param request
 	 * @param uriInfo
@@ -124,7 +124,7 @@ public class SysUserResource {
 		if (success) {
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.add_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.add_failure"));
 		}
@@ -134,7 +134,7 @@ public class SysUserResource {
 	}
 
 	/**
-	 * ÅúÁ¿É¾³ıĞÅÏ¢
+	 * æ‰¹é‡åˆ é™¤ä¿¡æ¯
 	 * 
 	 * @param request
 	 * @param uriInfo
@@ -150,10 +150,10 @@ public class SysUserResource {
 		long[] id = ParamUtil.getLongParameterValues(request, "id");
 		ret = sysUserService.deleteAll(id);
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.delete_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.delete_failure"));
 		}
@@ -162,7 +162,7 @@ public class SysUserResource {
 	}
 
 	/**
-	 * É¾³ı½ÇÉ«ÓÃ»§
+	 * åˆ é™¤è§’è‰²ç”¨æˆ·
 	 * 
 	 * @param request
 	 * @param uriInfo
@@ -191,7 +191,7 @@ public class SysUserResource {
 		if (sucess) {
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.delete_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.delete_failure"));
 		}
@@ -201,7 +201,7 @@ public class SysUserResource {
 	}
 
 	/**
-	 * µÃµ½²¿ÃÅÏÂËùÓĞ²¿ÃÅÁĞ±í
+	 * å¾—åˆ°éƒ¨é—¨ä¸‹æ‰€æœ‰éƒ¨é—¨åˆ—è¡¨
 	 * 
 	 * @param list
 	 * @param parentId
@@ -219,7 +219,7 @@ public class SysUserResource {
 	}
 
 	/**
-	 * µÃµ½±¾²¿ÃÅÏÂËùÊô½ÇÉ«µÄÈË Èç¹ûÃ»ÓĞ½ÇÉ«£¬ÔòµÃµ½±¾²¿ÃÅÀïËùÓĞÈË
+	 * å¾—åˆ°æœ¬éƒ¨é—¨ä¸‹æ‰€å±è§’è‰²çš„äºº å¦‚æœæ²¡æœ‰è§’è‰²ï¼Œåˆ™å¾—åˆ°æœ¬éƒ¨é—¨é‡Œæ‰€æœ‰äºº
 	 * 
 	 * @param set
 	 * @param deptId
@@ -309,7 +309,7 @@ public class SysUserResource {
 	}
 
 	/**
-	 * ÖØÖÃÓÃ»§ÃÜÂë
+	 * é‡ç½®ç”¨æˆ·å¯†ç 
 	 * 
 	 * @param request
 	 * @param uriInfo
@@ -352,10 +352,10 @@ public class SysUserResource {
 		}
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.modify_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.modify_failure"));
 		}
@@ -364,7 +364,7 @@ public class SysUserResource {
 	}
 
 	/**
-	 * Ìá½»Ôö¼ÓĞÅÏ¢
+	 * æäº¤å¢åŠ ä¿¡æ¯
 	 * 
 	 * @param request
 	 * @param uriInfo
@@ -409,15 +409,15 @@ public class SysUserResource {
 		if (sysUserService.findByAccount(bean.getAccount()) == null) {
 			if (sysUserService.create(bean))
 				ret = 2;
-		} else {// ÕÊºÅ´æÔÚ
+		} else {// å¸å·å­˜åœ¨
 			ret = 1;
 		}
 
 		ViewMessages messages = new ViewMessages();
-		if (ret == 2) {// ±£´æ³É¹¦
+		if (ret == 2) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.add_success"));
-		} else if (ret == 1) {// ±£´æÊ§°Ü
+		} else if (ret == 1) {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.existed"));
 		} else {
@@ -426,12 +426,12 @@ public class SysUserResource {
 		}
 		MessageUtils.addMessages(request, messages);
 
-		// ÏÔÊ¾ÁĞ±íÒ³Ãæ
+		// æ˜¾ç¤ºåˆ—è¡¨é¡µé¢
 		return new ModelAndView("show_json_msg");
 	}
 
 	/**
-	 * Ìá½»ĞŞ¸ÄĞÅÏ¢
+	 * æäº¤ä¿®æ”¹ä¿¡æ¯
 	 * 
 	 * @param request
 	 * @param uriInfo
@@ -465,10 +465,10 @@ public class SysUserResource {
 		}
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.modify_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.modify_failure"));
 		}
@@ -477,7 +477,7 @@ public class SysUserResource {
 	}
 
 	/**
-	 * Ìá½»ĞŞ¸ÄĞÅÏ¢
+	 * æäº¤ä¿®æ”¹ä¿¡æ¯
 	 * 
 	 * @param request
 	 * @param uriInfo
@@ -502,10 +502,10 @@ public class SysUserResource {
 		}
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.modify_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.modify_failure"));
 		}
@@ -514,7 +514,7 @@ public class SysUserResource {
 	}
 
 	/**
-	 * ĞŞ¸ÄÓÃ»§ÃÜÂë
+	 * ä¿®æ”¹ç”¨æˆ·å¯†ç 
 	 * 
 	 * @param request
 	 * @param uriInfo
@@ -546,10 +546,10 @@ public class SysUserResource {
 		}
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.modify_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.modify_failure"));
 		}
@@ -558,7 +558,7 @@ public class SysUserResource {
 	}
 
 	/**
-	 * ÉèÖÃÓÃ»§½ÇÉ«
+	 * è®¾ç½®ç”¨æˆ·è§’è‰²
 	 * 
 	 * @param request
 	 * @param uriInfo
@@ -573,31 +573,31 @@ public class SysUserResource {
 		logger.debug(RequestUtils.getParameterMap(request));
 		ViewMessages messages = new ViewMessages();
 		long userId = ParamUtil.getIntParameter(request, "user_id", 0);
-		SysUser user = sysUserService.findById(userId);// ²éÕÒÓÃ»§¶ÔÏó
+		SysUser user = sysUserService.findById(userId);// æŸ¥æ‰¾ç”¨æˆ·å¯¹è±¡
 
-		if (user != null) {// ÓÃ»§´æÔÚ
-			long[] id = ParamUtil.getLongParameterValues(request, "id");// »ñÈ¡Ò³Ãæ²ÎÊı
+		if (user != null) {// ç”¨æˆ·å­˜åœ¨
+			long[] id = ParamUtil.getLongParameterValues(request, "id");// è·å–é¡µé¢å‚æ•°
 			if (id != null) {
 				Set<SysDeptRole> delRoles = new HashSet<SysDeptRole>();
 				Set<SysDeptRole> oldRoles = user.getRoles();
 				Set<SysDeptRole> newRoles = new HashSet<SysDeptRole>();
 				for (int i = 0; i < id.length; i++) {
 					logger.debug("id[" + i + "]=" + id[i]);
-					SysDeptRole role = sysDeptRoleService.findById(id[i]);// ²éÕÒ½ÇÉ«¶ÔÏó
+					SysDeptRole role = sysDeptRoleService.findById(id[i]);// æŸ¥æ‰¾è§’è‰²å¯¹è±¡
 					if (role != null) {
-						newRoles.add(role);// ¼ÓÈëµ½½ÇÉ«ÁĞ±í
+						newRoles.add(role);// åŠ å…¥åˆ°è§’è‰²åˆ—è¡¨
 					}
 				}
 
-				oldRoles.retainAll(newRoles);// ¹«¹²È¨ÏŞ
-				delRoles.removeAll(newRoles);// ´ıÉ¾³ıµÄÈ¨ÏŞ
-				newRoles.removeAll(oldRoles);// ´ıÔö¼ÓµÄÈ¨ÏŞ
+				oldRoles.retainAll(newRoles);// å…¬å…±æƒé™
+				delRoles.removeAll(newRoles);// å¾…åˆ é™¤çš„æƒé™
+				newRoles.removeAll(oldRoles);// å¾…å¢åŠ çš„æƒé™
 				user.setUpdateBy(RequestUtils.getActorId(request));
 
-				if (sysUserService.updateRole(user, delRoles, newRoles)) {// ÊÚÈ¨³É¹¦
+				if (sysUserService.updateRole(user, delRoles, newRoles)) {// æˆæƒæˆåŠŸ
 					messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 							"user.role_success"));
-				} else {// ±£´æÊ§°Ü
+				} else {// ä¿å­˜å¤±è´¥
 					messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 							"user.role_failure"));
 				}

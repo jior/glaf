@@ -84,7 +84,7 @@ public final class Dom4jUtils {
 	}
 
 	/**
-	 * »ñÈ¡ÎÄµµ×Ö½ÚÁ÷
+	 * è·å–æ–‡æ¡£å­—èŠ‚æµ
 	 * 
 	 * @param doc
 	 *            Document
@@ -96,7 +96,7 @@ public final class Dom4jUtils {
 	}
 
 	/**
-	 * »ñÈ¡ÎÄµµ×Ö½ÚÁ÷
+	 * è·å–æ–‡æ¡£å­—èŠ‚æµ
 	 * 
 	 * @param doc
 	 *            Document
@@ -146,7 +146,7 @@ public final class Dom4jUtils {
 	}
 
 	/**
-	 * »ñÈ¡ÎÄµµ×Ö½ÚÁ÷
+	 * è·å–æ–‡æ¡£å­—èŠ‚æµ
 	 * 
 	 * @param doc
 	 *            Document
@@ -162,10 +162,10 @@ public final class Dom4jUtils {
 	}
 
 	/**
-	 * ½«XMLÎÄµµ×ª»»³É×Ö½ÚÊı×é¡£×¢Òâ£ºÕâ¸ö·½·¨²»ÄÜÓÃÓÚ¸½¼ş±àÂëÔÚXMLÎÄµµÖĞµÄÇé¿ö¡£
+	 * å°†XMLæ–‡æ¡£è½¬æ¢æˆå­—èŠ‚æ•°ç»„ã€‚æ³¨æ„ï¼šè¿™ä¸ªæ–¹æ³•ä¸èƒ½ç”¨äºé™„ä»¶ç¼–ç åœ¨XMLæ–‡æ¡£ä¸­çš„æƒ…å†µã€‚
 	 * 
 	 * @param doc
-	 * @return ×Ö½ÚÁ÷
+	 * @return å­—èŠ‚æµ
 	 * @throws Exception
 	 */
 	public static byte[] getBytesFromPrettyDocument(Document doc) {
@@ -173,11 +173,11 @@ public final class Dom4jUtils {
 	}
 
 	/**
-	 * ½«XMLÎÄµµ×ª»»³É×Ö½ÚÊı×é¡£×¢Òâ£ºÕâ¸ö·½·¨²»ÄÜÓÃÓÚ¸½¼ş±àÂëÔÚXMLÎÄµµÖĞµÄÇé¿ö¡£
+	 * å°†XMLæ–‡æ¡£è½¬æ¢æˆå­—èŠ‚æ•°ç»„ã€‚æ³¨æ„ï¼šè¿™ä¸ªæ–¹æ³•ä¸èƒ½ç”¨äºé™„ä»¶ç¼–ç åœ¨XMLæ–‡æ¡£ä¸­çš„æƒ…å†µã€‚
 	 * 
 	 * @param doc
 	 * @param encoding
-	 * @return ×Ö½ÚÁ÷
+	 * @return å­—èŠ‚æµ
 	 * @throws Exception
 	 */
 	public static byte[] getBytesFromPrettyDocument(Document doc,
@@ -191,7 +191,7 @@ public final class Dom4jUtils {
 	}
 
 	/**
-	 * »ñÈ¡Ö¸¶¨Â·¾¶µÄ½Úµã¿½±´
+	 * è·å–æŒ‡å®šè·¯å¾„çš„èŠ‚ç‚¹æ‹·è´
 	 * 
 	 * @param bytes
 	 *            byte[]
@@ -220,7 +220,7 @@ public final class Dom4jUtils {
 	}
 
 	/**
-	 * »ñÈ¡Ö¸¶¨Â·¾¶µÄ½Úµã¿½±´
+	 * è·å–æŒ‡å®šè·¯å¾„çš„èŠ‚ç‚¹æ‹·è´
 	 * 
 	 * @param inputStream
 	 *            InputStream
@@ -242,11 +242,11 @@ public final class Dom4jUtils {
 	}
 
 	/**
-	 * ×°ÔØXMLÎÄµµ
+	 * è£…è½½XMLæ–‡æ¡£
 	 * 
 	 * @param filename
-	 *            ÎÄ¼şÃû
-	 * @return XMLÎÄµµ¶ÔÏó
+	 *            æ–‡ä»¶å
+	 * @return XMLæ–‡æ¡£å¯¹è±¡
 	 * @throws Exception
 	 */
 	public static Document loadDocument(String filename) throws Exception {
@@ -256,12 +256,12 @@ public final class Dom4jUtils {
 	}
 
 	/**
-	 * ±£´æXMLÎÄµµµ½ÎÄ¼ş
+	 * ä¿å­˜XMLæ–‡æ¡£åˆ°æ–‡ä»¶
 	 * 
 	 * @param doc
-	 *            XMLÎÄµµ
+	 *            XMLæ–‡æ¡£
 	 * @param filename
-	 *            ÎÄ¼şÃû
+	 *            æ–‡ä»¶å
 	 * @throws IOException
 	 */
 	public static void saveDoument(Document doc, String filename) {
@@ -269,14 +269,14 @@ public final class Dom4jUtils {
 	}
 
 	/**
-	 * ±£´æXMLÎÄµµµ½ÎÄ¼ş¡£
+	 * ä¿å­˜XMLæ–‡æ¡£åˆ°æ–‡ä»¶ã€‚
 	 * 
 	 * @param doc
-	 *            XMLÎÄµµ
+	 *            XMLæ–‡æ¡£
 	 * @param filename
-	 *            ÎÄ¼şÃû
+	 *            æ–‡ä»¶å
 	 * @param encoding
-	 *            ±àÂë·½Ê½
+	 *            ç¼–ç æ–¹å¼
 	 * @throws IOException
 	 */
 	public static void saveDoument(Document doc, String filename,
@@ -285,12 +285,12 @@ public final class Dom4jUtils {
 	}
 
 	/**
-	 * ±£´æXMLÎÄµµµ½ÎÄ¼ş
+	 * ä¿å­˜XMLæ–‡æ¡£åˆ°æ–‡ä»¶
 	 * 
 	 * @param doc
-	 *            XMLÎÄµµ
+	 *            XMLæ–‡æ¡£
 	 * @param filename
-	 *            ÎÄ¼şÃû
+	 *            æ–‡ä»¶å
 	 * @throws IOException
 	 */
 	public static void savePrettyDoument(Document doc, String filename) {
@@ -298,14 +298,14 @@ public final class Dom4jUtils {
 	}
 
 	/**
-	 * ±£´æXMLÎÄµµµ½ÎÄ¼ş¡£×¢Òâ£ºÕâ¸ö·½·¨²»ÄÜÓÃÓÚ¸½¼ş±àÂëÔÚXMLÎÄµµÖĞµÄÇé¿ö¡£
+	 * ä¿å­˜XMLæ–‡æ¡£åˆ°æ–‡ä»¶ã€‚æ³¨æ„ï¼šè¿™ä¸ªæ–¹æ³•ä¸èƒ½ç”¨äºé™„ä»¶ç¼–ç åœ¨XMLæ–‡æ¡£ä¸­çš„æƒ…å†µã€‚
 	 * 
 	 * @param doc
-	 *            XMLÎÄµµ
+	 *            XMLæ–‡æ¡£
 	 * @param filename
-	 *            ÎÄ¼şÃû
+	 *            æ–‡ä»¶å
 	 * @param encoding
-	 *            ±àÂë·½Ê½
+	 *            ç¼–ç æ–¹å¼
 	 * @throws IOException
 	 */
 	public static void savePrettyDoument(Document doc, String filename,
@@ -314,7 +314,7 @@ public final class Dom4jUtils {
 	}
 
 	/**
-	 * ÓÃÖ¸¶¨µÄÑùÊ½±íÎÄ¼ş×ª»»ÎÄµµ
+	 * ç”¨æŒ‡å®šçš„æ ·å¼è¡¨æ–‡ä»¶è½¬æ¢æ–‡æ¡£
 	 * 
 	 * @param document
 	 *            Document
@@ -336,7 +336,7 @@ public final class Dom4jUtils {
 	}
 
 	/**
-	 * ×Ö½ÚÁ÷×ª»»³ÉÎÄµµ
+	 * å­—èŠ‚æµè½¬æ¢æˆæ–‡æ¡£
 	 * 
 	 * @param bytes
 	 *            byte[]
@@ -363,7 +363,7 @@ public final class Dom4jUtils {
 	}
 
 	/**
-	 * ×Ö½ÚÁ÷×ª»»³ÉÎÄµµ
+	 * å­—èŠ‚æµè½¬æ¢æˆæ–‡æ¡£
 	 * 
 	 * @param inputStream
 	 * 
@@ -381,7 +381,7 @@ public final class Dom4jUtils {
 	}
 
 	/**
-	 * ×Ö½ÚÁ÷×ª»»³ÉÎÄµµ
+	 * å­—èŠ‚æµè½¬æ¢æˆæ–‡æ¡£
 	 * 
 	 * @param reader
 	 * 
@@ -399,7 +399,7 @@ public final class Dom4jUtils {
 	}
 
 	/**
-	 * ×Ö½ÚÁ÷×ª»»³É¸ù½Úµã
+	 * å­—èŠ‚æµè½¬æ¢æˆæ ¹èŠ‚ç‚¹
 	 * 
 	 * @param bytes
 	 *            byte[]
@@ -422,7 +422,7 @@ public final class Dom4jUtils {
 	}
 
 	/**
-	 * ÊäÈëÁ÷×ª»»³É¸ù½Úµã
+	 * è¾“å…¥æµè½¬æ¢æˆæ ¹èŠ‚ç‚¹
 	 * 
 	 * @param inputStream
 	 *            InputStream

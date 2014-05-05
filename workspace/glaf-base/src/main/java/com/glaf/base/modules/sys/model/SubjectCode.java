@@ -39,25 +39,25 @@ public class SubjectCode implements Serializable, JSONable {
 	protected long id;
 
 	/**
-	 * ¸¸½Úµã±àºÅ
+	 * çˆ¶èŠ‚ç‚¹ç¼–å·
 	 */
 	@Column(name = "PARENT")
 	protected long parent;
 
 	/**
-	 * ±àÂë
+	 * ç¼–ç 
 	 */
 	@Column(name = "SUBJECTCODE", length = 50)
 	protected String subjectCode;
 
 	/**
-	 * Ãû³Æ
+	 * åç§°
 	 */
 	@Column(name = "SUBJECTNAME", length = 250)
 	protected String subjectName;
 
 	/**
-	 * Ë³Ğò
+	 * é¡ºåº
 	 */
 	@Column(name = "SORT")
 	protected int sort;

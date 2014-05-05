@@ -20,12 +20,12 @@ public interface Generation {
 	public final static String newline = System.getProperty("line.separator");
 
 	/**
-	 * Ìí¼Ó½Úµã
+	 * æ·»åŠ èŠ‚ç‚¹
 	 * 
 	 * @param doc
-	 *            ÎÄµµ
+	 *            æ–‡æ¡£
 	 * @param classDefinition
-	 *            Àà¶¨Òå
+	 *            ç±»å®šä¹‰
 	 */
 	void addNode(Document doc, ClassDefinition classDefinition);
 }

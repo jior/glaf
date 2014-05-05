@@ -29,7 +29,7 @@ import com.glaf.core.query.*;
 public interface ISysDataTableService {
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ı¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®åˆ é™¤è®°å½•
 	 * 
 	 * @return
 	 */
@@ -37,7 +37,7 @@ public interface ISysDataTableService {
 	void deleteById(String id);
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ı¶àÌõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®åˆ é™¤å¤šæ¡è®°å½•
 	 * 
 	 * @return
 	 */
@@ -45,28 +45,28 @@ public interface ISysDataTableService {
 	void deleteByIds(List<String> ids);
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡Ò»Ìõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®è·å–ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */
 	SysDataTable getDataTable(String id);
 
 	/**
-	 * ¸ù¾İ·şÎñID»ñÈ¡Ò»Ìõ¼ÇÂ¼
+	 * æ ¹æ®æœåŠ¡IDè·å–ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */
 	SysDataTable getDataTableByServiceKey(String serviceKey);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
 	int getDataTableCountByQueryCriteria(SysDataTableQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */
@@ -74,7 +74,7 @@ public interface ISysDataTableService {
 			SysDataTableQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼ÁĞ±í
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•åˆ—è¡¨
 	 * 
 	 * @return
 	 */
@@ -84,7 +84,7 @@ public interface ISysDataTableService {
 	void saveData(String serviceKey, Map<String, Object> dataMap);
 
 	/**
-	 * ±£´æ×Ö¶Î¶¨Òå
+	 * ä¿å­˜å­—æ®µå®šä¹‰
 	 * 
 	 * @param sysDataField
 	 */
@@ -92,7 +92,7 @@ public interface ISysDataTableService {
 	void saveDataField(SysDataField sysDataField);
 
 	/**
-	 * ±£´æ¶à¸ö×Ö¶Î¶¨Òå
+	 * ä¿å­˜å¤šä¸ªå­—æ®µå®šä¹‰
 	 * 
 	 * @param fields
 	 */
@@ -103,7 +103,7 @@ public interface ISysDataTableService {
 	void saveDataList(String serviceKey, List<Map<String, Object>> dataList);
 
 	/**
-	 * ±£´æÒ»Ìõ¼ÇÂ¼
+	 * ä¿å­˜ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */

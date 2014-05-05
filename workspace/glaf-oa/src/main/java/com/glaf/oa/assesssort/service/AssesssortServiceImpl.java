@@ -143,7 +143,7 @@ public class AssesssortServiceImpl implements AssesssortService {
 
 	@Transactional
 	public List<AssesssortType> getAssesssortsType(String typeCode) {
-		// °´CODEÏÈ»ñµÃÀàĞÍID
+		// æŒ‰CODEå…ˆè·å¾—ç±»å‹ID
 		List<BaseDataInfo> sortTypeList = assesssortMapper
 				.getAssessTypeByCode(typeCode);
 		Collections.sort(sortTypeList, new ComparetorAssessTypeBySort());
@@ -158,7 +158,7 @@ public class AssesssortServiceImpl implements AssesssortService {
 			assesssortType.setId(id);
 			assesssortType.setName(name);
 			assesssortType.setCode(code);
-			// °´parentId»ñµÃ×ÓÀàĞÍ
+			// æŒ‰parentIdè·å¾—å­ç±»å‹
 			List<AssesssortType> subList = new ArrayList<AssesssortType>();
 			List<Dictory> dictorys = dictoryService.getDictoryList(dataInfo
 					.getId());
@@ -177,7 +177,7 @@ public class AssesssortServiceImpl implements AssesssortService {
 	}
 
 	/**
-	 * °´¾ßÌåÄ³±ê×¼»ñµÃÉÏ¼¶²ã´ÎĞÅÏ¢
+	 * æŒ‰å…·ä½“æŸæ ‡å‡†è·å¾—ä¸Šçº§å±‚æ¬¡ä¿¡æ¯
 	 */
 	@Transactional
 	public List<AssessortTree> getParentsInfoByDictId(Integer dictId) {
@@ -213,7 +213,7 @@ public class AssesssortServiceImpl implements AssesssortService {
 }
 
 /**
- * ÅÅĞò±ê×¼
+ * æ’åºæ ‡å‡†
  * 
  * @author Administrator
  * 

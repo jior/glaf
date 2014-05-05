@@ -100,7 +100,7 @@ public class WithdrawalApproveController {
 	}
 
 	/**
-	 * ÉóºË¶¯×÷
+	 * å®¡æ ¸åŠ¨ä½œ
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -136,18 +136,18 @@ public class WithdrawalApproveController {
 			ex.printStackTrace();
 			logger.error(ex);
 			ModelAndView mav = new ModelAndView();
-			mav.addObject("message", "ÉóºËÒì³£¡£");
+			mav.addObject("message", "å®¡æ ¸å¼‚å¸¸ã€‚");
 			return mav;
 		}
 		return null;
 	}
 
 	/**
-	 * ¹¤×÷Á÷ÉóÅú
+	 * å·¥ä½œæµå®¡æ‰¹
 	 * 
 	 * @param purchase
 	 * @param flag
-	 *            0Í¬Òâ 1²»Í¬Òâ
+	 *            0åŒæ„ 1ä¸åŒæ„
 	 * @param request
 	 * @return
 	 */
@@ -159,41 +159,41 @@ public class WithdrawalApproveController {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
 
-		// »ñÈ¡µÇÂ¼ÓÃ»§²¿ÃÅ
+		// è·å–ç™»å½•ç”¨æˆ·éƒ¨é—¨
 		User appUser = BaseDataManager.getInstance().getSysUserService()
 				.findByAccount(withdrawal.getAppuser());
 
-		// ¸ù¾İÓÃ»§²¿ÃÅid »ñÈ¡Õû¸ö²¿ÃÅµÄ¶ÔÏó£¨GZ01£©
+		// æ ¹æ®ç”¨æˆ·éƒ¨é—¨id è·å–æ•´ä¸ªéƒ¨é—¨çš„å¯¹è±¡ï¼ˆGZ01ï¼‰
 		SysDepartment curdept = sysDepartmentService.findById(appUser
 				.getDeptId());
 
-		// ¸ù¾İ²¿ÃÅCODE(ÀıÈçGZ01)½ØÈ¡Ç°2Î» ×÷ÎªµØÇø
+		// æ ¹æ®éƒ¨é—¨CODE(ä¾‹å¦‚GZ01)æˆªå–å‰2ä½ ä½œä¸ºåœ°åŒº
 		String curAreadeptCode = curdept.getCode().substring(0, 2);
 
-		// ¸ù¾İcode »ñÈ¡ µØÇø²¿ÃÅ¶ÔÏó£¨GZ06£©ĞĞÕş²ÆÎñ²¿
+		// æ ¹æ®code è·å– åœ°åŒºéƒ¨é—¨å¯¹è±¡ï¼ˆGZ06ï¼‰è¡Œæ”¿è´¢åŠ¡éƒ¨
 		SysDepartment HRdept = sysDepartmentService.findByCode(curAreadeptCode
 				+ "06");
 
-		// ¸ù¾İcode »ñÈ¡ µØÇø²¿ÃÅ¶ÔÏó£¨GZ£©
+		// æ ¹æ®code è·å– åœ°åŒºéƒ¨é—¨å¯¹è±¡ï¼ˆGZï¼‰
 		SysDepartment curAreadept = sysDepartmentService
 				.findByCode(curAreadeptCode);
 
-		// »ñÈ¡¼¯ÍÅ²¿ÃÅ¶ÔÏó£¨JT£©
+		// è·å–é›†å›¢éƒ¨é—¨å¯¹è±¡ï¼ˆJTï¼‰
 		SysDepartment sysdeptMem = sysDepartmentService.findByCode("JT");
 
-		// ĞĞÕş×Ü¼à²¿ÃÅ
+		// è¡Œæ”¿æ€»ç›‘éƒ¨é—¨
 		SysDepartment sysJtdept = sysDepartmentService.findByCode("JT06");
 
 		ProcessContext ctx = new ProcessContext();
-		ctx.setRowId(withdrawal.getWithdrawalid());// ±íid
-		ctx.setActorId(actorId);// ÓÃ»§ÉóÅúÕß
-		ctx.setProcessName(processName);// Á÷³ÌÃû³Æ
+		ctx.setRowId(withdrawal.getWithdrawalid());// è¡¨id
+		ctx.setActorId(actorId);// ç”¨æˆ·å®¡æ‰¹è€…
+		ctx.setProcessName(processName);// æµç¨‹åç§°
 		String opinion = request.getParameter("approveOpinion");
-		ctx.setOpinion(opinion);// ÉóÅúÒâ¼û
-		Collection<DataField> dataFields = new ArrayList<DataField>();// ²ÎÊı
+		ctx.setOpinion(opinion);// å®¡æ‰¹æ„è§
+		Collection<DataField> dataFields = new ArrayList<DataField>();// å‚æ•°
 
 		DataField dataField = new DataField();
-		dataField.setName("isAgree");// ÊÇ·ñÍ¨¹ıÉóÅú
+		dataField.setName("isAgree");// æ˜¯å¦é€šè¿‡å®¡æ‰¹
 		if (flag == 0) {
 			dataField.setValue("true");
 		} else {
@@ -201,25 +201,25 @@ public class WithdrawalApproveController {
 		}
 		dataFields.add(dataField);
 
-		// ²ÆÎñµ£µ±
+		// è´¢åŠ¡æ‹…å½“
 		DataField datafield1 = new DataField();
 		datafield1.setName("deptId01");
 		datafield1.setValue(HRdept.getId());
 		dataFields.add(datafield1);
 
-		// µ±µØ×Ü¾­Àí
+		// å½“åœ°æ€»ç»ç†
 		DataField datafield4 = new DataField();
 		datafield4.setName("deptId02");
 		datafield4.setValue(curAreadept.getId());
 		dataFields.add(datafield4);
 
-		// ĞĞÕş×Ü¼à
+		// è¡Œæ”¿æ€»ç›‘
 		DataField datafield5 = new DataField();
 		datafield5.setName("deptId03");
 		datafield5.setValue(sysJtdept.getId());
 		dataFields.add(datafield5);
 
-		// ¼¯ÍÅ(JT)
+		// é›†å›¢(JT)
 		DataField datafield2 = new DataField();
 		datafield2.setName("deptId04");
 		datafield2.setValue(sysdeptMem.getId());
@@ -262,7 +262,7 @@ public class WithdrawalApproveController {
 		WithdrawalQuery query = new WithdrawalQuery();
 		Tools.populate(query, params);
 
-		// ²éÑ¯status 0ÎªÈ«²¿ 1ÎªÎ´ÉóÅú 2ÎªÒÑÉóÅú Ä¬ÈÏÏÔÊ¾Î´ÉóÅúµÄµ¥
+		// æŸ¥è¯¢status 0ä¸ºå…¨éƒ¨ 1ä¸ºæœªå®¡æ‰¹ 2ä¸ºå·²å®¡æ‰¹ é»˜è®¤æ˜¾ç¤ºæœªå®¡æ‰¹çš„å•
 		query.setStatus(ParamUtils.getIntValue(params, "status"));
 		if (StringUtils.isEmpty(request.getParameter("status"))) {
 			query.setStatus(1);

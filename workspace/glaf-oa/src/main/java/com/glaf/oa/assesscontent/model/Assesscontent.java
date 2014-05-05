@@ -72,10 +72,10 @@ public class Assesscontent implements Serializable, JSONable {
 	@Column(name = "updateBy", length = 50)
 	protected String updateBy;
 
-	// 指标ID
+	// 鎸囨爣ID
 	@Column(name = "assessId")
 	protected Long assessId;
-	// 指标信息
+	// 鎸囨爣淇℃伅
 	protected Assessinfo assessInfo;
 
 	public Assesscontent() {

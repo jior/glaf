@@ -20,25 +20,25 @@ import java.util.Map;
 import java.util.Queue;
 
 public abstract class Worker implements Runnable {
-	// ÈÎÎñ¶ÓÁĞ£¬ÓÃÓÚÈ¡µÃ×ÓÈÎÎñ
+	// ä»»åŠ¡é˜Ÿåˆ—ï¼Œç”¨äºå–å¾—å­ä»»åŠ¡
 	protected Queue<Object> workQueue;
-	// ×ÓÈÎÎñ´¦Àí½á¹û¼¯
+	// å­ä»»åŠ¡å¤„ç†ç»“æœé›†
 	protected Map<String, Object> resultMap;
 
-	// ×ÓÈÎÎñ´¦ÀíµÄÂß¼­£¬ÔÚ×ÓÀàÖĞÊµÏÖ¾ßÌåÂß¼­
+	// å­ä»»åŠ¡å¤„ç†çš„é€»è¾‘ï¼Œåœ¨å­ç±»ä¸­å®ç°å…·ä½“é€»è¾‘
 	public abstract Object process(Object input);
 
 	@Override
 	public void run() {
 		while (true) {
-			// »ñÈ¡×ÓÈÎÎñ
+			// è·å–å­ä»»åŠ¡
 			Object input = workQueue.poll();
 			if (input == null) {
 				break;
 			}
-			// ´¦Àí×ÓÈÎÎñ
+			// å¤„ç†å­ä»»åŠ¡
 			Object ret = process(input);
-			// ½«´¦Àí½á¹ûĞ´Èë½á¹û¼¯
+			// å°†å¤„ç†ç»“æœå†™å…¥ç»“æœé›†
 			resultMap.put(Integer.toString(input.hashCode()), ret);
 		}
 	}

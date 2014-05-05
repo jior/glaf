@@ -99,18 +99,18 @@ public class MxFormJsonServiceImpl implements FormJsonService {
 		}
 
 		Map<String, Object> pageInfo = new java.util.HashMap<String, Object>();
-		// µ±Ç°Ò³ÊıÉèÖÃ
+		// å½“å‰é¡µæ•°è®¾ç½®
 		pageInfo.put(
 				"start",
 				Integer.valueOf((page.getCurrentPage() - 1)
 						* page.getPageSize()));
 		pageInfo.put("pageNo", Integer.valueOf(page.getCurrentPage()));
 
-		// Ã¿Ò³¼ÇÂ¼Êı
+		// æ¯é¡µè®°å½•æ•°
 		pageInfo.put("limit", Integer.valueOf(page.getPageSize()));
 		pageInfo.put("pageSize", Integer.valueOf(page.getPageSize()));
 
-		// ×ÜÊı¾İÁ¿ÉèÖÃ
+		// æ€»æ•°æ®é‡è®¾ç½®
 		pageInfo.put("totalCount", Integer.valueOf(page.getTotal()));
 		pageInfo.put("rows", list);
 

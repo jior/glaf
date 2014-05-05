@@ -19,7 +19,7 @@
 package com.glaf.j2cache;
 
 /**
- * Ëù»ñÈ¡µÄ»º´æ¶ÔÏó
+ * æ‰€è·å–çš„ç¼“å­˜å¯¹è±¡
  * 
  * @author oschina.net
  */

@@ -33,7 +33,7 @@ import com.glaf.core.util.Paging;
 public interface ITableDataService {
 
 	/**
-	 * É¾³ıÊı¾İ
+	 * åˆ é™¤æ•°æ®
 	 * 
 	 * @param model
 	 */
@@ -44,7 +44,7 @@ public interface ITableDataService {
 	
 	
 	/**
-	 * »ñÈ¡Ò»Ò³Êı¾İ
+	 * è·å–ä¸€é¡µæ•°æ®
 	 * 
 	 * @param pageNo
 	 * @param pageSize
@@ -56,7 +56,7 @@ public interface ITableDataService {
 	Map<String, Object> getTableDataByPrimaryKey(TableModel model);
 
 	/**
-	 * ÅúÁ¿²åÈëÊı¾İ
+	 * æ‰¹é‡æ’å…¥æ•°æ®
 	 * 
 	 * @param rows
 	 */
@@ -64,7 +64,7 @@ public interface ITableDataService {
 	void insertTableData(List<TableModel> rows);
 
 	/**
-	 * ÅúÁ¿²åÈëÊı¾İ
+	 * æ‰¹é‡æ’å…¥æ•°æ®
 	 * 
 	 * @param tableName
 	 * @param rows
@@ -73,7 +73,7 @@ public interface ITableDataService {
 	void insertTableData(String tableName, List<Map<String, Object>> rows);
 
 	/**
-	 * ²åÈëÒ»Ìõ¼ÇÂ¼
+	 * æ’å…¥ä¸€æ¡è®°å½•
 	 * 
 	 * @param model
 	 */
@@ -81,7 +81,7 @@ public interface ITableDataService {
 	void insertTableData(TableModel model);
 	
 	/**
-	 * ²åÈëÒ»Ìõ¼ÇÂ¼
+	 * æ’å…¥ä¸€æ¡è®°å½•
 	 * 
 	 * @param model
 	 */
@@ -89,7 +89,7 @@ public interface ITableDataService {
 	void insertAllTableData(List<TableModel> rows);
 
 	/**
-	 * ÅúÁ¿±£´æ¼ÇÂ¼
+	 * æ‰¹é‡ä¿å­˜è®°å½•
 	 * 
 	 * @param tableName
 	 * @param rows
@@ -98,7 +98,7 @@ public interface ITableDataService {
 	void saveAll(String tableName, String seqNo, Collection<TableModel> rows);
 
 	/**
-	 * ÅúÁ¿±£´æ¼ÇÂ¼
+	 * æ‰¹é‡ä¿å­˜è®°å½•
 	 * 
 	 * @param tableDefinition
 	 * @param rows
@@ -108,7 +108,7 @@ public interface ITableDataService {
 			String seqNo, Collection<TableModel> rows);
 
 	/**
-	 * ÅúÁ¿ĞÂÔö»òĞŞ¸Ä¼ÇÂ¼£¬Èç¹û´æÔÚ£¬¿ÉÒÔÑ¡ÔñÊÇ·ñ¸üĞÂ
+	 * æ‰¹é‡æ–°å¢æˆ–ä¿®æ”¹è®°å½•ï¼Œå¦‚æœå­˜åœ¨ï¼Œå¯ä»¥é€‰æ‹©æ˜¯å¦æ›´æ–°
 	 * 
 	 * @param tableName
 	 * @param updatable
@@ -119,7 +119,7 @@ public interface ITableDataService {
 			List<Map<String, Object>> rows);
 
 	/**
-	 * ÅúÁ¿ĞÂÔö»òĞŞ¸Ä¼ÇÂ¼£¬Èç¹û´æÔÚ£¬¿ÉÒÔÑ¡ÔñÊÇ·ñ¸üĞÂ
+	 * æ‰¹é‡æ–°å¢æˆ–ä¿®æ”¹è®°å½•ï¼Œå¦‚æœå­˜åœ¨ï¼Œå¯ä»¥é€‰æ‹©æ˜¯å¦æ›´æ–°
 	 * 
 	 * @param tableDefinition
 	 * @param updatable
@@ -130,7 +130,7 @@ public interface ITableDataService {
 			List<Map<String, Object>> rows);
 	
 	/**
-	 * ±£´æJSONÊı×éÊı¾İµ½Ö¸¶¨µÄ±í
+	 * ä¿å­˜JSONæ•°ç»„æ•°æ®åˆ°æŒ‡å®šçš„è¡¨
 	 * 
 	 * @param tableName
 	 * @param rows
@@ -139,7 +139,7 @@ public interface ITableDataService {
 	void saveTableData(String tableName, JSONArray rows);
 
 	/**
-	 * ±£´æJSONÊı¾İµ½Ö¸¶¨µÄ±í
+	 * ä¿å­˜JSONæ•°æ®åˆ°æŒ‡å®šçš„è¡¨
 	 * 
 	 * @param tableName
 	 * @param jsonObject
@@ -148,7 +148,7 @@ public interface ITableDataService {
 	void saveTableData(String tableName, JSONObject jsonObject);
 
 	/**
-	 * ¸üĞÂĞòÁĞ
+	 * æ›´æ–°åºåˆ—
 	 * 
 	 * @param rows
 	 */
@@ -156,7 +156,7 @@ public interface ITableDataService {
 	void updateAllDbids(List<Dbid> rows);
 
 	/**
-	 * ÅúÁ¿¸üĞÂ¼ÇÂ¼
+	 * æ‰¹é‡æ›´æ–°è®°å½•
 	 * 
 	 * @param rows
 	 */
@@ -164,7 +164,7 @@ public interface ITableDataService {
 	void updateTableData(List<TableModel> rows);
 
 	/**
-	 * ÅúÁ¿¸üĞÂ¼ÇÂ¼
+	 * æ‰¹é‡æ›´æ–°è®°å½•
 	 * 
 	 * @param tableName
 	 * @param rows
@@ -173,7 +173,7 @@ public interface ITableDataService {
 	void updateTableData(String tableName, List<Map<String, Object>> rows);
 
 	/**
-	 * ¸üĞÂÒ»Ìõ¼ÇÂ¼
+	 * æ›´æ–°ä¸€æ¡è®°å½•
 	 * 
 	 * @param model
 	 */

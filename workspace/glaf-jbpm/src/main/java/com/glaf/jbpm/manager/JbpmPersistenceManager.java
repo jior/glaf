@@ -41,7 +41,7 @@ public class JbpmPersistenceManager {
 	}
 
 	/**
-	 * É¾³ı³Ö¾Ã»¯¶ÔÏó
+	 * åˆ é™¤æŒä¹…åŒ–å¯¹è±¡
 	 * 
 	 * @param model
 	 */
@@ -50,7 +50,7 @@ public class JbpmPersistenceManager {
 	}
 
 	/**
-	 * ÅúÁ¿É¾³ı³Ö¾Ã»¯¶ÔÏó
+	 * æ‰¹é‡åˆ é™¤æŒä¹…åŒ–å¯¹è±¡
 	 * 
 	 * @param rows
 	 */
@@ -59,7 +59,7 @@ public class JbpmPersistenceManager {
 	}
 
 	/**
-	 * ±£´æ³Ö¾Ã»¯¶ÔÏó
+	 * ä¿å­˜æŒä¹…åŒ–å¯¹è±¡
 	 * 
 	 * @param model
 	 */
@@ -68,7 +68,7 @@ public class JbpmPersistenceManager {
 	}
 
 	/**
-	 * ÅúÁ¿±£´æ³Ö¾Ã»¯¶ÔÏó
+	 * æ‰¹é‡ä¿å­˜æŒä¹…åŒ–å¯¹è±¡
 	 * 
 	 * @param rows
 	 */
@@ -77,7 +77,7 @@ public class JbpmPersistenceManager {
 	}
 
 	/**
-	 * ¸üĞÂ³Ö¾Ã»¯¶ÔÏó
+	 * æ›´æ–°æŒä¹…åŒ–å¯¹è±¡
 	 * 
 	 * @param model
 	 */
@@ -86,7 +86,7 @@ public class JbpmPersistenceManager {
 	}
 
 	/**
-	 * ÅúÁ¿¸üĞÂ³Ö¾Ã»¯¶ÔÏó
+	 * æ‰¹é‡æ›´æ–°æŒä¹…åŒ–å¯¹è±¡
 	 * 
 	 * @param rows
 	 */
@@ -95,12 +95,12 @@ public class JbpmPersistenceManager {
 	}
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡³Ö¾Ã»¯¶ÔÏó
+	 * æ ¹æ®ä¸»é”®è·å–æŒä¹…åŒ–å¯¹è±¡
 	 * 
 	 * @param clazz
-	 *            ÀàÃû
+	 *            ç±»å
 	 * @param persistId
-	 *            Ö÷¼üÖµ
+	 *            ä¸»é”®å€¼
 	 * @return
 	 */
 	public Object getPersistObject(JbpmContext jbpmContext, Class<?> clazz,
@@ -109,7 +109,7 @@ public class JbpmPersistenceManager {
 	}
 
 	/**
-	 * ²éÑ¯
+	 * æŸ¥è¯¢
 	 * 
 	 * @param queryExecutor
 	 * @return
@@ -120,7 +120,7 @@ public class JbpmPersistenceManager {
 	}
 
 	/**
-	 * ²éÑ¯
+	 * æŸ¥è¯¢
 	 * 
 	 * @param currPageNo
 	 * @param maxResults
@@ -134,7 +134,7 @@ public class JbpmPersistenceManager {
 	}
 
 	/**
-	 * ·ÖÒ³²éÑ¯
+	 * åˆ†é¡µæŸ¥è¯¢
 	 * 
 	 * @param currPageNo
 	 * @param pageSize

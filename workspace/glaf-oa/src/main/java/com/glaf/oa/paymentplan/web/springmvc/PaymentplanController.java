@@ -64,7 +64,7 @@ public class PaymentplanController {
 					Paymentplan paymentplan = paymentplanService
 							.getPaymentplan(Long.valueOf(x));
 					/**
-					 * �˴�ҵ���߼������е���
+					 * 此处业务逻辑需自行调整
 					 */
 					if (paymentplan != null) {
 						paymentplanService
@@ -76,7 +76,7 @@ public class PaymentplanController {
 			Paymentplan paymentplan = paymentplanService.getPaymentplan(Long
 					.valueOf(planid));
 			/**
-			 * �˴�ҵ���߼������е���
+			 * 此处业务逻辑需自行调整
 			 */
 			if (paymentplan != null) {
 				paymentplanService.deleteById((paymentplan.getPlanid()));
@@ -149,7 +149,7 @@ public class PaymentplanController {
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
 		/**
-		 * �˴�ҵ���߼������е���
+		 * 此处业务逻辑需自行调整
 		 */
 
 		String gridType = ParamUtils.getString(params, "gridType");

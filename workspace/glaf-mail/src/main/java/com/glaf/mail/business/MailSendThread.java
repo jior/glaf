@@ -59,19 +59,19 @@ public class MailSendThread implements Runnable {
 		logger.debug("---------------send mail----------------------------");
 		if (mailItem != null && MailTools.isMailAddress(mailItem.getMailTo())) {
 			/**
-			 * ÖØÊÔ´ÎÊı³¬¹ı5´Î£¬²»ÔÙ·¢ËÍ
+			 * é‡è¯•æ¬¡æ•°è¶…è¿‡5æ¬¡ï¼Œä¸å†å‘é€
 			 */
 			if (mailItem.getRetryTimes() > 5) {
 				return;
 			}
 			/**
-			 * ÒÑ¾­³É¹¦·¢ËÍµÄ¾Í²»ÔÙ·¢ËÍ
+			 * å·²ç»æˆåŠŸå‘é€çš„å°±ä¸å†å‘é€
 			 */
 			if (mailItem.getSendStatus() == 1) {
 				return;
 			}
 			/**
-			 * ³¬¹ıÒ»¸öÔÂµÄÒ²²»ÔÙ·¢ËÍ
+			 * è¶…è¿‡ä¸€ä¸ªæœˆçš„ä¹Ÿä¸å†å‘é€
 			 */
 			if (mailItem.getLastModified() < (System.currentTimeMillis() - DateUtils.DAY * 30)) {
 				return;

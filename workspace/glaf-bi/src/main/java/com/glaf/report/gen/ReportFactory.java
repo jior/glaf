@@ -60,7 +60,7 @@ public class ReportFactory {
 	protected static final Log logger = LogFactory.getLog(ReportFactory.class);
 
 	/**
-	 * ´´½¨È«²¿±¨±íÎÄ¼ş
+	 * åˆ›å»ºå…¨éƒ¨æŠ¥è¡¨æ–‡ä»¶
 	 */
 	public static void createAllReportFiles() {
 		IReportService reportService = ContextFactory.getBean("reportService");
@@ -72,7 +72,7 @@ public class ReportFactory {
 	}
 
 	/**
-	 * Éú³ÉÍ¼±í
+	 * ç”Ÿæˆå›¾è¡¨
 	 * 
 	 * @param chartDefinition
 	 * @param params
@@ -118,7 +118,7 @@ public class ReportFactory {
 	}
 
 	/**
-	 * ´´½¨Ä³¸ö±¨±íµÄ±¨±íÎÄ¼ş
+	 * åˆ›å»ºæŸä¸ªæŠ¥è¡¨çš„æŠ¥è¡¨æ–‡ä»¶
 	 * 
 	 * @param reportId
 	 */
@@ -169,7 +169,7 @@ public class ReportFactory {
 	}
 
 	/**
-	 * ´´½¨È«²¿±¨±íÎÄ¼ş
+	 * åˆ›å»ºå…¨éƒ¨æŠ¥è¡¨æ–‡ä»¶
 	 */
 	public static void createReportFiles(List<Report> reports) {
 		if (reports != null && !reports.isEmpty()) {
@@ -182,7 +182,7 @@ public class ReportFactory {
 	}
 
 	/**
-	 * ´´½¨Ä³¸ö±¨±íµÄ±¨±íÎÄ¼ş
+	 * åˆ›å»ºæŸä¸ªæŠ¥è¡¨çš„æŠ¥è¡¨æ–‡ä»¶
 	 * 
 	 * @param report
 	 */
@@ -193,7 +193,7 @@ public class ReportFactory {
 	}
 
 	/**
-	 * ¸ù¾İÖ¸¶¨²ÎÊıÉú³É
+	 * æ ¹æ®æŒ‡å®šå‚æ•°ç”Ÿæˆ
 	 * 
 	 * @param report
 	 * @param params
@@ -208,7 +208,7 @@ public class ReportFactory {
 			reportGen = new JxlsReportGen();
 		}
 		if (reportGen != null) {
-			// ×¼±¸²éÑ¯½á¹û¼¯ºÍÉú³ÉÍ¼Æ¬ĞÅÏ¢
+			// å‡†å¤‡æŸ¥è¯¢ç»“æœé›†å’Œç”Ÿæˆå›¾ç‰‡ä¿¡æ¯
 
 			ITablePageService tablePageService = ContextFactory
 					.getBean("tablePageService");
@@ -325,14 +325,14 @@ public class ReportFactory {
 				}
 			}
 			logger.debug("report parameter:" + params);
-			// ²úÉú±¨±í
+			// äº§ç”ŸæŠ¥è¡¨
 			rptBytes = reportGen.createReport(report, params);
 		}
 		return rptBytes;
 	}
 
 	/**
-	 * ´´½¨Ä³¸ö±¨±íµÄ±¨±íÎÄ¼ş
+	 * åˆ›å»ºæŸä¸ªæŠ¥è¡¨çš„æŠ¥è¡¨æ–‡ä»¶
 	 * 
 	 * @param reportId
 	 */

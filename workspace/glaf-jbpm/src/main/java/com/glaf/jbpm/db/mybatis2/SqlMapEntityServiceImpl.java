@@ -61,7 +61,7 @@ public class SqlMapEntityServiceImpl implements EntityService {
 	}
 
 	/**
-	 * ��ȡĳҳ�ļ�¼
+	 * 获取某页的记录
 	 * 
 	 * @param pageNo
 	 * @param pageSize
@@ -75,7 +75,7 @@ public class SqlMapEntityServiceImpl implements EntityService {
 	}
 
 	/**
-	 * ��ѯ
+	 * 查询
 	 * 
 	 * @param queryId
 	 * @param params
@@ -86,7 +86,7 @@ public class SqlMapEntityServiceImpl implements EntityService {
 	}
 
 	/**
-	 * ��ҳ��ѯ
+	 * 分页查询
 	 * 
 	 * @param currPageNo
 	 * @param pageSize

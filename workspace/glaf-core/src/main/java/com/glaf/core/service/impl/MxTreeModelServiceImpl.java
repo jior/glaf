@@ -62,10 +62,10 @@ public class MxTreeModelServiceImpl implements ITreeModelService {
 	}
 
 	/**
-	 * ¸´ÖÆÊ÷¶ÔÏó
+	 * å¤åˆ¶æ ‘å¯¹è±¡
 	 * 
-	 * @param Ô´¶ÔÏó
-	 * @param Ä¿±ê¶ÔÏó
+	 * @param æºå¯¹è±¡
+	 * @param ç›®æ ‡å¯¹è±¡
 	 */
 	protected void cloneTreeModel(TreeModel model, TreeModel m) {
 		m.setId(model.getId());
@@ -93,7 +93,7 @@ public class MxTreeModelServiceImpl implements ITreeModelService {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸ö½ÚµãµÄËùÓĞ×æÏÈ½Úµã
+	 * è·å–æŸä¸ªèŠ‚ç‚¹çš„æ‰€æœ‰ç¥–å…ˆèŠ‚ç‚¹
 	 * 
 	 * @param treeId
 	 * @return
@@ -113,7 +113,7 @@ public class MxTreeModelServiceImpl implements ITreeModelService {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸ö½ÚµãµÄËùÓĞ×ÓËï½Úµã
+	 * è·å–æŸä¸ªèŠ‚ç‚¹çš„æ‰€æœ‰å­å­™èŠ‚ç‚¹
 	 * 
 	 * @param treeId
 	 * @return
@@ -185,7 +185,7 @@ public class MxTreeModelServiceImpl implements ITreeModelService {
 	}
 
 	/**
-	 * ¸ù¾İ±àÂë»ñÈ¡Ê÷½Úµã
+	 * æ ¹æ®ç¼–ç è·å–æ ‘èŠ‚ç‚¹
 	 * 
 	 * @param treeId
 	 * @return
@@ -207,7 +207,7 @@ public class MxTreeModelServiceImpl implements ITreeModelService {
 	}
 
 	/**
-	 * ¸ù¾İ±àÂë»ñÈ¡Ê÷½Úµã
+	 * æ ¹æ®ç¼–ç è·å–æ ‘èŠ‚ç‚¹
 	 * 
 	 * @param treeId
 	 * @return

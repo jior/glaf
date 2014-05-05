@@ -37,24 +37,24 @@ public class AbstractJbpmTest {
 				List<DataField> dataFields = new java.util.concurrent.CopyOnWriteArrayList<DataField>();
 				dataFields.add(datafield);
 				ProcessContext ctx = new ProcessContext();
-				// ctx.setRowId(Integer.valueOf(rowId));//ÉóºË±íµÄ¼ÇÂ¼ID,ÀàĞÍÒªÆ¥Åä
-				ctx.setActorId("joe");// ²ÎÓëÕß£¬µÇÂ¼ÓÃ»§ÕÊ»§
-				ctx.setProcessInstanceId(processInstanceId);// Á÷³ÌÊµÀı±àºÅ
+				// ctx.setRowId(Integer.valueOf(rowId));//å®¡æ ¸è¡¨çš„è®°å½•ID,ç±»å‹è¦åŒ¹é…
+				ctx.setActorId("joe");// å‚ä¸è€…ï¼Œç™»å½•ç”¨æˆ·å¸æˆ·
+				ctx.setProcessInstanceId(processInstanceId);// æµç¨‹å®ä¾‹ç¼–å·
 				ctx.setOpinion("OK");
 
-				ctx.setDataFields(dataFields);// ¿ØÖÆ²ÎÊı
+				ctx.setDataFields(dataFields);// æ§åˆ¶å‚æ•°
 
 				boolean isOK = ProcessContainer.getContainer()
 						.completeTask(ctx);
 				System.out.println("joe audit isOK=" + isOK);
 
-				ctx.setActorId("jack");// ²ÎÓëÕß£¬µÇÂ¼ÓÃ»§ÕÊ»§
-				ctx.setOpinion("Í¨¹ı");
+				ctx.setActorId("jack");// å‚ä¸è€…ï¼Œç™»å½•ç”¨æˆ·å¸æˆ·
+				ctx.setOpinion("é€šè¿‡");
 				isOK = ProcessContainer.getContainer().completeTask(ctx);
 				System.out.println("jack audit isOK=" + isOK);
 
-				ctx.setActorId("rick");// ²ÎÓëÕß£¬µÇÂ¼ÓÃ»§ÕÊ»§
-				ctx.setOpinion("Í¬Òâ");
+				ctx.setActorId("rick");// å‚ä¸è€…ï¼Œç™»å½•ç”¨æˆ·å¸æˆ·
+				ctx.setOpinion("åŒæ„");
 
 				isOK = ProcessContainer.getContainer().completeTask(ctx);
 				System.out.println("rick audit isOK=" + isOK);
@@ -72,7 +72,7 @@ public class AbstractJbpmTest {
 
 	@Before
 	public void setUp() throws Exception {
-		System.out.println("¿ªÊ¼²âÊÔ..................................");
+		System.out.println("å¼€å§‹æµ‹è¯•..................................");
 		start = System.currentTimeMillis();
 		System.out.println(SystemProperties.getConfigRootPath());
 		// Environment.setCurrentSystemName(Environment.DEFAULT_SYSTEM_NAME);
@@ -84,16 +84,16 @@ public class AbstractJbpmTest {
 		try {
 			jbpmContext = ProcessContainer.getContainer().createJbpmContext();
 			ProcessContext ctx = new ProcessContext();
-			ctx.setRowId(UUID32.getUUID());// ÉóºË±íµÄ¼ÇÂ¼ID,ÀàĞÍÒªÆ¥Åä
-			ctx.setActorId("joy");// ²ÎÓëÕß£¬µÇÂ¼ÓÃ»§ÕÊ»§
-			ctx.setTitle("µ¥¾İ±àºÅ£º" + ctx.getRowId());// Á÷³Ì±êÌâ
-			ctx.setProcessName("SimpleProcess");// Á÷³ÌÃû³Æ£¨Ó¢ÎÄµÄÃû³Æ£©
+			ctx.setRowId(UUID32.getUUID());// å®¡æ ¸è¡¨çš„è®°å½•ID,ç±»å‹è¦åŒ¹é…
+			ctx.setActorId("joy");// å‚ä¸è€…ï¼Œç™»å½•ç”¨æˆ·å¸æˆ·
+			ctx.setTitle("å•æ®ç¼–å·ï¼š" + ctx.getRowId());// æµç¨‹æ ‡é¢˜
+			ctx.setProcessName("SimpleProcess");// æµç¨‹åç§°ï¼ˆè‹±æ–‡çš„åç§°ï¼‰
 
 			Collection<DataField> datafields = new java.util.concurrent.CopyOnWriteArrayList<DataField>();
 
 			DataField datafield = new DataField();
-			datafield.setName("isAgree");// ¿ØÖÆ²ÎÊıÃû³Æ
-			datafield.setValue("true");// ¿ØÖÆ²ÎÊıÖµ
+			datafield.setName("isAgree");// æ§åˆ¶å‚æ•°åç§°
+			datafield.setValue("true");// æ§åˆ¶å‚æ•°å€¼
 			datafields.add(datafield);
 
 			DataField datafield2 = new DataField();
@@ -102,13 +102,13 @@ public class AbstractJbpmTest {
 			datafields.add(datafield2);
 
 			DataField datafield3 = new DataField();
-			datafield3.setName("Auditor1");// ¿ØÖÆ²ÎÊıÃû³Æ
-			datafield3.setValue("joe,dane");// ¿ØÖÆ²ÎÊıÖµ
+			datafield3.setName("Auditor1");// æ§åˆ¶å‚æ•°åç§°
+			datafield3.setValue("joe,dane");// æ§åˆ¶å‚æ•°å€¼
 			datafields.add(datafield3);
 
 			DataField datafield4 = new DataField();
-			datafield4.setName("Auditor2");// ¿ØÖÆ²ÎÊıÃû³Æ
-			datafield4.setValue("jack,rick");// ¿ØÖÆ²ÎÊıÖµ
+			datafield4.setName("Auditor2");// æ§åˆ¶å‚æ•°åç§°
+			datafield4.setValue("jack,rick");// æ§åˆ¶å‚æ•°å€¼
 			datafields.add(datafield4);
 
 			DataField datafield5 = new DataField();
@@ -116,12 +116,12 @@ public class AbstractJbpmTest {
 			datafield5.setValue(new Date());
 			datafields.add(datafield5);
 
-			ctx.setDataFields(datafields);// ¿ØÖÆ²ÎÊı
+			ctx.setDataFields(datafields);// æ§åˆ¶å‚æ•°
 
 			processInstanceId = ProcessContainer.getContainer().startProcess(
 					ctx);
 
-			// Èç¹ûÁ÷³ÌÊµÀı±àºÅ²»Îª¿Õ£¬ÄÇÃ´ÒÑ¾­³É¹¦´´½¨Á÷³ÌÊµÀı£¬·ñÔòÅ×³öÒì³£
+			// å¦‚æœæµç¨‹å®ä¾‹ç¼–å·ä¸ä¸ºç©ºï¼Œé‚£ä¹ˆå·²ç»æˆåŠŸåˆ›å»ºæµç¨‹å®ä¾‹ï¼Œå¦åˆ™æŠ›å‡ºå¼‚å¸¸
 			if (processInstanceId != null) {
 				System.out.println("processInstanceId=" + processInstanceId);
 				System.out.println("OK!");
@@ -141,8 +141,8 @@ public class AbstractJbpmTest {
 	@After
 	public void tearDown() throws Exception {
 		long times = System.currentTimeMillis() - start;
-		System.out.println("×Ü¹²ºÄÊ±(ºÁÃë):" + times);
-		System.out.println("²âÊÔÍê³É¡£");
+		System.out.println("æ€»å…±è€—æ—¶(æ¯«ç§’):" + times);
+		System.out.println("æµ‹è¯•å®Œæˆã€‚");
 	}
 
 }

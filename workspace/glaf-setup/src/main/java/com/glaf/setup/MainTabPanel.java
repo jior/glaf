@@ -23,7 +23,7 @@ import javax.swing.JTabbedPane;
 import com.glaf.setup.tabui.DataBaseConfigPanel;
 import com.glaf.setup.tabui.MailServerConfigPanel;
 
-//±êÇ©Ãæ°å£¬
+//æ ‡ç­¾é¢æ¿ï¼Œ
 public class MainTabPanel extends JTabbedPane {
 	private static final long serialVersionUID = 1L;
 
@@ -31,9 +31,9 @@ public class MainTabPanel extends JTabbedPane {
 
 		DataBaseConfigPanel dbConfig = new DataBaseConfigPanel();
 
-		this.add("Êı¾İ¿âÅäÖÃ", dbConfig);
+		this.add("æ•°æ®åº“é…ç½®", dbConfig);
 
 		MailServerConfigPanel escp = new MailServerConfigPanel();
-		this.add("ÓÊ¼ş·şÎñÆ÷ÅäÖÃ", escp);
+		this.add("é‚®ä»¶æœåŠ¡å™¨é…ç½®", escp);
 	}
 }

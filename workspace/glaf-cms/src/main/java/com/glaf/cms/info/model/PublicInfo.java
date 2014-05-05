@@ -34,38 +34,38 @@ public class PublicInfo implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * ×÷Õß
+	 * ä½œè€…
 	 */
 	@Column(name = "AUTHOR_", length = 200)
 	protected String author;
 
 	/**
-	 * ²ÈÊıÄ¿
+	 * è¸©æ•°ç›®
 	 */
 	@Column(name = "BURY_")
 	protected Integer bury;
 
 	/**
-	 * ÆÀÂÛÊıÁ¿
+	 * è¯„è®ºæ•°é‡
 	 */
 	@Column(name = "COMMENTCOUNT_")
 	protected Integer commentCount;
 
 	/**
-	 * ÆÀÂÛ±ê¼Ç
+	 * è¯„è®ºæ ‡è®°
 	 */
 	@Column(name = "COMMENTFLAG_")
 	protected Integer commentFlag;
 
 	/**
-	 * ÄÚÈİ
+	 * å†…å®¹
 	 */
 	@Lob
 	@Column(name = "CONTENT_")
 	protected String content;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
@@ -74,33 +74,33 @@ public class PublicInfo implements Serializable, JSONable {
 	protected String createByName;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_")
 	protected Date createDate;
 
 	/**
-	 * É¾³ı±ê¼Ç
+	 * åˆ é™¤æ ‡è®°
 	 */
 	@Column(name = "DELETEFLAG_")
 	protected Integer deleteFlag;
 
 	/**
-	 * ¶¥ÊıÄ¿
+	 * é¡¶æ•°ç›®
 	 */
 	@Column(name = "DIGG_")
 	protected Integer digg;
 
 	/**
-	 * ½áÊøÈÕÆÚ
+	 * ç»“æŸæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "ENDDATE_")
 	protected Date endDate;
 
 	/**
-	 * ÍË»Ø±ê¼Ç
+	 * é€€å›æ ‡è®°
 	 */
 	@Column(name = "FALLBACKFLAG_", length = 10)
 	protected String fallbackFlag;
@@ -110,92 +110,92 @@ public class PublicInfo implements Serializable, JSONable {
 	protected String id;
 
 	/**
-	 * ¹Ø¼ü×Ö
+	 * å…³é”®å­—
 	 */
 	@Column(name = "KEYWORDS_", length = 200)
 	protected String keywords;
 
 	/**
-	 * Á´½Ó
+	 * é“¾æ¥
 	 */
 	@Column(name = "LINK_", length = 250)
 	protected String link;
 
 	/**
-	 * Ãû³Æ
+	 * åç§°
 	 */
 	@Column(name = "NAME_", length = 200)
 	protected String name;
 
 	/**
-	 * ½Úµã±àºÅ
+	 * èŠ‚ç‚¹ç¼–å·
 	 */
 	@Column(name = "NODEID_")
 	protected Long nodeId;
 
 	/**
-	 * ÊÇ·ñÔ­´´
+	 * æ˜¯å¦åŸåˆ›
 	 */
 	@Column(name = "ORIGINALFLAG_")
 	protected Integer originalFlag;
 
 	/**
-	 * Á÷³ÌÊµÀı±àºÅ
+	 * æµç¨‹å®ä¾‹ç¼–å·
 	 */
 	@Column(name = "PROCESSINSTANCEID_")
 	protected Long processInstanceId;
 
 	/**
-	 * Á÷³ÌÃû³Æ
+	 * æµç¨‹åç§°
 	 */
 	@Column(name = "PROCESSNAME_", length = 50)
 	protected String processName;
 
 	/**
-	 * ·¢²¼±ê¼Ç
+	 * å‘å¸ƒæ ‡è®°
 	 */
 	@Column(name = "PUBLISHFLAG_")
 	protected Integer publishFlag;
 
 	/**
-	 * ÒıÓÃµØÖ·
+	 * å¼•ç”¨åœ°å€
 	 */
 	@Column(name = "REFERERURL_", length = 200)
 	protected String refererUrl;
 
 	/**
-	 * ·şÎñ±êÊ¶
+	 * æœåŠ¡æ ‡è¯†
 	 */
 	@Column(name = "SERVICEKEY_", length = 50)
 	protected String serviceKey;
 
 	/**
-	 * ĞòºÅ
+	 * åºå·
 	 */
 	@Column(name = "SORTNO_")
 	protected Integer sortNo;
 
 	/**
-	 * ¿ªÊ¼ÈÕÆÚ
+	 * å¼€å§‹æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "STARTDATE_")
 	protected Date startDate;
 
 	/**
-	 * ×´Ì¬
+	 * çŠ¶æ€
 	 */
 	@Column(name = "STATUS_")
 	protected Integer status;
 
 	/**
-	 * Ö÷Ìâ
+	 * ä¸»é¢˜
 	 */
 	@Column(name = "SUBJECT_", length = 200)
 	protected String subject;
 
 	/**
-	 * ÕªÒª
+	 * æ‘˜è¦
 	 */
 	@Column(name = "SUMMARY_", length = 500)
 	protected String summary;
@@ -207,32 +207,32 @@ public class PublicInfo implements Serializable, JSONable {
 	protected String tag;
 
 	/**
-	 * ·¢²¼µ¥Î»
+	 * å‘å¸ƒå•ä½
 	 */
 	@Column(name = "UNITNAME_", length = 200)
 	protected String unitName;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "UPDATEBY_", length = 50)
 	protected String updateBy;
 
 	/**
-	 * ĞŞ¸ÄÈÕÆÚ
+	 * ä¿®æ”¹æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "UPDATEDATE_")
 	protected Date updateDate;
 
 	/**
-	 * ²é¿´×ÜÊı
+	 * æŸ¥çœ‹æ€»æ•°
 	 */
 	@Column(name = "VIEWCOUNT_")
 	protected Integer viewCount;
 
 	/**
-	 * ¹¤×÷Á÷×´Ì¬
+	 * å·¥ä½œæµçŠ¶æ€
 	 */
 	@Column(name = "WFSTATUS_")
 	protected Integer wfStatus;

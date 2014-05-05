@@ -21,7 +21,7 @@ package com.glaf.core.cache;
 public class CacheUtils {
 
 	/**
-	 * Çå³ýÄ¿Â¼Ê÷»º´æ
+	 * æ¸…é™¤ç›®å½•æ ‘ç¼“å­˜
 	 * 
 	 * @param treeId
 	 */
@@ -43,7 +43,7 @@ public class CacheUtils {
 	}
 
 	/**
-	 * Çå³ýÓÃ»§»º´æ
+	 * æ¸…é™¤ç”¨æˆ·ç¼“å­˜
 	 * 
 	 * @param actorId
 	 */

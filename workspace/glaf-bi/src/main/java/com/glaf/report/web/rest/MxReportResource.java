@@ -280,11 +280,11 @@ public class MxReportResource {
 			} else {
 				QuartzUtils.stop(taskId);
 			}
-			return ResponseUtils.responseJsonResult(true, "±£´æ³É¹¦£¡");
+			return ResponseUtils.responseJsonResult(true, "ä¿å­˜æˆåŠŸï¼");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		return ResponseUtils.responseJsonResult(false, "±£´æÊ§°Ü£¡");
+		return ResponseUtils.responseJsonResult(false, "ä¿å­˜å¤±è´¥ï¼");
 	}
 
 	@GET
@@ -304,10 +304,10 @@ public class MxReportResource {
 				ReportMailSender mailSender = new ReportMailSender();
 				try {
 					mailSender.sendMail(report.getId());
-					result.put("message", "ÓÊ¼ş·¢ËÍ³É¹¦£¡");
+					result.put("message", "é‚®ä»¶å‘é€æˆåŠŸï¼");
 				} catch (Exception ex) {
 					ex.printStackTrace();
-					result.put("message", "ÓÊ¼ş·¢ËÍÊ§°Ü£º" + ex.getMessage());
+					result.put("message", "é‚®ä»¶å‘é€å¤±è´¥ï¼š" + ex.getMessage());
 				}
 			}
 		}
@@ -326,14 +326,14 @@ public class MxReportResource {
 		ReportMailSender mailSender = new ReportMailSender();
 		try {
 			/**
-			 * Éú³É±¨±í²¢·¢ËÍ
+			 * ç”ŸæˆæŠ¥è¡¨å¹¶å‘é€
 			 */
 			ReportFactory.genAllReportFile();
 			mailSender.sendAllReportsInOneMail();
-			result.put("message", "ÓÊ¼ş·¢ËÍ³É¹¦£¡");
+			result.put("message", "é‚®ä»¶å‘é€æˆåŠŸï¼");
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			result.put("message", "ÓÊ¼ş·¢ËÍÊ§°Ü£º" + ex.getMessage());
+			result.put("message", "é‚®ä»¶å‘é€å¤±è´¥ï¼š" + ex.getMessage());
 		}
 		return result.toString().getBytes("UTF-8");
 	}

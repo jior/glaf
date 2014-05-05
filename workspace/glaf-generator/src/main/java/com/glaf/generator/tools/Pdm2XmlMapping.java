@@ -210,7 +210,7 @@ public class Pdm2XmlMapping {
 
 		} else {
 			if (file.isDirectory()) {
-				String[] filelist = file.list(); // 列出所有的子文件（夹）名字
+				String[] filelist = file.list(); // 鍒楀嚭鎵�鏈夌殑瀛愭枃浠讹紙澶癸級鍚嶅瓧
 				for (int i = 0; i < filelist.length; i++) {
 					File f = new File(file.getPath() + "/" + filelist[i]);
 					this.convert(f);

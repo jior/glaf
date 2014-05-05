@@ -39,7 +39,7 @@ public class LeaveNode implements ActivityBehavior {
 	protected final static Log logger = LogFactory.getLog(LeaveNode.class);
 
 	/**
-	 * Ìõ¼ş±í´ïÊ½
+	 * æ¡ä»¶è¡¨è¾¾å¼
 	 */
 	protected Expression conditionExpression;
 

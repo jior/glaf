@@ -35,7 +35,7 @@ import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.SerializationUtils;
 
 /**
- * »º´æ¶à²¥Í¨µÀ
+ * ç¼“å­˜å¤šæ’­é€šé“
  * 
  * @author oschina.net
  */
@@ -59,7 +59,7 @@ public class CacheChannel extends ReceiverAdapter implements
 	private static volatile CacheChannel instance;
 
 	/**
-	 * µ¥Àı·½·¨
+	 * å•ä¾‹æ–¹æ³•
 	 * 
 	 * @return
 	 */
@@ -75,7 +75,7 @@ public class CacheChannel extends ReceiverAdapter implements
 	}
 
 	/**
-	 * ³õÊ¼»¯»º´æÍ¨µÀ²¢Á¬½Ó
+	 * åˆå§‹åŒ–ç¼“å­˜é€šé“å¹¶è¿æ¥
 	 * 
 	 * @param name
 	 * @throws CacheException
@@ -107,7 +107,7 @@ public class CacheChannel extends ReceiverAdapter implements
 	}
 
 	/**
-	 * »ñÈ¡»º´æÖĞµÄÊı¾İ
+	 * è·å–ç¼“å­˜ä¸­çš„æ•°æ®
 	 * 
 	 * @param <T>
 	 * @param level
@@ -136,7 +136,7 @@ public class CacheChannel extends ReceiverAdapter implements
 	}
 
 	/**
-	 * Ğ´Èë»º´æ
+	 * å†™å…¥ç¼“å­˜
 	 * 
 	 * @param level
 	 * @param region
@@ -148,14 +148,14 @@ public class CacheChannel extends ReceiverAdapter implements
 			if (value == null)
 				evict(region, key);
 			else {
-				// ·Ö¼¸ÖÖÇé¿ö
+				// åˆ†å‡ ç§æƒ…å†µ
 				// Object obj1 = CacheManager.get(LEVEL_1, region, key);
 				// Object obj2 = CacheManager.get(LEVEL_2, region, key);
-				// 1. L1 ºÍ L2 ¶¼Ã»ÓĞ
-				// 2. L1 ÓĞ L2 Ã»ÓĞ£¨ÕâÖÖÇé¿ö²»´æÔÚ£¬³ı·ÇÊÇĞ´ L2 µÄÊ±ºòÊ§°Ü
-				// 3. L1 Ã»ÓĞ£¬L2 ÓĞ
-				// 4. L1 ºÍ L2 ¶¼ÓĞ
-				_sendEvictCmd(region, key);// Çå³ıÔ­ÓĞµÄÒ»¼¶»º´æµÄÄÚÈİ
+				// 1. L1 å’Œ L2 éƒ½æ²¡æœ‰
+				// 2. L1 æœ‰ L2 æ²¡æœ‰ï¼ˆè¿™ç§æƒ…å†µä¸å­˜åœ¨ï¼Œé™¤éæ˜¯å†™ L2 çš„æ—¶å€™å¤±è´¥
+				// 3. L1 æ²¡æœ‰ï¼ŒL2 æœ‰
+				// 4. L1 å’Œ L2 éƒ½æœ‰
+				_sendEvictCmd(region, key);// æ¸…é™¤åŸæœ‰çš„ä¸€çº§ç¼“å­˜çš„å†…å®¹
 				CacheManager.set(LEVEL_1, region, key, value);
 				CacheManager.set(LEVEL_2, region, key, value);
 			}
@@ -164,19 +164,19 @@ public class CacheChannel extends ReceiverAdapter implements
 	}
 
 	/**
-	 * É¾³ı»º´æ
+	 * åˆ é™¤ç¼“å­˜
 	 * 
 	 * @param region
 	 * @param key
 	 */
 	public void evict(String region, Object key) {
-		CacheManager.evict(LEVEL_1, region, key); // É¾³ıÒ»¼¶»º´æ
-		CacheManager.evict(LEVEL_2, region, key); // É¾³ı¶ş¼¶»º´æ
-		_sendEvictCmd(region, key); // ·¢ËÍ¹ã²¥
+		CacheManager.evict(LEVEL_1, region, key); // åˆ é™¤ä¸€çº§ç¼“å­˜
+		CacheManager.evict(LEVEL_2, region, key); // åˆ é™¤äºŒçº§ç¼“å­˜
+		_sendEvictCmd(region, key); // å‘é€å¹¿æ’­
 	}
 
 	/**
-	 * ÅúÁ¿É¾³ı»º´æ
+	 * æ‰¹é‡åˆ é™¤ç¼“å­˜
 	 * 
 	 * @param region
 	 * @param keys
@@ -202,7 +202,7 @@ public class CacheChannel extends ReceiverAdapter implements
 	}
 
 	/**
-	 * ÎªÁË±£Ö¤Ã¿¸ö½Úµã»º´æµÄÒ»ÖÂ£¬µ±Ä³¸ö»º´æ¶ÔÏóÒòÎª³¬Ê±±»Çå³ıÊ±£¬Ó¦¸ÃÍ¨ÖªÈº×éÆäËû³ÉÔ±
+	 * ä¸ºäº†ä¿è¯æ¯ä¸ªèŠ‚ç‚¹ç¼“å­˜çš„ä¸€è‡´ï¼Œå½“æŸä¸ªç¼“å­˜å¯¹è±¡å› ä¸ºè¶…æ—¶è¢«æ¸…é™¤æ—¶ï¼Œåº”è¯¥é€šçŸ¥ç¾¤ç»„å…¶ä»–æˆå‘˜
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
@@ -210,25 +210,25 @@ public class CacheChannel extends ReceiverAdapter implements
 
 		log.debug("Cache data expired, region=" + region + ",key=" + key);
 
-		// É¾³ı¶ş¼¶»º´æ
+		// åˆ é™¤äºŒçº§ç¼“å­˜
 		if (key instanceof List) {
 			CacheManager.batchEvict(LEVEL_2, region, (List) key);
 		} else {
 			CacheManager.evict(LEVEL_2, region, key);
 		}
 
-		// ·¢ËÍ¹ã²¥
+		// å‘é€å¹¿æ’­
 		_sendEvictCmd(region, key);
 	}
 
 	/**
-	 * ·¢ËÍÇå³ı»º´æµÄ¹ã²¥ÃüÁî
+	 * å‘é€æ¸…é™¤ç¼“å­˜çš„å¹¿æ’­å‘½ä»¤
 	 * 
 	 * @param region
 	 * @param key
 	 */
 	private void _sendEvictCmd(String region, Object key) {
-		// ·¢ËÍ¹ã²¥
+		// å‘é€å¹¿æ’­
 		Command cmd = new Command(OPT_DELETE_KEY, region, key);
 		try {
 			Message msg = new Message(null, null, cmd.toBuffers());
@@ -241,7 +241,7 @@ public class CacheChannel extends ReceiverAdapter implements
 	}
 
 	/**
-	 * É¾³ıÒ»¼¶»º´æµÄ¼ü¶ÔÓ¦ÄÚÈİ
+	 * åˆ é™¤ä¸€çº§ç¼“å­˜çš„é”®å¯¹åº”å†…å®¹
 	 * 
 	 * @param region
 	 * @param key
@@ -257,18 +257,18 @@ public class CacheChannel extends ReceiverAdapter implements
 	}
 
 	/**
-	 * ÏûÏ¢½ÓÊÕ
+	 * æ¶ˆæ¯æ¥æ”¶
 	 */
 	@Override
 	public void receive(Message msg) {
-		// ÎŞĞ§ÏûÏ¢
+		// æ— æ•ˆæ¶ˆæ¯
 		byte[] buffers = msg.getRawBuffer();
 		if (buffers.length < 1) {
 			log.warn("Message is empty.");
 			return;
 		}
 
-		// ²»´¦Àí·¢ËÍ¸ø×Ô¼ºµÄÏûÏ¢
+		// ä¸å¤„ç†å‘é€ç»™è‡ªå·±çš„æ¶ˆæ¯
 		if (msg.getSrc().equals(channel.getAddress())) {
 			return;
 		}
@@ -293,7 +293,7 @@ public class CacheChannel extends ReceiverAdapter implements
 	}
 
 	/**
-	 * ×éÖĞ³ÉÔ±±ä»¯Ê±
+	 * ç»„ä¸­æˆå‘˜å˜åŒ–æ—¶
 	 */
 	public void viewAccepted(View view) {
 		StringBuffer sb = new StringBuffer("Group Members Changed, LIST: ");
@@ -307,15 +307,15 @@ public class CacheChannel extends ReceiverAdapter implements
 	}
 
 	/**
-	 * ¹Ø±Õµ½Í¨µÀµÄÁ¬½Ó
+	 * å…³é—­åˆ°é€šé“çš„è¿æ¥
 	 */
 	public void close() {
 		channel.close();
 	}
 
 	/**
-	 * ÃüÁîÏûÏ¢·â×° ¸ñÊ½£º µÚ1¸ö×Ö½ÚÎªÃüÁî´úÂë£¬³¤¶È1 [OPT] µÚ2¡¢3¸ö×Ö½ÚÎªregion³¤¶È£¬³¤¶È2 [R_LEN] µÚ4¡¢N Îª
-	 * region Öµ£¬³¤¶ÈÎª [R_LEN] µÚN+1¡¢N+2 Îª key ³¤¶È£¬³¤¶È2 [K_LEN] µÚN+3¡¢MÎª keyÖµ£¬³¤¶ÈÎª
+	 * å‘½ä»¤æ¶ˆæ¯å°è£… æ ¼å¼ï¼š ç¬¬1ä¸ªå­—èŠ‚ä¸ºå‘½ä»¤ä»£ç ï¼Œé•¿åº¦1 [OPT] ç¬¬2ã€3ä¸ªå­—èŠ‚ä¸ºregioné•¿åº¦ï¼Œé•¿åº¦2 [R_LEN] ç¬¬4ã€N ä¸º
+	 * region å€¼ï¼Œé•¿åº¦ä¸º [R_LEN] ç¬¬N+1ã€N+2 ä¸º key é•¿åº¦ï¼Œé•¿åº¦2 [K_LEN] ç¬¬N+3ã€Mä¸º keyå€¼ï¼Œé•¿åº¦ä¸º
 	 * [K_LEN]
 	 */
 	private static class Command {

@@ -66,7 +66,7 @@ public class SpringDispatcherServlet extends DispatcherServlet {
 			}
 
 			/**
-			 * 未登录或不是系统管理员，不允许访问系统管理地址
+			 * 鏈櫥褰曟垨涓嶆槸绯荤粺绠＄悊鍛橈紝涓嶅厑璁歌闂郴缁熺鐞嗗湴鍧�
 			 */
 			if ((user == null) || (!user.isSystemAdministrator())) {
 				String uri = request.getRequestURI();

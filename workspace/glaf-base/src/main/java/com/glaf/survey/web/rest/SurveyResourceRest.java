@@ -66,16 +66,16 @@ public class SurveyResourceRest {
 			if (survey != null) {
 				if (survey.getStatus() != 0) {
 					return ResponseUtils.responseJsonResult(false,
-							"µ÷²éÖ÷ÌâÒÑ¾­½áÊø£¬Ğ»Ğ»ÄúµÄ¹Ø×¢£¡");
+							"è°ƒæŸ¥ä¸»é¢˜å·²ç»ç»“æŸï¼Œè°¢è°¢æ‚¨çš„å…³æ³¨ï¼");
 				}
 				Date now = new Date();
 				if (survey.getEndDate() != null
 						&& survey.getEndDate().getTime() < now.getTime()) {
 					return ResponseUtils.responseJsonResult(false,
-							"µ÷²éÖ÷ÌâÒÑ¾­½áÊø£¬Ğ»Ğ»ÄúµÄ¹Ø×¢£¡");
+							"è°ƒæŸ¥ä¸»é¢˜å·²ç»ç»“æŸï¼Œè°¢è°¢æ‚¨çš„å…³æ³¨ï¼");
 				}
 				String ip = RequestUtils.getIPAddress(request);
-				if (survey.getLimitFlag() == 1) {// ÏŞÖÆÃ¿¸öIPµØÖ·Í¶Æ±´ÎÊı
+				if (survey.getLimitFlag() == 1) {// é™åˆ¶æ¯ä¸ªIPåœ°å€æŠ•ç¥¨æ¬¡æ•°
 					SurveyResult result = surveyService.getLatestSurveyResult(
 							survey.getId(), ip);
 					if (result != null) {
@@ -83,7 +83,7 @@ public class SurveyResourceRest {
 						long ts = now.getTime() - surveyDate.getTime();
 						if (ts / (1000 * 60) <= survey.getLimitTimeInterval()) {
 							return ResponseUtils.responseJsonResult(false,
-									"ÄúÒÑ¾­Í¶¹ıÆ±ÁË£¬Ğ»Ğ»ÄúµÄ¹Ø×¢£¡");
+									"æ‚¨å·²ç»æŠ•è¿‡ç¥¨äº†ï¼Œè°¢è°¢æ‚¨çš„å…³æ³¨ï¼");
 						}
 					}
 				}
@@ -110,7 +110,7 @@ public class SurveyResourceRest {
 				}
 			}
 		}
-		return ResponseUtils.responseJsonResult(false, "µ÷²é²»³É¹¦£¬ÇëÉÔºòÔÙÊÔ£¡");
+		return ResponseUtils.responseJsonResult(false, "è°ƒæŸ¥ä¸æˆåŠŸï¼Œè¯·ç¨å€™å†è¯•ï¼");
 	}
 
 	@javax.annotation.Resource

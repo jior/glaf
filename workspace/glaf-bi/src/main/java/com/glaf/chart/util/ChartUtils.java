@@ -113,9 +113,9 @@ public class ChartUtils {
 	}
 
 	public static void setChartTheme(Chart chartModel) {
-		// ´´½¨Ö÷ÌâÑùÊ½
+		// åˆ›å»ºä¸»é¢˜æ ·å¼
 		StandardChartTheme standardChartTheme = new StandardChartTheme("cn");
-		// ÉèÖÃ±êÌâ×ÖÌå
+		// è®¾ç½®æ ‡é¢˜å­—ä½“
 		if (chartModel.getChartTitleFont() != null
 				&& chartModel.getChartTitleFontSize() != null
 				&& chartModel.getChartTitleFontSize() > 0) {
@@ -123,24 +123,24 @@ public class ChartUtils {
 					.getChartTitleFont(), Font.BOLD, chartModel
 					.getChartTitleFontSize()));
 		} else {
-			standardChartTheme.setExtraLargeFont(new Font("ËÎÌå", Font.BOLD, 18));
+			standardChartTheme.setExtraLargeFont(new Font("å®‹ä½“", Font.BOLD, 18));
 		}
 		if (chartModel.getChartFont() != null
 				&& chartModel.getChartFontSize() > 0) {
-			// ÉèÖÃÍ¼ÀıµÄ×ÖÌå
+			// è®¾ç½®å›¾ä¾‹çš„å­—ä½“
 			standardChartTheme
 					.setRegularFont(new Font(chartModel.getChartFont(),
 							Font.PLAIN, chartModel.getChartFontSize()));
-			// ÉèÖÃÖáÏòµÄ×ÖÌå
+			// è®¾ç½®è½´å‘çš„å­—ä½“
 			standardChartTheme.setLargeFont(new Font(chartModel.getChartFont(),
 					Font.PLAIN, chartModel.getChartFontSize()));
 		} else {
-			// ÉèÖÃÍ¼ÀıµÄ×ÖÌå
-			standardChartTheme.setRegularFont(new Font("ËÎÌå", Font.PLAIN, 14));
-			// ÉèÖÃÖáÏòµÄ×ÖÌå
-			standardChartTheme.setLargeFont(new Font("ËÎÌå", Font.PLAIN, 14));
+			// è®¾ç½®å›¾ä¾‹çš„å­—ä½“
+			standardChartTheme.setRegularFont(new Font("å®‹ä½“", Font.PLAIN, 14));
+			// è®¾ç½®è½´å‘çš„å­—ä½“
+			standardChartTheme.setLargeFont(new Font("å®‹ä½“", Font.PLAIN, 14));
 		}
-		// Ó¦ÓÃÖ÷ÌâÑùÊ½
+		// åº”ç”¨ä¸»é¢˜æ ·å¼
 		ChartFactory.setChartTheme(standardChartTheme);
 	}
 

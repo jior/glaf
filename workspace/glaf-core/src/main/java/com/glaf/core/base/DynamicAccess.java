@@ -21,35 +21,35 @@ package com.glaf.core.base;
 public interface DynamicAccess extends Accessable {
 
 	/**
-	 * ÊµÌåÀàÐÍ£¨mybatis3»òjpa£©
+	 * å®žä½“ç±»åž‹ï¼ˆmybatis3æˆ–jpaï¼‰
 	 * 
 	 * @return
 	 */
 	String getEntityType();
 
 	/**
-	 * ¹ýÂËSQL
+	 * è¿‡æ»¤SQL
 	 * 
 	 * @return
 	 */
 	String getFilterSql();
 
 	/**
-	 * Ö÷¼ü
+	 * ä¸»é”®
 	 * 
 	 * @return
 	 */
 	String getId();
 
 	/**
-	 * Ä¿±êID
+	 * ç›®æ ‡ID
 	 * 
 	 * @return
 	 */
 	String getObjectId();
 
 	/**
-	 * Ä¿±êÖµ
+	 * ç›®æ ‡å€¼
 	 * 
 	 * @return
 	 */

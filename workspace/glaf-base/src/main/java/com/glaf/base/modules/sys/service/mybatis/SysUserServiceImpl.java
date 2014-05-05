@@ -145,7 +145,7 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	/**
-	 * É¾³ı²¿ÃÅ½ÇÉ«ÓÃ»§
+	 * åˆ é™¤éƒ¨é—¨è§’è‰²ç”¨æˆ·
 	 * 
 	 * @param deptRole
 	 * @param userIds
@@ -265,7 +265,7 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	/**
-	 * ¸ù¾İ¹Ø¼ü×Ö²éÑ¯²¿ÃÅÓÃ»§ĞÅÏ¢
+	 * æ ¹æ®å…³é”®å­—æŸ¥è¯¢éƒ¨é—¨ç”¨æˆ·ä¿¡æ¯
 	 * 
 	 * @param searchWord
 	 * 
@@ -279,11 +279,11 @@ public class SysUserServiceImpl implements SysUserService {
 			int pageSize) {
 		SysUserQuery query = new SysUserQuery();
 		query.searchWord(searchWord);
-		// ¼ÆËã×ÜÊı
+		// è®¡ç®—æ€»æ•°
 		PageResult pager = new PageResult();
 		int count = sysUserMapper.getCountDeptUsers(query);
 
-		if (count == 0) {// ½á¹û¼¯Îª¿Õ
+		if (count == 0) {// ç»“æœé›†ä¸ºç©º
 			pager.setPageSize(pageSize);
 			return pager;
 		}
@@ -362,13 +362,13 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	public PageResult getSysUserList(long deptId, int pageNo, int pageSize) {
-		// ¼ÆËã×ÜÊı
+		// è®¡ç®—æ€»æ•°
 		PageResult pager = new PageResult();
 		SysUserQuery query = new SysUserQuery();
 		query.deptId(Long.valueOf(deptId));
 
 		int count = this.count(query);
-		if (count == 0) {// ½á¹û¼¯Îª¿Õ
+		if (count == 0) {// ç»“æœé›†ä¸ºç©º
 			pager.setPageSize(pageSize);
 			return pager;
 		}
@@ -388,7 +388,7 @@ public class SysUserServiceImpl implements SysUserService {
 
 	public PageResult getSysUserList(long deptId, String fullName, int pageNo,
 			int pageSize) {
-		// ¼ÆËã×ÜÊı
+		// è®¡ç®—æ€»æ•°
 		PageResult pager = new PageResult();
 		SysUserQuery query = new SysUserQuery();
 		query.deptId(Long.valueOf(deptId));
@@ -396,7 +396,7 @@ public class SysUserServiceImpl implements SysUserService {
 			query.nameLike(fullName);
 		}
 		int count = this.count(query);
-		if (count == 0) {// ½á¹û¼¯Îª¿Õ
+		if (count == 0) {// ç»“æœé›†ä¸ºç©º
 			pager.setPageSize(pageSize);
 			return pager;
 		}
@@ -416,12 +416,12 @@ public class SysUserServiceImpl implements SysUserService {
 
 	public PageResult getSysUserList(long deptId, String userName,
 			String account, int pageNo, int pageSize) {
-		// ¼ÆËã×ÜÊı
+		// è®¡ç®—æ€»æ•°
 		PageResult pager = new PageResult();
 		SysUserQuery query = new SysUserQuery();
 		query.deptId(Long.valueOf(deptId));
 		int count = this.count(query);
-		if (count == 0) {// ½á¹û¼¯Îª¿Õ
+		if (count == 0) {// ç»“æœé›†ä¸ºç©º
 			pager.setPageSize(pageSize);
 			return pager;
 		}
@@ -440,7 +440,7 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÓ¦ÓÃµÄÈ¨ÏŞÓÃ»§
+	 * è·å–æŸä¸ªåº”ç”¨çš„æƒé™ç”¨æˆ·
 	 * 
 	 * @param appId
 	 * @return
@@ -478,7 +478,7 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸ö½ÇÉ«´úÂëµÄÓÃ»§
+	 * è·å–æŸä¸ªè§’è‰²ä»£ç çš„ç”¨æˆ·
 	 * 
 	 * @param roleCode
 	 * @return
@@ -502,7 +502,7 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	/**
-	 * »ñÈ¡ÓÃ»§ĞÅÏ¢
+	 * è·å–ç”¨æˆ·ä¿¡æ¯
 	 * 
 	 * @return
 	 */
@@ -538,7 +538,7 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	/**
-	 * »ñÈ¡Ä³Ğ©ÓÃ»§µÄ½ÇÉ«
+	 * è·å–æŸäº›ç”¨æˆ·çš„è§’è‰²
 	 * 
 	 * @param actorIds
 	 * @return
@@ -740,7 +740,7 @@ public class SysUserServiceImpl implements SysUserService {
 	@Transactional
 	public boolean updateRole(SysUser user, Set<SysDeptRole> delRoles,
 			Set<SysDeptRole> newRoles) {
-		// ÏÈÉ¾³ıÓÃ»§Ö®Ç°µÄÈ¨ÏŞ
+		// å…ˆåˆ é™¤ç”¨æˆ·ä¹‹å‰çš„æƒé™
 		List<SysUserRole> userRoles = sysUserRoleMapper
 				.getSysUserRolesByUserId(user.getId());
 		if (userRoles != null && !userRoles.isEmpty()) {
@@ -755,7 +755,7 @@ public class SysUserServiceImpl implements SysUserService {
 
 		List<Membership> memberships = new java.util.ArrayList<Membership>();
 
-		// Ôö¼ÓĞÂÈ¨ÏŞ
+		// å¢åŠ æ–°æƒé™
 		if (newRoles != null && !newRoles.isEmpty()) {
 			Iterator<SysDeptRole> iter = newRoles.iterator();
 			while (iter.hasNext()) {

@@ -94,22 +94,22 @@ public class OvertimeController {
 		ctx.setActorId(actorId);
 		ctx.setProcessName(processName);
 		String opinion = request.getParameter("approveOpinion");
-		ctx.setOpinion(opinion);// ÉóÅúÒâ¼û
+		ctx.setOpinion(opinion);// å®¡æ‰¹æ„è§
 		/**
-		 * ¹¤×÷Á÷¿ØÖÆ²ÎÊı
+		 * å·¥ä½œæµæ§åˆ¶å‚æ•°
 		 */
 
 		Collection<DataField> datafields = new ArrayList<DataField>();
-		// »ñÈ¡ ²¿ÃÅ½Úµã
+		// è·å– éƒ¨é—¨èŠ‚ç‚¹
 		long deptId01 = sysUser.getDeptId();
 		SysDepartment curdept = sysDepartmentService.findById(deptId01);
-		// »ñÈ¡µ±µØ²¿ÃÅ½Úµã
+		// è·å–å½“åœ°éƒ¨é—¨èŠ‚ç‚¹
 		String curAreadeptCode = curdept.getCode().substring(0, 2);
 		SysDepartment curAreadept = sysDepartmentService
 				.findByCode(curAreadeptCode);
-		// »ñÈ¡¼¯ÍÅ½Úµã
+		// è·å–é›†å›¢èŠ‚ç‚¹
 		SysDepartment sysdeptMem = sysDepartmentService.findByCode("JT");
-		// »ñÈ¡¼¯ÍÅ²¿ÃÅ½Úµã
+		// è·å–é›†å›¢éƒ¨é—¨èŠ‚ç‚¹
 		String jtdeptCode = "";
 		if (curdept.getCode().length() >= 4) {
 			jtdeptCode = "JT" + curdept.getCode().substring(2, 4);
@@ -174,7 +174,7 @@ public class OvertimeController {
 			processInstanceId = overtime.getProcessinstanceid();
 			ctx.setProcessInstanceId(processInstanceId);
 			isOK = ProcessContainer.getContainer().completeTask(ctx);
-			logger.info("workflow ÖĞ");
+			logger.info("workflow ä¸­");
 		} else {
 			processInstanceId = ProcessContainer.getContainer().startProcess(
 					ctx);
@@ -198,7 +198,7 @@ public class OvertimeController {
 					Overtime overtime = overtimeService.getOvertime(Long
 							.parseLong(x));
 					/**
-					 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+					 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 					 */
 					if (overtime != null) {
 						// overtime.setDeleteFlag(1);
@@ -221,7 +221,7 @@ public class OvertimeController {
 		} else if (id != null) {
 			Overtime overtime = overtimeService.getOvertime(id);
 			/**
-			 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+			 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 			 */
 			if (overtime != null) {
 				// overtime.setDeleteFlag(1);
@@ -316,7 +316,7 @@ public class OvertimeController {
 		List<String> actorIds = new ArrayList<String>();
 
 		/**
-		 * Ò³Ãæ³õÊ¼»¯Ä¬ÈÏÊÇ´ıÉóºË×´Ì¬
+		 * é¡µé¢åˆå§‹åŒ–é»˜è®¤æ˜¯å¾…å®¡æ ¸çŠ¶æ€
 		 */
 		if (null == query.getWorkedProcessFlag()
 				|| "".equals(query.getWorkedProcessFlag())) {
@@ -381,9 +381,9 @@ public class OvertimeController {
 					JSONObject rowJSON = new JSONObject();
 
 					if ("WD".equals(query.getWorkedProcessFlag())) {
-						rowJSON.put("strstauts", "Î´ÉóºË");
+						rowJSON.put("strstauts", "æœªå®¡æ ¸");
 					} else if ("PD".equals(query.getWorkedProcessFlag())) {
-						rowJSON.put("strstauts", "ÒÑÉóºË");
+						rowJSON.put("strstauts", "å·²å®¡æ ¸");
 					}
 
 					rowJSON.put("id", overtime.getId());
@@ -779,7 +779,7 @@ public class OvertimeController {
 		Long id = RequestUtils.getLong(request, "id");
 		if (id != 0L) {
 			Overtime overtime = overtimeService.getOvertime(id);
-			// Ìí¼ÓÌá½»ÒµÎñÂß¼­
+			// æ·»åŠ æäº¤ä¸šåŠ¡é€»è¾‘
 			if (overtime.getStatus() == 1) {
 				if (overtime.getProcessinstanceid() != null) {
 					returnFlag = completeTask(overtime, 1, request);
@@ -869,7 +869,7 @@ public class OvertimeController {
 		query.setLoginContext(loginContext);
 
 		if (areaRole.equals("1")) {
-			// ²éÑ¯ËùÓĞ£¬²»ÉèÖÃ²ÎÊı
+			// æŸ¥è¯¢æ‰€æœ‰ï¼Œä¸è®¾ç½®å‚æ•°
 		} else {
 			SysDepartment sysDepartment = BaseDataManager.getInstance()
 					.getSysDepartmentService().findById(user.getDeptId());
@@ -1108,23 +1108,23 @@ public class OvertimeController {
 		ctx.setActorId(overtime.getAppuser());
 		ctx.setProcessName(processName);
 		/**
-		 * ¹¤×÷Á÷¿ØÖÆ²ÎÊı
+		 * å·¥ä½œæµæ§åˆ¶å‚æ•°
 		 */
 
 		Collection<DataField> datafields = new ArrayList<DataField>();
-		// »ñÈ¡ ²¿ÃÅ½Úµã
+		// è·å– éƒ¨é—¨èŠ‚ç‚¹
 		long deptId01 = sysUser.getDeptId();
 		SysDepartment curdept = sysDepartmentService.findById(deptId01);
 
-		// »ñÈ¡µ±µØ²¿ÃÅ½Úµã
+		// è·å–å½“åœ°éƒ¨é—¨èŠ‚ç‚¹
 		String curAreadeptCode = curdept.getCode().substring(0, 2);
 		SysDepartment curAreadept = sysDepartmentService
 				.findByCode(curAreadeptCode);
 
-		// »ñÈ¡¼¯ÍÅ½Úµã
+		// è·å–é›†å›¢èŠ‚ç‚¹
 		SysDepartment sysdeptMem = sysDepartmentService.findByCode("JT");
 
-		// »ñÈ¡¼¯ÍÅ²¿ÃÅ½Úµã
+		// è·å–é›†å›¢éƒ¨é—¨èŠ‚ç‚¹
 		String jtdeptCode = null;
 		if (curdept.getCode().length() >= 4) {
 			jtdeptCode = "JT" + curdept.getCode().substring(2, 4);
@@ -1186,7 +1186,7 @@ public class OvertimeController {
 			processInstanceId = overtime.getProcessinstanceid();
 			ctx.setProcessInstanceId(processInstanceId);
 			isOK = ProcessContainer.getContainer().completeTask(ctx);
-			logger.info("workflow ÖĞ");
+			logger.info("workflow ä¸­");
 		} else {
 			processInstanceId = ProcessContainer.getContainer().startProcess(
 					ctx);
@@ -1204,7 +1204,7 @@ public class OvertimeController {
 		Long id = RequestUtils.getLong(request, "id");
 		if (id != 0L) {
 			Overtime overtime = overtimeService.getOvertime(id);
-			// Ìí¼ÓÌá½»ÒµÎñÂß¼­
+			// æ·»åŠ æäº¤ä¸šåŠ¡é€»è¾‘
 			if (overtime.getStatus() == 0 || overtime.getStatus() == 3) {
 				returnFlag = startProcess(overtime, request);
 			}
@@ -1234,7 +1234,7 @@ public class OvertimeController {
 				if (StringUtils.isNotEmpty(x)) {
 					Overtime overtime = overtimeService.getOvertime(Long
 							.valueOf(x));
-					// Ìí¼ÓÌá½»ÒµÎñÂß¼­
+					// æ·»åŠ æäº¤ä¸šåŠ¡é€»è¾‘
 					if (overtime.getStatus() == 1) {
 						if (overtime.getProcessinstanceid() != null
 								&& overtime.getProcessinstanceid() != 0L) {
@@ -1249,7 +1249,7 @@ public class OvertimeController {
 			}
 		} else if (id != null) {
 			Overtime overtime = overtimeService.getOvertime(Long.valueOf(id));
-			// Ìí¼ÓÌá½»ÒµÎñÂß¼­
+			// æ·»åŠ æäº¤ä¸šåŠ¡é€»è¾‘
 			if (overtime.getStatus() == 1) {
 				if (overtime.getProcessinstanceid() != null
 						&& overtime.getProcessinstanceid() != 0) {

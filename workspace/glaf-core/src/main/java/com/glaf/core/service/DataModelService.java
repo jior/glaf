@@ -30,7 +30,7 @@ import com.glaf.core.query.DataModelQuery;
 public interface DataModelService {
 
 	/**
-	 * É¾³ı¶àÌõ¼ÇÂ¼
+	 * åˆ é™¤å¤šæ¡è®°å½•
 	 * 
 	 * @param tableName
 	 * @param businessKeys
@@ -39,7 +39,7 @@ public interface DataModelService {
 	void deleteAll(String tableName, Collection<String> businessKeys);
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ı¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®åˆ é™¤è®°å½•
 	 * 
 	 * @param tableName
 	 * @param rowIds
@@ -48,7 +48,7 @@ public interface DataModelService {
 	void deleteAllById(String tableName, Collection<Long> rowIds);
 
 	/**
-	 * »ñÈ¡Êı¾İÄ£ĞÍ¶ÔÏó
+	 * è·å–æ•°æ®æ¨¡å‹å¯¹è±¡
 	 * 
 	 * @param tableName
 	 * @param id
@@ -57,7 +57,7 @@ public interface DataModelService {
 	DataModel getDataModel(String tableName, Long id);
 
 	/**
-	 * »ñÈ¡Êı¾İÄ£ĞÍ¶ÔÏó
+	 * è·å–æ•°æ®æ¨¡å‹å¯¹è±¡
 	 * 
 	 * @param tableName
 	 * @param businessKey
@@ -66,7 +66,7 @@ public interface DataModelService {
 	DataModel getDataModelByBusinessKey(String tableName, String businessKey);
 
 	/**
-	 * »ñÈ¡Êı¾İÄ£ĞÍ¶ÔÏó
+	 * è·å–æ•°æ®æ¨¡å‹å¯¹è±¡
 	 * 
 	 * @param tableName
 	 * @param processInstanceId
@@ -76,7 +76,7 @@ public interface DataModelService {
 			String processInstanceId);
 
 	/**
-	 * Í³¼ÆÊı¾İÄ£ĞÍ¶ÔÏó¸öÊı
+	 * ç»Ÿè®¡æ•°æ®æ¨¡å‹å¯¹è±¡ä¸ªæ•°
 	 * 
 	 * @param query
 	 * @return
@@ -84,7 +84,7 @@ public interface DataModelService {
 	int getDataModelCount(DataModelQuery query);
 
 	/**
-	 * ±£´æÊı¾İ¶ÔÏóÊµÌå
+	 * ä¿å­˜æ•°æ®å¯¹è±¡å®ä½“
 	 * 
 	 * @param dataModel
 	 */
@@ -92,7 +92,7 @@ public interface DataModelService {
 	void insert(DataModel dataModel);
 
 	/**
-	 * »ñÈ¡Ò»Ò³Êı¾İ¶ÔÏó
+	 * è·å–ä¸€é¡µæ•°æ®å¯¹è±¡
 	 * 
 	 * @param pageNo
 	 * @param pageSize
@@ -102,7 +102,7 @@ public interface DataModelService {
 	List<DataModel> list(int pageNo, int pageSize, DataModelQuery query);
 
 	/**
-	 * ¸üĞÂÊı¾İ¶ÔÏó
+	 * æ›´æ–°æ•°æ®å¯¹è±¡
 	 * 
 	 * @param dataModel
 	 */

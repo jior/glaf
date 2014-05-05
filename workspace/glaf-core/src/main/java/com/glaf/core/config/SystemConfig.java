@@ -203,7 +203,7 @@ public class SystemConfig {
 	}
 
 	/**
-	 * 获取服务地址
+	 * 鑾峰彇鏈嶅姟鍦板潃
 	 * 
 	 * @return
 	 */

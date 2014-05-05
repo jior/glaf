@@ -28,7 +28,7 @@ import com.glaf.mail.domain.*;
 public interface IMailCountService {
 
 	/**
-	 * ¸ù¾İÈÎÎñ±àºÅ¼°ÀàĞÍ»ñÈ¡»ã×ÜĞÅÏ¢
+	 * æ ¹æ®ä»»åŠ¡ç¼–å·åŠç±»å‹è·å–æ±‡æ€»ä¿¡æ¯
 	 * 
 	 * @param taskId
 	 * @param type

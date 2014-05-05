@@ -145,7 +145,7 @@ public class ConfigTools {
 		}
 		path = getJavaFileSystemPath(path);
 		java.io.File directory = new java.io.File(path + sp);
-		if (!directory.exists()) { // Èç¹ûÄ¿Â¼²»´æÔÚ£¬ĞÂ½¨Ò»¸ö
+		if (!directory.exists()) { // å¦‚æœç›®å½•ä¸å­˜åœ¨ï¼Œæ–°å»ºä¸€ä¸ª
 			boolean isOK = directory.mkdirs();
 			if (isOK) {
 				throw new RuntimeException(directory.getAbsolutePath()

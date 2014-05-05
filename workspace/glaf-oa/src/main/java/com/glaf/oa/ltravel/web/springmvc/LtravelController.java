@@ -71,10 +71,10 @@ public class LtravelController {
 		ctx.setActorId(actorId);
 		ctx.setProcessName(processName);
 		String opinion = request.getParameter("approveOpinion");
-		ctx.setOpinion(opinion);// ÉóÅúÒâ¼û
+		ctx.setOpinion(opinion);// å®¡æ‰¹æ„è§
 
 		/**
-		 * ¹¤×÷Á÷¿ØÖÆ²ÎÊı
+		 * å·¥ä½œæµæ§åˆ¶å‚æ•°
 		 */
 		Collection<DataField> datafields = new ArrayList<DataField>();
 
@@ -82,19 +82,19 @@ public class LtravelController {
 		datafield1.setName("rowId");
 		datafield1.setValue(ltravel.getTravelid());
 
-		// ¼¯ÍÅ¸±×Ü
+		// é›†å›¢å‰¯æ€»
 		SysDepartment sysdepartMem1 = BaseDataManager.getInstance()
 				.getSysDepartmentService().findByCode("JT");
 		DataField datafield2 = new DataField();
 		datafield2.setName("deptId01");
 		datafield2.setValue(sysdepartMem1.getId());
 
-		// Ö´ĞĞ¶­ÊÂ
+		// æ‰§è¡Œè‘£äº‹
 		DataField datafield3 = new DataField();
 		datafield3.setName("deptId02");
 		datafield3.setValue(sysdepartMem1.getId());
 
-		// ¼¯ÍÅHR
+		// é›†å›¢HR
 		SysDepartment sysDepartment2 = BaseDataManager.getInstance()
 				.getSysDepartmentService().findByCode("JT03");
 		DataField datafield4 = new DataField();
@@ -125,7 +125,7 @@ public class LtravelController {
 			processInstanceId = ltravel.getProcessinstanceid();
 			ctx.setProcessInstanceId(processInstanceId);
 			isOK = ProcessContainer.getContainer().completeTask(ctx);
-			logger.info("workflow ÖĞ");
+			logger.info("workflow ä¸­");
 		} else {
 			processInstanceId = ProcessContainer.getContainer().startProcess(
 					ctx);
@@ -149,7 +149,7 @@ public class LtravelController {
 				if (x != 0L) {
 					Ltravel ltravel = ltravelService.getLtravel(x);
 					/**
-					 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+					 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 					 */
 					if (ltravel != null) {
 						// ltravel.setDeleteFlag(1);
@@ -172,7 +172,7 @@ public class LtravelController {
 		} else if (travelid != 0L) {
 			Ltravel ltravel = ltravelService.getLtravel(travelid);
 			/**
-			 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+			 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 			 */
 			if (ltravel != null) {
 				// ltravel.setDeleteFlag(1);
@@ -266,7 +266,7 @@ public class LtravelController {
 		List<String> actorIds = new ArrayList<String>();
 
 		/**
-		 * Ò³Ãæ³õÊ¼»¯Ä¬ÈÏÊÇ´ıÉóºË×´Ì¬
+		 * é¡µé¢åˆå§‹åŒ–é»˜è®¤æ˜¯å¾…å®¡æ ¸çŠ¶æ€
 		 */
 		if (null == query.getWorkedProcessFlag()
 				|| "".equals(query.getWorkedProcessFlag())) {
@@ -330,9 +330,9 @@ public class LtravelController {
 					JSONObject rowJSON = new JSONObject();
 
 					if ("WD".equals(query.getWorkedProcessFlag())) {
-						rowJSON.put("strstauts", "Î´ÉóºË");
+						rowJSON.put("strstauts", "æœªå®¡æ ¸");
 					} else if ("PD".equals(query.getWorkedProcessFlag())) {
-						rowJSON.put("strstauts", "ÒÑÉóºË");
+						rowJSON.put("strstauts", "å·²å®¡æ ¸");
 					}
 
 					rowJSON.put("travelid", ltravel.getTravelid());
@@ -718,7 +718,7 @@ public class LtravelController {
 		Long travelid = RequestUtils.getLong(request, "travelid");
 		if (travelid != 0L) {
 			Ltravel ltravel = ltravelService.getLtravel(travelid);
-			// Ìí¼ÓÌá½»ÒµÎñÂß¼­
+			// æ·»åŠ æäº¤ä¸šåŠ¡é€»è¾‘
 			if (ltravel.getStatus() == 1) {
 				if (ltravel.getProcessinstanceid() != null) {
 					returnFlag = completeTask(ltravel, 1, request);
@@ -803,7 +803,7 @@ public class LtravelController {
 		query.setLoginContext(loginContext);
 
 		if (areaRole.equals("1")) {
-			// ²éÑ¯ËùÓĞ£¬²»ÉèÖÃ²ÎÊı
+			// æŸ¥è¯¢æ‰€æœ‰ï¼Œä¸è®¾ç½®å‚æ•°
 		} else {
 			SysDepartment sysDepartment = BaseDataManager.getInstance()
 					.getSysDepartmentService().findById(user.getDeptId());
@@ -1023,7 +1023,7 @@ public class LtravelController {
 		ctx.setActorId(ltravel.getAppuser());
 		ctx.setProcessName(processName);
 		/**
-		 * ¹¤×÷Á÷¿ØÖÆ²ÎÊı
+		 * å·¥ä½œæµæ§åˆ¶å‚æ•°
 		 */
 		Collection<DataField> datafields = new ArrayList<DataField>();
 
@@ -1031,19 +1031,19 @@ public class LtravelController {
 		datafield1.setName("rowId");
 		datafield1.setValue(ltravel.getTravelid());
 
-		// ¼¯ÍÅ¸±×Ü
+		// é›†å›¢å‰¯æ€»
 		SysDepartment sysdepartMem1 = BaseDataManager.getInstance()
 				.getSysDepartmentService().findByCode("JT");
 		DataField datafield2 = new DataField();
 		datafield2.setName("deptId01");
 		datafield2.setValue(sysdepartMem1.getId());
 
-		// Ö´ĞĞ¶­ÊÂ
+		// æ‰§è¡Œè‘£äº‹
 		DataField datafield3 = new DataField();
 		datafield3.setName("deptId02");
 		datafield3.setValue(sysdepartMem1.getId());
 
-		// ¼¯ÍÅHR
+		// é›†å›¢HR
 		SysDepartment sysDepartment2 = BaseDataManager.getInstance()
 				.getSysDepartmentService().findByCode("JT03");
 		DataField datafield4 = new DataField();
@@ -1070,7 +1070,7 @@ public class LtravelController {
 			processInstanceId = ltravel.getProcessinstanceid();
 			ctx.setProcessInstanceId(processInstanceId);
 			isOK = ProcessContainer.getContainer().completeTask(ctx);
-			logger.info("workflow ÖĞ");
+			logger.info("workflow ä¸­");
 		} else {
 			processInstanceId = ProcessContainer.getContainer().startProcess(
 					ctx);
@@ -1118,7 +1118,7 @@ public class LtravelController {
 				if (StringUtils.isNotEmpty(x)) {
 					Ltravel ltravel = ltravelService
 							.getLtravel(Long.valueOf(x));
-					// Ìí¼ÓÌá½»ÒµÎñÂß¼­
+					// æ·»åŠ æäº¤ä¸šåŠ¡é€»è¾‘
 					if (ltravel.getStatus() == 1) {
 						if (ltravel.getProcessinstanceid() != null
 								&& ltravel.getProcessinstanceid() != 0L) {
@@ -1134,7 +1134,7 @@ public class LtravelController {
 
 		} else if (travelid != null) {
 			Ltravel ltravel = ltravelService.getLtravel(travelid);
-			// Ìí¼ÓÌá½»ÒµÎñÂß¼­
+			// æ·»åŠ æäº¤ä¸šåŠ¡é€»è¾‘
 			if (ltravel.getStatus() == 1) {
 				if (ltravel.getProcessinstanceid() != null
 						&& ltravel.getProcessinstanceid() != 0) {

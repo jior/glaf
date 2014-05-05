@@ -29,7 +29,7 @@ public class TableSchemaExecutionHandler implements ExecutionHandler {
 		SessionFactory sessionFactory = HibernateBeanFactory
 				.getSessionFactory();
 		System.out.println(sessionFactory);
-		System.out.println("<br>³É¹¦£¡");
+		System.out.println("<br>æˆåŠŸï¼");
 	}
 
 }

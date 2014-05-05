@@ -31,7 +31,7 @@ import com.glaf.base.modules.sys.model.SysTree;
 public class AQUtils {
 
 	/**
-	 * °´CODE»ñµÃlist
+	 * æŒ‰CODEè·å¾—list
 	 * 
 	 * @param code
 	 * @return
@@ -42,7 +42,7 @@ public class AQUtils {
 	}
 
 	/**
-	 * °Ñ»ù´¡Êı¾İ×ª³ÉMAP£¬KEYÎªCODE£¬VALUEÎªBaseDataInfo¶ÔÏó
+	 * æŠŠåŸºç¡€æ•°æ®è½¬æˆMAPï¼ŒKEYä¸ºCODEï¼ŒVALUEä¸ºBaseDataInfoå¯¹è±¡
 	 * 
 	 * @param baseList
 	 * @return
@@ -57,11 +57,11 @@ public class AQUtils {
 	}
 
 	/**
-	 * °´CodeÈ¡»ù´¡Êı¾İÖµ
+	 * æŒ‰Codeå–åŸºç¡€æ•°æ®å€¼
 	 * 
 	 * @param baseDataMap
 	 * @param code
-	 * @return µ±Ã»ÓĞ¶ÔÓ¦codeÊ±·µ»Ø new BaseDataInfo
+	 * @return å½“æ²¡æœ‰å¯¹åº”codeæ—¶è¿”å› new BaseDataInfo
 	 */
 	public static BaseDataInfo getValueByCode(
 			Map<String, BaseDataInfo> baseDataMap, String code) {
@@ -74,7 +74,7 @@ public class AQUtils {
 	}
 
 	/**
-	 * °´ ID»ñµÃtree
+	 * æŒ‰ IDè·å¾—tree
 	 * 
 	 * @param id
 	 * @return
@@ -84,7 +84,7 @@ public class AQUtils {
 	}
 
 	/**
-	 * °´ ID»ñµÃdictory
+	 * æŒ‰ IDè·å¾—dictory
 	 * 
 	 * @param id
 	 * @return

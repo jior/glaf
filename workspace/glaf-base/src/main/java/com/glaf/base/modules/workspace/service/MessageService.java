@@ -31,7 +31,7 @@ import com.glaf.core.util.PageResult;
 public interface MessageService {
 
 	/**
-	 * ±£´æĞÂÔöĞÅÏ¢
+	 * ä¿å­˜æ–°å¢ä¿¡æ¯
 	 * 
 	 * @param bean
 	 * @return
@@ -40,7 +40,7 @@ public interface MessageService {
 	boolean create(Message bean);
 
 	/**
-	 * ±£´æ»ò¸üĞÂĞÅÏ¢
+	 * ä¿å­˜æˆ–æ›´æ–°ä¿¡æ¯
 	 * 
 	 * @param bean
 	 * @return
@@ -49,7 +49,7 @@ public interface MessageService {
 	boolean saveOrUpdate(Message bean);
 
 	/**
-	 * ¸üĞÂĞÅÏ¢
+	 * æ›´æ–°ä¿¡æ¯
 	 * 
 	 * @param bean
 	 * @return
@@ -58,7 +58,7 @@ public interface MessageService {
 	boolean update(Message bean);
 
 	/**
-	 * µ¥ÏîÉ¾³ı
+	 * å•é¡¹åˆ é™¤
 	 * 
 	 * @param bean
 	 * @return
@@ -67,7 +67,7 @@ public interface MessageService {
 	boolean delete(Message bean);
 
 	/**
-	 * µ¥ÏîÉ¾³ı
+	 * å•é¡¹åˆ é™¤
 	 * 
 	 * @param id
 	 *            int
@@ -77,7 +77,7 @@ public interface MessageService {
 	boolean delete(long id);
 
 	/**
-	 * ÅúÁ¿É¾³ı
+	 * æ‰¹é‡åˆ é™¤
 	 * 
 	 * @param c
 	 * @return
@@ -86,7 +86,7 @@ public interface MessageService {
 	boolean deleteAll(Collection<Object> c);
 
 	/**
-	 * »ñÈ¡¶ÔÏó
+	 * è·å–å¯¹è±¡
 	 * 
 	 * @param id
 	 * @return
@@ -94,7 +94,7 @@ public interface MessageService {
 	Message find(long id);
 
 	/**
-	 * ·¢ËÍÏûÏ¢(¸øÓÃ»§)
+	 * å‘é€æ¶ˆæ¯(ç»™ç”¨æˆ·)
 	 * 
 	 * @param message
 	 * @param recverIdStr
@@ -104,7 +104,7 @@ public interface MessageService {
 	boolean saveSendMessage(Message message, String[] recverIds);
 
 	/**
-	 * ·¢ËÍÏûÏ¢(¸ø²¿ÃÅµÄÓÃ»§)
+	 * å‘é€æ¶ˆæ¯(ç»™éƒ¨é—¨çš„ç”¨æˆ·)
 	 * 
 	 * @param message
 	 * @param recverIds
@@ -114,7 +114,7 @@ public interface MessageService {
 	boolean saveSendMessageToDept(Message message, String[] recverIds);
 
 	/**
-	 * ÔÄ¶ÁÏûÏ¢
+	 * é˜…è¯»æ¶ˆæ¯
 	 * 
 	 * @param id
 	 * @return
@@ -123,7 +123,7 @@ public interface MessageService {
 	Message updateReadMessage(long id);
 
 	/**
-	 * »ñÈ¡ÁĞ±í
+	 * è·å–åˆ—è¡¨
 	 * 
 	 * @param params
 	 * @param pageNo
@@ -133,7 +133,7 @@ public interface MessageService {
 	PageResult getMessageList(Map params, int pageNo, int pageSize);
 
 	/**
-	 * »ñÈ¡ÊÕ¼şÏäÁĞ±í
+	 * è·å–æ”¶ä»¶ç®±åˆ—è¡¨
 	 * 
 	 * @param params
 	 * @param pageNo
@@ -143,7 +143,7 @@ public interface MessageService {
 	PageResult getReceiveList(long userId, Map params, int pageNo, int pageSize);
 
 	/**
-	 * »ñÈ¡Î´¶ÁÊÕ¼şÏäÁĞ±í
+	 * è·å–æœªè¯»æ”¶ä»¶ç®±åˆ—è¡¨
 	 * 
 	 * @param params
 	 * @param pageNo
@@ -153,7 +153,7 @@ public interface MessageService {
 	PageResult getNoReadList(long userId, Map params, int pageNo, int pageSize);
 
 	/**
-	 * »ñÈ¡·¢¼şÏäÁĞ±í
+	 * è·å–å‘ä»¶ç®±åˆ—è¡¨
 	 * 
 	 * @param params
 	 * @param pageNo

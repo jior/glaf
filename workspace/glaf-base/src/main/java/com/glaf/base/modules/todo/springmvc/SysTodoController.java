@@ -49,7 +49,7 @@ public class SysTodoController {
 	private TodoService todoService;
 
 	/**
-	 * 显示TODO列表
+	 * 鏄剧ずTODO鍒楄〃
 	 * 
 	 * @param modelMap
 	 * @param request
@@ -88,7 +88,7 @@ public class SysTodoController {
 	}
 
 	/**
-	 * 显示TODO列表
+	 * 鏄剧ずTODO鍒楄〃
 	 * 
 	 * @param modelMap
 	 * @param request
@@ -103,7 +103,7 @@ public class SysTodoController {
 	}
 
 	/**
-	 * 显示TODO列表
+	 * 鏄剧ずTODO鍒楄〃
 	 * 
 	 * @param modelMap
 	 * @param request
@@ -116,7 +116,7 @@ public class SysTodoController {
 	}
 
 	/**
-	 * 上传文件
+	 * 涓婁紶鏂囦欢
 	 * 
 	 * @param modelMap
 	 * @param request
@@ -129,7 +129,7 @@ public class SysTodoController {
 	}
 
 	/**
-	 * 上传文件
+	 * 涓婁紶鏂囦欢
 	 * 
 	 * @param request
 	 * @param modelMap

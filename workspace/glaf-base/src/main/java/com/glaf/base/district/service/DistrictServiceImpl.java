@@ -79,7 +79,7 @@ public class DistrictServiceImpl implements DistrictService {
 	}
 
 	/**
-	 * ¸ù¾İ±àÂë»ñÈ¡Ò»Ìõ¼ÇÂ¼
+	 * æ ¹æ®ç¼–ç è·å–ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */
@@ -88,7 +88,7 @@ public class DistrictServiceImpl implements DistrictService {
 	}
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
@@ -97,7 +97,7 @@ public class DistrictServiceImpl implements DistrictService {
 	}
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */
@@ -205,7 +205,7 @@ public class DistrictServiceImpl implements DistrictService {
 	public boolean update(DistrictEntity bean) {
 		DistrictEntity model = this.getDistrict(bean.getId());
 		/**
-		 * Èç¹û½ÚµãÒÆ¶¯ÁËÎ»ÖÃ£¬¼´ÒÆ¶¯µ½±ğµÄ½ÚµãÏÂÃæÈ¥ÁË
+		 * å¦‚æœèŠ‚ç‚¹ç§»åŠ¨äº†ä½ç½®ï¼Œå³ç§»åŠ¨åˆ°åˆ«çš„èŠ‚ç‚¹ä¸‹é¢å»äº†
 		 */
 		if (model.getParentId() != bean.getParentId()) {
 			List<DistrictEntity> list = new java.util.ArrayList<DistrictEntity>();
@@ -213,7 +213,7 @@ public class DistrictServiceImpl implements DistrictService {
 			if (!list.isEmpty()) {
 				for (DistrictEntity node : list) {
 					/**
-					 * ²»ÄÜÒÆ¶¯µ½ta×Ô¼ºµÄ×Ó½ÚµãÏÂÃæÈ¥
+					 * ä¸èƒ½ç§»åŠ¨åˆ°taè‡ªå·±çš„å­èŠ‚ç‚¹ä¸‹é¢å»
 					 */
 					if (bean.getParentId() == node.getId()) {
 						throw new RuntimeException(
@@ -221,7 +221,7 @@ public class DistrictServiceImpl implements DistrictService {
 					}
 				}
 				/**
-				 * ĞŞÕıËùÓĞ×Ó½ÚµãµÄtreeId
+				 * ä¿®æ­£æ‰€æœ‰å­èŠ‚ç‚¹çš„treeId
 				 */
 				DistrictEntity oldParent = this
 						.getDistrict(model.getParentId());

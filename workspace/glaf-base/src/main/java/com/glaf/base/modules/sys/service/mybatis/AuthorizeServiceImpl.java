@@ -43,7 +43,7 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 	private SysUserService sysUserService;
 
 	/**
-	 * ÓÃ»§ÈÏÖ¤
+	 * ç”¨æˆ·è®¤è¯
 	 * 
 	 * @param account
 	 * @param pwd
@@ -60,8 +60,8 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 			}
 			String password = sysUserService
 					.getSysUserPasswordByAccount(account);
-			if (!StringUtils.equals(password, pwd) || // ÃÜÂë²»Æ¥Åä
-					bean.getLocked() == 1) {// ÕÊºÅ½ûÖ¹
+			if (!StringUtils.equals(password, pwd) || // å¯†ç ä¸åŒ¹é…
+					bean.getLocked() == 1) {// å¸å·ç¦æ­¢
 				bean = null;
 			}
 		}
@@ -69,7 +69,7 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 	}
 
 	/**
-	 * ÓÃ»§µÇÂ½
+	 * ç”¨æˆ·ç™»é™†
 	 * 
 	 * @param account
 	 * @param pwd
@@ -86,10 +86,10 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 				logger.debug(account + " is system admin");
 			}
 			if (bean.getAccountType() != 1) {
-				// È¡³öÓÃ»§¶ÔÓ¦µÄÄ£¿éÈ¨ÏŞ
+				// å–å‡ºç”¨æˆ·å¯¹åº”çš„æ¨¡å—æƒé™
 				bean = sysUserService.getUserPrivileges(bean);
 
-				// È¡³öÓÃ»§µÄ²¿ÃÅÁĞ±í
+				// å–å‡ºç”¨æˆ·çš„éƒ¨é—¨åˆ—è¡¨
 				List<SysDepartment> list = new java.util.ArrayList<SysDepartment>();
 				sysDepartmentService.findNestingDepartment(list,
 						bean.getDepartment());
@@ -100,7 +100,7 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 	}
 
 	/**
-	 * ÓÃ»§µÇÂ½
+	 * ç”¨æˆ·ç™»é™†
 	 * 
 	 * @param account
 	 * @param pwd
@@ -117,8 +117,8 @@ public class AuthorizeServiceImpl implements AuthorizeService {
 			}
 			String password = sysUserService
 					.getSysUserPasswordByAccount(account);
-			if (!StringUtils.equals(password, pwd) || // ÃÜÂë²»Æ¥Åä
-					bean.getBlocked() == 1) {// ÕÊºÅ½ûÖ¹
+			if (!StringUtils.equals(password, pwd) || // å¯†ç ä¸åŒ¹é…
+					bean.getBlocked() == 1) {// å¸å·ç¦æ­¢
 				bean = null;
 			}
 		}

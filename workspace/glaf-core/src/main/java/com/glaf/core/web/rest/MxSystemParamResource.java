@@ -73,12 +73,12 @@ public class MxSystemParamResource {
 			List<String> ids = StringTools.split(rowIds);
 			if (ids != null && !ids.isEmpty()) {
 				// systemParamService.deleteByIds(ids);
-				return ResponseUtils.responseJsonResult(true, "É¾³ı³É¹¦£¡");
+				return ResponseUtils.responseJsonResult(true, "åˆ é™¤æˆåŠŸï¼");
 			}
 		} else {
 			throw new WebApplicationException(Response.Status.NOT_FOUND);
 		}
-		return ResponseUtils.responseJsonResult(false, "É¾³ıÊ§°Ü£¡");
+		return ResponseUtils.responseJsonResult(false, "åˆ é™¤å¤±è´¥ï¼");
 	}
 
 	@POST
@@ -91,12 +91,12 @@ public class MxSystemParamResource {
 			List<String> ids = StringTools.split(rowIds);
 			if (ids != null && !ids.isEmpty()) {
 				// systemParamService.deleteByIds(ids);
-				return ResponseUtils.responseJsonResult(true, "É¾³ı³É¹¦£¡");
+				return ResponseUtils.responseJsonResult(true, "åˆ é™¤æˆåŠŸï¼");
 			}
 		} else {
 			throw new WebApplicationException(Response.Status.NOT_FOUND);
 		}
-		return ResponseUtils.responseJsonResult(false, "É¾³ıÊ§°Ü£¡");
+		return ResponseUtils.responseJsonResult(false, "åˆ é™¤å¤±è´¥ï¼");
 	}
 
 	@POST
@@ -111,7 +111,7 @@ public class MxSystemParamResource {
 		}
 		if (systemParamId != null) {
 			systemParamService.deleteById(systemParamId);
-			return ResponseUtils.responseJsonResult(true, "É¾³ı³É¹¦£¡");
+			return ResponseUtils.responseJsonResult(true, "åˆ é™¤æˆåŠŸï¼");
 		} else {
 			throw new WebApplicationException(Response.Status.NOT_FOUND);
 		}
@@ -125,7 +125,7 @@ public class MxSystemParamResource {
 			@Context UriInfo uriInfo) {
 		if (systemParamId != null) {
 			systemParamService.deleteById(systemParamId);
-			return ResponseUtils.responseJsonResult(true, "É¾³ı³É¹¦£¡");
+			return ResponseUtils.responseJsonResult(true, "åˆ é™¤æˆåŠŸï¼");
 		} else {
 			throw new WebApplicationException(Response.Status.NOT_FOUND);
 		}
@@ -384,13 +384,13 @@ public class MxSystemParamResource {
 					}
 				}
 				systemParamService.saveAll(serviceKey, businessKey, rows);
-				return ResponseUtils.responseJsonResult(true, "±£´æ³É¹¦£¡");
+				return ResponseUtils.responseJsonResult(true, "ä¿å­˜æˆåŠŸï¼");
 			}
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		return ResponseUtils.responseJsonResult(false, "±£´æÊ§°Ü£¡");
+		return ResponseUtils.responseJsonResult(false, "ä¿å­˜å¤±è´¥ï¼");
 	}
 
 	@POST
@@ -417,11 +417,11 @@ public class MxSystemParamResource {
 
 		try {
 			this.systemParamService.save(systemParam);
-			return ResponseUtils.responseJsonResult(true, "±£´æ³É¹¦£¡");
+			return ResponseUtils.responseJsonResult(true, "ä¿å­˜æˆåŠŸï¼");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		return ResponseUtils.responseJsonResult(false, "±£´æÊ§°Ü£¡");
+		return ResponseUtils.responseJsonResult(false, "ä¿å­˜å¤±è´¥ï¼");
 	}
 
 	@javax.annotation.Resource

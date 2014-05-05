@@ -33,14 +33,14 @@ public interface PanelService {
 	Panel getPanelByTitle(String title);
 
 	/**
-	 * »ñÈ¡ÓÃ»§×Ô¶¨ÒåÃæ°å
+	 * è·å–ç”¨æˆ·è‡ªå®šä¹‰é¢æ¿
 	 * 
 	 * @return
 	 */
 	List<Panel> getPanels(String actorId);
 
 	/**
-	 * »ñÈ¡ÏµÍ³Ãæ°å
+	 * è·å–ç³»ç»Ÿé¢æ¿
 	 * 
 	 * @return
 	 */

@@ -194,7 +194,7 @@ public class MxChartServiceImpl implements IChartService {
 	}
 
 	/**
-	 * »ñÈ¡Í¼±í¶¨Òå²¢È¡Êı
+	 * è·å–å›¾è¡¨å®šä¹‰å¹¶å–æ•°
 	 * 
 	 * @param name
 	 * @return
@@ -229,7 +229,7 @@ public class MxChartServiceImpl implements IChartService {
 	}
 
 	/**
-	 * ¸ù¾İÃû³Æ»ñÈ¡Í¼±í¶¨Òå
+	 * æ ¹æ®åç§°è·å–å›¾è¡¨å®šä¹‰
 	 * 
 	 * @param name
 	 * @return
@@ -246,7 +246,7 @@ public class MxChartServiceImpl implements IChartService {
 	}
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
@@ -255,7 +255,7 @@ public class MxChartServiceImpl implements IChartService {
 	}
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */

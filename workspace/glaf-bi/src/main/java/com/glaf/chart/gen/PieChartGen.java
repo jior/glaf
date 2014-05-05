@@ -42,11 +42,11 @@ public class PieChartGen implements ChartGen {
 
 	public static void main(String[] args) {
 		Chart chartModel = new Chart();
-		chartModel.setChartFont("ËÎÌå");
+		chartModel.setChartFont("å®‹ä½“");
 		chartModel.setChartFontSize(12);
 		chartModel.setChartHeight(400);
 		chartModel.setChartWidth(400);
-		chartModel.setChartTitle("²âÊÔ±ıÍ¼");
+		chartModel.setChartTitle("æµ‹è¯•é¥¼å›¾");
 		chartModel.setImageType("png");
 		chartModel.setChartName("pie");
 		chartModel.setChartType("pie");
@@ -54,7 +54,7 @@ public class PieChartGen implements ChartGen {
 		for (int i = 1; i < 6; i++) {
 			ColumnModel cell = new ColumnModel();
 			cell.setColumnName("col_" + i);
-			cell.setSeries("ÌõÄ¿" + i);
+			cell.setSeries("æ¡ç›®" + i);
 			cell.setDoubleValue(rand.nextInt(100) + 1.0);
 			chartModel.addColumn(cell);
 		}
@@ -65,16 +65,16 @@ public class PieChartGen implements ChartGen {
 
 	public JFreeChart createChart(Chart chartModel) {
 		ChartUtils.setChartTheme(chartModel);
-		// ÓÃ¹¤³§Àà´´½¨±ıÍ¼
+		// ç”¨å·¥å‚ç±»åˆ›å»ºé¥¼å›¾
 		JFreeChart chart = ChartFactory.createPieChart(
 				chartModel.getChartTitle(), createDataset(chartModel), true,
 				true, false);
 		chart.setBackgroundPaint(Color.white);
-		// RenderingHints×öÎÄ×ÖäÖÈ¾²ÎÊıµÄĞŞ¸Ä
-		// VALUE_TEXT_ANTIALIAS_OFF±íÊ¾½«ÎÄ×ÖµÄ¿¹¾â³İ¹Ø±Õ.
+		// RenderingHintsåšæ–‡å­—æ¸²æŸ“å‚æ•°çš„ä¿®æ”¹
+		// VALUE_TEXT_ANTIALIAS_OFFè¡¨ç¤ºå°†æ–‡å­—çš„æŠ—é”¯é½¿å…³é—­.
 		chart.getRenderingHints().put(RenderingHints.KEY_TEXT_ANTIALIASING,
 				RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
-		// µÃµ½±ıÍ¼µÄPlot¶ÔÏó
+		// å¾—åˆ°é¥¼å›¾çš„Plotå¯¹è±¡
 		PiePlot piePlot = (PiePlot) chart.getPlot();
 		setSection(piePlot, chartModel);
 		setLabel(piePlot, chartModel);
@@ -85,7 +85,7 @@ public class PieChartGen implements ChartGen {
 	}
 
 	public DefaultPieDataset createDataset(Chart chartModel) {
-		// ÉèÖÃÊı¾İ
+		// è®¾ç½®æ•°æ®
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
 
 		List<ColumnModel> columns = chartModel.getColumns();
@@ -137,10 +137,10 @@ public class PieChartGen implements ChartGen {
 	}
 
 	public void setLabel(PiePlot pieplot, Chart chartModel) {
-		// ÉèÖÃÉÈÇø±êÇ©ÏÔÊ¾¸ñÊ½£º¹Ø¼ü×Ö£ºÖµ(°Ù·Ö±È)
+		// è®¾ç½®æ‰‡åŒºæ ‡ç­¾æ˜¾ç¤ºæ ¼å¼ï¼šå…³é”®å­—ï¼šå€¼(ç™¾åˆ†æ¯”)
 		pieplot.setLabelGenerator(new StandardPieSectionLabelGenerator(
 				"{0}:{1}({2})"));
-		// ÉèÖÃÉÈÇø±êÇ©ÑÕÉ«
+		// è®¾ç½®æ‰‡åŒºæ ‡ç­¾é¢œè‰²
 		pieplot.setLabelBackgroundPaint(new Color(255, 255, 255));
 		pieplot.setLabelFont((new Font(chartModel.getChartFont(), Font.PLAIN,
 				chartModel.getChartFontSize())));
@@ -148,17 +148,17 @@ public class PieChartGen implements ChartGen {
 	}
 
 	public void setNoDataMessage(PiePlot pieplot, Chart chartModel) {
-		// ÉèÖÃÃ»ÓĞÊı¾İÊ±ÏÔÊ¾µÄĞÅÏ¢
-		pieplot.setNoDataMessage("ÎŞÊı¾İ");
-		// ÉèÖÃÃ»ÓĞÊı¾İÊ±ÏÔÊ¾µÄĞÅÏ¢µÄ×ÖÌå
+		// è®¾ç½®æ²¡æœ‰æ•°æ®æ—¶æ˜¾ç¤ºçš„ä¿¡æ¯
+		pieplot.setNoDataMessage("æ— æ•°æ®");
+		// è®¾ç½®æ²¡æœ‰æ•°æ®æ—¶æ˜¾ç¤ºçš„ä¿¡æ¯çš„å­—ä½“
 		pieplot.setNoDataMessageFont(new Font(chartModel.getChartFont(),
 				Font.BOLD, chartModel.getChartFontSize()));
-		// ÉèÖÃÃ»ÓĞÊı¾İÊ±ÏÔÊ¾µÄĞÅÏ¢µÄÑÕÉ«
+		// è®¾ç½®æ²¡æœ‰æ•°æ®æ—¶æ˜¾ç¤ºçš„ä¿¡æ¯çš„é¢œè‰²
 		pieplot.setNoDataMessagePaint(Color.red);
 	}
 
 	public void setNullAndZeroValue(PiePlot piePlot, Chart chartModel) {
-		// ÉèÖÃÊÇ·ñºöÂÔ0ºÍnullÖµ
+		// è®¾ç½®æ˜¯å¦å¿½ç•¥0å’Œnullå€¼
 		piePlot.setIgnoreNullValues(true);
 		piePlot.setIgnoreZeroValues(true);
 	}

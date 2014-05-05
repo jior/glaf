@@ -74,10 +74,10 @@ public class BorrowSearchController {
 		Borrow borrow = new Borrow();
 		int areaRole = Integer.parseInt(request.getParameter("areaRole"));
 		if (areaRole == 0) {
-			// ¸ù¾İÓÃ»§²¿ÃÅid »ñÈ¡Õû¸ö²¿ÃÅµÄ¶ÔÏó£¨GZ01£©
+			// æ ¹æ®ç”¨æˆ·éƒ¨é—¨id è·å–æ•´ä¸ªéƒ¨é—¨çš„å¯¹è±¡ï¼ˆGZ01ï¼‰
 			SysDepartment curdept = sysDepartmentService.findById(user
 					.getDeptId());
-			// ¸ù¾İ²¿ÃÅCODE(ÀıÈçGZ01)½ØÈ¡Ç°2Î» ×÷ÎªµØÇø
+			// æ ¹æ®éƒ¨é—¨CODE(ä¾‹å¦‚GZ01)æˆªå–å‰2ä½ ä½œä¸ºåœ°åŒº
 			String curAreadeptCode = curdept.getCode().substring(0, 2);
 			borrow.setArea(curAreadeptCode);
 		}
@@ -104,10 +104,10 @@ public class BorrowSearchController {
 		int areaRole = Integer.parseInt(request.getParameter("areaRole"));
 		User user = RequestUtils.getUser(request);
 		if (areaRole == 0) {
-			// ¸ù¾İÓÃ»§²¿ÃÅid »ñÈ¡Õû¸ö²¿ÃÅµÄ¶ÔÏó£¨GZ01£©
+			// æ ¹æ®ç”¨æˆ·éƒ¨é—¨id è·å–æ•´ä¸ªéƒ¨é—¨çš„å¯¹è±¡ï¼ˆGZ01ï¼‰
 			SysDepartment curdept = sysDepartmentService.findById(user
 					.getDeptId());
-			// ¸ù¾İ²¿ÃÅCODE(ÀıÈçGZ01)½ØÈ¡Ç°2Î» ×÷ÎªµØÇø
+			// æ ¹æ®éƒ¨é—¨CODE(ä¾‹å¦‚GZ01)æˆªå–å‰2ä½ ä½œä¸ºåœ°åŒº
 			String curAreadeptCode = curdept.getCode().substring(0, 2);
 			query.setArea(curAreadeptCode);
 		} else {

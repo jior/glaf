@@ -37,7 +37,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.util.DateUtils;
 
 /**
- * ´«µİ»î¶¯Ö´ĞĞÇé¿ö
+ * ä¼ é€’æ´»åŠ¨æ‰§è¡Œæƒ…å†µ
  * 
  * @author jior2008@gmail.com
  * 
@@ -49,52 +49,52 @@ public class TransformExcecution implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Ö÷¼ü
+	 * ä¸»é”®
 	 */
 	@Id
 	@Column(name = "ID_", length = 50)
 	protected String id;
 
 	/**
-	 * »î¶¯±àºÅ
+	 * æ´»åŠ¨ç¼–å·
 	 */
 	@Column(name = "ACTIVITYID_", length = 50)
 	protected String activityId;
 
 	/**
-	 * ²½Öè±àºÅ
+	 * æ­¥éª¤ç¼–å·
 	 */
 	@Column(name = "STEPID_", length = 50)
 	protected String stepId;
 
 	/**
-	 * ¿ªÊ¼Ê±¼ä
+	 * å¼€å§‹æ—¶é—´
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "STARTTIME_", updatable = false)
 	protected Date startTime;
 
 	/**
-	 * ½áÊøÊ±¼ä
+	 * ç»“æŸæ—¶é—´
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "ENDTIME_", updatable = false)
 	protected Date endTime;
 
 	/**
-	 * ÓÅÏÈ¼¶(¼¶±ğ¸ßµÄÏÈÖ´ĞĞ)
+	 * ä¼˜å…ˆçº§(çº§åˆ«é«˜çš„å…ˆæ‰§è¡Œ)
 	 */
 	@Column(name = "PRIORITY_")
 	protected int priority;
 
 	/**
-	 * ÊÇ·ñÖ´ĞĞ
+	 * æ˜¯å¦æ‰§è¡Œ
 	 */
 	@Column(name = "EXECUTE_", length = 10)
 	protected String execute;
 
 	/**
-	 * Ö´ĞĞÊÇ·ñ³É¹¦
+	 * æ‰§è¡Œæ˜¯å¦æˆåŠŸ
 	 */
 	@Column(name = "SUCCESS_", length = 10)
 	protected String success;

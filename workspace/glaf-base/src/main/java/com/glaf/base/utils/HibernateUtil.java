@@ -35,7 +35,7 @@ import com.glaf.core.util.DateUtils;
 public class HibernateUtil {
 	protected static Log logger = LogFactory.getLog(HibernateUtil.class);
 
-	// Ò³Ãæ²ÎÊıÀàĞÍ
+	// é¡µé¢å‚æ•°ç±»å‹
 	final private static String QUERY_PREFIX = "query_";
 
 	final private static String ORDER_PREFIX = "order_";
@@ -51,8 +51,8 @@ public class HibernateUtil {
 		Set<String> params = map.keySet();
 		// boolean createAliased = false;
 		if (params != null) {
-			Map<String, String> aliasMap = new java.util.HashMap<String, String>();// ´¢´æ±ğÃû
-			int aliasNum = 0;// ±ğÃûÊıÁ¿
+			Map<String, String> aliasMap = new java.util.HashMap<String, String>();// å‚¨å­˜åˆ«å
+			int aliasNum = 0;// åˆ«åæ•°é‡
 			Iterator<String> it = params.iterator();
 			while (it.hasNext()) {
 				String key = (String) it.next();
@@ -61,9 +61,9 @@ public class HibernateUtil {
 				value = value == null ? value : value.trim();
 				if (key.startsWith(QUERY_PREFIX) && value != null
 						&& value.trim().length() > 0) {
-					// È¡µÃ¸Ã²ÎÊıµÄÖµ
+					// å–å¾—è¯¥å‚æ•°çš„å€¼
 					String name = key.substring(QUERY_PREFIX.length());
-					// »ñÈ¡²Ù×÷·û£¬Ä¬ÈÏÎª "="
+					// è·å–æ“ä½œç¬¦ï¼Œé»˜è®¤ä¸º "="
 					String op = "eq";
 					if (name.indexOf("_") != -1) {
 						int pos = name.lastIndexOf("_");
@@ -71,48 +71,48 @@ public class HibernateUtil {
 						name = name.substring(0, pos);
 					}
 
-					if ("me".equals(op)) { // Ö÷±í Êı×Ö×Ö¶Î£¬Ö÷ÒªÎªÁËÇø±ğÓë¹ØÁª±íÍ¬ÃûµÄ×Ö¶Î
+					if ("me".equals(op)) { // ä¸»è¡¨ æ•°å­—å­—æ®µï¼Œä¸»è¦ä¸ºäº†åŒºåˆ«ä¸å…³è”è¡¨åŒåçš„å­—æ®µ
 						String maintAlias = detachedCriteria.getAlias();
-						// ×Ó±íÁ¬½Ó string Á¬½Ó
+						// å­è¡¨è¿æ¥ string è¿æ¥
 						detachedCriteria.add(Restrictions
 								.sqlRestriction(maintAlias + "_." + name + "="
 										+ value));
 
-					} else if ("zns".equals(op)) { // ÎŞÁĞ±íÊä³ö
-						// ×Ó±íÁ¬½Ó string Á¬½Ó
+					} else if ("zns".equals(op)) { // æ— åˆ—è¡¨è¾“å‡º
+						// å­è¡¨è¿æ¥ string è¿æ¥
 						detachedCriteria.add(Restrictions
 								.sqlRestriction(" 1 = 2 "));
 
-					} else if ("mn".equals(op)) { // Ö÷±í ÈÕÆÚ×Ö¶Î£¬Ö÷ÒªÎªÁËÇø±ğÓë¹ØÁª±íÍ¬ÃûµÄ×Ö¶Î
+					} else if ("mn".equals(op)) { // ä¸»è¡¨ æ—¥æœŸå­—æ®µï¼Œä¸»è¦ä¸ºäº†åŒºåˆ«ä¸å…³è”è¡¨åŒåçš„å­—æ®µ
 						String maintAlias = detachedCriteria.getAlias();
-						// ×Ó±íÁ¬½Ó string Á¬½Ó
+						// å­è¡¨è¿æ¥ string è¿æ¥
 						detachedCriteria.add(Restrictions
 								.sqlRestriction(maintAlias + "_." + name
 										+ " is NULL "));
 
-					} else if ("mnn".equals(op)) { // Ö÷±í ÈÕÆÚ×Ö¶Î£¬Ö÷ÒªÎªÁËÇø±ğÓë¹ØÁª±íÍ¬ÃûµÄ×Ö¶Î
+					} else if ("mnn".equals(op)) { // ä¸»è¡¨ æ—¥æœŸå­—æ®µï¼Œä¸»è¦ä¸ºäº†åŒºåˆ«ä¸å…³è”è¡¨åŒåçš„å­—æ®µ
 						String maintAlias = detachedCriteria.getAlias();
-						// ×Ó±íÁ¬½Ó string Á¬½Ó
+						// å­è¡¨è¿æ¥ string è¿æ¥
 						detachedCriteria.add(Restrictions
 								.sqlRestriction(maintAlias + "_." + name
 										+ " is not NULL "));
 
-					} else if ("md".equals(op)) { // Ö÷±í ÈÕÆÚ×Ö¶Î£¬Ö÷ÒªÎªÁËÇø±ğÓë¹ØÁª±íÍ¬ÃûµÄ×Ö¶Î
+					} else if ("md".equals(op)) { // ä¸»è¡¨ æ—¥æœŸå­—æ®µï¼Œä¸»è¦ä¸ºäº†åŒºåˆ«ä¸å…³è”è¡¨åŒåçš„å­—æ®µ
 						String maintAlias = detachedCriteria.getAlias();
-						// ×Ó±íÁ¬½Ó string Á¬½Ó
+						// å­è¡¨è¿æ¥ string è¿æ¥
 						detachedCriteria.add(Restrictions.sqlRestriction(
 								maintAlias + "_." + name + "=?",
 								DateUtils.toDate(value),
 								StandardBasicTypes.DATE));
 
-					} else if ("mis".equals(op)) { // in( ×Ó±í_select )
+					} else if ("mis".equals(op)) { // in( å­è¡¨_select )
 						String maintAlias = detachedCriteria.getAlias();
-						// ×Ó±íÁ¬½Ó string Á¬½Ó
+						// å­è¡¨è¿æ¥ string è¿æ¥
 						detachedCriteria.add(Restrictions
 								.sqlRestriction(maintAlias + "_." + name
 										+ " in (" + value + ") "));
-					} else if ("xd".equals(op)) { // Ö÷±í Ïà¹Ø±í.×Ö¶Î Îªdate
-						// ×Ó±íÁ¬½Ó string Á¬½Ó
+					} else if ("xd".equals(op)) { // ä¸»è¡¨ ç›¸å…³è¡¨.å­—æ®µ ä¸ºdate
+						// å­è¡¨è¿æ¥ string è¿æ¥
 						int pos = name.lastIndexOf(".");
 						String alias = name.substring(0, pos);
 						name = name.substring(pos + 1);
@@ -126,8 +126,8 @@ public class HibernateUtil {
 								aliasMap.get(alias) + name + "=? ",
 								DateUtils.toDate(value),
 								StandardBasicTypes.DATE));
-					} else if ("xs".equals(op)) { // Ö÷±í Ïà¹Ø±í.×Ö¶Î ÎªString
-						// ×Ó±íÁ¬½Ó string Á¬½Ó
+					} else if ("xs".equals(op)) { // ä¸»è¡¨ ç›¸å…³è¡¨.å­—æ®µ ä¸ºString
+						// å­è¡¨è¿æ¥ string è¿æ¥
 						int pos = name.lastIndexOf(".");
 						String alias = name.substring(0, pos);
 						name = name.substring(pos + 1);
@@ -140,7 +140,7 @@ public class HibernateUtil {
 						detachedCriteria.add(Restrictions
 								.sqlRestriction(aliasMap.get(alias) + name
 										+ "='" + value + "' "));
-					} else if ("xe".equals(op)) { // Ö÷±í Ïà¹Ø±í.×Ö¶Î Îª Êı×Ö
+					} else if ("xe".equals(op)) { // ä¸»è¡¨ ç›¸å…³è¡¨.å­—æ®µ ä¸º æ•°å­—
 						if (!value.equals("") && Integer.parseInt(value) > 0) {
 							int pos = name.lastIndexOf(".");
 							String alias = name.substring(0, pos);
@@ -155,7 +155,7 @@ public class HibernateUtil {
 									.sqlRestriction(aliasMap.get(alias) + name
 											+ "=" + value));
 						}
-					} else if ("ixe".equals(op)) { // Ö÷±í Ïà¹Ø±í.×Ö¶Î Îª Êı×Ö
+					} else if ("ixe".equals(op)) { // ä¸»è¡¨ ç›¸å…³è¡¨.å­—æ®µ ä¸º æ•°å­—
 						if (!value.equals("") && Integer.parseInt(value) >= 0) {
 							int pos = name.lastIndexOf(".");
 							String alias = name.substring(0, pos);
@@ -170,7 +170,7 @@ public class HibernateUtil {
 									.sqlRestriction(aliasMap.get(alias) + name
 											+ "=" + value));
 						}
-					} else if ("xel".equals(op)) { // Ö÷±í Ïà¹Ø±í.×Ö¶Î Îª Êı×Ö
+					} else if ("xel".equals(op)) { // ä¸»è¡¨ ç›¸å…³è¡¨.å­—æ®µ ä¸º æ•°å­—
 						if (!value.equals("") && Long.parseLong(value) != -1) {
 							int pos = name.lastIndexOf(".");
 							String alias = name.substring(0, pos);
@@ -185,7 +185,7 @@ public class HibernateUtil {
 									.sqlRestriction(aliasMap.get(alias) + name
 											+ "=" + value));
 						}
-					} else if ("xne".equals(op)) { // Ö÷±í Ïà¹Ø±í.×Ö¶Î Îª Êı×Ö
+					} else if ("xne".equals(op)) { // ä¸»è¡¨ ç›¸å…³è¡¨.å­—æ®µ ä¸º æ•°å­—
 						if (!value.equals("") && Integer.parseInt(value) != -1) {
 							int pos = name.lastIndexOf(".");
 							String alias = name.substring(0, pos);
@@ -200,7 +200,7 @@ public class HibernateUtil {
 									.sqlRestriction(aliasMap.get(alias) + name
 											+ "<>" + value));
 						}
-					} else if ("xi".equals(op)) { // Ö÷±í Ïà¹Ø±í.×Ö¶Î in () ÎªString
+					} else if ("xi".equals(op)) { // ä¸»è¡¨ ç›¸å…³è¡¨.å­—æ®µ in () ä¸ºString
 						int pos = name.lastIndexOf(".");
 						String alias = name.substring(0, pos);
 						name = name.substring(pos + 1);
@@ -210,11 +210,11 @@ public class HibernateUtil {
 							aliasMap.put(alias,
 									getNewAliasName(alias, aliasNum));
 						}
-						// ×Ó±íÁ¬½Ó string Á¬½Ó
+						// å­è¡¨è¿æ¥ string è¿æ¥
 						detachedCriteria.add(Restrictions
 								.sqlRestriction(aliasMap.get(alias) + name
 										+ " in (" + value + ") "));
-					} else if ("xl".equals(op)) { // Ö÷±í like Ïà¹Ø±í.×Ö¶Î ÎªString
+					} else if ("xl".equals(op)) { // ä¸»è¡¨ like ç›¸å…³è¡¨.å­—æ®µ ä¸ºString
 						int pos = name.lastIndexOf(".");
 						String alias = name.substring(0, pos);
 						name = name.substring(pos + 1);
@@ -227,7 +227,7 @@ public class HibernateUtil {
 						detachedCriteria.add(Restrictions
 								.sqlRestriction(aliasMap.get(alias) + name
 										+ " like '%" + value + "%'"));
-					} else if (op.startsWith("xdate")) { // ¶ÔÓÚDate
+					} else if (op.startsWith("xdate")) { // å¯¹äºDate
 						String dateOp = "=";
 						if ("xdatelt".equals(op)) {
 							dateOp = "<";
@@ -251,7 +251,7 @@ public class HibernateUtil {
 								aliasMap.get(alias) + name + dateOp + "?",
 								DateUtils.toDate(value),
 								StandardBasicTypes.DATE));
-					} else if (op.startsWith("date")) { // ¶ÔÓÚDate
+					} else if (op.startsWith("date")) { // å¯¹äºDate
 						String dateOp = "=";
 						if ("datelt".equals(op)) {
 							dateOp = "<";
@@ -266,7 +266,7 @@ public class HibernateUtil {
 								+ dateOp + "?", DateUtils.toDate(value),
 								StandardBasicTypes.DATE));
 					} /*
-					 * else if(op.equals("double")){ //¶ÔÓÚDouble String doubleOp
+					 * else if(op.equals("double")){ //å¯¹äºDouble String doubleOp
 					 * = "="; if("double".equals(op)){ } }
 					 */else if ("like".equals(op)) { // like
 						detachedCriteria.add(Restrictions.like(name, "%"
@@ -301,7 +301,7 @@ public class HibernateUtil {
 							detachedCriteria.add(Restrictions.ne(name,
 									new Long(value)));
 						}
-					} else if ("in".equals(op)) { // in (Êı×Ö)
+					} else if ("in".equals(op)) { // in (æ•°å­—)
 						if (!"".trim().equals(value)) {
 							String maintAlias = detachedCriteria.getAlias();
 							detachedCriteria.add(Restrictions
@@ -311,7 +311,7 @@ public class HibernateUtil {
 							// .sqlRestriction(name + " in (" + value
 							// + ") "));
 						}
-					} else if ("nin".equals(op)) { // not in (Êı×Ö)
+					} else if ("nin".equals(op)) { // not in (æ•°å­—)
 						if (!"".trim().equals(value)) {
 							String maintAlias = detachedCriteria.getAlias();
 							detachedCriteria.add(Restrictions
@@ -325,7 +325,7 @@ public class HibernateUtil {
 						detachedCriteria.add(Restrictions.eq(name, value));
 					}
 				} else if (key.startsWith(ORDER_PREFIX)) {
-					// È¡µÃÅÅĞò²ÎÊıµÄÃû //order_×Ö¶Î_asc(desc) ÔÚÒ³ÃæÎª hidden ÀàĞÍ
+					// å–å¾—æ’åºå‚æ•°çš„å //order_å­—æ®µ_asc(desc) åœ¨é¡µé¢ä¸º hidden ç±»å‹
 					String name = key.substring(ORDER_PREFIX.length());
 
 					int pos = name.lastIndexOf(".");

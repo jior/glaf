@@ -182,29 +182,29 @@ public class MailConfig implements java.io.Serializable {
 			transport.close();
 		} catch (Exception ex) {
 			if (ex instanceof javax.mail.internet.ParseException) {
-				throw new RuntimeException("ÓÊ¼şµØÖ·²»ÕıÈ·£¬·¢ËÍÓÊ¼şÊ§°Ü¡£");
+				throw new RuntimeException("é‚®ä»¶åœ°å€ä¸æ­£ç¡®ï¼Œå‘é€é‚®ä»¶å¤±è´¥ã€‚");
 			} else if (ex instanceof javax.mail.AuthenticationFailedException) {
-				throw new RuntimeException("ÓÃ»§Ã»ÓĞÍ¨¹ıÈÏÖ¤£¬·¢ËÍÓÊ¼şÊ§°Ü¡£");
+				throw new RuntimeException("ç”¨æˆ·æ²¡æœ‰é€šè¿‡è®¤è¯ï¼Œå‘é€é‚®ä»¶å¤±è´¥ã€‚");
 			} else if (ex instanceof javax.mail.internet.AddressException) {
-				throw new RuntimeException("ÓÊ¼şµØÖ·ÓĞÎó£¬ÓÊ¼şÎŞ·¨³É¹¦·¢ËÍ¡£");
+				throw new RuntimeException("é‚®ä»¶åœ°å€æœ‰è¯¯ï¼Œé‚®ä»¶æ— æ³•æˆåŠŸå‘é€ã€‚");
 			} else if (ex instanceof javax.mail.SendFailedException) {
-				throw new RuntimeException("ÓÊ¼ş·¢ËÍÊ§°Ü¡£");
+				throw new RuntimeException("é‚®ä»¶å‘é€å¤±è´¥ã€‚");
 			} else if (ex instanceof java.net.UnknownHostException) {
-				throw new RuntimeException("ÎŞ·¨½âÎöSMTP·şÎñÆ÷µØÖ·¡£");
+				throw new RuntimeException("æ— æ³•è§£æSMTPæœåŠ¡å™¨åœ°å€ã€‚");
 			} else if (ex instanceof java.net.SocketException) {
-				throw new RuntimeException("ÍøÂçÖĞ¶Ï´íÎó¡£");
+				throw new RuntimeException("ç½‘ç»œä¸­æ–­é”™è¯¯ã€‚");
 			} else if (ex instanceof java.io.IOException) {
-				throw new RuntimeException("IOÖĞ¶Ï´íÎó¡£");
+				throw new RuntimeException("IOä¸­æ–­é”™è¯¯ã€‚");
 			} else if (ex instanceof java.net.ConnectException) {
-				throw new RuntimeException("·¢ËÍ¶Ë¿Ú´íÎó¡£");
+				throw new RuntimeException("å‘é€ç«¯å£é”™è¯¯ã€‚");
 			}
 			if (ex instanceof javax.mail.MessagingException) {
 				throw new RuntimeException(
-						"Á¬½ÓÓÊ¼ş·şÎñÆ÷Ê§°Ü£¬¿ÉÄÜÊÇÍøÂçÒÑ¾­¶Ï¿ª»òÓÊ¼ş·şÎñÆ÷ÒÑ¾­¹Ø±Õ£¬ÇëÉÔºóÔÙÊÔ¡£");
+						"è¿æ¥é‚®ä»¶æœåŠ¡å™¨å¤±è´¥ï¼Œå¯èƒ½æ˜¯ç½‘ç»œå·²ç»æ–­å¼€æˆ–é‚®ä»¶æœåŠ¡å™¨å·²ç»å…³é—­ï¼Œè¯·ç¨åå†è¯•ã€‚");
 			}
 			String errormsg = ex.getMessage();
 			if (errormsg == null) {
-				errormsg = "Î´Öª´íÎóÔ­Òò¡£";
+				errormsg = "æœªçŸ¥é”™è¯¯åŸå› ã€‚";
 			}
 			throw new RuntimeException(ex);
 		}
@@ -221,7 +221,7 @@ public class MailConfig implements java.io.Serializable {
 			inputStream.close();
 		} catch (IOException ex) {
 			ex.printStackTrace();
-			throw new RuntimeException("²»ÄÜ¶ÁÈ¡ÅäÖÃÎÄ¼ş", ex);
+			throw new RuntimeException("ä¸èƒ½è¯»å–é…ç½®æ–‡ä»¶", ex);
 		}
 
 		properties.put("mail.host", host);
@@ -249,7 +249,7 @@ public class MailConfig implements java.io.Serializable {
 			PropertiesUtils.save(resource, dataMap);
 			MailProperties.reload();
 		} catch (IOException ex) {
-			throw new RuntimeException("²»ÄÜ±£´æÅäÖÃÎÄ¼ş", ex);
+			throw new RuntimeException("ä¸èƒ½ä¿å­˜é…ç½®æ–‡ä»¶", ex);
 		}
 
 	}

@@ -531,12 +531,12 @@ public class MailTaskResource {
 						mailTask.getCreateBy())) {
 			DiskFileItemFactory factory = new DiskFileItemFactory();
 			factory.setSizeThreshold(4096);
-			// ÉèÖÃÁÙÊ±´æ·ÅÄ¿Â¼
+			// è®¾ç½®ä¸´æ—¶å­˜æ”¾ç›®å½•
 			factory.setRepository(new File(SystemProperties.getConfigRootPath()
 					+ "/temp/"));
 			ServletFileUpload upload = new ServletFileUpload(factory);
-			// »ñÈ¡ÎÄ¼ş³ß´ç
-			// ÉèÖÃ×î´óÎÄ¼ş³ß´ç
+			// è·å–æ–‡ä»¶å°ºå¯¸
+			// è®¾ç½®æœ€å¤§æ–‡ä»¶å°ºå¯¸
 			// upload.setSizeMax(4194304);
 			upload.setHeaderEncoding("UTF-8");
 			List<?> fileItems = null;
@@ -568,7 +568,7 @@ public class MailTaskResource {
 						break;
 					}
 				}
-			} catch (FileUploadException ex) {// ´¦ÀíÎÄ¼ş³ß´ç¹ı´óÒì³£
+			} catch (FileUploadException ex) {// å¤„ç†æ–‡ä»¶å°ºå¯¸è¿‡å¤§å¼‚å¸¸
 				ex.printStackTrace();
 				throw new RuntimeException(ex.getMessage());
 			}

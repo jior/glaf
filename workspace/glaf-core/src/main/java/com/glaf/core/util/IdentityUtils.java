@@ -33,7 +33,7 @@ public class IdentityUtils {
 	protected final static Log logger = LogFactory.getLog(IdentityUtils.class);
 
 	/**
-	 * »ñÈ¡Ä¬ÈÏÅäÖÃµÄÓÃ»§¼¯ºÏ
+	 * è·å–é»˜è®¤é…ç½®çš„ç”¨æˆ·é›†åˆ
 	 * 
 	 * @param sqlSession
 	 * @param paramMap
@@ -68,7 +68,7 @@ public class IdentityUtils {
 	}
 
 	/**
-	 * »ñÈ¡Ö¸¶¨²éÑ¯Óï¾äµÄÓÃ»§¼¯ºÏ
+	 * è·å–æŒ‡å®šæŸ¥è¯¢è¯­å¥çš„ç”¨æˆ·é›†åˆ
 	 * 
 	 * @param sqlSession
 	 * @param statement
@@ -100,7 +100,7 @@ public class IdentityUtils {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§µÄÖ±½ÓÉÏ¼¶
+	 * è·å–æŸä¸ªç”¨æˆ·çš„ç›´æ¥ä¸Šçº§
 	 * 
 	 * @param actorId
 	 * @return

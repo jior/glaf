@@ -27,14 +27,14 @@ import com.glaf.core.query.*;
 public interface ISysCalendarService {
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡Ò»Ìõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®è·å–ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */
 	SysCalendar getSysCalendar(Long id);
 
 	/**
-	 * »ñÈ¡Ä³ÌõÉú²úÏßµÄÏµÍ³ÈÕÀú
+	 * è·å–æŸæ¡ç”Ÿäº§çº¿çš„ç³»ç»Ÿæ—¥å†
 	 * 
 	 * @param productionLine
 	 * @param year
@@ -46,14 +46,14 @@ public interface ISysCalendarService {
 			int day);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼ÁĞ±í
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•åˆ—è¡¨
 	 * 
 	 * @return
 	 */
 	List<SysCalendar> list(SysCalendarQuery query);
 
 	/**
-	 * ±£´æÒ»Ìõ¼ÇÂ¼
+	 * ä¿å­˜ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */

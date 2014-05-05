@@ -147,7 +147,7 @@ public class RitemServiceImpl implements RitemService {
 	}
 
 	/**
-	 * ¸üÐÂÖ÷±í×Ü¼Û¸ñ
+	 * æ›´æ–°ä¸»è¡¨æ€»ä»·æ ¼
 	 * 
 	 * @param reimbursementid
 	 */

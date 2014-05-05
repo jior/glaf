@@ -162,7 +162,7 @@ public class DbToDbTransfer {
 			}
 
 			/**
-			 * ÖØ½¨Ä¿±ê±í
+			 * é‡å»ºç›®æ ‡è¡¨
 			 */
 			if (rebuildTargartTable) {
 				tableDefinition.setColumns(columns);

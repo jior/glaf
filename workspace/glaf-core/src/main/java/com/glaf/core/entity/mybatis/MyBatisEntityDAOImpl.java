@@ -269,7 +269,7 @@ public class MyBatisEntityDAOImpl extends SqlSessionDaoSupport implements
 	}
 
 	/**
-	 * »ñÈ¡ÏÂÒ»Ìõ¼ÇÂ¼±àºÅ
+	 * è·å–ä¸‹ä¸€æ¡è®°å½•ç¼–å·
 	 * 
 	 * @return
 	 */
@@ -278,7 +278,7 @@ public class MyBatisEntityDAOImpl extends SqlSessionDaoSupport implements
 				.selectOne("getNextDbId", "next.dbid");
 		if (dbid == null) {
 			dbid = new Dbid();
-			dbid.setTitle("ÏµÍ³ÄÚÖÃÖ÷¼ü");
+			dbid.setTitle("ç³»ç»Ÿå†…ç½®ä¸»é”®");
 			dbid.setName("next.dbid");
 			dbid.setValue("1001");
 			dbid.setVersion(1);
@@ -288,7 +288,7 @@ public class MyBatisEntityDAOImpl extends SqlSessionDaoSupport implements
 		long oldValue = Long.parseLong(dbid.getValue());
 		long newValue = oldValue + conf.getInt("dbid_step", 100);
 		dbid.setName("next.dbid");
-		dbid.setTitle("ÏµÍ³ÄÚÖÃÖ÷¼ü");
+		dbid.setTitle("ç³»ç»Ÿå†…ç½®ä¸»é”®");
 		dbid.setValue(Long.toString(newValue));
 		dbid.setVersion(dbid.getVersion() + 1);
 		getSqlSession().update("updateNextDbId", dbid);
@@ -296,7 +296,7 @@ public class MyBatisEntityDAOImpl extends SqlSessionDaoSupport implements
 	}
 
 	/**
-	 * »ñÈ¡ÏÂÒ»Ìõ¼ÇÂ¼±àºÅ
+	 * è·å–ä¸‹ä¸€æ¡è®°å½•ç¼–å·
 	 * 
 	 * @return
 	 */
@@ -304,7 +304,7 @@ public class MyBatisEntityDAOImpl extends SqlSessionDaoSupport implements
 		Dbid dbid = (Dbid) getSqlSession().selectOne("getNextDbId", name);
 		if (dbid == null) {
 			dbid = new Dbid();
-			dbid.setTitle("ÏµÍ³ÄÚÖÃÖ÷¼ü");
+			dbid.setTitle("ç³»ç»Ÿå†…ç½®ä¸»é”®");
 			dbid.setName(name);
 			dbid.setValue("1");
 			dbid.setVersion(1);
@@ -314,7 +314,7 @@ public class MyBatisEntityDAOImpl extends SqlSessionDaoSupport implements
 		long oldValue = Long.parseLong(dbid.getValue());
 		long newValue = oldValue + 1;
 		dbid.setName(name);
-		dbid.setTitle("ÏµÍ³ÄÚÖÃÖ÷¼ü");
+		dbid.setTitle("ç³»ç»Ÿå†…ç½®ä¸»é”®");
 		dbid.setValue(Long.toString(newValue));
 		dbid.setVersion(dbid.getVersion() + 1);
 		getSqlSession().update("updateNextDbId", dbid);

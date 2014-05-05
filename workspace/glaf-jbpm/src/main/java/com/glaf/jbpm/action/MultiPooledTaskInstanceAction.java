@@ -40,13 +40,13 @@ import org.jbpm.taskmgmt.exe.TaskMgmtInstance;
 import com.glaf.jbpm.util.Constant;
 
 /**
- * ¶¯Ì¬ÈÎÎñ²úÉú×¢ÒâÊÂÏî£ºĞèÒª½«task-node½ÚµãµÄcreate-tasksµÄÊôĞÔ¸Ä³Écreate-tasks="false" ÀıÈç£º
- * <task-node name="Éè±¸¹ÜÀíÔ±ÑéÊÕ" create-tasks="false" end-tasks="true"><br>
+ * åŠ¨æ€ä»»åŠ¡äº§ç”Ÿæ³¨æ„äº‹é¡¹ï¼šéœ€è¦å°†task-nodeèŠ‚ç‚¹çš„create-tasksçš„å±æ€§æ”¹æˆcreate-tasks="false" ä¾‹å¦‚ï¼š
+ * <task-node name="è®¾å¤‡ç®¡ç†å‘˜éªŒæ”¶" create-tasks="false" end-tasks="true"><br>
  * <event type="node-enter"><br>
  * <action ref-name="multiPooledTaskInstanceAction"/><br>
  * </event><br>
- * <task name="taskxyz" description="Ê¹ÓÃ²¿ÃÅ²¿³¤ÉóÅú" ></task><br>
- * <transition name="tr005" to="Éè±¸¹ÜÀíÔ±ÑéÊÕÍ¨¹ı£¿"></transition><br>
+ * <task name="taskxyz" description="ä½¿ç”¨éƒ¨é—¨éƒ¨é•¿å®¡æ‰¹" ></task><br>
+ * <transition name="tr005" to="è®¾å¤‡ç®¡ç†å‘˜éªŒæ”¶é€šè¿‡ï¼Ÿ"></transition><br>
  * </task-node><br>
  */
 
@@ -66,23 +66,23 @@ public class MultiPooledTaskInstanceAction implements ActionHandler {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * ¶¯Ì¬ÉèÖÃµÄ²ÎÓëÕßµÄ²ÎÊıÃû£¬»·¾³±äÁ¿¿ÉÒÔÍ¨¹ıcontextInstance.getVariable()È¡µÃ
-	 * ÀıÈç£ºcontextInstance.getVariable("SendDocAuditor");
+	 * åŠ¨æ€è®¾ç½®çš„å‚ä¸è€…çš„å‚æ•°åï¼Œç¯å¢ƒå˜é‡å¯ä»¥é€šè¿‡contextInstance.getVariable()å–å¾—
+	 * ä¾‹å¦‚ï¼šcontextInstance.getVariable("SendDocAuditor");
 	 */
 	String dynamicActors;
 
 	/**
-	 * Èç¹û²»ÄÜ»ñÈ¡ÈÎÎñ²ÎÓëÕßÊÇ·ñÀë¿ª±¾½Úµã£¨ÈÎÎñ½Úµã£©
+	 * å¦‚æœä¸èƒ½è·å–ä»»åŠ¡å‚ä¸è€…æ˜¯å¦ç¦»å¼€æœ¬èŠ‚ç‚¹ï¼ˆä»»åŠ¡èŠ‚ç‚¹ï¼‰
 	 */
 	boolean leaveNodeIfActorNotAvailable;
 
 	/**
-	 * ×ªÒÆÂ·¾¶µÄÃû³Æ
+	 * è½¬ç§»è·¯å¾„çš„åç§°
 	 */
 	String transitionName;
 
 	/**
-	 * ÈÎÎñÃû³Æ
+	 * ä»»åŠ¡åç§°
 	 */
 	String taskName;
 
@@ -204,7 +204,7 @@ public class MultiPooledTaskInstanceAction implements ActionHandler {
 			}
 		}
 
-		// Èç¹ûÃ»ÓĞÈÎÎñ²ÎÓëÕß£¬ÅĞ¶ÏÊÇ·ñ¿ÉÒÔÀë¿ª±¾½Úµã¡£
+		// å¦‚æœæ²¡æœ‰ä»»åŠ¡å‚ä¸è€…ï¼Œåˆ¤æ–­æ˜¯å¦å¯ä»¥ç¦»å¼€æœ¬èŠ‚ç‚¹ã€‚
 		if (!hasTaskActor) {
 			if (leaveNodeIfActorNotAvailable) {
 				contextInstance.setVariable(Constant.IS_AGREE, "true");

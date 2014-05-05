@@ -67,7 +67,7 @@ public class DictoryResource {
 	protected SysTreeService sysTreeService;
 
 	/**
-	 * 提交删除
+	 * 鎻愪氦鍒犻櫎
 	 * 
 	 * @param request
 	 * @param uriInfo
@@ -83,10 +83,10 @@ public class DictoryResource {
 		long[] id = ParamUtil.getLongParameterValues(request, "id");
 		ret = dictoryService.deleteAll(id);
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
+		if (ret) {// 淇濆瓨鎴愬姛
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"dictory.delete_success"));
-		} else { // 删除失败
+		} else { // 鍒犻櫎澶辫触
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"dictory.delete_failure"));
 		}
@@ -166,7 +166,7 @@ public class DictoryResource {
 	}
 
 	/**
-	 * 提交增加字典信息
+	 * 鎻愪氦澧炲姞瀛楀吀淇℃伅
 	 * 
 	 * @param request
 	 * @param uriInfo
@@ -189,11 +189,11 @@ public class DictoryResource {
 		bean.setCreateBy(RequestUtils.getActorId(request));
 
 		ViewMessages messages = new ViewMessages();
-		if (dictoryService.create(bean)) {// 保存成功
+		if (dictoryService.create(bean)) {// 淇濆瓨鎴愬姛
 			BaseDataManager.getInstance().loadDictInfo();
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"dictory.add_success"));
-		} else {// 保存失败
+		} else {// 淇濆瓨澶辫触
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"dictory.add_failure"));
 		}
@@ -204,7 +204,7 @@ public class DictoryResource {
 	}
 
 	/**
-	 * 提交修改字典信息
+	 * 鎻愪氦淇敼瀛楀吀淇℃伅
 	 * 
 	 * @param request
 	 * @param uriInfo
@@ -227,11 +227,11 @@ public class DictoryResource {
 		}
 		bean.setUpdateBy(RequestUtils.getActorId(request));
 		ViewMessages messages = new ViewMessages();
-		if (dictoryService.update(bean)) {// 保存成功
+		if (dictoryService.update(bean)) {// 淇濆瓨鎴愬姛
 			BaseDataManager.getInstance().loadDictInfo();
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"dictory.modify_success"));
-		} else {// 保存失败
+		} else {// 淇濆瓨澶辫触
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"dictory.modify_failure"));
 		}

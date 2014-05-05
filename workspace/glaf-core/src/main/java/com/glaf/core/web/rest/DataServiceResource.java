@@ -167,7 +167,7 @@ public class DataServiceResource {
 			log.setModuleId("DS");
 
 			int timeMS = (int) (System.currentTimeMillis() - start);
-			logger.debug("ÓÃÊ±£¨ºÁÃë£©:" + timeMS);
+			logger.debug("ç”¨æ—¶ï¼ˆæ¯«ç§’ï¼‰:" + timeMS);
 			log.setTimeMS(timeMS);
 
 			if (StringUtils.equals(dataType, "json")) {

@@ -223,7 +223,7 @@ public class JsonUtils {
 
 	public static void main(String[] args) throws Exception {
 		Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
-		dataMap.put("key01", "¹ãÖİ");
+		dataMap.put("key01", "å¹¿å·");
 		dataMap.put("key02", 12345);
 		dataMap.put("key03", 789.85D);
 		dataMap.put("date", new Date());
@@ -237,10 +237,10 @@ public class JsonUtils {
 		dataMap.put("x_sale_actor_actorIds", actorIds);
 
 		Map<String, Object> xxxMap = new java.util.HashMap<String, Object>();
-		xxxMap.put("0", "----ÇëÑ¡Ôñ----");
-		xxxMap.put("1", "»ğ³µ");
-		xxxMap.put("2", "·É»ú");
-		xxxMap.put("3", "Æû³µ");
+		xxxMap.put("0", "----è¯·é€‰æ‹©----");
+		xxxMap.put("1", "ç«è½¦");
+		xxxMap.put("2", "é£æœº");
+		xxxMap.put("3", "æ±½è½¦");
 
 		dataMap.put("trans", xxxMap);
 
@@ -250,7 +250,7 @@ public class JsonUtils {
 		System.out.println(p);
 		System.out.println(p.get("date").getClass().getName());
 
-		String xx = "{name:\"trans\",nodeType:\"select\",children:{\"1\":\"»ğ³µ\",\"3\":\"Æû³µ\",\"2\":\"·É»ú\",\"0\":\"----ÇëÑ¡Ôñ----\"}}";
+		String xx = "{name:\"trans\",nodeType:\"select\",children:{\"1\":\"ç«è½¦\",\"3\":\"æ±½è½¦\",\"2\":\"é£æœº\",\"0\":\"----è¯·é€‰æ‹©----\"}}";
 		Map<String, Object> xMap = JsonUtils.decode(xx);
 		System.out.println(xMap);
 		Set<Entry<String, Object>> entrySet = xMap.entrySet();

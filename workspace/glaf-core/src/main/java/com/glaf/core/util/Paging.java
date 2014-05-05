@@ -24,72 +24,72 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Ò³¶ÔÏó¡£ÓÃÀ´±íÊ¾Êı¾İµÄ·­Ò³ÏÔÊ¾Ê±µÄÒ³ĞÅÏ¢£¬°üÀ¨Ò³Êı¾İºÍ·ÖÒ³ĞÅÏ¢¡£
+ * é¡µå¯¹è±¡ã€‚ç”¨æ¥è¡¨ç¤ºæ•°æ®çš„ç¿»é¡µæ˜¾ç¤ºæ—¶çš„é¡µä¿¡æ¯ï¼ŒåŒ…æ‹¬é¡µæ•°æ®å’Œåˆ†é¡µä¿¡æ¯ã€‚
  */
 public class Paging implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * ÓÃÀ´´«µİÒ³ÂëĞÅÏ¢µÄ²ÎÊıÃû³Æ
+	 * ç”¨æ¥ä¼ é€’é¡µç ä¿¡æ¯çš„å‚æ•°åç§°
 	 */
 	public final static String PAGENO_PARAMNAME = "__go2pageNo";
 
 	/**
-	 * ¿Õ°×Ò³
+	 * ç©ºç™½é¡µ
 	 */
 	public final static Paging EMPTY_PAGE = new Paging(Collections.emptyList(),
 			0, 0, 0);
 
 	/**
-	 * Ã¿Ò³¼ÇÂ¼ÌõÊı
+	 * æ¯é¡µè®°å½•æ¡æ•°
 	 */
 	public final static int DEFAULT_PAGE_SIZE = 10;
 
 	/**
-	 * ×î´ó¼ÇÂ¼ÌõÊı
+	 * æœ€å¤§è®°å½•æ¡æ•°
 	 */
 	public final static int MAX_RECORD_COUNT = 2000;
 
 	/**
-	 * µ±Ç°Ò³ºÅ
+	 * å½“å‰é¡µå·
 	 */
 	private int currentPage = 1;
 
 	/**
-	 * Ã¿Ò³¼ÇÂ¼Êı
+	 * æ¯é¡µè®°å½•æ•°
 	 */
 	private int pageSize = DEFAULT_PAGE_SIZE;
 
 	/**
-	 * ×Ü¼ÇÂ¼Êı
+	 * æ€»è®°å½•æ•°
 	 */
 	private int total = 0;
 
 	/**
-	 * ±¾Ò³µÄÊı¾İ
+	 * æœ¬é¡µçš„æ•°æ®
 	 */
 	private List<Object> rows = new java.util.ArrayList<Object>();
 
 	/**
-	 * ÊÇ·ñĞèÒª»º´æ½á¹û¼¯
+	 * æ˜¯å¦éœ€è¦ç¼“å­˜ç»“æœé›†
 	 */
 	private boolean cacheable;
 
 	/**
-	 * ÏÔÊ¾Ò³µÄÖ÷Ìâ
+	 * æ˜¾ç¤ºé¡µçš„ä¸»é¢˜
 	 */
 	private String title;
 
 	private String prefix;
 
 	/**
-	 * »·¾³±äÁ¿
+	 * ç¯å¢ƒå˜é‡
 	 */
 	private Map<String, Object> contextMap = new java.util.HashMap<String, Object>();
 
 	/**
-	 * ÏÔÊ¾Ò³µÄ²ÎÊı
+	 * æ˜¾ç¤ºé¡µçš„å‚æ•°
 	 */
 	private Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 
@@ -130,18 +130,18 @@ public class Paging implements java.io.Serializable {
 	}
 
 	/**
-	 * »ñµÃµ±Ç°Ò³Êı¡£
+	 * è·å¾—å½“å‰é¡µæ•°ã€‚
 	 * 
-	 * @return µ±Ç°Ò³Êı
+	 * @return å½“å‰é¡µæ•°
 	 */
 	public int getCurrentPage() {
 		return currentPage;
 	}
 
 	/**
-	 * »ñµÃÃ¿Ò³×î´ó¼ÇÂ¼Êı¡£
+	 * è·å¾—æ¯é¡µæœ€å¤§è®°å½•æ•°ã€‚
 	 * 
-	 * @return Ã¿Ò³×î´ó¼ÇÂ¼Êı
+	 * @return æ¯é¡µæœ€å¤§è®°å½•æ•°
 	 */
 	public int getMaxPageRecordCount() {
 		return pageSize;
@@ -174,16 +174,16 @@ public class Paging implements java.io.Serializable {
 	}
 
 	/**
-	 * »ñµÃ¼ÇÂ¼×ÜÊı
+	 * è·å¾—è®°å½•æ€»æ•°
 	 * 
-	 * @return ¼ÇÂ¼×ÜÊı
+	 * @return è®°å½•æ€»æ•°
 	 */
 	public int getTotal() {
 		return total;
 	}
 
 	/**
-	 * µÃµ½×ÜÒ³Êı Ëã·¨£º×Ü¼ÇÂ¼Êı³ıÒÔÃ¿Ò³µÄ¼ÍÂ¼Êı£¬½á¹ûÎªÕûÊı£¬Èô»¹ÓĞÓàÊı£¬ÔòĞèÒª¼ÓÒ»¡£
+	 * å¾—åˆ°æ€»é¡µæ•° ç®—æ³•ï¼šæ€»è®°å½•æ•°é™¤ä»¥æ¯é¡µçš„çºªå½•æ•°ï¼Œç»“æœä¸ºæ•´æ•°ï¼Œè‹¥è¿˜æœ‰ä½™æ•°ï¼Œåˆ™éœ€è¦åŠ ä¸€ã€‚
 	 * 
 	 * @return int
 	 */
@@ -191,11 +191,11 @@ public class Paging implements java.io.Serializable {
 		if (pageSize <= 0) {
 			pageSize = DEFAULT_PAGE_SIZE;
 		}
-		// ÏÈÇóµÃÕû³ıµÄ½á¹û
+		// å…ˆæ±‚å¾—æ•´é™¤çš„ç»“æœ
 		int pageCount = this.getTotal() / pageSize;
-		// ÔÙÇóµÃÄ£ÔËËãµÄ½á¹û
+		// å†æ±‚å¾—æ¨¡è¿ç®—çš„ç»“æœ
 		int temp = this.getTotal() % pageSize;
-		// ÈôÄ£ÔËËãµÄ½á¹û²»ÎªÁã£¬Ôò×ÜÒ³ÊıÎªÕû³ıµÄ½á¹û¼ÓÉÏÄ£ÔËËãµÄ½á¹û
+		// è‹¥æ¨¡è¿ç®—çš„ç»“æœä¸ä¸ºé›¶ï¼Œåˆ™æ€»é¡µæ•°ä¸ºæ•´é™¤çš„ç»“æœåŠ ä¸Šæ¨¡è¿ç®—çš„ç»“æœ
 		if (temp > 0) {
 			pageCount += 1;
 		}
@@ -215,7 +215,7 @@ public class Paging implements java.io.Serializable {
 	}
 
 	/**
-	 * ÉèÖÃµ±Ç°Ò³Êı¡£
+	 * è®¾ç½®å½“å‰é¡µæ•°ã€‚
 	 * 
 	 * @param currPageNo
 	 */
@@ -224,10 +224,10 @@ public class Paging implements java.io.Serializable {
 	}
 
 	/**
-	 * ÉèÖÃÃ¿Ò³×î´ó¼ÇÂ¼Êı¡£
+	 * è®¾ç½®æ¯é¡µæœ€å¤§è®°å½•æ•°ã€‚
 	 * 
 	 * @param pageSize
-	 *            Ã¿Ò³×î´ó¼ÇÂ¼Êı
+	 *            æ¯é¡µæœ€å¤§è®°å½•æ•°
 	 */
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
@@ -250,7 +250,7 @@ public class Paging implements java.io.Serializable {
 	}
 
 	/**
-	 * ÉèÖÃ¼ÇÂ¼×ÜÊı
+	 * è®¾ç½®è®°å½•æ€»æ•°
 	 * 
 	 * @param i
 	 */

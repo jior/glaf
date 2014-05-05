@@ -29,7 +29,7 @@ import com.glaf.core.query.AccessEntryQuery;
 public interface IAccessService {
 
 	/**
-	 * »ñÈ¡·ÃÎÊÁĞ±í
+	 * è·å–è®¿é—®åˆ—è¡¨
 	 * 
 	 * @param serviceKey
 	 * @param businessKey
@@ -38,7 +38,7 @@ public interface IAccessService {
 	List<Accessable> getAccessableList(String serviceKey, String businessKey);
 
 	/**
-	 * Í¨¹ı²ÎÊı»ñÈ¡·ÃÎÊÊµÌå
+	 * é€šè¿‡å‚æ•°è·å–è®¿é—®å®ä½“
 	 * 
 	 * @param params
 	 * @return
@@ -46,7 +46,7 @@ public interface IAccessService {
 	List<AccessEntry> getAccessEntries(AccessEntryQuery query);
 
 	/**
-	 * Í¨¹ıÁ÷³ÌÃû³Æ»ñÈ¡·ÃÎÊÊµÌå
+	 * é€šè¿‡æµç¨‹åç§°è·å–è®¿é—®å®ä½“
 	 * 
 	 * @param processName
 	 * @return
@@ -54,7 +54,7 @@ public interface IAccessService {
 	List<AccessEntry> getAccessEntries(String processName);
 
 	/**
-	 * »ñÈ¡Êı¾İ·ÃÎÊ¶ÔÏó
+	 * è·å–æ•°æ®è®¿é—®å¯¹è±¡
 	 * 
 	 * @param serviceKey
 	 * @param dataInstanceId
@@ -63,7 +63,7 @@ public interface IAccessService {
 	List<DataAccess> getDataAccesses(String serviceKey, String dataInstanceId);
 
 	/**
-	 * Í¨¹ıÓ¦ÓÃÃû³Æ»ñÈ¡·ÃÎÊÊµÌå
+	 * é€šè¿‡åº”ç”¨åç§°è·å–è®¿é—®å®ä½“
 	 * 
 	 * @param applicationName
 	 * @return
@@ -71,7 +71,7 @@ public interface IAccessService {
 	AccessEntry getLatestAccessEntry(String applicationName);
 
 	/**
-	 * Í¨¹ıÁ÷³ÌÃû³Æ¼°ÈÎÎñÃû³Æ»ñÈ¡·ÃÎÊÊµÌå
+	 * é€šè¿‡æµç¨‹åç§°åŠä»»åŠ¡åç§°è·å–è®¿é—®å®ä½“
 	 * 
 	 * @param processName
 	 * @param taskName
@@ -80,7 +80,7 @@ public interface IAccessService {
 	AccessEntry getLatestAccessEntry(String processName, String taskName);
 
 	/**
-	 * »ñÈ¡Ä£¿é·ÃÎÊ¶ÔÏó
+	 * è·å–æ¨¡å—è®¿é—®å¯¹è±¡
 	 * 
 	 * @param serviceKey
 	 * @return
@@ -88,7 +88,7 @@ public interface IAccessService {
 	List<ModuleAccess> getModuleAccesses(String serviceKey);
 
 	/**
-	 * ±£´æ·ÃÎÊÊµÌå
+	 * ä¿å­˜è®¿é—®å®ä½“
 	 * 
 	 * @param accessEntry
 	 */
@@ -96,7 +96,7 @@ public interface IAccessService {
 	void saveAccessEntry(AccessEntry accessEntry);
 
 	/**
-	 * ±£´æ¶à¸ö·ÃÎÊÊµÌå
+	 * ä¿å­˜å¤šä¸ªè®¿é—®å®ä½“
 	 * 
 	 * @param rows
 	 */

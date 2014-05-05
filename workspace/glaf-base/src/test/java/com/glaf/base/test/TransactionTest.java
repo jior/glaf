@@ -27,7 +27,7 @@ public class TransactionTest extends AbstractTest {
 	protected TestService testService;
 
 	/**
-	 * ²âÊÔÖ÷¼üÒÑ¾­´æÔÚ
+	 * æµ‹è¯•ä¸»é”®å·²ç»å­˜åœ¨
 	 */
 	@Test
 	public void testSave() {
@@ -36,7 +36,7 @@ public class TransactionTest extends AbstractTest {
 	}
 
 	/**
-	 * ²âÊÔ×Ö¶Î³¬³¤
+	 * æµ‹è¯•å­—æ®µè¶…é•¿
 	 */
 	@Test
 	public void testSave2() {
@@ -45,7 +45,7 @@ public class TransactionTest extends AbstractTest {
 	}
 
 	/**
-	 * ²âÊÔ×Ö¶Î³¬³¤²¢Å×³öÔËĞĞÊ±Òì³£
+	 * æµ‹è¯•å­—æ®µè¶…é•¿å¹¶æŠ›å‡ºè¿è¡Œæ—¶å¼‚å¸¸
 	 */
 	@Test
 	public void testSave3() {

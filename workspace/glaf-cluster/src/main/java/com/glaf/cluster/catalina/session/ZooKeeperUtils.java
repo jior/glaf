@@ -16,7 +16,7 @@ import org.apache.zookeeper.data.Stat;
 
 public class ZooKeeperUtils {
 
-	/** ÈÕÖ¾ */
+	/** æ—¥å¿— */
 	private static Log log = LogFactory.getLog(ZooKeeperUtils.class);
 
 	private static ExecutorService pool = Executors.newCachedThreadPool();
@@ -27,11 +27,11 @@ public class ZooKeeperUtils {
 
 	/**
 	 * 
-	 * ´´½¨Ö¸¶¨Session IDµÄ½Úµã(Òì²½²Ù×÷)
+	 * åˆ›å»ºæŒ‡å®šSession IDçš„èŠ‚ç‚¹(å¼‚æ­¥æ“ä½œ)
 	 * 
 	 * @param sid
 	 * 
-	 * @param waitForÊÇ·ñµÈ´ıÖ´ĞĞ½á¹û
+	 * @param waitForæ˜¯å¦ç­‰å¾…æ‰§è¡Œç»“æœ
 	 * 
 	 * @return
 	 */
@@ -48,7 +48,7 @@ public class ZooKeeperUtils {
 
 		try {
 			Future<String> result = pool.submit(task);
-			// Èç¹ûĞèÒªµÈ´ıÖ´ĞĞ½á¹û
+			// å¦‚æœéœ€è¦ç­‰å¾…æ‰§è¡Œç»“æœ
 			if (waitFor) {
 				while (true) {
 					if (result.isDone()) {
@@ -65,11 +65,11 @@ public class ZooKeeperUtils {
 
 	/**
 	 * 
-	 * É¾³ıÖ¸¶¨Session IDµÄ½Úµã(Òì²½²Ù×÷)
+	 * åˆ é™¤æŒ‡å®šSession IDçš„èŠ‚ç‚¹(å¼‚æ­¥æ“ä½œ)
 	 * 
 	 * @param sid
 	 * 
-	 * @param waitForÊÇ·ñµÈ´ıÖ´ĞĞ½á¹û
+	 * @param waitForæ˜¯å¦ç­‰å¾…æ‰§è¡Œç»“æœ
 	 * 
 	 * @return
 	 */
@@ -88,7 +88,7 @@ public class ZooKeeperUtils {
 		try {
 			Future<Boolean> result = pool.submit(task);
 
-			// Èç¹ûĞèÒªµÈ´ıÖ´ĞĞ½á¹û
+			// å¦‚æœéœ€è¦ç­‰å¾…æ‰§è¡Œç»“æœ
 			if (waitFor) {
 				while (true) {
 					if (result.isDone()) {
@@ -105,11 +105,11 @@ public class ZooKeeperUtils {
 
 	/**
 	 * 
-	 * É¾³ıÖ¸¶¨Session IDµÄ½Úµã(Òì²½²Ù×÷)
+	 * åˆ é™¤æŒ‡å®šSession IDçš„èŠ‚ç‚¹(å¼‚æ­¥æ“ä½œ)
 	 * 
 	 * @param sid
 	 * 
-	 * @param waitForÊÇ·ñµÈ´ıÖ´ĞĞ½á¹û
+	 * @param waitForæ˜¯å¦ç­‰å¾…æ‰§è¡Œç»“æœ
 	 * 
 	 * @return
 	 */
@@ -129,7 +129,7 @@ public class ZooKeeperUtils {
 		try {
 			Future<Boolean> result = pool.submit(task);
 
-			// Èç¹ûĞèÒªµÈ´ıÖ´ĞĞ½á¹û
+			// å¦‚æœéœ€è¦ç­‰å¾…æ‰§è¡Œç»“æœ
 			if (waitFor) {
 				while (true) {
 					if (result.isDone()) {
@@ -146,7 +146,7 @@ public class ZooKeeperUtils {
 
 	/**
 	 * 
-	 * ¹Ø±ÕÒ»¸ö»á»°
+	 * å…³é—­ä¸€ä¸ªä¼šè¯
 	 */
 	public static void close(ZooKeeper zk) {
 		if (zk != null) {
@@ -160,7 +160,7 @@ public class ZooKeeperUtils {
 
 	/**
 	 * 
-	 * Á¬½Ó·şÎñÆ÷
+	 * è¿æ¥æœåŠ¡å™¨
 	 * 
 	 * @return
 	 */
@@ -172,22 +172,22 @@ public class ZooKeeperUtils {
 
 	/**
 	 * 
-	 * ´´½¨Ò»¸ö×é½Úµã
+	 * åˆ›å»ºä¸€ä¸ªç»„èŠ‚ç‚¹
 	 */
 	public static void createGroupNode() {
 		ZooKeeper zk = connect();
 		if (zk != null) {
 			try {
-				// ¼ì²é½ÚµãÊÇ·ñ´æÔÚ
+				// æ£€æŸ¥èŠ‚ç‚¹æ˜¯å¦å­˜åœ¨
 				Stat stat = zk.exists(GROUP_NAME, false);
-				// statÎªnull±íÊ¾ÎŞ´Ë½Úµã£¬ĞèÒª´´½¨
+				// statä¸ºnullè¡¨ç¤ºæ— æ­¤èŠ‚ç‚¹ï¼Œéœ€è¦åˆ›å»º
 				if (stat == null) {
-					// ´´½¨×é¼şµã
+					// åˆ›å»ºç»„ä»¶ç‚¹
 					String path = zk.create(GROUP_NAME, null,
 							Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
-					log.debug("´´½¨½ÚµãÍê³É:[" + path + "]");
+					log.debug("åˆ›å»ºèŠ‚ç‚¹å®Œæˆ:[" + path + "]");
 				} else {
-					log.debug("×é½ÚµãÒÑ´æÔÚ£¬ÎŞĞè´´½¨[" + GROUP_NAME + "]");
+					log.debug("ç»„èŠ‚ç‚¹å·²å­˜åœ¨ï¼Œæ— éœ€åˆ›å»º[" + GROUP_NAME + "]");
 				}
 			} catch (KeeperException e) {
 				log.error(e);
@@ -201,24 +201,24 @@ public class ZooKeeperUtils {
 
 	/**
 	 * 
-	 * ´´½¨Ö¸¶¨Session IDµÄ½Úµã
+	 * åˆ›å»ºæŒ‡å®šSession IDçš„èŠ‚ç‚¹
 	 * 
 	 * @return
 	 */
 	public static String createRootNode() {
-		ZooKeeper zk = connect(); // Á¬½Ó·şÎñÆÚ
+		ZooKeeper zk = connect(); // è¿æ¥æœåŠ¡æœŸ
 		if (zk != null) {
 			String path = GROUP_NAME;
 			try {
-				// ¼ì²é½ÚµãÊÇ·ñ´æÔÚ
+				// æ£€æŸ¥èŠ‚ç‚¹æ˜¯å¦å­˜åœ¨
 				Stat stat = zk.exists(path, false);
-				// statÎªnull±íÊ¾ÎŞ´Ë½Úµã£¬ĞèÒª´´½¨
+				// statä¸ºnullè¡¨ç¤ºæ— æ­¤èŠ‚ç‚¹ï¼Œéœ€è¦åˆ›å»º
 				if (stat == null) {
-					// ´´½¨×é¼şµã
+					// åˆ›å»ºç»„ä»¶ç‚¹
 					String createPath = zk.create(path, null,
 							Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
-					log.debug("´´½¨Session½ÚµãÍê³É:[" + createPath + "]");
-					// Ğ´Èë½ÚµãÊı¾İ
+					log.debug("åˆ›å»ºSessionèŠ‚ç‚¹å®Œæˆ:[" + createPath + "]");
+					// å†™å…¥èŠ‚ç‚¹æ•°æ®
 					zk.setData(path, "/".getBytes(), -1);
 					return createPath;
 				}
@@ -238,10 +238,10 @@ public class ZooKeeperUtils {
 
 	/**
 	 * 
-	 * ´´½¨Ö¸¶¨Session IDµÄ½Úµã
+	 * åˆ›å»ºæŒ‡å®šSession IDçš„èŠ‚ç‚¹
 	 * 
 	 * @param metadata
-	 *            Session Êı¾İ
+	 *            Session æ•°æ®
 	 * 
 	 * @return
 	 */
@@ -249,19 +249,19 @@ public class ZooKeeperUtils {
 		if (metadata == null) {
 			return null;
 		}
-		ZooKeeper zk = connect(); // Á¬½Ó·şÎñÆÚ
+		ZooKeeper zk = connect(); // è¿æ¥æœåŠ¡æœŸ
 		if (zk != null) {
 			String path = GROUP_NAME + "/" + metadata.getId();
 			try {
-				// ¼ì²é½ÚµãÊÇ·ñ´æÔÚ
+				// æ£€æŸ¥èŠ‚ç‚¹æ˜¯å¦å­˜åœ¨
 				Stat stat = zk.exists(path, false);
-				// statÎªnull±íÊ¾ÎŞ´Ë½Úµã£¬ĞèÒª´´½¨
+				// statä¸ºnullè¡¨ç¤ºæ— æ­¤èŠ‚ç‚¹ï¼Œéœ€è¦åˆ›å»º
 				if (stat == null) {
-					// ´´½¨×é¼şµã
+					// åˆ›å»ºç»„ä»¶ç‚¹
 					String createPath = zk.create(path, null,
 							Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
-					log.debug("´´½¨Session½ÚµãÍê³É:[" + createPath + "]");
-					// Ğ´Èë½ÚµãÊı¾İ
+					log.debug("åˆ›å»ºSessionèŠ‚ç‚¹å®Œæˆ:[" + createPath + "]");
+					// å†™å…¥èŠ‚ç‚¹æ•°æ®
 					zk.setData(path, SerializationUtils.serialize(metadata), -1);
 					return createPath;
 				}
@@ -281,7 +281,7 @@ public class ZooKeeperUtils {
 
 	/**
 	 * 
-	 * É¾³ıÖ¸¶¨Session IDµÄ½Úµã
+	 * åˆ é™¤æŒ‡å®šSession IDçš„èŠ‚ç‚¹
 	 * 
 	 * @param sid
 	 *            Session ID
@@ -289,15 +289,15 @@ public class ZooKeeperUtils {
 	 * @return
 	 */
 	public static boolean deleteSessionNode(String sid) {
-		ZooKeeper zk = connect(); // Á¬½Ó·şÎñÆÚ
+		ZooKeeper zk = connect(); // è¿æ¥æœåŠ¡æœŸ
 		if (zk != null) {
 			String path = GROUP_NAME + "/" + sid;
 			try {
-				// ¼ì²é½ÚµãÊÇ·ñ´æÔÚ
+				// æ£€æŸ¥èŠ‚ç‚¹æ˜¯å¦å­˜åœ¨
 				Stat stat = zk.exists(path, false);
-				// Èç¹û½Úµã´æÔÚÔòÉ¾³ıÖ®
+				// å¦‚æœèŠ‚ç‚¹å­˜åœ¨åˆ™åˆ é™¤ä¹‹
 				if (stat != null) {
-					// ÏÈÉ¾³ı×Ó½Úµã
+					// å…ˆåˆ é™¤å­èŠ‚ç‚¹
 					List<String> nodes = zk.getChildren(path, false);
 					if (nodes != null) {
 						for (String node : nodes) {
@@ -305,9 +305,9 @@ public class ZooKeeperUtils {
 						}
 					}
 
-					// É¾³ı¸¸½Úµã
+					// åˆ é™¤çˆ¶èŠ‚ç‚¹
 					zk.delete(path, -1);
-					log.debug("É¾³ıSession½ÚµãÍê³É:[" + path + "]");
+					log.debug("åˆ é™¤SessionèŠ‚ç‚¹å®Œæˆ:[" + path + "]");
 					return true;
 				}
 			} catch (KeeperException e) {
@@ -324,42 +324,42 @@ public class ZooKeeperUtils {
 
 	/**
 	 * 
-	 * Ïú»Ù
+	 * é”€æ¯
 	 */
 	public static void destroy() {
 		if (pool != null) {
-			// ¹Ø±Õ
+			// å…³é—­
 			pool.shutdown();
 		}
 	}
 
 	/**
 	 * 
-	 * ·µ»ØÖ¸¶¨Session IDµÄ½ÚµãÏÂÊı¾İ
+	 * è¿”å›æŒ‡å®šSession IDçš„èŠ‚ç‚¹ä¸‹æ•°æ®
 	 * 
 	 * @param sid
 	 *            Session ID
 	 * 
 	 * @param name
-	 *            Êı¾İ½ÚµãµÄÃû³Æ
+	 *            æ•°æ®èŠ‚ç‚¹çš„åç§°
 	 * 
 	 * @return
 	 */
 	public static byte[] getBytesData(String sid, String name) {
-		ZooKeeper zk = connect(); // Á¬½Ó·şÎñÆ÷
+		ZooKeeper zk = connect(); // è¿æ¥æœåŠ¡å™¨
 
 		if (zk != null) {
 			String path = GROUP_NAME + "/" + sid;
 			try {
-				// ¼ì²éÖ¸¶¨µÄSession½ÚµãÊÇ·ñ´æÔÚ
+				// æ£€æŸ¥æŒ‡å®šçš„SessionèŠ‚ç‚¹æ˜¯å¦å­˜åœ¨
 				Stat stat = zk.exists(path, false);
 				if (stat != null) {
-					// ²éÕÒÊı¾İ½ÚµãÊÇ·ñ´æÔÚ
+					// æŸ¥æ‰¾æ•°æ®èŠ‚ç‚¹æ˜¯å¦å­˜åœ¨
 					String dataPath = path + "/" + name;
 					stat = zk.exists(dataPath, false);
 
 					if (stat != null) {
-						// »ñÈ¡½ÚµãÊı¾İ
+						// è·å–èŠ‚ç‚¹æ•°æ®
 						byte[] data = zk.getData(dataPath, false, null);
 						if (data != null) {
 							log.debug("get data from zookeeper...");
@@ -381,35 +381,35 @@ public class ZooKeeperUtils {
 
 	/**
 	 * 
-	 * ·µ»ØÖ¸¶¨Session IDµÄ½ÚµãÏÂÊı¾İ
+	 * è¿”å›æŒ‡å®šSession IDçš„èŠ‚ç‚¹ä¸‹æ•°æ®
 	 * 
 	 * @param sid
 	 *            Session ID
 	 * 
 	 * @param name
-	 *            Êı¾İ½ÚµãµÄÃû³Æ
+	 *            æ•°æ®èŠ‚ç‚¹çš„åç§°
 	 * 
 	 * @return
 	 */
 	public static Object getSessionData(String sid, String name) {
 
-		ZooKeeper zk = connect(); // Á¬½Ó·şÎñÆ÷
+		ZooKeeper zk = connect(); // è¿æ¥æœåŠ¡å™¨
 
 		if (zk != null) {
 			String path = GROUP_NAME + "/" + sid;
 			try {
-				// ¼ì²éÖ¸¶¨µÄSession½ÚµãÊÇ·ñ´æÔÚ
+				// æ£€æŸ¥æŒ‡å®šçš„SessionèŠ‚ç‚¹æ˜¯å¦å­˜åœ¨
 				Stat stat = zk.exists(path, false);
 				if (stat != null) {
-					// ²éÕÒÊı¾İ½ÚµãÊÇ·ñ´æÔÚ
+					// æŸ¥æ‰¾æ•°æ®èŠ‚ç‚¹æ˜¯å¦å­˜åœ¨
 					String dataPath = path + "/" + name;
 					stat = zk.exists(dataPath, false);
 					Object value = null;
 					if (stat != null) {
-						// »ñÈ¡½ÚµãÊı¾İ
+						// è·å–èŠ‚ç‚¹æ•°æ®
 						byte[] data = zk.getData(dataPath, false, null);
 						if (data != null) {
-							// ·´ĞòÁĞ»¯
+							// ååºåˆ—åŒ–
 							value = SerializationUtils.deserialize(data);
 						}
 					}
@@ -430,7 +430,7 @@ public class ZooKeeperUtils {
 
 	/**
 	 * 
-	 * ·µ»ØZooKeeper·şÎñÆ÷ÉÏµÄSession½ÚµãµÄËùÓĞÊı¾İ£¬²¢×°ÔØÎªMap
+	 * è¿”å›ZooKeeperæœåŠ¡å™¨ä¸Šçš„SessionèŠ‚ç‚¹çš„æ‰€æœ‰æ•°æ®ï¼Œå¹¶è£…è½½ä¸ºMap
 	 * 
 	 * @param id
 	 * 
@@ -441,23 +441,23 @@ public class ZooKeeperUtils {
 		if (zk != null) {
 			String path = GROUP_NAME + "/" + id;
 			try {
-				// »ñÈ¡ÔªÊı¾İ
+				// è·å–å…ƒæ•°æ®
 				SessionMetaData metadata = getSessionMetaData(path, zk);
-				// Èç¹û²»´æÔÚ»òÊÇÎŞĞ§£¬ÔòÖ±½Ó·µ»Ønull
+				// å¦‚æœä¸å­˜åœ¨æˆ–æ˜¯æ— æ•ˆï¼Œåˆ™ç›´æ¥è¿”å›null
 				if (metadata == null || !metadata.getValidate()) {
 					return null;
 				}
 
-				// »ñÈ¡ËùÓĞ×Ó½Úµã
+				// è·å–æ‰€æœ‰å­èŠ‚ç‚¹
 				List<String> nodes = zk.getChildren(path, false);
-				// ´æ·ÅÊı¾İ
+				// å­˜æ”¾æ•°æ®
 				Map<String, Object> sessionMap = new java.util.HashMap<String, Object>();
 				for (String node : nodes) {
 					String dataPath = path + "/" + node;
 					Stat stat = zk.exists(dataPath, false);
-					// ½Úµã´æÔÚ
+					// èŠ‚ç‚¹å­˜åœ¨
 					if (stat != null) {
-						// ÌáÈ¡Êı¾İ
+						// æå–æ•°æ®
 						byte[] data = zk.getData(dataPath, false, null);
 						if (data != null) {
 							sessionMap.put(node,
@@ -482,7 +482,7 @@ public class ZooKeeperUtils {
 
 	/**
 	 * 
-	 * ·µ»ØÖ¸¶¨IDµÄSessionÔªÊı¾İ
+	 * è¿”å›æŒ‡å®šIDçš„Sessionå…ƒæ•°æ®
 	 * 
 	 * @param id
 	 * 
@@ -492,22 +492,22 @@ public class ZooKeeperUtils {
 		if (zk != null) {
 			String path = GROUP_NAME + "/" + id;
 			try {
-				// ¼ì²é½ÚµãÊÇ·ñ´æÔÚ
+				// æ£€æŸ¥èŠ‚ç‚¹æ˜¯å¦å­˜åœ¨
 				Stat stat = zk.exists(path, false);
-				// statÎªnull±íÊ¾ÎŞ´Ë½Úµã
+				// statä¸ºnullè¡¨ç¤ºæ— æ­¤èŠ‚ç‚¹
 				if (stat == null) {
 					return null;
 				}
 
-				// »ñÈ¡½ÚµãÉÏµÄÊı¾İ
+				// è·å–èŠ‚ç‚¹ä¸Šçš„æ•°æ®
 				byte[] data = zk.getData(path, false, null);
 				if (data != null) {
-					// ·´ĞòÁĞ»¯
+					// ååºåˆ—åŒ–
 					Object value = SerializationUtils.deserialize(data);
-					// ×ª»»ÀàĞÍ
+					// è½¬æ¢ç±»å‹
 					if (value instanceof SessionMetaData) {
 						SessionMetaData metadata = (SessionMetaData) value;
-						// ÉèÖÃµ±Ç°°æ±¾ºÅ
+						// è®¾ç½®å½“å‰ç‰ˆæœ¬å·
 						metadata.setVersion(stat.getVersion());
 						return metadata;
 					}
@@ -524,7 +524,7 @@ public class ZooKeeperUtils {
 
 	/**
 	 * 
-	 * ³õÊ¼»¯
+	 * åˆå§‹åŒ–
 	 */
 	public static void initialize(String hosts) {
 		ZooKeeperUtils.hosts = hosts;
@@ -538,7 +538,7 @@ public class ZooKeeperUtils {
 
 	/**
 	 * 
-	 * ÑéÖ¤Ö¸¶¨IDµÄ½ÚµãÊÇ·ñÓĞĞ§
+	 * éªŒè¯æŒ‡å®šIDçš„èŠ‚ç‚¹æ˜¯å¦æœ‰æ•ˆ
 	 * 
 	 * @param id
 	 * 
@@ -558,7 +558,7 @@ public class ZooKeeperUtils {
 
 	/**
 	 * 
-	 * ÑéÖ¤Ö¸¶¨IDµÄ½ÚµãÊÇ·ñÓĞĞ§
+	 * éªŒè¯æŒ‡å®šIDçš„èŠ‚ç‚¹æ˜¯å¦æœ‰æ•ˆ
 	 * 
 	 * @param id
 	 * 
@@ -568,9 +568,9 @@ public class ZooKeeperUtils {
 	 */
 	public static boolean isValid(String id, ZooKeeper zk) {
 		if (zk != null) {
-			// »ñÈ¡ÔªÊı¾İ
+			// è·å–å…ƒæ•°æ®
 			SessionMetaData metadata = getSessionMetaData(id, zk);
-			// Èç¹û²»´æÔÚ»òÊÇÎŞĞ§£¬ÔòÖ±½Ó·µ»Ønull
+			// å¦‚æœä¸å­˜åœ¨æˆ–æ˜¯æ— æ•ˆï¼Œåˆ™ç›´æ¥è¿”å›null
 			if (metadata == null) {
 				return false;
 			}
@@ -581,29 +581,29 @@ public class ZooKeeperUtils {
 
 	/**
 	 * 
-	 * É¾³ıÖ¸¶¨Session IDµÄ½ÚµãÏÂÊı¾İ
+	 * åˆ é™¤æŒ‡å®šSession IDçš„èŠ‚ç‚¹ä¸‹æ•°æ®
 	 * 
 	 * @param sid
 	 *            Session ID
 	 * 
 	 * @param name
-	 *            Êı¾İ½ÚµãµÄÃû³Æ
+	 *            æ•°æ®èŠ‚ç‚¹çš„åç§°
 	 * 
 	 * @return
 	 */
 	public static void removeSessionData(String sid, String name) {
-		ZooKeeper zk = connect(); // Á¬½Ó·şÎñÆ÷
+		ZooKeeper zk = connect(); // è¿æ¥æœåŠ¡å™¨
 		if (zk != null) {
 			String path = GROUP_NAME + "/" + sid;
 			try {
-				// ¼ì²éÖ¸¶¨µÄSession½ÚµãÊÇ·ñ´æÔÚ
+				// æ£€æŸ¥æŒ‡å®šçš„SessionèŠ‚ç‚¹æ˜¯å¦å­˜åœ¨
 				Stat stat = zk.exists(path, false);
 				if (stat != null) {
-					// ²éÕÒÊı¾İ½ÚµãÊÇ·ñ´æÔÚ
+					// æŸ¥æ‰¾æ•°æ®èŠ‚ç‚¹æ˜¯å¦å­˜åœ¨
 					String dataPath = path + "/" + name;
 					stat = zk.exists(dataPath, false);
 					if (stat != null) {
-						// É¾³ı½Úµã
+						// åˆ é™¤èŠ‚ç‚¹
 						zk.delete(dataPath, -1);
 					}
 				}
@@ -619,49 +619,49 @@ public class ZooKeeperUtils {
 
 	/**
 	 * 
-	 * ÔÚÖ¸¶¨Session IDµÄ½ÚµãÏÂÌí¼ÓÊı¾İ½Úµã
+	 * åœ¨æŒ‡å®šSession IDçš„èŠ‚ç‚¹ä¸‹æ·»åŠ æ•°æ®èŠ‚ç‚¹
 	 * 
 	 * @param sid
 	 *            Session ID
 	 * 
 	 * @param name
-	 *            Êı¾İ½ÚµãµÄÃû³Æ
+	 *            æ•°æ®èŠ‚ç‚¹çš„åç§°
 	 * 
 	 * @param data
-	 *            Êı¾İ
+	 *            æ•°æ®
 	 * 
 	 * @return
 	 */
 	public static boolean setSessionData(String sid, String name, byte[] data) {
 		boolean result = false;
-		ZooKeeper zk = connect(); // Á¬½Ó·şÎñÆ÷
+		ZooKeeper zk = connect(); // è¿æ¥æœåŠ¡å™¨
 		if (zk != null) {
 			String path = GROUP_NAME + "/" + sid;
 			try {
-				// ¼ì²éÖ¸¶¨µÄSession½ÚµãÊÇ·ñ´æÔÚ
+				// æ£€æŸ¥æŒ‡å®šçš„SessionèŠ‚ç‚¹æ˜¯å¦å­˜åœ¨
 				Stat stat = zk.exists(path, false);
 
-				// Èç¹û½Úµã´æÔÚÔòÉ¾³ıÖ®
+				// å¦‚æœèŠ‚ç‚¹å­˜åœ¨åˆ™åˆ é™¤ä¹‹
 				if (stat != null) {
-					// ²éÕÒÊı¾İ½ÚµãÊÇ·ñ´æÔÚ£¬²»´æÔÚ¾Í´´½¨Ò»¸ö
+					// æŸ¥æ‰¾æ•°æ®èŠ‚ç‚¹æ˜¯å¦å­˜åœ¨ï¼Œä¸å­˜åœ¨å°±åˆ›å»ºä¸€ä¸ª
 					String dataPath = path + "/" + name;
 					stat = zk.exists(dataPath, false);
 					if (stat == null) {
-						// ´´½¨Êı¾İ½Úµã
+						// åˆ›å»ºæ•°æ®èŠ‚ç‚¹
 						zk.create(dataPath, null, Ids.OPEN_ACL_UNSAFE,
 								CreateMode.PERSISTENT);
-						log.debug("´´½¨Êı¾İ½ÚµãÍê³É[" + dataPath + "]");
+						log.debug("åˆ›å»ºæ•°æ®èŠ‚ç‚¹å®Œæˆ[" + dataPath + "]");
 					}
 
-					// ÔÚ½ÚµãÉÏÉèÖÃÊı¾İ£¬ËùÓĞÊı¾İ±ØĞë¿ÉĞòÁĞ»¯
+					// åœ¨èŠ‚ç‚¹ä¸Šè®¾ç½®æ•°æ®ï¼Œæ‰€æœ‰æ•°æ®å¿…é¡»å¯åºåˆ—åŒ–
 					int dataNodeVer = -1;
 
 					if (stat != null) {
-						// ¼ÇÂ¼Êı¾İ½ÚµãµÄ°æ±¾
+						// è®°å½•æ•°æ®èŠ‚ç‚¹çš„ç‰ˆæœ¬
 						dataNodeVer = stat.getVersion();
 					}
 					stat = zk.setData(dataPath, data, dataNodeVer);
-					log.debug("¸üĞÂÊı¾İ½ÚµãÊı¾İÍê³É[" + dataPath + "]");
+					log.debug("æ›´æ–°æ•°æ®èŠ‚ç‚¹æ•°æ®å®Œæˆ[" + dataPath + "]");
 					result = true;
 				}
 			} catch (KeeperException e) {
@@ -678,56 +678,56 @@ public class ZooKeeperUtils {
 
 	/**
 	 * 
-	 * ÔÚÖ¸¶¨Session IDµÄ½ÚµãÏÂÌí¼ÓÊı¾İ½Úµã
+	 * åœ¨æŒ‡å®šSession IDçš„èŠ‚ç‚¹ä¸‹æ·»åŠ æ•°æ®èŠ‚ç‚¹
 	 * 
 	 * @param sid
 	 *            Session ID
 	 * 
 	 * @param name
-	 *            Êı¾İ½ÚµãµÄÃû³Æ
+	 *            æ•°æ®èŠ‚ç‚¹çš„åç§°
 	 * 
 	 * @param value
-	 *            Êı¾İ
+	 *            æ•°æ®
 	 * 
 	 * @return
 	 */
 	public static boolean setSessionData(String sid, String name, Object value) {
 		boolean result = false;
 
-		ZooKeeper zk = connect(); // Á¬½Ó·şÎñÆ÷
+		ZooKeeper zk = connect(); // è¿æ¥æœåŠ¡å™¨
 
 		if (zk != null) {
 			String path = GROUP_NAME + "/" + sid;
 			try {
-				// ¼ì²éÖ¸¶¨µÄSession½ÚµãÊÇ·ñ´æÔÚ
+				// æ£€æŸ¥æŒ‡å®šçš„SessionèŠ‚ç‚¹æ˜¯å¦å­˜åœ¨
 				Stat stat = zk.exists(path, false);
 
-				// Èç¹û½Úµã´æÔÚÔòÉ¾³ıÖ®
+				// å¦‚æœèŠ‚ç‚¹å­˜åœ¨åˆ™åˆ é™¤ä¹‹
 				if (stat != null) {
-					// ²éÕÒÊı¾İ½ÚµãÊÇ·ñ´æÔÚ£¬²»´æÔÚ¾Í´´½¨Ò»¸ö
+					// æŸ¥æ‰¾æ•°æ®èŠ‚ç‚¹æ˜¯å¦å­˜åœ¨ï¼Œä¸å­˜åœ¨å°±åˆ›å»ºä¸€ä¸ª
 					String dataPath = path + "/" + name;
 					stat = zk.exists(dataPath, false);
 					if (stat == null) {
-						// ´´½¨Êı¾İ½Úµã
+						// åˆ›å»ºæ•°æ®èŠ‚ç‚¹
 						zk.create(dataPath, null, Ids.OPEN_ACL_UNSAFE,
 								CreateMode.PERSISTENT);
-						log.debug("´´½¨Êı¾İ½ÚµãÍê³É[" + dataPath + "]");
+						log.debug("åˆ›å»ºæ•°æ®èŠ‚ç‚¹å®Œæˆ[" + dataPath + "]");
 					}
 
-					// ÔÚ½ÚµãÉÏÉèÖÃÊı¾İ£¬ËùÓĞÊı¾İ±ØĞë¿ÉĞòÁĞ»¯
+					// åœ¨èŠ‚ç‚¹ä¸Šè®¾ç½®æ•°æ®ï¼Œæ‰€æœ‰æ•°æ®å¿…é¡»å¯åºåˆ—åŒ–
 					if (value instanceof Serializable) {
 
 						int dataNodeVer = -1;
 
 						if (stat != null) {
-							// ¼ÇÂ¼Êı¾İ½ÚµãµÄ°æ±¾
+							// è®°å½•æ•°æ®èŠ‚ç‚¹çš„ç‰ˆæœ¬
 							dataNodeVer = stat.getVersion();
 						}
 
 						byte[] data = SerializationUtils
 								.serialize((Serializable) value);
 						stat = zk.setData(dataPath, data, dataNodeVer);
-						log.debug("¸üĞÂÊı¾İ½ÚµãÊı¾İÍê³É[" + dataPath + "][" + value + "]");
+						log.debug("æ›´æ–°æ•°æ®èŠ‚ç‚¹æ•°æ®å®Œæˆ[" + dataPath + "][" + value + "]");
 						result = true;
 					}
 				}
@@ -745,10 +745,10 @@ public class ZooKeeperUtils {
 
 	/**
 	 * 
-	 * ¸üĞÂSession½ÚµãµÄÔªÊı¾İ
+	 * æ›´æ–°SessionèŠ‚ç‚¹çš„å…ƒæ•°æ®
 	 * 
 	 * @param metadata
-	 *            Session Êı¾İ
+	 *            Session æ•°æ®
 	 * 
 	 * @param zk
 	 */
@@ -757,24 +757,24 @@ public class ZooKeeperUtils {
 		try {
 			if (metadata != null) {
 				String id = metadata.getId();
-				Long now = System.currentTimeMillis(); // µ±Ç°Ê±¼ä
-				// ¼ì²éÊÇ·ñ¹ıÆÚ
+				Long now = System.currentTimeMillis(); // å½“å‰æ—¶é—´
+				// æ£€æŸ¥æ˜¯å¦è¿‡æœŸ
 				Long timeout = metadata.getLastAccessTime()
-						+ metadata.getMaxIdle(); // ¿ÕÏĞÊ±¼ä
-				// Èç¹û¿ÕÏĞÊ±¼äĞ¡ÓÚµ±Ç°Ê±¼ä£¬Ôò±íÊ¾Session³¬Ê±
+						+ metadata.getMaxIdle(); // ç©ºé—²æ—¶é—´
+				// å¦‚æœç©ºé—²æ—¶é—´å°äºå½“å‰æ—¶é—´ï¼Œåˆ™è¡¨ç¤ºSessionè¶…æ—¶
 				if (timeout < now) {
 					metadata.setValidate(false);
-					log.debug("Session½ÚµãÒÑ³¬Ê±[" + id + "]");
+					log.debug("SessionèŠ‚ç‚¹å·²è¶…æ—¶[" + id + "]");
 				}
 
-				// ÉèÖÃ×îºóÒ»´Î·ÃÎÊÊ±¼ä
+				// è®¾ç½®æœ€åä¸€æ¬¡è®¿é—®æ—¶é—´
 				metadata.setLastAccessTime(now);
 
-				// ¸üĞÂ½ÚµãÊı¾İ
+				// æ›´æ–°èŠ‚ç‚¹æ•°æ®
 				String path = GROUP_NAME + "/" + id;
 				byte[] data = SerializationUtils.serialize(metadata);
 				zk.setData(path, data, metadata.getVersion());
-				log.debug("¸üĞÂSession½ÚµãµÄÔªÊı¾İÍê³É[" + path + "]");
+				log.debug("æ›´æ–°SessionèŠ‚ç‚¹çš„å…ƒæ•°æ®å®Œæˆ[" + path + "]");
 			}
 
 		} catch (KeeperException e) {
@@ -786,7 +786,7 @@ public class ZooKeeperUtils {
 
 	/**
 	 * 
-	 * ¸üĞÂSession½ÚµãµÄÔªÊı¾İ
+	 * æ›´æ–°SessionèŠ‚ç‚¹çš„å…ƒæ•°æ®
 	 * 
 	 * @param id
 	 *            Session ID
@@ -795,7 +795,7 @@ public class ZooKeeperUtils {
 	public static void updateSessionMetaData(String id) {
 		ZooKeeper zk = connect();
 		try {
-			// »ñÈ¡ÔªÊı¾İ
+			// è·å–å…ƒæ•°æ®
 			SessionMetaData metadata = getSessionMetaData(id, zk);
 			if (metadata != null) {
 				updateSessionMetaData(metadata, zk);

@@ -30,19 +30,19 @@ import com.glaf.core.base.AccessToken;
 import com.glaf.core.cache.CacheFactory;
 
 /**
- * ¹«ÖÚÆ½Ì¨Í¨ÓÃ½Ó¿Ú¹¤¾ßÀà
+ * å…¬ä¼—å¹³å°é€šç”¨æ¥å£å·¥å…·ç±»
  * 
  */
 public class TokenUtils {
 	private static final Logger log = LoggerFactory.getLogger(TokenUtils.class);
 
 	/**
-	 * »ñÈ¡access_token
+	 * è·å–access_token
 	 * 
 	 * @param accountId
-	 *            Æ¾Ö¤
+	 *            å‡­è¯
 	 * @param appSecret
-	 *            ÃÜÔ¿
+	 *            å¯†é’¥
 	 * @return
 	 */
 	public static AccessToken getAccessToken(String access_token_url,
@@ -60,7 +60,7 @@ public class TokenUtils {
 					.replace("APPSECRET", appSecret);
 			JSONObject jsonObject = HttpUtils.executeRequest(requestUrl, "GET",
 					null);
-			// Èç¹ûÇëÇó³É¹¦
+			// å¦‚æœè¯·æ±‚æˆåŠŸ
 			if (null != jsonObject) {
 				log.debug(jsonObject.toJSONString());
 				try {
@@ -71,8 +71,8 @@ public class TokenUtils {
 					CacheFactory.put(cacheKey, jsonObject.toJSONString());
 				} catch (JSONException e) {
 					accessToken = null;
-					// »ñÈ¡tokenÊ§°Ü
-					log.error("»ñÈ¡tokenÊ§°Ü errcode:{} errmsg:{}",
+					// è·å–tokenå¤±è´¥
+					log.error("è·å–tokenå¤±è´¥ errcode:{} errmsg:{}",
 							jsonObject.getInteger("errcode"),
 							jsonObject.getString("errmsg"));
 				}

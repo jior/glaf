@@ -195,7 +195,7 @@ public class MongodbBlobServiceImpl implements IBlobService {
 	}
 
 	/**
-	 * 根据文件名称获取数据(不包含字节流)
+	 * 鏍规嵁鏂囦欢鍚嶇О鑾峰彇鏁版嵁(涓嶅寘鍚瓧鑺傛祦)
 	 * 
 	 * @param filename
 	 * @return
@@ -488,8 +488,8 @@ public class MongodbBlobServiceImpl implements IBlobService {
 					file = gridFS.createFile(blobItem.getInputStream());
 				}
 				file.setId(blobItem.getFileId());
-				file.setFilename(blobItem.getFileId());// 指定唯一文件名称
-				file.save();// 保存
+				file.setFilename(blobItem.getFileId());// 鎸囧畾鍞竴鏂囦欢鍚嶇О
+				file.save();// 淇濆瓨
 				logger.debug("save file to mongodb.");
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -683,8 +683,8 @@ public class MongodbBlobServiceImpl implements IBlobService {
 					file = gridFS.createFile(blobItem.getInputStream());
 				}
 				file.setId(blobItem.getFileId());
-				file.setFilename(blobItem.getFileId());// 指定唯一文件名称
-				file.save();// 保存
+				file.setFilename(blobItem.getFileId());// 鎸囧畾鍞竴鏂囦欢鍚嶇О
+				file.save();// 淇濆瓨
 				logger.debug("save file to mongodb.");
 			} catch (Exception ex) {
 				ex.printStackTrace();

@@ -29,7 +29,7 @@ import com.glaf.core.query.SysDataLogQuery;
 public interface SysDataLogService {
 
 	/**
-	 * »ñÈ¡ÈÕÖ¾×Ü¼ÇÂ¼Êı
+	 * è·å–æ—¥å¿—æ€»è®°å½•æ•°
 	 * 
 	 * @param query
 	 * @return
@@ -37,7 +37,7 @@ public interface SysDataLogService {
 	int getSysDataLogCountByQueryCriteria(SysDataLogQuery query);
 
 	/**
-	 * »ñÈ¡Ò»Ò³ÈÕÖ¾
+	 * è·å–ä¸€é¡µæ—¥å¿—
 	 * 
 	 * @param start
 	 * @param pageSize
@@ -48,7 +48,7 @@ public interface SysDataLogService {
 			SysDataLogQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯Ìõ¼ş»ñÈ¡ÈÕÖ¾
+	 * æ ¹æ®æŸ¥è¯¢æ¡ä»¶è·å–æ—¥å¿—
 	 * 
 	 * @param query
 	 * @return
@@ -56,7 +56,7 @@ public interface SysDataLogService {
 	List<SysDataLog> list(SysDataLogQuery query);
 
 	/**
-	 * ±£´æ
+	 * ä¿å­˜
 	 * 
 	 * @param bean
 	 *            SysDataLog

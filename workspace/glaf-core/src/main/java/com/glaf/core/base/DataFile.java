@@ -24,70 +24,70 @@ import java.util.Date;
 public interface DataFile extends JSONable {
 
 	/**
-	 * ÒµÎñ±êÊ¶
+	 * ä¸šåŠ¡æ ‡è¯†
 	 * 
 	 * @return
 	 */
 	String getBusinessKey();
 
 	/**
-	 * »ñÈ¡ContentType
+	 * è·å–ContentType
 	 * 
 	 * @return
 	 */
 	String getContentType();
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 * 
 	 * @return
 	 */
 	String getCreateBy();
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 * 
 	 * @return
 	 */
 	Date getCreateDate();
 
 	/**
-	 * Êı¾İÁ÷
+	 * æ•°æ®æµ
 	 * 
 	 * @return
 	 */
 	byte[] getData();
 
 	/**
-	 * É¾³ı±ê¼Ç
+	 * åˆ é™¤æ ‡è®°
 	 * 
 	 * @return
 	 */
 	int getDeleteFlag();
 
 	/**
-	 * »ñÈ¡Éè±¸±àºÅ
+	 * è·å–è®¾å¤‡ç¼–å·
 	 * 
 	 * @return
 	 */
 	String getDeviceId();
 
 	/**
-	 * ÎÄ¼ş±àºÅ
+	 * æ–‡ä»¶ç¼–å·
 	 * 
 	 * @return
 	 */
 	String getFileId();
 
 	/**
-	 * ÎÄ¼şÃû³Æ
+	 * æ–‡ä»¶åç§°
 	 * 
 	 * @return
 	 */
 	String getFilename();
 
 	/**
-	 * ±àºÅ
+	 * ç¼–å·
 	 * 
 	 * @return
 	 */
@@ -96,35 +96,35 @@ public interface DataFile extends JSONable {
 	InputStream getInputStream();
 
 	/**
-	 * ×îºóĞŞ¸ÄÈÕÆÚ
+	 * æœ€åä¿®æ”¹æ—¥æœŸ
 	 * 
 	 * @return
 	 */
 	long getLastModified();
 
 	/**
-	 * Ëø¶¨±ê¼Ç
+	 * é”å®šæ ‡è®°
 	 * 
 	 * @return
 	 */
 	int getLocked();
 
 	/**
-	 * Ãû³Æ
+	 * åç§°
 	 * 
 	 * @return
 	 */
 	String getName();
 
 	/**
-	 * »ñÈ¡Ä¿±êID
+	 * è·å–ç›®æ ‡ID
 	 * 
 	 * @return
 	 */
 	String getObjectId();
 
 	/**
-	 * »ñÈ¡Ä¿±êÖµ
+	 * è·å–ç›®æ ‡å€¼
 	 * 
 	 * @return
 	 */
@@ -133,28 +133,28 @@ public interface DataFile extends JSONable {
 	String getPath();
 
 	/**
-	 * ·şÎñ±êÊ¶
+	 * æœåŠ¡æ ‡è¯†
 	 * 
 	 * @return
 	 */
 	String getServiceKey();
 
 	/**
-	 * ÎÄ¼ş´óĞ¡
+	 * æ–‡ä»¶å¤§å°
 	 * 
 	 * @return
 	 */
 	long getSize();
 
 	/**
-	 * ×´Ì¬
+	 * çŠ¶æ€
 	 * 
 	 * @return
 	 */
 	int getStatus();
 
 	/**
-	 * ÀàĞÍ
+	 * ç±»å‹
 	 * 
 	 * @return
 	 */
@@ -167,14 +167,14 @@ public interface DataFile extends JSONable {
 	void setCreateBy(String createBy);
 
 	/**
-	 * ¼ÇÂ¼´´½¨Ê±¼ä
+	 * è®°å½•åˆ›å»ºæ—¶é—´
 	 * 
 	 * @param createDate
 	 */
 	void setCreateDate(Date createDate);
 
 	/**
-	 * ÉèÖÃÊı¾İÁ÷
+	 * è®¾ç½®æ•°æ®æµ
 	 * 
 	 * @param data
 	 */
@@ -183,28 +183,28 @@ public interface DataFile extends JSONable {
 	void setDeleteFlag(int deleteFlag);
 
 	/**
-	 * ÉèÖÃÉè±¸±àºÅ
+	 * è®¾ç½®è®¾å¤‡ç¼–å·
 	 * 
 	 * @param deviceId
 	 */
 	void setDeviceId(String deviceId);
 
 	/**
-	 * ÉèÖÃÎÄ¼ş±àºÅ
+	 * è®¾ç½®æ–‡ä»¶ç¼–å·
 	 * 
 	 * @param fileId
 	 */
 	void setFileId(String fileId);
 
 	/**
-	 * ÉèÖÃÎÄ¼şÃû³Æ
+	 * è®¾ç½®æ–‡ä»¶åç§°
 	 * 
 	 * @param filename
 	 */
 	void setFilename(String filename);
 
 	/**
-	 * ÉèÖÃ¼ÇÂ¼Ö÷¼ü
+	 * è®¾ç½®è®°å½•ä¸»é”®
 	 * 
 	 * @param id
 	 */
@@ -213,7 +213,7 @@ public interface DataFile extends JSONable {
 	void setInputStream(InputStream inputStream);
 
 	/**
-	 * »ñÈ¡Êı¾İ×îºóĞŞ¸ÄÊ±¼ä
+	 * è·å–æ•°æ®æœ€åä¿®æ”¹æ—¶é—´
 	 * 
 	 * @param lastModified
 	 */
@@ -222,7 +222,7 @@ public interface DataFile extends JSONable {
 	void setLocked(int locked);
 
 	/**
-	 * ÉèÖÃÃû³Æ
+	 * è®¾ç½®åç§°
 	 * 
 	 * @param name
 	 */
@@ -235,14 +235,14 @@ public interface DataFile extends JSONable {
 	void setPath(String path);
 
 	/**
-	 * ÉèÖÃ·şÎñ±êÊ¶
+	 * è®¾ç½®æœåŠ¡æ ‡è¯†
 	 * 
 	 * @param serviceKey
 	 */
 	void setServiceKey(String serviceKey);
 
 	/**
-	 * ÉèÖÃÊı¾İ³¤¶È
+	 * è®¾ç½®æ•°æ®é•¿åº¦
 	 * 
 	 * @param size
 	 */

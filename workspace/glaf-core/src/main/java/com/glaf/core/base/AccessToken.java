@@ -19,15 +19,15 @@
 package com.glaf.core.base;
 
 /**
- * ͨ�ýӿ�ƾ֤
+ * 通用接口凭证
  *
  */
 public class AccessToken implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
-	// ��ȡ����ƾ֤
+	// 获取到的凭证
 	private String token;
-	// ƾ֤��Чʱ�䣬��λ����
+	// 凭证有效时间，单位：秒
 	private int expiresIn;
 
 	public AccessToken() {

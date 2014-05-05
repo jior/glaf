@@ -36,9 +36,9 @@ public class MultiRoutingDataSourceTest extends AbstractTest {
 	@Test
 	public void testMultiDS() throws IOException {
 		sysLogService = super.getBean("sysLogService");
-		// ÏÂÃæ²Ù×÷²»¿ÉÓÃÔÚserice°üµÄÀàÖĞ£¨ÊÂÎñÔ­Òò£©£¬Ö»ÄÜÓÃÓÚ¿ØÖÆ²ã»òµ÷¶È
+		// ä¸‹é¢æ“ä½œä¸å¯ç”¨åœ¨sericeåŒ…çš„ç±»ä¸­ï¼ˆäº‹åŠ¡åŸå› ï¼‰ï¼Œåªèƒ½ç”¨äºæ§åˆ¶å±‚æˆ–è°ƒåº¦
 		String currentName = com.glaf.core.config.Environment
-				.getCurrentSystemName();// ¼ÇÏÂÖ®Ç°µÄÊı¾İÔ´»·¾³£¬Ä¬ÈÏÊÇdefault
+				.getCurrentSystemName();// è®°ä¸‹ä¹‹å‰çš„æ•°æ®æºç¯å¢ƒï¼Œé»˜è®¤æ˜¯default
 		try {
 			java.util.Map<String, Properties> dataSourceProperties = com.glaf.core.config.DBConfiguration
 					.getDataSourceProperties();
@@ -46,9 +46,9 @@ public class MultiRoutingDataSourceTest extends AbstractTest {
 					.iterator();
 			while (iter.hasNext()) {
 				String systemName = (String) iter.next();
-				Environment.setCurrentSystemName(systemName);// ÉèÖÃµ±Ç°Òª×öÒµÎñ²Ù×÷µÄÊı¾İÔ´Ãû³Æ£¬ÈçÉÏÃæÉèÖÃµÄds02
-				// ÄãµÄserviceÂß¼­
-				// dataService.doYourBussiness(....);//µ÷ÓÃService·½·¨£¬Ã¿¸öÊı¾İ¿âÉÏÏÂÎÄ¶¼ÊÇ¶ÀÁ¢ÊÂÎñ£¡£¡£¡
+				Environment.setCurrentSystemName(systemName);// è®¾ç½®å½“å‰è¦åšä¸šåŠ¡æ“ä½œçš„æ•°æ®æºåç§°ï¼Œå¦‚ä¸Šé¢è®¾ç½®çš„ds02
+				// ä½ çš„serviceé€»è¾‘
+				// dataService.doYourBussiness(....);//è°ƒç”¨Serviceæ–¹æ³•ï¼Œæ¯ä¸ªæ•°æ®åº“ä¸Šä¸‹æ–‡éƒ½æ˜¯ç‹¬ç«‹äº‹åŠ¡ï¼ï¼ï¼
 				for (int i = 0; i < 100; i++) {
 					SysLog bean = new SysLog();
 					bean.setAccount("test");
@@ -60,7 +60,7 @@ public class MultiRoutingDataSourceTest extends AbstractTest {
 				}
 			}
 		} finally {
-			com.glaf.core.config.Environment.setCurrentSystemName(currentName);// ÓÃÍêÁË¼ÇµÃ»¹Ô­
+			com.glaf.core.config.Environment.setCurrentSystemName(currentName);// ç”¨å®Œäº†è®°å¾—è¿˜åŸ
 		}
 	}
 

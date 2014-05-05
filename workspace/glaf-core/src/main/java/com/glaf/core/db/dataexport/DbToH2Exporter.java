@@ -118,10 +118,10 @@ public class DbToH2Exporter {
 					String javaType = c.getJavaType();
 					if ("Blob".equals(javaType)) {
 						/**
-						 * ÓĞ¶ş½øÖÆÁ÷µÄÇé¿ö£¬Ã¿Ò³È¡Êı²»ÄÜÌ«´ó
+						 * æœ‰äºŒè¿›åˆ¶æµçš„æƒ…å†µï¼Œæ¯é¡µå–æ•°ä¸èƒ½å¤ªå¤§
 						 */
 						pageSize = 5;
-						logger.debug(c.getColumnName() + "ÊÇ¶ş½øÖÆÁ÷¡£");
+						logger.debug(c.getColumnName() + "æ˜¯äºŒè¿›åˆ¶æµã€‚");
 					}
 
 					sb2.append(c.getColumnName()).append(", ");

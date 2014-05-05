@@ -22,7 +22,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
 /**
- * GridBagLayout¶¨Î»²¼¾ÖÀà
+ * GridBagLayoutå®šä½å¸ƒå±€ç±»
  */
 public class GBC extends GridBagConstraints {
 

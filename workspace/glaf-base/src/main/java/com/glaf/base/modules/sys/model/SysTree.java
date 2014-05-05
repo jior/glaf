@@ -54,19 +54,19 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 	protected List<TreeModel> children = new java.util.ArrayList<TreeModel>();
 
 	/**
-	 * ±àÂë
+	 * ç¼–ç 
 	 */
 	@Column(name = "CODE", length = 50)
 	protected String code;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY", length = 50)
 	protected String createBy;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE")
@@ -82,7 +82,7 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 	protected SysDepartment department;
 
 	/**
-	 * ½ÚµãÃèÊö
+	 * èŠ‚ç‚¹æè¿°
 	 */
 	@Column(name = "NODEDESC", length = 500)
 	protected String desc;
@@ -91,13 +91,13 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 	protected String discriminator;
 
 	/**
-	 * Í¼±ê
+	 * å›¾æ ‡
 	 */
 	@Column(name = "icon", length = 50)
 	protected String icon;
 
 	/**
-	 * Í¼±êÑùÊ½
+	 * å›¾æ ‡æ ·å¼
 	 */
 	@Column(name = "iconCls", length = 50)
 	protected String iconCls;
@@ -107,7 +107,7 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 	protected long id;
 
 	/**
-	 * ÊÇ·ñÆôÓÃ
+	 * æ˜¯å¦å¯ç”¨
 	 */
 	@Column(name = "locked")
 	protected int locked;
@@ -116,7 +116,7 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 	protected String moveable;
 
 	/**
-	 * Ãû³Æ
+	 * åç§°
 	 */
 	@Column(name = "NAME", length = 100)
 	protected String name;
@@ -125,13 +125,13 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 	protected TreeModel parent;
 
 	/**
-	 * ¸¸½Úµã±àºÅ
+	 * çˆ¶èŠ‚ç‚¹ç¼–å·
 	 */
 	@Column(name = "PARENT")
 	protected long parentId;
 
 	/**
-	 * ĞòºÅ
+	 * åºå·
 	 */
 	@Column(name = "SORT")
 	protected int sort;
@@ -140,13 +140,13 @@ public class SysTree implements Serializable, TreeModel, JSONable {
 	protected String treeId;
 
 	/**
-	 * ĞŞ¸ÄÈË
+	 * ä¿®æ”¹äºº
 	 */
 	@Column(name = "UPDATEBY", length = 50)
 	protected String updateBy;
 
 	/**
-	 * ĞŞ¸ÄÈÕÆÚ
+	 * ä¿®æ”¹æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "UPDATEDATE")

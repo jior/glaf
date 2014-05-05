@@ -47,14 +47,14 @@ public class SqlUpdateExecutionListener implements ExecutionListener {
 			.getLog(SqlUpdateExecutionListener.class);
 
 	/**
-	 * 表名称，例如：sys_log
+	 * 琛ㄥ悕绉帮紝渚嬪锛歴ys_log
 	 */
 	protected Expression table;
 
 	protected Expression primaryKey;
 
 	/**
-	 * 字段JSON定义，例如：
+	 * 瀛楁JSON瀹氫箟锛屼緥濡傦細
 	 * {"account":"#{actorId}","ip":"#{ip}","createtime":"#{now}","operate":
 	 * "#{operate}","flag":"#{flag}"}
 	 */

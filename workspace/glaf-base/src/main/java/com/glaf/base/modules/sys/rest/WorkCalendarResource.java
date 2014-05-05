@@ -42,7 +42,7 @@ public class WorkCalendarResource {
 	private WorkCalendarService workCalendarService;
 
 	/**
-	 * ´´½¨¼ÇÂ¼
+	 * åˆ›å»ºè®°å½•
 	 * 
 	 * @param year
 	 * @param month
@@ -67,7 +67,7 @@ public class WorkCalendarResource {
 	}
 
 	/**
-	 * É¾³ý¼ÇÂ¼
+	 * åˆ é™¤è®°å½•
 	 * 
 	 * @param year
 	 * @param month

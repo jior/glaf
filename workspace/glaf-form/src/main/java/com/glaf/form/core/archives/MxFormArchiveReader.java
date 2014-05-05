@@ -39,7 +39,7 @@ public class MxFormArchiveReader {
 	private static int BUFFER = 4096;
 
 	/**
-	 * 获取应用定义
+	 * 鑾峰彇搴旂敤瀹氫箟
 	 * 
 	 * @param zipBytes
 	 * @return
@@ -62,7 +62,7 @@ public class MxFormArchiveReader {
 	}
 
 	/**
-	 * 获取应用定义
+	 * 鑾峰彇搴旂敤瀹氫箟
 	 * 
 	 * @param is
 	 * @return
@@ -104,7 +104,7 @@ public class MxFormArchiveReader {
 	}
 
 	/**
-	 * 获取表单定义
+	 * 鑾峰彇琛ㄥ崟瀹氫箟
 	 * 
 	 * @param zipBytes
 	 * @return
@@ -127,7 +127,7 @@ public class MxFormArchiveReader {
 	}
 
 	/**
-	 * 获取表单定义
+	 * 鑾峰彇琛ㄥ崟瀹氫箟
 	 * 
 	 * @param is
 	 * @return

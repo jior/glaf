@@ -19,13 +19,13 @@
 package com.glaf.core.security;
 
 /**
- * µÇÂ¼Handler
+ * ç™»å½•Handler
  *
  */
 public interface LoginHandler {
 
 	/**
-	 * »ñÈ¡µÇÂ¼ÓÃ»§µÄĞÅÏ¢£¬ĞëÔÚ¸÷¸öÏµÍ³ÖĞ×ÔĞĞÊµÏÖ
+	 * è·å–ç™»å½•ç”¨æˆ·çš„ä¿¡æ¯ï¼Œé¡»åœ¨å„ä¸ªç³»ç»Ÿä¸­è‡ªè¡Œå®ç°
 	 * @param actorId
 	 * @return
 	 */

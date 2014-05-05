@@ -33,73 +33,73 @@ public class AgentImpl implements Agent {
 
 	private static final long serialVersionUID = 1L;
 	/**
-	 * Ö÷¼ü
+	 * ä¸»é”®
 	 */
 
 	protected String id;
 
 	/**
-	 * Î¯ÍĞÈË £¬consigner
+	 * å§”æ‰˜äºº ï¼Œconsigner
 	 */
 
 	protected String assignFrom;
 
 	/**
-	 * Î¯ÍĞÈËÃû³Æ
+	 * å§”æ‰˜äººåç§°
 	 */
 
 	protected String assignFromName;
 
 	/**
-	 * ÊÜÍĞÈË£¬assignee
+	 * å—æ‰˜äººï¼Œassignee
 	 */
 
 	protected String assignTo;
 
 	/**
-	 * ÊÜÍĞÈËÃû³Æ
+	 * å—æ‰˜äººåç§°
 	 */
 
 	protected String assignToName;
 
 	/**
-	 * Á÷³ÌÃû³Æ
+	 * æµç¨‹åç§°
 	 */
 
 	protected String processName;
 
 	/**
-	 * ÈÎÎñÃû³Æ
+	 * ä»»åŠ¡åç§°
 	 */
 
 	protected String taskName;
 
 	/**
-	 * ¶ÔÏó±àºÅ
+	 * å¯¹è±¡ç¼–å·
 	 */
 
 	protected String objectId;
 
 	/**
-	 * ¶ÔÏóÖµ
+	 * å¯¹è±¡å€¼
 	 */
 
 	protected String objectValue;
 
 	/**
-	 * ¿ªÊ¼ÉúĞ§ÈÕÆÚ
+	 * å¼€å§‹ç”Ÿæ•ˆæ—¥æœŸ
 	 */
 
 	protected Date startDate;
 
 	/**
-	 * ½áÊøÈÕÆÚ
+	 * ç»“æŸæ—¥æœŸ
 	 */
 
 	protected Date endDate;
 
 	/**
-	 * ´úÀíÀàĞÍ 0-È«¾Ö´úÀí 1-´úÀíÖ¸¶¨Á÷³ÌµÄÈ«²¿ÈÎÎñ 2-´úÀíÖ¸¶¨Á÷³ÌµÄÖ¸¶¨ÈÎÎñ
+	 * ä»£ç†ç±»å‹ 0-å…¨å±€ä»£ç† 1-ä»£ç†æŒ‡å®šæµç¨‹çš„å…¨éƒ¨ä»»åŠ¡ 2-ä»£ç†æŒ‡å®šæµç¨‹çš„æŒ‡å®šä»»åŠ¡
 	 */
 
 	protected int agentType;
@@ -107,7 +107,7 @@ public class AgentImpl implements Agent {
 	protected String serviceKey;
 
 	/**
-	 * Ëø¶¨±ê¼Ç
+	 * é”å®šæ ‡è®°
 	 */
 
 	protected int locked;
@@ -115,7 +115,7 @@ public class AgentImpl implements Agent {
 	protected boolean valid = false;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	protected Date createDate;
 

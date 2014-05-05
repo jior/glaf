@@ -38,9 +38,9 @@ public class StartupListener extends ContextLoaderListener implements
 	private static class SchedulerRunner extends Thread {
 		public void run() {
 			try {
-				Thread.sleep(60000);// 60ÃëºóÖ´ĞĞ
+				Thread.sleep(60000);// 60ç§’åæ‰§è¡Œ
 				QuartzUtils.startup();
-				logger.info("ÏµÍ³µ÷¶ÈÒÑ¾­³É¹¦Æô¶¯¡£");
+				logger.info("ç³»ç»Ÿè°ƒåº¦å·²ç»æˆåŠŸå¯åŠ¨ã€‚");
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				logger.error(ex);
@@ -66,7 +66,7 @@ public class StartupListener extends ContextLoaderListener implements
 			super.contextInitialized(event);
 			this.setupContext(context);
 		} else {
-			logger.error("Êı¾İ¿âÁ¬½Ó´íÎó£¬Çë¼ì²éÅäÖÃ¡£");
+			logger.error("æ•°æ®åº“è¿æ¥é”™è¯¯ï¼Œè¯·æ£€æŸ¥é…ç½®ã€‚");
 		}
 	}
 
@@ -74,7 +74,7 @@ public class StartupListener extends ContextLoaderListener implements
 		ApplicationContext ctx = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(context);
 		if (ctx != null) {
-			logger.info("ÉèÖÃÓ¦ÓÃ»·¾³ÉÏÏÂÎÄ......");
+			logger.info("è®¾ç½®åº”ç”¨ç¯å¢ƒä¸Šä¸‹æ–‡......");
 			ContextFactory.setContext(ctx);
 			if (ContextFactory.hasBean("scheduler")) {
 				SchedulerRunner runner = new SchedulerRunner();

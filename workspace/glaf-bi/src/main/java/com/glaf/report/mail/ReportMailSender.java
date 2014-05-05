@@ -61,7 +61,7 @@ public class ReportMailSender {
 	private static Configuration conf = BaseConfiguration.create();
 
 	/**
-	 * »ñÈ¡±¨±íµÄÓÊ¼şĞÅÏ¢
+	 * è·å–æŠ¥è¡¨çš„é‚®ä»¶ä¿¡æ¯
 	 * 
 	 * @param reportId
 	 * @return
@@ -83,7 +83,7 @@ public class ReportMailSender {
 	}
 
 	/**
-	 * »ñÈ¡±¨±íµÄÓÊ¼şĞÅÏ¢
+	 * è·å–æŠ¥è¡¨çš„é‚®ä»¶ä¿¡æ¯
 	 * 
 	 * @param reportId
 	 * @return
@@ -147,7 +147,7 @@ public class ReportMailSender {
 							+ report.getReportFormat());
 					dataFile.setData(bytes);
 					dataFiles.add(dataFile);
-					logger.debug("Ìí¼Ó¸½¼ş£º" + dataFile.getFilename());
+					logger.debug("æ·»åŠ é™„ä»¶ï¼š" + dataFile.getFilename());
 				}
 			}
 		}
@@ -165,7 +165,7 @@ public class ReportMailSender {
 				toArray[index++] = x;
 			}
 		}
-		logger.debug("¸½¼şÊıÁ¿£º" + dataFiles.size());
+		logger.debug("é™„ä»¶æ•°é‡ï¼š" + dataFiles.size());
 		mailMessage.setTo(toArray);
 		mailMessage.setFiles(dataFiles);
 
@@ -173,7 +173,7 @@ public class ReportMailSender {
 	}
 
 	/**
-	 * »ñÈ¡±¨±íµÄÓÊ¼şĞÅÏ¢
+	 * è·å–æŠ¥è¡¨çš„é‚®ä»¶ä¿¡æ¯
 	 * 
 	 * @param reportId
 	 * @return
@@ -255,7 +255,7 @@ public class ReportMailSender {
 				String id = report.getId() + "_"
 						+ DateUtils.getYearMonthDay(new Date());
 				ReportFile reportFile = reportFileService.getReportFile(id);
-				logger.debug("¶ÁÈ¡¸½¼ş£º" + reportFile.getFilename());
+				logger.debug("è¯»å–é™„ä»¶ï¼š" + reportFile.getFilename());
 				bytes = reportFile.getFileContent();
 				if (bytes != null) {
 					DataFile dataFile = new BlobItemEntity();
@@ -264,13 +264,13 @@ public class ReportMailSender {
 					dataFile.setName(report.getSubject() + "."
 							+ report.getReportFormat());
 					dataFile.setData(bytes);
-					logger.debug("Ìí¼Ó¸½¼ş£º" + dataFile.getFilename());
+					logger.debug("æ·»åŠ é™„ä»¶ï¼š" + dataFile.getFilename());
 					dataFiles.add(dataFile);
 				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
-			logger.debug("¸½¼şÊıÁ¿£º" + dataFiles.size());
+			logger.debug("é™„ä»¶æ•°é‡ï¼š" + dataFiles.size());
 
 			// mailMessage.setDataFiles(dataFiles);
 			mailMessage.setFiles(dataFiles);
@@ -288,7 +288,7 @@ public class ReportMailSender {
 			mailSender.send(mailMessage);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			throw new RuntimeException("·¢ËÍÓÊ¼şÊ§°Ü£¡", ex);
+			throw new RuntimeException("å‘é€é‚®ä»¶å¤±è´¥ï¼", ex);
 		}
 	}
 
@@ -300,7 +300,7 @@ public class ReportMailSender {
 			mailSender.send(mailMessage);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			throw new RuntimeException("·¢ËÍÓÊ¼şÊ§°Ü£¡", ex);
+			throw new RuntimeException("å‘é€é‚®ä»¶å¤±è´¥ï¼", ex);
 		}
 	}
 

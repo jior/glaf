@@ -15,19 +15,19 @@ package com.glaf.core.security;
 
 public class SecurityContext {
 
-	private String jceProvider = "BC"; // JCEÌá¹©Õß
+	private String jceProvider = "BC"; // JCEæä¾›è€…
 
-	private String asymmetryAlgorithm = "RSA"; // ·Ç¶Ô³Æ¼ÓÃÜËã·¨
+	private String asymmetryAlgorithm = "RSA"; // éå¯¹ç§°åŠ å¯†ç®—æ³•
 
-	private String signatureAlgorithm = "SHA1withRSA"; // Ç©ÃûËã·¨
+	private String signatureAlgorithm = "SHA1withRSA"; // ç­¾åç®—æ³•
 
-	private String secureRandomAlgorithm = "SHA1PRNG"; // °²È«Ëæ»úÊıËã·¨
+	private String secureRandomAlgorithm = "SHA1PRNG"; // å®‰å…¨éšæœºæ•°ç®—æ³•
 
-	private String symmetryAlgorithm = "DES/ECB/PKCS5Padding"; // ¶Ô³Æ¼ÓÃÜËã·¨
+	private String symmetryAlgorithm = "DES/ECB/PKCS5Padding"; // å¯¹ç§°åŠ å¯†ç®—æ³•
 
 	private String symmetryKeyAlgorithm = "DES";
 
-	private int symmetryKeySize = 256; // ¶Ô³Æ¼ÓÃÜÃÜÔ¿³¤¶È
+	private int symmetryKeySize = 256; // å¯¹ç§°åŠ å¯†å¯†é’¥é•¿åº¦
 
 	public SecurityContext() {
 

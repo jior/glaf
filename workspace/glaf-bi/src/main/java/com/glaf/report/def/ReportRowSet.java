@@ -26,57 +26,57 @@ public class ReportRowSet implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Êı¾İ¼¯Ó³ÉäÃû
+	 * æ•°æ®é›†æ˜ å°„å
 	 */
 	protected String mapping;
 
 	/**
-	 * Êı¾İ¹ÜÀíÆ÷Ãû³Æ
+	 * æ•°æ®ç®¡ç†å™¨åç§°
 	 */
 	protected String dataMgr;
 
 	/**
-	 * Êı¾İ¹ÜÀíÆ÷Spring Bean Id
+	 * æ•°æ®ç®¡ç†å™¨Spring Bean Id
 	 */
 	protected String dataMgrBeanId;
 
 	/**
-	 * ×Ô¶¨ÒåÊı¾İ¹ÜÀíÆ÷ÀàÃû
+	 * è‡ªå®šä¹‰æ•°æ®ç®¡ç†å™¨ç±»å
 	 */
 	protected String dataMgrClassName;
 
 	/**
-	 * ±¨±í¹ÜÀíÆ÷Ãû³Æ
+	 * æŠ¥è¡¨ç®¡ç†å™¨åç§°
 	 */
 	protected String rptMgr;
 
 	/**
-	 * ×Ô¶¨Òå±¨±í¹ÜÀíÆ÷ÀàÃû
+	 * è‡ªå®šä¹‰æŠ¥è¡¨ç®¡ç†å™¨ç±»å
 	 */
 	protected String rptMgrClassName;
 
 	/**
-	 * ±¨±í¹ÜÀíÆ÷Ó³ÉäÃû
+	 * æŠ¥è¡¨ç®¡ç†å™¨æ˜ å°„å
 	 */
 	protected String rptMgrMapping;
 
 	/**
-	 * ²éÑ¯Óï¾ä¶¨ÒåÃû³Æ
+	 * æŸ¥è¯¢è¯­å¥å®šä¹‰åç§°
 	 */
 	protected String query;
 
 	/**
-	 * ÊÇ·ñÎ¨Ò»½á¹û¼¯
+	 * æ˜¯å¦å”¯ä¸€ç»“æœé›†
 	 */
 	protected boolean singleResult;
 
 	/**
-	 * ½á¹û¼¯
+	 * ç»“æœé›†
 	 */
 	protected List<?> resultList;
 
 	/**
-	 * ±¨±íÊôĞÔ¶¨Òå£¬Ö÷ÒªÓÃÓÚ×Ô¶¨Òå´¦Àí³ÌĞò
+	 * æŠ¥è¡¨å±æ€§å®šä¹‰ï¼Œä¸»è¦ç”¨äºè‡ªå®šä¹‰å¤„ç†ç¨‹åº
 	 */
 	protected Map<String, Object> properties = new java.util.HashMap<String, Object>();
 

@@ -223,33 +223,33 @@ public class ExtensionTaskCreateListener implements TaskListener {
 		logger.debug("taskMgmtType:" + taskMgmtType);
 
 		switch (taskMgmtType) {
-		// ÔËĞĞÊ±Ö¸¶¨
+		// è¿è¡Œæ—¶æŒ‡å®š
 		case Constants.TM_RUNTIME_TYPE:
 			actorIds = this.getRuntimeAssign(execution, processName,
 					taskDefinitionKey);
 			break;
-		// Á÷³ÌÆô¶¯Õß
+		// æµç¨‹å¯åŠ¨è€…
 		case Constants.TM_PROCESS_STARTER_TYPE:
 			actorIds = new java.util.ArrayList<String>();
 			actorIds.add(startUserId);
 			break;
-		// Á÷³ÌÆô¶¯ÕßµÄÖ±½ÓÉÏ¼¶
+		// æµç¨‹å¯åŠ¨è€…çš„ç›´æ¥ä¸Šçº§
 		case Constants.TM_PROCESS_STARTER_LEADER_TYPE:
 			actorIds = IdentityUtils.getLeaderIds(sqlSession, startUserId);
-			logger.debug("Á÷³ÌÆô¶¯ÕßµÄÖ±½ÓÉÏ¼¶:" + actorIds);
+			logger.debug("æµç¨‹å¯åŠ¨è€…çš„ç›´æ¥ä¸Šçº§:" + actorIds);
 			break;
-		// Ö±½ÓÖ¸¶¨ÓÃ»§
+		// ç›´æ¥æŒ‡å®šç”¨æˆ·
 		case Constants.TM_USER_TYPE:
 			actorIds = defActorIds;
 			break;
-		// ²¿ÃÅ½ÇÉ«
+		// éƒ¨é—¨è§’è‰²
 		case Constants.TM_DEPT_ROLE_USER_TYPE:
 			if (extension != null) {
 				actorIds = this.getDeptRoleUsers(execution, sqlSession,
 						extension);
 			}
 			break;
-		// Ä¬ÈÏÎª¿ØÖÆÌ¨ÅäÖÃ
+		// é»˜è®¤ä¸ºæ§åˆ¶å°é…ç½®
 		default:
 			break;
 		}

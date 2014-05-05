@@ -67,7 +67,7 @@ import de.javakaffee.kryoserializers.UUIDSerializer;
 import de.javakaffee.kryoserializers.UnmodifiableCollectionsSerializer;
 
 /**
- * »ùÓÚKryo 2.xµÄ(ĞòÁĞ»¯/·´ĞòÁĞ»¯)Àà. ¿ÉÒÔ´¦ÀíÈÎºÎÀà(°üÀ¨Ã»ÓĞÊµÏÖSerializable½Ó¿ÚµÄÀà).
+ * åŸºäºKryo 2.xçš„(åºåˆ—åŒ–/ååºåˆ—åŒ–)ç±». å¯ä»¥å¤„ç†ä»»ä½•ç±»(åŒ…æ‹¬æ²¡æœ‰å®ç°Serializableæ¥å£çš„ç±»).
  */
 
 public class KryoSerializer implements
@@ -97,7 +97,7 @@ public class KryoSerializer implements
 						return new DateSerializer(type);
 					}
 
-					// ÅĞ¶ÏÊÇ·ñÊÇEnhancerByCGLIB
+					// åˆ¤æ–­æ˜¯å¦æ˜¯EnhancerByCGLIB
 					try {
 						if (type.getName().indexOf("$$EnhancerByCGLIB$$") > 0) {
 							Method method = Class
@@ -150,7 +150,7 @@ public class KryoSerializer implements
 			UnmodifiableCollectionsSerializer.registerSerializers(kryo);
 			SynchronizedCollectionsSerializer.registerSerializers(kryo);
 
-			// ¶¯Ì¬×¢²áJodaDateTimeSerializer
+			// åŠ¨æ€æ³¨å†ŒJodaDateTimeSerializer
 			try {
 				Class<?> clazz = Class.forName("org.joda.time.DateTime");
 				Serializer<?> serializer = (Serializer<?>) Class
@@ -162,7 +162,7 @@ public class KryoSerializer implements
 
 			}
 
-			// ¶¯Ì¬×¢²áCGLibProxySerializer
+			// åŠ¨æ€æ³¨å†ŒCGLibProxySerializer
 			try {
 				Class<?> clazz = Class
 						.forName("de.javakaffee.kryoserializers.cglib.CGLibProxySerializer$CGLibProxyMarker");

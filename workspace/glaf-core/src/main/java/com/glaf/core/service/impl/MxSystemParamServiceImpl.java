@@ -95,7 +95,7 @@ public class MxSystemParamServiceImpl implements ISystemParamService {
 						m.setStringVal(def.getInitValue());
 					} else {
 						/**
-						 * Èç¹ûÊÇÎÄ±¾ÊäÈë¿ò»òÊı×ÖÊäÈë¿ò£¬ÓÃ¶¨ÒåµÄÖµ×÷Îª³õÊ¼»¯Öµ
+						 * å¦‚æœæ˜¯æ–‡æœ¬è¾“å…¥æ¡†æˆ–æ•°å­—è¾“å…¥æ¡†ï¼Œç”¨å®šä¹‰çš„å€¼ä½œä¸ºåˆå§‹åŒ–å€¼
 						 */
 						if ("text".equals(def.getInputType())
 								|| "numberbox".equals(def.getInputType())) {
@@ -138,7 +138,7 @@ public class MxSystemParamServiceImpl implements ISystemParamService {
 	}
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
@@ -147,7 +147,7 @@ public class MxSystemParamServiceImpl implements ISystemParamService {
 	}
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
@@ -174,7 +174,7 @@ public class MxSystemParamServiceImpl implements ISystemParamService {
 	}
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼ÁĞ±í
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•åˆ—è¡¨
 	 * 
 	 * @return
 	 */
@@ -191,7 +191,7 @@ public class MxSystemParamServiceImpl implements ISystemParamService {
 	}
 
 	/**
-	 * »ñÈ¡ÏµÍ³²ÎÊı
+	 * è·å–ç³»ç»Ÿå‚æ•°
 	 * 
 	 * @param serviceKey
 	 * @param businessKey
@@ -212,7 +212,7 @@ public class MxSystemParamServiceImpl implements ISystemParamService {
 	}
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */
@@ -314,7 +314,7 @@ public class MxSystemParamServiceImpl implements ISystemParamService {
 	}
 
 	/**
-	 * ĞŞ¸Ä¶àÌõ²ÎÊı¶¨Òå
+	 * ä¿®æ”¹å¤šæ¡å‚æ•°å®šä¹‰
 	 * 
 	 * @param serviceKey
 	 * @param rows

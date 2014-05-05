@@ -37,7 +37,7 @@ public class ExecutionListenerFactory {
 	private static KeyedObjectPoolFactory poolFactory = new StackKeyedObjectPoolFactory(
 			factory, 50, 5);
 	private static KeyedObjectPool pool = poolFactory.createPool();
-	// 自定义ExecutionListener实现类执行调用类型，取值为spring或pool
+	// 鑷畾涔塃xecutionListener瀹炵幇绫绘墽琛岃皟鐢ㄧ被鍨嬶紝鍙栧�间负spring鎴杙ool
 	private final static String EXECUTION_LISTENER_FACTORY_TYPE = "activitiExecutionListenerFactoryType";
 
 	public static void notify(String key, DelegateExecution execution) {

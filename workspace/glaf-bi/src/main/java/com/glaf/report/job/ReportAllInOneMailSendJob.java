@@ -29,7 +29,7 @@ import com.glaf.report.mail.ReportMailSender;
 
 /**
  * 
- * ËùÓĞ±¨±í¸½¼ş¶¼·Åµ½Ò»¸öÓÊ¼şÖĞ·¢ËÍµÄJob
+ * æ‰€æœ‰æŠ¥è¡¨é™„ä»¶éƒ½æ”¾åˆ°ä¸€ä¸ªé‚®ä»¶ä¸­å‘é€çš„Job
  * 
  */
 public class ReportAllInOneMailSendJob implements Job {
@@ -44,11 +44,11 @@ public class ReportAllInOneMailSendJob implements Job {
 			try {
 				retry++;
 				ReportFactory.genAllReportFile();
-				logger.info("ÒÑ¾­³É¹¦Éú³É±¨±í¡£");
+				logger.info("å·²ç»æˆåŠŸç”ŸæˆæŠ¥è¡¨ã€‚");
 				success = true;
 			} catch (Exception ex) {
 				ex.printStackTrace();
-				logger.error("Éú³É±¨±íÊ§°Ü¡£");
+				logger.error("ç”ŸæˆæŠ¥è¡¨å¤±è´¥ã€‚");
 			}
 		}
 		ReportMailSender sender = new ReportMailSender();

@@ -186,7 +186,7 @@ public class MailUtils {
 		try {
 			filename = MimeUtility.decodeText(filename);
 		} catch (Exception ex) {
-			filename = "Î´ÖªÀàĞÍÎÄ¼ş";
+			filename = "æœªçŸ¥ç±»å‹æ–‡ä»¶";
 		}
 		boolean b_else = needEncode;
 		if (b_else) {
@@ -277,12 +277,12 @@ public class MailUtils {
 		if (type == 1) {
 			buffer.append(newline);
 			buffer.append(newline);
-			buffer.append("=================== ÄúÔÚÀ´ĞÅÖĞĞ´µÀ£º====================");
+			buffer.append("=================== æ‚¨åœ¨æ¥ä¿¡ä¸­å†™é“ï¼š====================");
 			buffer.append(newline);
 		}
 		if (type == 2) {
 			buffer.append(newline);
-			buffer.append("********************ÏÂÃæÊÇ×ª·¢ÓÊ¼ş**********************");
+			buffer.append("********************ä¸‹é¢æ˜¯è½¬å‘é‚®ä»¶**********************");
 		}
 
 		StringTokenizer token = new StringTokenizer(text, "\r\n");
@@ -311,7 +311,7 @@ public class MailUtils {
 
 	public static String getSubject(String mailSubject) {
 		if (mailSubject == null) {
-			mailSubject = "£¨ÎŞÖ÷Ìâ£©";
+			mailSubject = "ï¼ˆæ— ä¸»é¢˜ï¼‰";
 			return mailSubject;
 		}
 		try {
@@ -329,31 +329,31 @@ public class MailUtils {
 
 		if (mailSubject == null || mailSubject.trim().equals("null")
 				|| mailSubject.trim().equals("")) {
-			mailSubject = "£¨ÎŞÖ÷Ìâ£©";
+			mailSubject = "ï¼ˆæ— ä¸»é¢˜ï¼‰";
 		}
 		return mailSubject;
 	}
 
 	/**
-	 * °´ÀàĞÍ·µ»ØÕıÎÄ
+	 * æŒ‰ç±»å‹è¿”å›æ­£æ–‡
 	 * 
 	 * @param pText
-	 *            Ô­ÕıÎÄ
-	 * @return ´¦ÀíºóµÄÕıÎÄ
+	 *            åŸæ­£æ–‡
+	 * @return å¤„ç†åçš„æ­£æ–‡
 	 * @throws Exception
 	 */
 	public static String getText(String pText, String name, String mail)
 			throws Exception {
 		StringBuffer sb = new StringBuffer();
-		sb.append("\nÄúºÃ£¡");
+		sb.append("\næ‚¨å¥½ï¼");
 		sb.append("\n    " + pText);
-		sb.append("\n\n     ÖÂ");
-		sb.append("\nÀñ£¡");
+		sb.append("\n\n     è‡´");
+		sb.append("\nç¤¼ï¼");
 		sb.append("\n");
 		sb.append("\n        ").append(name);
 		sb.append("\n        ").append(mail);
 		java.util.Date date = new java.util.Date();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyyÄêMMÔÂddÈÕ EEE",
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyå¹´MMæœˆddæ—¥ EEE",
 				Locale.getDefault());
 		String lastdate = formatter.format(date);
 		sb.append("\n        " + lastdate);
@@ -399,16 +399,16 @@ public class MailUtils {
 	public static void main(String[] args) {
 		System.out
 				.println(MailUtils
-						.replaceBase64Decode("Ö°¹¤=?GBK?B?am95KLvGs6/OxCnU2jIwMTMtMDEtMjEtMjAxMy0wMS0yONauvOS1xFRpbWVTaGVldLK7?="));
+						.replaceBase64Decode("èŒå·¥=?GBK?B?am95KLvGs6/OxCnU2jIwMTMtMDEtMjEtMjAxMy0wMS0yONauvOS1xFRpbWVTaGVldLK7?="));
 		System.out
 				.println(MailUtils
-						.replaceBase64Decode("Ö°¹¤=?GBK?B?am95KLvGs6/OxCnU2jIwMTMtMDEtMjEtMjAxMy0wMS0yONauvOS1xFRpbWVTaGVldLK7?==?GBK?B?ubujoQ==?="));
+						.replaceBase64Decode("èŒå·¥=?GBK?B?am95KLvGs6/OxCnU2jIwMTMtMDEtMjEtMjAxMy0wMS0yONauvOS1xFRpbWVTaGVldLK7?==?GBK?B?ubujoQ==?="));
 		System.out
 				.println(MailUtils
-						.replaceBase64Decode("Ö°¹¤=?GB2312?B?am95KLvGs6/OxCnU2jIwMTMtMDEtMjEtMjAxMy0wMS0yONauvOS1xFRpbWVTaGVldLK7?="));
+						.replaceBase64Decode("èŒå·¥=?GB2312?B?am95KLvGs6/OxCnU2jIwMTMtMDEtMjEtMjAxMy0wMS0yONauvOS1xFRpbWVTaGVldLK7?="));
 		System.out
 				.println(MailUtils
-						.replaceBase64Decode("Ö°¹¤=?GB2312?B?am95KLvGs6/OxCnU2jIwMTMtMDEtMjEtMjAxMy0wMS0yONauvOS1xFRpbWVTaGVldLK7?==?GB2312?B?ubujoQ==?="));
+						.replaceBase64Decode("èŒå·¥=?GB2312?B?am95KLvGs6/OxCnU2jIwMTMtMDEtMjEtMjAxMy0wMS0yONauvOS1xFRpbWVTaGVldLK7?==?GB2312?B?ubujoQ==?="));
 
 	}
 

@@ -30,7 +30,7 @@ public class FileUtil {
 	private static Log logger = LogFactory.getLog(FileUtil.class);
 
 	/**
-	 * É¾³ıÖ¸¶¨Â·¾¶µÄµ¥¸öÎÄ¼ş
+	 * åˆ é™¤æŒ‡å®šè·¯å¾„çš„å•ä¸ªæ–‡ä»¶
 	 * 
 	 * @param filePath
 	 */
@@ -43,7 +43,7 @@ public class FileUtil {
 	}
 
 	/**
-	 * É¾³ıÖ¸¶¨Ä¿Â¼ÖĞµÄËùÓĞÎÄ¼ş
+	 * åˆ é™¤æŒ‡å®šç›®å½•ä¸­çš„æ‰€æœ‰æ–‡ä»¶
 	 * 
 	 * @param dirPath
 	 */
@@ -68,7 +68,7 @@ public class FileUtil {
 	}
 
 	/**
-	 * É¾³ıÏµÍ³ÖĞµÄuploadÎÄ¼ş¼ĞÖĞµÄtempÎÄ¼şÄ¿Â¼ÖĞµÄËùÓĞÎÄ¼ş 
+	 * åˆ é™¤ç³»ç»Ÿä¸­çš„uploadæ–‡ä»¶å¤¹ä¸­çš„tempæ–‡ä»¶ç›®å½•ä¸­çš„æ‰€æœ‰æ–‡ä»¶ 
 	 */
 	public static void delDownTempFiles() {
 		String path = SystemProperties.getConfigRootPath() + Constants.UPLOAD_DIR

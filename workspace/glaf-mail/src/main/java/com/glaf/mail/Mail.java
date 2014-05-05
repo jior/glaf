@@ -44,20 +44,20 @@ public class Mail implements MessageProvider {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Ö÷¼ü
+	 * ä¸»é”®
 	 */
 	@Id
 	@Column(name = "ID_", length = 50, nullable = false)
 	protected String id;
 
 	/**
-	 * ½Úµã±àºÅ
+	 * èŠ‚ç‚¹ç¼–å·
 	 */
 	@Column(name = "NODEID_", length = 50)
 	protected String nodeId;
 
 	/**
-	 * ÓÊ¼ş±àºÅ
+	 * é‚®ä»¶ç¼–å·
 	 */
 	@Column(name = "MAILID_", length = 50)
 	protected String mailId;
@@ -69,7 +69,7 @@ public class Mail implements MessageProvider {
 	protected String messageId;
 
 	/**
-	 * ×ÊÔ´±àºÅ
+	 * èµ„æºç¼–å·
 	 */
 	@Column(name = "RESOURCEID_", length = 50)
 	protected String businessKey;
@@ -78,181 +78,181 @@ public class Mail implements MessageProvider {
 	protected String username;
 
 	/**
-	 * ÈÎÎñ±àºÅ
+	 * ä»»åŠ¡ç¼–å·
 	 */
 	@Column(name = "TASKID_", length = 50)
 	protected String taskId;
 
 	/**
-	 * ÓÊ¼şÕÊºÅ
+	 * é‚®ä»¶å¸å·
 	 */
 	@Column(name = "ACCOUNTID_", length = 50)
 	protected String accountId;
 
 	/**
-	 * ·¢ËÍÕß±àºÅ
+	 * å‘é€è€…ç¼–å·
 	 */
 	@Column(name = "SENDERID_", length = 50)
 	protected String senderId;
 
 	/**
-	 * ·¢ËÍÕß
+	 * å‘é€è€…
 	 */
 	@Transient
 	protected String senderName;
 
 	/**
-	 * ½ÓÊÕÕß±àºÅ
+	 * æ¥æ”¶è€…ç¼–å·
 	 */
 	@Column(name = "RECEIVERID_", length = 50)
 	protected String receiverId;
 
 	/**
-	 * ½ÓÊÕÕß
+	 * æ¥æ”¶è€…
 	 */
 	@Transient
 	protected String receiverName;
 
 	/**
-	 * Ö÷Ìâ
+	 * ä¸»é¢˜
 	 */
 	@Column(name = "SUBJECT_")
 	protected String subject;
 
 	/**
-	 * ÄÚÈİ
+	 * å†…å®¹
 	 */
 	@Lob
 	@Column(name = "CONTENT_")
 	protected String content;
 
 	/**
-	 * ÄÚÈİ
+	 * å†…å®¹
 	 */
 	@Lob
 	@Column(name = "HTML_")
 	protected String html;
 
 	/**
-	 * Ä£°å±àºÅ
+	 * æ¨¡æ¿ç¼–å·
 	 */
 	@Column(name = "TEMPLATEID_", length = 50)
 	protected String templateId;
 
 	/**
-	 * ·¢¼şÈË
+	 * å‘ä»¶äºº
 	 */
 	@Column(name = "MAILFROM_", length = 100)
 	protected String mailFrom;
 
 	/**
-	 * ÊÕ¼şÈË
+	 * æ”¶ä»¶äºº
 	 */
 	@Column(name = "MAILTO_", length = 200)
 	protected String mailTo;
 
 	/**
-	 * ³­ËÍÈË
+	 * æŠ„é€äºº
 	 */
 	@Column(name = "MAILCC_", length = 200)
 	protected String mailCC;
 
 	/**
-	 * °µËÍÈË
+	 * æš—é€äºº
 	 */
 	@Column(name = "MAILBCC_", length = 200)
 	protected String mailBCC;
 
 	/**
-	 * »Ø¸´µØÖ·
+	 * å›å¤åœ°å€
 	 */
 	@Column(name = "MAILREPLYTO_", length = 100)
 	protected String mailReplyTo;
 
 	/**
-	 * ·¢¼şÏä(S)¡¢ÊÕ¼şÏä(R)¡¢²İ¸åÏä(D)¡¢À¬»øÏä(R)¡¢·Ï¼şÏä(W)
+	 * å‘ä»¶ç®±(S)ã€æ”¶ä»¶ç®±(R)ã€è‰ç¨¿ç®±(D)ã€åƒåœ¾ç®±(R)ã€åºŸä»¶ç®±(W)
 	 */
 	@Column(name = "MAILBOX_", length = 50)
 	protected String mailBox;
 
 	/**
-	 * ÓÊ¼şÀàĞÍ
+	 * é‚®ä»¶ç±»å‹
 	 */
 	@Column(name = "MAILTYPE_", length = 50)
 	protected String mailType;
 
 	/**
-	 * ÓÊ¼ş´óĞ¡
+	 * é‚®ä»¶å¤§å°
 	 */
 	@Column(name = "MAILSIZE_")
 	protected int mailSize;
 
 	/**
-	 * ·¢ËÍÈÕÆÚ
+	 * å‘é€æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "SENDDATE_")
 	protected Date sendDate;
 
 	/**
-	 * ÓÊ¼ş×´Ì¬
+	 * é‚®ä»¶çŠ¶æ€
 	 */
 	@Column(name = "STATUS_")
 	protected int status;
 
 	/**
-	 * ·¢ËÍ×´Ì¬
+	 * å‘é€çŠ¶æ€
 	 */
 	@Column(name = "SENDSTATUS_")
 	protected int sendStatus;
 
 	/**
-	 * ÖØÊÔ´ÎÊı
+	 * é‡è¯•æ¬¡æ•°
 	 */
 	@Column(name = "RETRYTIMES_")
 	protected int retryTimes;
 
 	/**
-	 * ½ÓÊÕÈÕÆÚ
+	 * æ¥æ”¶æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "RECEIVEDATE_")
 	protected Date receiveDate;
 
 	/**
-	 * ÓÊ¼ş½ÓÊÕ×´Ì¬
+	 * é‚®ä»¶æ¥æ”¶çŠ¶æ€
 	 */
 	@Column(name = "RECEIVESTATUS_")
 	protected int receiveStatus;
 
 	/**
-	 * ´´½¨Õß±àºÅ
+	 * åˆ›å»ºè€…ç¼–å·
 	 */
 	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_", updatable = false)
 	protected Date createDate;
 
 	/**
-	 * ×îºóÒ»´Î²é¿´ÈÕÆÚ
+	 * æœ€åä¸€æ¬¡æŸ¥çœ‹æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "LASTVIEWDATE_")
 	protected Date lastViewDate;
 
 	/**
-	 * ×îºóÒ»´Î²é¿´IPµØÖ·
+	 * æœ€åä¸€æ¬¡æŸ¥çœ‹IPåœ°å€
 	 */
 	@Column(name = "LASTVIEWIP_", length = 100)
 	protected String lastViewIP;
 
 	/**
-	 * Ïà¹Ø¸½¼ş
+	 * ç›¸å…³é™„ä»¶
 	 */
 	@Transient
 	protected Collection<DataFile> dataFiles = new HashSet<DataFile>();

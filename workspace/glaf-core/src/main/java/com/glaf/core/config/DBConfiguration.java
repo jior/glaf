@@ -89,7 +89,7 @@ public class DBConfiguration {
 	public static final String POOL_TIMEOUT = "jdbc.timeout";
 
 	/**
-	 * 连接池类型，支持druid,C3P0,DBCP,TomcatJdbc,默认是druid
+	 * 杩炴帴姹犵被鍨嬶紝鏀寔druid,C3P0,DBCP,TomcatJdbc,榛樿鏄痙ruid
 	 */
 	public static final String JDBC_POOL_TYPE = "jdbc.pool_type";
 

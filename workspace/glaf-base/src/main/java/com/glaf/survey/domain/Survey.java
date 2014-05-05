@@ -45,7 +45,7 @@ public class Survey implements Serializable, JSONable {
 	protected String title;
 
 	/**
-	 * 描述
+	 * 鎻忚堪
 	 */
 	@Column(name = "DESC_", length = 500)
 	protected String desc;
@@ -60,7 +60,7 @@ public class Survey implements Serializable, JSONable {
 	protected String icon;
 
 	/**
-	 * 顺序
+	 * 椤哄簭
 	 */
 	@Column(name = "SORT_")
 	protected Integer sort;
@@ -102,7 +102,7 @@ public class Survey implements Serializable, JSONable {
 	protected Date createDate;
 
 	/**
-	 * 关联的内容编号，多个之间用逗号隔开
+	 * 鍏宠仈鐨勫唴瀹圭紪鍙凤紝澶氫釜涔嬮棿鐢ㄩ�楀彿闅斿紑
 	 */
 	@Column(name = "RELATIONIDS_", length = 100)
 	protected String relationIds;

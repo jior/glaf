@@ -26,7 +26,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.glaf.oa.assesscontent.model.AssesscontentAndScore;
 
 /**
- * ËùÓĞÖ¸±ê·ÖÀàÀàĞÍ
+ * æ‰€æœ‰æŒ‡æ ‡åˆ†ç±»ç±»å‹
  * 
  * @author
  * 

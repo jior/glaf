@@ -43,44 +43,44 @@ public class Dictory implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * ÊÇ·ñÆôÓÃ
+	 * æ˜¯å¦å¯ç”¨
 	 */
 	@Column(name = "BLOCKED")
 	protected int blocked;
 
 	/**
-	 * ±àÂë
+	 * ç¼–ç 
 	 */
 	@Column(name = "CODE", length = 50)
 	protected String code;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY", length = 50)
 	protected String createBy;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE")
 	protected Date createDate;
 
 	/**
-	 * ÃèÊö
+	 * æè¿°
 	 */
 	@Column(name = "DICTDESC", length = 500)
 	protected String desc;
 
 	/**
-	 * ×Ö·û´®Öµ1
+	 * å­—ç¬¦ä¸²å€¼1
 	 */
 	@Column(name = "EXT1", length = 200)
 	protected String ext1;
 
 	/**
-	 * ÈÕÆÚÖµ10
+	 * æ—¥æœŸå€¼10
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "ext10")
@@ -141,7 +141,7 @@ public class Dictory implements Serializable, JSONable {
 	protected Double ext19;
 
 	/**
-	 * ×Ö·û´®Öµ2
+	 * å­—ç¬¦ä¸²å€¼2
 	 */
 	@Column(name = "EXT2", length = 200)
 	protected String ext2;
@@ -153,47 +153,47 @@ public class Dictory implements Serializable, JSONable {
 	protected Double ext20;
 
 	/**
-	 * ×Ö·û´®Öµ3
+	 * å­—ç¬¦ä¸²å€¼3
 	 */
 	@Column(name = "EXT3", length = 200)
 	protected String ext3;
 
 	/**
-	 * ×Ö·û´®Öµ4
+	 * å­—ç¬¦ä¸²å€¼4
 	 */
 	@Column(name = "EXT4", length = 200)
 	protected String ext4;
 
 	/**
-	 * ÈÕÆÚÖµ5
+	 * æ—¥æœŸå€¼5
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "EXT5")
 	protected Date ext5;
 
 	/**
-	 * ÈÕÆÚÖµ6
+	 * æ—¥æœŸå€¼6
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "EXT6")
 	protected Date ext6;
 
 	/**
-	 * ÈÕÆÚÖµ7
+	 * æ—¥æœŸå€¼7
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "ext7")
 	protected Date ext7;
 
 	/**
-	 * ÈÕÆÚÖµ8
+	 * æ—¥æœŸå€¼8
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "ext8")
 	protected Date ext8;
 
 	/**
-	 * ÈÕÆÚÖµ9
+	 * æ—¥æœŸå€¼9
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "ext9")
@@ -204,38 +204,38 @@ public class Dictory implements Serializable, JSONable {
 	protected long id;
 
 	/**
-	 * Ãû³Æ
+	 * åç§°
 	 */
 	@Column(name = "NAME", length = 50)
 	protected String name;
 
 	/**
-	 * ÀàĞÍ±àºÅ
+	 * ç±»å‹ç¼–å·
 	 */
 	@Column(name = "TYPEID")
 	protected Long nodeId;
 
 	/**
-	 * ĞòºÅ
+	 * åºå·
 	 */
 	@Column(name = "SORT")
 	protected int sort;
 
 	/**
-	 * ĞŞ¸ÄÈË
+	 * ä¿®æ”¹äºº
 	 */
 	@Column(name = "UPDATEBY")
 	protected String updateBy;
 
 	/**
-	 * ĞŞ¸ÄÈÕÆÚ
+	 * ä¿®æ”¹æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "UPDATEDATE")
 	protected Date updateDate;
 
 	/**
-	 * Öµ
+	 * å€¼
 	 */
 	@Column(name = "VALUE_", length = 200)
 	protected String value;

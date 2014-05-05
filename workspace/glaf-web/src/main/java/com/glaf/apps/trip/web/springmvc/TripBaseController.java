@@ -167,7 +167,7 @@ public class TripBaseController {
 				if (StringUtils.isNotEmpty(x)) {
 					Trip trip = tripService.getTrip(x);
 					/**
-					 * �˴�ҵ���߼������е���
+					 * 此处业务逻辑需自行调整
 					 */
 					// TODO
 					if (trip != null
@@ -182,7 +182,7 @@ public class TripBaseController {
 		} else if (StringUtils.isNotEmpty(id)) {
 			Trip trip = tripService.getTrip(id);
 			/**
-			 * �˴�ҵ���߼������е���
+			 * 此处业务逻辑需自行调整
 			 */
 			// TODO
 			if (trip != null
@@ -297,7 +297,7 @@ public class TripBaseController {
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
 		/**
-		 * �˴�ҵ���߼������е���
+		 * 此处业务逻辑需自行调整
 		 */
 		if (!loginContext.isSystemAdministrator()) {
 			String actorId = loginContext.getActorId();

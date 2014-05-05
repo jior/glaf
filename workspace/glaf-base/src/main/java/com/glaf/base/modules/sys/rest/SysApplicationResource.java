@@ -69,7 +69,7 @@ public class SysApplicationResource {
 	protected SysTreeService sysTreeService;
 
 	/**
-	 * 批量删除信息
+	 * 鎵归噺鍒犻櫎淇℃伅
 	 * 
 	 * @param request
 	 * @param uriInfo
@@ -86,10 +86,10 @@ public class SysApplicationResource {
 		ret = sysApplicationService.deleteAll(id);
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
+		if (ret) {// 淇濆瓨鎴愬姛
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"application.delete_success"));
-		} else {// 保存失败
+		} else {// 淇濆瓨澶辫触
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"application.delete_failure"));
 		}
@@ -171,7 +171,7 @@ public class SysApplicationResource {
 	}
 
 	/**
-	 * 提交增加信息
+	 * 鎻愪氦澧炲姞淇℃伅
 	 * 
 	 * @param request
 	 * @param uriInfo
@@ -198,10 +198,10 @@ public class SysApplicationResource {
 
 		boolean ret = sysApplicationService.create(bean);
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
+		if (ret) {// 淇濆瓨鎴愬姛
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"application.add_success"));
-		} else {// 保存失败
+		} else {// 淇濆瓨澶辫触
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"application.add_failure"));
 		}
@@ -210,7 +210,7 @@ public class SysApplicationResource {
 	}
 
 	/**
-	 * 提交修改信息
+	 * 鎻愪氦淇敼淇℃伅
 	 * 
 	 * @param request
 	 * @param uriInfo
@@ -244,10 +244,10 @@ public class SysApplicationResource {
 			logger.error(ex);
 		}
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
+		if (ret) {// 淇濆瓨鎴愬姛
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"application.modify_success"));
-		} else {// 保存失败
+		} else {// 淇濆瓨澶辫触
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"application.modify_failure"));
 		}

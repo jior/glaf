@@ -331,7 +331,7 @@ public class JbpmEntityDAO {
 	}
 
 	/**
-	 * È¥³ıhqlµÄorderby ×Ó¾ä
+	 * å»é™¤hqlçš„orderby å­å¥
 	 * 
 	 * @param hql
 	 * @return hql

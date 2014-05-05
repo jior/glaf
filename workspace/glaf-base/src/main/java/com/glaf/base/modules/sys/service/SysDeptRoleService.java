@@ -31,7 +31,7 @@ import com.glaf.core.util.PageResult;
 public interface SysDeptRoleService {
 
 	/**
-	 * ±£´æ
+	 * ä¿å­˜
 	 * 
 	 * @param bean
 	 *            SysDeptRole
@@ -41,7 +41,7 @@ public interface SysDeptRoleService {
 	boolean create(SysDeptRole bean);
 
 	/**
-	 * ¸üĞÂ
+	 * æ›´æ–°
 	 * 
 	 * @param bean
 	 *            SysDeptRole
@@ -51,7 +51,7 @@ public interface SysDeptRoleService {
 	boolean update(SysDeptRole bean);
 
 	/**
-	 * É¾³ı
+	 * åˆ é™¤
 	 * 
 	 * @param bean
 	 *            SysDeptRole
@@ -61,7 +61,7 @@ public interface SysDeptRoleService {
 	boolean delete(SysDeptRole bean);
 
 	/**
-	 * É¾³ı
+	 * åˆ é™¤
 	 * 
 	 * @param id
 	 *            int
@@ -71,7 +71,7 @@ public interface SysDeptRoleService {
 	boolean delete(long id);
 
 	/**
-	 * ÅúÁ¿É¾³ı
+	 * æ‰¹é‡åˆ é™¤
 	 * 
 	 * @param ids
 	 * @return
@@ -83,7 +83,7 @@ public interface SysDeptRoleService {
 	boolean deleteByDept(long deptId);
 
 	/**
-	 * »ñÈ¡¶ÔÏó
+	 * è·å–å¯¹è±¡
 	 * 
 	 * @param id
 	 * @return
@@ -107,7 +107,7 @@ public interface SysDeptRoleService {
 	Set<SysUser> findRoleUser(long deptId, String code);
 
 	/**
-	 * »ñÈ¡·ÖÒ³ÁĞ±í
+	 * è·å–åˆ†é¡µåˆ—è¡¨
 	 * 
 	 * @param pageNo
 	 *            int
@@ -118,25 +118,25 @@ public interface SysDeptRoleService {
 	PageResult getRoleList(long deptId, int pageNo, int pageSize);
 
 	/**
-	 * »ñÈ¡ÁĞ±í
+	 * è·å–åˆ—è¡¨
 	 * 
 	 * @return List
 	 */
 	List<SysDeptRole> getRoleList(long deptId);
 
 	/**
-	 * ÅÅĞò
+	 * æ’åº
 	 * 
 	 * @param bean
 	 *            SysDeptRole
 	 * @param operate
-	 *            int ²Ù×÷
+	 *            int æ“ä½œ
 	 */
 	@Transactional
 	void sort(SysDeptRole bean, int operate);
 
 	/**
-	 * ÉèÖÃ½ÇÉ«¶ÔÓ¦µÄÄ£¿é¡¢¹¦ÄÜ
+	 * è®¾ç½®è§’è‰²å¯¹åº”çš„æ¨¡å—ã€åŠŸèƒ½
 	 * 
 	 * @param roleId
 	 * @param appIds
@@ -147,7 +147,7 @@ public interface SysDeptRoleService {
 	boolean saveRoleApplication(long roleId, long[] appIds, long[] funcIds);
 
 	/**
-	 * È«¾ÖÉèÖÃ½ÇÉ«¶ÔÓ¦µÄÄ£¿é¡¢¹¦ÄÜ
+	 * å…¨å±€è®¾ç½®è§’è‰²å¯¹åº”çš„æ¨¡å—ã€åŠŸèƒ½
 	 * 
 	 * @param roleId
 	 * @param appIds

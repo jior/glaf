@@ -46,7 +46,7 @@ public class ExtendedStackedBarRenderer extends StackedBarRenderer {
 	private static final long serialVersionUID = 1L;
 	private boolean showPositiveTotal = true;
 	private boolean showNegativeTotal = true;
-	private Font totalLabelFont = new Font("ËÎÌå", 1, 16);
+	private Font totalLabelFont = new Font("å®‹ä½“", 1, 16);
 	private NumberFormat totalFormatter = NumberFormat.getInstance();
 
 	public NumberFormat getTotalFormatter() {

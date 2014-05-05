@@ -29,7 +29,7 @@ public interface EntityDAO {
 	void setConnection(java.sql.Connection connection);
 
 	/**
-	 * É¾³ı¼ÇÂ¼
+	 * åˆ é™¤è®°å½•
 	 * 
 	 * @param statementId
 	 * @param parameterObject
@@ -37,7 +37,7 @@ public interface EntityDAO {
 	void delete(String statementId, Object parameterObject);
 
 	/**
-	 * É¾³ı¶àÌõ¼ÇÂ¼
+	 * åˆ é™¤å¤šæ¡è®°å½•
 	 * 
 	 * @param statementId
 	 * @param parameterObject
@@ -45,7 +45,7 @@ public interface EntityDAO {
 	void deleteAll(String statementId, List<Object> rowIds);
 
 	/**
-	 * ¸ù¾İ¼ÇÂ¼Ö÷¼üÉ¾³ı¼ÇÂ¼
+	 * æ ¹æ®è®°å½•ä¸»é”®åˆ é™¤è®°å½•
 	 * 
 	 * @param statementId
 	 * @param rowId
@@ -53,14 +53,14 @@ public interface EntityDAO {
 	void deleteById(String statementId, Object rowId);
 
 	/**
-	 * Ö´ĞĞÅúÁ¿¸üĞÂ
+	 * æ‰§è¡Œæ‰¹é‡æ›´æ–°
 	 * 
 	 * @param sqlExecutors
 	 */
 	void executeBatch(List<SqlExecutor> sqlExecutors);
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®è·å–è®°å½•
 	 * 
 	 * @param statementId
 	 * @param parameterObject
@@ -69,7 +69,7 @@ public interface EntityDAO {
 	Object getById(String statementId, Object parameterObject);
 
 	/**
-	 * »ñÈ¡×Ü¼ÇÂ¼Êı
+	 * è·å–æ€»è®°å½•æ•°
 	 * 
 	 * @param statementId
 	 * @param parameterObject
@@ -78,7 +78,7 @@ public interface EntityDAO {
 	int getCount(String statementId, Object parameterObject);
 
 	/**
-	 * »ñÈ¡Ò»Ò³Êı¾İ
+	 * è·å–ä¸€é¡µæ•°æ®
 	 * 
 	 * @param pageNo
 	 * @param pageSize
@@ -88,7 +88,7 @@ public interface EntityDAO {
 	List<Object> getList(int pageNo, int pageSize, SqlExecutor queryExecutor);
 
 	/**
-	 * »ñÈ¡Êı¾İ¼¯
+	 * è·å–æ•°æ®é›†
 	 * 
 	 * @param statementId
 	 * @param parameterObject
@@ -97,7 +97,7 @@ public interface EntityDAO {
 	List<Object> getList(String statementId, Object parameterObject);
 
 	/**
-	 * »ñÈ¡µ¥¸ö¶ÔÏó
+	 * è·å–å•ä¸ªå¯¹è±¡
 	 * 
 	 * @param statementId
 	 * @param parameterObject
@@ -106,7 +106,7 @@ public interface EntityDAO {
 	Object getSingleObject(String statementId, Object parameterObject);
 
 	/**
-	 * »ñÈ¡Ò»Ò³¼ÇÂ¼
+	 * è·å–ä¸€é¡µè®°å½•
 	 * 
 	 * @param pageNo
 	 * @param pageSize
@@ -118,21 +118,21 @@ public interface EntityDAO {
 			SqlExecutor queryExecutor);
 
 	/**
-	 * »ñÈ¡ÏÂÒ»Ìõ¼ÇÂ¼±àºÅ
+	 * è·å–ä¸‹ä¸€æ¡è®°å½•ç¼–å·
 	 * 
 	 * @return
 	 */
 	IdBlock nextDbidBlock();
 	
 	/**
-	 * »ñÈ¡ÏÂÒ»Ìõ¼ÇÂ¼±àºÅ
-	 * @param name Ãû³Æ
+	 * è·å–ä¸‹ä¸€æ¡è®°å½•ç¼–å·
+	 * @param name åç§°
 	 * @return
 	 */
 	IdBlock nextDbidBlock(String name);
 
 	/**
-	 * ²åÈëÒ»Ìõ¼ÇÂ¼
+	 * æ’å…¥ä¸€æ¡è®°å½•
 	 * 
 	 * @param statementId
 	 * @param parameterObject
@@ -140,7 +140,7 @@ public interface EntityDAO {
 	void insert(String statementId, Object parameterObject);
 
 	/**
-	 * ²åÈë¶àÌõ¼ÇÂ¼
+	 * æ’å…¥å¤šæ¡è®°å½•
 	 * 
 	 * @param statementId
 	 * @param parameterObject
@@ -148,7 +148,7 @@ public interface EntityDAO {
 	void insertAll(String statementId, List<Object> rows);
 
 	/**
-	 * ĞŞ¸ÄÒ»Ìõ¼ÇÂ¼
+	 * ä¿®æ”¹ä¸€æ¡è®°å½•
 	 * 
 	 * @param statementId
 	 * @param parameterObject
@@ -156,7 +156,7 @@ public interface EntityDAO {
 	void update(String statementId, Object parameterObject);
 
 	/**
-	 * ĞŞ¸Ä¶àÌõ¼ÇÂ¼
+	 * ä¿®æ”¹å¤šæ¡è®°å½•
 	 * 
 	 * @param statementId
 	 * @param parameterObject

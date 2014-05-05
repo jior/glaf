@@ -209,7 +209,7 @@ public class MxSystemTableResource {
 				tablePage = tablePageService.getTablePage(tablePageQuery,
 						start, limit);
 				long time = System.currentTimeMillis() - startTs;
-				logger.debug("²éÑ¯Íê³É,¼ÇÂ¼×ÜÊı:" + tablePage.getTotal() + " ÓÃÊ±(ºÁÃë):"
+				logger.debug("æŸ¥è¯¢å®Œæˆ,è®°å½•æ€»æ•°:" + tablePage.getTotal() + " ç”¨æ—¶(æ¯«ç§’):"
 						+ time);
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -239,13 +239,13 @@ public class MxSystemTableResource {
 							rowJSON.put(name.toLowerCase(),
 									DateUtils.getDate(date));
 						} else if (value instanceof byte[]) {
-							rowJSON.put(name, "¶ş½øÖÆÁ÷");
+							rowJSON.put(name, "äºŒè¿›åˆ¶æµ");
 						} else if (value instanceof java.io.InputStream) {
-							rowJSON.put(name, "¶ş½øÖÆÁ÷");
+							rowJSON.put(name, "äºŒè¿›åˆ¶æµ");
 						} else if (value instanceof java.sql.Blob) {
-							rowJSON.put(name, "¶ş½øÖÆÁ÷");
+							rowJSON.put(name, "äºŒè¿›åˆ¶æµ");
 						} else if (value instanceof java.sql.Clob) {
-							rowJSON.put(name, "³¤ÎÄ±¾");
+							rowJSON.put(name, "é•¿æ–‡æœ¬");
 						} else {
 							rowJSON.put(name, value);
 							rowJSON.put(name.toLowerCase(), value);

@@ -32,7 +32,7 @@
 	<target name="build" depends="clean">
 		<echo message="编译应用程序......" />
 		<mkdir dir="bin" />
-		<javac srcdir="src" destdir="bin" debug="on" fork="${javac.fork}" deprecation="on">
+		<javac srcdir="src" destdir="bin" debug="on" fork="${javac.fork}" deprecation="on" encoding="UTF-8">
 			<include name="main/java/**/*.java" />
 			<include name="test/java/**/*.java" />
 			<classpath refid="compile.classpath" />

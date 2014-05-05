@@ -51,7 +51,7 @@ public class SysDataTable implements Serializable, JSONable {
 	protected String title;
 
 	/**
-	 * 0-ÏµÍ³±í 1-À©Õ¹±í
+	 * 0-ç³»ç»Ÿè¡¨ 1-æ‰©å±•è¡¨
 	 */
 	@Column(name = "TYPE_")
 	protected Integer type;

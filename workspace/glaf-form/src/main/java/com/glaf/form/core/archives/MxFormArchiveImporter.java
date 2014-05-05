@@ -68,7 +68,7 @@ public class MxFormArchiveImporter {
 			.getLog(MxFormArchiveImporter.class);
 
 	/**
-	 * ²¿ÊğÒµÎñ°ü
+	 * éƒ¨ç½²ä¸šåŠ¡åŒ…
 	 * 
 	 * @param loginContext
 	 * @param zipInputStream
@@ -357,12 +357,12 @@ public class MxFormArchiveImporter {
 	}
 
 	/**
-	 * ²¿ÊğÁ÷³Ì°ü
+	 * éƒ¨ç½²æµç¨‹åŒ…
 	 * 
 	 * @param loginContext
-	 *            ÓÃ»§ÉÏÏÂÎÄ
+	 *            ç”¨æˆ·ä¸Šä¸‹æ–‡
 	 * @param zipInputStream
-	 *            Ñ¹ËõÊäÈëÁ÷
+	 *            å‹ç¼©è¾“å…¥æµ
 	 * @return
 	 */
 	public ProcessDefinition deployJpdl(LoginContext loginContext,
@@ -412,9 +412,9 @@ public class MxFormArchiveImporter {
 						processDefinition.getName();
 					}
 					if (task.getDescription() != null) {
-						subject = subject + task.getDescription() + "ÉĞÎ´Íê³É£¡";
+						subject = subject + task.getDescription() + "å°šæœªå®Œæˆï¼";
 					} else {
-						subject = subject + task.getName() + "ÉĞÎ´Íê³É£¡";
+						subject = subject + task.getName() + "å°šæœªå®Œæˆï¼";
 					}
 					Todo todo = new Todo();
 					todo.setTaskName(task.getName());

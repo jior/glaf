@@ -55,7 +55,7 @@ public class MyMenuController {
 	private MyMenuService myMenuService;
 
 	/**
-	 * ÅúÁ¿É¾³ıĞÅÏ¢
+	 * æ‰¹é‡åˆ é™¤ä¿¡æ¯
 	 * 
 	 * @return
 	 */
@@ -63,7 +63,7 @@ public class MyMenuController {
 	public ModelAndView batchDelete(ModelMap modelMap,
 			HttpServletRequest request) {
 		boolean ret = true;
-		// if (isTokenValid(request)) {// ·ÀÖ¹±íµ¥ÖØ¸´Ìá½»
+		// if (isTokenValid(request)) {// é˜²æ­¢è¡¨å•é‡å¤æäº¤
 		int[] id = ParamUtil.getIntParameterValues(request, "id");
 		if (id != null) {
 			for (int i = 0; i < id.length; i++) {
@@ -76,20 +76,20 @@ public class MyMenuController {
 		// saveToken(request);
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"myMenu.delete_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"myMenu.delete_failure"));
 		}
 		MessageUtils.addMessages(request, messages);
-		// ÏÔÊ¾Ìá½»ºóÒ³Ãæ
+		// æ˜¾ç¤ºæäº¤åé¡µé¢
 		return new ModelAndView("show_msg", modelMap);
 	}
 
 	/**
-	 * ÏÔÊ¾Ôö¼ÓÒ³Ãæ
+	 * æ˜¾ç¤ºå¢åŠ é¡µé¢
 	 * 
 	 * @return
 	 */
@@ -106,7 +106,7 @@ public class MyMenuController {
 	}
 
 	/**
-	 * ÏÔÊ¾Ôö¼ÓÎÒµÄ²Ëµ¥Ò³Ãæ
+	 * æ˜¾ç¤ºå¢åŠ æˆ‘çš„èœå•é¡µé¢
 	 * 
 	 * @return
 	 */
@@ -125,7 +125,7 @@ public class MyMenuController {
 	}
 
 	/**
-	 * ÏÔÊ¾ĞŞ¸ÄÒ³Ãæ
+	 * æ˜¾ç¤ºä¿®æ”¹é¡µé¢
 	 * 
 	 * @return
 	 */
@@ -142,13 +142,13 @@ public class MyMenuController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		// ÏÔÊ¾ĞŞ¸ÄÒ³Ãæ
+		// æ˜¾ç¤ºä¿®æ”¹é¡µé¢
 		return new ModelAndView("/modules/workspace/mymenu/mymenu_modify",
 				modelMap);
 	}
 
 	/**
-	 * Ìá½»Ôö¼ÓĞÅÏ¢
+	 * æäº¤å¢åŠ ä¿¡æ¯
 	 * 
 	 * @return
 	 */
@@ -177,24 +177,24 @@ public class MyMenuController {
 		bean.setUserId(userId);
 
 		boolean ret = false;
-		// if (isTokenValid(request)) {// ·ÀÖ¹±íµ¥ÖØ¸´Ìá½»
+		// if (isTokenValid(request)) {// é˜²æ­¢è¡¨å•é‡å¤æäº¤
 		ret = myMenuService.create(bean);
 		// }
 		// saveToken(request);
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"myMenu.add_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"myMenu.add_failure"));
 		}
 		MessageUtils.addMessages(request, messages);
 
-		// ÏÔÊ¾Ìá½»ºóÒ³Ãæ
+		// æ˜¾ç¤ºæäº¤åé¡µé¢
 		int showList = ParamUtil.getIntParameter(request, "showList", 0);
-		if (showList == 1) {// Ìí¼Óµ½ÎÒµÄ²Ëµ¥
+		if (showList == 1) {// æ·»åŠ åˆ°æˆ‘çš„èœå•
 
 			int pageNo = ParamUtil.getIntParameter(request, "page_no", 1);
 			int pageSize = ParamUtil.getIntParameter(request, "page_size",
@@ -210,7 +210,7 @@ public class MyMenuController {
 	}
 
 	/**
-	 * Ìá½»ĞŞ¸ÄĞÅÏ¢
+	 * æäº¤ä¿®æ”¹ä¿¡æ¯
 	 * 
 	 * @return
 	 */
@@ -225,21 +225,21 @@ public class MyMenuController {
 		}
 
 		boolean ret = false;
-		// if (isTokenValid(request)) {// ·ÀÖ¹±íµ¥ÖØ¸´Ìá½»
+		// if (isTokenValid(request)) {// é˜²æ­¢è¡¨å•é‡å¤æäº¤
 		ret = myMenuService.update(bean);
 		// }
 		// saveToken(request);
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// ±£´æ³É¹¦
+		if (ret) {// ä¿å­˜æˆåŠŸ
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"myMenu.modify_success"));
-		} else {// ±£´æÊ§°Ü
+		} else {// ä¿å­˜å¤±è´¥
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"myMenu.modify_failure"));
 		}
 		MessageUtils.addMessages(request, messages);
-		// ÏÔÊ¾Ìá½»ºóÒ³Ãæ
+		// æ˜¾ç¤ºæäº¤åé¡µé¢
 		return new ModelAndView("show_msg", modelMap);
 	}
 
@@ -249,7 +249,7 @@ public class MyMenuController {
 	}
 
 	/**
-	 * ÏÔÊ¾ÁĞ±í
+	 * æ˜¾ç¤ºåˆ—è¡¨
 	 * 
 	 * @return
 	 */
@@ -271,7 +271,7 @@ public class MyMenuController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		// ÏÔÊ¾ÁĞ±íÒ³Ãæ
+		// æ˜¾ç¤ºåˆ—è¡¨é¡µé¢
 		return new ModelAndView("/modules/workspace/mymenu/mymenu_list",
 				modelMap);
 	}

@@ -178,7 +178,7 @@ public class PlainTextParser implements Parser {
 			while ((line = reader.readLine()) != null) {
 				// System.out.println(line);
 				/**
-				 * Èç¹û¶ÁÈ¡µ½Ö¸¶¨µÄ½áÊøÖ¸Áî£¬½áÊøÑ­»·
+				 * å¦‚æžœè¯»å–åˆ°æŒ‡å®šçš„ç»“æŸæŒ‡ä»¤ï¼Œç»“æŸå¾ªçŽ¯
 				 */
 				if (StringUtils.contains(line, tableModel.getStopWord())) {
 					break;
@@ -189,7 +189,7 @@ public class PlainTextParser implements Parser {
 				}
 
 				/**
-				 * ÅÅ³ý²»ÐèÒª´¦ÀíµÄÐÐ
+				 * æŽ’é™¤ä¸éœ€è¦å¤„ç†çš„è¡Œ
 				 */
 				if (tableModel.getExcludes() != null
 						&& !tableModel.getExcludes().isEmpty()) {
@@ -202,7 +202,7 @@ public class PlainTextParser implements Parser {
 
 				if (currentRowNo >= startRow) {
 					/**
-					 * Èç¹ûµ±Ç°Êý¾ÝµÄ³¤¶È´óÓÚ¹æ¶¨µÄ×îÐ¡³¤¶È
+					 * å¦‚æžœå½“å‰æ•°æ®çš„é•¿åº¦å¤§äºŽè§„å®šçš„æœ€å°é•¿åº¦
 					 */
 					if (line.length() >= tableModel.getMinLength()) {
 						try {

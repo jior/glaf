@@ -82,7 +82,7 @@ public class ExtensionExecutionListener implements ExecutionListener {
 			}
 			if (extension == null) {
 				/**
-				 * 取指定流程指定名称的动作定义信息
+				 * 鍙栨寚瀹氭祦绋嬫寚瀹氬悕绉扮殑鍔ㄤ綔瀹氫箟淇℃伅
 				 */
 				logger.debug("2--search EX2......");
 				extension = service.getExtensionListener(processName,

@@ -111,7 +111,7 @@ public class DictoryServiceImpl implements DictoryService {
 	}
 
 	/**
-	 * »ñÈ¡È«²¿»ù´¡Êı¾İµÄ·ÖÀàÊ÷
+	 * è·å–å…¨éƒ¨åŸºç¡€æ•°æ®çš„åˆ†ç±»æ ‘
 	 * 
 	 * @return
 	 */
@@ -148,11 +148,11 @@ public class DictoryServiceImpl implements DictoryService {
 	}
 
 	public PageResult getDictoryList(int pageNo, int pageSize) {
-		// ¼ÆËã×ÜÊı
+		// è®¡ç®—æ€»æ•°
 		PageResult pager = new PageResult();
 		DictoryQuery query = new DictoryQuery();
 		int count = this.count(query);
-		if (count == 0) {// ½á¹û¼¯Îª¿Õ
+		if (count == 0) {// ç»“æœé›†ä¸ºç©º
 			pager.setPageSize(pageSize);
 			return pager;
 		}
@@ -177,12 +177,12 @@ public class DictoryServiceImpl implements DictoryService {
 	}
 
 	public PageResult getDictoryList(long nodeId, int pageNo, int pageSize) {
-		// ¼ÆËã×ÜÊı
+		// è®¡ç®—æ€»æ•°
 		PageResult pager = new PageResult();
 		DictoryQuery query = new DictoryQuery();
 		query.nodeId(nodeId);
 		int count = this.count(query);
-		if (count == 0) {// ½á¹û¼¯Îª¿Õ
+		if (count == 0) {// ç»“æœé›†ä¸ºç©º
 			pager.setPageSize(pageSize);
 			return pager;
 		}
@@ -200,7 +200,7 @@ public class DictoryServiceImpl implements DictoryService {
 	}
 
 	/**
-	 * ·µ»ØÄ³·ÖÀàÏÂµÄËùÓĞ×ÖµäÁĞ±í
+	 * è¿”å›æŸåˆ†ç±»ä¸‹çš„æ‰€æœ‰å­—å…¸åˆ—è¡¨
 	 * 
 	 * @param nodeCode
 	 * @return
@@ -270,17 +270,17 @@ public class DictoryServiceImpl implements DictoryService {
 	public void sort(long parent, Dictory bean, int operate) {
 		if (bean == null)
 			return;
-		if (operate == SysConstants.SORT_PREVIOUS) {// Ç°ÒÆ
-			logger.debug("Ç°ÒÆ:" + bean.getName());
+		if (operate == SysConstants.SORT_PREVIOUS) {// å‰ç§»
+			logger.debug("å‰ç§»:" + bean.getName());
 			sortByPrevious(parent, bean);
-		} else if (operate == SysConstants.SORT_FORWARD) {// ºóÒÆ
+		} else if (operate == SysConstants.SORT_FORWARD) {// åç§»
 			sortByForward(parent, bean);
-			logger.debug("ºóÒÆ:" + bean.getName());
+			logger.debug("åç§»:" + bean.getName());
 		}
 	}
 
 	/**
-	 * ÏòºóÒÆ¶¯ÅÅĞò
+	 * å‘åç§»åŠ¨æ’åº
 	 * 
 	 * @param bean
 	 */
@@ -292,22 +292,22 @@ public class DictoryServiceImpl implements DictoryService {
 		query.setOrderBy(" E.SORT desc ");
 
 		List<?> list = this.list(query);
-		if (list != null && list.size() > 0) {// ÓĞ¼ÇÂ¼
+		if (list != null && list.size() > 0) {// æœ‰è®°å½•
 			Dictory temp = (Dictory) list.get(0);
 			int sort = bean.getSort();
 			bean.setSort(temp.getSort() - 1);
 			if (sort != temp.getSort()) {
 				bean.setSort(temp.getSort());
 			}
-			this.update(bean);// ¸üĞÂbean
+			this.update(bean);// æ›´æ–°bean
 
 			temp.setSort(sort+1);
-			this.update(temp);// ¸üĞÂtemp
+			this.update(temp);// æ›´æ–°temp
 		}
 	}
 
 	/**
-	 * ÏòÇ°ÒÆ¶¯ÅÅĞò
+	 * å‘å‰ç§»åŠ¨æ’åº
 	 * 
 	 * @param bean
 	 */
@@ -318,17 +318,17 @@ public class DictoryServiceImpl implements DictoryService {
 		query.setIdNotEqual(bean.getId());
 
 		List<?> list = this.list(query);
-		if (list != null && list.size() > 0) {// ÓĞ¼ÇÂ¼
+		if (list != null && list.size() > 0) {// æœ‰è®°å½•
 			Dictory temp = (Dictory) list.get(0);
 			int sort = bean.getSort();
 			bean.setSort(temp.getSort() + 1);
 			if (sort != temp.getSort()) {
 				bean.setSort(temp.getSort());
 			}
-			this.update(bean);// ¸üĞÂbean
+			this.update(bean);// æ›´æ–°bean
 
 			temp.setSort(sort-1);
-			this.update(temp);// ¸üĞÂtemp
+			this.update(temp);// æ›´æ–°temp
 		}
 	}
 

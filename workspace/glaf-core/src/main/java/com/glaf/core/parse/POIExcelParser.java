@@ -78,9 +78,9 @@ public class POIExcelParser implements Parser {
 			HSSFSheet sheet = wb.getSheetAt(r);
 			int rowCount = sheet.getPhysicalNumberOfRows();
 			for (int i = 0; i < rowCount; i++) {
-				int startRow = metadata.getStartRow();// ´Ó1¿ªÊ¼
+				int startRow = metadata.getStartRow();// ä»Ž1å¼€å§‹
 				if (startRow > 0 && i < startRow - 1) {
-					continue;// Ìø¹ý¿ªÊ¼ÐÐ
+					continue;// è·³è¿‡å¼€å§‹è¡Œ
 				}
 				HSSFRow row = sheet.getRow(i);
 				TableModel model = new TableModel();

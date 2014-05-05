@@ -41,20 +41,20 @@ public class Group implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY", length = 50)
 	protected String createBy;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE")
 	protected Date createDate;
 
 	/**
-	 * ÃèÊö
+	 * æè¿°
 	 */
 	@Column(name = "GROUPDESC", length = 500)
 	protected String desc;
@@ -64,31 +64,31 @@ public class Group implements Serializable, JSONable {
 	protected String groupId;
 
 	/**
-	 * Ãû³Æ
+	 * åç§°
 	 */
 	@Column(name = "NAME", length = 200)
 	protected String name;
 
 	/**
-	 * Ë³ĞòºÅ
+	 * é¡ºåºå·
 	 */
 	@Column(name = "SORT")
 	protected int sort;
 
 	/**
-	 * ÀàĞÍ
+	 * ç±»å‹
 	 */
 	@Column(name = "TYPE", length = 50)
 	protected String type;
 
 	/**
-	 * ĞŞ¸ÄÈË
+	 * ä¿®æ”¹äºº
 	 */
 	@Column(name = "UPDATEBY", length = 50)
 	protected String updateBy;
 
 	/**
-	 * ĞŞ¸ÄÈÕÆÚ
+	 * ä¿®æ”¹æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "UPDATEDATE")

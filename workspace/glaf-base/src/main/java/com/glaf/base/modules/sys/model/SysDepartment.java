@@ -44,38 +44,38 @@ public class SysDepartment implements Serializable, JSONable {
 	private List<SysDepartment> children = new java.util.ArrayList<SysDepartment>();
 
 	/**
-	 * ±àÂë
+	 * ç¼–ç 
 	 */
 	@Column(name = "CODE", length = 250)
 	protected String code;
 
 	/**
-	 * ±àÂë2
+	 * ç¼–ç 2
 	 */
 	@Column(name = "CODE2", length = 250)
 	protected String code2;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY", length = 50)
 	protected String createBy;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATETIME")
 	protected Date createTime;
 
 	/**
-	 * ÃèÊö
+	 * æè¿°
 	 */
 	@Column(name = "DEPTDESC", length = 500)
 	protected String desc;
 
 	/**
-	 * ²ÆÎñ´úÂë
+	 * è´¢åŠ¡ä»£ç 
 	 */
 	@Column(name = "FINCODE", length = 250)
 	protected String fincode;
@@ -85,20 +85,20 @@ public class SysDepartment implements Serializable, JSONable {
 	protected long id;
 
 	/**
-	 * ²¿ÃÅ¼¶±ğ
+	 * éƒ¨é—¨çº§åˆ«
 	 */
 	@Column(name = "DEPTLEVEL")
 	protected Integer level;
 	
 
 	/**
-	 * Ãû³Æ
+	 * åç§°
 	 */
 	@Column(name = "NAME", length = 200)
 	protected String name;
 
 	/**
-	 * ²¿ÃÅ±àºÅ
+	 * éƒ¨é—¨ç¼–å·
 	 */
 	@Column(name = "DEPTNO")
 	protected String no;
@@ -107,7 +107,7 @@ public class SysDepartment implements Serializable, JSONable {
 	private SysTree node;
 
 	/**
-	 * ½Úµã±àºÅ
+	 * èŠ‚ç‚¹ç¼–å·
 	 */
 	@Column(name = "NODEID")
 	protected long nodeId;
@@ -119,25 +119,25 @@ public class SysDepartment implements Serializable, JSONable {
 	private Set<SysDeptRole> roles = new HashSet<SysDeptRole>();
 
 	/**
-	 * ĞòºÅ
+	 * åºå·
 	 */
 	@Column(name = "SORT")
 	protected int sort;
 
 	/**
-	 * ×´Ì¬
+	 * çŠ¶æ€
 	 */
 	@Column(name = "STATUS")
-	protected int status = 0;// ÊÇ·ñÓĞĞ§[Ä¬ÈÏÓĞĞ§]
+	protected int status = 0;// æ˜¯å¦æœ‰æ•ˆ[é»˜è®¤æœ‰æ•ˆ]
 
 	/**
-	 * ĞŞ¸ÄÈË
+	 * ä¿®æ”¹äºº
 	 */
 	@Column(name = "UPDATEBY", length = 50)
 	protected String updateBy;
 
 	/**
-	 * ĞŞ¸ÄÈÕÆÚ
+	 * ä¿®æ”¹æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "UPDATEDATE")

@@ -185,12 +185,12 @@ public class SysTreeServiceImpl implements SysTreeService {
 	}
 
 	/**
-	 * »ñÈ¡¹ØÁª±íÊ÷ĞÍ½á¹¹
+	 * è·å–å…³è”è¡¨æ ‘å‹ç»“æ„
 	 * 
 	 * @param relationTable
-	 *            ±íÃû
+	 *            è¡¨å
 	 * @param relationColumn
-	 *            ¹ØÁª×Ö¶ÎÃû
+	 *            å…³è”å­—æ®µå
 	 * @param query
 	 * @return
 	 */
@@ -202,7 +202,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§Ä³¸ö½ÇÉ«µÄÊ÷½Úµã
+	 * è·å–æŸä¸ªç”¨æˆ·æŸä¸ªè§’è‰²çš„æ ‘èŠ‚ç‚¹
 	 * 
 	 * @param query
 	 * @return
@@ -219,10 +219,10 @@ public class SysTreeServiceImpl implements SysTreeService {
 			this.initDepartments(nodes);
 			this.initApplications(nodes);
 			Iterator<SysTree> iter = nodes.iterator();
-			while (iter.hasNext()) {// µİ¹é±éÀú
+			while (iter.hasNext()) {// é€’å½’éå†
 				SysTree bean = iter.next();
 				bean.setDeep(deep + 1);
-				tree.add(bean);// ¼ÓÈëµ½Êı×é
+				tree.add(bean);// åŠ å…¥åˆ°æ•°ç»„
 				getSysTree(tree, (int) bean.getId(), bean.getDeep());
 			}
 		}
@@ -261,12 +261,12 @@ public class SysTreeServiceImpl implements SysTreeService {
 	}
 
 	public PageResult getSysTreeList(long parentId, int pageNo, int pageSize) {
-		// ¼ÆËã×ÜÊı
+		// è®¡ç®—æ€»æ•°
 		PageResult pager = new PageResult();
 		SysTreeQuery query = new SysTreeQuery();
 		query.parentId(Long.valueOf(parentId));
 		int count = this.count(query);
-		if (count == 0) {// ½á¹û¼¯Îª¿Õ
+		if (count == 0) {// ç»“æœé›†ä¸ºç©º
 			pager.setPageSize(pageSize);
 			return pager;
 		}
@@ -296,13 +296,13 @@ public class SysTreeServiceImpl implements SysTreeService {
 	}
 
 	/**
-	 * »ñÈ¡¸¸½ÚµãÁĞ±í£¬Èç:¸ùÄ¿Â¼>A>A1>A11
+	 * è·å–çˆ¶èŠ‚ç‚¹åˆ—è¡¨ï¼Œå¦‚:æ ¹ç›®å½•>A>A1>A11
 	 * 
 	 * @param tree
 	 * @param int id
 	 */
 	public void getSysTreeParent(List<SysTree> tree, long id) {
-		// ²éÕÒÊÇ·ñÓĞ¸¸½Úµã
+		// æŸ¥æ‰¾æ˜¯å¦æœ‰çˆ¶èŠ‚ç‚¹
 		SysTree bean = findById(id);
 		if (bean != null) {
 			if (bean.getParentId() != 0) {
@@ -470,17 +470,17 @@ public class SysTreeServiceImpl implements SysTreeService {
 
 	@Transactional
 	public void sort(long parent, SysTree bean, int operate) {
-		if (operate == SysConstants.SORT_PREVIOUS) {// Ç°ÒÆ
-			logger.debug("Ç°ÒÆ:" + bean.getName());
+		if (operate == SysConstants.SORT_PREVIOUS) {// å‰ç§»
+			logger.debug("å‰ç§»:" + bean.getName());
 			sortByPrevious(parent, bean);
-		} else if (operate == SysConstants.SORT_FORWARD) {// ºóÒÆ
+		} else if (operate == SysConstants.SORT_FORWARD) {// åç§»
 			sortByForward(parent, bean);
-			logger.debug("ºóÒÆ:" + bean.getName());
+			logger.debug("åç§»:" + bean.getName());
 		}
 	}
 
 	/**
-	 * ÏòºóÒÆ¶¯ÅÅĞò
+	 * å‘åç§»åŠ¨æ’åº
 	 * 
 	 * @param bean
 	 */
@@ -489,21 +489,21 @@ public class SysTreeServiceImpl implements SysTreeService {
 		query.parentId(Long.valueOf(parent));
 		query.setSortLessThan(bean.getSort());
 		query.setOrderBy(" E.SORT desc ");
-		// ²éÕÒºóÒ»¸ö¶ÔÏó
+		// æŸ¥æ‰¾åä¸€ä¸ªå¯¹è±¡
 		List<SysTree> list = this.list(query);
-		if (list != null && list.size() > 0) {// ÓĞ¼ÇÂ¼
+		if (list != null && list.size() > 0) {// æœ‰è®°å½•
 			SysTree temp = (SysTree) list.get(0);
 			int sort = bean.getSort();
 			bean.setSort(temp.getSort() - 1);
-			this.update(bean);// ¸üĞÂbean
+			this.update(bean);// æ›´æ–°bean
 
 			temp.setSort(sort + 1);
-			this.update(temp);// ¸üĞÂtemp
+			this.update(temp);// æ›´æ–°temp
 		}
 	}
 
 	/**
-	 * ÏòÇ°ÒÆ¶¯ÅÅĞò
+	 * å‘å‰ç§»åŠ¨æ’åº
 	 * 
 	 * @param bean
 	 */
@@ -513,16 +513,16 @@ public class SysTreeServiceImpl implements SysTreeService {
 		query.setSortGreaterThan(bean.getSort());
 		query.setOrderBy(" E.SORT asc ");
 
-		// ²éÕÒÇ°Ò»¸ö¶ÔÏó
+		// æŸ¥æ‰¾å‰ä¸€ä¸ªå¯¹è±¡
 		List<SysTree> list = this.list(query);
-		if (list != null && list.size() > 0) {// ÓĞ¼ÇÂ¼
+		if (list != null && list.size() > 0) {// æœ‰è®°å½•
 			SysTree temp = (SysTree) list.get(0);
 			int sort = bean.getSort();
 			bean.setSort(temp.getSort() + 1);
-			this.update(bean);// ¸üĞÂbean
+			this.update(bean);// æ›´æ–°bean
 
 			temp.setSort(sort - 1);
-			this.update(temp);// ¸üĞÂtemp
+			this.update(temp);// æ›´æ–°temp
 		}
 	}
 
@@ -530,7 +530,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 	public boolean update(SysTree bean) {
 		SysTree model = this.findById(bean.getId());
 		/**
-		 * Èç¹û½ÚµãÒÆ¶¯ÁËÎ»ÖÃ£¬¼´ÒÆ¶¯µ½±ğµÄ½ÚµãÏÂÃæÈ¥ÁË
+		 * å¦‚æœèŠ‚ç‚¹ç§»åŠ¨äº†ä½ç½®ï¼Œå³ç§»åŠ¨åˆ°åˆ«çš„èŠ‚ç‚¹ä¸‹é¢å»äº†
 		 */
 		if (model.getParentId() != bean.getParentId()) {
 			List<SysTree> list = new java.util.ArrayList<SysTree>();
@@ -538,7 +538,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 			if (!list.isEmpty()) {
 				for (SysTree node : list) {
 					/**
-					 * ²»ÄÜÒÆ¶¯µ½ta×Ô¼ºµÄ×Ó½ÚµãÏÂÃæÈ¥
+					 * ä¸èƒ½ç§»åŠ¨åˆ°taè‡ªå·±çš„å­èŠ‚ç‚¹ä¸‹é¢å»
 					 */
 					if (bean.getParentId() == node.getId()) {
 						throw new RuntimeException(
@@ -546,7 +546,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 					}
 				}
 				/**
-				 * ĞŞÕıËùÓĞ×Ó½ÚµãµÄtreeId
+				 * ä¿®æ­£æ‰€æœ‰å­èŠ‚ç‚¹çš„treeId
 				 */
 				SysTree oldParent = this.findById(model.getParentId());
 				SysTree newParent = this.findById(bean.getParentId());
@@ -628,7 +628,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 	}
 
 	/**
-	 * ¸üĞÂÊ÷µÄtreeId×Ö¶Î
+	 * æ›´æ–°æ ‘çš„treeIdå­—æ®µ
 	 * 
 	 * @param treeMap
 	 */

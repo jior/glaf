@@ -34,7 +34,7 @@ import com.glaf.core.util.PageResult;
 public interface SysApplicationService {
 
 	/**
-	 * ±£´æ
+	 * ä¿å­˜
 	 * 
 	 * @param bean
 	 *            SysApplication
@@ -43,7 +43,7 @@ public interface SysApplicationService {
 	boolean create(SysApplication bean);
 
 	/**
-	 * É¾³ı
+	 * åˆ é™¤
 	 * 
 	 * @param id
 	 *            int
@@ -52,7 +52,7 @@ public interface SysApplicationService {
 	boolean delete(long id);
 
 	/**
-	 * É¾³ı
+	 * åˆ é™¤
 	 * 
 	 * @param bean
 	 *            SysApplication
@@ -61,7 +61,7 @@ public interface SysApplicationService {
 	boolean delete(SysApplication bean);
 
 	/**
-	 * ÅúÁ¿É¾³ı
+	 * æ‰¹é‡åˆ é™¤
 	 * 
 	 * @param id
 	 * @return
@@ -69,7 +69,7 @@ public interface SysApplicationService {
 	boolean deleteAll(long[] id);
 
 	/**
-	 * »ñÈ¡¶ÔÏó
+	 * è·å–å¯¹è±¡
 	 * 
 	 * @param id
 	 * @return
@@ -77,7 +77,7 @@ public interface SysApplicationService {
 	SysApplication findById(long id);
 
 	/**
-	 * °´±àÂë²éÕÒ¶ÔÏó
+	 * æŒ‰ç¼–ç æŸ¥æ‰¾å¯¹è±¡
 	 * 
 	 * @param code
 	 *            String
@@ -86,7 +86,7 @@ public interface SysApplicationService {
 	SysApplication findByCode(String code);
 
 	/**
-	 * ¸ù¾İ½Úµã±àºÅ²éÕÒ¶ÔÏó
+	 * æ ¹æ®èŠ‚ç‚¹ç¼–å·æŸ¥æ‰¾å¯¹è±¡
 	 * 
 	 * @param nodeId
 	 * @return
@@ -94,7 +94,7 @@ public interface SysApplicationService {
 	SysApplication findByNodeId(long nodeId);
 
 	/**
-	 * °´Ãû³Æ²éÕÒ¶ÔÏó
+	 * æŒ‰åç§°æŸ¥æ‰¾å¯¹è±¡
 	 * 
 	 * @param name
 	 *            String
@@ -103,7 +103,7 @@ public interface SysApplicationService {
 	SysApplication findByName(String name);
 
 	/**
-	 * »ñÈ¡ÓÃ»§ÄÜ·ÃÎÊµ½µÄÄ£¿éÁĞ±í
+	 * è·å–ç”¨æˆ·èƒ½è®¿é—®åˆ°çš„æ¨¡å—åˆ—è¡¨
 	 * 
 	 * @param userId
 	 *            int
@@ -114,14 +114,14 @@ public interface SysApplicationService {
 	List<SysApplication> getAccessAppList(long parent, SysUser user);
 
 	/**
-	 * »ñÈ¡È«²¿ÁĞ±í
+	 * è·å–å…¨éƒ¨åˆ—è¡¨
 	 * 
 	 * @return List
 	 */
 	List<SysApplication> getApplicationList();
 
 	/**
-	 * »ñÈ¡ÁĞ±í
+	 * è·å–åˆ—è¡¨
 	 * 
 	 * @param parent
 	 *            int
@@ -130,7 +130,7 @@ public interface SysApplicationService {
 	List<SysApplication> getApplicationList(long parent);
 
 	/**
-	 * »ñÈ¡·ÖÒ³ÁĞ±í
+	 * è·å–åˆ†é¡µåˆ—è¡¨
 	 * 
 	 * @param parent
 	 *            int
@@ -143,7 +143,7 @@ public interface SysApplicationService {
 	PageResult getApplicationList(long parent, int pageNo, int pageSize);
 
 	/**
-	 * »ñÈ¡²Ëµ¥
+	 * è·å–èœå•
 	 * 
 	 * @param parent
 	 * @param userId
@@ -154,14 +154,14 @@ public interface SysApplicationService {
 	List<RealmInfo> getRealmInfos();
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
 	int getSysApplicationCountByQueryCriteria(SysApplicationQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */
@@ -169,12 +169,12 @@ public interface SysApplicationService {
 			int pageSize, SysApplicationQuery query);
 
 	/**
-	 * »ñÈ¡ÓÃ»§²Ëµ¥Ö®json¶ÔÏó
+	 * è·å–ç”¨æˆ·èœå•ä¹‹jsonå¯¹è±¡
 	 * 
 	 * @param parentId
-	 *            ¸¸½Úµã±àºÅ
+	 *            çˆ¶èŠ‚ç‚¹ç¼–å·
 	 * @param userId
-	 *            ÓÃ»§µÇÂ¼ÕËºÅ
+	 *            ç”¨æˆ·ç™»å½•è´¦å·
 	 * @return
 	 */
 	JSONArray getUserMenu(long parentId, String userId);
@@ -182,37 +182,37 @@ public interface SysApplicationService {
 	TreeModel getTreeModelByAppId(long appId);
 
 	/**
-	 * »ñÈ¡Ä³¸ö·ÖÀàÏÂµÄÈ«²¿·ÖÀà½Úµã
+	 * è·å–æŸä¸ªåˆ†ç±»ä¸‹çš„å…¨éƒ¨åˆ†ç±»èŠ‚ç‚¹
 	 * 
 	 * @param parentId
-	 *            (sys_tree±íµÄid) ¸¸½Úµã±àºÅ
+	 *            (sys_treeè¡¨çš„id) çˆ¶èŠ‚ç‚¹ç¼–å·
 	 * @return
 	 */
 	List<TreeModel> getTreeModels(long parentId);
 
 	/**
-	 * »ñÈ¡ÓÃ»§Ä³¸ö·ÖÀàÏÂµÄÈ«²¿·ÖÀà½Úµã
+	 * è·å–ç”¨æˆ·æŸä¸ªåˆ†ç±»ä¸‹çš„å…¨éƒ¨åˆ†ç±»èŠ‚ç‚¹
 	 * 
 	 * @param parentId
-	 *            ¸¸½Úµã±àºÅ(sys_tree±íµÄid)
+	 *            çˆ¶èŠ‚ç‚¹ç¼–å·(sys_treeè¡¨çš„id)
 	 * @param actorId
-	 *            ÓÃ»§µÇÂ¼ÕËºÅ
+	 *            ç”¨æˆ·ç™»å½•è´¦å·
 	 * @return
 	 */
 	List<TreeModel> getTreeModels(long parentId, String actorId);
 
 	/**
-	 * ÅÅĞò
+	 * æ’åº
 	 * 
 	 * @param bean
 	 *            SysApplication
 	 * @param operate
-	 *            int ²Ù×÷
+	 *            int æ“ä½œ
 	 */
 	void sort(long parent, SysApplication bean, int operate);
 
 	/**
-	 * ¸üĞÂ
+	 * æ›´æ–°
 	 * 
 	 * @param bean
 	 *            SysApplication

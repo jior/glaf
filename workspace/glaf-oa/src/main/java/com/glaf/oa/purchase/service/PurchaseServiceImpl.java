@@ -151,9 +151,9 @@ public class PurchaseServiceImpl implements PurchaseService {
 					ProcessContainer.getContainer().abortProcess(ctx);
 				}
 
-				purchaseitemService.deleteByParentId(id);// ÏÈÉ¾³ıÃ÷Ï¸
+				purchaseitemService.deleteByParentId(id);// å…ˆåˆ é™¤æ˜ç»†
 
-				purchaseMapper.deletePurchaseById(id);// É¾³ıÖ÷±í
+				purchaseMapper.deletePurchaseById(id);// åˆ é™¤ä¸»è¡¨
 			}
 		}
 
@@ -163,7 +163,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 	public void submit(List<Long> purchaseids) {
 		if (purchaseids != null && !purchaseids.isEmpty()) {
 			for (Long id : purchaseids) {
-				purchaseMapper.submitById(id);// Ìá½»
+				purchaseMapper.submitById(id);// æäº¤
 			}
 		}
 	}

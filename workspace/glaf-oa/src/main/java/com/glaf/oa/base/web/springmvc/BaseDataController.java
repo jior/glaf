@@ -94,27 +94,27 @@ public class BaseDataController {
 		for (ActivityInstance activityInstance : list) {
 
 			JSONObject jsonObject = new JSONObject();
-			// ÈÎÎñÃû³Æ
+			// ä»»åŠ¡åç§°
 			jsonObject.put("taskName", activityInstance.getTaskDescription());
-			// Ö´ĞĞÕßId
+			// æ‰§è¡Œè€…Id
 			jsonObject.put("actorId", activityInstance.getActorId());
-			// Ö´ĞĞÕßname
+			// æ‰§è¡Œè€…name
 			jsonObject
 					.put("actorName",
 							BaseDataManager.getInstance().getStringValue(
 									activityInstance.getActorId(), "SYS_USERS"));
-			// ¿ªÊ¼Ê±¼ä
+			// å¼€å§‹æ—¶é—´
 			jsonObject.put("starDate", starDateStr.length() > 0 ? starDateStr
 					: (DateUtils.getDate(activityInstance.getDate())));
-			// ½áÊøÊ±¼ä
+			// ç»“æŸæ—¶é—´
 			jsonObject.put("endDate",
 					DateUtils.getDate(activityInstance.getDate()));
-			// ÉóÅú½á¹û
+			// å®¡æ‰¹ç»“æœ
 			jsonObject.put(
 					"isAgree",
 					activityInstance.getIsAgree() != null ? activityInstance
 							.getIsAgree() : "");
-			// ÉóÅúÒâ¼û
+			// å®¡æ‰¹æ„è§
 			jsonObject.put(
 					"content",
 					activityInstance.getContent() != null ? activityInstance

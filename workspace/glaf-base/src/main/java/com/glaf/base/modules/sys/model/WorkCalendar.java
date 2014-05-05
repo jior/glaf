@@ -39,19 +39,19 @@ public class WorkCalendar implements Serializable, JSONable {
 	protected long id;
 
 	/**
-	 * ĞİÏ¢ÈÕ
+	 * ä¼‘æ¯æ—¥
 	 */
 	@Column(name = "FREEDAY")
 	protected int freeDay;
 
 	/**
-	 * ÔÂ
+	 * æœˆ
 	 */
 	@Column(name = "FREEMONTH")
 	protected int freeMonth;
 
 	/**
-	 * Äê
+	 * å¹´
 	 */
 	@Column(name = "FREEYEAR")
 	protected int freeYear;

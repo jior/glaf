@@ -81,14 +81,14 @@ public class MethodInterceptor implements MethodBeforeAdvice {
 			}
 		}
 
-		// À¹½ØµÄ¹¦ÄÜÔÚÏµÍ³¹¦ÄÜÁĞ±íÖĞ
+		// æ‹¦æˆªçš„åŠŸèƒ½åœ¨ç³»ç»ŸåŠŸèƒ½åˆ—è¡¨ä¸­
 		if (checkSystemFunction(operation)) {
-			// ÔÚÓÃ»§¹¦ÄÜÁĞ±íÖĞ£¬Í¨¹ı
+			// åœ¨ç”¨æˆ·åŠŸèƒ½åˆ—è¡¨ä¸­ï¼Œé€šè¿‡
 			if (checkUserFunction(actorId, methodName)) {
 				logger.debug("method is in user functions");
 				authorized = true;
 			}
-		} else {// À¹½ØµÄ¹¦ÄÜ²»ÔÚÏµÍ³¹¦ÄÜÁĞ±íÖĞ£¬Í¨¹ı
+		} else {// æ‹¦æˆªçš„åŠŸèƒ½ä¸åœ¨ç³»ç»ŸåŠŸèƒ½åˆ—è¡¨ä¸­ï¼Œé€šè¿‡
 			logger.debug("method isn't in system functions");
 			authorized = true;
 		}
@@ -98,7 +98,7 @@ public class MethodInterceptor implements MethodBeforeAdvice {
 					.getLoginContext(actorId);
 			if (loginContext.isSystemAdministrator()) {
 				/**
-				 * ÏµÍ³¹ÜÀíÔ±ÓµÓĞÈ«²¿È¨ÏŞ
+				 * ç³»ç»Ÿç®¡ç†å‘˜æ‹¥æœ‰å…¨éƒ¨æƒé™
 				 */
 				authorized = true;
 			}
@@ -153,14 +153,14 @@ public class MethodInterceptor implements MethodBeforeAdvice {
 
 		boolean authorized = false;
 
-		// À¹½ØµÄ¹¦ÄÜÔÚÏµÍ³¹¦ÄÜÁĞ±íÖĞ
+		// æ‹¦æˆªçš„åŠŸèƒ½åœ¨ç³»ç»ŸåŠŸèƒ½åˆ—è¡¨ä¸­
 		if (checkSystemFunction(operation)) {
-			// ÔÚÓÃ»§¹¦ÄÜÁĞ±íÖĞ£¬Í¨¹ı
+			// åœ¨ç”¨æˆ·åŠŸèƒ½åˆ—è¡¨ä¸­ï¼Œé€šè¿‡
 			if (checkUserFunction(actorId, methodName)) {
 				logger.debug("method is in user functions");
 				authorized = true;
 			}
-		} else {// À¹½ØµÄ¹¦ÄÜ²»ÔÚÏµÍ³¹¦ÄÜÁĞ±íÖĞ£¬Í¨¹ı
+		} else {// æ‹¦æˆªçš„åŠŸèƒ½ä¸åœ¨ç³»ç»ŸåŠŸèƒ½åˆ—è¡¨ä¸­ï¼Œé€šè¿‡
 			logger.debug("method isn't in system functions");
 			authorized = true;
 		}
@@ -170,7 +170,7 @@ public class MethodInterceptor implements MethodBeforeAdvice {
 					.getLoginContext(actorId);
 			if (loginContext.isSystemAdministrator()) {
 				/**
-				 * ÏµÍ³¹ÜÀíÔ±ÓµÓĞÈ«²¿È¨ÏŞ
+				 * ç³»ç»Ÿç®¡ç†å‘˜æ‹¥æœ‰å…¨éƒ¨æƒé™
 				 */
 				authorized = true;
 			}
@@ -194,7 +194,7 @@ public class MethodInterceptor implements MethodBeforeAdvice {
 	}
 
 	/**
-	 * ¼ì²é¹¦ÄÜÊÇ·ñ´æÔÚÏµÍ³¹¦ÄÜÁĞ±íÖĞ
+	 * æ£€æŸ¥åŠŸèƒ½æ˜¯å¦å­˜åœ¨ç³»ç»ŸåŠŸèƒ½åˆ—è¡¨ä¸­
 	 * 
 	 * @param methodName
 	 * @return
@@ -203,12 +203,12 @@ public class MethodInterceptor implements MethodBeforeAdvice {
 	protected boolean checkSystemFunction(String function) {
 		boolean ret = false;
 		if (ContextUtils.get(Constants.SYSTEM_PERMISSION_IDS) != null) {
-			// ÏµÍ³¹¦ÄÜÁĞ±í£¬ÔÚ³õÊ¼»¯servletÖĞ¼ÓÔØ
+			// ç³»ç»ŸåŠŸèƒ½åˆ—è¡¨ï¼Œåœ¨åˆå§‹åŒ–servletä¸­åŠ è½½
 			Iterator<String> iter = ((List<String>) ContextUtils
 					.get(Constants.SYSTEM_PERMISSION_IDS)).iterator();
 			while (iter.hasNext()) {
 				String item = (String) iter.next();
-				if (StringUtils.equals(function, item)) {// ÕÒµ½
+				if (StringUtils.equals(function, item)) {// æ‰¾åˆ°
 					ret = true;
 					break;
 				}
@@ -218,16 +218,16 @@ public class MethodInterceptor implements MethodBeforeAdvice {
 	}
 
 	/**
-	 * ¼ì²é¹¦ÄÜÊÇ·ñ´æÔÚÓÃ»§¹¦ÄÜÁĞ±íÖĞ
+	 * æ£€æŸ¥åŠŸèƒ½æ˜¯å¦å­˜åœ¨ç”¨æˆ·åŠŸèƒ½åˆ—è¡¨ä¸­
 	 * 
 	 * @param methodName
 	 * @return
 	 */
 	protected boolean checkUserFunction(String actorId, String methodName) {
 		boolean ret = false;
-		// ÓÃ»§¶ÔÏó£¬ÔÚµÇÂ½ºó¼ÓÔØ
+		// ç”¨æˆ·å¯¹è±¡ï¼Œåœ¨ç™»é™†ååŠ è½½
 		LoginContext loginContext = IdentityFactory.getLoginContext(actorId);
-		Iterator<String> iter = loginContext.getFunctions().iterator();// ÓÃ»§¹¦ÄÜÁĞ±í
+		Iterator<String> iter = loginContext.getFunctions().iterator();// ç”¨æˆ·åŠŸèƒ½åˆ—è¡¨
 		while (iter.hasNext()) {
 			String function = iter.next();
 			if (StringUtils.equals(methodName, function)) {

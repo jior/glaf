@@ -31,7 +31,7 @@ import com.glaf.core.util.PageResult;
 public interface SysRoleService {
 
 	/**
-	 * ±£´æ
+	 * ä¿å­˜
 	 * 
 	 * @param bean
 	 *            SysRole
@@ -41,7 +41,7 @@ public interface SysRoleService {
 	boolean create(SysRole bean);
 
 	/**
-	 * É¾³ı
+	 * åˆ é™¤
 	 * 
 	 * @param id
 	 *            int
@@ -51,7 +51,7 @@ public interface SysRoleService {
 	boolean delete(long id);
 
 	/**
-	 * É¾³ı
+	 * åˆ é™¤
 	 * 
 	 * @param bean
 	 *            SysRole
@@ -61,7 +61,7 @@ public interface SysRoleService {
 	boolean delete(SysRole bean);
 
 	/**
-	 * ÅúÁ¿É¾³ı
+	 * æ‰¹é‡åˆ é™¤
 	 * 
 	 * @param ids
 	 * @return
@@ -70,7 +70,7 @@ public interface SysRoleService {
 	boolean deleteAll(long[] ids);
 
 	/**
-	 * °´code²éÕÒ¶ÔÏó
+	 * æŒ‰codeæŸ¥æ‰¾å¯¹è±¡
 	 * 
 	 * @param name
 	 *            String
@@ -79,7 +79,7 @@ public interface SysRoleService {
 	SysRole findByCode(String code);
 
 	/**
-	 * »ñÈ¡¶ÔÏó
+	 * è·å–å¯¹è±¡
 	 * 
 	 * @param id
 	 * @return
@@ -87,7 +87,7 @@ public interface SysRoleService {
 	SysRole findById(long id);
 
 	/**
-	 * °´Ãû³Æ²éÕÒ¶ÔÏó
+	 * æŒ‰åç§°æŸ¥æ‰¾å¯¹è±¡
 	 * 
 	 * @param name
 	 *            String
@@ -96,14 +96,14 @@ public interface SysRoleService {
 	SysRole findByName(String name);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
 	int getSysRoleCountByQueryCriteria(SysRoleQuery query);
 
 	/**
-	 * »ñÈ¡ÁĞ±í
+	 * è·å–åˆ—è¡¨
 	 * 
 	 * @return List
 	 */
@@ -113,7 +113,7 @@ public interface SysRoleService {
 	List<SysRole> getSysRolesOfDepts(SysDepartmentQuery query);
 
 	/**
-	 * »ñÈ¡·ÖÒ³ÁĞ±í
+	 * è·å–åˆ†é¡µåˆ—è¡¨
 	 * 
 	 * @param pageNo
 	 *            int
@@ -124,7 +124,7 @@ public interface SysRoleService {
 	PageResult getSysRoleList(int pageNo, int pageSize);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */
@@ -132,18 +132,18 @@ public interface SysRoleService {
 			SysRoleQuery query);
 
 	/**
-	 * ÅÅĞò
+	 * æ’åº
 	 * 
 	 * @param bean
 	 *            SysRole
 	 * @param operate
-	 *            int ²Ù×÷
+	 *            int æ“ä½œ
 	 */
 	@Transactional
 	void sort(SysRole bean, int operate);
 
 	/**
-	 * ¸üĞÂ
+	 * æ›´æ–°
 	 * 
 	 * @param bean
 	 *            SysRole

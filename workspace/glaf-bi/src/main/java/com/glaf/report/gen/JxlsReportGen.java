@@ -64,7 +64,7 @@ public class JxlsReportGen extends AbstractReportGen implements ReportGen {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(
-					"生成" + report.getReportFormat() + "文件出错", ex);
+					"鐢熸垚" + report.getReportFormat() + "鏂囦欢鍑洪敊", ex);
 		} finally {
 			JdbcUtils.close(con);
 			IOUtils.closeQuietly(bais);

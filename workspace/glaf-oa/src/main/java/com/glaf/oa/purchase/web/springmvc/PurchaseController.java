@@ -79,11 +79,11 @@ public class PurchaseController {
 	}
 
 	/**
-	 * ¹¤×÷Á÷ÉóÅú
+	 * å·¥ä½œæµå®¡æ‰¹
 	 * 
 	 * @param purchase
 	 * @param flag
-	 *            0Í¬Òâ 1²»Í¬Òâ
+	 *            0åŒæ„ 1ä¸åŒæ„
 	 * @param request
 	 * @return
 	 */
@@ -94,33 +94,33 @@ public class PurchaseController {
 		User appUser = BaseDataManager.getInstance().getSysUserService()
 				.findByAccount(purchase.getAppuser());
 
-		// ¸ù¾İÓÃ»§²¿ÃÅid »ñÈ¡Õû¸ö²¿ÃÅµÄ¶ÔÏó£¨GZ01£©
+		// æ ¹æ®ç”¨æˆ·éƒ¨é—¨id è·å–æ•´ä¸ªéƒ¨é—¨çš„å¯¹è±¡ï¼ˆGZ01ï¼‰
 		SysDepartment curdept = sysDepartmentService.findById(appUser
 				.getDeptId());
 
-		// ¸ù¾İ²¿ÃÅCODE(ÀıÈçGZ01)½ØÈ¡Ç°2Î» ×÷ÎªµØÇø
+		// æ ¹æ®éƒ¨é—¨CODE(ä¾‹å¦‚GZ01)æˆªå–å‰2ä½ ä½œä¸ºåœ°åŒº
 		String curAreadeptCode = curdept.getCode().substring(0, 2);
-		// ¸ù¾İcode »ñÈ¡ µØÇø²¿ÃÅ¶ÔÏó£¨GZ06£©ĞĞÕş
+		// æ ¹æ®code è·å– åœ°åŒºéƒ¨é—¨å¯¹è±¡ï¼ˆGZ06ï¼‰è¡Œæ”¿
 		SysDepartment HRdept = sysDepartmentService.findByCode(curAreadeptCode
 				+ "06");
-		// ¸ù¾İcode »ñÈ¡ µØÇø²¿ÃÅ¶ÔÏó£¨GZ£©
+		// æ ¹æ®code è·å– åœ°åŒºéƒ¨é—¨å¯¹è±¡ï¼ˆGZï¼‰
 		SysDepartment curAreadept = sysDepartmentService
 				.findByCode(curAreadeptCode);
 
-		// »ñÈ¡¼¯ÍÅ²¿ÃÅ¶ÔÏó£¨JT£©
+		// è·å–é›†å›¢éƒ¨é—¨å¯¹è±¡ï¼ˆJTï¼‰
 		SysDepartment sysdeptMem = sysDepartmentService.findByCode("JT");
 
 		ProcessContext ctx = new ProcessContext();
-		ctx.setRowId(purchase.getPurchaseid());// ±íid
-		ctx.setActorId(appUser.getActorId());// ÓÃ»§ÉóÅúÕß
-		ctx.setProcessName(processName);// Á÷³ÌÃû³Æ
+		ctx.setRowId(purchase.getPurchaseid());// è¡¨id
+		ctx.setActorId(appUser.getActorId());// ç”¨æˆ·å®¡æ‰¹è€…
+		ctx.setProcessName(processName);// æµç¨‹åç§°
 		String opinion = request.getParameter("approveOpinion");
-		ctx.setOpinion(opinion);// ÉóÅúÒâ¼û
+		ctx.setOpinion(opinion);// å®¡æ‰¹æ„è§
 
-		Collection<DataField> dataFields = new ArrayList<DataField>();// ²ÎÊı
+		Collection<DataField> dataFields = new ArrayList<DataField>();// å‚æ•°
 
 		DataField dataField = new DataField();
-		dataField.setName("isAgree");// ÊÇ·ñÍ¨¹ıÉóÅú
+		dataField.setName("isAgree");// æ˜¯å¦é€šè¿‡å®¡æ‰¹
 		if (flag == 0) {
 			dataField.setValue("true");
 		} else {
@@ -128,25 +128,25 @@ public class PurchaseController {
 		}
 		dataFields.add(dataField);
 
-		// ÓÃ»§ÏúÊÛ²¿ÃÅ£¨ÈçGZ01£©²¿ÃÅ¾­ÀíÉóºË
+		// ç”¨æˆ·é”€å”®éƒ¨é—¨ï¼ˆå¦‚GZ01ï¼‰éƒ¨é—¨ç»ç†å®¡æ ¸
 		DataField datafield1 = new DataField();
 		datafield1.setName("deptId01");
 		datafield1.setValue(appUser.getDeptId());
 		dataFields.add(datafield1);
 
-		// ÓÃ»§µØÇø²¿ÃÅ£¨ÈçGZ06£©ĞĞÕş²¿ÃÅ
+		// ç”¨æˆ·åœ°åŒºéƒ¨é—¨ï¼ˆå¦‚GZ06ï¼‰è¡Œæ”¿éƒ¨é—¨
 		DataField datafield4 = new DataField();
 		datafield4.setName("deptId02");
 		datafield4.setValue(HRdept.getId());
 		dataFields.add(datafield4);
 
-		// ÓÃ»§µØÇø²¿ÃÅ£¨ÈçGZ£©
+		// ç”¨æˆ·åœ°åŒºéƒ¨é—¨ï¼ˆå¦‚GZï¼‰
 		DataField datafield5 = new DataField();
 		datafield5.setName("deptId03");
 		datafield5.setValue(curAreadept.getId());
 		dataFields.add(datafield5);
 
-		// ¼¯ÍÅ(JT)
+		// é›†å›¢(JT)
 		DataField datafield2 = new DataField();
 		datafield2.setName("deptId04");
 		datafield2.setValue(sysdeptMem.getId());
@@ -183,7 +183,7 @@ public class PurchaseController {
 	@RequestMapping("/delete")
 	public ModelAndView delete(HttpServletRequest request, ModelMap modelMap) {
 		String purchaseids = request.getParameter("purchaseIds");
-		if (StringUtils.isNotEmpty(purchaseids)) {// purchaseids²»ÎªnullÊ±
+		if (StringUtils.isNotEmpty(purchaseids)) {// purchaseidsä¸ä¸ºnullæ—¶
 			StringTokenizer token = new StringTokenizer(purchaseids, ",");
 			List<Long> ids = new ArrayList<Long>();
 			while (token.hasMoreTokens()) {
@@ -198,7 +198,7 @@ public class PurchaseController {
 				ex.printStackTrace();
 				logger.error(ex.getMessage());
 				ModelAndView mav = new ModelAndView();
-				mav.addObject("message", "É¾³ıÊ§°Ü¡£");
+				mav.addObject("message", "åˆ é™¤å¤±è´¥ã€‚");
 				return mav;
 			}
 		}
@@ -226,7 +226,7 @@ public class PurchaseController {
 				request, "purchaseId"));
 		if (purchase == null) {
 			purchase = new Purchase();
-			purchase.setStatus(-1);// ÎŞĞ§
+			purchase.setStatus(-1);// æ— æ•ˆ
 			SysDepartment sysDepartment = BaseDataManager.getInstance()
 					.getSysDepartmentService().findById(user.getDeptId());
 			String areaCode = "";
@@ -234,9 +234,9 @@ public class PurchaseController {
 					&& sysDepartment.getCode().length() >= 2) {
 				areaCode = sysDepartment.getCode().substring(0, 2);
 			}
-			purchase.setArea(areaCode);// µØÇø
-			purchase.setDept(sysDepartment.getCode());// ²¿ÃÅ
-			purchase.setPost(RequestUtil.getLoginUser(request).getHeadship());// Ö°Î»
+			purchase.setArea(areaCode);// åœ°åŒº
+			purchase.setDept(sysDepartment.getCode());// éƒ¨é—¨
+			purchase.setPost(RequestUtil.getLoginUser(request).getHeadship());// èŒä½
 			purchase.setAppuser(actorId);
 			purchase.setAppdate(new Date());
 			purchase.setCreateBy(actorId);
@@ -283,10 +283,10 @@ public class PurchaseController {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		PurchaseQuery query = new PurchaseQuery();
 		Tools.populate(query, params);
-		query.setActorId(loginContext.getActorId());// Ö»ÄÜ²éÕÒ×Ô¼º
+		query.setActorId(loginContext.getActorId());// åªèƒ½æŸ¥æ‰¾è‡ªå·±
 		query.setLoginContext(loginContext);
 		/**
-		 * ²éÑ¯Ìõ¼ş
+		 * æŸ¥è¯¢æ¡ä»¶
 		 */
 		query.setPurchasenoLike(ParamUtils.getString(params, "purchaseNoLike"));
 		query.setAppdateGreaterThanOrEqual(ParamUtils.getDate(params,
@@ -451,7 +451,7 @@ public class PurchaseController {
 			ex.printStackTrace();
 			logger.error(ex.getMessage());
 			ModelAndView mav = new ModelAndView();
-			mav.addObject("message", "±£´æ´íÎó¡£");
+			mav.addObject("message", "ä¿å­˜é”™è¯¯ã€‚");
 			return mav;
 		}
 		return this.list(request, modelMap);
@@ -517,7 +517,7 @@ public class PurchaseController {
 	}
 
 	/**
-	 * Æô¶¯¹¤×÷Á÷
+	 * å¯åŠ¨å·¥ä½œæµ
 	 * 
 	 * @param contract
 	 * @param request
@@ -526,52 +526,52 @@ public class PurchaseController {
 	private boolean startProcess(Purchase purchase, HttpServletRequest request) {
 		String processName = "PurchaseProcess";
 
-		// »ñÈ¡µÇÂ¼ÓÃ»§²¿ÃÅ
+		// è·å–ç™»å½•ç”¨æˆ·éƒ¨é—¨
 		User appUser = BaseDataManager.getInstance().getSysUserService()
 				.findByAccount(purchase.getAppuser());
 
-		// ¸ù¾İÓÃ»§²¿ÃÅid »ñÈ¡Õû¸ö²¿ÃÅµÄ¶ÔÏó£¨GZ01£©
+		// æ ¹æ®ç”¨æˆ·éƒ¨é—¨id è·å–æ•´ä¸ªéƒ¨é—¨çš„å¯¹è±¡ï¼ˆGZ01ï¼‰
 		SysDepartment curdept = sysDepartmentService.findById(appUser
 				.getDeptId());
 
-		// ¸ù¾İ²¿ÃÅCODE(ÀıÈçGZ01)½ØÈ¡Ç°2Î» ×÷ÎªµØÇø
+		// æ ¹æ®éƒ¨é—¨CODE(ä¾‹å¦‚GZ01)æˆªå–å‰2ä½ ä½œä¸ºåœ°åŒº
 		String curAreadeptCode = curdept.getCode().substring(0, 2);
-		// ¸ù¾İcode »ñÈ¡ µØÇø²¿ÃÅ¶ÔÏó£¨GZ06£©ĞĞÕş
+		// æ ¹æ®code è·å– åœ°åŒºéƒ¨é—¨å¯¹è±¡ï¼ˆGZ06ï¼‰è¡Œæ”¿
 		SysDepartment HRdept = sysDepartmentService.findByCode(curAreadeptCode
 				+ "06");
-		// ¸ù¾İcode »ñÈ¡ µØÇø²¿ÃÅ¶ÔÏó£¨GZ£©
+		// æ ¹æ®code è·å– åœ°åŒºéƒ¨é—¨å¯¹è±¡ï¼ˆGZï¼‰
 		SysDepartment curAreadept = sysDepartmentService
 				.findByCode(curAreadeptCode);
 
-		// »ñÈ¡¼¯ÍÅ²¿ÃÅ¶ÔÏó£¨JT£©
+		// è·å–é›†å›¢éƒ¨é—¨å¯¹è±¡ï¼ˆJTï¼‰
 		SysDepartment sysdeptMem = sysDepartmentService.findByCode("JT");
 
 		ProcessContext ctx = new ProcessContext();
-		ctx.setRowId(purchase.getPurchaseid());// ±íid
-		ctx.setActorId(appUser.getActorId());// ÓÃ»§ÉóÅúÕß
-		ctx.setProcessName(processName);// Á÷³ÌÃû³Æ
+		ctx.setRowId(purchase.getPurchaseid());// è¡¨id
+		ctx.setActorId(appUser.getActorId());// ç”¨æˆ·å®¡æ‰¹è€…
+		ctx.setProcessName(processName);// æµç¨‹åç§°
 
-		Collection<DataField> dataFields = new ArrayList<DataField>();// ²ÎÊı
+		Collection<DataField> dataFields = new ArrayList<DataField>();// å‚æ•°
 
-		// ÓÃ»§ÏúÊÛ²¿ÃÅ£¨ÈçGZ01£©
+		// ç”¨æˆ·é”€å”®éƒ¨é—¨ï¼ˆå¦‚GZ01ï¼‰
 		DataField datafield1 = new DataField();
 		datafield1.setName("deptId01");
 		datafield1.setValue(appUser.getDeptId());
 		dataFields.add(datafield1);
 
-		// ÓÃ»§µØÇø²¿ÃÅ£¨ÈçGZ06£©ĞĞÕş²¿ÃÅ
+		// ç”¨æˆ·åœ°åŒºéƒ¨é—¨ï¼ˆå¦‚GZ06ï¼‰è¡Œæ”¿éƒ¨é—¨
 		DataField datafield4 = new DataField();
 		datafield4.setName("deptId02");
 		datafield4.setValue(HRdept.getId());
 		dataFields.add(datafield4);
 
-		// ÓÃ»§µØÇø²¿ÃÅ£¨ÈçGZ£©
+		// ç”¨æˆ·åœ°åŒºéƒ¨é—¨ï¼ˆå¦‚GZï¼‰
 		DataField datafield5 = new DataField();
 		datafield5.setName("deptId03");
 		datafield5.setValue(curAreadept.getId());
 		dataFields.add(datafield5);
 
-		// ¼¯ÍÅ(JT)
+		// é›†å›¢(JT)
 		DataField datafield2 = new DataField();
 		datafield2.setName("deptId04");
 		datafield2.setValue(sysdeptMem.getId());
@@ -611,16 +611,16 @@ public class PurchaseController {
 		try {
 			Tools.populate(purchase, params);
 			purchase.setPurchaseid(RequestUtils.getLong(request, "purchaseid"));
-			purchase.setPurchaseno(request.getParameter("purchaseno"));// ²É¹º±àºÅ
-			purchase.setArea(request.getParameter("area"));// µØÇø
-			purchase.setCompany(request.getParameter("company"));// µ¥Î»
-			purchase.setDept(request.getParameter("dept"));// ²¿ÃÅ
-			purchase.setPost(request.getParameter("post"));// Ö°Î»
-			purchase.setAppuser(request.getParameter("appuser"));// ÉêÇëÈË
-			purchase.setAppdate(RequestUtils.getDate(request, "appdate"));// ÉêÇëÈÕÆÚ
+			purchase.setPurchaseno(request.getParameter("purchaseno"));// é‡‡è´­ç¼–å·
+			purchase.setArea(request.getParameter("area"));// åœ°åŒº
+			purchase.setCompany(request.getParameter("company"));// å•ä½
+			purchase.setDept(request.getParameter("dept"));// éƒ¨é—¨
+			purchase.setPost(request.getParameter("post"));// èŒä½
+			purchase.setAppuser(request.getParameter("appuser"));// ç”³è¯·äºº
+			purchase.setAppdate(RequestUtils.getDate(request, "appdate"));// ç”³è¯·æ—¥æœŸ
 			purchase.setPurchasesum(RequestUtils.getDouble(request,
-					"purchasesum"));// ×Ü½ğ¶î
-			purchase.setStatus(1);// ×´Ì¬ ÒÑÌá½»
+					"purchasesum"));// æ€»é‡‘é¢
+			purchase.setStatus(1);// çŠ¶æ€ å·²æäº¤
 			purchase.setCreateBy(request.getParameter("createby") == null ? null
 					: request.getParameter("createby"));
 			purchase.setCreateDate(RequestUtils.getDate(request, "createdate") == null ? null
@@ -630,7 +630,7 @@ public class PurchaseController {
 
 			purchaseService.save(purchase);
 
-			// ×´Ì¬Îª Ìá½» ½øÈë¹¤×÷Á÷³Ì
+			// çŠ¶æ€ä¸º æäº¤ è¿›å…¥å·¥ä½œæµç¨‹
 			if (purchase.getStatus() == 1) {
 				if (purchase.getProcessinstanceid() != null
 						&& purchase.getProcessinstanceid() > 0) {
@@ -646,7 +646,7 @@ public class PurchaseController {
 			ex.printStackTrace();
 			logger.error(ex);
 			ModelAndView mav = new ModelAndView();
-			mav.addObject("message", "Ìá½»Ê§°Ü¡£");
+			mav.addObject("message", "æäº¤å¤±è´¥ã€‚");
 			return mav;
 		}
 	}

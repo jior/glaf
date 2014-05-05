@@ -87,10 +87,10 @@ public class StravelController {
 		ctx.setActorId(actorId);
 		ctx.setProcessName(processName);
 		String opinion = request.getParameter("approveOpinion");
-		ctx.setOpinion(opinion);// ÉóÅúÒâ¼û
+		ctx.setOpinion(opinion);// å®¡æ‰¹æ„è§
 
 		/**
-		 * ¹¤×÷Á÷¿ØÖÆ²ÎÊı
+		 * å·¥ä½œæµæ§åˆ¶å‚æ•°
 		 */
 		SysUser sysUser = BaseDataManager.getInstance().getSysUserService()
 				.findByAccount(stravel.getAppuser());
@@ -100,7 +100,7 @@ public class StravelController {
 		datafield1.setName("rowId");
 		datafield1.setValue(stravel.getTravelid());
 
-		// Ö±ÊôÉÏ¼¶
+		// ç›´å±ä¸Šçº§
 		String useId = "";
 		String userId = "";
 		List<SysUser> list = BaseDataManager.getInstance().getSysUserService()
@@ -119,19 +119,19 @@ public class StravelController {
 		datafield2.setName("userId");
 		datafield2.setValue(userId);
 
-		// ²¿ÃÅ¾­Àí
+		// éƒ¨é—¨ç»ç†
 		DataField datafield3 = new DataField();
 		datafield3.setName("deptId02");
 		datafield3.setValue(sysUser.getDeptId());
 
-		// ÊÇ·ñÊÇ¼¯ÍÅÔ±¹¤
+		// æ˜¯å¦æ˜¯é›†å›¢å‘˜å·¥
 		SysDepartment curdept = BaseDataManager.getInstance()
 				.getSysDepartmentService().findById(sysUser.getDeptId());
 		DataField datafield4 = new DataField();
 		datafield4.setName("area");
 		datafield4.setValue(curdept.getCode().substring(0, 2));
 
-		// µ±µØ×Ü¾­Àí
+		// å½“åœ°æ€»ç»ç†
 		SysDepartment curAreadept = BaseDataManager.getInstance()
 				.getSysDepartmentService()
 				.findByCode(curdept.getCode().substring(0, 2));
@@ -139,21 +139,21 @@ public class StravelController {
 		datafield5.setName("deptId03");
 		datafield5.setValue(curAreadept.getId());
 
-		// ¼¯ÍÅ¸±×Ü
+		// é›†å›¢å‰¯æ€»
 		SysDepartment sysdepartMem1 = BaseDataManager.getInstance()
 				.getSysDepartmentService().findByCode("JT");
 		DataField datafield6 = new DataField();
 		datafield6.setName("deptId04");
 		datafield6.setValue(sysdepartMem1.getId());
 
-		// ¼¯ÍÅHR
+		// é›†å›¢HR
 		SysDepartment sysDepartment2 = BaseDataManager.getInstance()
 				.getSysDepartmentService().findByCode("JT03");
 		DataField datafield7 = new DataField();
 		datafield7.setName("deptId05");
 		datafield7.setValue(sysDepartment2.getId());
 
-		// ĞĞÕş²ÆÎñ
+		// è¡Œæ”¿è´¢åŠ¡
 		SysDepartment sysdepartMem3 = BaseDataManager.getInstance()
 				.getSysDepartmentService()
 				.findByCode(curdept.getCode().substring(0, 2) + "06");
@@ -189,7 +189,7 @@ public class StravelController {
 			processInstanceId = stravel.getProcessinstanceid();
 			ctx.setProcessInstanceId(processInstanceId);
 			isOK = ProcessContainer.getContainer().completeTask(ctx);
-			logger.info("workflow ÖĞ");
+			logger.info("workflow ä¸­");
 		} else {
 			processInstanceId = ProcessContainer.getContainer().startProcess(
 					ctx);
@@ -215,7 +215,7 @@ public class StravelController {
 				if (x != 0L) {
 					Stravel stravel = stravelService.getStravel(x);
 					/**
-					 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+					 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 					 */
 					if (stravel != null) {
 						// stravel.setDeleteFlag(1);
@@ -241,7 +241,7 @@ public class StravelController {
 		} else if (travelid != null) {
 			Stravel stravel = stravelService.getStravel(Long.valueOf(travelid));
 			/**
-			 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+			 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 			 */
 			if (stravel != null) {
 				// stravel.setDeleteFlag(1);
@@ -292,7 +292,7 @@ public class StravelController {
 			JSONObject rowJSON = stravel.toJsonObject();
 			request.setAttribute("x_json", rowJSON.toJSONString());
 		} else {
-			// ĞÂÔö´´½¨Ò»ÕÅµ¥
+			// æ–°å¢åˆ›å»ºä¸€å¼ å•
 			stravel = new Stravel();
 			SysDepartment sysDepartment = BaseDataManager.getInstance()
 					.getSysDepartmentService().findById(user.getDeptId());
@@ -340,7 +340,7 @@ public class StravelController {
 		List<String> actorIds = new ArrayList<String>();
 
 		/**
-		 * Ò³Ãæ³õÊ¼»¯Ä¬ÈÏÊÇ´ıÉóºË×´Ì¬
+		 * é¡µé¢åˆå§‹åŒ–é»˜è®¤æ˜¯å¾…å®¡æ ¸çŠ¶æ€
 		 */
 		if (null == query.getWorkedProcessFlag()
 				|| "".equals(query.getWorkedProcessFlag())) {
@@ -404,9 +404,9 @@ public class StravelController {
 					JSONObject rowJSON = new JSONObject();
 
 					if ("WD".equals(query.getWorkedProcessFlag())) {
-						rowJSON.put("strstauts", "Î´ÉóºË");
+						rowJSON.put("strstauts", "æœªå®¡æ ¸");
 					} else if ("PD".equals(query.getWorkedProcessFlag())) {
-						rowJSON.put("strstauts", "ÒÑÉóºË");
+						rowJSON.put("strstauts", "å·²å®¡æ ¸");
 					}
 
 					rowJSON.put("travelid", stravel.getTravelid());
@@ -808,7 +808,7 @@ public class StravelController {
 		Long travelid = RequestUtils.getLong(request, "travelid");
 		if (travelid != 0L) {
 			Stravel stravel = stravelService.getStravel(travelid);
-			// Ìí¼ÓÌá½»ÒµÎñÂß¼­
+			// æ·»åŠ æäº¤ä¸šåŠ¡é€»è¾‘
 			if (stravel.getStatus() == 1) {
 				if (stravel.getProcessinstanceid() != null) {
 					returnFlag = completeTask(stravel, 1, request);
@@ -900,7 +900,7 @@ public class StravelController {
 		query.setStatusGreaterThanOrEqual(0);
 
 		if (areaRole.equals("1")) {
-			// ²éÑ¯ËùÓĞ£¬²»ÉèÖÃ²ÎÊı
+			// æŸ¥è¯¢æ‰€æœ‰ï¼Œä¸è®¾ç½®å‚æ•°
 		} else {
 			SysDepartment sysDepartment = BaseDataManager.getInstance()
 					.getSysDepartmentService().findById(user.getDeptId());
@@ -1143,7 +1143,7 @@ public class StravelController {
 		ctx.setActorId(stravel.getAppuser());
 		ctx.setProcessName(processName);
 		/**
-		 * ¹¤×÷Á÷¿ØÖÆ²ÎÊı
+		 * å·¥ä½œæµæ§åˆ¶å‚æ•°
 		 */
 		SysUser sysUser = BaseDataManager.getInstance().getSysUserService()
 				.findByAccount(stravel.getAppuser());
@@ -1153,7 +1153,7 @@ public class StravelController {
 		datafield1.setName("rowId");
 		datafield1.setValue(stravel.getTravelid());
 
-		// Ö±ÊôÉÏ¼¶
+		// ç›´å±ä¸Šçº§
 		String useId = "";
 		String userId = "";
 		List<SysUser> list = BaseDataManager.getInstance().getSysUserService()
@@ -1172,19 +1172,19 @@ public class StravelController {
 		datafield2.setName("userId");
 		datafield2.setValue(userId);
 
-		// ²¿ÃÅ¾­Àí
+		// éƒ¨é—¨ç»ç†
 		DataField datafield3 = new DataField();
 		datafield3.setName("deptId02");
 		datafield3.setValue(sysUser.getDeptId());
 
-		// ÊÇ·ñÊÇ¼¯ÍÅÔ±¹¤
+		// æ˜¯å¦æ˜¯é›†å›¢å‘˜å·¥
 		SysDepartment curdept = BaseDataManager.getInstance()
 				.getSysDepartmentService().findById(sysUser.getDeptId());
 		DataField datafield4 = new DataField();
 		datafield4.setName("area");
 		datafield4.setValue(curdept.getCode().substring(0, 2));
 
-		// µ±µØ×Ü¾­Àí
+		// å½“åœ°æ€»ç»ç†
 		SysDepartment curAreadept = BaseDataManager.getInstance()
 				.getSysDepartmentService()
 				.findByCode(curdept.getCode().substring(0, 2));
@@ -1192,21 +1192,21 @@ public class StravelController {
 		datafield5.setName("deptId03");
 		datafield5.setValue(curAreadept.getId());
 
-		// ¼¯ÍÅ¸±×Ü
+		// é›†å›¢å‰¯æ€»
 		SysDepartment sysdepartMem1 = BaseDataManager.getInstance()
 				.getSysDepartmentService().findByCode("JT");
 		DataField datafield6 = new DataField();
 		datafield6.setName("deptId04");
 		datafield6.setValue(sysdepartMem1.getId());
 
-		// ¼¯ÍÅHR
+		// é›†å›¢HR
 		SysDepartment sysDepartment2 = BaseDataManager.getInstance()
 				.getSysDepartmentService().findByCode("JT03");
 		DataField datafield7 = new DataField();
 		datafield7.setName("deptId05");
 		datafield7.setValue(sysDepartment2.getId());
 
-		// ĞĞÕş²ÆÎñ
+		// è¡Œæ”¿è´¢åŠ¡
 		SysDepartment sysdepartMem3 = BaseDataManager.getInstance()
 				.getSysDepartmentService()
 				.findByCode(curdept.getCode().substring(0, 2) + "06");
@@ -1238,7 +1238,7 @@ public class StravelController {
 			processInstanceId = stravel.getProcessinstanceid();
 			ctx.setProcessInstanceId(processInstanceId);
 			isOK = ProcessContainer.getContainer().completeTask(ctx);
-			logger.info("workflow ÖĞ");
+			logger.info("workflow ä¸­");
 		} else {
 			processInstanceId = ProcessContainer.getContainer().startProcess(
 					ctx);
@@ -1311,7 +1311,7 @@ public class StravelController {
 				if (StringUtils.isNotEmpty(x)) {
 					Stravel stravel = stravelService
 							.getStravel(Long.valueOf(x));
-					// Ìí¼ÓÌá½»ÒµÎñÂß¼­
+					// æ·»åŠ æäº¤ä¸šåŠ¡é€»è¾‘
 					if (stravel.getStatus() == 1) {
 						if (stravel.getProcessinstanceid() != null
 								&& stravel.getProcessinstanceid() != 0L) {
@@ -1327,7 +1327,7 @@ public class StravelController {
 
 		} else if (travelid != null) {
 			Stravel stravel = stravelService.getStravel(travelid);
-			// Ìí¼ÓÌá½»ÒµÎñÂß¼­
+			// æ·»åŠ æäº¤ä¸šåŠ¡é€»è¾‘
 			if (stravel.getStatus() == 1) {
 				if (stravel.getProcessinstanceid() != null
 						&& stravel.getProcessinstanceid() != 0) {

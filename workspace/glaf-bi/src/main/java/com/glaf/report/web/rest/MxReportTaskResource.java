@@ -73,12 +73,12 @@ public class MxReportTaskResource {
 			List<String> ids = StringTools.split(rowIds);
 			if (ids != null && !ids.isEmpty()) {
 				// reportTaskService.deleteByIds(ids);
-				return ResponseUtils.responseJsonResult(true, "É¾³ı³É¹¦£¡");
+				return ResponseUtils.responseJsonResult(true, "åˆ é™¤æˆåŠŸï¼");
 			}
 		} else {
 			throw new WebApplicationException(Response.Status.NOT_FOUND);
 		}
-		return ResponseUtils.responseJsonResult(false, "É¾³ıÊ§°Ü£¡");
+		return ResponseUtils.responseJsonResult(false, "åˆ é™¤å¤±è´¥ï¼");
 	}
 
 	@POST
@@ -91,12 +91,12 @@ public class MxReportTaskResource {
 			List<String> ids = StringTools.split(rowIds);
 			if (ids != null && !ids.isEmpty()) {
 				// reportTaskService.deleteByIds(ids);
-				return ResponseUtils.responseJsonResult(true, "É¾³ı³É¹¦£¡");
+				return ResponseUtils.responseJsonResult(true, "åˆ é™¤æˆåŠŸï¼");
 			}
 		} else {
 			throw new WebApplicationException(Response.Status.NOT_FOUND);
 		}
-		return ResponseUtils.responseJsonResult(false, "É¾³ıÊ§°Ü£¡");
+		return ResponseUtils.responseJsonResult(false, "åˆ é™¤å¤±è´¥ï¼");
 	}
 
 	@POST
@@ -111,7 +111,7 @@ public class MxReportTaskResource {
 		}
 		if (reportTaskId != null) {
 			reportTaskService.deleteById(reportTaskId);
-			return ResponseUtils.responseJsonResult(true, "É¾³ı³É¹¦£¡");
+			return ResponseUtils.responseJsonResult(true, "åˆ é™¤æˆåŠŸï¼");
 		} else {
 			throw new WebApplicationException(Response.Status.NOT_FOUND);
 		}
@@ -125,7 +125,7 @@ public class MxReportTaskResource {
 			@Context UriInfo uriInfo) {
 		if (reportTaskId != null) {
 			reportTaskService.deleteById(reportTaskId);
-			return ResponseUtils.responseJsonResult(true, "É¾³ı³É¹¦£¡");
+			return ResponseUtils.responseJsonResult(true, "åˆ é™¤æˆåŠŸï¼");
 		} else {
 			throw new WebApplicationException(Response.Status.NOT_FOUND);
 		}
@@ -256,11 +256,11 @@ public class MxReportTaskResource {
 				QuartzUtils.stop(taskId);
 			}
 
-			return ResponseUtils.responseJsonResult(true, "±£´æ³É¹¦£¡");
+			return ResponseUtils.responseJsonResult(true, "ä¿å­˜æˆåŠŸï¼");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		return ResponseUtils.responseJsonResult(false, "±£´æÊ§°Ü£¡");
+		return ResponseUtils.responseJsonResult(false, "ä¿å­˜å¤±è´¥ï¼");
 	}
 
 	@javax.annotation.Resource

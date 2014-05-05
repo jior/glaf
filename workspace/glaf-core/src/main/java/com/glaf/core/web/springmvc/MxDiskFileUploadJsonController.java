@@ -71,20 +71,20 @@ public class MxDiskFileUploadJsonController {
 		response.setContentType("text/html; charset=UTF-8");
 		String businessKey = request.getParameter("businessKey");
 		String serviceKey = request.getParameter("serviceKey");
-		// ÎÄ¼ş±£´æÄ¿Â¼Â·¾¶
+		// æ–‡ä»¶ä¿å­˜ç›®å½•è·¯å¾„
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		String savePath = SystemProperties.getAppPath() + "/upload/"
 				+ loginContext.getUser().getId() + "/";
-		// ÎÄ¼ş±£´æÄ¿Â¼URL
+		// æ–‡ä»¶ä¿å­˜ç›®å½•URL
 		String saveUrl = request.getContextPath() + "/upload/"
 				+ loginContext.getUser().getId() + "/";
 		if(StringUtils.isNotEmpty(serviceKey)){
 			saveUrl = saveUrl + serviceKey+ "/";
 		}
-		// ¶¨ÒåÔÊĞíÉÏ´«µÄÎÄ¼şÀ©Õ¹Ãû
+		// å®šä¹‰å…è®¸ä¸Šä¼ çš„æ–‡ä»¶æ‰©å±•å
 		String[] fileTypes = new String[] { "gif", "jpg", "jpeg", "png", "bmp",
 				"swf" };
-		// ×î´óÎÄ¼ş´óĞ¡
+		// æœ€å¤§æ–‡ä»¶å¤§å°
 		long maxSize = 10240000;
 
 		String allowSize = CustomProperties.getString("upload.maxSize");
@@ -97,7 +97,7 @@ public class MxDiskFileUploadJsonController {
 			maxSize = Long.parseLong(allowSize);
 		}
 
-		// ¼ì²éÄ¿Â¼
+		// æ£€æŸ¥ç›®å½•
 		File uploadDir = new File(savePath);
 		try {
 			if (!uploadDir.exists()) {
@@ -107,12 +107,12 @@ public class MxDiskFileUploadJsonController {
 		}
 
 		if (!uploadDir.isDirectory()) {
-			response.getWriter().write(getError("ÉÏ´«Ä¿Â¼²»´æÔÚ¡£"));
+			response.getWriter().write(getError("ä¸Šä¼ ç›®å½•ä¸å­˜åœ¨ã€‚"));
 			return;
 		}
-		// ¼ì²éÄ¿Â¼Ğ´È¨ÏŞ
+		// æ£€æŸ¥ç›®å½•å†™æƒé™
 		if (!uploadDir.canWrite()) {
-			response.getWriter().write(getError("ÉÏ´«Ä¿Â¼Ã»ÓĞĞ´È¨ÏŞ¡£"));
+			response.getWriter().write(getError("ä¸Šä¼ ç›®å½•æ²¡æœ‰å†™æƒé™ã€‚"));
 			return;
 		}
 
@@ -122,17 +122,17 @@ public class MxDiskFileUploadJsonController {
 		for (Entry<String, MultipartFile> entry : entrySet) {
 			MultipartFile mFile = entry.getValue();
 			if (mFile.getOriginalFilename() != null && mFile.getSize() > 0) {
-				// ¼ì²éÎÄ¼ş´óĞ¡
+				// æ£€æŸ¥æ–‡ä»¶å¤§å°
 				if (mFile.getSize() > maxSize) {
-					response.getWriter().write(getError("ÉÏ´«ÎÄ¼ş´óĞ¡³¬¹ıÏŞÖÆ¡£"));
+					response.getWriter().write(getError("ä¸Šä¼ æ–‡ä»¶å¤§å°è¶…è¿‡é™åˆ¶ã€‚"));
 					return;
 				}
 				String fileName = mFile.getOriginalFilename();
-				// ¼ì²éÀ©Õ¹Ãû
+				// æ£€æŸ¥æ‰©å±•å
 				String fileExt = fileName.substring(
 						fileName.lastIndexOf(".") + 1).toLowerCase();
 				if (!Arrays.<String> asList(fileTypes).contains(fileExt)) {
-					response.getWriter().write(getError("ÉÏ´«ÎÄ¼şÀ©Õ¹ÃûÊÇ²»ÔÊĞíµÄÀ©Õ¹Ãû¡£"));
+					response.getWriter().write(getError("ä¸Šä¼ æ–‡ä»¶æ‰©å±•åæ˜¯ä¸å…è®¸çš„æ‰©å±•åã€‚"));
 					return;
 				}
 				SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -163,7 +163,7 @@ public class MxDiskFileUploadJsonController {
 
 				} catch (Exception ex) {
 					ex.printStackTrace();
-					response.getWriter().write(getError("±£´æÎÄ¼şÊ§°Ü¡£"));
+					response.getWriter().write(getError("ä¿å­˜æ–‡ä»¶å¤±è´¥ã€‚"));
 					return;
 				}
 

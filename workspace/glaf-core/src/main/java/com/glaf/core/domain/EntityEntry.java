@@ -47,63 +47,63 @@ public class EntityEntry implements java.io.Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Ö÷¼ü
+	 * ä¸»é”®
 	 */
 	@Id
 	@Column(name = "ID_", length = 50, nullable = false)
 	protected String id;
 
 	/**
-	 * ½Úµã±àºÅ
+	 * èŠ‚ç‚¹ç¼–å·
 	 */
 	@Column(name = "NODEID_")
 	protected Long nodeId;
 
 	/**
-	 * ÊµÌå±àºÅ
+	 * å®ä½“ç¼–å·
 	 */
 	@Column(name = "ENTITYID_", length = 50)
 	protected String entityId;
 
 	/**
-	 * ÊµÌåKey
+	 * å®ä½“Key
 	 */
 	@Column(name = "ENTRYKEY_", length = 50)
 	protected String entryKey;
 
 	/**
-	 * ÊµÌåÀàĞÍ
+	 * å®ä½“ç±»å‹
 	 */
 	@Column(name = "ENTRYTYPE_")
 	protected int entryType = 0;
 
 	/**
-	 * Ä£¿é±àºÅ
+	 * æ¨¡å—ç¼–å·
 	 */
 	@Column(name = "MODULEID_", length = 50)
 	protected String moduleId;
 
 	/**
-	 * Êı¾İ´úÂë
+	 * æ•°æ®ä»£ç 
 	 */
 	@Column(name = "DATACODE_", length = 50)
 	protected String dataCode;
 
 	/**
-	 * ÊÇ·ñÏòÏÂ´«²¥
+	 * æ˜¯å¦å‘ä¸‹ä¼ æ’­
 	 */
 	@Column(name = "ISPROPAGATIONALLOWED_", length = 10)
 	protected String isPropagationAllowed = "0";
 
 	/**
-	 * ¿ªÊ¼ÈÕÆÚ
+	 * å¼€å§‹æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "STARTDATE_")
 	protected Date startDate;
 
 	/**
-	 * ½áÊøÈÕÆÚ
+	 * ç»“æŸæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "ENDDATE_")
@@ -113,38 +113,38 @@ public class EntityEntry implements java.io.Serializable, JSONable {
 	protected boolean valid = false;
 
 	/**
-	 * Ö÷Ìâ
+	 * ä¸»é¢˜
 	 */
 	@Column(name = "SUBJECT_")
 	protected String subject;
 
 	/**
-	 * Ä¿±êID
+	 * ç›®æ ‡ID
 	 */
 	@Column(name = "OBJECTID_")
 	protected String objectId;
 
 	/**
-	 * Ä¿±êÖµ
+	 * ç›®æ ‡å€¼
 	 */
 	@Column(name = "OBJECTVALUE_")
 	protected String objectValue;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_")
 	protected Date createDate;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
 
 	/**
-	 * ·ÃÎÊµã
+	 * è®¿é—®ç‚¹
 	 */
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "entityEntry")
 	protected List<EntryPoint> entryPoints = new java.util.ArrayList<EntryPoint>();

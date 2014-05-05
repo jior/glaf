@@ -122,21 +122,21 @@ public class MxDiskFileManagerJsonController {
 		response.setContentType("text/html; charset=UTF-8");
 		String serviceKey = request.getParameter("serviceKey");
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
-		// ¸ùÄ¿Â¼Â·¾¶£¬¿ÉÒÔÖ¸¶¨¾ø¶ÔÂ·¾¶£¬±ÈÈç /var/www/upload/
+		// æ ¹ç›®å½•è·¯å¾„ï¼Œå¯ä»¥æŒ‡å®šç»å¯¹è·¯å¾„ï¼Œæ¯”å¦‚ /var/www/upload/
 		String rootPath = SystemProperties.getAppPath() + "/upload/"
 				+ loginContext.getUser().getId() + "/";
-		// ¸ùÄ¿Â¼URL£¬¿ÉÒÔÖ¸¶¨¾ø¶ÔÂ·¾¶£¬±ÈÈç http://www.yoursite.com/upload/
+		// æ ¹ç›®å½•URLï¼Œå¯ä»¥æŒ‡å®šç»å¯¹è·¯å¾„ï¼Œæ¯”å¦‚ http://www.yoursite.com/upload/
 		String rootUrl = request.getContextPath() + "/upload/"
 				+ loginContext.getUser().getId() + "/";
 		if (StringUtils.isNotEmpty(serviceKey)) {
 			rootPath = rootPath + serviceKey + "/";
 			rootUrl = rootUrl + serviceKey + "/";
 		}
-		// Í¼Æ¬À©Õ¹Ãû
+		// å›¾ç‰‡æ‰©å±•å
 		String[] fileTypes = new String[] { "gif", "jpg", "jpeg", "png", "bmp",
 				"swf" };
 
-		// ¸ù¾İpath²ÎÊı£¬ÉèÖÃ¸÷Â·¾¶ºÍURL
+		// æ ¹æ®pathå‚æ•°ï¼Œè®¾ç½®å„è·¯å¾„å’ŒURL
 		String path = request.getParameter("path") != null ? request
 				.getParameter("path") : "";
 		String currentPath = rootPath + path;
@@ -150,30 +150,30 @@ public class MxDiskFileManagerJsonController {
 					str.lastIndexOf("/") + 1) : "";
 		}
 
-		// ÅÅĞòĞÎÊ½£¬name or size or type
+		// æ’åºå½¢å¼ï¼Œname or size or type
 		String order = request.getParameter("order") != null ? request
 				.getParameter("order").toLowerCase() : "name";
 
-		// ²»ÔÊĞíÊ¹ÓÃ..ÒÆ¶¯µ½ÉÏÒ»¼¶Ä¿Â¼
+		// ä¸å…è®¸ä½¿ç”¨..ç§»åŠ¨åˆ°ä¸Šä¸€çº§ç›®å½•
 		if (path.indexOf("..") >= 0) {
 			response.getWriter().write(getError("Access is not allowed."));
 			return;
 		}
 
-		// ×îºóÒ»¸ö×Ö·û²»ÊÇ/
+		// æœ€åä¸€ä¸ªå­—ç¬¦ä¸æ˜¯/
 		if (!"".equals(path) && !path.endsWith("/")) {
 			response.getWriter().write(getError("Parameter is not valid."));
 			return;
 		}
 
-		// Ä¿Â¼²»´æÔÚ»ò²»ÊÇÄ¿Â¼
+		// ç›®å½•ä¸å­˜åœ¨æˆ–ä¸æ˜¯ç›®å½•
 		File currentPathFile = new File(currentPath);
 		if (!currentPathFile.isDirectory()) {
 			response.getWriter().write(getError("Directory does not exist."));
 			return;
 		}
 
-		// ±éÀúÄ¿Â¼È¡µÄÎÄ¼şĞÅÏ¢
+		// éå†ç›®å½•å–çš„æ–‡ä»¶ä¿¡æ¯
 		List<Hashtable<String, Object>> fileList = new java.util.ArrayList<Hashtable<String, Object>>();
 		if (currentPathFile.listFiles() != null) {
 			for (File file : currentPathFile.listFiles()) {

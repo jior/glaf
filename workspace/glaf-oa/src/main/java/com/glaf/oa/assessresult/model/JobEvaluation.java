@@ -30,21 +30,21 @@ import com.glaf.core.base.JSONable;
 public class JobEvaluation implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
-	protected String treeName; // 考评类型
+	protected String treeName; // 鑰冭瘎绫诲瀷
 
-	protected String dictoryName;// 考评类型
+	protected String dictoryName;// 鑰冭瘎绫诲瀷
 
-	protected Long contentId; // 指标考核内容id
+	protected Long contentId; // 鎸囨爣鑰冩牳鍐呭id
 
-	protected String contentName;// 指标名称 kpi关键绩效指标
+	protected String contentName;// 鎸囨爣鍚嶇О kpi鍏抽敭缁╂晥鎸囨爣
 
-	protected String basis;// 评分依据
+	protected String basis;// 璇勫垎渚濇嵁
 
-	protected Double standard;// 评分标准
+	protected Double standard;// 璇勫垎鏍囧噯
 
-	protected Integer score; // 得分
+	protected Integer score; // 寰楀垎
 
-	protected String reason; // 扣分原因
+	protected String reason; // 鎵ｅ垎鍘熷洜
 
 	public JobEvaluation() {
 

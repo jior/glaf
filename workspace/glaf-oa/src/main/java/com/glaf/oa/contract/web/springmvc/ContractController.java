@@ -100,21 +100,21 @@ public class ContractController {
 		}
 		ctx.setProcessName(processName);
 		String opinion = request.getParameter("approveOpinion");
-		ctx.setOpinion(opinion);// ÉóÅúÒâ¼û
+		ctx.setOpinion(opinion);// å®¡æ‰¹æ„è§
 		/**
-		 * ¹¤×÷Á÷¿ØÖÆ²ÎÊı
+		 * å·¥ä½œæµæ§åˆ¶å‚æ•°
 		 */
 		Collection<DataField> datafields = new ArrayList<DataField>();
-		// »ñÈ¡ ²¿ÃÅ½Úµã
+		// è·å– éƒ¨é—¨èŠ‚ç‚¹
 		long deptId01 = user.getDeptId();
 		SysDepartment curdept = sysDepartmentService.findById(deptId01);
-		// »ñÈ¡µ±µØ²¿ÃÅ½Úµã
+		// è·å–å½“åœ°éƒ¨é—¨èŠ‚ç‚¹
 		String curAreadeptCode = curdept.getCode().substring(0, 2);
 		SysDepartment curAreadept = sysDepartmentService
 				.findByCode(curAreadeptCode);
-		// »ñÈ¡¼¯ÍÅ½Úµã
+		// è·å–é›†å›¢èŠ‚ç‚¹
 		SysDepartment sysdeptMem = sysDepartmentService.findByCode("JT");
-		// »ñÈ¡¼¯ÍÅ²¿ÃÅ½Úµã
+		// è·å–é›†å›¢éƒ¨é—¨èŠ‚ç‚¹
 		String jtdeptCode = "";
 		if (curdept.getCode().length() >= 4) {
 			jtdeptCode = "JT" + curdept.getCode().substring(2, 4);
@@ -179,7 +179,7 @@ public class ContractController {
 			processInstanceId = contract.getProcessinstanceid();
 			ctx.setProcessInstanceId(Long.parseLong(processInstanceId));
 			isOK = ProcessContainer.getContainer().completeTask(ctx);
-			logger.info("workflow ÖĞ");
+			logger.info("workflow ä¸­");
 		} else {
 			processInstanceId = ProcessContainer.getContainer()
 					.startProcess(ctx).toString();
@@ -206,7 +206,7 @@ public class ContractController {
 					Contract contract = contractService.getContract(Long
 							.valueOf(x));
 					/**
-					 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+					 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 					 */
 					if (contract != null
 							&& (StringUtils.equals(contract.getCreateBy(),
@@ -226,7 +226,7 @@ public class ContractController {
 		} else if (id != null) {
 			Contract contract = contractService.getContract(Long.valueOf(id));
 			/**
-			 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+			 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 			 */
 			if (contract != null
 					&& (StringUtils.equals(contract.getCreateBy(),
@@ -291,7 +291,7 @@ public class ContractController {
 			contract = new Contract();
 			long deptId01 = user.getDeptId();
 			SysDepartment curdept = sysDepartmentService.findById(deptId01);
-			// »ñÈ¡µ±µØ²¿ÃÅ½Úµã
+			// è·å–å½“åœ°éƒ¨é—¨èŠ‚ç‚¹
 			String curAreadeptCode = curdept.getCode().substring(0, 2);
 
 			contract.setArea(curAreadeptCode);
@@ -328,7 +328,7 @@ public class ContractController {
 		query.setLoginContext(loginContext);
 		List<String> actorIds = new ArrayList<String>();
 
-		// ÓÉÓÚÒ³ÃæÊäÈëµÄÈÕÆÚÃ»ÓĞÊ±·ÖÃë£¬²éÕÒ·¶Î§µÄÊ±ºò»ñÈ¡²»µ½×îºóÒ»ÌìµÄ¼ÇÂ¼,ÈËÎªÉèÖÃ
+		// ç”±äºé¡µé¢è¾“å…¥çš„æ—¥æœŸæ²¡æœ‰æ—¶åˆ†ç§’ï¼ŒæŸ¥æ‰¾èŒƒå›´çš„æ—¶å€™è·å–ä¸åˆ°æœ€åä¸€å¤©çš„è®°å½•,äººä¸ºè®¾ç½®
 		if (null != query.getAppdateLessThanOrEqual()) {
 			Date appdateLessThanOrEqual = query.getAppdateLessThanOrEqual();
 			// appdateLessThanOrEqual.setHours(23);
@@ -338,7 +338,7 @@ public class ContractController {
 		}
 
 		/**
-		 * Ò³Ãæ³õÊ¼»¯Ä¬ÈÏÊÇ´ıÉóºË×´Ì¬
+		 * é¡µé¢åˆå§‹åŒ–é»˜è®¤æ˜¯å¾…å®¡æ ¸çŠ¶æ€
 		 */
 		if (null == query.getWorkedProcessFlag()
 				|| "".equals(query.getWorkedProcessFlag())) {
@@ -412,7 +412,7 @@ public class ContractController {
 										contract.getArea());
 						contract.setCompanyname(companyname_CN);
 						contract.setArea(area_CN);
-						// ÓÃ»§Ãû´¦Àí
+						// ç”¨æˆ·åå¤„ç†
 						String appusername = BaseDataManager.getInstance()
 								.getStringValue(contract.getAppuser(),
 										"SYS_USERS");
@@ -488,7 +488,7 @@ public class ContractController {
 		long deptId01 = user.getDeptId();
 		SysDepartment curdept = sysDepartmentService.findById(deptId01);
 
-		// ÓÉÓÚÒ³ÃæÊäÈëµÄÈÕÆÚÃ»ÓĞÊ±·ÖÃë£¬²éÕÒ·¶Î§µÄÊ±ºò»ñÈ¡²»µ½×îºóÒ»ÌìµÄ¼ÇÂ¼,ÈËÎªÉèÖÃ
+		// ç”±äºé¡µé¢è¾“å…¥çš„æ—¥æœŸæ²¡æœ‰æ—¶åˆ†ç§’ï¼ŒæŸ¥æ‰¾èŒƒå›´çš„æ—¶å€™è·å–ä¸åˆ°æœ€åä¸€å¤©çš„è®°å½•,äººä¸ºè®¾ç½®
 		if (null != query.getAppdateLessThanOrEqual()) {
 			Date appdateLessThanOrEqual = query.getAppdateLessThanOrEqual();
 			// appdateLessThanOrEqual.setHours(23);
@@ -499,7 +499,7 @@ public class ContractController {
 		query.setLoginContext(loginContext);
 
 		/**
-		 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+		 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 		 */
 
 		String rstatus = request.getParameter("rstatus");
@@ -584,7 +584,7 @@ public class ContractController {
 										contract.getArea());
 						contract.setCompanyname(companyname_CN);
 						contract.setArea(area_CN);
-						// ÓÃ»§Ãû´¦Àí
+						// ç”¨æˆ·åå¤„ç†
 						String appusername = BaseDataManager.getInstance()
 								.getStringValue(contract.getAppuser(),
 										"SYS_USERS");
@@ -682,7 +682,7 @@ public class ContractController {
 
 		request.setAttribute("canUpdate", canUpdate);
 
-		// Ôö¼ÓÆ·ÅÆ¼ìË÷
+		// å¢åŠ å“ç‰Œæ£€ç´¢
 		List<BaseDataInfo> brandlist = BaseDataManager.getInstance()
 				.getDataList("Brand");
 		BaseDataInfo brand1 = null;
@@ -760,7 +760,7 @@ public class ContractController {
 				if (StringUtils.isNotEmpty(x)) {
 					Contract contract = contractService.getContract(Long
 							.valueOf(x));
-					// Ìí¼ÓÌá½»ÒµÎñÂß¼­
+					// æ·»åŠ æäº¤ä¸šåŠ¡é€»è¾‘
 					if (contract.getStatus() == 1) {
 						if (contract.getProcessinstanceid() != null
 								&& contract.getProcessinstanceid().trim()
@@ -774,7 +774,7 @@ public class ContractController {
 			}
 		} else if (id != null) {
 			Contract contract = contractService.getContract(Long.valueOf(id));
-			// Ìí¼ÓÌá½»ÒµÎñÂß¼­
+			// æ·»åŠ æäº¤ä¸šåŠ¡é€»è¾‘
 			if (contract.getStatus() == 1) {
 				if (contract.getProcessinstanceid() != null
 						&& contract.getProcessinstanceid().trim().length() > 0) {
@@ -821,7 +821,7 @@ public class ContractController {
 			contract.setArea(request.getParameter("area"));
 			contract.setDept(request.getParameter("dept"));
 			contract.setPost(request.getParameter("post"));
-			// Ôö¼ÓÆ·ÅÆ´¦Àí
+			// å¢åŠ å“ç‰Œå¤„ç†
 			List<BaseDataInfo> brandlist = BaseDataManager.getInstance()
 					.getDataList("Brand");
 			BaseDataInfo brand1 = null;
@@ -854,12 +854,12 @@ public class ContractController {
 						"brands2account"));
 			}
 
-			// ĞÂÔö´¦Àí
+			// æ–°å¢å¤„ç†
 			if (null == contract.getId()) {
 				contract.setAppdate(new Date());
 				contract.setStatus(0);
 			}
-			// ĞŞ¸Ä´¦Àí
+			// ä¿®æ”¹å¤„ç†
 			else {
 				contract.setUpdateBy(user.getActorId());
 				contract.setUpdateDate(new Date());
@@ -919,7 +919,7 @@ public class ContractController {
 			contract.setArea(request.getParameter("area"));
 			contract.setDept(request.getParameter("dept"));
 			contract.setPost(request.getParameter("post"));
-			// Ôö¼ÓÆ·ÅÆ´¦Àí
+			// å¢åŠ å“ç‰Œå¤„ç†
 			List<BaseDataInfo> brandlist = BaseDataManager.getInstance()
 					.getDataList("Brand");
 			BaseDataInfo brand1 = null;
@@ -952,12 +952,12 @@ public class ContractController {
 						"brands2account"));
 			}
 
-			// ĞÂÔö´¦Àí
+			// æ–°å¢å¤„ç†
 			if (null == contract.getId()) {
 				contract.setAppdate(new Date());
 				contract.setStatus(0);
 			}
-			// ĞŞ¸Ä´¦Àí
+			// ä¿®æ”¹å¤„ç†
 			else {
 				contract.setUpdateBy(user.getActorId());
 				contract.setUpdateDate(new Date());
@@ -1015,20 +1015,20 @@ public class ContractController {
 		ctx.setActorId(contract.getAppuser());
 		ctx.setProcessName(processName);
 		/**
-		 * ¹¤×÷Á÷¿ØÖÆ²ÎÊı
+		 * å·¥ä½œæµæ§åˆ¶å‚æ•°
 		 */
 		Collection<DataField> datafields = new ArrayList<DataField>();
-		// »ñÈ¡ ²¿ÃÅ½Úµã
+		// è·å– éƒ¨é—¨èŠ‚ç‚¹
 		long deptId01 = user.getDeptId();
 		SysDepartment curdept = sysDepartmentService.findById(deptId01);
-		// »ñÈ¡µ±µØ²¿ÃÅ½Úµã
+		// è·å–å½“åœ°éƒ¨é—¨èŠ‚ç‚¹
 		String curAreadeptCode = curdept.getCode().substring(0, 2);
-		// µØÇø
+		// åœ°åŒº
 		SysDepartment curAreadept = sysDepartmentService
 				.findByCode(curAreadeptCode);
-		// »ñÈ¡¼¯ÍÅ½Úµã
+		// è·å–é›†å›¢èŠ‚ç‚¹
 		SysDepartment sysdeptMem = sysDepartmentService.findByCode("JT");
-		// »ñÈ¡¼¯ÍÅ²¿ÃÅ½Úµã
+		// è·å–é›†å›¢éƒ¨é—¨èŠ‚ç‚¹
 		String jtdeptCode = null;
 		if (curdept.getCode().length() >= 4) {
 			jtdeptCode = "JT" + curdept.getCode().substring(2, 4);
@@ -1083,7 +1083,7 @@ public class ContractController {
 			processInstanceId = contract.getProcessinstanceid();
 			ctx.setProcessInstanceId(Long.parseLong(processInstanceId));
 			isOK = ProcessContainer.getContainer().completeTask(ctx);
-			logger.info("workflow ÖĞ");
+			logger.info("workflow ä¸­");
 		} else {
 			processInstanceId = ProcessContainer.getContainer()
 					.startProcess(ctx).toString();
@@ -1109,7 +1109,7 @@ public class ContractController {
 				if (StringUtils.isNotEmpty(x)) {
 					Contract contract = contractService.getContract(Long
 							.valueOf(x));
-					// Ìí¼ÓÌá½»ÒµÎñÂß¼­
+					// æ·»åŠ æäº¤ä¸šåŠ¡é€»è¾‘
 					if (contract.getStatus() == 0 || contract.getStatus() == 3) {
 						if (contract.getProcessinstanceid() != null
 								&& contract.getProcessinstanceid().trim()
@@ -1125,7 +1125,7 @@ public class ContractController {
 			}
 		} else if (id != null) {
 			Contract contract = contractService.getContract(Long.valueOf(id));
-			// Ìí¼ÓÌá½»ÒµÎñÂß¼­
+			// æ·»åŠ æäº¤ä¸šåŠ¡é€»è¾‘
 			if (contract.getStatus() == 0 || contract.getStatus() == 3) {
 				if (contract.getProcessinstanceid() != null
 						&& contract.getProcessinstanceid().trim().length() > 0) {
@@ -1155,7 +1155,7 @@ public class ContractController {
 				if (StringUtils.isNotEmpty(x)) {
 					Contract contract = contractService.getContract(Long
 							.valueOf(x));
-					// Ìí¼ÓÌá½»ÒµÎñÂß¼­
+					// æ·»åŠ æäº¤ä¸šåŠ¡é€»è¾‘
 					if (contract.getStatus() == 1) {
 						if (contract.getProcessinstanceid() != null
 								&& contract.getProcessinstanceid().trim()
@@ -1171,7 +1171,7 @@ public class ContractController {
 			}
 		} else if (id != null) {
 			Contract contract = contractService.getContract(Long.valueOf(id));
-			// Ìí¼ÓÌá½»ÒµÎñÂß¼­
+			// æ·»åŠ æäº¤ä¸šåŠ¡é€»è¾‘
 			if (contract.getStatus() == 1) {
 				if (contract.getProcessinstanceid() != null
 						&& contract.getProcessinstanceid().trim().length() > 0) {

@@ -72,7 +72,7 @@ public class AssesscontentController {
 	}
 
 	/**
-	 * É¾³ıÖ¸±ê
+	 * åˆ é™¤æŒ‡æ ‡
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -89,7 +89,7 @@ public class AssesscontentController {
 		Long contentid = null;
 		String scontentId = request.getParameter("contentid");
 		if (scontentId == null) {
-			modelMap.addAttribute("message", "É¾³ıÊ§°Ü");
+			modelMap.addAttribute("message", "åˆ é™¤å¤±è´¥");
 			return new ModelAndView("/oa/assessquestion/makeAssessIndex",
 					modelMap);
 		}
@@ -99,16 +99,16 @@ public class AssesscontentController {
 
 		} catch (DataIntegrityViolationException de) {
 			de.printStackTrace();
-			logger.error("AssesscontentController.class,method=delete,ÒÑ¿¼ºË²»ÄÜÉ¾³ı="
+			logger.error("AssesscontentController.class,method=delete,å·²è€ƒæ ¸ä¸èƒ½åˆ é™¤="
 					+ de.getMessage());
-			modelMap.addAttribute("message", "ÒÑ¿¼ºË£¬²»ÄÜÉ¾³ı¡£");
+			modelMap.addAttribute("message", "å·²è€ƒæ ¸ï¼Œä¸èƒ½åˆ é™¤ã€‚");
 			return new ModelAndView("/oa/assessquestion/makeAssessIndex",
 					modelMap);
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("AssesscontentController.class,method=delete,É¾³ıÒì³£="
+			logger.error("AssesscontentController.class,method=delete,åˆ é™¤å¼‚å¸¸="
 					+ e.getMessage());
-			modelMap.addAttribute("message", "É¾³ıÒì³£");
+			modelMap.addAttribute("message", "åˆ é™¤å¼‚å¸¸");
 			return new ModelAndView("/oa/assessquestion/makeAssessIndex",
 					modelMap);
 		}
@@ -117,7 +117,7 @@ public class AssesscontentController {
 	}
 
 	/**
-	 * É¾³ıÖ¸±êÀàĞÍ
+	 * åˆ é™¤æŒ‡æ ‡ç±»å‹
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -130,7 +130,7 @@ public class AssesscontentController {
 		Long assesssortid = null;
 		String assesssortId = request.getParameter("assesssortid");
 		if (assesssortId == null) {
-			modelMap.addAttribute("message", "É¾³ıÊ§°Ü");
+			modelMap.addAttribute("message", "åˆ é™¤å¤±è´¥");
 			return new ModelAndView("/oa/assessquestion/makeAssessIndex",
 					modelMap);
 		}
@@ -140,16 +140,16 @@ public class AssesscontentController {
 			assesssortService.deleteById(assesssortid);
 		} catch (DataIntegrityViolationException de) {
 			de.printStackTrace();
-			logger.error("AssesscontentController.class,method=deleteType,ÒÑ¿¼ºË²»ÄÜÉ¾³ı="
+			logger.error("AssesscontentController.class,method=deleteType,å·²è€ƒæ ¸ä¸èƒ½åˆ é™¤="
 					+ de.getMessage());
-			modelMap.addAttribute("message", "ÒÑ¿¼ºË£¬²»ÄÜÉ¾³ı¡£");
+			modelMap.addAttribute("message", "å·²è€ƒæ ¸ï¼Œä¸èƒ½åˆ é™¤ã€‚");
 			return new ModelAndView("/oa/assessquestion/makeAssessIndex",
 					modelMap);
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("AssesscontentController.class,method=deleteType,É¾³ıÒì³£="
+			logger.error("AssesscontentController.class,method=deleteType,åˆ é™¤å¼‚å¸¸="
 					+ e.getMessage());
-			modelMap.addAttribute("message", "É¾³ıÒì³£");
+			modelMap.addAttribute("message", "åˆ é™¤å¼‚å¸¸");
 			return new ModelAndView("/oa/assessquestion/makeAssessIndex",
 					modelMap);
 		}
@@ -225,7 +225,7 @@ public class AssesscontentController {
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
 		/**
-		 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+		 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 		 */
 		if (!loginContext.isSystemAdministrator()) {
 			String actorId = loginContext.getActorId();
@@ -395,7 +395,7 @@ public class AssesscontentController {
 		return ResponseUtils.responseJsonResult(false);
 	}
 
-	// ±£´æÖ¸±ê
+	// ä¿å­˜æŒ‡æ ‡
 	@RequestMapping("/saveAssessContent")
 	@ResponseBody
 	public byte[] saveAssessContent(HttpServletRequest request,
@@ -418,7 +418,7 @@ public class AssesscontentController {
 						assesscontent.setBasis(assessinfo.getBasis());
 						assesscontent.setStandard(assessinfo.getStandard());
 						assesscontent.setCreateDate(new Date());
-						// Ö¸±êID
+						// æŒ‡æ ‡ID
 						assesscontent.setAssessId(assessinfo.getIndexid());
 						assesscontent.setAssessInfo(assessinfo);
 						assesscontentService.save(assesscontent);
@@ -432,7 +432,7 @@ public class AssesscontentController {
 	}
 
 	/**
-	 * Ñ¡ÔñÖ¸±ê²éÑ¯Ò³Ãæ
+	 * é€‰æ‹©æŒ‡æ ‡æŸ¥è¯¢é¡µé¢
 	 * 
 	 * @param request
 	 * @param modelMap

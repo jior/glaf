@@ -91,7 +91,7 @@ public class Hbm2SqlMap {
 				}
 
 				/**
-				 * ²úÉúÀàÃû¼°±ğÃû
+				 * äº§ç”Ÿç±»ååŠåˆ«å
 				 */
 				Element typeAlias = r.addElement("typeAlias");
 				typeAlias.addAttribute("alias", alias);
@@ -119,7 +119,7 @@ public class Hbm2SqlMap {
 				}
 
 				/**
-				 * ²úÉú½á¹ûÓ³Éä¼¯
+				 * äº§ç”Ÿç»“æœæ˜ å°„é›†
 				 */
 				Element resultMap = r.addElement("resultMap");
 				resultMap.addAttribute("id", alias + "Map");
@@ -153,7 +153,7 @@ public class Hbm2SqlMap {
 				}
 
 				/**
-				 * ²åÈëÊı¾İ
+				 * æ’å…¥æ•°æ®
 				 */
 				Element insert = r.addElement("insert");
 				insert.addAttribute("id", "insert" + className);
@@ -186,7 +186,7 @@ public class Hbm2SqlMap {
 				insert.addText(buffer.toString());
 
 				/**
-				 * ¶¯Ì¬²åÈëÊı¾İ
+				 * åŠ¨æ€æ’å…¥æ•°æ®
 				 */
 				Element dynamicInsert = r.addElement("insert");
 				dynamicInsert.addAttribute("id", "dynamicInsert" + className);
@@ -236,7 +236,7 @@ public class Hbm2SqlMap {
 				dynamicInsert.addText(newline + "\t\t ) ");
 
 				/**
-				 * ĞŞ¸ÄÊı¾İ
+				 * ä¿®æ”¹æ•°æ®
 				 */
 				Element update = r.addElement("update");
 				update.addAttribute("id", "update" + className);
@@ -261,7 +261,7 @@ public class Hbm2SqlMap {
 						+ pk_property + "# ");
 
 				/**
-				 * ¸ù¾İÖ÷¼üÉ¾³ıÊı¾İ
+				 * æ ¹æ®ä¸»é”®åˆ é™¤æ•°æ®
 				 */
 				Element delete = r.addElement("delete");
 				delete.addAttribute("id", "delete" + className);
@@ -278,7 +278,7 @@ public class Hbm2SqlMap {
 						+ " WHERE " + pk_column + " = #" + pk_property + "# ");
 
 				/**
-				 * ²éÑ¯Í³¼ÆÊı¾İ
+				 * æŸ¥è¯¢ç»Ÿè®¡æ•°æ®
 				 */
 				Element count = r.addElement("select");
 				count.addAttribute("id", "count" + className);
@@ -290,7 +290,7 @@ public class Hbm2SqlMap {
 				dynamic55.addAttribute("prepend", "WHERE");
 
 				/**
-				 * Ö÷¼üÒ²·ÅÈë²éÑ¯Ìõ¼şÖĞ
+				 * ä¸»é”®ä¹Ÿæ”¾å…¥æŸ¥è¯¢æ¡ä»¶ä¸­
 				 */
 				colMap.put(pk_column, pk_property);
 
@@ -376,7 +376,7 @@ public class Hbm2SqlMap {
 						+ "s[]# ) ");
 
 				/**
-				 * ²éÑ¯Êı¾İ
+				 * æŸ¥è¯¢æ•°æ®
 				 */
 				Element select = r.addElement("select");
 				select.addAttribute("id", "select" + className);
@@ -388,7 +388,7 @@ public class Hbm2SqlMap {
 				dynamic5.addAttribute("prepend", "WHERE");
 
 				/**
-				 * Ö÷¼üÒ²·ÅÈë²éÑ¯Ìõ¼şÖĞ
+				 * ä¸»é”®ä¹Ÿæ”¾å…¥æŸ¥è¯¢æ¡ä»¶ä¸­
 				 */
 				colMap.put(pk_column, pk_property);
 
@@ -474,7 +474,7 @@ public class Hbm2SqlMap {
 						+ "s[]# ) ");
 
 				/**
-				 * ²úÉúHibernate²éÑ¯
+				 * äº§ç”ŸHibernateæŸ¥è¯¢
 				 */
 				Element hbmQuery = r.addElement("select");
 				hbmQuery.addAttribute("id", "query" + className);
@@ -486,7 +486,7 @@ public class Hbm2SqlMap {
 				dynamic555.addAttribute("prepend", "where");
 
 				/**
-				 * Ö÷¼üÒ²·ÅÈë²éÑ¯Ìõ¼şÖĞ
+				 * ä¸»é”®ä¹Ÿæ”¾å…¥æŸ¥è¯¢æ¡ä»¶ä¸­
 				 */
 				colMap.put(pk_property, pk_property);
 
@@ -592,7 +592,7 @@ public class Hbm2SqlMap {
 
 		} else {
 			if (file.isDirectory()) {
-				String[] filelist = file.list(); // ÁĞ³öËùÓĞµÄ×ÓÎÄ¼ş£¨¼Ğ£©Ãû×Ö
+				String[] filelist = file.list(); // åˆ—å‡ºæ‰€æœ‰çš„å­æ–‡ä»¶ï¼ˆå¤¹ï¼‰åå­—
 				for (int i = 0; i < filelist.length; i++) {
 					File f = new File(file.getPath() + "/" + filelist[i]);
 					this.convert(f);

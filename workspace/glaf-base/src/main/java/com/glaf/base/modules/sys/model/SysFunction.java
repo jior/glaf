@@ -39,25 +39,25 @@ public class SysFunction implements Serializable, JSONable {
 	private SysApplication app;
 
 	/**
-	 * 应用编号
+	 * 搴旂敤缂栧彿
 	 */
 	@Column(name = "APPID")
 	protected long appId;
 
 	/**
-	 * 权限代码
+	 * 鏉冮檺浠ｇ爜
 	 */
 	@Column(name = "CODE", length = 50)
 	protected String code;
 
 	/**
-	 * 描述
+	 * 鎻忚堪
 	 */
 	@Column(name = "FUNCDESC", length = 500)
 	protected String funcDesc;
 
 	/**
-	 * 方法
+	 * 鏂规硶
 	 */
 	@Column(name = "FUNCMETHOD", length = 250)
 	protected String funcMethod;
@@ -67,13 +67,13 @@ public class SysFunction implements Serializable, JSONable {
 	protected long id;
 
 	/**
-	 * 名称
+	 * 鍚嶇О
 	 */
 	@Column(name = "NAME", length = 100)
 	protected String name;
 
 	/**
-	 * 序号
+	 * 搴忓彿
 	 */
 	@Column(name = "SORT")
 	protected int sort;

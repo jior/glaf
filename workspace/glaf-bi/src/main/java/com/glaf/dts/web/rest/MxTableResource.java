@@ -516,7 +516,7 @@ public class MxTableResource {
 					|| StringUtils.startsWith(tableName, "sys_")
 					|| StringUtils.startsWith(tableName, "act_")
 					|| StringUtils.startsWith(tableName, "jbpm_")) {
-				return ResponseUtils.responseJsonResult(false, "Ä¿±ê±í²»ÕıÈ·£¡");
+				return ResponseUtils.responseJsonResult(false, "ç›®æ ‡è¡¨ä¸æ­£ç¡®ï¼");
 			}
 			MxTransformManager manager = new MxTransformManager();
 			TableDefinition tableDefinition = null;
@@ -547,7 +547,7 @@ public class MxTableResource {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				return ResponseUtils
-						.responseJsonResult(false, "²éÑ¯Ê§°Ü£¬SQLÓï¾ä²»ÕıÈ·£¡");
+						.responseJsonResult(false, "æŸ¥è¯¢å¤±è´¥ï¼ŒSQLè¯­å¥ä¸æ­£ç¡®ï¼");
 			}
 
 			TransformTable transformTable = new TransformTable();

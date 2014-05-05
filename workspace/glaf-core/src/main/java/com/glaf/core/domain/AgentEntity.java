@@ -43,76 +43,76 @@ public class AgentEntity implements Agent, JSONable {
 
 	private static final long serialVersionUID = 1L;
 	/**
-	 * ´úÀíÀàĞÍ 0-È«¾Ö´úÀí 1-´úÀíÖ¸¶¨Á÷³ÌµÄÈ«²¿ÈÎÎñ 2-´úÀíÖ¸¶¨Á÷³ÌµÄÖ¸¶¨ÈÎÎñ
+	 * ä»£ç†ç±»å‹ 0-å…¨å±€ä»£ç† 1-ä»£ç†æŒ‡å®šæµç¨‹çš„å…¨éƒ¨ä»»åŠ¡ 2-ä»£ç†æŒ‡å®šæµç¨‹çš„æŒ‡å®šä»»åŠ¡
 	 */
 	@Column(name = "AGENTTYPE_")
 	protected int agentType;
 
 	/**
-	 * Î¯ÍĞÈË £¬consigner
+	 * å§”æ‰˜äºº ï¼Œconsigner
 	 */
 	@Column(name = "ASSIGNFROM_")
 	protected String assignFrom;
 
 	/**
-	 * Î¯ÍĞÈËÃû³Æ
+	 * å§”æ‰˜äººåç§°
 	 */
 	@Transient
 	protected String assignFromName;
 
 	/**
-	 * ÊÜÍĞÈË£¬assignee
+	 * å—æ‰˜äººï¼Œassignee
 	 */
 	@Column(name = "ASSIGNTO_")
 	protected String assignTo;
 
 	/**
-	 * ÊÜÍĞÈËÃû³Æ
+	 * å—æ‰˜äººåç§°
 	 */
 	@Transient
 	protected String assignToName;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_")
 	protected Date createDate;
 
 	/**
-	 * ½áÊøÈÕÆÚ
+	 * ç»“æŸæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "ENDDATE_")
 	protected Date endDate;
 
 	/**
-	 * Ö÷¼ü
+	 * ä¸»é”®
 	 */
 	@Id
 	@Column(name = "ID_", length = 50, nullable = false)
 	protected String id;
 
 	/**
-	 * Ëø¶¨±ê¼Ç
+	 * é”å®šæ ‡è®°
 	 */
 	@Column(name = "LOCKED_")
 	protected int locked;
 
 	/**
-	 * ¶ÔÏó±àºÅ
+	 * å¯¹è±¡ç¼–å·
 	 */
 	@Column(name = "OBJECTID_")
 	protected String objectId;
 
 	/**
-	 * ¶ÔÏóÖµ
+	 * å¯¹è±¡å€¼
 	 */
 	@Column(name = "OBJECTVALUE_")
 	protected String objectValue;
 
 	/**
-	 * Á÷³ÌÃû³Æ
+	 * æµç¨‹åç§°
 	 */
 	@Column(name = "PROCESSNAME_")
 	protected String processName;
@@ -121,14 +121,14 @@ public class AgentEntity implements Agent, JSONable {
 	protected String serviceKey;
 
 	/**
-	 * ¿ªÊ¼ÉúĞ§ÈÕÆÚ
+	 * å¼€å§‹ç”Ÿæ•ˆæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "STARTDATE_")
 	protected Date startDate;
 
 	/**
-	 * ÈÎÎñÃû³Æ
+	 * ä»»åŠ¡åç§°
 	 */
 	@Column(name = "TASKNAME_")
 	protected String taskName;

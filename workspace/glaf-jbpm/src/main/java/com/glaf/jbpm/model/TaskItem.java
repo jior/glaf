@@ -33,92 +33,92 @@ public class TaskItem implements Serializable, Comparable<TaskItem> {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * ²ÎÓëÕß±àºÅ
+	 * å‚ä¸è€…ç¼–å·
 	 */
 	protected String actorId;
 
 	/**
-	 * ²ÎÓëÕßĞÕÃû
+	 * å‚ä¸è€…å§“å
 	 */
 	protected String actorName;
 
 	/**
-	 * ÒµÎñ±àºÅ
+	 * ä¸šåŠ¡ç¼–å·
 	 */
 	protected String rowId;
 
 	/**
-	 * ÒµÎñ±àºÅ
+	 * ä¸šåŠ¡ç¼–å·
 	 */
 	protected String rowKey;
 
 	/**
-	 * ÈÎÎñÊµÀı±àºÅ
+	 * ä»»åŠ¡å®ä¾‹ç¼–å·
 	 */
 	protected Long taskInstanceId;
 
 	/**
-	 * ÈÎÎñÃû³Æ
+	 * ä»»åŠ¡åç§°
 	 */
 	protected String taskName;
 
 	/**
-	 * ÈÎÎñÃèÊö
+	 * ä»»åŠ¡æè¿°
 	 */
 	protected String taskDescription;
 
 	/**
-	 * ÈÎÎñ´´½¨ÈÕÆÚ
+	 * ä»»åŠ¡åˆ›å»ºæ—¥æœŸ
 	 */
 	protected Date createDate;
 
 	/**
-	 * ÈÎÎñ¿ªÊ¼Ê±¼ä
+	 * ä»»åŠ¡å¼€å§‹æ—¶é—´
 	 */
 	protected Date startDate;
 
 	/**
-	 * ÈÎÎñÍê³ÉÊ±¼ä
+	 * ä»»åŠ¡å®Œæˆæ—¶é—´
 	 */
 	protected Date endDate;
 
 	/**
-	 * ³¬ÆÚÌìÊı
+	 * è¶…æœŸå¤©æ•°
 	 */
 	protected double pastDueDay;
 
 	/**
-	 * ÓÃÊ±
+	 * ç”¨æ—¶
 	 */
 	protected double duration;
 
 	/**
-	 * Á÷³ÌÃû³Æ
+	 * æµç¨‹åç§°
 	 */
 	protected String processName;
 
 	/**
-	 * Á÷³ÌÃèÊö
+	 * æµç¨‹æè¿°
 	 */
 	protected String processDescription;
 
 	/**
-	 * Á÷³Ì¶¨Òå±àºÅ
+	 * æµç¨‹å®šä¹‰ç¼–å·
 	 */
 	protected Long processDefinitionId;
 
 	/**
-	 * Á÷³ÌÊµÀıÃû³Æ
+	 * æµç¨‹å®ä¾‹åç§°
 	 */
 	protected Long processInstanceId;
 
 	/**
-	 * ¶ÔÏóÃû³Æ
+	 * å¯¹è±¡åç§°
 	 */
 	protected String objectId;
 
 	/**
-	 * ¶ÔÏóÖµ
+	 * å¯¹è±¡å€¼
 	 */
 	protected String objectValue;
 
@@ -129,7 +129,7 @@ public class TaskItem implements Serializable, Comparable<TaskItem> {
 	protected String json;
 
 	/**
-	 * ¹¤×÷Á÷×´Ì¬
+	 * å·¥ä½œæµçŠ¶æ€
 	 */
 	protected int wfStatus;
 

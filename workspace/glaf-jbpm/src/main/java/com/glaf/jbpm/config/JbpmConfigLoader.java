@@ -50,7 +50,7 @@ public class JbpmConfigLoader {
 	}
 
 	/**
-	 * 安装流程配置文件
+	 * 瀹夎娴佺▼閰嶇疆鏂囦欢
 	 */
 	public synchronized void installActionsConfig() {
 		String configPath = SystemProperties.getConfigRootPath();

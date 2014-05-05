@@ -23,14 +23,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Master {
-	// ÈÎÎñ¶ÓÁĞ
+	// ä»»åŠ¡é˜Ÿåˆ—
 	protected Queue<Object> workQueue = new ConcurrentLinkedQueue<Object>();
-	// WorkerÏß³Ì¶ÓÁĞ
+	// Workerçº¿ç¨‹é˜Ÿåˆ—
 	protected Map<String, Thread> threadMap = new HashMap<String, Thread>();
-	// ×ÓÈÎÎñ´¦Àí½á¹û¼¯
+	// å­ä»»åŠ¡å¤„ç†ç»“æœé›†
 	protected Map<String, Object> resultMap = new ConcurrentHashMap<String, Object>();
 
-	// MasterµÄ¹¹Ôì£¬ĞèÒªÒ»¸öWorker½ø³ÌÂß¼­£¬ºÍĞèÒªµÄWorker½ø³ÌÊıÁ¿
+	// Masterçš„æ„é€ ï¼Œéœ€è¦ä¸€ä¸ªWorkerè¿›ç¨‹é€»è¾‘ï¼Œå’Œéœ€è¦çš„Workerè¿›ç¨‹æ•°é‡
 	public Master(Worker worker, int countWorker) {
 		worker.setWorkQueue(workQueue);
 		worker.setResultMap(resultMap);
@@ -40,19 +40,19 @@ public class Master {
 		}
 	}
 
-	// ¿ªÊ¼ÔËĞĞËùÓĞµÄWorker½ø³Ì£¬½øĞĞ´¦Àí
+	// å¼€å§‹è¿è¡Œæ‰€æœ‰çš„Workerè¿›ç¨‹ï¼Œè¿›è¡Œå¤„ç†
 	public void execute() {
 		for (Map.Entry<String, Thread> entry : threadMap.entrySet()) {
 			entry.getValue().start();
 		}
 	}
 
-	// ·µ»Ø×ÓÈÎÎñ½á¹û¼¯
+	// è¿”å›å­ä»»åŠ¡ç»“æœé›†
 	public Map<String, Object> getResultMap() {
 		return resultMap;
 	}
 
-	// ÊÇ·ñËùÓĞµÄ×ÓÈÎÎñ¶¼½áÊøÁË
+	// æ˜¯å¦æ‰€æœ‰çš„å­ä»»åŠ¡éƒ½ç»“æŸäº†
 	public boolean isComplete() {
 		for (Map.Entry<String, Thread> entry : threadMap.entrySet()) {
 			if (entry.getValue().getState() != Thread.State.TERMINATED) {
@@ -62,7 +62,7 @@ public class Master {
 		return true;
 	}
 
-	// Ìá½»Ò»¸öÈÎÎñ
+	// æäº¤ä¸€ä¸ªä»»åŠ¡
 	public void submit(Object job) {
 		workQueue.add(job);
 	}

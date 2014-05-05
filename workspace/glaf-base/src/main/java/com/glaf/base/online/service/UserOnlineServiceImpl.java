@@ -72,7 +72,7 @@ public class UserOnlineServiceImpl implements UserOnlineService {
 	}
 
 	/**
-	 * É¾³ı³¬Ê±µÄÔÚÏßÓÃ»§
+	 * åˆ é™¤è¶…æ—¶çš„åœ¨çº¿ç”¨æˆ·
 	 * 
 	 * @param timeoutSeconds
 	 */
@@ -83,7 +83,7 @@ public class UserOnlineServiceImpl implements UserOnlineService {
 		if (list != null && !list.isEmpty()) {
 			for (UserOnline bean : list) {
 				long ts = System.currentTimeMillis() - bean.getCheckDateMs();
-				if (ts / 1000 > timeoutSeconds) {// Èç¹û³¬Ê±£¬´ÓÔÚÏßÓÃ»§ÁĞ±íÖĞÉ¾³ı
+				if (ts / 1000 > timeoutSeconds) {// å¦‚æœè¶…æ—¶ï¼Œä»åœ¨çº¿ç”¨æˆ·åˆ—è¡¨ä¸­åˆ é™¤
 					userOnlineMapper.deleteUserOnlineById(bean.getId());
 				}
 			}
@@ -147,7 +147,7 @@ public class UserOnlineServiceImpl implements UserOnlineService {
 	}
 
 	/**
-	 * ³ÖĞøÔÚÏßÓÃ»§
+	 * æŒç»­åœ¨çº¿ç”¨æˆ·
 	 * 
 	 * @param actorId
 	 */
@@ -162,7 +162,7 @@ public class UserOnlineServiceImpl implements UserOnlineService {
 	}
 
 	/**
-	 * ÍË³öÏµÍ³
+	 * é€€å‡ºç³»ç»Ÿ
 	 * 
 	 * @param actorId
 	 */

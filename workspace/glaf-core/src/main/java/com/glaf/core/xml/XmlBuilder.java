@@ -95,7 +95,7 @@ public class XmlBuilder {
 	public void processElement(String systemName, Element root,
 			Map<String, Object> params) {
 		/**
-		 * »ñÈ¡½ÚµãµÄÊı¾İ¼¯¶¨Òå
+		 * è·å–èŠ‚ç‚¹çš„æ•°æ®é›†å®šä¹‰
 		 */
 		Map<String, DatasetModel> dataSetMap = new HashMap<String, DatasetModel>();
 		List<?> elements = root.elements("DataSet");
@@ -382,12 +382,12 @@ public class XmlBuilder {
 								}
 							}
 							/**
-							 * Èç¹û²»·ûºÏÇĞ·ÖÌõ¼ş
+							 * å¦‚æœä¸ç¬¦åˆåˆ‡åˆ†æ¡ä»¶
 							 */
 							if (splitCnt != splits.size()) {
 								// LOG.debug("dsId="+dsId);
 								// LOG.debug("params:"+params );
-								// LOG.debug(dataMap + " ²»·ûºÏÇĞ·ÖÌõ¼ş");
+								// LOG.debug(dataMap + " ä¸ç¬¦åˆåˆ‡åˆ†æ¡ä»¶");
 								continue;
 							}
 						}

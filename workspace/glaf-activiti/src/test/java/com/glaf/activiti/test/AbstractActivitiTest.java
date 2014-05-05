@@ -39,7 +39,7 @@ public class AbstractActivitiTest {
 
 	@Before
 	public void setUp() throws Exception {
-		System.out.println("¿ªÊ¼²âÊÔ..................................");
+		System.out.println("å¼€å§‹æµ‹è¯•..................................");
 		start = System.currentTimeMillis();
 		System.out.println(SystemProperties.getConfigRootPath());
 		// Environment.setCurrentSystemName(Environment.DEFAULT_SYSTEM_NAME);
@@ -55,8 +55,8 @@ public class AbstractActivitiTest {
 	@After
 	public void tearDown() throws Exception {
 		long times = System.currentTimeMillis() - start;
-		System.out.println("×Ü¹²ºÄÊ±(ºÁÃë):" + times);
-		System.out.println("²âÊÔÍê³É¡£");
+		System.out.println("æ€»å…±è€—æ—¶(æ¯«ç§’):" + times);
+		System.out.println("æµ‹è¯•å®Œæˆã€‚");
 	}
 
 }

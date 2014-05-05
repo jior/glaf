@@ -29,7 +29,7 @@ import com.glaf.core.todo.TodoTotal;
 public interface ISysTodoService {
 
 	/**
-	 * 获取Todo定义
+	 * 鑾峰彇Todo瀹氫箟
 	 * 
 	 * @param todoId
 	 * @return
@@ -37,7 +37,7 @@ public interface ISysTodoService {
 	Todo getTodo(Long todoId);
 
 	/**
-	 * 获取Todo定义
+	 * 鑾峰彇Todo瀹氫箟
 	 * 
 	 * @param todoId
 	 * @return
@@ -45,7 +45,7 @@ public interface ISysTodoService {
 	Todo getTodoByCode(String code);
 
 	/**
-	 * 获取Todo定义列表
+	 * 鑾峰彇Todo瀹氫箟鍒楄〃
 	 * 
 	 * @return
 	 */
@@ -55,14 +55,14 @@ public interface ISysTodoService {
 			Map<String, Object> params);
 
 	/**
-	 * 获取Todo定义Map
+	 * 鑾峰彇Todo瀹氫箟Map
 	 * 
 	 * @return
 	 */
 	Map<Long, Todo> getTodoMap();
 
 	/**
-	 * 锁定或解锁某个TODO
+	 * 閿佸畾鎴栬В閿佹煇涓猅ODO
 	 * 
 	 * @param todoId
 	 * @param locked
@@ -71,13 +71,13 @@ public interface ISysTodoService {
 	void locked(Long todoId, int locked);
 
 	/**
-	 * 重新装载配置文件
+	 * 閲嶆柊瑁呰浇閰嶇疆鏂囦欢
 	 */
 
 	void reloadConfig() throws Exception;
 
 	/**
-	 * 保存TODO
+	 * 淇濆瓨TODO
 	 * 
 	 * @param todo
 	 */
@@ -85,7 +85,7 @@ public interface ISysTodoService {
 	void save(Todo todo);
 
 	/**
-	 * 保存多个TODO
+	 * 淇濆瓨澶氫釜TODO
 	 * 
 	 * @param todos
 	 */

@@ -591,10 +591,10 @@ public class ActivitiTaskQueryServiceImpl implements ActivitiTaskQueryService {
 	}
 
 	/**
-	 * 获取用户的代办任务（包含个人及组的任务）
+	 * 鑾峰彇鐢ㄦ埛鐨勪唬鍔炰换鍔★紙鍖呭惈涓汉鍙婄粍鐨勪换鍔★級
 	 * 
 	 * @param actorId
-	 *            用户编号
+	 *            鐢ㄦ埛缂栧彿
 	 * @return
 	 */
 	public List<Task> getUserTasks(String actorId) {

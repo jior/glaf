@@ -39,54 +39,54 @@ public class ModuleAccessEntity implements ModuleAccess, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Ö÷¼ü
+	 * ä¸»é”®
 	 */
 	@Id
 	@Column(name = "ID_", length = 50, nullable = false)
 	protected String id;
 
 	/**
-	 * ·şÎñ±êÊ¶
+	 * æœåŠ¡æ ‡è¯†
 	 */
 	@Column(name = "SERVICEKEY_", length = 50)
 	protected String serviceKey;
 
 	/**
-	 * »ù´¡´úÂë
+	 * åŸºç¡€ä»£ç 
 	 */
 	@Column(name = "BASECODE_", length = 100)
 	private String baseCode;
 
 	/**
-	 * ²Ù×÷£¨ĞÂÔö£¬ĞŞ¸Ä£¬É¾³ı£¬²é¿´£¬ÉóºË£¬´òÓ¡£¬µ¼³ö£©
+	 * æ“ä½œï¼ˆæ–°å¢ï¼Œä¿®æ”¹ï¼Œåˆ é™¤ï¼ŒæŸ¥çœ‹ï¼Œå®¡æ ¸ï¼Œæ‰“å°ï¼Œå¯¼å‡ºï¼‰
 	 */
 	@Column(name = "OPERATION_", length = 100)
 	private String operation;
 
 	/**
-	 * ·ÃÎÊÄ¿±ê£¨ÓÃ»§¡¢²¿ÃÅ¡¢½ÇÉ«»òÉÏ¼¶£©
+	 * è®¿é—®ç›®æ ‡ï¼ˆç”¨æˆ·ã€éƒ¨é—¨ã€è§’è‰²æˆ–ä¸Šçº§ï¼‰
 	 */
 	@Column(name = "TARGET_", length = 50)
 	protected String target;
 
 	/**
-	 * ·ÃÎÊÄ¿±êÀàĞÍ<br/>
-	 * 0-ÓÃ»§<br/>
-	 * 1-²¿ÃÅ<br/>
-	 * 2-½ÇÉ«<br/>
-	 * 3-ÉÏ¼¶<br/>
+	 * è®¿é—®ç›®æ ‡ç±»å‹<br/>
+	 * 0-ç”¨æˆ·<br/>
+	 * 1-éƒ¨é—¨<br/>
+	 * 2-è§’è‰²<br/>
+	 * 3-ä¸Šçº§<br/>
 	 */
 	@Column(name = "TARGETTYPE_")
 	protected int targetType;
 
 	/**
-	 * À©Õ¹×Ö¶Î-±àºÅ
+	 * æ‰©å±•å­—æ®µ-ç¼–å·
 	 */
 	@Column(name = "OBJECTID_")
 	protected String objectId;
 
 	/**
-	 * À©Õ¹×Ö¶Î-Öµ
+	 * æ‰©å±•å­—æ®µ-å€¼
 	 */
 	@Column(name = "OBJECTVALUE_")
 	protected String objectValue;

@@ -36,14 +36,14 @@ public class SysPermission implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 功能编号
+	 * 鍔熻兘缂栧彿
 	 */
 	@Id
 	@Column(name = "FUNCID", nullable = false)
 	protected long funcId;
 
 	/**
-	 * 部门角色编号(对应SYS_DEPT_ROLE的ID字段)
+	 * 閮ㄩ棬瑙掕壊缂栧彿(瀵瑰簲SYS_DEPT_ROLE鐨処D瀛楁)
 	 */
 	@Id
 	@Column(name = "ROLEID", nullable = false)

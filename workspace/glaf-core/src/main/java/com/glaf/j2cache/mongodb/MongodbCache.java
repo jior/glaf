@@ -111,7 +111,7 @@ public class MongodbCache implements com.glaf.j2cache.Cache {
 			long saveTime = (Long) dbObject.get("time");
 			if ((now - saveTime) > expireMinutes * 60000) {
 				/**
-				 * 如果已经过期，就删除缓存对象
+				 * 濡傛灉宸茬粡杩囨湡锛屽氨鍒犻櫎缂撳瓨瀵硅薄
 				 */
 				dbCollection.remove(query);
 			}

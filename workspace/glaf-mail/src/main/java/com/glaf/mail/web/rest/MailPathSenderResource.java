@@ -239,10 +239,10 @@ public class MailPathSenderResource {
 				MailPathTaskSender sender = new MailPathTaskSender();
 				try {
 					sender.sendMail(mailId);
-					result.put("message", "邮件发送成功！");
+					result.put("message", "閭欢鍙戦�佹垚鍔燂紒");
 				} catch (Exception ex) {
 					ex.printStackTrace();
-					result.put("message", "邮件发送失败：" + ex.getMessage());
+					result.put("message", "閭欢鍙戦�佸け璐ワ細" + ex.getMessage());
 				}
 			}
 		}

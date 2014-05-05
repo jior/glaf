@@ -28,7 +28,7 @@ import com.glaf.batch.query.*;
 public interface IJobService {
 
 	/**
-	 * Íê³ÉÄ³¸ö²½Öè
+	 * å®ŒæˆæŸä¸ªæ­¥éª¤
 	 * 
 	 * @param jobStepKey
 	 */
@@ -36,7 +36,7 @@ public interface IJobService {
 	void completeStepExecution(String jobStepKey);
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ı¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®åˆ é™¤è®°å½•
 	 * 
 	 * @return
 	 */
@@ -44,7 +44,7 @@ public interface IJobService {
 	void deleteJobInstanceById(long jobInstanceId);
 
 	/**
-	 * ¸ù¾İKeyÉ¾³ı¼ÇÂ¼
+	 * æ ¹æ®Keyåˆ é™¤è®°å½•
 	 * 
 	 * @return
 	 */
@@ -52,7 +52,7 @@ public interface IJobService {
 	void deleteJobInstanceByJobKey(String jobKey);
 
 	/**
-	 * ¸ù¾İÖ´ĞĞId»ñÈ¡Ö´ĞĞĞÅÏ¢
+	 * æ ¹æ®æ‰§è¡ŒIdè·å–æ‰§è¡Œä¿¡æ¯
 	 * 
 	 * @param jobExecutionId
 	 * @return
@@ -60,7 +60,7 @@ public interface IJobService {
 	JobExecution getJobExecutionById(long jobExecutionId);
 
 	/**
-	 * ¸ù¾İJobÊµÀı±àºÅ»ñÈ¡Ö´ĞĞĞÅÏ¢
+	 * æ ¹æ®Jobå®ä¾‹ç¼–å·è·å–æ‰§è¡Œä¿¡æ¯
 	 * 
 	 * @param jobInstanceId
 	 * @return
@@ -68,21 +68,21 @@ public interface IJobService {
 	List<JobExecution> getJobExecutions(long jobInstanceId);
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡JobÊµÀı
+	 * æ ¹æ®ä¸»é”®è·å–Jobå®ä¾‹
 	 * 
 	 * @return
 	 */
 	JobInstance getJobInstanceById(long jobInstanceId);
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡JobÊµÀı
+	 * æ ¹æ®ä¸»é”®è·å–Jobå®ä¾‹
 	 * 
 	 * @return
 	 */
 	JobInstance getJobInstanceByIdWithAll(long jobInstanceId);
 
 	/**
-	 * ¸ù¾İJob Key»ñÈ¡JobÊµÀı
+	 * æ ¹æ®Job Keyè·å–Jobå®ä¾‹
 	 * 
 	 * @param jobKey
 	 * @return
@@ -90,28 +90,28 @@ public interface IJobService {
 	JobInstance getJobInstanceByJobKey(String jobKey);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
 	int getJobInstanceCount(Map<String, Object> parameter);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
 	int getJobInstanceCountByQueryCriteria(JobInstanceQuery query);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼ÁĞ±í
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•åˆ—è¡¨
 	 * 
 	 * @return
 	 */
 	List<JobInstance> getJobInstances(Map<String, Object> parameter);
 
 	/**
-	 * »ñÈ¡Ò»Ò³JobÊµÀı
+	 * è·å–ä¸€é¡µJobå®ä¾‹
 	 * 
 	 * @param jobName
 	 * @param start
@@ -121,7 +121,7 @@ public interface IJobService {
 	List<JobInstance> getJobInstances(String jobName, int start, int limit);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */
@@ -129,7 +129,7 @@ public interface IJobService {
 			JobInstanceQuery query);
 
 	/**
-	 * ¸ù¾İID»ñÈ¡Ö´ĞĞ²½Öè
+	 * æ ¹æ®IDè·å–æ‰§è¡Œæ­¥éª¤
 	 * 
 	 * @param stepExecutionId
 	 * @return
@@ -151,7 +151,7 @@ public interface IJobService {
 	List<StepExecution> getStepExecutions(long jobInstanceId);
 
 	/**
-	 * ÅĞ¶ÏÄ³¸öJobÊÇ·ñÍê³É
+	 * åˆ¤æ–­æŸä¸ªJobæ˜¯å¦å®Œæˆ
 	 * 
 	 * @param jobKey
 	 * @return
@@ -159,14 +159,14 @@ public interface IJobService {
 	boolean jobCompleted(String jobKey);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼ÁĞ±í
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•åˆ—è¡¨
 	 * 
 	 * @return
 	 */
 	List<JobInstance> list(JobInstanceQuery query);
 
 	/**
-	 * ±£´æJobÖ´ĞĞĞÅÏ¢
+	 * ä¿å­˜Jobæ‰§è¡Œä¿¡æ¯
 	 * 
 	 * @return
 	 */
@@ -174,7 +174,7 @@ public interface IJobService {
 	void saveJobExecution(JobExecution jobExecution);
 
 	/**
-	 * ±£´æJobÊµÀıĞÅÏ¢
+	 * ä¿å­˜Jobå®ä¾‹ä¿¡æ¯
 	 * 
 	 * @return
 	 */
@@ -182,7 +182,7 @@ public interface IJobService {
 	void saveJobInstance(JobInstance jobInstance);
 
 	/**
-	 * ±£´æÖ´ĞĞ²½ÖèĞÅÏ¢
+	 * ä¿å­˜æ‰§è¡Œæ­¥éª¤ä¿¡æ¯
 	 * 
 	 * @return
 	 */
@@ -190,7 +190,7 @@ public interface IJobService {
 	void saveStepExecution(StepExecution stepExecution);
 
 	/**
-	 * ¿ªÊ¼Ä³¸ö²½Öè
+	 * å¼€å§‹æŸä¸ªæ­¥éª¤
 	 * 
 	 * @param jobStepKey
 	 */
@@ -198,7 +198,7 @@ public interface IJobService {
 	void startStepExecution(String jobStepKey);
 
 	/**
-	 * ÅĞ¶ÏÄ³¸ö²½ÖèÊÇ·ñ³É¹¦Íê³É
+	 * åˆ¤æ–­æŸä¸ªæ­¥éª¤æ˜¯å¦æˆåŠŸå®Œæˆ
 	 * 
 	 * @param jobStepKey
 	 * @return

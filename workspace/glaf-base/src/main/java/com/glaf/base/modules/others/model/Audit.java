@@ -34,32 +34,32 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class Audit implements Serializable, JSONable {
 	private static final long serialVersionUID = 4192168036356165765L;
 	/**
-	 * 创建日期
+	 * 鍒涘缓鏃ユ湡
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE")
 	protected Date createDate;
 
 	/**
-	 * 部门编号
+	 * 閮ㄩ棬缂栧彿
 	 */
 	@Column(name = "DEPTID")
 	protected long deptId;
 
 	/**
-	 * 部门名称
+	 * 閮ㄩ棬鍚嶇О
 	 */
 	@Column(name = "DEPTNAME", length = 250)
 	protected String deptName;
 
 	/**
-	 * 标记
+	 * 鏍囪
 	 */
 	@Column(name = "FLAG")
 	protected int flag;
 
 	/**
-	 * 职位
+	 * 鑱屼綅
 	 */
 	@Column(name = "HEADSHIP", length = 50)
 	protected String headship;
@@ -69,31 +69,31 @@ public class Audit implements Serializable, JSONable {
 	protected long id;
 
 	/**
-	 * 领导编号
+	 * 棰嗗缂栧彿
 	 */
 	@Column(name = "LEADERID")
 	protected long leaderId;
 
 	/**
-	 * 领导名称
+	 * 棰嗗鍚嶇О
 	 */
 	@Column(name = "LEADERNAME", length = 50)
 	protected String leaderName;
 
 	/**
-	 * 评价
+	 * 璇勪环
 	 */
 	@Column(name = "MEMO", length = 500)
 	protected String memo;
 
 	/**
-	 * 引用ID
+	 * 寮曠敤ID
 	 */
 	@Column(name = "REFERID")
 	protected long referId;
 
 	/**
-	 * 引用类型
+	 * 寮曠敤绫诲瀷
 	 */
 	@Column(name = "REFERTYPE")
 	protected int referType;

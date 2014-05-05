@@ -128,7 +128,7 @@ public class RedisManager {
 	}
 
 	/**
-	 * ³õÊ¼»¯·½·¨
+	 * åˆå§‹åŒ–æ–¹æ³•
 	 */
 	public void init() {
 		if (jedisPool == null) {
@@ -141,9 +141,9 @@ public class RedisManager {
 			poolConfig.setTestOnBorrow(false);
 			poolConfig.setTestOnReturn(false);
 			poolConfig.setTestWhileIdle(true);
-			poolConfig.setMinEvictableIdleTimeMillis(1000L * 60L * 10L); // ¿ÕÏĞ¶ÔÏó,¿ÕÏĞ¶à³¤Ê±¼ä»á±»ÇıÖğ³ö³ØÀï
-			poolConfig.setTimeBetweenEvictionRunsMillis(1000L * 30L); // ÇıÖğÏß³Ì30ÃëÖ´ĞĞÒ»´Î
-			poolConfig.setNumTestsPerEvictionRun(-1); // -1,±íÊ¾ÔÚÇıÖğÏß³ÌÖ´ĞĞÊ±,²âÊÔËùÓĞµÄ¿ÕÏĞ¶ÔÏó
+			poolConfig.setMinEvictableIdleTimeMillis(1000L * 60L * 10L); // ç©ºé—²å¯¹è±¡,ç©ºé—²å¤šé•¿æ—¶é—´ä¼šè¢«é©±é€å‡ºæ± é‡Œ
+			poolConfig.setTimeBetweenEvictionRunsMillis(1000L * 30L); // é©±é€çº¿ç¨‹30ç§’æ‰§è¡Œä¸€æ¬¡
+			poolConfig.setNumTestsPerEvictionRun(-1); // -1,è¡¨ç¤ºåœ¨é©±é€çº¿ç¨‹æ‰§è¡Œæ—¶,æµ‹è¯•æ‰€æœ‰çš„ç©ºé—²å¯¹è±¡
 			jedisPool = new JedisPool(poolConfig, host, port);
 		}
 	}

@@ -102,7 +102,7 @@ public class MxDataTransferController {
 					DataTransfer dataTransfer = dataTransferService
 							.getDataTransfer(String.valueOf(x));
 					/**
-					 * �˴�ҵ���߼������е���
+					 * 此处业务逻辑需自行调整
 					 */
 
 					if (dataTransfer != null
@@ -118,7 +118,7 @@ public class MxDataTransferController {
 			DataTransfer dataTransfer = dataTransferService
 					.getDataTransfer(String.valueOf(id));
 			/**
-			 * �˴�ҵ���߼������е���
+			 * 此处业务逻辑需自行调整
 			 */
 
 			if (dataTransfer != null
@@ -295,7 +295,7 @@ public class MxDataTransferController {
 		}
 
 		/**
-		 * �˴�ҵ���߼������е���
+		 * 此处业务逻辑需自行调整
 		 */
 		if (!loginContext.isSystemAdministrator()) {
 			String actorId = loginContext.getActorId();

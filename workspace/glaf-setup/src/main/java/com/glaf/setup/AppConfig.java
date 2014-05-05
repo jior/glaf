@@ -38,19 +38,19 @@ import com.glaf.setup.conf.Database;
 import com.glaf.setup.conf.DatabaseConfig;
 
 /**
- * Ó¦ÓÃĞÅÏ¢ÅäÖÃ£¨Ä¿Ç°Ö»ĞèÅäÖÃÓ¦ÓÃÂ·¾¶£©
+ * åº”ç”¨ä¿¡æ¯é…ç½®ï¼ˆç›®å‰åªéœ€é…ç½®åº”ç”¨è·¯å¾„ï¼‰
  * 
  * 
  */
 public class AppConfig extends JDialog {
 	private static final long serialVersionUID = 1L;
 	public static String appPath = "";
-	private JLabel serverPath; // ·şÎñÆ÷Â·¾¶
+	private JLabel serverPath; // æœåŠ¡å™¨è·¯å¾„
 	private JTextField serverPathText;
-	private JButton browseFileBtn; // Â·¾¶ä¯ÀÀ
+	private JButton browseFileBtn; // è·¯å¾„æµè§ˆ
 
-	private JButton saveBtn; // ±£´æÅäÖÃ
-	private JButton cancelBtn; // Çå¿Õ
+	private JButton saveBtn; // ä¿å­˜é…ç½®
+	private JButton cancelBtn; // æ¸…ç©º
 
 	public AppConfig() {
 		initskin();
@@ -60,11 +60,11 @@ public class AppConfig extends JDialog {
 
 		int y = 0;
 		mainPanel.add(new JPanel(), new GBC(0, y, 1, 1).setInsets(2, 2, 2, 2)
-				.setFill(GBC.BOTH).setWeight(30, 0));// Ìî³ä×ó±ß¿Õ°×Î»ÖÃ
+				.setFill(GBC.BOTH).setWeight(30, 0));// å¡«å……å·¦è¾¹ç©ºç™½ä½ç½®
 		mainPanel.add(new JPanel(), new GBC(1, y, 1, 1).setInsets(2, 2, 2, 2)
 				.setFill(GBC.BOTH).setWeight(40, 10));
 		mainPanel.add(new JPanel(), new GBC(2, y, 1, 1).setInsets(2, 2, 2, 2)
-				.setFill(GBC.BOTH).setWeight(30, 0));// Ìî³äÓÒ±ß¿Õ°×Î»ÖÃ
+				.setFill(GBC.BOTH).setWeight(30, 0));// å¡«å……å³è¾¹ç©ºç™½ä½ç½®
 
 		y++;
 		mainPanel.add(this.initServerPanel(),
@@ -94,22 +94,22 @@ public class AppConfig extends JDialog {
 		this.setBounds(0, 0, 400, 200);
 		this.setLocationRelativeTo(null);
 		this.setModal(true);
-		this.setTitle("Ó¦ÓÃÅäÖÃ");
+		this.setTitle("åº”ç”¨é…ç½®");
 		// this.setVisible(true);
 	}
 
-	// ÍøÕ¾·şÎñÆ÷Ãæ°å³õÊ¼»¯
+	// ç½‘ç«™æœåŠ¡å™¨é¢æ¿åˆå§‹åŒ–
 	private JPanel initServerPanel() {
-		serverPath = new JLabel("Ó¦ÓÃÂ·¾¶"); // ·şÎñÆ÷Â·¾¶
+		serverPath = new JLabel("åº”ç”¨è·¯å¾„"); // æœåŠ¡å™¨è·¯å¾„
 		serverPathText = new JTextField(appPath);
 
-		browseFileBtn = new JButton("ä¯ÀÀ");
+		browseFileBtn = new JButton("æµè§ˆ");
 
-		// Ñ¡Ôñ·şÎñÆ÷ÎÄ¼şÂ·¾¶
+		// é€‰æ‹©æœåŠ¡å™¨æ–‡ä»¶è·¯å¾„
 		browseFileBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new JFileChooser();
-				chooser.setApproveButtonText("Ñ¡Ôñ");
+				chooser.setApproveButtonText("é€‰æ‹©");
 				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				File f = null;
 				try {
@@ -142,7 +142,7 @@ public class AppConfig extends JDialog {
 		JPanel serverPanel = new JPanel();
 		serverPanel.setLayout(new GridBagLayout());
 		serverPanel.setBorder(javax.swing.BorderFactory
-				.createTitledBorder("Ó¦ÓÃ·şÎñÆ÷ÅäÖÃ"));
+				.createTitledBorder("åº”ç”¨æœåŠ¡å™¨é…ç½®"));
 
 		int row = 0;
 
@@ -158,10 +158,10 @@ public class AppConfig extends JDialog {
 		return serverPanel;
 	}
 
-	// ³õÊ¼°´Å¥Ãæ°å ±£´æÅäÖÃÊÂ¼ş´¦Àí, ²âÊÔÁ¬½ÓÊÂ¼ş´¦Àí
+	// åˆå§‹æŒ‰é’®é¢æ¿ ä¿å­˜é…ç½®äº‹ä»¶å¤„ç†, æµ‹è¯•è¿æ¥äº‹ä»¶å¤„ç†
 	private JPanel initButton() {
-		saveBtn = new JButton(" È·  ¶¨ "); // ±£´æÅäÖÃ
-		cancelBtn = new JButton(" È¡ Ïû "); // ²âÊÔÁ¬½Ó
+		saveBtn = new JButton(" ç¡®  å®š "); // ä¿å­˜é…ç½®
+		cancelBtn = new JButton(" å– æ¶ˆ "); // æµ‹è¯•è¿æ¥
 
 		saveBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -172,12 +172,12 @@ public class AppConfig extends JDialog {
 						AppConfig.this.dispose();
 					} else {
 						javax.swing.JOptionPane.showMessageDialog(null,
-								"Ó¦ÓÃÂ·¾¶²»ÕıÈ·£¬ÇëÖØĞÂÑ¡Ôñ£¡");
+								"åº”ç”¨è·¯å¾„ä¸æ­£ç¡®ï¼Œè¯·é‡æ–°é€‰æ‹©ï¼");
 						lockEditable(false);
 					}
 				} else {
 					javax.swing.JOptionPane
-							.showMessageDialog(null, "±ØĞëÑ¡ÔñÓ¦ÓÃÂ·¾¶£¡");
+							.showMessageDialog(null, "å¿…é¡»é€‰æ‹©åº”ç”¨è·¯å¾„ï¼");
 					lockEditable(false);
 				}
 			}
@@ -200,31 +200,31 @@ public class AppConfig extends JDialog {
 	private boolean checkAppPath(String path) {
 		DatabaseConfig dbConfig = new DatabaseConfig();
 
-		// Õâ¸öÊı¾İÀ´ÓÚÃæ°åÂ·¾¶
+		// è¿™ä¸ªæ•°æ®æ¥äºé¢æ¿è·¯å¾„
 		List<Database> dbList = dbConfig.getDatabases(path);
 		if (dbList.size() > 0) {
 			lockEditable(true);
 			return true;
 		} else {
-			javax.swing.JOptionPane.showMessageDialog(null, "Ó¦ÓÃÂ·¾¶²»ÕıÈ·£¬ÇëÖØĞÂÑ¡Ôñ");
+			javax.swing.JOptionPane.showMessageDialog(null, "åº”ç”¨è·¯å¾„ä¸æ­£ç¡®ï¼Œè¯·é‡æ–°é€‰æ‹©");
 			lockEditable(false);
 			return false;
 		}
 	}
 
-	// ³õÊ¼»¯Æ¤·ô
+	// åˆå§‹åŒ–çš®è‚¤
 	public void initskin() {
 		try {
 			UIManager
 					.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
 
 		} catch (Exception e) {
-			System.out.println("×°ÔØÆ¤·ô´íÎó" + e);
+			System.out.println("è£…è½½çš®è‚¤é”™è¯¯" + e);
 		}
 	}
 
 	private void lockEditable(boolean b) {
-		saveBtn.setEnabled(b); // ±£´æÅäÖÃ
+		saveBtn.setEnabled(b); // ä¿å­˜é…ç½®
 	}
 
 }

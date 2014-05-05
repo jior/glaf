@@ -21,27 +21,27 @@ package com.glaf.jbpm.util;
 public class MappingConstant {
 
 	/**
-	 * Ó³ÉäÓÃ»§µÄÓÃ»§±àºÅ»ò²ÎÓëÕßÎ¨Ò»±êÊ¶
+	 * æ˜ å°„ç”¨æˆ·çš„ç”¨æˆ·ç¼–å·æˆ–å‚ä¸è€…å”¯ä¸€æ ‡è¯†
 	 */
 	public final static String ACTOR_ID = "actorId";
 
 	/**
-	 * Ó³ÉäÓÃ»§µÄĞÕÃû»ò½ÇÉ«Ãû³Æ
+	 * æ˜ å°„ç”¨æˆ·çš„å§“åæˆ–è§’è‰²åç§°
 	 */
 	public final static String ACTOR_NAME = "name";
 
 	/**
-	 * Ó³ÉäÓÃ»§µÄµç×ÓÓÊ¼ş
+	 * æ˜ å°„ç”¨æˆ·çš„ç”µå­é‚®ä»¶
 	 */
 	public final static String ACTOR_MAIL = "mail";
 
 	/**
-	 * Ó³ÉäÓÃ»§µÄÊÖ»úºÅÂë
+	 * æ˜ å°„ç”¨æˆ·çš„æ‰‹æœºå·ç 
 	 */
 	public final static String ACTOR_MOBILE = "mobile";
 
 	/**
-	 * Ó³ÉäÓÃ»§µÄMSN
+	 * æ˜ å°„ç”¨æˆ·çš„MSN
 	 */
 	public final static String ACTOR_MSN = "msn";
 

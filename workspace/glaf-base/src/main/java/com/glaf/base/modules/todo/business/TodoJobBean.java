@@ -59,14 +59,14 @@ public class TodoJobBean {
 	public void createTasks(List processInstanceIds) {
 		List tasks = this.getJbpmTasksByProcessInstanceIds(processInstanceIds);
 		todoService.createTasks(processInstanceIds, tasks);
-		logger.info("Á÷³Ì " + processInstanceIds + " µÄÈÎÎñÒÑ¾­¸üĞÂ,ÏÖÔÚÓĞÈÎÎñ:"
+		logger.info("æµç¨‹ " + processInstanceIds + " çš„ä»»åŠ¡å·²ç»æ›´æ–°,ç°åœ¨æœ‰ä»»åŠ¡:"
 				+ tasks.size());
 	}
 
 	public void createTasks(Long processInstanceId) {
 		List tasks = this.getJbpmTasksByProcessInstanceId(processInstanceId);
 		// todoService.createTasks(processInstanceId, tasks);
-		logger.info("Á÷³Ì " + processInstanceId + " µÄÈÎÎñÒÑ¾­¸üĞÂ,ÏÖÔÚÓĞÈÎÎñ:"
+		logger.info("æµç¨‹ " + processInstanceId + " çš„ä»»åŠ¡å·²ç»æ›´æ–°,ç°åœ¨æœ‰ä»»åŠ¡:"
 				+ tasks.size());
 	}
 
@@ -447,8 +447,8 @@ public class TodoJobBean {
 						model.setContent(content);
 					} else {
 						if (StringUtils.isNotEmpty(taskItem.getRowId())) {
-							content = content + " µ¥¾İ±àºÅ£¨" + taskItem.getRowId()
-									+ "£©";
+							content = content + " å•æ®ç¼–å·ï¼ˆ" + taskItem.getRowId()
+									+ "ï¼‰";
 							model.setContent(content);
 						}
 					}

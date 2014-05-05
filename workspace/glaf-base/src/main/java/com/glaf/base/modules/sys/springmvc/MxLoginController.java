@@ -79,7 +79,7 @@ public class MxLoginController {
 	private ISystemPropertyService systemPropertyService;
 
 	/**
-	 * µÇÂ¼
+	 * ç™»å½•
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -102,7 +102,7 @@ public class MxLoginController {
 		}
 
 		ViewMessages messages = new ViewMessages();
-		// »ñÈ¡²ÎÊı
+		// è·å–å‚æ•°
 		String account = ParamUtil.getParameter(request, "x");
 		String password = ParamUtil.getParameter(request, "y");
 
@@ -118,10 +118,10 @@ public class MxLoginController {
 
 		logger.debug(account + " start login........................");
 
-		// ÓÃ»§µÇÂ½£¬·µ»ØÏµÍ³ÓÃ»§¶ÔÏó
+		// ç”¨æˆ·ç™»é™†ï¼Œè¿”å›ç³»ç»Ÿç”¨æˆ·å¯¹è±¡
 		SysUser bean = authorizeService.authorize(account, pwd);
 		if (bean == null) {
-			// ÓÃ»§¶ÔÏóÎª¿Õ»òÊ§Ğ§£¬ÏÔÊ¾´íÎóĞÅÏ¢
+			// ç”¨æˆ·å¯¹è±¡ä¸ºç©ºæˆ–å¤±æ•ˆï¼Œæ˜¾ç¤ºé”™è¯¯ä¿¡æ¯
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"authorize.login_failure"));
 			MessageUtils.addMessages(request, messages);
@@ -152,7 +152,7 @@ public class MxLoginController {
 			}
 
 			/**
-			 * ¼ì²âÊÇ·ñÏŞÖÆÒ»¸öÓÃ»§Ö»ÄÜÔÚÒ»¸öµØ·½µÇÂ¼
+			 * æ£€æµ‹æ˜¯å¦é™åˆ¶ä¸€ä¸ªç”¨æˆ·åªèƒ½åœ¨ä¸€ä¸ªåœ°æ–¹ç™»å½•
 			 */
 			if (p != null && StringUtils.equals(p.getValue(), "true")) {
 				logger.debug("#################3#########################");
@@ -166,23 +166,23 @@ public class MxLoginController {
 					if (userOnline.getCheckDateMs() != null
 							&& System.currentTimeMillis()
 									- userOnline.getCheckDateMs() > timeoutSeconds * 1000) {
-						timeout = true;// ³¬Ê±£¬ËµÃ÷µÇÂ¼ÒÑ¾­¹ıÆÚ
+						timeout = true;// è¶…æ—¶ï¼Œè¯´æ˜ç™»å½•å·²ç»è¿‡æœŸ
 					}
 					if (userOnline.getLoginDate() != null
 							&& System.currentTimeMillis()
 									- userOnline.getLoginDate().getTime() > timeoutSeconds * 1000) {
-						timeout = true;// ³¬Ê±£¬ËµÃ÷µÇÂ¼ÒÑ¾­¹ıÆÚ
+						timeout = true;// è¶…æ—¶ï¼Œè¯´æ˜ç™»å½•å·²ç»è¿‡æœŸ
 					}
 				}
 				logger.info("timeout:" + timeout);
 				logger.info("login IP:" + loginIP);
-				if (!timeout) {// ³¬Ê±£¬ËµÃ÷µÇÂ¼ÒÑ¾­¹ıÆÚ£¬²»ÓÃÅĞ¶ÏÊÇ·ñÒÑ¾­µÇÂ¼ÁË
+				if (!timeout) {// è¶…æ—¶ï¼Œè¯´æ˜ç™»å½•å·²ç»è¿‡æœŸï¼Œä¸ç”¨åˆ¤æ–­æ˜¯å¦å·²ç»ç™»å½•äº†
 					if (loginIP != null
-							&& !(StringUtils.equals(ipAddr, loginIP))) {// ÓÃ»§ÒÑÔÚÆäËû»úÆ÷µÇÂ½
+							&& !(StringUtils.equals(ipAddr, loginIP))) {// ç”¨æˆ·å·²åœ¨å…¶ä»–æœºå™¨ç™»é™†
 						messages.add(ViewMessages.GLOBAL_MESSAGE,
 								new ViewMessage("authorize.login_failure2"));
 						MessageUtils.addMessages(request, messages);
-						logger.debug("ÓÃ»§ÒÑ¾­ÔÚÆäËûµØ·½µÇÂ¼¡£");
+						logger.debug("ç”¨æˆ·å·²ç»åœ¨å…¶ä»–åœ°æ–¹ç™»å½•ã€‚");
 						return new ModelAndView("/modules/login", modelMap);
 					}
 				}
@@ -214,11 +214,11 @@ public class MxLoginController {
 			bean.setLoginCount(1);
 		}
 
-		// µÇÂ¼³É¹¦£¬ĞŞ¸Ä×î½üÒ»´ÎµÇÂ¼Ê±¼ä
+		// ç™»å½•æˆåŠŸï¼Œä¿®æ”¹æœ€è¿‘ä¸€æ¬¡ç™»å½•æ—¶é—´
 		bean.setLastLoginDate(new Date());
 		sysUserService.updateUser(bean);
 
-		ContextUtil.put(bean.getAccount(), bean);// ´«ÈëÈ«¾Ö±äÁ¿
+		ContextUtil.put(bean.getAccount(), bean);// ä¼ å…¥å…¨å±€å˜é‡
 
 		RequestUtils.setLoginUser(request, response, "default",
 				bean.getAccount());
@@ -237,9 +237,9 @@ public class MxLoginController {
 			logger.error(ex);
 		}
 
-		if (bean.getAccountType() == 1) {// ¹©Ó¦ÉÌÓÃ»§
+		if (bean.getAccountType() == 1) {// ä¾›åº”å•†ç”¨æˆ·
 			return new ModelAndView("/modules/sp_main", modelMap);
-		} else if (bean.getAccountType() == 2) {// Î¢ĞÅÓÃ»§
+		} else if (bean.getAccountType() == 2) {// å¾®ä¿¡ç”¨æˆ·
 			return new ModelAndView("/modules/wx_main", modelMap);
 		} else {
 			return new ModelAndView("/modules/main", modelMap);
@@ -248,7 +248,7 @@ public class MxLoginController {
 	}
 
 	/**
-	 * µÇÂ¼
+	 * ç™»å½•
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -259,7 +259,7 @@ public class MxLoginController {
 			HttpServletResponse response) {
 		String ip = RequestUtils.getIPAddress(request);
 		/**
-		 * ÔÊĞí´ÓÖ¸¶¨µÄ»úÆ÷ÉÏÍ¨¹ıÓÃ»§ÃûÃÜÂëµÇÂ¼
+		 * å…è®¸ä»æŒ‡å®šçš„æœºå™¨ä¸Šé€šè¿‡ç”¨æˆ·åå¯†ç ç™»å½•
 		 */
 		if (StringUtils.contains(conf.get("login.allow.ip", "127.0.0.1"), ip)
 				|| StringUtils.contains(
@@ -289,7 +289,7 @@ public class MxLoginController {
 	}
 
 	/**
-	 * ×¢Ïú
+	 * æ³¨é”€
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -299,7 +299,7 @@ public class MxLoginController {
 	public ModelAndView logout(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String actorId = RequestUtils.getActorId(request);
-		// ÍË³öÏµÍ³£¬Çå³ısession¶ÔÏó
+		// é€€å‡ºç³»ç»Ÿï¼Œæ¸…é™¤sessionå¯¹è±¡
 		request.getSession().removeAttribute(SysConstants.LOGIN);
 		request.getSession().removeAttribute(SysConstants.MENU);
 		try {
@@ -316,7 +316,7 @@ public class MxLoginController {
 	}
 
 	/**
-	 * ×¼±¸µÇÂ¼
+	 * å‡†å¤‡ç™»å½•
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -326,7 +326,7 @@ public class MxLoginController {
 	public ModelAndView prepareLogin(HttpServletRequest request,
 			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		// ÏÔÊ¾µÇÂ½Ò³Ãæ
+		// æ˜¾ç¤ºç™»é™†é¡µé¢
 		return new ModelAndView("/modules/login", modelMap);
 	}
 

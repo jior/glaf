@@ -77,7 +77,7 @@ public class UserController {
 	protected SysUserService sysUserService;
 
 	/**
-	 * 显示修改页面
+	 * 鏄剧ず淇敼椤甸潰
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -208,7 +208,7 @@ public class UserController {
 	}
 
 	/**
-	 * 显示修改页面
+	 * 鏄剧ず淇敼椤甸潰
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -239,7 +239,7 @@ public class UserController {
 	}
 
 	/**
-	 * 提交修改信息
+	 * 鎻愪氦淇敼淇℃伅
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -269,10 +269,10 @@ public class UserController {
 		}
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
+		if (ret) {// 淇濆瓨鎴愬姛
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.modify_success"));
-		} else {// 保存失败
+		} else {// 淇濆瓨澶辫触
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.modify_failure"));
 		}
@@ -281,7 +281,7 @@ public class UserController {
 	}
 
 	/**
-	 * 提交修改信息
+	 * 鎻愪氦淇敼淇℃伅
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -303,10 +303,10 @@ public class UserController {
 		}
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
+		if (ret) {// 淇濆瓨鎴愬姛
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.modify_success"));
-		} else {// 保存失败
+		} else {// 淇濆瓨澶辫触
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.modify_failure"));
 		}
@@ -315,7 +315,7 @@ public class UserController {
 	}
 
 	/**
-	 * 修改用户密码
+	 * 淇敼鐢ㄦ埛瀵嗙爜
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -345,10 +345,10 @@ public class UserController {
 		}
 
 		ViewMessages messages = new ViewMessages();
-		if (ret) {// 保存成功
+		if (ret) {// 淇濆瓨鎴愬姛
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.modify_success"));
-		} else {// 保存失败
+		} else {// 淇濆瓨澶辫触
 			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
 					"user.modify_failure"));
 		}
@@ -379,15 +379,15 @@ public class UserController {
 				ex.printStackTrace();
 			}
 		}
-		if (ret) {// 保存成功
-			return ResponseUtils.responseJsonResult(true, "保存成功!");
-		} else {// 保存失败
-			return ResponseUtils.responseJsonResult(true, "保存失败!");
+		if (ret) {// 淇濆瓨鎴愬姛
+			return ResponseUtils.responseJsonResult(true, "淇濆瓨鎴愬姛!");
+		} else {// 淇濆瓨澶辫触
+			return ResponseUtils.responseJsonResult(true, "淇濆瓨澶辫触!");
 		}
 	}
 
 	/**
-	 * 显示用户信息页面
+	 * 鏄剧ず鐢ㄦ埛淇℃伅椤甸潰
 	 * 
 	 * @param request
 	 * @param modelMap

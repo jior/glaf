@@ -39,7 +39,7 @@ import com.glaf.setup.GBC;
 import com.glaf.setup.conf.MailConfig;
 
 /**
- * ÓÊ¼şÅäÖÃ±êÇ©Ãæ°å
+ * é‚®ä»¶é…ç½®æ ‡ç­¾é¢æ¿
  * 
  */
 public class MailServerConfigPanel extends JPanel {
@@ -50,48 +50,48 @@ public class MailServerConfigPanel extends JPanel {
 
 	public final static String sp = System.getProperty("file.separator");
 
-	private JLabel serverAddress; // ÓÊ¼ş·şÎñÆ÷µØÖ· ±ØÌî
+	private JLabel serverAddress; // é‚®ä»¶æœåŠ¡å™¨åœ°å€ å¿…å¡«
 	private JTextField serverAddressText;
 
-	private JLabel serverPort; // ·¢ËÍ¶Ë¿Ú
+	private JLabel serverPort; // å‘é€ç«¯å£
 	private JTextField serverPortText;
 
-	private JLabel sendUser; // ·¢ËÍÕßÃû³Æ
+	private JLabel sendUser; // å‘é€è€…åç§°
 	private JTextField sendUserText;
 
-	private JLabel verify; // ÊÇ·ñĞèÒªÈÏÖ¤
+	private JLabel verify; // æ˜¯å¦éœ€è¦è®¤è¯
 	private JComboBox verifyBox;
 
-	private JLabel userName; // ÓÃ»§Ãû
+	private JLabel userName; // ç”¨æˆ·å
 	private JTextField userNameText;
 
-	private JLabel password; // ÃÜÂë
+	private JLabel password; // å¯†ç 
 	private JPasswordField passwordText;
 
 	private JPanel userPanel;
 
-	private JLabel mailCode; // ÓÊ¼ş±àÂë
+	private JLabel mailCode; // é‚®ä»¶ç¼–ç 
 	// private JTextField mailCodeText ;
 	private JComboBox mailCodeBox;
 
-	private JLabel mailContent; // //ÇëÌîĞ´²âÊÔÎÄ±¾
+	private JLabel mailContent; // //è¯·å¡«å†™æµ‹è¯•æ–‡æœ¬
 	private JTextArea mailContentText;
-	// ÇëÌîĞ´²âÊÔÎÄ±¾
+	// è¯·å¡«å†™æµ‹è¯•æ–‡æœ¬
 
-	private JButton saveBtn; // ±£´æÅäÖÃ
-	private JButton checkConnect; // ²âÊÔÁ¬½Ó
+	private JButton saveBtn; // ä¿å­˜é…ç½®
+	private JButton checkConnect; // æµ‹è¯•è¿æ¥
 
 	public MailServerConfigPanel() {
 		this.setLayout(new GridBagLayout());
 
 		int y = 0;
-		// ×ó±ß¿Õ°×Ìî³ä
+		// å·¦è¾¹ç©ºç™½å¡«å……
 		this.add(new JPanel(), new GBC(0, y, 1, 1).setInsets(0, 2, 0, 2)
 				.setFill(GBC.BOTH).setWeight(30, 0));
-		// ¶¥²¿¿Õ°×
+		// é¡¶éƒ¨ç©ºç™½
 		this.add(new JPanel(), new GBC(1, y, 1, 1).setInsets(0, 2, 0, 2)
 				.setFill(GBC.BOTH).setWeight(40, 0));
-		// ÓÒ±ß¿Õ°×Ìî³ä
+		// å³è¾¹ç©ºç™½å¡«å……
 		this.add(new JPanel(), new GBC(2, y, 1, 1).setInsets(0, 2, 0, 2)
 				.setFill(GBC.BOTH).setWeight(30, 0));
 
@@ -114,30 +114,30 @@ public class MailServerConfigPanel extends JPanel {
 	public JPanel initPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
-		panel.setBorder(javax.swing.BorderFactory.createTitledBorder("ÓÊ¼ş·şÎñÅäÖÃ"));
+		panel.setBorder(javax.swing.BorderFactory.createTitledBorder("é‚®ä»¶æœåŠ¡é…ç½®"));
 
-		serverAddress = new JLabel("ÓÊ¼ş·şÎñÆ÷µØÖ·*"); // ÓÊ¼ş·şÎñÆ÷µØÖ· ±ØÌî
+		serverAddress = new JLabel("é‚®ä»¶æœåŠ¡å™¨åœ°å€*"); // é‚®ä»¶æœåŠ¡å™¨åœ°å€ å¿…å¡«
 		serverAddressText = new JTextField("");
 
-		serverPort = new JLabel("·¢ËÍ¶Ë¿Ú*  		           "); // ·¢ËÍ¶Ë¿Ú
+		serverPort = new JLabel("å‘é€ç«¯å£*  		           "); // å‘é€ç«¯å£
 		serverPortText = new JTextField("25");
 
-		sendUser = new JLabel("·¢ËÍÕßÃû³Æ*         "); // ·¢ËÍÕßÃû³Æ
+		sendUser = new JLabel("å‘é€è€…åç§°*         "); // å‘é€è€…åç§°
 		sendUserText = new JTextField();
 
-		userName = new JLabel("ÓÃ»§Ãû*               "); // ÓÃ»§Ãû
+		userName = new JLabel("ç”¨æˆ·å*               "); // ç”¨æˆ·å
 		userNameText = new JTextField();
 
-		password = new JLabel("ÃÜÂë                      "); // ÃÜÂë
+		password = new JLabel("å¯†ç                       "); // å¯†ç 
 		passwordText = new JPasswordField();
 
-		verify = new JLabel("ÊÇ·ñĞèÒªÈÏÖ¤       "); // ÊÇ·ñĞèÒªÈÏÖ¤
-		verifyBox = new JComboBox(new Object[] { "ĞèÒª", "²»ĞèÒª" });
+		verify = new JLabel("æ˜¯å¦éœ€è¦è®¤è¯       "); // æ˜¯å¦éœ€è¦è®¤è¯
+		verifyBox = new JComboBox(new Object[] { "éœ€è¦", "ä¸éœ€è¦" });
 		verifyBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Object item = verifyBox.getSelectedItem();
 				if (item != null) {
-					if (item.toString().equals("ĞèÒª")) {
+					if (item.toString().equals("éœ€è¦")) {
 						userPanel.setVisible(true);
 					} else {
 						userPanel.setVisible(false);
@@ -146,13 +146,13 @@ public class MailServerConfigPanel extends JPanel {
 			}
 		});
 
-		mailCode = new JLabel("ÓÊ¼ş±àÂë               "); // ÓÊ¼ş±àÂë
+		mailCode = new JLabel("é‚®ä»¶ç¼–ç                "); // é‚®ä»¶ç¼–ç 
 		// mailCodeText = new JTextField();
 		mailCodeBox = new JComboBox(new Object[] { "GBK", "GB2312", "GB18030",
 				"BIG5", "UTF-8", "UTF-16", "ISO-8859-1" });
 
-		mailContent = new JLabel("ÇëÌîĞ´²âÊÔÎÄ±¾    "); // //ÇëÌîĞ´²âÊÔÎÄ±¾
-		mailContentText = new JTextArea("²âÊÔÓÊ¼ş¡£");
+		mailContent = new JLabel("è¯·å¡«å†™æµ‹è¯•æ–‡æœ¬    "); // //è¯·å¡«å†™æµ‹è¯•æ–‡æœ¬
+		mailContentText = new JTextArea("æµ‹è¯•é‚®ä»¶ã€‚");
 		mailContentText.setRows(3);
 
 		int y = 0;
@@ -217,10 +217,10 @@ public class MailServerConfigPanel extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
 
-		saveBtn = new JButton("±£´æÅäÖÃ"); // ±£´æÅäÖÃ
-		checkConnect = new JButton(" ²â  ÊÔ  "); // ²âÊÔ
+		saveBtn = new JButton("ä¿å­˜é…ç½®"); // ä¿å­˜é…ç½®
+		checkConnect = new JButton(" æµ‹  è¯•  "); // æµ‹è¯•
 
-		// ±£´æÓÊ¼şÅäÖÃ
+		// ä¿å­˜é‚®ä»¶é…ç½®
 		saveBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MailConfig mainConfig = checkValue();
@@ -231,24 +231,24 @@ public class MailServerConfigPanel extends JPanel {
 							re.getMessage());
 				} catch (Exception ex) {
 					javax.swing.JOptionPane.showMessageDialog(null,
-							"±£´æÊ§°Ü" + ex.getMessage());
+							"ä¿å­˜å¤±è´¥" + ex.getMessage());
 				}
 			}
 		});
 
-		// ²âÊÔÓÊ¼ş·şÎñ
+		// æµ‹è¯•é‚®ä»¶æœåŠ¡
 		checkConnect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MailConfig mainConfig = checkValue();
 				if (mainConfig != null) {
 					try {
 						mainConfig.check();
-						javax.swing.JOptionPane.showMessageDialog(null, "·¢ËÍ³É¹¦");
+						javax.swing.JOptionPane.showMessageDialog(null, "å‘é€æˆåŠŸ");
 					} catch (RuntimeException re) {
 						javax.swing.JOptionPane.showMessageDialog(null,
 								re.getMessage());
 					} catch (Exception ex) {
-						javax.swing.JOptionPane.showMessageDialog(null, "·¢ËÍÊ§°Ü"
+						javax.swing.JOptionPane.showMessageDialog(null, "å‘é€å¤±è´¥"
 								+ ex.getMessage());
 					}
 				}
@@ -265,42 +265,42 @@ public class MailServerConfigPanel extends JPanel {
 	public MailConfig checkValue() {
 		MailConfig mailConfig = new MailConfig();
 
-		if (serverAddressText.getText().trim().equals("")) { // ÓÊ¼ş·şÎñÆ÷µØÖ· ±ØÌî
-			javax.swing.JOptionPane.showMessageDialog(null, "ÇëÏÈÌîĞ´ÓÊ¼ş·şÎñÆ÷µØÖ·£¡");
+		if (serverAddressText.getText().trim().equals("")) { // é‚®ä»¶æœåŠ¡å™¨åœ°å€ å¿…å¡«
+			javax.swing.JOptionPane.showMessageDialog(null, "è¯·å…ˆå¡«å†™é‚®ä»¶æœåŠ¡å™¨åœ°å€ï¼");
 			return null;
 		}
 		mailConfig.setHost(serverAddressText.getText().trim());
 
-		if (serverPortText.getText().trim().equals("")) { // ·¢ËÍ¶Ë¿Ú
-			javax.swing.JOptionPane.showMessageDialog(null, "ÇëÏÈÌîĞ´ÓÊ¼ş·şÎñÆ÷·¢ËÍ¶Ë¿Ú£¡");
+		if (serverPortText.getText().trim().equals("")) { // å‘é€ç«¯å£
+			javax.swing.JOptionPane.showMessageDialog(null, "è¯·å…ˆå¡«å†™é‚®ä»¶æœåŠ¡å™¨å‘é€ç«¯å£ï¼");
 			return null;
 		}
 		mailConfig.setPort(Integer.valueOf(serverPortText.getText().trim()));
 
-		if (sendUserText.getText().trim().equals("")) { // ·¢ËÍÕßÃû³Æ
-			javax.swing.JOptionPane.showMessageDialog(null, "ÇëÏÈÌîĞ´ÓÊ¼ş·¢ËÍÕßÃû³Æ£¡");
+		if (sendUserText.getText().trim().equals("")) { // å‘é€è€…åç§°
+			javax.swing.JOptionPane.showMessageDialog(null, "è¯·å…ˆå¡«å†™é‚®ä»¶å‘é€è€…åç§°ï¼");
 			return null;
 		}
 		mailConfig.setMailFrom(sendUserText.getText().trim());
 
-		if (verifyBox.getSelectedItem().toString().equals("ĞèÒª")) { // ÊÇ·ñĞèÒªÈÏÖ¤
-			if (userNameText.getText().trim().equals("")) { // ÓÃ»§Ãû
-				javax.swing.JOptionPane.showMessageDialog(null, "ÇëÏÈÌîĞ´ÓÃ»§Ãû£¡");
+		if (verifyBox.getSelectedItem().toString().equals("éœ€è¦")) { // æ˜¯å¦éœ€è¦è®¤è¯
+			if (userNameText.getText().trim().equals("")) { // ç”¨æˆ·å
+				javax.swing.JOptionPane.showMessageDialog(null, "è¯·å…ˆå¡«å†™ç”¨æˆ·åï¼");
 				return null;
 			}
 			mailConfig.setAuth(true);
 
 			mailConfig.setUsername(userNameText.getText().trim());
 
-			mailConfig.setPassword(String.valueOf(passwordText.getPassword())); // ÃÜÂë
+			mailConfig.setPassword(String.valueOf(passwordText.getPassword())); // å¯†ç 
 
 		} else {
 			mailConfig.setAuth(false);
 		}
 
-		mailConfig.setEncoding(mailCodeBox.getSelectedItem().toString()); // ÓÊ¼ş±àÂë
+		mailConfig.setEncoding(mailCodeBox.getSelectedItem().toString()); // é‚®ä»¶ç¼–ç 
 
-		mailConfig.setText(mailContentText.getText()); // ÇëÌîĞ´²âÊÔÎÄ±¾
+		mailConfig.setText(mailContentText.getText()); // è¯·å¡«å†™æµ‹è¯•æ–‡æœ¬
 
 		return mailConfig;
 	}

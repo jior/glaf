@@ -76,7 +76,7 @@ public class AssessresultController {
 	}
 
 	/**
-	 * ¸ÚÎ»¿¼ºË²éÑ¯ÁĞ±í
+	 * å²—ä½è€ƒæ ¸æŸ¥è¯¢åˆ—è¡¨
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -95,7 +95,7 @@ public class AssessresultController {
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
 		/**
-		 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+		 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 		 */
 		if (!loginContext.isSystemAdministrator()) {
 			String actorId = loginContext.getActorId();
@@ -186,7 +186,7 @@ public class AssessresultController {
 					Assessresult assessresult = assessresultService
 							.getAssessresult(Long.valueOf(x));
 					/**
-					 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+					 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 					 */
 					if (assessresult != null
 							&& (StringUtils.equals(assessresult.getCreateBy(),
@@ -201,7 +201,7 @@ public class AssessresultController {
 			Assessresult assessresult = assessresultService
 					.getAssessresult(Long.valueOf(resultid));
 			/**
-			 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+			 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 			 */
 			if (assessresult != null
 					&& (StringUtils.equals(assessresult.getCreateBy(),
@@ -277,7 +277,7 @@ public class AssessresultController {
 		Assessquestion assessquestion = assessquestionService
 				.getAssessquestion(query.getQustionid());
 
-		// ºÏ²¢µ¥Ôª¸ñ²ÎÊı
+		// åˆå¹¶å•å…ƒæ ¼å‚æ•°
 		Map<String, List<JobEvaluation>> map = new HashMap<String, List<JobEvaluation>>();
 		List<String> dictorList = new ArrayList<String>();
 		List<JobEvaluation> list = null;
@@ -311,7 +311,7 @@ public class AssessresultController {
 			jsonObj.put("rowspan", entryMap.getValue().size());
 			rowsJSON.add(jsonObj);
 
-			// µÚ2ÁĞºÏ²¢
+			// ç¬¬2åˆ—åˆå¹¶
 			Map<String, List<JobEvaluation>> subMap = new HashMap<String, List<JobEvaluation>>();
 			List<JobEvaluation> subList = entryMap.getValue();
 			for (JobEvaluation jobEvaluation : subList) {
@@ -394,7 +394,7 @@ public class AssessresultController {
 			jsonObj.put("rowspan", entryMap.getValue().size());
 			rowsJSON.add(jsonObj);
 
-			// µÚ2ÁĞºÏ²¢
+			// ç¬¬2åˆ—åˆå¹¶
 			Map<String, List<JobEvaluation>> subMap = new HashMap<String, List<JobEvaluation>>();
 			List<JobEvaluation> subList = entryMap.getValue();
 			for (JobEvaluation jobEvaluation : subList) {
@@ -443,7 +443,7 @@ public class AssessresultController {
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
 		/**
-		 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+		 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 		 */
 		if (!loginContext.isSystemAdministrator()) {
 			String actorId = loginContext.getActorId();
@@ -518,7 +518,7 @@ public class AssessresultController {
 	}
 
 	/**
-	 * ¿¼ºË½á¹ûµÃ·Ö²é¿´
+	 * è€ƒæ ¸ç»“æœå¾—åˆ†æŸ¥çœ‹
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -618,7 +618,7 @@ public class AssessresultController {
 	}
 
 	/**
-	 * ÏÔÊ¾¸ÚÃÇ¿¼ºË²éÑ¯ÁĞ±í
+	 * æ˜¾ç¤ºå²—ä»¬è€ƒæ ¸æŸ¥è¯¢åˆ—è¡¨
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -631,7 +631,7 @@ public class AssessresultController {
 	}
 
 	/**
-	 * ¿¼ºË½á¹û²é¿´
+	 * è€ƒæ ¸ç»“æœæŸ¥çœ‹
 	 * 
 	 * @param request
 	 * @param modelMap
@@ -648,7 +648,7 @@ public class AssessresultController {
 		// assessquestionService.getAssessquestion(query.getQustionid());
 		Assessresult assessresult = assessresultService.getAssessresult(query
 				.getResultid());
-		// ºÏ²¢µ¥Ôª¸ñ²ÎÊı
+		// åˆå¹¶å•å…ƒæ ¼å‚æ•°
 		Map<String, List<JobEvaluation>> map = new HashMap<String, List<JobEvaluation>>();
 		List<String> dictorList = new ArrayList<String>();
 		List<JobEvaluation> list = null;
@@ -682,7 +682,7 @@ public class AssessresultController {
 			jsonObj.put("rowspan", entryMap.getValue().size());
 			rowsJSON.add(jsonObj);
 
-			// µÚ2ÁĞºÏ²¢
+			// ç¬¬2åˆ—åˆå¹¶
 			Map<String, List<JobEvaluation>> subMap = new HashMap<String, List<JobEvaluation>>();
 			List<JobEvaluation> subList = entryMap.getValue();
 			for (JobEvaluation jobEvaluation : subList) {
@@ -755,7 +755,7 @@ public class AssessresultController {
 	}
 
 	/**
-	 * ±£´æ
+	 * ä¿å­˜
 	 * 
 	 * @param request
 	 * @return
@@ -793,13 +793,13 @@ public class AssessresultController {
 			int datagridLength = RequestUtils.getInt(request, "datagridLength");
 			for (int i = 0; i < datagridLength; i++) {
 				Assessscore assessscore = new Assessscore();
-				assessscore.setResultid(assessresult.getResultid());// ¿¼ºË½á¹ûid
+				assessscore.setResultid(assessresult.getResultid());// è€ƒæ ¸ç»“æœid
 				assessscore.setContentid(RequestUtils.getLong(request,
-						"contentid_" + i));// ¿¼ºËÄÚÈİid
+						"contentid_" + i));// è€ƒæ ¸å†…å®¹id
 				assessscore.setScore(RequestUtils
-						.getLong(request, "score_" + i));// µÃ·Ö
+						.getLong(request, "score_" + i));// å¾—åˆ†
 				assessscore.setReason(RequestUtils.getString(request, "reason_"
-						+ i));// ¿Û·ÖÔ­Òò
+						+ i));// æ‰£åˆ†åŸå› 
 				assessscoreService.save(assessscore);
 			}
 

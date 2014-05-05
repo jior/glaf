@@ -41,26 +41,26 @@ public class SysApplication implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * ±àÂë
+	 * ç¼–ç 
 	 */
 	@Column(name = "CODE", length = 50)
 	protected String code;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY", length = 50)
 	protected String createBy;
 
 	/**
-	 * ´´½¨ÈÕÆÚ
+	 * åˆ›å»ºæ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE")
 	protected Date createDate;
 
 	/**
-	 * ÃèÊö
+	 * æè¿°
 	 */
 	@Column(name = "APPDESC", length = 500)
 	protected String desc;
@@ -73,19 +73,19 @@ public class SysApplication implements Serializable, JSONable {
 	protected long id;
 
 	/**
-	 * ÊÇ·ñÆôÓÃ
+	 * æ˜¯å¦å¯ç”¨
 	 */
 	@Column(name = "locked")
 	protected int locked;
 
 	/**
-	 * Ãû³Æ
+	 * åç§°
 	 */
 	@Column(name = "NAME", length = 250)
 	protected String name;
 
 	/**
-	 * ÀàĞÍ
+	 * ç±»å‹
 	 */
 	@Column(name = "TYPE", length = 50)
 	protected String type;
@@ -94,31 +94,31 @@ public class SysApplication implements Serializable, JSONable {
 	private SysTree node;
 
 	/**
-	 * ½Úµã±àºÅ
+	 * èŠ‚ç‚¹ç¼–å·
 	 */
 	@Column(name = "NODEID")
 	protected long nodeId;
 
 	/**
-	 * ÏÔÊ¾²Ëµ¥
+	 * æ˜¾ç¤ºèœå•
 	 */
 	@Column(name = "SHOWMENU")
 	protected int showMenu;
 
 	/**
-	 * ĞòºÅ
+	 * åºå·
 	 */
 	@Column(name = "SORT")
 	protected int sort;
 
 	/**
-	 * ĞŞ¸ÄÈË
+	 * ä¿®æ”¹äºº
 	 */
 	@Column(name = "UPDATEBY", length = 50)
 	protected String updateBy;
 
 	/**
-	 * ĞŞ¸ÄÈÕÆÚ
+	 * ä¿®æ”¹æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "UPDATEDATE")
@@ -131,7 +131,7 @@ public class SysApplication implements Serializable, JSONable {
 	protected String url;
 
 	/**
-	 * ¿ª·Å±ê¼Ç
+	 * å¼€æ”¾æ ‡è®°
 	 */
 	@Column(name = "OPENFLAG", length = 50)
 	protected String openFlag;

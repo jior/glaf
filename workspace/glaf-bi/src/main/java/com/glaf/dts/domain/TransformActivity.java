@@ -38,7 +38,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.util.DateUtils;
 
 /**
- * ´«µİ»î¶¯¶¨Òå
+ * ä¼ é€’æ´»åŠ¨å®šä¹‰
  * 
  * @author jior2008@gmail.com
  * 
@@ -50,57 +50,57 @@ public class TransformActivity implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Ö÷¼ü
+	 * ä¸»é”®
 	 */
 	@Id
 	@Column(name = "ID_", length = 50)
 	protected String id;
 
 	/**
-	 * Ö÷Ìâ
+	 * ä¸»é¢˜
 	 */
 	@Column(name = "TITLE_")
 	protected String title;
 
 	/**
-	 * Ö´ĞĞ±í´ïÊ½
+	 * æ‰§è¡Œè¡¨è¾¾å¼
 	 */
 	@Column(name = "CRONEXPRESSION_")
 	protected String cronExpression;
 
 	/**
-	 * Ö´ĞĞÖÜÆÚ
+	 * æ‰§è¡Œå‘¨æœŸ
 	 */
 	@Column(name = "EXECUTECYCLE_")
 	protected String executeCycle;
 
 	/**
-	 * ´´½¨Ê±¼ä
+	 * åˆ›å»ºæ—¶é—´
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATETIME_", updatable = false)
 	protected Date createTime;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY_", updatable = false)
 	protected String createBy;
 
 	/**
-	 * ÃèÊö
+	 * æè¿°
 	 */
 	@Column(name = "DESCRIPTION_", length = 500)
 	protected String description;
 
 	/**
-	 * ÊÇ·ñËø¶¨
+	 * æ˜¯å¦é”å®š
 	 */
 	@Column(name = "LOCKED_")
 	protected int locked;
 
 	/**
-	 * ĞŞ¶©°æ±¾
+	 * ä¿®è®¢ç‰ˆæœ¬
 	 */
 	@Column(name = "REVISION_")
 	protected int revision;

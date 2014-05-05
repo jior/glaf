@@ -25,14 +25,14 @@ import java.util.Map;
 public interface DataManager {
 
 	/**
-	 * »ñÈ¡½á¹û¼¯
+	 * è·å–ç»“æœé›†
 	 * 
 	 * @param connection
-	 *            Êı¾İ¿âÁ¬½Ó
+	 *            æ•°æ®åº“è¿æ¥
 	 * @param query
-	 *            ²éÑ¯Óï¾ä
+	 *            æŸ¥è¯¢è¯­å¥
 	 * @param paramMap
-	 *            ²ÎÊı
+	 *            å‚æ•°
 	 * @return
 	 */
 	List<?> getResultList(Connection connection, String query,

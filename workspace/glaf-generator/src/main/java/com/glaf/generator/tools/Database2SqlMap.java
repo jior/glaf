@@ -33,16 +33,16 @@ public class Database2SqlMap {
 				System.out.println("tablename->" + tablename);
 				Table table = new Table();
 				table.setTablename(tablename);
-				// »ñÈ¡Ö÷¼ü
+				// è·å–ä¸»é”®
 
 				ResultSet rs2 = dbmd.getPrimaryKeys(null, null, tablename);
 				while (rs2.next()) {
-					System.out.println("Ä¿Â¼Ãû£º" + rs2.getString(1));
-					System.out.println("Ä£Ê½Ãû£º" + rs2.getString(2));
-					System.out.println("±íÃû£º" + rs2.getString(3));
-					System.out.println("ÁĞÃû£º" + rs2.getString(4));
-					System.out.println("ÁĞÃûË³ĞòºÅ£º" + rs2.getString(5));
-					System.out.println("Ö÷¼üÃû£º" + rs2.getString(6));
+					System.out.println("ç›®å½•åï¼š" + rs2.getString(1));
+					System.out.println("æ¨¡å¼åï¼š" + rs2.getString(2));
+					System.out.println("è¡¨åï¼š" + rs2.getString(3));
+					System.out.println("åˆ—åï¼š" + rs2.getString(4));
+					System.out.println("åˆ—åé¡ºåºå·ï¼š" + rs2.getString(5));
+					System.out.println("ä¸»é”®åï¼š" + rs2.getString(6));
 				}
 				rs2.close();
 
@@ -102,7 +102,7 @@ public class Database2SqlMap {
 		}
 
 		/**
-		 * ²úÉúÀàÃû¼°±ğÃû
+		 * äº§ç”Ÿç±»ååŠåˆ«å
 		 */
 		Element typeAlias = r.addElement("typeAlias");
 		typeAlias.addAttribute("alias", alias);
@@ -131,7 +131,7 @@ public class Database2SqlMap {
 		}
 
 		/**
-		 * ²úÉú½á¹ûÓ³Éä¼¯
+		 * äº§ç”Ÿç»“æœæ˜ å°„é›†
 		 */
 		Element resultMap = r.addElement("resultMap");
 		resultMap.addAttribute("id", alias + "Map");
@@ -149,7 +149,7 @@ public class Database2SqlMap {
 		}
 
 		/**
-		 * ²åÈëÊı¾İ
+		 * æ’å…¥æ•°æ®
 		 */
 		Element insert = r.addElement("insert");
 		insert.addAttribute("id", "insert" + className);
@@ -180,7 +180,7 @@ public class Database2SqlMap {
 		insert.addText(buffer.toString());
 
 		/**
-		 * ¶¯Ì¬²åÈëÊı¾İ
+		 * åŠ¨æ€æ’å…¥æ•°æ®
 		 */
 		Element dynamicInsert = r.addElement("insert");
 		dynamicInsert.addAttribute("id", "dynamicInsert" + className);
@@ -230,7 +230,7 @@ public class Database2SqlMap {
 		dynamicInsert.addText(newline + "\t\t ) ");
 
 		/**
-		 * ĞŞ¸ÄÊı¾İ
+		 * ä¿®æ”¹æ•°æ®
 		 */
 		Element update = r.addElement("update");
 		update.addAttribute("id", "update" + className);
@@ -255,7 +255,7 @@ public class Database2SqlMap {
 				+ pk_property + "# ");
 
 		/**
-		 * ¸ù¾İÖ÷¼üÉ¾³ıÊı¾İ
+		 * æ ¹æ®ä¸»é”®åˆ é™¤æ•°æ®
 		 */
 		Element delete = r.addElement("delete");
 		delete.addAttribute("id", "delete" + className);
@@ -272,7 +272,7 @@ public class Database2SqlMap {
 				+ pk_column + " = #" + pk_property + "# ");
 
 		/**
-		 * ²éÑ¯Í³¼ÆÊı¾İ
+		 * æŸ¥è¯¢ç»Ÿè®¡æ•°æ®
 		 */
 		Element count = r.addElement("select");
 		count.addAttribute("id", "count" + className);
@@ -284,7 +284,7 @@ public class Database2SqlMap {
 		dynamic55.addAttribute("prepend", "WHERE");
 
 		/**
-		 * Ö÷¼üÒ²·ÅÈë²éÑ¯Ìõ¼şÖĞ
+		 * ä¸»é”®ä¹Ÿæ”¾å…¥æŸ¥è¯¢æ¡ä»¶ä¸­
 		 */
 		if (pk_column != null) {
 			colMap.put(pk_column, pk_property);
@@ -371,7 +371,7 @@ public class Database2SqlMap {
 		iterate55.addText(" ( " + pk_column + " = #" + pk_property + "s[]# ) ");
 
 		/**
-		 * ²éÑ¯Êı¾İ
+		 * æŸ¥è¯¢æ•°æ®
 		 */
 		Element select = r.addElement("select");
 		select.addAttribute("id", "select" + className);
@@ -383,7 +383,7 @@ public class Database2SqlMap {
 		dynamic5.addAttribute("prepend", "WHERE");
 
 		/**
-		 * Ö÷¼üÒ²·ÅÈë²éÑ¯Ìõ¼şÖĞ
+		 * ä¸»é”®ä¹Ÿæ”¾å…¥æŸ¥è¯¢æ¡ä»¶ä¸­
 		 */
 		if (pk_column != null) {
 			colMap.put(pk_column, pk_property);

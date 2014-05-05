@@ -84,7 +84,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	}
 
 	/**
-	 * É¾³ıÊı¾İ
+	 * åˆ é™¤æ•°æ®
 	 * 
 	 * @param model
 	 */
@@ -104,7 +104,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	}
 
 	/**
-	 * »ñÈ¡Ò»Ò³Êı¾İ
+	 * è·å–ä¸€é¡µæ•°æ®
 	 * 
 	 * @param pageNo
 	 * @param pageSize
@@ -467,7 +467,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 				while (iterator.hasNext()) {
 					TableModel tableData = iterator.next();
 					/**
-					 * Ê¹ÓÃ¾ÛºÏÖ÷¼üÅĞ¶Ï
+					 * ä½¿ç”¨èšåˆä¸»é”®åˆ¤æ–­
 					 */
 					colMap.clear();
 					buffer.delete(0, buffer.length());
@@ -489,7 +489,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 					}
 					String aggregationKey = buffer.toString();
 					aggregationKeys.add(aggregationKey);
-					tableData.setAggregationKey(aggregationKey);// ÉèÖÃ¾ÛºÏÖ÷¼üÖµ
+					tableData.setAggregationKey(aggregationKey);// è®¾ç½®èšåˆä¸»é”®å€¼
 				}
 
 				if (aggregationKeys.size() > 0
@@ -773,7 +773,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	}
 
 	/**
-	 * ±£´æJSONÊı×éÊı¾İµ½Ö¸¶¨µÄ±í
+	 * ä¿å­˜JSONæ•°ç»„æ•°æ®åˆ°æŒ‡å®šçš„è¡¨
 	 * 
 	 * @param tableName
 	 * @param rows
@@ -798,7 +798,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	}
 
 	/**
-	 * ±£´æJSONÊı¾İµ½Ö¸¶¨µÄ±í
+	 * ä¿å­˜JSONæ•°æ®åˆ°æŒ‡å®šçš„è¡¨
 	 * 
 	 * @param tableName
 	 * @param jsonObject

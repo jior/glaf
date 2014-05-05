@@ -24,13 +24,13 @@ import java.util.Set;
 @SuppressWarnings("rawtypes")
 public interface Cacheable {
 	/**
-	 * Çå¿Õ»º´æ
+	 * æ¸…ç©ºç¼“å­˜
 	 * 
 	 */
 	void clear();
 
 	/**
-	 * É¾³ı »º´æ
+	 * åˆ é™¤ ç¼“å­˜
 	 * 
 	 * @param key
 	 * @param mapkey
@@ -39,7 +39,7 @@ public interface Cacheable {
 	Long deleteHashCache(byte[] key, byte[] mapkey);
 
 	/**
-	 * »ñÈ¡»º´æ
+	 * è·å–ç¼“å­˜
 	 * 
 	 * @param key
 	 * @return
@@ -47,7 +47,7 @@ public interface Cacheable {
 	Object getCache(byte[] key);
 
 	/**
-	 * »ñÈ¡»º´æ
+	 * è·å–ç¼“å­˜
 	 * 
 	 * @param key
 	 * @param mapkey
@@ -56,7 +56,7 @@ public interface Cacheable {
 	Object getHashCache(byte[] key, byte[] mapkey);
 
 	/**
-	 * ¸ù¾İ ÕıÔò±í´ïÊ½key »ñÈ¡ ÁĞ±í
+	 * æ ¹æ® æ­£åˆ™è¡¨è¾¾å¼key è·å– åˆ—è¡¨
 	 * 
 	 * @param keys
 	 * @return
@@ -64,7 +64,7 @@ public interface Cacheable {
 	Set getHashKeys(byte[] key);
 
 	/**
-	 * »ñÈ¡ mapµÄ³¤¶È
+	 * è·å– mapçš„é•¿åº¦
 	 * 
 	 * @param key
 	 * @return
@@ -72,7 +72,7 @@ public interface Cacheable {
 	Long getHashSize(byte[] key);
 
 	/**
-	 * »ñÈ¡ mapÖĞµÄËùÓĞÖµ
+	 * è·å– mapä¸­çš„æ‰€æœ‰å€¼
 	 * 
 	 * @param key
 	 * @return
@@ -80,7 +80,7 @@ public interface Cacheable {
 	List getHashValues(byte[] key);
 
 	/**
-	 * ¸ù¾İ ÕıÔò±í´ïÊ½key »ñÈ¡ ÁĞ±í
+	 * æ ¹æ® æ­£åˆ™è¡¨è¾¾å¼key è·å– åˆ—è¡¨
 	 * 
 	 * @param keys
 	 * @return
@@ -88,14 +88,14 @@ public interface Cacheable {
 	Collection getKeys(byte[] keys);
 
 	/**
-	 * »ñÈ¡ mapµÄ³¤¶È
+	 * è·å– mapçš„é•¿åº¦
 	 * 
 	 * @return
 	 */
 	Long getSize();
 
 	/**
-	 * É¾³ı »º´æ
+	 * åˆ é™¤ ç¼“å­˜
 	 * 
 	 * @param key
 	 * @return
@@ -103,7 +103,7 @@ public interface Cacheable {
 	String remove(byte[] key);
 
 	/**
-	 * ¸üĞÂ »º´æ
+	 * æ›´æ–° ç¼“å­˜
 	 * 
 	 * @param key
 	 * @param value
@@ -113,7 +113,7 @@ public interface Cacheable {
 	Object update(byte[] key, byte[] value, Long expire);
 
 	/**
-	 * ¸üĞÂ »º´æ
+	 * æ›´æ–° ç¼“å­˜
 	 * 
 	 * @param key
 	 * @param mapkey

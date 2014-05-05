@@ -78,7 +78,7 @@ public class SendSimpleMailTaskBean {
 		if (conf.get("RunningTasks_template") != null) {
 			tpl_path = conf.get("RunningTasks_template");
 		}
-		String subject = "${res_system_name} ${now}待办任务提醒";
+		String subject = "${res_system_name} ${now}寰呭姙浠诲姟鎻愰啋";
 		if (conf.get("RunningTasks_subject") != null) {
 			subject = conf.get("RunningTasks_subject");
 		}

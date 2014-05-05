@@ -29,7 +29,7 @@ import com.glaf.core.util.PageResult;
 public interface GroupService {
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ı¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®åˆ é™¤è®°å½•
 	 * 
 	 * @return
 	 */
@@ -37,7 +37,7 @@ public interface GroupService {
 	void deleteById(String id);
 
 	/**
-	 * ¸ù¾İÖ÷¼üÉ¾³ı¶àÌõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®åˆ é™¤å¤šæ¡è®°å½•
 	 * 
 	 * @return
 	 */
@@ -45,21 +45,21 @@ public interface GroupService {
 	void deleteByIds(List<String> rowIds);
 
 	/**
-	 * ¸ù¾İÖ÷¼ü»ñÈ¡Ò»Ìõ¼ÇÂ¼
+	 * æ ¹æ®ä¸»é”®è·å–ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */
 	Group getGroup(String id);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼×ÜÊı
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•æ€»æ•°
 	 * 
 	 * @return
 	 */
 	int getGroupCountByQueryCriteria(GroupQuery query);
 
 	/**
-	 * »ñÈ¡Ò»Ò³Èº×é
+	 * è·å–ä¸€é¡µç¾¤ç»„
 	 * 
 	 * @param pageNo
 	 * @param pageSize
@@ -69,7 +69,7 @@ public interface GroupService {
 			int pageSize);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡Ò»Ò³µÄÊı¾İ
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–ä¸€é¡µçš„æ•°æ®
 	 * 
 	 * @return
 	 */
@@ -77,7 +77,7 @@ public interface GroupService {
 			GroupQuery query);
 
 	/**
-	 * Í¨¹ıÓÃ»§ÕËºÅ»ñÈ¡Èº×é
+	 * é€šè¿‡ç”¨æˆ·è´¦å·è·å–ç¾¤ç»„
 	 * 
 	 * @param userId
 	 * @return
@@ -85,7 +85,7 @@ public interface GroupService {
 	List<Group> getGroupsByUserId(String userId);
 
 	/**
-	 * Í¨¹ıÓÃ»§ÕËºÅ¼°×éÀàĞÍ»ñÈ¡Èº×é
+	 * é€šè¿‡ç”¨æˆ·è´¦å·åŠç»„ç±»å‹è·å–ç¾¤ç»„
 	 * 
 	 * @param userId
 	 * @param type
@@ -94,7 +94,7 @@ public interface GroupService {
 	List<Group> getGroupsByUserIdAndType(String userId, String type);
 
 	/**
-	 * »ñÈ¡Ä³¸öÈº×éµÄÓÃ»§
+	 * è·å–æŸä¸ªç¾¤ç»„çš„ç”¨æˆ·
 	 * 
 	 * @param groupId
 	 * @return
@@ -103,7 +103,7 @@ public interface GroupService {
 	
 	
 	/**
-	 * »ñÈ¡Ä³¸öÈº×éµÄÁìµ¼
+	 * è·å–æŸä¸ªç¾¤ç»„çš„é¢†å¯¼
 	 * 
 	 * @param groupId
 	 * @return
@@ -111,7 +111,7 @@ public interface GroupService {
 	List<String> getLeaderUserIdsByGroupId(String groupId);
 	
 	/**
-	 * ¸ù¾İÈº×éÃû³Æ¼°ÀàĞÍ»ñÈ¡Èº×éÓÃ»§
+	 * æ ¹æ®ç¾¤ç»„åç§°åŠç±»å‹è·å–ç¾¤ç»„ç”¨æˆ·
 	 * @param groupName
 	 * @param groupType
 	 * @return
@@ -119,14 +119,14 @@ public interface GroupService {
 	List<String> getUserIdsByGroupNameAndType(String groupName, String groupType);
 
 	/**
-	 * ¸ù¾İ²éÑ¯²ÎÊı»ñÈ¡¼ÇÂ¼ÁĞ±í
+	 * æ ¹æ®æŸ¥è¯¢å‚æ•°è·å–è®°å½•åˆ—è¡¨
 	 * 
 	 * @return
 	 */
 	List<Group> list(GroupQuery query);
 
 	/**
-	 * ±£´æÒ»Ìõ¼ÇÂ¼
+	 * ä¿å­˜ä¸€æ¡è®°å½•
 	 * 
 	 * @return
 	 */
@@ -134,7 +134,7 @@ public interface GroupService {
 	void save(Group group);
 
 	/**
-	 * ±£´æÈº×éÓÃ»§
+	 * ä¿å­˜ç¾¤ç»„ç”¨æˆ·
 	 * 
 	 * @param groupId
 	 * @param userIds
@@ -143,7 +143,7 @@ public interface GroupService {
 	void saveGroupUsers(String groupId, Set<String> userIds);
 	
 	/**
-	 * ±£´æÈº×éÁìµ¼
+	 * ä¿å­˜ç¾¤ç»„é¢†å¯¼
 	 * 
 	 * @param groupId
 	 * @param userIds
@@ -152,12 +152,12 @@ public interface GroupService {
 	void saveGroupLeaders(String groupId, Set<String> userIds);
 
 	/**
-	 * ÅÅĞò
+	 * æ’åº
 	 * 
 	 * @param bean
 	 *            Group
 	 * @param operate
-	 *            int ²Ù×÷
+	 *            int æ“ä½œ
 	 */
 	@Transactional
 	void sort(Group bean, int operate);

@@ -37,9 +37,9 @@ import com.glaf.jbpm.config.JbpmObjectFactory;
 import com.glaf.jbpm.container.ProcessContainer;
 
 /**
- * ÈÎÎñ·ÖÅäËµÃ÷£º ¸ù¾İÓÅÏÈ¼¶Ë³Ğò£¬ÉèÖÃÈÎÎñµÄ²ÎÓëÕß<br>
- * 1¡¢Ö±½Ó´ÓÍâ²¿»ñÈ¡µÄ¶¯Ì¬²ÎÓëÕßID <br>
- * 2¡¢Á÷³ÌÈÎÎñÔ¤¶¨ÒåµÄ²ÎÓëÕß<br>
+ * ä»»åŠ¡åˆ†é…è¯´æ˜ï¼š æ ¹æ®ä¼˜å…ˆçº§é¡ºåºï¼Œè®¾ç½®ä»»åŠ¡çš„å‚ä¸è€…<br>
+ * 1ã€ç›´æ¥ä»å¤–éƒ¨è·å–çš„åŠ¨æ€å‚ä¸è€…ID <br>
+ * 2ã€æµç¨‹ä»»åŠ¡é¢„å®šä¹‰çš„å‚ä¸è€…<br>
  * 
  */
 public class GeneralAssignment implements AssignmentHandler {
@@ -51,13 +51,13 @@ public class GeneralAssignment implements AssignmentHandler {
 	private transient AssignableHelper helper;
 
 	/**
-	 * ¶¯Ì¬ÉèÖÃµÄ²ÎÓëÕßµÄ²ÎÊıÃû£¬»·¾³±äÁ¿¿ÉÒÔÍ¨¹ıcontextInstance.getVariable()È¡µÃ
-	 * ÀıÈç£ºcontextInstance.getVariable("SendDocAuditor");
+	 * åŠ¨æ€è®¾ç½®çš„å‚ä¸è€…çš„å‚æ•°åï¼Œç¯å¢ƒå˜é‡å¯ä»¥é€šè¿‡contextInstance.getVariable()å–å¾—
+	 * ä¾‹å¦‚ï¼šcontextInstance.getVariable("SendDocAuditor");
 	 */
 	private String dynamicActors;
 
 	/**
-	 * ½ÇÉ«±àºÅ
+	 * è§’è‰²ç¼–å·
 	 */
 	private String roleId;
 
@@ -87,7 +87,7 @@ public class GeneralAssignment implements AssignmentHandler {
 		logger.debug("-------------------------------------------------------");
 
 		/**
-		 * 1¡¢Ö±½Ó´ÓÍâ²¿»ñÈ¡µÄ¶¯Ì¬²ÎÓëÕßID
+		 * 1ã€ç›´æ¥ä»å¤–éƒ¨è·å–çš„åŠ¨æ€å‚ä¸è€…ID
 		 */
 		ContextInstance contextInstance = ctx.getContextInstance();
 		if (StringUtils.isNotEmpty(dynamicActors)) {
@@ -95,7 +95,7 @@ public class GeneralAssignment implements AssignmentHandler {
 					.getVariable(dynamicActors);
 			if (StringUtils.isNotEmpty(actorId)) {
 				if (LogUtils.isDebug()) {
-					logger.debug("Íâ²¿ÊäÈëµÄactors:" + actorId);
+					logger.debug("å¤–éƒ¨è¾“å…¥çš„actors:" + actorId);
 				}
 				helper.setActors(assignable, actorId);
 				return;
@@ -107,7 +107,7 @@ public class GeneralAssignment implements AssignmentHandler {
 		String taskName = ctx.getTask().getName();
 
 		/**
-		 * 2¡¢Á÷³ÌÈÎÎñÔ¤¶¨ÒåµÄ²ÎÓëÕß
+		 * 2ã€æµç¨‹ä»»åŠ¡é¢„å®šä¹‰çš„å‚ä¸è€…
 		 */
 
 		if (StringUtils.isEmpty(roleId)) {

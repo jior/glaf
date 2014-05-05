@@ -19,14 +19,14 @@
 package com.glaf.j2cache;
 
 /**
- * ÕìÌı»º´æÖĞµÄÄ³¸ö¼ÇÂ¼³¬Ê±
+ * ä¾¦å¬ç¼“å­˜ä¸­çš„æŸä¸ªè®°å½•è¶…æ—¶
  * 
  * @author oschina.net
  */
 public interface CacheExpiredListener {
 
 	/**
-	 * µ±»º´æÖĞµÄÄ³¸ö¶ÔÏó³¬Ê±±»Çå³ıµÄÊ±ºò´¥·¢
+	 * å½“ç¼“å­˜ä¸­çš„æŸä¸ªå¯¹è±¡è¶…æ—¶è¢«æ¸…é™¤çš„æ—¶å€™è§¦å‘
 	 * 
 	 * @param region
 	 * @param key

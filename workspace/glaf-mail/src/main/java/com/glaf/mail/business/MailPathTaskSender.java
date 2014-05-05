@@ -52,7 +52,7 @@ public class MailPathTaskSender {
 			.getLog(MailPathTaskSender.class);
 
 	/**
-	 * »ñÈ¡±¨±íµÄÓÊ¼şĞÅÏ¢
+	 * è·å–æŠ¥è¡¨çš„é‚®ä»¶ä¿¡æ¯
 	 * 
 	 * @param id
 	 * @return
@@ -113,7 +113,7 @@ public class MailPathTaskSender {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
-			logger.debug("¸½¼şÊıÁ¿£º" + dataFiles.size());
+			logger.debug("é™„ä»¶æ•°é‡ï¼š" + dataFiles.size());
 
 			// mailMessage.setDataFiles(dataFiles);
 			mailMessage.setFiles(dataFiles);
@@ -124,7 +124,7 @@ public class MailPathTaskSender {
 	}
 
 	/**
-	 * µİ¹é¶ÁÈ¡Ä¿Â¼ÎÄ¼ş
+	 * é€’å½’è¯»å–ç›®å½•æ–‡ä»¶
 	 * 
 	 * @param totalSize
 	 * @param mailTask
@@ -169,7 +169,7 @@ public class MailPathTaskSender {
 								String dir = file.getAbsolutePath();
 								dir = StringTools.replace(dir, root, "");
 								dataFile.setPath(dir);
-								logger.debug("Ìí¼Ó¸½¼ş£º" + dataFile.getFilename());
+								logger.debug("æ·»åŠ é™„ä»¶ï¼š" + dataFile.getFilename());
 								dataFiles.add(dataFile);
 							}
 						}
@@ -185,7 +185,7 @@ public class MailPathTaskSender {
 	}
 
 	/**
-	 * »ñÈ¡±¨±íµÄÓÊ¼şĞÅÏ¢
+	 * è·å–æŠ¥è¡¨çš„é‚®ä»¶ä¿¡æ¯
 	 * 
 	 * @param id
 	 * @return
@@ -198,7 +198,7 @@ public class MailPathTaskSender {
 	}
 
 	/**
-	 * »ñÈ¡±¨±íµÄÓÊ¼şĞÅÏ¢
+	 * è·å–æŠ¥è¡¨çš„é‚®ä»¶ä¿¡æ¯
 	 * 
 	 * @param taskId
 	 * @return
@@ -258,7 +258,7 @@ public class MailPathTaskSender {
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			throw new RuntimeException("·¢ËÍÓÊ¼şÊ§°Ü£¡", ex);
+			throw new RuntimeException("å‘é€é‚®ä»¶å¤±è´¥ï¼", ex);
 		}
 	}
 
@@ -271,7 +271,7 @@ public class MailPathTaskSender {
 			this.sendMail(mailTask);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			throw new RuntimeException("·¢ËÍÓÊ¼şÊ§°Ü£¡", ex);
+			throw new RuntimeException("å‘é€é‚®ä»¶å¤±è´¥ï¼", ex);
 		}
 	}
 
@@ -284,7 +284,7 @@ public class MailPathTaskSender {
 			this.sendMail(mailTask);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			throw new RuntimeException("·¢ËÍÓÊ¼şÊ§°Ü£¡", ex);
+			throw new RuntimeException("å‘é€é‚®ä»¶å¤±è´¥ï¼", ex);
 		}
 	}
 

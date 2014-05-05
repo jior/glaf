@@ -76,7 +76,7 @@ public class AssesssortController {
 					Assesssort assesssort = assesssortService
 							.getAssesssort(Long.valueOf(x));
 					/**
-					 * �˴�ҵ���߼������е���
+					 * 此处业务逻辑需自行调整
 					 */
 					if (assesssort != null
 							&& (StringUtils.equals(assesssort.getCreateBy(),
@@ -91,7 +91,7 @@ public class AssesssortController {
 			Assesssort assesssort = assesssortService.getAssesssort(Long
 					.valueOf(assesssortid));
 			/**
-			 * �˴�ҵ���߼������е���
+			 * 此处业务逻辑需自行调整
 			 */
 			if (assesssort != null
 					&& (StringUtils.equals(assesssort.getCreateBy(),
@@ -168,7 +168,7 @@ public class AssesssortController {
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
 		/**
-		 * �˴�ҵ���߼������е���
+		 * 此处业务逻辑需自行调整
 		 */
 		if (!loginContext.isSystemAdministrator()) {
 			String actorId = loginContext.getActorId();
@@ -332,7 +332,7 @@ public class AssesssortController {
 	}
 
 	/**
-	 * ѡ��ָ������
+	 * 选择指标类型
 	 * 
 	 * @param request
 	 * @param modelMap

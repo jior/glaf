@@ -71,10 +71,10 @@ public class PurchaseSearchController {
 		Purchase purchase = new Purchase();
 		int areaRole = Integer.parseInt(request.getParameter("areaRole"));
 		if (areaRole == 0) {
-			// ¸ù¾İÓÃ»§²¿ÃÅid »ñÈ¡Õû¸ö²¿ÃÅµÄ¶ÔÏó£¨GZ01£©
+			// æ ¹æ®ç”¨æˆ·éƒ¨é—¨id è·å–æ•´ä¸ªéƒ¨é—¨çš„å¯¹è±¡ï¼ˆGZ01ï¼‰
 			SysDepartment curdept = sysDepartmentService.findById(user
 					.getDeptId());
-			// ¸ù¾İ²¿ÃÅCODE(ÀıÈçGZ01)½ØÈ¡Ç°2Î» ×÷ÎªµØÇø
+			// æ ¹æ®éƒ¨é—¨CODE(ä¾‹å¦‚GZ01)æˆªå–å‰2ä½ ä½œä¸ºåœ°åŒº
 			String curAreadeptCode = curdept.getCode().substring(0, 2);
 			purchase.setArea(curAreadeptCode);
 		}
@@ -94,19 +94,19 @@ public class PurchaseSearchController {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		PurchaseQuery query = new PurchaseQuery();
 		Tools.populate(query, params);
-		query.setActorId(loginContext.getActorId());// Ö»ÄÜ²éÕÒ×Ô¼º
+		query.setActorId(loginContext.getActorId());// åªèƒ½æŸ¥æ‰¾è‡ªå·±
 		query.setLoginContext(loginContext);
 
 		User user = RequestUtils.getUser(request);
 		/**
-		 * ²éÑ¯Ìõ¼ş
+		 * æŸ¥è¯¢æ¡ä»¶
 		 */
 		int areaRole = Integer.parseInt(request.getParameter("areaRole"));
 		if (areaRole == 0) {
-			// ¸ù¾İÓÃ»§²¿ÃÅid »ñÈ¡Õû¸ö²¿ÃÅµÄ¶ÔÏó£¨GZ01£©
+			// æ ¹æ®ç”¨æˆ·éƒ¨é—¨id è·å–æ•´ä¸ªéƒ¨é—¨çš„å¯¹è±¡ï¼ˆGZ01ï¼‰
 			SysDepartment curdept = sysDepartmentService.findById(user
 					.getDeptId());
-			// ¸ù¾İ²¿ÃÅCODE(ÀıÈçGZ01)½ØÈ¡Ç°2Î» ×÷ÎªµØÇø
+			// æ ¹æ®éƒ¨é—¨CODE(ä¾‹å¦‚GZ01)æˆªå–å‰2ä½ ä½œä¸ºåœ°åŒº
 			String curAreadeptCode = curdept.getCode().substring(0, 2);
 			query.setArea(curAreadeptCode);
 		} else {

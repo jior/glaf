@@ -129,7 +129,7 @@ public class SecurityConfig {
 						String key = it.next();
 						String value = p.get(key);
 						/**
-						 * 保证后面添加的配置不能覆盖前面的配置
+						 * 淇濊瘉鍚庨潰娣诲姞鐨勯厤缃笉鑳借鐩栧墠闈㈢殑閰嶇疆
 						 */
 						if (!filterChainDefinitionMap.containsKey(key)) {
 							filterChainDefinitionMap.put(key, value);
@@ -159,7 +159,7 @@ public class SecurityConfig {
 								String key = it.next();
 								String value = p.get(key);
 								/**
-								 * 保证后面添加的配置不能覆盖前面的配置
+								 * 淇濊瘉鍚庨潰娣诲姞鐨勯厤缃笉鑳借鐩栧墠闈㈢殑閰嶇疆
 								 */
 								if (!filterChainDefinitionMap.containsKey(key)) {
 									filterChainDefinitionMap.put(key, value);

@@ -28,22 +28,22 @@ public class AssessQuestionDetails implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 问题索引
+	 * 闂绱㈠紩
 	 */
 	private String index;
 
 	/**
-	 * 分类层次结构
+	 * 鍒嗙被灞傛缁撴瀯
 	 */
 	private AssessortTree sortTree;
 
 	/**
-	 * 考核内容
+	 * 鑰冩牳鍐呭
 	 */
 	private List<Assesscontent> contentList;
 
 	/**
-	 * 指标考核分类
+	 * 鎸囨爣鑰冩牳鍒嗙被
 	 * 
 	 * @return
 	 */

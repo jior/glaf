@@ -39,25 +39,25 @@ public class MyMenu implements Serializable, JSONable {
 	protected long id;
 
 	/**
-	 * 用户ID
+	 * 鐢ㄦ埛ID
 	 */
 	@Column(name = "USERID")
 	protected long userId;
 
 	/**
-	 * 标题
+	 * 鏍囬
 	 */
 	@Column(name = "TITLE", length = 250)
 	protected String title;
 
 	/**
-	 * 链接
+	 * 閾炬帴
 	 */
 	@Column(name = "URL", length = 500)
 	protected String url;
 
 	/**
-	 * 顺序
+	 * 椤哄簭
 	 */
 	@Column(name = "SORT")
 	protected int sort;

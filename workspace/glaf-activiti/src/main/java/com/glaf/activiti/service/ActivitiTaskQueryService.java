@@ -58,19 +58,19 @@ public interface ActivitiTaskQueryService {
 	List<Task> getTasks(String processInstanceId);
 
 	/**
-	 * 获取用户的待办任务（包含个人及组的任务）
+	 * 鑾峰彇鐢ㄦ埛鐨勫緟鍔炰换鍔★紙鍖呭惈涓汉鍙婄粍鐨勪换鍔★級
 	 * 
 	 * @param actorId
-	 *            用户编号
+	 *            鐢ㄦ埛缂栧彿
 	 * @return
 	 */
 	List<Task> getUserTasks(String actorId);
 
 	/**
-	 * 获取某个流程实例用户的待办任务（包含个人及组的任务）
+	 * 鑾峰彇鏌愪釜娴佺▼瀹炰緥鐢ㄦ埛鐨勫緟鍔炰换鍔★紙鍖呭惈涓汉鍙婄粍鐨勪换鍔★級
 	 * 
 	 * @param actorId
-	 *            用户编号
+	 *            鐢ㄦ埛缂栧彿
 	 * @return
 	 */
 	List<Task> getUserTasks(String processInstanceId, String actorId);

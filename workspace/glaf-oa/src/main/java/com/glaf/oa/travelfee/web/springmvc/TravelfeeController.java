@@ -66,7 +66,7 @@ public class TravelfeeController {
 					Travelfee travelfee = travelfeeService.getTravelfee(Long
 							.valueOf(x));
 					/**
-					 * 此处业务逻辑需自行调整
+					 * 姝ゅ涓氬姟閫昏緫闇�鑷璋冩暣
 					 */
 					if (travelfee != null) {
 						// travelfee.setDeleteFlag(1);
@@ -78,7 +78,7 @@ public class TravelfeeController {
 			Travelfee travelfee = travelfeeService.getTravelfee(Long
 					.valueOf(feeid));
 			/**
-			 * 此处业务逻辑需自行调整
+			 * 姝ゅ涓氬姟閫昏緫闇�鑷璋冩暣
 			 */
 			if (travelfee != null) {
 				// travelfee.setDeleteFlag(1);

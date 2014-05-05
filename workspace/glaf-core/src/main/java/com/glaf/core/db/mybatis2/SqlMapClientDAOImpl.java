@@ -264,7 +264,7 @@ public class SqlMapClientDAOImpl implements SqlMapClientDAO {
 				"getNextDbId", name);
 		if (dbid == null) {
 			dbid = new Dbid();
-			dbid.setTitle("系统内置主键");
+			dbid.setTitle("绯荤粺鍐呯疆涓婚敭");
 			dbid.setName(name);
 			dbid.setValue("1001");
 			dbid.setVersion(1);
@@ -274,7 +274,7 @@ public class SqlMapClientDAOImpl implements SqlMapClientDAO {
 		}
 		long oldValue = Long.parseLong(dbid.getValue());
 		long newValue = oldValue + 1;
-		dbid.setTitle("系统内置主键");
+		dbid.setTitle("绯荤粺鍐呯疆涓婚敭");
 		dbid.setValue(Long.toString(newValue));
 		dbid.setVersion(dbid.getVersion() + 1);
 		getSqlMapClientTemplate().update("updateNextDbId", dbid);

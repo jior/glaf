@@ -34,7 +34,7 @@ import com.glaf.report.service.IReportService;
 
 /**
  * 
- * 每个报表作为一个邮件发送的Job
+ * 姣忎釜鎶ヨ〃浣滀负涓�涓偖浠跺彂閫佺殑Job
  * 
  */
 public class ReportMailSenderJob implements Job {

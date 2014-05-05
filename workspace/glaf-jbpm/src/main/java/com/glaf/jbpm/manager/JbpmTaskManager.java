@@ -64,7 +64,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * ÎªÓÃ»§²úÉúÈÎÎñ
+	 * ä¸ºç”¨æˆ·äº§ç”Ÿä»»åŠ¡
 	 * 
 	 * @param taskInstanceId
 	 * @param actorIds
@@ -112,7 +112,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * ´´½¨ĞÂÈÎÎñÊµÀı
+	 * åˆ›å»ºæ–°ä»»åŠ¡å®ä¾‹
 	 * 
 	 * @param processInstanceId
 	 * @param taskName
@@ -172,7 +172,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÁ÷³ÌÊµÀıÓÉÓÃ»§´¦ÀíµÄÈÎÎñÊµÀı
+	 * è·å–æŸä¸ªæµç¨‹å®ä¾‹ç”±ç”¨æˆ·å¤„ç†çš„ä»»åŠ¡å®ä¾‹
 	 * 
 	 * @param jbpmContext
 	 * @param processInstanceId
@@ -200,7 +200,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * »ñÈ¡È«²¿ÓÃ»§µÄ´ı°ìÈÎÎñ£¬ÓÃÓÚÏûÏ¢ÏµÍ³µÄ´ß°ì¡£
+	 * è·å–å…¨éƒ¨ç”¨æˆ·çš„å¾…åŠä»»åŠ¡ï¼Œç”¨äºæ¶ˆæ¯ç³»ç»Ÿçš„å‚¬åŠã€‚
 	 * 
 	 * @param jbpmContext
 	 * @return
@@ -210,7 +210,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * »ñÈ¡ÓÃ»§ÒÑ¾­´¦Àí¹ı²¢ÇÒÁ÷³ÌÒÑ¾­Íê³ÉµÄÊµÀı±àºÅ
+	 * è·å–ç”¨æˆ·å·²ç»å¤„ç†è¿‡å¹¶ä¸”æµç¨‹å·²ç»å®Œæˆçš„å®ä¾‹ç¼–å·
 	 * 
 	 * @param jbpmContext
 	 * @param actorIds
@@ -224,7 +224,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * »ñÈ¡ÓÃ»§ÒÑ¾­´¦Àí¹ı²¢ÇÒÁ÷³ÌÒÑ¾­Íê³ÉµÄÊµÀı±àºÅ
+	 * è·å–ç”¨æˆ·å·²ç»å¤„ç†è¿‡å¹¶ä¸”æµç¨‹å·²ç»å®Œæˆçš„å®ä¾‹ç¼–å·
 	 * 
 	 * @param jbpmContext
 	 * @param paramMap
@@ -240,7 +240,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * ·ÖÒ³²éÑ¯
+	 * åˆ†é¡µæŸ¥è¯¢
 	 * 
 	 * @param currPageNo
 	 * @param pageSize
@@ -255,7 +255,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * »ñÈ¡Ò»Ò³ÈÎÎñÊµÀı
+	 * è·å–ä¸€é¡µä»»åŠ¡å®ä¾‹
 	 * 
 	 * @param jbpmContext
 	 * @param pageNo
@@ -344,7 +344,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸ö²ÎÓëÕßµÄÈÎÎñÊµÀı
+	 * è·å–æŸä¸ªå‚ä¸è€…çš„ä»»åŠ¡å®ä¾‹
 	 * 
 	 * @param actorId
 	 * @return
@@ -371,7 +371,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * ¸ù¾İÈÎÎñÊµÀı±àºÅ»ñÈ¡ÈÎÎñ
+	 * æ ¹æ®ä»»åŠ¡å®ä¾‹ç¼–å·è·å–ä»»åŠ¡
 	 * 
 	 * @param jbpmContext
 	 * @param taskInstanceId
@@ -416,7 +416,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * »ñÈ¡¶à¸ö²ÎÓëÕßµÄ´ı°ìÈÎÎñ
+	 * è·å–å¤šä¸ªå‚ä¸è€…çš„å¾…åŠä»»åŠ¡
 	 * 
 	 * @param jbpmContext
 	 * @param actorIds
@@ -430,7 +430,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * ¸ù¾İ²ÎÊı»ñÈ¡ÓÃ»§µÄÈÎÎñÊµÀı
+	 * æ ¹æ®å‚æ•°è·å–ç”¨æˆ·çš„ä»»åŠ¡å®ä¾‹
 	 * 
 	 * @param params
 	 * @return
@@ -457,7 +457,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * »ñÈ¡ÓÃ»§µÄ´ı°ìÈÎÎñ
+	 * è·å–ç”¨æˆ·çš„å¾…åŠä»»åŠ¡
 	 * 
 	 * @param actorId
 	 * @return
@@ -469,7 +469,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * ¸ù¾İÁ÷³ÌÊµÀı±àºÅºÍÓÃ»§±àºÅ»ñÈ¡ÓÃ»§µÄÈÎÎñÊµÀı±àºÅ
+	 * æ ¹æ®æµç¨‹å®ä¾‹ç¼–å·å’Œç”¨æˆ·ç¼–å·è·å–ç”¨æˆ·çš„ä»»åŠ¡å®ä¾‹ç¼–å·
 	 * 
 	 * @param actorId
 	 * @param processInstanceId
@@ -484,7 +484,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÁ÷³ÌÊµÀıµÄÈÎÎñÁĞ±í
+	 * è·å–æŸä¸ªæµç¨‹å®ä¾‹çš„ä»»åŠ¡åˆ—è¡¨
 	 * 
 	 * @param processInstanceId
 	 * @return
@@ -497,7 +497,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * ¸ù¾İÁ÷³ÌÊµÀı±àºÅ»ñÈ¡ÓÃ»§µÄÈÎÎñÊµÀı
+	 * æ ¹æ®æµç¨‹å®ä¾‹ç¼–å·è·å–ç”¨æˆ·çš„ä»»åŠ¡å®ä¾‹
 	 * 
 	 * @param processInstanceIds
 	 * @return
@@ -510,7 +510,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * »ñÈ¡Ä³Ğ©ÓÃ»§Ä³¸öÁ÷³ÌËùÓĞ°æ±¾µÄ´ı°ìÈÎÎñ
+	 * è·å–æŸäº›ç”¨æˆ·æŸä¸ªæµç¨‹æ‰€æœ‰ç‰ˆæœ¬çš„å¾…åŠä»»åŠ¡
 	 * 
 	 * @param jbpmContext
 	 * @param processNames
@@ -526,7 +526,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§Ä³¸öÁ÷³ÌËùÓĞ°æ±¾µÄ´ı°ìÈÎÎñ
+	 * è·å–æŸä¸ªç”¨æˆ·æŸä¸ªæµç¨‹æ‰€æœ‰ç‰ˆæœ¬çš„å¾…åŠä»»åŠ¡
 	 * 
 	 * @param jbpmContext
 	 * @param processNames
@@ -542,7 +542,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÁ÷³ÌËùÓĞ°æ±¾µÄ´ı°ìÈÎÎñ
+	 * è·å–æŸä¸ªæµç¨‹æ‰€æœ‰ç‰ˆæœ¬çš„å¾…åŠä»»åŠ¡
 	 * 
 	 * @param jbpmContext
 	 * @param processName
@@ -556,7 +556,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * »ñÈ¡Ä³Ğ©ÓÃ»§Ä³¸öÁ÷³ÌËùÓĞ°æ±¾µÄ´ı°ìÈÎÎñ
+	 * è·å–æŸäº›ç”¨æˆ·æŸä¸ªæµç¨‹æ‰€æœ‰ç‰ˆæœ¬çš„å¾…åŠä»»åŠ¡
 	 * 
 	 * @param jbpmContext
 	 * @param processName
@@ -572,7 +572,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * »ñÈ¡Ä³¸öÓÃ»§Ä³¸öÁ÷³ÌËùÓĞ°æ±¾µÄ´ı°ìÈÎÎñ
+	 * è·å–æŸä¸ªç”¨æˆ·æŸä¸ªæµç¨‹æ‰€æœ‰ç‰ˆæœ¬çš„å¾…åŠä»»åŠ¡
 	 * 
 	 * @param jbpmContext
 	 * @param processName
@@ -588,7 +588,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * »ñÈ¡ÓÃ»§ÒÑ¾­´¦Àí¹ıµÄÁ÷³ÌÊµÀı±àºÅ
+	 * è·å–ç”¨æˆ·å·²ç»å¤„ç†è¿‡çš„æµç¨‹å®ä¾‹ç¼–å·
 	 * 
 	 * @param params
 	 * @return
@@ -599,7 +599,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * »ñÈ¡ÓÃ»§ÒÑ¾­´¦Àí¹ıµÄÈÎÎñ
+	 * è·å–ç”¨æˆ·å·²ç»å¤„ç†è¿‡çš„ä»»åŠ¡
 	 * 
 	 * @param actorIds
 	 * @return
@@ -612,7 +612,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * »ñÈ¡ÓÃ»§ÒÑ¾­´¦Àí¹ıµÄÈÎÎñ
+	 * è·å–ç”¨æˆ·å·²ç»å¤„ç†è¿‡çš„ä»»åŠ¡
 	 * 
 	 * @param params
 	 * @return
@@ -623,7 +623,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * »ñÈ¡ÓÃ»§ÒÑ¾­´¦Àí¹ıµÄÈÎÎñ
+	 * è·å–ç”¨æˆ·å·²ç»å¤„ç†è¿‡çš„ä»»åŠ¡
 	 * 
 	 * @param actorId
 	 * @return
@@ -636,7 +636,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * »ñÈ¡ÓÃ»§ÒÑ¾­´¦Àí¹ıµÄÈÎÎñ
+	 * è·å–ç”¨æˆ·å·²ç»å¤„ç†è¿‡çš„ä»»åŠ¡
 	 * 
 	 * @param processName
 	 * @param actorIds
@@ -651,7 +651,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * »ñÈ¡ÓÃ»§ÒÑ¾­´¦Àí¹ıµÄÈÎÎñ
+	 * è·å–ç”¨æˆ·å·²ç»å¤„ç†è¿‡çš„ä»»åŠ¡
 	 * 
 	 * @param processName
 	 * @param actorId
@@ -666,7 +666,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * ½«Á÷³ÌÖĞ´ı°ìÈÎÎñÒÔÇ°µÄ²ÎÓëÕß¸ü¸ÄÎªĞÂµÄ²ÎÓëÕß
+	 * å°†æµç¨‹ä¸­å¾…åŠä»»åŠ¡ä»¥å‰çš„å‚ä¸è€…æ›´æ”¹ä¸ºæ–°çš„å‚ä¸è€…
 	 * 
 	 * @param jbpmContext
 	 * @param previousActorId
@@ -714,7 +714,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * ÖØĞÂ·ÖÅäÈÎÎñ
+	 * é‡æ–°åˆ†é…ä»»åŠ¡
 	 * 
 	 * @param taskInstanceId
 	 * @param actorIds
@@ -757,7 +757,7 @@ public class JbpmTaskManager {
 	}
 
 	/**
-	 * ÖØĞÂ·ÖÅäÈÎÎñ
+	 * é‡æ–°åˆ†é…ä»»åŠ¡
 	 * 
 	 * @param processInstanceId
 	 * @param taskName

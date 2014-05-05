@@ -82,12 +82,12 @@ public class UserOnlineController {
 			UserOnline userOnline = userOnlineService
 					.getUserOnline(loginContext.getActorId());
 			if (userOnline != null) {
-				// Èç¹ûÓĞÔÚÏßĞÅÏ¢£¬¸üĞÂ¼ì²éÊ±¼ä
+				// å¦‚æœæœ‰åœ¨çº¿ä¿¡æ¯ï¼Œæ›´æ–°æ£€æŸ¥æ—¶é—´
 				userOnlineService.remain(loginContext.getActorId());
 			} else {
-				// Èç¹û±»Ìß³öµÄÓÃ»§²»ÊÇÏµÍ³¹ÜÀíÔ±£¬×¢ÏúÓÃ»§
+				// å¦‚æœè¢«è¸¢å‡ºçš„ç”¨æˆ·ä¸æ˜¯ç³»ç»Ÿç®¡ç†å‘˜ï¼Œæ³¨é”€ç”¨æˆ·
 				if (!loginContext.isSystemAdministrator()) {
-					// ÍË³öÏµÍ³£¬Çå³ısession¶ÔÏó
+					// é€€å‡ºç³»ç»Ÿï¼Œæ¸…é™¤sessionå¯¹è±¡
 					request.getSession().removeAttribute(SysConstants.LOGIN);
 					request.getSession().removeAttribute(SysConstants.MENU);
 					try {
@@ -97,7 +97,7 @@ public class UserOnlineController {
 						cacheKey = Constants.USER_CACHE + actorId;
 						CacheFactory.remove(cacheKey);
 						ShiroSecurity.logout();
-						logger.info("ÓÃ»§"+actorId+"ÒÑ¾­ÏÂÏß£¡");
+						logger.info("ç”¨æˆ·"+actorId+"å·²ç»ä¸‹çº¿ï¼");
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}

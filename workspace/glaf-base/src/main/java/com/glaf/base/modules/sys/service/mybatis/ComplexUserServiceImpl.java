@@ -128,7 +128,7 @@ public class ComplexUserServiceImpl implements ComplexUserService {
 	}
 
 	/**
-	 * »ñÈ¡ÓÃ»§¹ÜÀíµÄ·ÖÖ§»ú¹¹
+	 * è·å–ç”¨æˆ·ç®¡ç†çš„åˆ†æ”¯æœºæ„
 	 * 
 	 * @param actorId
 	 * @return
@@ -165,7 +165,7 @@ public class ComplexUserServiceImpl implements ComplexUserService {
 			}
 		}
 
-		logger.debug("·Ö¼¶¹ÜÀí²¿ÃÅ±àºÅ:" + deptIds);
+		logger.debug("åˆ†çº§ç®¡ç†éƒ¨é—¨ç¼–å·:" + deptIds);
 
 		if (!deptIds.isEmpty()) {
 			for (Long deptId : deptIds) {
@@ -188,7 +188,7 @@ public class ComplexUserServiceImpl implements ComplexUserService {
 	}
 
 	/**
-	 * »ñÈ¡ÓÃ»§¹ÜÀíµÄ·ÖÖ§»ú¹¹µÄ±àºÅ¼¯ºÏ
+	 * è·å–ç”¨æˆ·ç®¡ç†çš„åˆ†æ”¯æœºæ„çš„ç¼–å·é›†åˆ
 	 * 
 	 * @param actorId
 	 * @return
@@ -246,7 +246,7 @@ public class ComplexUserServiceImpl implements ComplexUserService {
 	}
 
 	/**
-	 * »ñÈ¡ÓÃ»§¹ÜÀíµÄ·ÖÖ§»ú¹¹(SYS_DEPARTMENTµÄ·â×°)
+	 * è·å–ç”¨æˆ·ç®¡ç†çš„åˆ†æ”¯æœºæ„(SYS_DEPARTMENTçš„å°è£…)
 	 * 
 	 * @param actorId
 	 * @return

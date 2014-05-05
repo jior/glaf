@@ -79,7 +79,7 @@ public class ZooKeeperClientImpl implements ZooKeeperClient {
 						@Override
 						public String call() throws Exception {
 							Stat stat = zooKeeper.exists(pathPrefix, false);
-							// statΪnull��ʾ�޴˽ڵ㣬��Ҫ����
+							// stat为null表示无此节点，需要创建
 							if (stat == null) {
 								String createPath = zooKeeper.create(
 										pathPrefix, null,
@@ -114,7 +114,7 @@ public class ZooKeeperClientImpl implements ZooKeeperClient {
 						@Override
 						public String call() throws Exception {
 							Stat stat = zooKeeper.exists(pathPrefix, false);
-							// statΪnull��ʾ�޴˽ڵ㣬��Ҫ����
+							// stat为null表示无此节点，需要创建
 							if (stat == null) {
 								return zooKeeper.create(pathPrefix, Integer
 										.toString(size).getBytes("US-ASCII"),

@@ -26,7 +26,7 @@ import com.glaf.core.domain.SysLog;
 public interface ISysLogService {
 
 	/**
-	 * 保存
+	 * 淇濆瓨
 	 * 
 	 * @param bean
 	 *            SysLog
@@ -36,7 +36,7 @@ public interface ISysLogService {
 	boolean create(SysLog bean);
 
 	/**
-	 * 更新
+	 * 鏇存柊
 	 * 
 	 * @param bean
 	 *            SysLog
@@ -46,7 +46,7 @@ public interface ISysLogService {
 	boolean update(SysLog bean);
 
 	/**
-	 * 删除
+	 * 鍒犻櫎
 	 * 
 	 * @param bean
 	 *            SysLog
@@ -56,7 +56,7 @@ public interface ISysLogService {
 	boolean delete(SysLog bean);
 
 	/**
-	 * 删除
+	 * 鍒犻櫎
 	 * 
 	 * @param id
 	 *            int
@@ -66,7 +66,7 @@ public interface ISysLogService {
 	boolean delete(long id);
 
 	/**
-	 * 获取对象
+	 * 鑾峰彇瀵硅薄
 	 * 
 	 * @param id
 	 * @return

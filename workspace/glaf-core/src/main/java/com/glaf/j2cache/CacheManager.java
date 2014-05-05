@@ -31,7 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * »º´æ¹ÜÀíÆ÷
+ * ç¼“å­˜ç®¡ç†å™¨
  * 
  * @author oschina.net
  */
@@ -53,7 +53,7 @@ class CacheManager {
 	}
 
 	/**
-	 * ÅúÁ¿É¾³ı»º´æÖĞµÄÒ»Ğ©Êı¾İ
+	 * æ‰¹é‡åˆ é™¤ç¼“å­˜ä¸­çš„ä¸€äº›æ•°æ®
 	 * 
 	 * @param level
 	 * @param name
@@ -81,7 +81,7 @@ class CacheManager {
 	}
 
 	/**
-	 * Çå³ı»º´æÖĞµÄÄ³¸öÊı¾İ
+	 * æ¸…é™¤ç¼“å­˜ä¸­çš„æŸä¸ªæ•°æ®
 	 * 
 	 * @param level
 	 * @param name
@@ -98,7 +98,7 @@ class CacheManager {
 	}
 
 	/**
-	 * »ñÈ¡»º´æÖĞµÄÊı¾İ
+	 * è·å–ç¼“å­˜ä¸­çš„æ•°æ®
 	 * 
 	 * @param <T>
 	 * @param level
@@ -121,7 +121,7 @@ class CacheManager {
 	}
 
 	/**
-	 * »ñÈ¡»º´æÖĞµÄÊı¾İ
+	 * è·å–ç¼“å­˜ä¸­çš„æ•°æ®
 	 * 
 	 * @param level
 	 * @param name
@@ -225,7 +225,7 @@ class CacheManager {
 	}
 
 	/**
-	 * Ğ´Èë»º´æ
+	 * å†™å…¥ç¼“å­˜
 	 * 
 	 * @param level
 	 * @param name

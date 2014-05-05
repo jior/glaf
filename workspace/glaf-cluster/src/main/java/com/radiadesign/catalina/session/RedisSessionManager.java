@@ -281,9 +281,9 @@ public class RedisSessionManager extends ManagerBase implements Lifecycle {
 			poolConfig.setTestOnBorrow(false);
 			poolConfig.setTestOnReturn(false);
 			poolConfig.setTestWhileIdle(true);
-			poolConfig.setMinEvictableIdleTimeMillis(1000L * 60L * 10L); // ¿ÕÏĞ¶ÔÏó,¿ÕÏĞ¶à³¤Ê±¼ä»á±»ÇıÖğ³ö³ØÀï
-			poolConfig.setTimeBetweenEvictionRunsMillis(1000L * 30L); // ÇıÖğÏß³Ì30ÃëÖ´ĞĞÒ»´Î
-			poolConfig.setNumTestsPerEvictionRun(-1); // -1,±íÊ¾ÔÚÇıÖğÏß³ÌÖ´ĞĞÊ±,²âÊÔËùÓĞµÄ¿ÕÏĞ¶ÔÏó
+			poolConfig.setMinEvictableIdleTimeMillis(1000L * 60L * 10L); // ç©ºé—²å¯¹è±¡,ç©ºé—²å¤šé•¿æ—¶é—´ä¼šè¢«é©±é€å‡ºæ± é‡Œ
+			poolConfig.setTimeBetweenEvictionRunsMillis(1000L * 30L); // é©±é€çº¿ç¨‹30ç§’æ‰§è¡Œä¸€æ¬¡
+			poolConfig.setNumTestsPerEvictionRun(-1); // -1,è¡¨ç¤ºåœ¨é©±é€çº¿ç¨‹æ‰§è¡Œæ—¶,æµ‹è¯•æ‰€æœ‰çš„ç©ºé—²å¯¹è±¡
 
 			String[] serverlists = servers.split(",");
 			java.util.List<JedisShardInfo> shards = new java.util.ArrayList<JedisShardInfo>(
@@ -303,11 +303,11 @@ public class RedisSessionManager extends ManagerBase implements Lifecycle {
 				connectionPool = new JedisPool(poolConfig, shards.get(0)
 						.getHost(), shards.get(0).getPort(), shards.get(0)
 						.getTimeout(), shards.get(0).getPassword());
-				log.info("Ê¹ÓÃ:JedisPool");
+				log.info("ä½¿ç”¨:JedisPool");
 			}
 
 			log.info("RedisShards:" + shards.toString());
-			log.info("³õÊ¼»¯RedisManager:" + this.toString());
+			log.info("åˆå§‹åŒ–RedisManager:" + this.toString());
 
 		} catch (Exception e) {
 			e.printStackTrace();

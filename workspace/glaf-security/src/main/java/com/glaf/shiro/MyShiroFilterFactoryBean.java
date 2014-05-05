@@ -55,7 +55,7 @@ public class MyShiroFilterFactoryBean extends ShiroFilterFactoryBean {
 			logger.debug("add security filter chain:" + key + "=" + value);
 		}
 		/**
-		 * ÈçÏÂ¶¨ÒåÊÇÎªÁË·ÀÖ¹ÅäÖÃ´íÎóµ¼ÖÂ°²È«Â©¶´
+		 * å¦‚ä¸‹å®šä¹‰æ˜¯ä¸ºäº†é˜²æ­¢é…ç½®é”™è¯¯å¯¼è‡´å®‰å…¨æ¼æ´
 		 */
 		filterChainDefinitionMap.put("/rs/**", "authc");
 		filterChainDefinitionMap.put("/mx/**", "authc");

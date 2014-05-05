@@ -45,19 +45,19 @@ public class SysUser implements Serializable, User, JSONable {
 	private static final long serialVersionUID = -7677600372139823989L;
 
 	/**
-	 * ÓÃ»§Ãû
+	 * ç”¨æˆ·å
 	 */
 	@Column(name = "ACCOUNT", length = 50)
 	protected String account;
 
 	/**
-	 * ÕËºÅÀàĞÍ
+	 * è´¦å·ç±»å‹
 	 */
 	@Column(name = "ACCOUNTTYPE")
 	protected int accountType;
 
 	/**
-	 * ¹ÜÀíÔ±±êÊ¶
+	 * ç®¡ç†å‘˜æ ‡è¯†
 	 */
 	@Column(name = "ADMINFLAG", length = 10)
 	protected String adminFlag;
@@ -66,25 +66,25 @@ public class SysUser implements Serializable, User, JSONable {
 	private Set<SysApplication> apps = new HashSet<SysApplication>();
 
 	/**
-	 * ÆôÓÃ±ê¼Ç
+	 * å¯ç”¨æ ‡è®°
 	 */
 	@Column(name = "BLOCKED")
 	protected int blocked;
 
 	/**
-	 * ±àÂë
+	 * ç¼–ç 
 	 */
 	@Column(name = "CODE", length = 200)
 	protected String code;
 
 	/**
-	 * ´´½¨ÈË
+	 * åˆ›å»ºäºº
 	 */
 	@Column(name = "CREATEBY", length = 50)
 	protected String createBy;
 
 	/**
-	 * ´´½¨Ê±¼ä
+	 * åˆ›å»ºæ—¶é—´
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATETIME")
@@ -94,31 +94,31 @@ public class SysUser implements Serializable, User, JSONable {
 	private SysDepartment department;
 
 	/**
-	 * ²¿ÃÅ±àºÅ
+	 * éƒ¨é—¨ç¼–å·
 	 */
 	@Column(name = "DEPTID")
 	protected long deptId;
 
 	/**
-	 * ·ÏÆú±ê¼Ç
+	 * åºŸå¼ƒæ ‡è®°
 	 */
 	@Column(name = "DUMPFLAG")
 	protected int dumpFlag;
 
 	/**
-	 * ÓÊ¼ş
+	 * é‚®ä»¶
 	 */
 	@Column(name = "EMAIL", length = 200)
 	protected String email;
 
 	/**
-	 * ³ö²î
+	 * å‡ºå·®
 	 */
 	@Column(name = "EVECTION")
 	protected int evection;
 
 	/**
-	 * ´«Õæ
+	 * ä¼ çœŸ
 	 */
 	@Column(name = "FAX", length = 50)
 	protected String fax;
@@ -127,13 +127,13 @@ public class SysUser implements Serializable, User, JSONable {
 	private Set<SysFunction> functions = new HashSet<SysFunction>();
 
 	/**
-	 * ĞÔ±ğ
+	 * æ€§åˆ«
 	 */
 	@Column(name = "GENDER")
 	protected int gender;
 
 	/**
-	 * Ö°Îñ
+	 * èŒåŠ¡
 	 */
 	@Column(name = "HEADSHIP", length = 50)
 	protected String headship;
@@ -143,13 +143,13 @@ public class SysUser implements Serializable, User, JSONable {
 	protected long id;
 
 	/**
-	 * ×îºóµÇÂ¼IP
+	 * æœ€åç™»å½•IP
 	 */
 	@Column(name = "LASTLOGINIP", length = 80)
 	protected String lastLoginIP;
 
 	/**
-	 * ×îºóµÇÂ¼Ê±¼ä
+	 * æœ€åç™»å½•æ—¶é—´
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "LASTLOGINTIME")
@@ -159,13 +159,13 @@ public class SysUser implements Serializable, User, JSONable {
 	protected String menus;
 
 	/**
-	 * ÊÖ»ú
+	 * æ‰‹æœº
 	 */
 	@Column(name = "MOBILE", length = 50)
 	protected String mobile;
 
 	/**
-	 * ĞÕÃû
+	 * å§“å
 	 */
 	@Column(name = "NAME", length = 50)
 	protected String name;
@@ -174,7 +174,7 @@ public class SysUser implements Serializable, User, JSONable {
 	private List<SysDepartment> nestingDepartment;
 
 	/**
-	 * ÃÜÂë
+	 * å¯†ç 
 	 */
 	@Column(name = "PASSWORD", length = 50)
 	protected String password;
@@ -183,25 +183,25 @@ public class SysUser implements Serializable, User, JSONable {
 	private Set<SysDeptRole> roles = new HashSet<SysDeptRole>();
 
 	/**
-	 * ÉÏ¼¶Áìµ¼
+	 * ä¸Šçº§é¢†å¯¼
 	 */
 	@Column(name = "SUPERIORIDS", length = 250)
 	protected String superiorIds;
 
 	/**
-	 * µç»°
+	 * ç”µè¯
 	 */
 	@Column(name = "TELEPHONE", length = 50)
 	protected String telephone;
 
 	/**
-	 * ĞŞ¸ÄÈË
+	 * ä¿®æ”¹äºº
 	 */
 	@Column(name = "UPDATEBY", length = 50)
 	protected String updateBy;
 
 	/**
-	 * ĞŞ¸ÄÈÕÆÚ
+	 * ä¿®æ”¹æ—¥æœŸ
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "UPDATEDATE")
@@ -214,7 +214,7 @@ public class SysUser implements Serializable, User, JSONable {
 	private Set<SysUserRole> userRoles = new HashSet<SysUserRole>();
 
 	/**
-	 * ÓÃ»§Àà±ğ
+	 * ç”¨æˆ·ç±»åˆ«
 	 */
 	@Column(name = "USERTYPE")
 	protected int userType;

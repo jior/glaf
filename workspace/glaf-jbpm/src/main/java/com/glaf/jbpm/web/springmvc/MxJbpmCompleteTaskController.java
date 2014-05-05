@@ -92,7 +92,7 @@ public class MxJbpmCompleteTaskController {
 
 		if (taskInstanceId != null && StringUtils.isNotEmpty(actorId)) {
 			/**
-			 * ¸ù¾İÈÎÎñÊµÀı±àºÅºÍÓÃ»§±àºÅ»ñÈ¡´ı°ìÈÎÎñ
+			 * æ ¹æ®ä»»åŠ¡å®ä¾‹ç¼–å·å’Œç”¨æˆ·ç¼–å·è·å–å¾…åŠä»»åŠ¡
 			 */
 			taskItem = container.getTaskItem(taskInstanceId, actorId);
 			if (taskItem != null) {
@@ -104,7 +104,7 @@ public class MxJbpmCompleteTaskController {
 			}
 		} else if (processInstanceId != null && StringUtils.isNotEmpty(actorId)) {
 			/**
-			 * ¸ù¾İÁ÷³ÌÊµÀı±àºÅºÍÓÃ»§±àºÅ»ñÈ¡´ı°ìÈÎÎñ
+			 * æ ¹æ®æµç¨‹å®ä¾‹ç¼–å·å’Œç”¨æˆ·ç¼–å·è·å–å¾…åŠä»»åŠ¡
 			 */
 			taskItem = container.getMinTaskItem(actorId, processInstanceId);
 			if (taskItem != null) {
@@ -114,13 +114,13 @@ public class MxJbpmCompleteTaskController {
 		}
 
 		/**
-		 * Èç¹û´æÔÚ´ı°ìÈÎÎñ²¢ÇÒ¿ÉÒÔÌá½»ÉóºË
+		 * å¦‚æœå­˜åœ¨å¾…åŠä»»åŠ¡å¹¶ä¸”å¯ä»¥æäº¤å®¡æ ¸
 		 */
 		if (canSubmit && taskItem != null) {
 			ProcessContext ctx = new ProcessContext();
 			/**
-			 * Á÷³Ì¿ØÖÆ²ÎÊıÎªjson¸ñÊ½µÄ×Ö·û´®.<br>
-			 * ÀıÈç£º{money:100000,day:5,pass:true,deptId:"123", roleId:"R001"}
+			 * æµç¨‹æ§åˆ¶å‚æ•°ä¸ºjsonæ ¼å¼çš„å­—ç¬¦ä¸².<br>
+			 * ä¾‹å¦‚ï¼š{money:100000,day:5,pass:true,deptId:"123", roleId:"R001"}
 			 */
 			if (StringUtils.isNotEmpty(json)) {
 				Map<String, Object> jsonMap = JsonUtils.decode(json);
@@ -177,9 +177,9 @@ public class MxJbpmCompleteTaskController {
 		String responseDataType = RequestUtils.getStringValue(request,
 				"responseDataType");
 		/**
-		 * Èç¹ûÏìÓ¦µÄÊı¾İÀàĞÍÎªjson»òxml£¬ÄÇÃ´¸ù¾İ´¦Àí½á¹û½øĞĞÏìÓ¦¡£<br>
-		 * 200-³É¹¦ <br>
-		 * 500-Ê§°Ü<br>
+		 * å¦‚æœå“åº”çš„æ•°æ®ç±»å‹ä¸ºjsonæˆ–xmlï¼Œé‚£ä¹ˆæ ¹æ®å¤„ç†ç»“æœè¿›è¡Œå“åº”ã€‚<br>
+		 * 200-æˆåŠŸ <br>
+		 * 500-å¤±è´¥<br>
 		 */
 		if (StringUtils.equals(responseDataType, "json")) {
 			String encoding = request.getParameter("encoding");
@@ -243,9 +243,9 @@ public class MxJbpmCompleteTaskController {
 		}
 
 		/**
-		 * Èç¹ûÅäÖÃÁËÄ£°å£¬Ôò¸ù¾İÄ£°å¶¨Òå½øĞĞÏìÓ¦<br>
-		 * Ä£°å¶¨Òå±àºÅ¹æÔòÊÇ¡°Á÷³ÌÃû³Æ_complete_template¡±£¬Ò²¿ÉÒÔÊÇÈ«¾ÖµÄjbpm_complete_template£¬
-		 * ¶¨ÒåÔÚWEB-INF\conf\extensionÄ¿Â¼ÏÂµÄÈÎºÎÊôĞÔÎÄ¼ş¾ù¿É¡£
+		 * å¦‚æœé…ç½®äº†æ¨¡æ¿ï¼Œåˆ™æ ¹æ®æ¨¡æ¿å®šä¹‰è¿›è¡Œå“åº”<br>
+		 * æ¨¡æ¿å®šä¹‰ç¼–å·è§„åˆ™æ˜¯â€œæµç¨‹åç§°_complete_templateâ€ï¼Œä¹Ÿå¯ä»¥æ˜¯å…¨å±€çš„jbpm_complete_templateï¼Œ
+		 * å®šä¹‰åœ¨WEB-INF\conf\extensionç›®å½•ä¸‹çš„ä»»ä½•å±æ€§æ–‡ä»¶å‡å¯ã€‚
 		 */
 		String templateId = RequestUtils
 				.getStringValue(request, "y_templateId");

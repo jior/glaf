@@ -29,7 +29,7 @@ import org.apache.shiro.util.CollectionUtils;
 import org.apache.shiro.web.filter.authz.AuthorizationFilter;
 
 /**
- * ÓµÓĞÈÎºÎÒ»¸ö½ÇÉ«¼´¿É·ÃÎÊ
+ * æ‹¥æœ‰ä»»ä½•ä¸€ä¸ªè§’è‰²å³å¯è®¿é—®
  * 
  */
 public class AnyRoleAuthorizationFilter extends AuthorizationFilter {

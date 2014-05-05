@@ -40,21 +40,21 @@ public class FormLink implements java.lang.Comparable<FormLink>, Serializable,
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Ó¦ÓÃÃû³Æ
+	 * åº”ç”¨åç§°
 	 */
 	@Basic
 	@Column(name = "APPLICATIONNAME_")
 	protected String applicationName;
 
 	/**
-	 * ×ÓÓ¦ÓÃÃû³Æ
+	 * å­åº”ç”¨åç§°
 	 */
 	@Basic
 	@Column(name = "CHILDNAME_")
 	protected String childName;
 
 	/**
-	 * Ö÷¼ü
+	 * ä¸»é”®
 	 */
 	@Id
 	@Column(name = "ID_", length = 50, nullable = false)
@@ -67,21 +67,21 @@ public class FormLink implements java.lang.Comparable<FormLink>, Serializable,
 	protected String objectValue;
 
 	/**
-	 * ¹ØÁª¹ØÏµ£¬Ò»¶ÔÒ»£¨1£©»¹ÊÇÒ»¶Ô¶à£¨2£©
+	 * å…³è”å…³ç³»ï¼Œä¸€å¯¹ä¸€ï¼ˆ1ï¼‰è¿˜æ˜¯ä¸€å¯¹å¤šï¼ˆ2ï¼‰
 	 */
 	@Basic
 	@Column(name = "ONETOMANY_")
 	protected int oneToMany;
 
 	/**
-	 * ¹ØÁª±íµ¥µÄÅÅĞò×Ö¶Î£¨±íµ¥¶¨Òå½ÚµãÃû³Æ£©
+	 * å…³è”è¡¨å•çš„æ’åºå­—æ®µï¼ˆè¡¨å•å®šä¹‰èŠ‚ç‚¹åç§°ï¼‰
 	 */
 	@Basic
 	@Column(name = "ORDERBY_")
 	protected String orderBy;
 
 	/**
-	 * Ë³ĞòºÅ
+	 * é¡ºåºå·
 	 */
 	@Basic
 	@Column(name = "SORTNO_")

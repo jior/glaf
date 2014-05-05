@@ -28,21 +28,21 @@ import com.glaf.core.base.JSONable;
 public class BaseDataInfo implements Serializable, JSONable {
 	private static final long serialVersionUID = 4103533989257821676L;
 
-	protected long id; // »ù´¡ĞÅÏ¢ÄÚ²¿±êÊ¶ºÅ
+	protected long id; // åŸºç¡€ä¿¡æ¯å†…éƒ¨æ ‡è¯†å·
 
-	protected String name; // »ù´¡ĞÅÏ¢Ãû³Æ
+	protected String name; // åŸºç¡€ä¿¡æ¯åç§°
 
-	protected String code; // ´úÂë
+	protected String code; // ä»£ç 
 
 	protected String desc;
 
-	protected int deep; // Ê÷×´½á¹¹»ù´¡ĞÅÏ¢Éî¶È
+	protected int deep; // æ ‘çŠ¶ç»“æ„åŸºç¡€ä¿¡æ¯æ·±åº¦
 
-	protected String no; // »ù´¡ĞÅÏ¢ÄÚÈİÃû³Æ
+	protected String no; // åŸºç¡€ä¿¡æ¯å†…å®¹åç§°
 
-	protected int parentId; // »ù´¡ĞÅÏ¢¸¸Àà±êÊ¶ºÅ
+	protected int parentId; // åŸºç¡€ä¿¡æ¯çˆ¶ç±»æ ‡è¯†å·
 
-	protected String value;// Öµ
+	protected String value;// å€¼
 
 	protected Long nodeId;
 
@@ -86,7 +86,7 @@ public class BaseDataInfo implements Serializable, JSONable {
 
 	protected Date ext9;
 
-	protected double value1; // Ïà¹ØÊıÖµ£¬Ö÷ÒªÓĞ»ãÂÊ£¬µ¥Î»»»ËãµÈ
+	protected double value1; // ç›¸å…³æ•°å€¼ï¼Œä¸»è¦æœ‰æ±‡ç‡ï¼Œå•ä½æ¢ç®—ç­‰
 
 	protected double value2;
 

@@ -80,9 +80,9 @@ public class SalescontractController {
 		String processName = "SalesContractProcess";
 		ProcessContext ctx = new ProcessContext();
 		ctx.setRowId(salescontract.getId());
-		// »ñÈ¡ÉêÇëÈË
+		// è·å–ç”³è¯·äºº
 		User user = sysUserService.findByAccount(salescontract.getAppuser());
-		// »ñÈ¡²Ù×÷Õß
+		// è·å–æ“ä½œè€…
 		User opUser = RequestUtils.getUser(request);
 		if (salescontract.getWfstatus() == -5555) {
 			ctx.setActorId(salescontract.getAppuser());
@@ -92,22 +92,22 @@ public class SalescontractController {
 
 		ctx.setProcessName(processName);
 		String opinion = request.getParameter("approveOpinion");
-		ctx.setOpinion(opinion);// ÉóÅúÒâ¼û
+		ctx.setOpinion(opinion);// å®¡æ‰¹æ„è§
 		/**
-		 * ¹¤×÷Á÷¿ØÖÆ²ÎÊı
+		 * å·¥ä½œæµæ§åˆ¶å‚æ•°
 		 */
 		Collection<DataField> datafields = new ArrayList<DataField>();
-		// »ñÈ¡ ²¿ÃÅ½Úµã
+		// è·å– éƒ¨é—¨èŠ‚ç‚¹
 		long deptId02 = user.getDeptId();
 		SysDepartment curdept = sysDepartmentService.findById(deptId02);
-		// »ñÈ¡µ±µØ²¿ÃÅ½Úµã
+		// è·å–å½“åœ°éƒ¨é—¨èŠ‚ç‚¹
 		String curAreadeptCode = curdept.getCode().substring(0, 2);
 		SysDepartment curAreadept = sysDepartmentService
 				.findByCode(curAreadeptCode);
 
 		SysDepartment sysdeptMemSale = sysDepartmentService.findByCode("JT01");
 
-		// »ñÈ¡µ±µØĞĞÕş²¿ÃÅ
+		// è·å–å½“åœ°è¡Œæ”¿éƒ¨é—¨
 		SysDepartment admindept = sysDepartmentService
 				.findByCode(curAreadeptCode + "06");
 		DataField datafield1 = new DataField();
@@ -147,7 +147,7 @@ public class SalescontractController {
 					.getProcessinstanceid()).longValue()));
 
 			isOK = ProcessContainer.getContainer().completeTask(ctx);
-			logger.info("workflow ÖĞ");
+			logger.info("workflow ä¸­");
 		} else {
 			long processInstanceId = ProcessContainer.getContainer()
 					.startProcess(ctx);
@@ -174,7 +174,7 @@ public class SalescontractController {
 					Salescontract salescontract = salescontractService
 							.getSalescontract(Long.valueOf(x));
 					/**
-					 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+					 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 					 */
 					if (salescontract != null
 							&& (StringUtils.equals(salescontract.getCreateBy(),
@@ -196,7 +196,7 @@ public class SalescontractController {
 			Salescontract salescontract = salescontractService
 					.getSalescontract(Long.valueOf(id));
 			/**
-			 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+			 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 			 */
 			if (salescontract != null
 					&& (StringUtils.equals(salescontract.getCreateBy(),
@@ -239,16 +239,16 @@ public class SalescontractController {
 			request.setAttribute("salescontract", salescontract);
 			JSONObject rowJSON = salescontract.toJsonObject();
 			request.setAttribute("x_json", rowJSON.toJSONString());
-			// ÓÃ»§Ãû´¦Àí
+			// ç”¨æˆ·åå¤„ç†
 			String appusername = BaseDataManager.getInstance().getStringValue(
 					salescontract.getAppuser(), "SYS_USERS");
 			request.setAttribute("appusername", appusername);
 
 		} else {
-			// »ñÈ¡ ²¿ÃÅ½Úµã
+			// è·å– éƒ¨é—¨èŠ‚ç‚¹
 			long deptId01 = user.getDeptId();
 			SysDepartment curdept = sysDepartmentService.findById(deptId01);
-			// »ñÈ¡µ±µØ²¿ÃÅ½Úµã
+			// è·å–å½“åœ°éƒ¨é—¨èŠ‚ç‚¹
 			String curAreadeptCode = curdept.getCode().substring(0, 2);
 			request.setAttribute("area", curAreadeptCode);
 			salescontract = new Salescontract();
@@ -310,10 +310,10 @@ public class SalescontractController {
 		query.deleteFlag(0);
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
-		query.setStatusGreaterThanOrEqual(0);// ²éÑ¯×´Ì¬´óÓÚ0µÄ¼ÇÂ¼£¬-1ÎªÎŞĞ§
+		query.setStatusGreaterThanOrEqual(0);// æŸ¥è¯¢çŠ¶æ€å¤§äº0çš„è®°å½•ï¼Œ-1ä¸ºæ— æ•ˆ
 		List<String> actorIds = new ArrayList<String>();
 
-		// ÓÉÓÚÒ³ÃæÊäÈëµÄÈÕÆÚÃ»ÓĞÊ±·ÖÃë£¬²éÕÒ·¶Î§µÄÊ±ºò»ñÈ¡²»µ½×îºóÒ»ÌìµÄ¼ÇÂ¼,ÈËÎªÉèÖÃ
+		// ç”±äºé¡µé¢è¾“å…¥çš„æ—¥æœŸæ²¡æœ‰æ—¶åˆ†ç§’ï¼ŒæŸ¥æ‰¾èŒƒå›´çš„æ—¶å€™è·å–ä¸åˆ°æœ€åä¸€å¤©çš„è®°å½•,äººä¸ºè®¾ç½®
 		if (null != query.getAppdateLessThanOrEqual()) {
 			Date appdateLessThanOrEqual = query.getAppdateLessThanOrEqual();
 			// appdateLessThanOrEqual.setHours(23);
@@ -323,7 +323,7 @@ public class SalescontractController {
 		}
 
 		/**
-		 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+		 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 		 */
 		if (null == query.getWorkedProcessFlag()
 				|| "".equals(query.getWorkedProcessFlag())) {
@@ -393,7 +393,7 @@ public class SalescontractController {
 								.getStringValue(salescontract.getCompanyname(),
 										salescontract.getArea());
 						salescontract.setCompanyname(companyname_CN);
-						// ÓÃ»§Ãû´¦Àí
+						// ç”¨æˆ·åå¤„ç†
 						String appusername = BaseDataManager.getInstance()
 								.getStringValue(salescontract.getAppuser(),
 										"SYS_USERS");
@@ -463,12 +463,12 @@ public class SalescontractController {
 		query.deleteFlag(0);
 		query.setActorId(loginContext.getActorId());
 		query.setLoginContext(loginContext);
-		query.setStatusGreaterThanOrEqual(0);// ²éÑ¯×´Ì¬´óÓÚ0µÄ¼ÇÂ¼£¬-1ÎªÎŞĞ§
+		query.setStatusGreaterThanOrEqual(0);// æŸ¥è¯¢çŠ¶æ€å¤§äº0çš„è®°å½•ï¼Œ-1ä¸ºæ— æ•ˆ
 		User user = loginContext.getUser();
 		long deptId01 = user.getDeptId();
 		SysDepartment curdept = sysDepartmentService.findById(deptId01);
 
-		// ÓÉÓÚÒ³ÃæÊäÈëµÄÈÕÆÚÃ»ÓĞÊ±·ÖÃë£¬²éÕÒ·¶Î§µÄÊ±ºò»ñÈ¡²»µ½×îºóÒ»ÌìµÄ¼ÇÂ¼,ÈËÎªÉèÖÃ
+		// ç”±äºé¡µé¢è¾“å…¥çš„æ—¥æœŸæ²¡æœ‰æ—¶åˆ†ç§’ï¼ŒæŸ¥æ‰¾èŒƒå›´çš„æ—¶å€™è·å–ä¸åˆ°æœ€åä¸€å¤©çš„è®°å½•,äººä¸ºè®¾ç½®
 		if (null != query.getAppdateLessThanOrEqual()) {
 			Date appdateLessThanOrEqual = query.getAppdateLessThanOrEqual();
 			// appdateLessThanOrEqual.setHours(23);
@@ -551,7 +551,7 @@ public class SalescontractController {
 								.getStringValue(salescontract.getCompanyname(),
 										salescontract.getArea());
 						salescontract.setCompanyname(companyname_CN);
-						// ÓÃ»§Ãû´¦Àí
+						// ç”¨æˆ·åå¤„ç†
 						String appusername = BaseDataManager.getInstance()
 								.getStringValue(salescontract.getAppuser(),
 										"SYS_USERS");
@@ -620,7 +620,7 @@ public class SalescontractController {
 			request.setAttribute("salescontract", salescontract);
 			JSONObject rowJSON = salescontract.toJsonObject();
 			request.setAttribute("x_json", rowJSON.toJSONString());
-			// ÓÃ»§Ãû´¦Àí
+			// ç”¨æˆ·åå¤„ç†
 			String appusername = BaseDataManager.getInstance().getStringValue(
 					salescontract.getAppuser(), "SYS_USERS");
 			request.setAttribute("appusername", appusername);
@@ -698,7 +698,7 @@ public class SalescontractController {
 					Salescontract salescontract = salescontractService
 							.getSalescontract(Long.valueOf(x));
 					/**
-					 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+					 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 					 */
 
 					if (salescontract.getStatus() == 1) {
@@ -715,7 +715,7 @@ public class SalescontractController {
 			Salescontract salescontract = salescontractService
 					.getSalescontract(Long.valueOf(id));
 			/**
-			 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+			 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 			 */
 
 			if (salescontract.getStatus() == 0
@@ -783,7 +783,7 @@ public class SalescontractController {
 		salescontract.setUpdatedate(new Date());
 		salescontract.setUpdateby(actorId);
 
-		// ´¦ÀíµØÇø
+		// å¤„ç†åœ°åŒº
 		salescontract.setArea(request.getParameter("area"));
 		salescontractService.save(salescontract);
 
@@ -839,7 +839,7 @@ public class SalescontractController {
 			salescontract.setUpdatedate(new Date());
 			salescontract.setUpdateby(actorId);
 
-			// ´¦ÀíµØÇø
+			// å¤„ç†åœ°åŒº
 			salescontract.setArea(request.getParameter("area"));
 			salescontractService.save(salescontract);
 			boolean returnFlag = false;
@@ -895,20 +895,20 @@ public class SalescontractController {
 		ctx.setActorId(actorId);
 		ctx.setProcessName(processName);
 		/**
-		 * ¹¤×÷Á÷¿ØÖÆ²ÎÊı
+		 * å·¥ä½œæµæ§åˆ¶å‚æ•°
 		 */
 		Collection<DataField> datafields = new ArrayList<DataField>();
-		// »ñÈ¡ ²¿ÃÅ½Úµã
+		// è·å– éƒ¨é—¨èŠ‚ç‚¹
 		long deptId02 = user.getDeptId();
 		SysDepartment curdept = sysDepartmentService.findById(deptId02);
-		// »ñÈ¡µ±µØ²¿ÃÅ½Úµã
+		// è·å–å½“åœ°éƒ¨é—¨èŠ‚ç‚¹
 		String curAreadeptCode = curdept.getCode().substring(0, 2);
 		SysDepartment curAreadept = sysDepartmentService
 				.findByCode(curAreadeptCode);
 
 		SysDepartment sysdeptMemSale = sysDepartmentService.findByCode("JT01");
 
-		// »ñÈ¡µ±µØĞĞÕş²¿ÃÅ
+		// è·å–å½“åœ°è¡Œæ”¿éƒ¨é—¨
 		SysDepartment admindept = sysDepartmentService
 				.findByCode(curAreadeptCode + "06");
 		DataField datafield1 = new DataField();
@@ -938,7 +938,7 @@ public class SalescontractController {
 				&& salescontract.getWfstatus() != 9999
 				&& salescontract.getWfstatus() != null) {
 			isOK = ProcessContainer.getContainer().completeTask(ctx);
-			logger.info("workflow ÖĞ");
+			logger.info("workflow ä¸­");
 		} else {
 			long processInstanceId = ProcessContainer.getContainer()
 					.startProcess(ctx);
@@ -965,7 +965,7 @@ public class SalescontractController {
 					Salescontract salescontract = salescontractService
 							.getSalescontract(Long.valueOf(x));
 					/**
-					 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+					 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 					 */
 
 					if (salescontract != null) {
@@ -989,7 +989,7 @@ public class SalescontractController {
 			Salescontract salescontract = salescontractService
 					.getSalescontract(Long.valueOf(id));
 			/**
-			 * ´Ë´¦ÒµÎñÂß¼­Ğè×ÔĞĞµ÷Õû
+			 * æ­¤å¤„ä¸šåŠ¡é€»è¾‘éœ€è‡ªè¡Œè°ƒæ•´
 			 */
 			if (salescontract != null) {
 				if (null != salescontract.getProcessinstanceid()

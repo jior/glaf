@@ -29,7 +29,7 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 /**
- * Redis 缓存实现
+ * Redis 缂撳瓨瀹炵幇
  */
 public class RedisCacheProvider implements CacheProvider {
 
@@ -47,7 +47,7 @@ public class RedisCacheProvider implements CacheProvider {
 	}
 
 	/**
-	 * 释放资源
+	 * 閲婃斁璧勬簮
 	 * 
 	 * @param jedis
 	 * @param isBrokenResource

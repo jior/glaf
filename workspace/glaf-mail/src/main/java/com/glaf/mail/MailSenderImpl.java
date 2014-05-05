@@ -63,17 +63,17 @@ public class MailSenderImpl implements MailSender {
 
 	public static void main(String[] args) throws Exception {
 		Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
-		dataMap.put("taskDescription", "ÓÊ¼şÏµÍ³¿ª·¢");
-		dataMap.put("processStarterName", "ÏµÍ³¹ÜÀíÔ±");
+		dataMap.put("taskDescription", "é‚®ä»¶ç³»ç»Ÿå¼€å‘");
+		dataMap.put("processStarterName", "ç³»ç»Ÿç®¡ç†å‘˜");
 		dataMap.put("serviceUrl", "http://127.0.0.1:8080/glaf");
 		dataMap.put("callback", "http://127.0.0.1:8080/glaf/task.jsp");
 
 		MailMessage mailMessage = new MailMessage();
 		mailMessage.setFrom("joy@127.0.0.1");
 		mailMessage.setTo("joy@127.0.0.1");
-		mailMessage.setSubject("ÓÊ¼ş²âÊÔ");
+		mailMessage.setSubject("é‚®ä»¶æµ‹è¯•");
 		mailMessage.setDataMap(dataMap);
-		mailMessage.setContent("²âÊÔ²âÊÔ");
+		mailMessage.setContent("æµ‹è¯•æµ‹è¯•");
 		// mailMessage.setTemplateId(args[0]);
 		mailMessage.setSupportExpression(false);
 
@@ -164,7 +164,7 @@ public class MailSenderImpl implements MailSender {
 		}
 
 		if (mailSubject == null) {
-			mailSubject = "ÎŞÖ÷Ìâ";
+			mailSubject = "æ— ä¸»é¢˜";
 		}
 
 		mimeMessage.setSubject(mailSubject);
@@ -320,7 +320,7 @@ public class MailSenderImpl implements MailSender {
 		javaMailSender.send(mimeMessage);
 
 		logger.info("-----------------------------------------");
-		logger.info("ÓÊ¼şÒÑ¾­³É¹¦·¢ËÍ¡£");
+		logger.info("é‚®ä»¶å·²ç»æˆåŠŸå‘é€ã€‚");
 		logger.info("-----------------------------------------");
 	}
 

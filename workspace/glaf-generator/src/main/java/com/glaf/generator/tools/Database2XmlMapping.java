@@ -27,7 +27,7 @@ public class Database2XmlMapping {
 			gen.setTodir("codegen/mapping");
 		}
 		gen.execute();
-		System.out.println("Éú³É½áÊø£¬Çëµ½" + gen.getTodir() + "²é¿´Êä³ö¡£");
+		System.out.println("ç”Ÿæˆç»“æŸï¼Œè¯·åˆ°" + gen.getTodir() + "æŸ¥çœ‹è¾“å‡ºã€‚");
 		System.exit(0);
 	}
 
