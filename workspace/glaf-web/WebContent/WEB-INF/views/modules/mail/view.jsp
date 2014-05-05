@@ -6,7 +6,7 @@
 <html>
 <title>查看邮件信息</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
 </head>
 <body >
 <br />
@@ -74,7 +74,7 @@
 </div>
 
 </center>
-<%@ include file="/WEB-INF/views/tm/footer.jsp"%>
+<%@ include file="/WEB-INF/views/inc/footer.jsp"%>
 
 </body>
 </html>

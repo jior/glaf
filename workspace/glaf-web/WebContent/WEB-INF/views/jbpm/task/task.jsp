@@ -32,7 +32,7 @@
 <!DOCTYPE html>
 <html>
 <title>流程任务</title> 
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
 

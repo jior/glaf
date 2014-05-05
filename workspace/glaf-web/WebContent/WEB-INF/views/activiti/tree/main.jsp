@@ -11,7 +11,7 @@ request.setAttribute("contextPath", request.getContextPath());
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Layout</title>
-<%@ include file="/WEB-INF/views/tm/header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/header.jsp"%>
 <link rel="stylesheet" type="text/css" href="${contextPath}/scripts/easyui/themes/${theme}/easyui.css">
 <link rel="stylesheet" type="text/css" href="${contextPath}/scripts/ztree/css/zTreeStyle/zTreeStyle.css" >
 <link rel="stylesheet" type="text/css" href="${contextPath}/css/icons.css">

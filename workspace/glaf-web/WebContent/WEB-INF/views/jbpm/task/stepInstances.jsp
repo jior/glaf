@@ -13,7 +13,7 @@
 <%@ page import="com.glaf.jbpm.container.*"%>
 <%@ page import="com.glaf.jbpm.datafield.*"%>
 <%@ page import="org.apache.commons.lang.StringUtils"%>
-<%@ include file="/WEB-INF/views/tm/x_header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/x_header.jsp"%>
 <%
      
 	Map variables = (Map) request.getAttribute("variables");

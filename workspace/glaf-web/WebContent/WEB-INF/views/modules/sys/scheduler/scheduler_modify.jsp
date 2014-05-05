@@ -11,7 +11,7 @@
 <html>
 <head>
 <title>任务调度管理</title>
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
 <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/scripts/calendar/skins/aqua/theme.css"/>
 <script language="javascript" src='<%=contextPath%>/scripts/main.js'></script>
 <script language="javascript" src='<%=contextPath%>/scripts/verify.js'></script>

@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>报表文件</title>
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/datepicker/skin/WdatePicker.css" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/datepicker/skin/default/datepicker.css" />
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/datepicker/config.js"></script>

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <title>流程任务</title> 
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
 <%
 
      String processInstanceId = request.getParameter("processInstanceId");

@@ -5,7 +5,7 @@
 <html>
 <head>
 <title>参数设置</title>
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
 <script type="text/javascript">
 	     function saveForm(){
 			 var params = jQuery("#iForm").formSerialize();

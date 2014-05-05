@@ -13,7 +13,7 @@
 <head>
 <title>代理人设置</title>
 <meta content="text/html; charset=UTF-8" http-equiv="content-type">
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/styles/jquery.treeTable.css" />
 <script type="text/javascript"

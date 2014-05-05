@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
-<%@ include file="/WEB-INF/views/tm/header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/header.jsp"%>
 <html>
 <head>
 <title>流程发布</title>

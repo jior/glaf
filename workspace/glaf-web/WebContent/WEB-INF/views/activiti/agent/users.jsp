@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
-<%@ include file="/WEB-INF/views/tm/header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/header.jsp"%>
 <%
 int sortNo =1;
 %>
@@ -48,4 +48,4 @@ int sortNo =1;
 </center>
 </form>
 
-<%@ include file="/WEB-INF/views/tm/footer.jsp"%>
+<%@ include file="/WEB-INF/views/inc/footer.jsp"%>

@@ -16,7 +16,7 @@
 <html>
 <head>
 <title>查看流程实例</title>
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
 
 </head>
 <body>

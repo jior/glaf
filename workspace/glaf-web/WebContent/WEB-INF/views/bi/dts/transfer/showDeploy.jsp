@@ -3,7 +3,7 @@
 <html>
 <head>
 <title>元数据定义发布</title>
-<%@ include file="/WEB-INF/views/tm/header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/header.jsp"%>
 <script language="javascript">
 
 	function submitRequest(form){

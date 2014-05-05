@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <title>流程定义列表</title> 
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
 </head>
 <body style="padding-left:20px;padding-right:20px">
 <%
@@ -59,4 +59,4 @@
 </center>
 
 
-<%@ include file="/WEB-INF/views/tm/footer.jsp"%>
+<%@ include file="/WEB-INF/views/inc/footer.jsp"%>

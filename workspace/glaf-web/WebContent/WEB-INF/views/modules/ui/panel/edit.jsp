@@ -12,7 +12,7 @@
 <head>
 <title>桌面板块</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
 <script language="javascript" src="<%=request.getContextPath()%>/scripts/kindeditor/kindeditor-min.js"></script>
 <script type="text/javascript">
 

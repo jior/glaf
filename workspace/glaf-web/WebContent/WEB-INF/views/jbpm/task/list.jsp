@@ -76,7 +76,7 @@
 <!DOCTYPE html>
 <html>
 <title>任务列表</title> 
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
 <script language="javascript">
  function query(){
     location.href="<%=request.getContextPath()%>/mx/jbpm/task/query";
@@ -162,4 +162,4 @@
 </center>
 
 
-<%@ include file="/WEB-INF/views/tm/footer.jsp"%>
+<%@ include file="/WEB-INF/views/inc/footer.jsp"%>

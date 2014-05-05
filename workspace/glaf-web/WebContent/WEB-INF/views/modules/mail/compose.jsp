@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>邮件信息</title>
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
 <link type="text/css"
 	href="<%=request.getContextPath()%>/scripts/calendar/skins/aqua/theme.css"
 	rel="stylesheet" />
@@ -138,4 +138,4 @@
 </form>
 </div>
 </center>
-<%@ include file="/WEB-INF/views/tm/footer.jsp"%>
+<%@ include file="/WEB-INF/views/inc/footer.jsp"%>

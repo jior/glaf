@@ -3,7 +3,7 @@
 <html>
 <head>
 <title>导入数据</title>
-<%@ include file="/WEB-INF/views/tm/header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/header.jsp"%>
 <script language="javascript">
 
 	function submitRequest(form){

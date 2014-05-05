@@ -60,7 +60,7 @@
 %>
 <!DOCTYPE html >
 <html>
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
 <head>
 	<title>Task List </title>
 	<meta http-equiv="refresh" content="10">

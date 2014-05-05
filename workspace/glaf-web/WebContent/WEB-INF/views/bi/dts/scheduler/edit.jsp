@@ -35,7 +35,7 @@
 <head>
 <title>任务调度管理</title>
 
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
 <link type="text/css"
 	href="<%=request.getContextPath()%>/scripts/calendar/skins/aqua/theme.css"
 	rel="stylesheet" />

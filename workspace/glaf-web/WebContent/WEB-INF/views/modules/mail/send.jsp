@@ -3,7 +3,7 @@
 <%@ page import="com.glaf.core.context.*"%>
 <%@ page import="com.glaf.core.util.*"%>
 <%@ page import="org.apache.commons.lang.*"%>
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
 
 <br>
 <br>

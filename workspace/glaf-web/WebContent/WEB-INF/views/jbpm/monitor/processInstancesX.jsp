@@ -43,7 +43,7 @@
 <!DOCTYPE html>
 <html>
 <title>流程定义列表</title> 
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
 <script language="javascript">
  function query(){
     location.href="<%=request.getContextPath()%>/mx/jbpm/monitor?method=query";
@@ -188,4 +188,4 @@ P-超期天数</div>
 </center>
 
 
-<%@ include file="/WEB-INF/views/tm/footer.jsp"%>
+<%@ include file="/WEB-INF/views/inc/footer.jsp"%>

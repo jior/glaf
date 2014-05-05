@@ -11,7 +11,7 @@
 <html>
 <title>任务调度管理</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
 <script language="javascript" src='<%=contextPath%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=contextPath%>/scripts/main.js'></script>
 <script language="javascript">

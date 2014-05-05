@@ -13,7 +13,7 @@ SysUser bean=(SysUser)request.getAttribute("bean");
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>修改用户信息</title>
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script></head>
 <script language="javascript">

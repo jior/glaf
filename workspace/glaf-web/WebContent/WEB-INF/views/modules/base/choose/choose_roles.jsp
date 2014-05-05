@@ -25,7 +25,7 @@
 <!DOCTYPE html>
 <html>
 <title>角色选择</title>
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/${theme}/styles.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-base.js"></script>
  

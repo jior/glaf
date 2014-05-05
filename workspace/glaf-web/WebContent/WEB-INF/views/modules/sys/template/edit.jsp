@@ -8,7 +8,7 @@
 <html>
 <head>
 <title>模板信息</title>
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
  <script language="javascript">
   String.prototype.trim = function() {
      return this.replace(/(^\s*)|(\s*$)/g, "");
@@ -182,4 +182,4 @@
 <br />
 <br />
 
-<%@ include file="/WEB-INF/views/tm/footer.jsp"%>
+<%@ include file="/WEB-INF/views/inc/footer.jsp"%>

@@ -26,7 +26,7 @@
 <html>
 <head>
 <title>表管理 </title>
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
 <script type="text/javascript">
          
 		 function transformTable(tableName){

@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <title>模板管理</title>
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
  <script language="javascript">
 
 function createTemplateId(){
@@ -86,4 +86,4 @@ function modifyTemplate(templateId){
 <iframe id="newFrame" name="newFrame" width="0" height="0"></iframe></center>
 </form>
 
-<%@ include file="/WEB-INF/views/tm/footer.jsp"%>
+<%@ include file="/WEB-INF/views/inc/footer.jsp"%>

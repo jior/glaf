@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
 <title>桌面板块设置</title>
-<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
 
 <script language="javascript">
  

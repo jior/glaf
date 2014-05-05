@@ -21,7 +21,7 @@
 <html>
 <head>
 	<title>Query Layout </title>
-	<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+	<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
  	<style type="text/css" media="print">
  
 	html, body {

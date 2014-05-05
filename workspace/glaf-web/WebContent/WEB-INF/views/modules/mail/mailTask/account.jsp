@@ -29,7 +29,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>邮件任务</title>
-	<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
+	<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>
 	
