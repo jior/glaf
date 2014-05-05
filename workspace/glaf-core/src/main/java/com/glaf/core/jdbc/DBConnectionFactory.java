@@ -216,6 +216,7 @@ public class DBConnectionFactory {
 		databaseTypeMappings.setProperty("DB2/LINUX", "db2");
 		databaseTypeMappings.setProperty("DB2/LINUX390", "db2");
 		databaseTypeMappings.setProperty("DB2/LINUXZ64", "db2");
+		databaseTypeMappings.setProperty("DB2/LINUXX8664", "db2");
 		databaseTypeMappings.setProperty("DB2/400 SQL", "db2");
 		databaseTypeMappings.setProperty("DB2/6000", "db2");
 		databaseTypeMappings.setProperty("DB2 UDB iSeries", "db2");
@@ -226,6 +227,7 @@ public class DBConnectionFactory {
 		databaseTypeMappings.setProperty("DB2/SUN64", "db2");
 		databaseTypeMappings.setProperty("DB2/PTX", "db2");
 		databaseTypeMappings.setProperty("DB2/2", "db2");
+
 		return databaseTypeMappings;
 	}
 
