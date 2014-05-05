@@ -10,7 +10,7 @@
 <title>邮件帐户</title>
 <%@ include file="/WEB-INF/views/tm/header.jsp"%>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css">
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/icons.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/styles/mxcore.css">
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>

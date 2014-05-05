@@ -131,7 +131,7 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css" type="text/css"/>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/easyui/css/portal.css" type="text/css"/>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/themes/${theme}/styles.css" type="text/css"/>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/icons/styles.css" type="text/css"/>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/icons.css" type="text/css"/>
 <style type="text/css">
 	.mx_title{
 			font-size:13px;

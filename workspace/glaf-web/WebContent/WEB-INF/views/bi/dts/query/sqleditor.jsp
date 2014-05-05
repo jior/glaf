@@ -21,7 +21,7 @@
 	<title>Õº–ŒªØ≤È—Ø</title>
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/easyui/themes/default/easyui.css" type="text/css"></link>
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/scripts/easyui/themes/demo.css" type="text/css"></link>
-	<link rel="stylesheet" href="<%=request.getContextPath()%>/icons/styles.css" type="text/css"></link>
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/icons.css" type="text/css"></link>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>		
 	<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.form.js"></script>			
 	<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>

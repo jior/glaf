@@ -12,7 +12,7 @@
 <title>角色用户</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/core.css"/>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/scripts/ztree/css/zTreeStyle/zTreeStyle.css"/>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/icons/styles.css"/>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/icons.css"/>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/ztree/js/jquery.ztree.all.min.js"></script>
 <script type="text/javascript">

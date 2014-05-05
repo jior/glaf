@@ -36,10 +36,10 @@
 <link href="<%=request.getContextPath()%>/layout/css/styles.css" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/scripts/easyui/themes/${theme}/easyui.css" rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/themes/${theme}/styles.css" rel="stylesheet" type="text/css" />
-<link href="<%=request.getContextPath()%>/icons/styles.css" rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath()%>/css/icons.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/scripts/easyui/jquery.easyui.min.js"></script>
-<script type="text/javascript" src='<%=request.getContextPath()%>/layout/js/outlook3.js'> </script>
+<script type="text/javascript" src='<%=request.getContextPath()%>/scripts/layout/js/outlook3.js'> </script>
 <script type="text/javascript">
 
    var contextPath = "<%=request.getContextPath()%>";

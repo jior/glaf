@@ -14,7 +14,7 @@ request.setAttribute("contextPath", request.getContextPath());
 <%@ include file="/WEB-INF/views/tm/header.jsp"%>
 <link rel="stylesheet" type="text/css" href="${contextPath}/scripts/easyui/themes/${theme}/easyui.css">
 <link rel="stylesheet" type="text/css" href="${contextPath}/scripts/ztree/css/zTreeStyle/zTreeStyle.css" >
-<link rel="stylesheet" type="text/css" href="${contextPath}/icons/styles.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/icons.css">
 <script type="text/javascript" src="${contextPath}/scripts/jquery.min.js"></script>
 <script type="text/javascript" src="${contextPath}/scripts/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${contextPath}/scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
