@@ -151,15 +151,6 @@ public interface SysTreeService {
 	List<SysTree> getRoleUserTrees(SysUserQuery query);
 
 	/**
-	 * 获取树型列表
-	 * 
-	 * @param parent
-	 *            int
-	 * @return List
-	 */
-	void loadSysTrees(List<SysTree> treeList, long parentId, int deep);
-
-	/**
 	 * 按树编号获取树节点
 	 * 
 	 * @param tree
@@ -222,6 +213,15 @@ public interface SysTreeService {
 	 */
 	List<SysTree> getSysTreesByQueryCriteria(int start, int pageSize,
 			SysTreeQuery query);
+
+	/**
+	 * 获取树型列表
+	 * 
+	 * @param parent
+	 *            int
+	 * @return List
+	 */
+	void loadSysTrees(List<SysTree> treeList, long parentId, int deep);
 
 	/**
 	 * 排序

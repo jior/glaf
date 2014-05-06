@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -61,6 +62,15 @@ import com.glaf.core.util.StringTools;
 public class SysTreeServiceImpl implements SysTreeService {
 	protected final static Log logger = LogFactory
 			.getLog(SysTreeServiceImpl.class);
+
+	public static void main(String[] args) {
+		String str1 = "1|2|5|195235|";
+		String str2 = "1|2|5|195235|195274|195347|195483|";
+		String tmp = str2.substring(str1.length(), str2.length());
+		System.out.println(tmp);
+		StringTokenizer token = new StringTokenizer(tmp, "|");
+		System.out.println(token.countTokens());
+	}
 
 	protected IdGenerator idGenerator;
 
@@ -327,23 +337,6 @@ public class SysTreeServiceImpl implements SysTreeService {
 		}
 	}
 
-	public void loadSysTrees(List<SysTree> treeList, long parentId, int deep) {
-		SysTreeQuery query = new SysTreeQuery();
-		query.setParentId(Long.valueOf(parentId));
-		List<SysTree> nodes = this.list(query);
-		if (nodes != null && !nodes.isEmpty()) {
-			this.initDepartments(nodes);
-			this.initApplications(nodes);
-			Iterator<SysTree> iter = nodes.iterator();
-			while (iter.hasNext()) {// 递归遍历
-				SysTree bean = iter.next();
-				bean.setDeep(deep + 1);
-				treeList.add(bean);// 加入到数组
-				loadSysTrees(treeList, bean.getId(), bean.getDeep());
-			}
-		}
-	}
-
 	public List<SysTree> getSysTreesByQueryCriteria(int start, int pageSize,
 			SysTreeQuery query) {
 		RowBounds rowBounds = new RowBounds(start, pageSize);
@@ -409,19 +402,83 @@ public class SysTreeServiceImpl implements SysTreeService {
 		return list;
 	}
 
-	public void loadChildren(List<SysTree> list, long parentId) {
+	public void loadChildren(List<SysTree> treeList, long parentId) {
+		SysTree root = this.findById(parentId);
+		if (root != null) {
+			if (StringUtils.isNotEmpty(root.getTreeId())) {
+				SysTreeQuery query = new SysTreeQuery();
+				query.treeIdLike(root.getTreeId() + "%");
+				List<SysTree> nodes = this.list(query);
+				if (nodes != null && !nodes.isEmpty()) {
+					Iterator<SysTree> iter = nodes.iterator();
+					while (iter.hasNext()) {
+						SysTree bean = iter.next();
+						treeList.add(bean);
+					}
+				}
+			} else {
+				SysTreeQuery query = new SysTreeQuery();
+				query.setParentId(Long.valueOf(parentId));
+				List<SysTree> nodes = this.list(query);
+				if (nodes != null && !nodes.isEmpty()) {
+					Iterator<SysTree> iter = nodes.iterator();
+					while (iter.hasNext()) {
+						SysTree bean = iter.next();
+						treeList.add(bean);// 加入到数组
+						loadChildren(treeList, bean.getId());// 递归遍历
+					}
+				}
+			}
+		}
+	}
+
+	public void loadChildren2(List<SysTree> list, long parentId) {
 		SysTreeQuery query = new SysTreeQuery();
 		query.setParentId(Long.valueOf(parentId));
 		List<SysTree> nodes = this.list(query);
 		if (nodes != null && !nodes.isEmpty()) {
 			for (SysTree node : nodes) {
 				list.add(node);
-				this.loadChildren(list, node.getId());
+				this.loadChildren2(list, node.getId());
 			}
 		}
 	}
 
-	protected void loadChildrenTreeListForDept(List<SysTree> list,
+	protected void loadChildrenTreeListForDept(List<SysTree> treeList,
+			long parentId, int status) {
+		SysTree root = this.findById(parentId);
+		if (root != null) {
+			if (StringUtils.isNotEmpty(root.getTreeId())) {
+				SysTreeQuery query = new SysTreeQuery();
+				query.treeIdLike(root.getTreeId() + "%");
+				List<SysTree> nodes = this.list(query);
+				if (nodes != null && !nodes.isEmpty()) {
+					this.initDepartments(nodes);
+					Iterator<SysTree> iter = nodes.iterator();
+					while (iter.hasNext()) {
+						SysTree bean = iter.next();
+						treeList.add(bean);
+					}
+				}
+			} else {
+				SysTreeQuery query = new SysTreeQuery();
+				query.setParentId(Long.valueOf(parentId));
+				List<SysTree> nodes = this.list(query);
+				if (nodes != null && !nodes.isEmpty()) {
+					this.initDepartments(nodes);
+					Iterator<SysTree> iter = nodes.iterator();
+					while (iter.hasNext()) {
+						SysTree bean = iter.next();
+						treeList.add(bean);// 加入到数组
+						loadChildrenTreeListForDept(treeList, bean.getId(),
+								status);// 递归遍历
+					}
+				}
+			}
+		}
+	}
+
+	protected void loadChildrenTreeListForDept2(List<SysTree> list,
 			long parentId, int status) {
 		SysTreeQuery query = new SysTreeQuery();
 		query.setParentId(Long.valueOf(parentId));
@@ -432,7 +489,64 @@ public class SysTreeServiceImpl implements SysTreeService {
 		if (trees != null && !trees.isEmpty()) {
 			for (SysTree tt : trees) {
 				list.add(tt);
-				this.loadChildrenTreeListForDept(list, tt.getId(), status);
+				this.loadChildrenTreeListForDept2(list, tt.getId(), status);
+			}
+		}
+	}
+
+	public void loadSysTrees(List<SysTree> treeList, long parentId, int deep) {
+		SysTree root = this.findById(parentId);
+		if (root != null) {
+			if (StringUtils.isNotEmpty(root.getTreeId())) {
+				SysTreeQuery query = new SysTreeQuery();
+				query.treeIdLike(root.getTreeId() + "%");
+				List<SysTree> nodes = this.list(query);
+				if (nodes != null && !nodes.isEmpty()) {
+					this.initDepartments(nodes);
+					this.initApplications(nodes);
+					Iterator<SysTree> iter = nodes.iterator();
+					while (iter.hasNext()) {
+						SysTree bean = iter.next();
+						String treeId = bean.getTreeId();
+						String tmp = treeId.substring(
+								root.getTreeId().length(), treeId.length());
+						StringTokenizer token = new StringTokenizer(tmp, "|");
+						bean.setDeep(token.countTokens());
+						treeList.add(bean);// 加入到数组
+					}
+				}
+			} else {
+				SysTreeQuery query = new SysTreeQuery();
+				query.setParentId(Long.valueOf(parentId));
+				List<SysTree> nodes = this.list(query);
+				if (nodes != null && !nodes.isEmpty()) {
+					this.initDepartments(nodes);
+					this.initApplications(nodes);
+					Iterator<SysTree> iter = nodes.iterator();
+					while (iter.hasNext()) {
+						SysTree bean = iter.next();
+						bean.setDeep(deep + 1);
+						treeList.add(bean);// 加入到数组
+						loadSysTrees(treeList, bean.getId(), bean.getDeep());// 递归遍历
+					}
+				}
+			}
+		}
+	}
+
+	public void loadSysTrees2(List<SysTree> treeList, long parentId, int deep) {
+		SysTreeQuery query = new SysTreeQuery();
+		query.setParentId(Long.valueOf(parentId));
+		List<SysTree> nodes = this.list(query);
+		if (nodes != null && !nodes.isEmpty()) {
+			this.initDepartments(nodes);
+			this.initApplications(nodes);
+			Iterator<SysTree> iter = nodes.iterator();
+			while (iter.hasNext()) {// 递归遍历
+				SysTree bean = iter.next();
+				bean.setDeep(deep + 1);
+				treeList.add(bean);// 加入到数组
+				loadSysTrees2(treeList, bean.getId(), bean.getDeep());
 			}
 		}
 	}
