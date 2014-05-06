@@ -247,6 +247,7 @@ insert into SYS_PROPERTY (id_, description_, locked_, name_, title_, type_, valu
 insert into SYS_PROPERTY (id_, description_, locked_, name_, title_, type_, value_, category_, initvalue_) values ('8', '允许接入系统的IP地址', 0, 'login.allow.ip', '允许接入系统的IP地址', null, '', 'SYS', null);
 insert into SYS_PROPERTY (id_, category_, description_, initvalue_, locked_, name_, title_, type_, value_, inputtype_) values ('9', 'SYS', '文件存储方式', '[{"name":"数据库","value":"DATABASE"},{"name":"硬盘","value":"DISK"}]', 0, 'fs_storage_strategy', '文件存储方式', null, 'DATABASE', 'combobox');
 insert into sys_property (id_, category_, description_, initvalue_, locked_, name_, title_, type_, value_, inputtype_) values ('10', 'SYS', '存储备份到Mongodb', '[{"name":"是","value":"true"},{"name":"否","value":"false"}]', 0, 'fs_storage_mongodb', '存储备份到Mongodb', null, 'false', 'combobox');
+insert into sys_property (id_, category_, description_, initvalue_, locked_, name_, title_, type_, value_, inputtype_) values ('11', 'SYS', '启用查询缓存', '[{"name":"是","value":"true"},{"name":"否","value":"false"}]', 0, 'use_query_cache', '启用查询缓存', null, 'false', 'combobox');
 
 
 insert into SYS_PROPERTY (id_, description_, locked_, name_, title_, type_, value_, category_, initvalue_) values ('101', '当天的6位年月格式（YYYYMM），如201312', 0, 'curr_yyyymm', '当前年月', null, '', 'RPT', '${curr_yyyymm}');
