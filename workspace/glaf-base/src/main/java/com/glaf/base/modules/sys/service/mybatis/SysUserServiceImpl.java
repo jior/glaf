@@ -34,6 +34,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.base.modules.sys.mapper.SysAccessMapper;
 import com.glaf.base.modules.sys.mapper.SysApplicationMapper;
 import com.glaf.base.modules.sys.mapper.SysDeptRoleMapper;
@@ -54,7 +56,10 @@ import com.glaf.base.modules.sys.query.SysUserQuery;
 import com.glaf.base.modules.sys.query.SysUserRoleQuery;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysUserService;
+import com.glaf.base.modules.sys.util.SysUserJsonFactory;
 import com.glaf.core.base.TableModel;
+import com.glaf.core.cache.CacheFactory;
+import com.glaf.core.config.SystemConfig;
 import com.glaf.core.domain.Membership;
 import com.glaf.core.id.IdGenerator;
 import com.glaf.core.jdbc.DBConnectionFactory;
@@ -190,8 +195,8 @@ public class SysUserServiceImpl implements SysUserService {
 		}
 		return user;
 	}
-	
-	public String getSysUserPasswordByAccount(String account){
+
+	public String getSysUserPasswordByAccount(String account) {
 		return sysUserMapper.getSysUserPasswordByAccount(account);
 	}
 
@@ -341,7 +346,19 @@ public class SysUserServiceImpl implements SysUserService {
 		if (id == null) {
 			return null;
 		}
+		String cacheKey = "sys_user_" + id;
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& CacheFactory.getString(cacheKey) != null) {
+			String text = CacheFactory.getString(cacheKey);
+			JSONObject json = JSON.parseObject(text);
+			return SysUserJsonFactory.jsonToObject(json);
+		}
+
 		SysUser sysUser = sysUserMapper.getSysUserById(id);
+		if (sysUser != null && SystemConfig.getBoolean("use_query_cache")) {
+			JSONObject json = sysUser.toJsonObject();
+			CacheFactory.put(cacheKey, json.toJSONString());
+		}
 		return sysUser;
 	}
 
@@ -608,6 +625,8 @@ public class SysUserServiceImpl implements SysUserService {
 		} else {
 			sysUser.setUpdateDate(new Date());
 			sysUserMapper.updateSysUser(sysUser);
+			String cacheKey = "sys_user_" + sysUser.getId();
+			CacheFactory.remove(cacheKey);
 		}
 
 		TableModel table = new TableModel();
@@ -733,6 +752,8 @@ public class SysUserServiceImpl implements SysUserService {
 				}
 			}
 		}
+		String cacheKey = "sys_user_" + sysUser.getId();
+		CacheFactory.remove(cacheKey);
 		return true;
 	}
 
@@ -788,6 +809,8 @@ public class SysUserServiceImpl implements SysUserService {
 	@Transactional
 	public boolean updateUser(SysUser sysUser) {
 		sysUserMapper.updateSysUser(sysUser);
+		String cacheKey = "sys_user_" + sysUser.getId();
+		CacheFactory.remove(cacheKey);
 		return true;
 	}
 

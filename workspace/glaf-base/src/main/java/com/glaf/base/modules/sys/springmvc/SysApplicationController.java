@@ -125,7 +125,7 @@ public class SysApplicationController {
 		List<SysTree> list = new java.util.ArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
-		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
+		sysTreeService.loadSysTrees(list, parent.getId(), 1);
 		request.setAttribute("parent", list);
 
 		String x_view = ViewProperties.getString("application.edit");
@@ -274,7 +274,7 @@ public class SysApplicationController {
 		List<SysTree> list = new java.util.ArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
-		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
+		sysTreeService.loadSysTrees(list, parent.getId(), 1);
 		request.setAttribute("parent", list);
 
 		String x_view = ViewProperties.getString("application.prepareModify");
@@ -558,7 +558,7 @@ public class SysApplicationController {
 		RequestUtils.setRequestParameterToAttribute(request);
 		int parent = ParamUtil.getIntParameter(request, "parent", 0);
 		List<SysTree> list = new java.util.ArrayList<SysTree>();
-		sysTreeService.getSysTree(list, parent, 0);
+		sysTreeService.loadSysTrees(list, parent, 0);
 		request.setAttribute("list", list);
 
 		String x_view = ViewProperties.getString("application.showNavMenu");

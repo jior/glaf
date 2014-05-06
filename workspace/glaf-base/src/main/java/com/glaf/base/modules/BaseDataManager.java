@@ -787,7 +787,7 @@ public class BaseDataManager {
 			SysTree parent = getSysTreeService().getSysTreeByCode(
 					SysConstants.TREE_DEPT);
 			List<SysTree> list = new java.util.ArrayList<SysTree>();
-			getSysTreeService().getSysTree(list, (int) parent.getId(), 0);
+			getSysTreeService().loadSysTrees(list, parent.getId(), 0);
 			SysTreeQuery query = new SysTreeQuery();
 			query.setDiscriminator("D");
 			query.setTreeIdLike(parent.getTreeId() + "%");

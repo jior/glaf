@@ -29,6 +29,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.mapper.GroupLeaderMapper;
 import com.glaf.base.modules.sys.mapper.GroupMapper;
@@ -38,6 +40,9 @@ import com.glaf.base.modules.sys.model.GroupLeader;
 import com.glaf.base.modules.sys.model.GroupUser;
 import com.glaf.base.modules.sys.query.GroupQuery;
 import com.glaf.base.modules.sys.service.GroupService;
+import com.glaf.base.modules.sys.util.GroupJsonFactory;
+import com.glaf.core.cache.CacheFactory;
+import com.glaf.core.config.SystemConfig;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
 import com.glaf.core.util.PageResult;
@@ -51,7 +56,7 @@ public class GroupServiceImpl implements GroupService {
 	protected GroupMapper groupMapper;
 
 	protected GroupUserMapper groupUserMapper;
-	
+
 	protected GroupLeaderMapper groupLeaderMapper;
 
 	protected IdGenerator idGenerator;
@@ -89,7 +94,19 @@ public class GroupServiceImpl implements GroupService {
 		if (id == null) {
 			return null;
 		}
+		String cacheKey = "sys_group_" + id;
+
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& CacheFactory.getString(cacheKey) != null) {
+			String text = CacheFactory.getString(cacheKey);
+			JSONObject json = JSON.parseObject(text);
+			return GroupJsonFactory.jsonToObject(json);
+		}
 		Group group = groupMapper.getGroupById(id);
+		if (group != null && SystemConfig.getBoolean("use_query_cache")) {
+			JSONObject json = group.toJsonObject();
+			CacheFactory.put(cacheKey, json.toJSONString());
+		}
 		return group;
 	}
 
@@ -158,8 +175,7 @@ public class GroupServiceImpl implements GroupService {
 	public List<String> getUserIdsByGroupId(String groupId) {
 		return groupUserMapper.getUserIdsByGroupId(groupId);
 	}
-	
-	
+
 	public List<String> getLeaderUserIdsByGroupId(String groupId) {
 		return groupLeaderMapper.getUserIdsByGroupId(groupId);
 	}
@@ -203,6 +219,8 @@ public class GroupServiceImpl implements GroupService {
 			} else {
 				group.setUpdateDate(new Date());
 				groupMapper.updateGroup(group);
+				String cacheKey = "sys_group_" + group.getGroupId();
+				CacheFactory.remove(cacheKey);
 			}
 		}
 	}
@@ -225,7 +243,7 @@ public class GroupServiceImpl implements GroupService {
 			}
 		}
 	}
-	
+
 	/**
 	 * 保存群组用户
 	 * 
@@ -259,8 +277,7 @@ public class GroupServiceImpl implements GroupService {
 	public void setGroupMapper(GroupMapper groupMapper) {
 		this.groupMapper = groupMapper;
 	}
-	
-	
+
 	@javax.annotation.Resource
 	public void setGroupUserMapper(GroupUserMapper groupUserMapper) {
 		this.groupUserMapper = groupUserMapper;
@@ -307,11 +324,11 @@ public class GroupServiceImpl implements GroupService {
 		List<Group> list = this.list(query);
 		if (list != null && list.size() > 0) {// 有记录
 			Group temp = (Group) list.get(0);
-			int i = bean.getSort();
-			bean.setSort(temp.getSort());
+			int sort = bean.getSort();
+			bean.setSort(temp.getSort() - 1);
 			this.update(bean);// 更新bean
 
-			temp.setSort(i);
+			temp.setSort(sort + 1);
 			this.update(temp);// 更新temp
 		}
 	}
@@ -324,15 +341,16 @@ public class GroupServiceImpl implements GroupService {
 	private void sortByPrevious(Group bean) {
 		GroupQuery query = new GroupQuery();
 		query.setSortGreaterThan(bean.getSort());
+		query.setOrderBy(" E.SORT asc ");
 		// 查找前一个对象
 		List<Group> list = this.list(query);
 		if (list != null && list.size() > 0) {// 有记录
 			Group temp = (Group) list.get(0);
-			int i = bean.getSort();
-			bean.setSort(temp.getSort());
+			int sort = bean.getSort();
+			bean.setSort(temp.getSort() + sort);
 			this.update(bean);// 更新bean
 
-			temp.setSort(i);
+			temp.setSort(sort - 1);
 			this.update(temp);// 更新temp
 		}
 	}
@@ -341,6 +359,8 @@ public class GroupServiceImpl implements GroupService {
 	public void update(Group group) {
 		group.setUpdateDate(new Date());
 		groupMapper.updateGroup(group);
+		String cacheKey = "sys_group_" + group.getGroupId();
+		CacheFactory.remove(cacheKey);
 	}
 
 }

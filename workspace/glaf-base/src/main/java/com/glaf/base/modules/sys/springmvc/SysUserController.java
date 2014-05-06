@@ -441,7 +441,7 @@ public class SysUserController {
 		List<SysTree> list = new java.util.ArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
-		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
+		sysTreeService.loadSysTrees(list, parent.getId(), 1);
 		request.setAttribute("parent", list);
 
 		String x_view = ViewProperties.getString("user.prepareModify");
@@ -512,7 +512,7 @@ public class SysUserController {
 		List<SysTree> list = new java.util.ArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
-		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
+		sysTreeService.loadSysTrees(list, parent.getId(), 1);
 		request.setAttribute("parent", list);
 
 		String x_view = ViewProperties.getString("user.prepareModifyPwd");
@@ -841,7 +841,8 @@ public class SysUserController {
 		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
 		String name = ParamUtil.getParameter(request, "fullName", null);
 
-		SysDepartment sysDepartment = sysDepartmentService.getSysDepartment(deptId);
+		SysDepartment sysDepartment = sysDepartmentService
+				.getSysDepartment(deptId);
 		request.setAttribute("sysDepartment", sysDepartment);
 		PageResult pager = null;
 		if (name != null && !"".equals(name)) {
@@ -1165,7 +1166,7 @@ public class SysUserController {
 		List<SysTree> list = new java.util.ArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
-		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
+		sysTreeService.loadSysTrees(list, parent.getId(), 1);
 		request.setAttribute("parent", list);
 
 		String x_view = ViewProperties.getString("user.showUser");

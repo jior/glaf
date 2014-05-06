@@ -31,6 +31,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
 import com.glaf.base.business.TreeHelper;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.mapper.SysAccessMapper;
@@ -46,8 +47,11 @@ import com.glaf.base.modules.sys.service.AuthorizeService;
 import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
+import com.glaf.base.modules.sys.util.SysApplicationJsonFactory;
 import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TreeModel;
+import com.glaf.core.cache.CacheFactory;
+import com.glaf.core.config.SystemConfig;
 import com.glaf.core.context.ApplicationContext;
 import com.glaf.core.id.IdGenerator;
 import com.glaf.core.identity.Agent;
@@ -171,11 +175,31 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	}
 
 	public SysApplication findById(long id) {
-		SysApplication app = this.getSysApplication(id);
+		String cacheKey = "sys_app_" + id;
+
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& CacheFactory.getString(cacheKey) != null) {
+			String text = CacheFactory.getString(cacheKey);
+			com.alibaba.fastjson.JSONObject json = JSON.parseObject(text);
+			SysApplication app = SysApplicationJsonFactory.jsonToObject(json);
+			if (app != null && app.getNodeId() > 0) {
+				SysTree node = sysTreeService.findById(app.getNodeId());
+				app.setNode(node);
+			}
+			return app;
+		}
+
+		SysApplication app = sysApplicationMapper.getSysApplicationById(id);
 		if (app != null && app.getNodeId() > 0) {
-			SysTree node = sysTreeMapper.getSysTreeById(app.getNodeId());
+			SysTree node = sysTreeService.findById(app.getNodeId());
 			app.setNode(node);
 		}
+
+		if (app != null && SystemConfig.getBoolean("use_query_cache")) {
+			com.alibaba.fastjson.JSONObject json = app.toJsonObject();
+			CacheFactory.put(cacheKey, json.toJSONString());
+		}
+
 		return app;
 	}
 
@@ -340,13 +364,7 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		if (id == null) {
 			return null;
 		}
-		SysApplication sysApplication = sysApplicationMapper
-				.getSysApplicationById(id);
-		if (sysApplication != null) {
-			SysTree node = sysTreeService.findById(sysApplication.getNodeId());
-			sysApplication.setNode(node);
-		}
-		return sysApplication;
+		return this.findById(id);
 	}
 
 	public int getSysApplicationCountByQueryCriteria(SysApplicationQuery query) {
@@ -760,12 +778,16 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 
 	@Transactional
 	public boolean update(SysApplication bean) {
+		String cacheKey = "sys_app_" + bean.getId();
 		bean.setUpdateDate(new Date());
 		this.sysApplicationMapper.updateSysApplication(bean);
+		CacheFactory.remove(cacheKey);
 		if (bean.getNode() != null) {
 			bean.getNode().setLocked(bean.getLocked());
 			bean.getNode().setUpdateBy(bean.getUpdateBy());
 			sysTreeService.update(bean.getNode());
+			cacheKey = "sys_tree_" + bean.getNode().getId();
+			CacheFactory.remove(cacheKey);
 		}
 		return true;
 	}

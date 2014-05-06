@@ -987,6 +987,8 @@ public class RequestUtils {
 					continue;
 				} else if (StringUtils.equalsIgnoreCase("cancel", paramName)) {
 					continue;
+				} else if (StringUtils.equalsIgnoreCase("parent", paramName)) {
+					continue;
 				} else if (StringUtils.equalsIgnoreCase("hasPermission",
 						paramName)) {
 					continue;

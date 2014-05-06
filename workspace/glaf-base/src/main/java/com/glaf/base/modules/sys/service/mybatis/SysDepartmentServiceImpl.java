@@ -30,6 +30,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.mapper.SysDepartmentMapper;
 import com.glaf.base.modules.sys.mapper.SysDeptRoleMapper;
@@ -43,6 +45,9 @@ import com.glaf.base.modules.sys.query.SysTreeQuery;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysTreeService;
+import com.glaf.base.modules.sys.util.SysDepartmentJsonFactory;
+import com.glaf.core.cache.CacheFactory;
+import com.glaf.core.config.SystemConfig;
 import com.glaf.core.id.IdGenerator;
 import com.glaf.core.util.PageResult;
 
@@ -173,7 +178,21 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 	}
 
 	public SysDepartment findById(long id) {
-		return sysDepartmentMapper.getSysDepartmentById(id);
+		String cacheKey = "sys_dept_" + id;
+
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& CacheFactory.getString(cacheKey) != null) {
+			String text = CacheFactory.getString(cacheKey);
+			JSONObject json = JSON.parseObject(text);
+			return SysDepartmentJsonFactory.jsonToObject(json);
+		}
+
+		SysDepartment dept = sysDepartmentMapper.getSysDepartmentById(id);
+		if (dept != null && SystemConfig.getBoolean("use_query_cache")) {
+			JSONObject json = dept.toJsonObject();
+			CacheFactory.put(cacheKey, json.toJSONString());
+		}
+		return dept;
 	}
 
 	public SysDepartment findByName(String name) {
@@ -280,18 +299,19 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		return this.list(query);
 	}
 
-	public List<SysDepartment> getSysDepartmentList(long parent) {
+	public List<SysDepartment> getSysDepartmentList(long parentId) {
 		SysDepartmentQuery query = new SysDepartmentQuery();
-		query.parentId(Long.valueOf(parent));
+		query.parentId(Long.valueOf(parentId));
 		return this.list(query);
 	}
 
 	@Override
-	public PageResult getSysDepartmentList(long parent, int pageNo, int pageSize) {
+	public PageResult getSysDepartmentList(long parentId, int pageNo,
+			int pageSize) {
 		// 计算总数
 		PageResult pager = new PageResult();
 		SysDepartmentQuery query = new SysDepartmentQuery();
-		query.parentId(Long.valueOf(parent));
+		query.parentId(Long.valueOf(parentId));
 		int count = this.count(query);
 		if (count == 0) {// 结果集为空
 			pager.setPageSize(pageSize);
@@ -424,16 +444,16 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		if (list != null && list.size() > 0) {// 有记录
 			SysDepartment temp = (SysDepartment) list.get(0);
 			int sort = bean.getSort();
-			bean.setSort(temp.getSort()-1);
+			bean.setSort(temp.getSort() - 1);
 			this.update(bean);// 更新bean
 			SysTree node = bean.getNode();
-			node.setSort(bean.getSort()-1);
+			node.setSort(bean.getSort() - 1);
 			sysTreeService.update(node);
 
-			temp.setSort(sort+1);
+			temp.setSort(sort + 1);
 			this.update(temp);// 更新temp
 			node = temp.getNode();
-			node.setSort(temp.getSort()+1);
+			node.setSort(temp.getSort() + 1);
 			sysTreeService.update(node);
 		}
 	}
@@ -453,16 +473,16 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 		if (list != null && list.size() > 0) {// 有记录
 			SysDepartment temp = (SysDepartment) list.get(0);
 			int sort = bean.getSort();
-			bean.setSort(temp.getSort()+1);
+			bean.setSort(temp.getSort() + 1);
 			this.update(bean);// 更新bean
 			SysTree node = bean.getNode();
-			node.setSort(bean.getSort()+1);
+			node.setSort(bean.getSort() + 1);
 			sysTreeService.update(node);
 
-			temp.setSort(sort-1);
+			temp.setSort(sort - 1);
 			this.update(temp);// 更新temp
 			node = temp.getNode();
-			node.setSort(temp.getSort()-1);
+			node.setSort(temp.getSort() - 1);
 			sysTreeService.update(node);
 		}
 	}
@@ -476,9 +496,13 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 				this.updateSubStatus(sts, bean.getStatus());
 			}
 			sysTreeService.update(bean.getNode());
+			String cacheKey = "sys_tree_" + bean.getNode().getId();
+			CacheFactory.remove(cacheKey);
 		}
 		bean.setUpdateDate(new Date());
 		sysDepartmentMapper.updateSysDepartment(bean);
+		String cacheKey = "sys_dept_" + bean.getId();
+		CacheFactory.remove(cacheKey);
 		return true;
 	}
 

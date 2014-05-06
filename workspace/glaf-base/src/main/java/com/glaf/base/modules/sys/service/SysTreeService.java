@@ -157,7 +157,7 @@ public interface SysTreeService {
 	 *            int
 	 * @return List
 	 */
-	void getSysTree(List<SysTree> tree, long parentId, int deep);
+	void loadSysTrees(List<SysTree> treeList, long parentId, int deep);
 
 	/**
 	 * 按树编号获取树节点

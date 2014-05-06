@@ -277,7 +277,7 @@ public class SysDeptRoleController {
 		logger.debug("apps:" + deptRole.getApps());
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
 		List<SysTree> list = new java.util.ArrayList<SysTree>();
-		sysTreeService.getSysTree(list, (int) parent.getId(), 0);
+		sysTreeService.loadSysTrees(list, parent.getId(), 0);
 		request.setAttribute("list", list);
 		logger.debug("------------list size:" + list.size());
 
@@ -301,7 +301,7 @@ public class SysDeptRoleController {
 		request.setAttribute("role", role);
 		SysTree parent = sysTreeService.getSysTreeByCode(Constants.TREE_APP);
 		List<SysTree> list = new java.util.ArrayList<SysTree>();
-		sysTreeService.getSysTree(list, (int) parent.getId(), 0);
+		sysTreeService.loadSysTrees(list, parent.getId(), 0);
 		request.setAttribute("list", list);
 		logger.debug("------------list size:" + list.size());
 

@@ -231,6 +231,7 @@ public class SysDictoryController {
 	public ModelAndView prepareAdd(HttpServletRequest request, ModelMap modelMap) {
 		// 显示列表页面
 		RequestUtils.setRequestParameterToAttribute(request);
+		request.removeAttribute("parent");
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		Long nodeId = ParamUtils.getLong(params, "parent");
 		if (nodeId > 0) {
@@ -261,6 +262,7 @@ public class SysDictoryController {
 	public ModelAndView prepareModify(HttpServletRequest request,
 			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		request.removeAttribute("parent");
 		long id = ParamUtil.getIntParameter(request, "id", 0);
 		Dictory bean = dictoryService.find(id);
 		request.setAttribute("bean", bean);
@@ -291,7 +293,7 @@ public class SysDictoryController {
 			List<SysTree> list = new java.util.ArrayList<SysTree>();
 			parent.setDeep(0);
 			list.add(parent);
-			sysTreeService.getSysTree(list, (int) parent.getId(), 1);
+			sysTreeService.loadSysTrees(list, parent.getId(), 1);
 			request.setAttribute("parent", list);
 		}
 

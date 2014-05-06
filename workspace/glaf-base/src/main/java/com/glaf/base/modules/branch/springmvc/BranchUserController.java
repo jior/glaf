@@ -386,7 +386,7 @@ public class BranchUserController {
 		List<SysTree> list = new java.util.ArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
-		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
+		sysTreeService.loadSysTrees(list, parent.getId(), 1);
 		request.setAttribute("parent", list);
 
 		String x_view = ViewProperties.getString("branch.user.prepareModify");

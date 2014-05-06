@@ -87,6 +87,7 @@ public class UserController {
 	public ModelAndView prepareModifyInfo(HttpServletRequest request,
 			ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		request.removeAttribute("parent");
 		SysUser user = RequestUtil.getLoginUser(request);
 		SysUser bean = sysUserService.findByAccount(user.getAccount());
 		request.setAttribute("bean", bean);
@@ -225,7 +226,7 @@ public class UserController {
 		List<SysTree> list = new java.util.ArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
-		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
+		sysTreeService.loadSysTrees(list, parent.getId(), 1);
 		request.setAttribute("parent", list);
 
 		String x_view = ViewProperties
@@ -396,6 +397,7 @@ public class UserController {
 	@RequestMapping(params = "method=view")
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		request.removeAttribute("parent");
 		String actorId = request.getParameter("actorId");
 		SysUser bean = sysUserService.findByAccount(actorId);
 		request.setAttribute("bean", bean);
@@ -419,7 +421,7 @@ public class UserController {
 		List<SysTree> list = new java.util.ArrayList<SysTree>();
 		parent.setDeep(0);
 		list.add(parent);
-		sysTreeService.getSysTree(list, (int) parent.getId(), 1);
+		sysTreeService.loadSysTrees(list, parent.getId(), 1);
 		request.setAttribute("parent", list);
 
 		String x_view = ViewProperties.getString("user.view");

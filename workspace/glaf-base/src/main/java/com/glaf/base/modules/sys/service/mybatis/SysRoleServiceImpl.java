@@ -28,6 +28,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.mapper.SysDeptRoleMapper;
 import com.glaf.base.modules.sys.mapper.SysRoleMapper;
@@ -35,6 +37,9 @@ import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.modules.sys.query.SysDepartmentQuery;
 import com.glaf.base.modules.sys.query.SysRoleQuery;
 import com.glaf.base.modules.sys.service.SysRoleService;
+import com.glaf.base.modules.sys.util.SysRoleJsonFactory;
+import com.glaf.core.cache.CacheFactory;
+import com.glaf.core.config.SystemConfig;
 import com.glaf.core.id.IdGenerator;
 import com.glaf.core.util.PageResult;
 
@@ -148,7 +153,19 @@ public class SysRoleServiceImpl implements SysRoleService {
 		if (id == null) {
 			return null;
 		}
+		String cacheKey = "sys_role_" + id;
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& CacheFactory.getString(cacheKey) != null) {
+			String text = CacheFactory.getString(cacheKey);
+			JSONObject json = JSON.parseObject(text);
+			return SysRoleJsonFactory.jsonToObject(json);
+		}
+
 		SysRole sysRole = sysRoleMapper.getSysRoleById(id);
+		if (sysRole != null && SystemConfig.getBoolean("use_query_cache")) {
+			JSONObject json = sysRole.toJsonObject();
+			CacheFactory.put(cacheKey, json.toJSONString());
+		}
 		return sysRole;
 	}
 
@@ -158,7 +175,6 @@ public class SysRoleServiceImpl implements SysRoleService {
 
 	public List<SysRole> getSysRoleList() {
 		SysRoleQuery query = new SysRoleQuery();
-
 		List<SysRole> list = this.list(query);
 		return list;
 	}
@@ -268,10 +284,10 @@ public class SysRoleServiceImpl implements SysRoleService {
 		if (list != null && list.size() > 0) {// 有记录
 			SysRole temp = (SysRole) list.get(0);
 			int sort = bean.getSort();
-			bean.setSort(temp.getSort()-1);
+			bean.setSort(temp.getSort() - 1);
 			this.update(bean);// 更新bean
 
-			temp.setSort(sort+1);
+			temp.setSort(sort + 1);
 			this.update(temp);// 更新temp
 		}
 	}
@@ -290,10 +306,10 @@ public class SysRoleServiceImpl implements SysRoleService {
 		if (list != null && list.size() > 0) {// 有记录
 			SysRole temp = (SysRole) list.get(0);
 			int sort = bean.getSort();
-			bean.setSort(temp.getSort()+1);
+			bean.setSort(temp.getSort() + 1);
 			this.update(bean);// 更新bean
 
-			temp.setSort(sort-1);
+			temp.setSort(sort - 1);
 			this.update(temp);// 更新temp
 		}
 	}
@@ -302,6 +318,8 @@ public class SysRoleServiceImpl implements SysRoleService {
 	public boolean update(SysRole bean) {
 		bean.setUpdateDate(new Date());
 		sysRoleMapper.updateSysRole(bean);
+		String cacheKey = "sys_role_" + bean.getId();
+		CacheFactory.remove(cacheKey);
 		return true;
 	}
 }

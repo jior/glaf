@@ -32,6 +32,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.mapper.SysApplicationMapper;
 import com.glaf.base.modules.sys.mapper.SysDepartmentMapper;
@@ -44,8 +46,11 @@ import com.glaf.base.modules.sys.query.SysDepartmentQuery;
 import com.glaf.base.modules.sys.query.SysTreeQuery;
 import com.glaf.base.modules.sys.query.SysUserQuery;
 import com.glaf.base.modules.sys.service.SysTreeService;
+import com.glaf.base.modules.sys.util.SysTreeJsonFactory;
 import com.glaf.core.base.ColumnModel;
 import com.glaf.core.base.TableModel;
+import com.glaf.core.cache.CacheFactory;
+import com.glaf.core.config.SystemConfig;
 import com.glaf.core.id.IdGenerator;
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.util.PageResult;
@@ -211,37 +216,47 @@ public class SysTreeServiceImpl implements SysTreeService {
 		return sysTreeMapper.getRoleUserTrees(query);
 	}
 
-	public void getSysTree(List<SysTree> tree, long parentId, int deep) {
-		SysTreeQuery query = new SysTreeQuery();
-		query.setParentId(Long.valueOf(parentId));
-		List<SysTree> nodes = this.list(query);
-		if (nodes != null && !nodes.isEmpty()) {
-			this.initDepartments(nodes);
-			this.initApplications(nodes);
-			Iterator<SysTree> iter = nodes.iterator();
-			while (iter.hasNext()) {// 递归遍历
-				SysTree bean = iter.next();
-				bean.setDeep(deep + 1);
-				tree.add(bean);// 加入到数组
-				getSysTree(tree, (int) bean.getId(), bean.getDeep());
-			}
-		}
-	}
-
 	public SysTree getSysTree(Long id) {
 		if (id == null) {
 			return null;
 		}
+		String cacheKey = "sys_tree_" + id;
+
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& CacheFactory.getString(cacheKey) != null) {
+			String text = CacheFactory.getString(cacheKey);
+			JSONObject json = JSON.parseObject(text);
+			return SysTreeJsonFactory.jsonToObject(json);
+		}
+
 		SysTree sysTree = sysTreeMapper.getSysTreeById(id);
+		if (sysTree != null && SystemConfig.getBoolean("use_query_cache")) {
+			JSONObject json = sysTree.toJsonObject();
+			CacheFactory.put(cacheKey, json.toJSONString());
+		}
 		return sysTree;
 	}
 
 	public SysTree getSysTreeByCode(String code) {
+		String cacheKey = "sys_tree_" + code;
+
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& CacheFactory.getString(cacheKey) != null) {
+			String text = CacheFactory.getString(cacheKey);
+			JSONObject json = JSON.parseObject(text);
+			return SysTreeJsonFactory.jsonToObject(json);
+		}
+
 		SysTreeQuery query = new SysTreeQuery();
 		query.code(code);
 
 		List<SysTree> list = this.list(query);
 		if (list != null && !list.isEmpty()) {
+			if (list.get(0) != null
+					&& SystemConfig.getBoolean("use_query_cache")) {
+				JSONObject json = list.get(0).toJsonObject();
+				CacheFactory.put(cacheKey, json.toJSONString());
+			}
 			return list.get(0);
 		}
 
@@ -256,7 +271,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 		SysTreeQuery query = new SysTreeQuery();
 		query.setParentId(Long.valueOf(parentId));
 		List<SysTree> list = this.list(query);
-		Collections.sort(list);
+		// Collections.sort(list);
 		return list;
 	}
 
@@ -290,7 +305,7 @@ public class SysTreeServiceImpl implements SysTreeService {
 			query.setDepartmentStatus(status);
 		}
 		List<SysTree> list = this.list(query);
-		Collections.sort(list);
+		// Collections.sort(list);
 		this.initDepartments(list);
 		return list;
 	}
@@ -309,6 +324,23 @@ public class SysTreeServiceImpl implements SysTreeService {
 				getSysTreeParent(tree, bean.getParentId());
 			}
 			tree.add(bean);
+		}
+	}
+
+	public void loadSysTrees(List<SysTree> treeList, long parentId, int deep) {
+		SysTreeQuery query = new SysTreeQuery();
+		query.setParentId(Long.valueOf(parentId));
+		List<SysTree> nodes = this.list(query);
+		if (nodes != null && !nodes.isEmpty()) {
+			this.initDepartments(nodes);
+			this.initApplications(nodes);
+			Iterator<SysTree> iter = nodes.iterator();
+			while (iter.hasNext()) {// 递归遍历
+				SysTree bean = iter.next();
+				bean.setDeep(deep + 1);
+				treeList.add(bean);// 加入到数组
+				loadSysTrees(treeList, bean.getId(), bean.getDeep());
+			}
 		}
 	}
 
@@ -596,6 +628,8 @@ public class SysTreeServiceImpl implements SysTreeService {
 		}
 
 		sysTreeMapper.updateSysTree(bean);
+		CacheFactory.remove("sys_tree_" + bean.getId());
+		CacheFactory.remove("sys_tree_" + bean.getCode());
 		return true;
 	}
 
