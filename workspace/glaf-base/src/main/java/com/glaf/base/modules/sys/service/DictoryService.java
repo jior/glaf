@@ -19,8 +19,7 @@
 package com.glaf.base.modules.sys.service;
 
 import java.util.List;
-import java.util.Map;
-
+ 
 import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.base.modules.sys.model.Dictory;
@@ -92,7 +91,7 @@ public interface DictoryService {
 	 * @return
 	 */
 	List<Dictory> getAvailableDictoryList(long parent);
-	
+
 	/**
 	 * 返回某分类下的所有字典列表
 	 * 
@@ -142,15 +141,6 @@ public interface DictoryService {
 	 * @return
 	 */
 	PageResult getDictoryList(long parent, int pageNo, int pageSize);
-
-	/**
-	 * 主要用在获得核算项目的键值对
-	 * 
-	 * @param list
-	 * @param purchaseId
-	 * @return
-	 */
-	Map<String, String> getDictoryMap(List<Dictory> list, long purchaseId);
 
 	/**
 	 * 根据查询参数获取一页的数据

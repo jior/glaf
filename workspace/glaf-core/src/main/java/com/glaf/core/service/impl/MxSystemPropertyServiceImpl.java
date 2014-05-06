@@ -31,6 +31,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.glaf.core.config.SystemConfig;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.domain.SystemProperty;
 import com.glaf.core.id.IdGenerator;
@@ -156,8 +157,10 @@ public class MxSystemPropertyServiceImpl implements ISystemPropertyService {
 				bean.setTitle(property.getTitle());
 				bean.setType(property.getType());
 				systemPropertyMapper.updateSystemProperty(bean);
+				SystemConfig.setProperty(bean);
 			} else {
 				systemPropertyMapper.insertSystemProperty(property);
+				SystemConfig.setProperty(property);
 			}
 		} else {
 			SystemPropertyQuery query = new SystemPropertyQuery();
@@ -174,11 +177,13 @@ public class MxSystemPropertyServiceImpl implements ISystemPropertyService {
 				bean.setTitle(property.getTitle());
 				bean.setType(property.getType());
 				systemPropertyMapper.updateSystemProperty(bean);
+				SystemConfig.setProperty(bean);
 			} else {
 				if (property.getId() == null) {
 					property.setId(idGenerator.getNextId());
 				}
 				systemPropertyMapper.insertSystemProperty(property);
+				SystemConfig.setProperty(property);
 			}
 		}
 	}
@@ -204,6 +209,7 @@ public class MxSystemPropertyServiceImpl implements ISystemPropertyService {
 					systemPropertyMapper.insertSystemProperty(p);
 				}
 			}
+			SystemConfig.reload();
 		}
 	}
 

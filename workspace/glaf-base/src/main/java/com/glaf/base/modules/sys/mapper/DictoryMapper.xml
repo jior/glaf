@@ -344,7 +344,7 @@
 	</delete>
 
 
-	<delete id="deleteDictorys" parameterType="com.glaf.base.modules.sys.query.DictoryQuery">
+	<delete id="deleteDictories" parameterType="com.glaf.base.modules.sys.query.DictoryQuery">
 		delete from SYS_DICTORY
 		where (
 		ID IN
@@ -361,10 +361,10 @@
 	</select>
 
 
-	<select id="getDictorys" parameterType="com.glaf.base.modules.sys.query.DictoryQuery"
+	<select id="getDictories" parameterType="com.glaf.base.modules.sys.query.DictoryQuery"
 		resultMap="dictoryResultMap">
 		select E.*
-		<include refid="selectDictorysSql" />
+		<include refid="selectDictoriesSql" />
 		<choose>
 			<when test="orderBy != null">
 				order by ${orderBy}
@@ -379,11 +379,11 @@
 	<select id="getDictoryCount" parameterType="com.glaf.base.modules.sys.query.DictoryQuery"
 		resultType="int">
 		select count(*)
-		<include refid="selectDictorysSql" />
+		<include refid="selectDictoriesSql" />
 	</select>
 
 
-	<sql id="selectDictorysSql">
+	<sql id="selectDictoriesSql">
 
 		from SYS_DICTORY E
 
@@ -457,7 +457,7 @@
 			<if test="blocked != null">
 				and E.BLOCKED = #{blocked}
 			</if>
-			
+
 			<if test="idNotEqual != null">
 				and E.id != #{idNotEqual}
 			</if>

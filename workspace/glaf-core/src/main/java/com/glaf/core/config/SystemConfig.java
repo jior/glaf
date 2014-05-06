@@ -20,6 +20,7 @@ package com.glaf.core.config;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.lang3.StringUtils;
@@ -35,7 +36,7 @@ import com.glaf.core.util.DateUtils;
 public class SystemConfig {
 	protected static final Log logger = LogFactory.getLog(SystemConfig.class);
 
-	protected final static Map<String, SystemProperty> properties = new ConcurrentHashMap<String, SystemProperty>();
+	protected final static ConcurrentMap<String, SystemProperty> properties = new ConcurrentHashMap<String, SystemProperty>();
 
 	protected static AtomicBoolean loading = new AtomicBoolean(false);
 
@@ -52,6 +53,27 @@ public class SystemConfig {
 	public final static String NOW = "${now}";
 
 	private static volatile String TOKEN = null;
+
+	public static boolean getBoolean(String key) {
+		boolean ret = false;
+		if (properties.isEmpty()) {
+			reload();
+		}
+		SystemProperty prop = properties.get(key);
+		if (prop != null) {
+			String value = prop.getValue();
+			if (StringUtils.isEmpty(value)) {
+				value = prop.getInitValue();
+			}
+			if (StringUtils.equalsIgnoreCase(value, "true")
+					|| StringUtils.equalsIgnoreCase(value, "1")
+					|| StringUtils.equalsIgnoreCase(value, "y")
+					|| StringUtils.equalsIgnoreCase(value, "yes")) {
+				ret = true;
+			}
+		}
+		return ret;
+	}
 
 	public static Map<String, Object> getContextMap() {
 		Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
@@ -219,22 +241,6 @@ public class SystemConfig {
 		return serviceUrl;
 	}
 
-	public static boolean getBoolean(String key) {
-		boolean ret = false;
-		if (properties.isEmpty()) {
-			reload();
-		}
-		SystemProperty prop = properties.get(key);
-		if (prop != null) {
-			String value = prop.getValue();
-			if (StringUtils.isEmpty(value)) {
-				value = prop.getInitValue();
-			}
-			return Boolean.parseBoolean(value);
-		}
-		return ret;
-	}
-
 	public static String getString(String key) {
 		String ret = null;
 		if (properties.isEmpty()) {
@@ -297,7 +303,7 @@ public class SystemConfig {
 
 	public static void main(String[] args) {
 		Date now = new Date();
-		Map<String, Object> sysMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+		Map<String, Object> sysMap = new java.util.HashMap<String, Object>();
 		sysMap.put("curr_yyyymmdd", DateUtils.getYearMonthDay(now));
 		sysMap.put("curr_yyyymm", DateUtils.getYearMonth(now));
 		System.out.println(Mvel2ExpressionEvaluator.evaluate(
@@ -323,6 +329,12 @@ public class SystemConfig {
 			} finally {
 				loading.set(false);
 			}
+		}
+	}
+
+	public static void setProperty(SystemProperty p) {
+		if (p != null && p.getName() != null) {
+			properties.put(p.getName(), p);
 		}
 	}
 

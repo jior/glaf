@@ -26,7 +26,7 @@ import com.glaf.base.modules.sys.query.*;
 @Component
 public interface DictoryMapper {
 
-	void deleteDictorys(DictoryQuery query);
+	void deleteDictories(DictoryQuery query);
 
 	void deleteDictoryById(Long id);
 
@@ -34,7 +34,7 @@ public interface DictoryMapper {
 
 	int getDictoryCount(DictoryQuery query);
 
-	List<Dictory> getDictorys(DictoryQuery query);
+	List<Dictory> getDictories(DictoryQuery query);
 
 	void insertDictory(Dictory model);
 

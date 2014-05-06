@@ -101,7 +101,6 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	public int count(SysUserQuery query) {
-		query.ensureInitialized();
 		return sysUserMapper.getSysUserCount(query);
 	}
 
