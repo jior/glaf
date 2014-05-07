@@ -85,9 +85,7 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/jedis.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jetty-util.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jfreechart.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/jgraphx.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/joda-time.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/json-lib-2.4-jdk15.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/json.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jsp-api.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/jstl.jar"/>
