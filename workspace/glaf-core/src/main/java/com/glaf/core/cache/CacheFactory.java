@@ -69,54 +69,6 @@ public class CacheFactory {
 		}
 	}
 
-	public static Object get(final String key) {
-		boolean waitFor = true;
-		Callable<Object> task = new Callable<Object>() {
-			@Override
-			public Object call() throws Exception {
-				try {
-					Cache cache = getCache();
-					if (cache != null) {
-						String cacheKey = Environment.getCurrentSystemName()
-								+ "_" + CACHE_PREFIX + key;
-						cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
-						Object value = cache.get(cacheKey);
-						if (value != null) {
-							logger.debug("get object'" + key + "' from cache.");
-							return value;
-						}
-					}
-				} catch (Exception ex) {
-					if (logger.isDebugEnabled()) {
-						ex.printStackTrace();
-						logger.debug(ex);
-					}
-				}
-				return null;
-			}
-		};
-
-		try {
-			Future<Object> result = pool.submit(task);
-			long start = System.currentTimeMillis();
-
-			// 如果需要等待执行结果
-			if (waitFor) {
-				while (true) {
-					if (System.currentTimeMillis() - start > 2000) {
-						break;
-					}
-					if (result.isDone()) {
-						return result.get();
-					}
-				}
-			}
-		} catch (Exception e) {
-			logger.error(e);
-		}
-
-		return null;
-	}
 
 	public static ApplicationContext getApplicationContext() {
 		return ctx;

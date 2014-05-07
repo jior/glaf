@@ -50,7 +50,7 @@ public class CacheTest {
 	@Test
 	public void testGet() {
 		for (int i = 100; i < 110; i++) {
-			System.out.println(CacheFactory.get("cache_" + i));
+			System.out.println(CacheFactory.getString("cache_" + i));
 		}
 	}
 
@@ -60,7 +60,7 @@ public class CacheTest {
 			CacheFactory.put("cache_" + i,"value_" + i + "#" + UUID32.getUUID());
 		}
 		for (int i = 100; i < 110; i++) {
-			System.out.println(CacheFactory.get("cache_" + i));
+			System.out.println(CacheFactory.getString("cache_" + i));
 		}
 	}
 

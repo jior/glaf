@@ -23,7 +23,6 @@ import java.util.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +30,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.TableModel;
 import com.glaf.core.cache.CacheFactory;
+import com.glaf.core.config.SystemConfig;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
 import com.glaf.base.modules.sys.model.*;
@@ -241,14 +241,15 @@ public class TodoServiceMyBatisImpl implements TodoService {
 
 	public Todo getTodo(long todoId) {
 		String cacheKey = "todo_" + todoId;
-		if (CacheFactory.get(cacheKey) != null) {
-			String text = (String) CacheFactory.get(cacheKey);
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& CacheFactory.getString(cacheKey) != null) {
+			String text = CacheFactory.getString(cacheKey);
 			JSONObject jsonObject = JSON.parseObject(text);
 			Todo model = TodoJsonFactory.jsonToObject(jsonObject);
 			return model;
 		}
 		Todo todo = todoMapper.getTodoById(todoId);
-		if (todo != null) {
+		if (SystemConfig.getBoolean("use_query_cache") && todo != null) {
 			CacheFactory.put(cacheKey, todo.toJsonObject().toJSONString());
 		}
 		return todo;

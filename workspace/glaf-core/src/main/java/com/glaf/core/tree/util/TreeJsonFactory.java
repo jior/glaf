@@ -28,6 +28,16 @@ import com.glaf.core.base.TreeModel;
 
 public class TreeJsonFactory {
 
+	public static java.util.List<TreeModel> arrayToList(JSONArray array) {
+		java.util.List<TreeModel> list = new java.util.ArrayList<TreeModel>();
+		for (int i = 0, len = array.size(); i < len; i++) {
+			JSONObject jsonObject = array.getJSONObject(i);
+			TreeModel model = jsonToObject(jsonObject);
+			list.add(model);
+		}
+		return list;
+	}
+
 	public static TreeModel jsonToObject(JSONObject jsonObject) {
 		TreeModel model = new BaseTree();
 		if (jsonObject.containsKey("id")) {
@@ -82,6 +92,17 @@ public class TreeJsonFactory {
 		}
 
 		return model;
+	}
+
+	public static JSONArray listToArray(java.util.List<TreeModel> list) {
+		JSONArray array = new JSONArray();
+		if (list != null && !list.isEmpty()) {
+			for (TreeModel model : list) {
+				JSONObject jsonObject = model.toJsonObject();
+				array.add(jsonObject);
+			}
+		}
+		return array;
 	}
 
 	public static JSONObject toJsonObject(TreeModel model) {

@@ -32,8 +32,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.cache.CacheFactory;
+import com.glaf.core.config.SystemConfig;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.domain.EntityEntry;
 import com.glaf.core.domain.EntryPoint;
@@ -45,6 +48,8 @@ import com.glaf.core.query.TreeModelQuery;
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.IEntryService;
 import com.glaf.core.service.ITreeModelService;
+import com.glaf.core.tree.util.TreeJsonFactory;
+import com.glaf.core.util.StringTools;
 
 @Service("entryService")
 @Transactional(readOnly = true)
@@ -145,8 +150,10 @@ public class MxEntryServiceImpl implements IEntryService {
 			String moduleId, String entryKey) {
 		String cacheKey = "mx_" + loginContext.getActorId() + "_" + moduleId
 				+ "_" + entryKey;
-		if (CacheFactory.get(cacheKey) != null) {
-
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& CacheFactory.getString(cacheKey) != null) {
+			String text = CacheFactory.getString(cacheKey);
+			return StringTools.split(text);
 		}
 		List<String> entityIds = new java.util.ArrayList<String>();
 		Map<String, Object> params = new java.util.HashMap<String, Object>();
@@ -235,6 +242,11 @@ public class MxEntryServiceImpl implements IEntryService {
 			}
 		}
 
+		if (SystemConfig.getBoolean("use_query_cache")) {
+			String text = StringTools.listToString(entityIds);
+			CacheFactory.put(cacheKey, text);
+		}
+
 		return entityIds;
 	}
 
@@ -247,8 +259,10 @@ public class MxEntryServiceImpl implements IEntryService {
 	 */
 	public List<String> getEntryKeys(LoginContext loginContext, String moduleId) {
 		String cacheKey = "mx_ek_" + loginContext.getActorId() + "_" + moduleId;
-		if (CacheFactory.get(cacheKey) != null) {
-
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& CacheFactory.getString(cacheKey) != null) {
+			String text = CacheFactory.getString(cacheKey);
+			return StringTools.split(text);
 		}
 		List<String> entryKeys = new java.util.ArrayList<String>();
 		Map<String, Object> params = new java.util.HashMap<String, Object>();
@@ -338,7 +352,10 @@ public class MxEntryServiceImpl implements IEntryService {
 			}
 		}
 
-		// CacheFactory.put(cacheKey, entryKeys);
+		if (SystemConfig.getBoolean("use_query_cache")) {
+			String text = StringTools.listToString(entryKeys);
+			CacheFactory.put(cacheKey, text);
+		}
 
 		return entryKeys;
 	}
@@ -357,8 +374,11 @@ public class MxEntryServiceImpl implements IEntryService {
 	 */
 	public List<TreeModel> getTreeModels(LoginContext loginContext) {
 		String cacheKey = "mx_" + loginContext.getActorId();
-		if (CacheFactory.get(cacheKey) != null) {
-
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& CacheFactory.getString(cacheKey) != null) {
+			String text = CacheFactory.getString(cacheKey);
+			JSONArray array = JSON.parseArray(text);
+			return TreeJsonFactory.arrayToList(array);
 		}
 		List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
 		List<Long> nodeIds = new java.util.ArrayList<Long>();
@@ -470,6 +490,13 @@ public class MxEntryServiceImpl implements IEntryService {
 			treeModels = treeModelService.getTreeModels(q);
 		}
 
+		if (treeModels != null && !treeModels.isEmpty()) {
+			if (SystemConfig.getBoolean("use_query_cache")) {
+				JSONArray array = TreeJsonFactory.listToArray(treeModels);
+				CacheFactory.put(cacheKey, array.toJSONString());
+			}
+		}
+
 		return treeModels;
 	}
 
@@ -506,9 +533,11 @@ public class MxEntryServiceImpl implements IEntryService {
 
 		String cacheKey = "CX_" + permKey + "_" + nodeId + "_"
 				+ loginContext.getActorId();
-		if (CacheFactory.get(cacheKey) != null) {
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& CacheFactory.getString(cacheKey) != null) {
 			logger.debug(cacheKey + " has caching.");
-
+			String text = CacheFactory.getString(cacheKey);
+			return Boolean.parseBoolean(text);
 		}
 
 		/**
@@ -618,6 +647,10 @@ public class MxEntryServiceImpl implements IEntryService {
 			}
 		}
 
+		if (SystemConfig.getBoolean("use_query_cache")) {
+			CacheFactory.put(cacheKey, String.valueOf(hasPermission));
+		}
+
 		return hasPermission;
 	}
 
@@ -649,8 +682,15 @@ public class MxEntryServiceImpl implements IEntryService {
 			return true;
 		}
 
-		// String cacheKey = "PX_" + moduleId + "_" + permKey + "_" + entityId
-		// + "_" + loginContext.getActorId();
+		String cacheKey = "PX_" + moduleId + "_" + permKey + "_" + entityId
+				+ "_" + loginContext.getActorId();
+
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& CacheFactory.getString(cacheKey) != null) {
+			logger.debug(cacheKey + " has caching.");
+			String text = CacheFactory.getString(cacheKey);
+			return Boolean.parseBoolean(text);
+		}
 
 		/**
 		 * 角色是否具有该记录的权限
@@ -724,6 +764,10 @@ public class MxEntryServiceImpl implements IEntryService {
 			if (entryPoints != null && entryPoints.size() > 0) {
 				hasPermission = true;
 			}
+		}
+
+		if (SystemConfig.getBoolean("use_query_cache")) {
+			CacheFactory.put(cacheKey, String.valueOf(hasPermission));
 		}
 
 		return hasPermission;

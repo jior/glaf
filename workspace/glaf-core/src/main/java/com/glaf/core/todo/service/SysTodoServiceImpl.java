@@ -37,6 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.cache.CacheFactory;
+import com.glaf.core.config.SystemConfig;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
@@ -79,14 +80,15 @@ public class SysTodoServiceImpl implements ISysTodoService {
 
 	public Todo getTodo(Long todoId) {
 		String cacheKey = "todo_" + todoId;
-		if (CacheFactory.get(cacheKey) != null) {
-			String text = (String) CacheFactory.get(cacheKey);
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& CacheFactory.getString(cacheKey) != null) {
+			String text = (String) CacheFactory.getString(cacheKey);
 			JSONObject jsonObject = JSON.parseObject(text);
 			Todo model = TodoJsonFactory.jsonToObject(jsonObject);
 			return model;
 		}
 		Todo todo = todoMapper.getTodoById(todoId);
-		if (todo != null) {
+		if (SystemConfig.getBoolean("use_query_cache") && todo != null) {
 			CacheFactory.put(cacheKey, todo.toJsonObject().toJSONString());
 		}
 		return todo;
@@ -94,14 +96,15 @@ public class SysTodoServiceImpl implements ISysTodoService {
 
 	public Todo getTodoByCode(String code) {
 		String cacheKey = "todo_code_" + code;
-		if (CacheFactory.get(cacheKey) != null) {
-			String text = (String) CacheFactory.get(cacheKey);
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& CacheFactory.getString(cacheKey) != null) {
+			String text = CacheFactory.getString(cacheKey);
 			JSONObject jsonObject = JSON.parseObject(text);
 			Todo todo = TodoJsonFactory.jsonToObject(jsonObject);
 			return todo;
 		}
 		Todo todo = todoMapper.getTodoByCode(code);
-		if (todo != null) {
+		if (SystemConfig.getBoolean("use_query_cache") && todo != null) {
 			CacheFactory.put(cacheKey, todo.toJsonObject().toJSONString());
 		}
 

@@ -31,7 +31,6 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
-
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -121,7 +120,7 @@ public class MxTemplateServiceImpl implements ITemplateService {
 			return null;
 		}
 		String cacheKey = "x_tpl_" + templateId;
-		if (CacheFactory.get(cacheKey) != null) {
+		if ( CacheFactory.getString(cacheKey) != null) {
 			logger.debug("load " + templateId + " from cache.");
 			String text = CacheFactory.getString(cacheKey);
 			JSONObject jsonObject = JSON.parseObject(text);

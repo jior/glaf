@@ -58,6 +58,23 @@ public final class StringTools {
 		return sbuf.toString();
 	}
 
+	public static String listToString(List<String> strs) {
+		return listToString(strs, ",");
+	}
+
+	public static String listToString(List<String> strs, String separator) {
+		if (strs == null || strs.size() == 0) {
+			return "";
+		}
+		StringBuffer sbuf = new StringBuffer();
+		sbuf.append(strs.get(0));
+		for (int idx = 1; idx < strs.size(); idx++) {
+			sbuf.append(separator);
+			sbuf.append(strs.get(idx));
+		}
+		return sbuf.toString();
+	}
+
 	/**
 	 * 字节数组转化成16进制形式
 	 */
@@ -656,7 +673,7 @@ public final class StringTools {
 		}
 		return string;
 	}
-	
+
 	public static String replaceFirst(String string, String oldString,
 			String newString) {
 		if (string == null) {
@@ -681,7 +698,6 @@ public final class StringTools {
 		}
 		return string;
 	}
-
 
 	public static String replace(String line, String oldString,
 			String newString, int[] count) {

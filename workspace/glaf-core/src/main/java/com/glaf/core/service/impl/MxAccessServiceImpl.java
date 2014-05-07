@@ -38,6 +38,7 @@ import com.glaf.core.base.Accessable;
 import com.glaf.core.base.DataAccess;
 import com.glaf.core.base.ModuleAccess;
 import com.glaf.core.cache.CacheFactory;
+import com.glaf.core.config.SystemConfig;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.id.IdGenerator;
 import com.glaf.core.mapper.AccessEntryMapper;
@@ -226,15 +227,17 @@ public class MxAccessServiceImpl implements IAccessService {
 		accessEntry.setCreateDate(new Date());
 		accessEntryMapper.insertAccessEntry(accessEntry);
 
-		String cacheKey = "x_acs_proc_" + accessEntry.getProcessName() + "_"
-				+ accessEntry.getTaskName();
-		CacheFactory.remove(cacheKey);
+		if (SystemConfig.getBoolean("use_query_cache")) {
+			String cacheKey = "x_acs_proc_" + accessEntry.getProcessName()
+					+ "_" + accessEntry.getTaskName();
+			CacheFactory.remove(cacheKey);
 
-		cacheKey = "x_acs_app_" + accessEntry.getApplicationName();
-		CacheFactory.remove(cacheKey);
+			cacheKey = "x_acs_app_" + accessEntry.getApplicationName();
+			CacheFactory.remove(cacheKey);
 
-		cacheKey = "x_acs_proc_" + accessEntry.getProcessName();
-		CacheFactory.remove(cacheKey);
+			cacheKey = "x_acs_proc_" + accessEntry.getProcessName();
+			CacheFactory.remove(cacheKey);
+		}
 
 		Map<String, AccessPoint> accessPoints = accessEntry.getAccessPoints();
 		if (accessPoints != null) {
@@ -275,15 +278,17 @@ public class MxAccessServiceImpl implements IAccessService {
 			accessEntry.setCreateDate(new Date());
 			accessEntry.setId(idGenerator.getNextId());
 
-			String cacheKey = "x_acs_proc_" + accessEntry.getProcessName()
-					+ "_" + accessEntry.getTaskName();
-			CacheFactory.remove(cacheKey);
+			if (SystemConfig.getBoolean("use_query_cache")) {
+				String cacheKey = "x_acs_proc_" + accessEntry.getProcessName()
+						+ "_" + accessEntry.getTaskName();
+				CacheFactory.remove(cacheKey);
 
-			cacheKey = "x_acs_app_" + accessEntry.getApplicationName();
-			CacheFactory.remove(cacheKey);
+				cacheKey = "x_acs_app_" + accessEntry.getApplicationName();
+				CacheFactory.remove(cacheKey);
 
-			cacheKey = "x_acs_proc_" + accessEntry.getProcessName();
-			CacheFactory.remove(cacheKey);
+				cacheKey = "x_acs_proc_" + accessEntry.getProcessName();
+				CacheFactory.remove(cacheKey);
+			}
 
 			accessEntryMapper.insertAccessEntry(accessEntry);
 

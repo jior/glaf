@@ -41,6 +41,7 @@ import com.glaf.core.base.DataFile;
 import com.glaf.core.base.DataModel;
 import com.glaf.core.base.DataModelEntity;
 import com.glaf.core.cache.CacheFactory;
+import com.glaf.core.config.SystemConfig;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.domain.BlobItemEntity;
 import com.glaf.core.domain.ColumnDefinition;
@@ -175,14 +176,16 @@ public class MxFormDataServiceImpl implements FormDataService {
 
 	public FormApplication getFormApplication(String appId) {
 		String cacheKey = "form_app_" + appId;
-		if (CacheFactory.get(cacheKey) != null) {
-			String text = (String) CacheFactory.get(cacheKey);
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& CacheFactory.getString(cacheKey) != null) {
+			String text = CacheFactory.getString(cacheKey);
 			JSONObject jsonObject = JSON.parseObject(text);
 			return FormApplicationJsonFactory.jsonToObject(jsonObject);
 		}
 		FormApplication formApplication = formApplicationMapper
 				.getFormApplicationById(appId);
-		if (formApplication != null) {
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& formApplication != null) {
 			CacheFactory.put(cacheKey, formApplication.toJsonObject()
 					.toJSONString());
 		}
@@ -192,14 +195,16 @@ public class MxFormDataServiceImpl implements FormDataService {
 
 	public FormApplication getFormApplicationByName(String name) {
 		String cacheKey = "form_app_" + name;
-		if (CacheFactory.get(cacheKey) != null) {
-			String text = (String) CacheFactory.get(cacheKey);
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& CacheFactory.getString(cacheKey) != null) {
+			String text = CacheFactory.getString(cacheKey);
 			JSONObject jsonObject = JSON.parseObject(text);
 			return FormApplicationJsonFactory.jsonToObject(jsonObject);
 		}
 		FormApplication formApplication = formApplicationMapper
 				.getFormApplicationByName(name);
-		if (formApplication != null) {
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& formApplication != null) {
 			CacheFactory.put(cacheKey, formApplication.toJsonObject()
 					.toJSONString());
 		}
@@ -220,14 +225,16 @@ public class MxFormDataServiceImpl implements FormDataService {
 
 	public FormDefinition getFormDefinition(String formDefinitionId) {
 		String cacheKey = "form_def_" + formDefinitionId;
-		if (CacheFactory.get(cacheKey) != null) {
-			String text = (String) CacheFactory.get(cacheKey);
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& CacheFactory.getString(cacheKey) != null) {
+			String text = CacheFactory.getString(cacheKey);
 			JSONObject jsonObject = JSON.parseObject(text);
 			return FormDefinitionJsonFactory.jsonToObject(jsonObject);
 		}
 		FormDefinition formDefinition = formDefinitionMapper
 				.getFormDefinition(formDefinitionId);
-		if (formDefinition != null) {
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& formDefinition != null) {
 			CacheFactory.put(cacheKey, formDefinition.toJsonObject()
 					.toJSONString());
 		}
@@ -242,14 +249,16 @@ public class MxFormDataServiceImpl implements FormDataService {
 
 	public FormDefinition getLatestFormDefinition(String name) {
 		String cacheKey = "form_def_" + name;
-		if (CacheFactory.get(cacheKey) != null) {
-			String text = (String) CacheFactory.get(cacheKey);
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& CacheFactory.getString(cacheKey) != null) {
+			String text = CacheFactory.getString(cacheKey);
 			JSONObject jsonObject = JSON.parseObject(text);
 			return FormDefinitionJsonFactory.jsonToObject(jsonObject);
 		}
 		FormDefinition formDefinition = formDefinitionMapper
 				.getLatestFormDefinitionByName(name);
-		if (formDefinition != null) {
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& formDefinition != null) {
 			CacheFactory.put(cacheKey, formDefinition.toJsonObject()
 					.toJSONString());
 		}
@@ -575,7 +584,6 @@ public class MxFormDataServiceImpl implements FormDataService {
 	}
 
 	@javax.annotation.Resource
-	
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
@@ -599,7 +607,6 @@ public class MxFormDataServiceImpl implements FormDataService {
 	}
 
 	@javax.annotation.Resource
-	
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}

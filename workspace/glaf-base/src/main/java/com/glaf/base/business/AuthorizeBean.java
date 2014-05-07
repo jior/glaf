@@ -27,18 +27,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.cache.CacheFactory;
+import com.glaf.core.config.SystemConfig;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.util.ClassUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.web.callback.CallbackProperties;
 import com.glaf.core.web.callback.LoginCallback;
-
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.service.AuthorizeService;
 import com.glaf.base.modules.sys.service.SysApplicationService;
@@ -102,14 +101,17 @@ public class AuthorizeBean {
 		SysUser sysUser = null;
 		if (account != null) {
 			String cacheKey = "cache_user_" + account;
-			String content = (String) CacheFactory.get(cacheKey);
-			if (StringUtils.isNotEmpty(content)) {
-				JSONObject jsonObject = JSON.parseObject(content);
-				sysUser = SysUserJsonFactory.jsonToObject(jsonObject);
+			if (SystemConfig.getBoolean("use_query_cache")) {
+				String content = CacheFactory.getString(cacheKey);
+				if (StringUtils.isNotEmpty(content)) {
+					JSONObject jsonObject = JSON.parseObject(content);
+					sysUser = SysUserJsonFactory.jsonToObject(jsonObject);
+				}
 			}
 			if (sysUser == null) {
 				sysUser = getSysUserService().findByAccountWithAll(account);
-				if (sysUser != null) {
+				if (SystemConfig.getBoolean("use_query_cache")
+						&& sysUser != null) {
 					CacheFactory.put(cacheKey, sysUser.toJsonObject()
 							.toJSONString());
 				}
