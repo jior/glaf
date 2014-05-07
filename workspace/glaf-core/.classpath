@@ -163,5 +163,13 @@
 	<classpathentry kind="lib" path="lib/hazelcast-all.jar"/>
 	<classpathentry kind="lib" path="lib/jboss-logging.jar"/>
 	<classpathentry kind="lib" path="lib/xom.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-dataformat-xml.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-jaxrs-base.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-jaxrs-json-provider.jar"/>
+	<classpathentry kind="lib" path="lib/stax2.jar"/>
+	<classpathentry kind="lib" path="lib/staxon-gson.jar"/>
+	<classpathentry kind="lib" path="lib/staxon-jackson.jar"/>
+	<classpathentry kind="lib" path="lib/staxon-jaxrs.jar"/>
+	<classpathentry kind="lib" path="lib/staxon.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

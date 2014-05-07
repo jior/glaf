@@ -39,7 +39,6 @@ import org.dom4j.Document;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.util.IOUtils;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.domain.SysData;
 import com.glaf.core.domain.SysDataLog;
@@ -47,8 +46,10 @@ import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.SysDataService;
 import com.glaf.core.util.Dom4jUtils;
 import com.glaf.core.util.FileUtils;
+import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.StaxonUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.SysDataLogFactory;
 import com.glaf.core.xml.XmlBuilder;
@@ -111,7 +112,6 @@ public class DataServiceResource {
 				}
 				if (addr.endsWith("*")) {
 					String tmp = addr.substring(0, addr.indexOf("*"));
-					// System.out.println(">>>>>>>>>>>>>>>"+tmp);
 					if (StringUtils.contains(ipAddress, tmp)) {
 						hasPermission = true;
 					}
@@ -171,9 +171,11 @@ public class DataServiceResource {
 			log.setTimeMS(timeMS);
 
 			if (StringUtils.equals(dataType, "json")) {
-				net.sf.json.xml.XMLSerializer xmlSerializer = new net.sf.json.xml.XMLSerializer();
-				net.sf.json.JSON json = xmlSerializer.read(doc.asXML());
-				return json.toString(2).getBytes("UTF-8");
+				// net.sf.json.xml.XMLSerializer xmlSerializer = new
+				// net.sf.json.xml.XMLSerializer();
+				// net.sf.json.JSON json = xmlSerializer.read(doc.asXML());
+				// return json.toString(2).getBytes("UTF-8");
+				return StaxonUtils.xml2json(doc.asXML()).getBytes("UTF-8");
 			}
 
 			return Dom4jUtils.getBytesFromPrettyDocument(doc, "UTF-8");
@@ -182,7 +184,7 @@ public class DataServiceResource {
 			log.setFlag(-1);
 			throw new RuntimeException(ex);
 		} finally {
-			IOUtils.close(inputStream);
+			IOUtils.closeStream(inputStream);
 			SysDataLogFactory.create(log);
 		}
 	}
