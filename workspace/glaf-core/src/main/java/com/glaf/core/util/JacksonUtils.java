@@ -113,6 +113,14 @@ public class JacksonUtils {
 		String xml = xmlMapper.writeValueAsString(root);
 		return xml;
 	}
+	
+	protected static JsonGenerator configure(JsonGenerator generator, boolean pretty) {
+		generator.configure(JsonGenerator.Feature.AUTO_CLOSE_TARGET, false);
+		if (pretty) {
+			generator.useDefaultPrettyPrinter();
+		}
+		return generator;
+	}
 
 	/**
 	 * xml string convert to json string
@@ -121,6 +129,7 @@ public class JacksonUtils {
 		StringWriter w = new StringWriter();
 		JsonParser jp = xmlMapper.getFactory().createParser(xml);
 		JsonGenerator jg = objectMapper.getFactory().createGenerator(w);
+		configure(jg, true);
 		while (jp.nextToken() != null) {
 			jg.copyCurrentEvent(jp);
 		}

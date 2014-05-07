@@ -49,7 +49,7 @@ import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.RequestUtils;
-import com.glaf.core.util.StaxonUtils;
+import com.glaf.core.util.JacksonUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.SysDataLogFactory;
 import com.glaf.core.xml.XmlBuilder;
@@ -175,7 +175,7 @@ public class DataServiceResource {
 				// net.sf.json.xml.XMLSerializer();
 				// net.sf.json.JSON json = xmlSerializer.read(doc.asXML());
 				// return json.toString(2).getBytes("UTF-8");
-				return StaxonUtils.xml2json(doc.asXML()).getBytes("UTF-8");
+				return JacksonUtils.xml2json(doc.asXML()).getBytes("UTF-8");
 			}
 
 			return Dom4jUtils.getBytesFromPrettyDocument(doc, "UTF-8");
