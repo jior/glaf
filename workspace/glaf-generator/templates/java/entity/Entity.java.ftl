@@ -11,6 +11,12 @@ import com.glaf.core.base.*;
 import com.glaf.core.util.DateUtils;
 import ${packageName}.util.*;
 
+/**
+ * 
+ * 实体对象
+ *
+ */
+
 @Entity
 @Table(name = "${tableName}")
 public class ${entityName} implements Serializable, JSONable {

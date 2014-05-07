@@ -23,6 +23,12 @@ import ${packageName}.domain.*;
 import ${packageName}.query.*;
 import ${packageName}.service.*;
 
+/**
+ * 
+ * SpringMVC¿ØÖÆÆ÷
+ *
+ */
+
 @Controller("/${classDefinition.moduleName}/${modelName}")
 @RequestMapping("/${classDefinition.moduleName}/${modelName}")
 public class ${entityName}Controller {

@@ -3,6 +3,12 @@ package ${packageName}.query;
 import java.util.*;
 import com.glaf.core.query.DataQuery;
 
+
+/**
+ * 
+ * ≤È—Ø¿‡
+ *
+ */
 public class ${entityName}Query extends DataQuery {
         private static final long serialVersionUID = 1L;
 	protected List<${idField.type}> ${idField.name}s;

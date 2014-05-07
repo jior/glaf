@@ -7,6 +7,12 @@ import com.glaf.core.base.*;
 import com.glaf.core.util.DateUtils;
 import ${packageName}.domain.*;
 
+
+/**
+ * 
+ * JSONπ§≥ß¿‡
+ *
+ */
 public class ${entityName}JsonFactory {
 
 	public static ${entityName} jsonToObject(JSONObject jsonObject) {

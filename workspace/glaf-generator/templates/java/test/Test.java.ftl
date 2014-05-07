@@ -9,6 +9,11 @@ import ${packageName}.query.${entityName}Query;
 import ${packageName}.service.${entityName}Service;
 import com.glaf.test.AbstractTest;
 
+/**
+ * 
+ * µ•‘™≤‚ ‘¿‡
+ *
+ */
 public class ${entityName}Test extends AbstractTest {
 
 	protected ${entityName}Service ${modelName}Service;

@@ -5,6 +5,12 @@ import org.springframework.stereotype.Component;
 import ${packageName}.domain.*;
 import ${packageName}.query.*;
 
+/**
+ * 
+ * Mapper½Ó¿Ú
+ *
+ */
+
 @Component
 public interface ${entityName}Mapper {
 

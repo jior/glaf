@@ -27,6 +27,12 @@ import ${packageName}.domain.${entityName};
 import ${packageName}.query.${entityName}Query;
 import ${packageName}.service.${entityName}Service;
 
+/**
+ * 
+ * RestœÏ”¶¿‡
+ *
+ */
+
 @Controller
 @Path("/rs/${classDefinition.moduleName}/${modelName}")
 public class ${entityName}ResourceRest {
