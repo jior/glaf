@@ -24,9 +24,11 @@ import com.glaf.j2cache.CacheException;
 import com.glaf.j2cache.CacheExpiredListener;
 import com.glaf.j2cache.CacheProvider;
 import com.glaf.j2cache.redis.RedisCache;
+
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.exceptions.JedisConnectionException;
 
 /**
  * Redis 缓存实现
@@ -65,7 +67,14 @@ public class RedisCacheProvider implements CacheProvider {
 	}
 
 	public static Jedis getResource() {
-		return pool.getResource();
+		Jedis jedis = null;
+		try {
+			jedis = pool.getResource();
+			return jedis;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new JedisConnectionException(ex);
+		}  
 	}
 
 	@Override
