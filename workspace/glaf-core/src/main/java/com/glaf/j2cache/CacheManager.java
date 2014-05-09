@@ -163,6 +163,9 @@ class CacheManager {
 		if ("xmemcached".equalsIgnoreCase(value)) {
 			className = "com.glaf.j2cache.xmemcache.XMemCacheProvider";
 		}
+		if ("fourinone".equalsIgnoreCase(value)) {
+			className = "com.glaf.j2cache.fourinone.FourinoneCacheProvider";
+		}
 		if ("map".equalsIgnoreCase(value)) {
 			className = "com.glaf.j2cache.MapCacheProvider";
 		}
