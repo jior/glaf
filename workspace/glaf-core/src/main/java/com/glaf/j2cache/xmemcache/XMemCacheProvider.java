@@ -97,7 +97,7 @@ public class XMemCacheProvider implements CacheProvider {
 
 	@Override
 	public void stop() {
-		cache.clear();
+		cache.destroy();
 	}
 
 }

@@ -246,4 +246,12 @@ class CacheManager {
 		}
 	}
 
+	/**
+	 * 关闭缓存
+	 * @param level
+	 */
+	public final static void shutdown(int level) {
+		((level == 1) ? l1_provider : l2_provider).stop();
+	}
+
 }

@@ -128,7 +128,7 @@ public class CacheChannel extends ReceiverAdapter implements
 					obj.setLevel(LEVEL_2);
 					CacheManager.set(LEVEL_1, region, key, obj.getValue());
 				}
-			} else{
+			} else {
 				obj.setLevel(LEVEL_1);
 			}
 		}
@@ -194,6 +194,15 @@ public class CacheChannel extends ReceiverAdapter implements
 	public void clear(String region) throws CacheException {
 		CacheManager.clear(LEVEL_1, region);
 		CacheManager.clear(LEVEL_2, region);
+	}
+
+	/**
+	 * 关闭到通道的连接
+	 */
+	public void close() {
+		CacheManager.shutdown(LEVEL_1);
+		CacheManager.shutdown(LEVEL_2);
+		channel.close();
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -304,13 +313,6 @@ public class CacheChannel extends ReceiverAdapter implements
 			sb.append(addrs.get(i).toString());
 		}
 		log.info(sb.toString());
-	}
-
-	/**
-	 * 关闭到通道的连接
-	 */
-	public void close() {
-		channel.close();
 	}
 
 	/**
