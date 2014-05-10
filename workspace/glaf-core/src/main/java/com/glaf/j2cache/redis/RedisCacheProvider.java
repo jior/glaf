@@ -74,7 +74,7 @@ public class RedisCacheProvider implements CacheProvider {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new JedisConnectionException(ex);
-		}  
+		}
 	}
 
 	@Override
@@ -94,12 +94,10 @@ public class RedisCacheProvider implements CacheProvider {
 		timeout = getProperty(props, "timeout", 2000);
 		database = getProperty(props, "database", 0);
 
-		// config.setWhenExhaustedAction((byte)getProperty(props,
-		// "whenExhaustedAction",1));
+		config.setMaxTotal(getProperty(props, "maxTotal", 50));
 		config.setMaxIdle(getProperty(props, "maxIdle", 10));
 		config.setMinIdle(getProperty(props, "minIdle", 5));
-		// config.setMaxActive(getProperty(props, "maxActive", 50));
-		// config.setMaxWait(getProperty(props, "maxWait", 100));
+		config.setMaxWaitMillis(getProperty(props, "maxWait", 10) * 1000);
 		config.setTestWhileIdle(getProperty(props, "testWhileIdle", false));
 		config.setTestOnBorrow(getProperty(props, "testOnBorrow", true));
 		config.setTestOnReturn(getProperty(props, "testOnReturn", false));
@@ -111,7 +109,7 @@ public class RedisCacheProvider implements CacheProvider {
 				"softMinEvictableIdleTimeMillis", 10));
 		config.setTimeBetweenEvictionRunsMillis(getProperty(props,
 				"timeBetweenEvictionRunsMillis", 10));
-		// config.lifo = getProperty(props, "lifo", false);
+		config.setLifo(getProperty(props, "lifo", false));
 
 		pool = new JedisPool(config, host, port, timeout, password, database);
 
