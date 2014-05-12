@@ -171,10 +171,6 @@ public class DataServiceResource {
 			log.setTimeMS(timeMS);
 
 			if (StringUtils.equals(dataType, "json")) {
-				// net.sf.json.xml.XMLSerializer xmlSerializer = new
-				// net.sf.json.xml.XMLSerializer();
-				// net.sf.json.JSON json = xmlSerializer.read(doc.asXML());
-				// return json.toString(2).getBytes("UTF-8");
 				return JacksonUtils.xml2json(doc.asXML()).getBytes("UTF-8");
 			}
 
