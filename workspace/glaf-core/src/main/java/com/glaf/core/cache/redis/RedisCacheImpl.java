@@ -39,11 +39,18 @@ public class RedisCacheImpl implements Cache {
 	}
 
 	public Object get(String key) {
-		Jedis jedis = redisPool.getResource();
-		byte[] bytes = jedis.get(key.getBytes());
-		redisPool.returnResource(jedis);
-		if (!isEmpty(bytes)) {
-			return this.deserialize(bytes);
+		Jedis jedis = null;
+		boolean isBroken = false;
+		try {
+			jedis = redisPool.getResource();
+			byte[] bytes = jedis.get(key.getBytes());
+			if (!isEmpty(bytes)) {
+				return this.deserialize(bytes);
+			}
+		} catch (Exception ex) {
+			isBroken = true;
+		} finally {
+			returnResource(jedis, isBroken);
 		}
 		return null;
 	}
@@ -59,16 +66,48 @@ public class RedisCacheImpl implements Cache {
 	public void put(String key, Object value) {
 		byte[] bytes = this.serialize(value);
 		if (!isEmpty(bytes)) {
-			Jedis jedis = redisPool.getResource();
-			jedis.set(key.getBytes(), bytes);
-			redisPool.returnResource(jedis);
+			Jedis jedis = null;
+			boolean isBroken = false;
+			try {
+				jedis = redisPool.getResource();
+				jedis.set(key.getBytes(), bytes);
+			} catch (Exception ex) {
+				isBroken = true;
+			} finally {
+				returnResource(jedis, isBroken);
+			}
 		}
 	}
 
 	public void remove(String key) {
-		Jedis jedis = redisPool.getResource();
-		jedis.del(key);
-		redisPool.returnResource(jedis);
+		Jedis jedis = null;
+		boolean isBroken = false;
+		try {
+			jedis = redisPool.getResource();
+			jedis.del(key);
+		} catch (Exception ex) {
+			isBroken = true;
+		} finally {
+			returnResource(jedis, isBroken);
+		}
+	}
+
+	/**
+	 * 释放资源
+	 * 
+	 * @param jedis
+	 * @param isBrokenResource
+	 */
+	public void returnResource(Jedis jedis, boolean isBrokenResource) {
+		if (null == jedis) {
+			return;
+		}
+		if (isBrokenResource) {
+			redisPool.returnBrokenResource(jedis);
+			jedis = null;
+		} else {
+			redisPool.returnResource(jedis);
+		}
 	}
 
 	public byte[] serialize(Object t) {
@@ -88,16 +127,31 @@ public class RedisCacheImpl implements Cache {
 	}
 
 	public void shutdown() {
-		Jedis jedis = redisPool.getResource();
-		jedis.shutdown();
-		redisPool.returnResource(jedis);
+		Jedis jedis = null;
+		boolean isBroken = false;
+		try {
+			jedis = redisPool.getResource();
+			jedis.shutdown();
+		} catch (Exception ex) {
+			isBroken = true;
+		} finally {
+			returnResource(jedis, isBroken);
+		}
 	}
 
 	public int size() {
-		Jedis jedis = redisPool.getResource();
-		Long size = jedis.dbSize();
-		redisPool.returnResource(jedis);
-		return size.intValue();
+		Jedis jedis = null;
+		boolean isBroken = false;
+		try {
+			jedis = redisPool.getResource();
+			Long size = jedis.dbSize();
+			return size.intValue();
+		} catch (Exception ex) {
+			isBroken = true;
+		} finally {
+			returnResource(jedis, isBroken);
+		}
+		return -1;
 	}
 
 }
