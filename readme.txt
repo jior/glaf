@@ -2,7 +2,7 @@
 ####请先执行copy-jar.bat复制jar到运行环境。       ####
 ######################################################
 
-根据服务器信息自行调整JVM参数：
+根据服务器信息自行调整JVM（推荐使用JDK1.7）参数：
 jvm_args    : -Xms1024m -Xmx1024m -XX:NewSize=64m -XX:MaxNewSize=64m -XX:PermSize=256m -XX:MaxPermSize=512m -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=7 -XX:+UseCMSInitiatingOccupancyOnly
 
 
