@@ -27,6 +27,11 @@ public class ThreadContextHolder {
 	private static ThreadLocal<HttpServletRequest> HttpRequestThreadLocalHolder = new ThreadLocal<HttpServletRequest>();
 	private static ThreadLocal<HttpServletResponse> HttpResponseThreadLocalHolder = new ThreadLocal<HttpServletResponse>();
 
+	public static void clear(){
+		HttpRequestThreadLocalHolder.remove();
+		HttpResponseThreadLocalHolder.remove();
+	}
+	
 	public static HttpServletRequest getHttpRequest() {
 		return HttpRequestThreadLocalHolder.get();
 	}

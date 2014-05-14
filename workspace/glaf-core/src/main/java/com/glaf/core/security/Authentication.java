@@ -23,6 +23,11 @@ public class Authentication {
 
 	}
 	
+	public static void clear(){
+		authenticatedActorThreadLocal.remove();
+		loginContextThreadLocal.remove();
+	}
+	
 	public static LoginContext getLoginContext() {
 		return loginContextThreadLocal.get();
 	}

@@ -47,6 +47,12 @@ public class Environment {
 
 	protected static ThreadLocal<String> systemNameThreadLocal = new ThreadLocal<String>();
 
+	public static void clear(){
+		threadLocalContexts.remove();
+		threadLocalVaribles.remove();
+		systemNameThreadLocal.remove();
+	}
+	
 	public static String getCurrentDatabaseType() {
 		return DBConfiguration.getCurrentDatabaseType();
 	}

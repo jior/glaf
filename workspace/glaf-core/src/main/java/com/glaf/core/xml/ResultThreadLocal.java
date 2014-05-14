@@ -30,6 +30,7 @@ public class ResultThreadLocal {
 		if (threadLocalVaribles.get() != null) {
 			threadLocalVaribles.get().clear();
 		}
+		threadLocalVaribles.remove();
 	}
 
 	public static List<Map<String, Object>> getResultList(String key) {

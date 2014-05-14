@@ -37,6 +37,14 @@ public abstract class ThreadHolder {
 
 	static ThreadLocal<List<String>> taskIdsThreadLocal = new ThreadLocal<List<String>>();
 
+	public static void clear(){
+		sqlSessionThreadLocal.remove();
+		dbSqlSessionThreadLocal.remove();
+		extensionThreadLocal.remove();
+		extensionTaskThreadLocal.remove();
+		taskIdsThreadLocal.remove();
+	}
+	
 	public static DbSqlSession getDbSqlSession() {
 		return dbSqlSessionThreadLocal.get();
 	}

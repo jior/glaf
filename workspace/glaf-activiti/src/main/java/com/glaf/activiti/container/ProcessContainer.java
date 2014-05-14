@@ -37,12 +37,12 @@ import com.glaf.core.context.ContextFactory;
 import com.glaf.core.identity.Agent;
 import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.util.StringTools;
-
 import com.glaf.activiti.model.ProcessContext;
 import com.glaf.activiti.model.TaskItem;
 import com.glaf.activiti.service.ActivitiProcessQueryService;
 import com.glaf.activiti.service.ActivitiProcessService;
 import com.glaf.activiti.service.ActivitiTaskQueryService;
+import com.glaf.activiti.util.ThreadHolder;
 
 public class ProcessContainer {
 
@@ -121,6 +121,7 @@ public class ProcessContainer {
 			throw new RuntimeException(ex);
 		} finally {
 			cache.remove(cacheKey);
+			ThreadHolder.clear();
 		}
 		return isCompleteOK;
 	}
@@ -1027,6 +1028,7 @@ public class ProcessContainer {
 			throw new RuntimeException(ex);
 		} finally {
 			cache.remove(cacheKey);
+			ThreadHolder.clear();
 		}
 		return processInstanceId;
 	}

@@ -25,6 +25,11 @@ public class Authentication {
 
 	}
 
+	public static void clear() {
+		authenticatedAccountThreadLocal.remove();
+		authenticatedUserThreadLocal.remove();
+	}
+
 	public static String getAuthenticatedAccount() {
 		return authenticatedAccountThreadLocal.get();
 	}

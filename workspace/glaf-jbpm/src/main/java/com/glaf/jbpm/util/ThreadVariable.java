@@ -28,6 +28,11 @@ public class ThreadVariable {
 
 	static ThreadLocal<Object> approveThreadLocal = new ThreadLocal<Object>();
 
+	public static void clear() {
+		dataFieldsThreadLocal.remove();
+		approveThreadLocal.remove();
+	}
+
 	public static void setApprove(Object approve) {
 		approveThreadLocal.set(approve);
 	}

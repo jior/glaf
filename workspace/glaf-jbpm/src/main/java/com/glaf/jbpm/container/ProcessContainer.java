@@ -63,6 +63,7 @@ import com.glaf.jbpm.model.ActivityInstance;
 import com.glaf.jbpm.model.Extension;
 import com.glaf.jbpm.model.TaskItem;
 import com.glaf.jbpm.query.ProcessQuery;
+import com.glaf.jbpm.util.ThreadVariable;
 
 public class ProcessContainer {
 
@@ -164,6 +165,7 @@ public class ProcessContainer {
 		} finally {
 			cache.remove(cacheKey);
 			Context.close(jbpmContext);
+			ThreadVariable.clear();
 		}
 		return isCompleteOK;
 	}
@@ -198,6 +200,7 @@ public class ProcessContainer {
 			throw new JbpmException(ex);
 		} finally {
 			Context.close(jbpmContext);
+			ThreadVariable.clear();
 		}
 		return isOK;
 	}
@@ -2365,6 +2368,7 @@ public class ProcessContainer {
 			throw new org.jbpm.JbpmException(ex);
 		} finally {
 			Context.close(jbpmContext);
+			ThreadVariable.clear();
 		}
 	}
 
@@ -2390,6 +2394,7 @@ public class ProcessContainer {
 			throw new org.jbpm.JbpmException(ex);
 		} finally {
 			Context.close(jbpmContext);
+			ThreadVariable.clear();
 		}
 	}
 
@@ -2417,6 +2422,7 @@ public class ProcessContainer {
 			throw new org.jbpm.JbpmException(ex);
 		} finally {
 			Context.close(jbpmContext);
+			ThreadVariable.clear();
 		}
 	}
 
@@ -2440,6 +2446,7 @@ public class ProcessContainer {
 			throw new org.jbpm.JbpmException(ex);
 		} finally {
 			Context.close(jbpmContext);
+			ThreadVariable.clear();
 		}
 	}
 
@@ -2491,6 +2498,7 @@ public class ProcessContainer {
 		} finally {
 			cache.remove(cacheKey);
 			Context.close(jbpmContext);
+			ThreadVariable.clear();
 		}
 		return processInstanceId;
 	}
@@ -2515,6 +2523,7 @@ public class ProcessContainer {
 			throw new org.jbpm.JbpmException(ex);
 		} finally {
 			Context.close(jbpmContext);
+			ThreadVariable.clear();
 		}
 	}
 }
