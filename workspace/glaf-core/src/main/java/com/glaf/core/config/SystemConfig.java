@@ -27,8 +27,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.domain.SystemProperty;
+import com.glaf.core.domain.util.SystemPropertyJsonFactory;
 import com.glaf.core.el.Mvel2ExpressionEvaluator;
 import com.glaf.core.service.ISystemPropertyService;
 import com.glaf.core.util.DateUtils;
@@ -36,7 +39,7 @@ import com.glaf.core.util.DateUtils;
 public class SystemConfig {
 	protected static final Log logger = LogFactory.getLog(SystemConfig.class);
 
-	protected final static ConcurrentMap<String, SystemProperty> properties = new ConcurrentHashMap<String, SystemProperty>();
+	protected final static ConcurrentMap<String, SystemProperty> concurrentMap = new ConcurrentHashMap<String, SystemProperty>();
 
 	protected static AtomicBoolean loading = new AtomicBoolean(false);
 
@@ -56,14 +59,11 @@ public class SystemConfig {
 
 	public static boolean getBoolean(String key) {
 		boolean ret = false;
-		if (properties.isEmpty()) {
-			reload();
-		}
-		SystemProperty prop = properties.get(key);
-		if (prop != null) {
-			String value = prop.getValue();
+		SystemProperty property = getProperty(key);
+		if (property != null) {
+			String value = property.getValue();
 			if (StringUtils.isEmpty(value)) {
-				value = prop.getInitValue();
+				value = property.getInitValue();
 			}
 			if (StringUtils.equalsIgnoreCase(value, "true")
 					|| StringUtils.equalsIgnoreCase(value, "1")
@@ -201,19 +201,21 @@ public class SystemConfig {
 		return mappingDir;
 	}
 
-	public static Map<String, SystemProperty> getProperties() {
-		return properties;
-	}
-
 	public static SystemProperty getProperty(String key) {
-		if (properties.isEmpty()) {
-			reload();
+		SystemProperty property = null;
+		String text = DistributedConfig.getString(SystemConfig.class.getName(),
+				key);
+		if (StringUtils.isNotEmpty(text)) {
+			JSONObject jsonObject = JSON.parseObject(text);
+			property = SystemPropertyJsonFactory.jsonToObject(jsonObject);
 		}
-		SystemProperty prop = properties.get(key);
-		if (prop != null) {
-
+		if (property == null) {
+			if (concurrentMap.isEmpty()) {
+				reload();
+			}
+			property = concurrentMap.get(key);
 		}
-		return prop;
+		return property;
 	}
 
 	public static String getReportSavePath() {
@@ -243,10 +245,7 @@ public class SystemConfig {
 
 	public static String getString(String key) {
 		String ret = null;
-		if (properties.isEmpty()) {
-			reload();
-		}
-		SystemProperty prop = properties.get(key);
+		SystemProperty prop = getProperty(key);
 		if (prop != null) {
 			String value = prop.getValue();
 			if (StringUtils.isEmpty(value)) {
@@ -259,10 +258,7 @@ public class SystemConfig {
 
 	public static String getString(String key, String defaultValue) {
 		String ret = defaultValue;
-		if (properties.isEmpty()) {
-			reload();
-		}
-		SystemProperty prop = properties.get(key);
+		SystemProperty prop = getProperty(key);
 		if (prop != null) {
 			String value = prop.getValue();
 			if (StringUtils.isEmpty(value)) {
@@ -314,13 +310,17 @@ public class SystemConfig {
 		if (!loading.get()) {
 			try {
 				loading.set(true);
+				DistributedConfig.clear(SystemConfig.class.getName());
 				ISystemPropertyService systemPropertyService = ContextFactory
 						.getBean("systemPropertyService");
 				List<SystemProperty> list = systemPropertyService
 						.getAllSystemProperties();
 				if (list != null && !list.isEmpty()) {
 					for (SystemProperty p : list) {
-						properties.put(p.getName(), p);
+						concurrentMap.put(p.getName(), p);
+						DistributedConfig.put(SystemConfig.class.getName(), p
+								.getName(), SystemPropertyJsonFactory
+								.toJsonObject(p).toJSONString());
 					}
 				}
 			} catch (Exception ex) {
@@ -334,7 +334,9 @@ public class SystemConfig {
 
 	public static void setProperty(SystemProperty p) {
 		if (p != null && p.getName() != null) {
-			properties.put(p.getName(), p);
+			concurrentMap.put(p.getName(), p);
+			DistributedConfig.put(SystemConfig.class.getName(), p.getName(),
+					SystemPropertyJsonFactory.toJsonObject(p).toJSONString());
 		}
 	}
 

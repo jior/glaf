@@ -6,6 +6,12 @@
 		<name>i18n.messages_key</name>
 		<value>ApplicationStrings</value>
 	</property>
+
+
+	<property>
+		<name>distributed.config.provider</name>
+		<value>zookeeper</value>
+	</property>
  
 
 </configuration>
