@@ -44,6 +44,30 @@
 	</action>
 
 
+	<action name="mail_action_01" class="com.glaf.jbpm.action.MailAction">
+		<mailTo>x_running</mailTo>
+		<taskName>task02</taskName>
+		<subject>系长审核</subject>
+		<templateId>task_notice</templateId>
+	</action>
+
+	
+	<action name="mail_action_02" class="com.glaf.jbpm.action.MailAction">
+		<mailTo>x_running</mailTo>
+		<taskName>task03</taskName>
+		<subject>科长审核</subject>
+		<templateId>task_notice</templateId>
+	</action>
+
+
+	<action name="mail_action_03" class="com.glaf.jbpm.action.MailAction">
+		<mailTo>x_running</mailTo>
+		<taskName>task04</taskName>
+		<subject>部长审批</subject>
+		<templateId>task_notice</templateId>
+	</action>
+
+
 	<action name="EndCounterSigningAction"
          class="com.glaf.jbpm.action.EndCounterSigningAction">
       <expression>#{isAgree eq 'false'}</expression>
@@ -94,6 +118,7 @@
 		<event type="node-enter">
 			<action ref-name="create_task02" />
 			<action ref-name="xyz_1002" />
+			<action ref-name="mail_action_01" />
 		</event>
 		<task name="task02" description="系长审核">
 			<controller>
@@ -109,6 +134,7 @@
 		<event type="node-enter">
 			<action ref-name="create_task03" />
 			<action ref-name="xyz_1002" />
+			<action ref-name="mail_action_02" />
 		</event>
 		<task name="task03" description="科长审核">
 			<controller>
@@ -126,6 +152,7 @@
 		signal="last">
 		<event type="node-enter">
 			<action ref-name="create_task04" />
+			<action ref-name="mail_action_03" />
 		</event>
 		<task name="task04" description="部长会签">
 			<controller>

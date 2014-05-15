@@ -22,6 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MailTools {
+	
 
 	public static boolean isMailAddress(String mail) {
 		if (mail == null) {

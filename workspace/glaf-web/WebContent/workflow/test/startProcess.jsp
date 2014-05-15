@@ -13,8 +13,23 @@
 			DataField df01 = new DataField();
 			df01.setName("money");
 			df01.setValue(5000000D);
- 
 			ctx.addDataField(df01);//工作流控制参数
+
+			DataField df02 = new DataField();
+			df02.setName("deptId02");
+			df02.setValue(6L);
+			ctx.addDataField(df02);//工作流控制参数
+
+			DataField df03 = new DataField();
+			df03.setName("deptId03");
+			df03.setValue(6L);
+			ctx.addDataField(df03);//工作流控制参数
+
+			DataField df04 = new DataField();
+			df04.setName("deptId04");
+			df04.setValue(6L);
+			ctx.addDataField(df04);//工作流控制参数
+
             try {
 				Object processInstanceId = container.startProcess(ctx);
 				// 如果流程实例编号不为空，那么已经成功创建流程实例，否则抛出异常

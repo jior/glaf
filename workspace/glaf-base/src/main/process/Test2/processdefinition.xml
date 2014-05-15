@@ -49,6 +49,33 @@
       <expression>#{isAgree eq 'false'}</expression>
     </action>
 
+	<action name="mail_action_01" class="com.glaf.jbpm.action.MailAction">
+		<mailTo>x_running</mailTo>
+		<taskName>task02</taskName>
+		<subject>系长审核</subject>
+		<content>系长审核尚未完成</content>
+		<templateId>task_notice</templateId>
+	</action>
+
+	
+	<action name="mail_action_02" class="com.glaf.jbpm.action.MailAction">
+		<mailTo>x_running</mailTo>
+		<taskName>task03</taskName>
+		<subject>科长审核</subject>
+		<content>科长审核尚未完成</content>
+		<templateId>task_notice</templateId>
+	</action>
+
+
+	<action name="mail_action_03" class="com.glaf.jbpm.action.MailAction">
+		<mailTo>x_running</mailTo>
+		<taskName>task04</taskName>
+		<subject>部长审批</subject>
+		<content>部长审批尚未完成</content>
+		<templateId>task_notice</templateId>
+	</action>
+
+
 	<action name="xyz_1000" class="com.glaf.jbpm.action.HibernateNativeSQLAction">
 		<sql>
 			UPDATE TEST
@@ -98,6 +125,9 @@
 				<variable name="isAgree" access="read,write,required"
 					mapped-name="isAgree" />
 			</controller>
+			<event type="task-assign">
+			  <action ref-name="mail_action_01" />
+			</event>
 		</task>
 		<transition to="判断1？" name="判断"></transition>
 	</task-node>
@@ -111,6 +141,9 @@
 				<variable name="isAgree" access="read,write,required"
 					mapped-name="isAgree" />
 			</controller>
+			<event type="task-assign">
+			  <action ref-name="mail_action_02" />
+			</event>
 			<event type="task-end">
 			  <action ref-name="EndCounterSigningAction" />
 			</event>
@@ -124,6 +157,9 @@
 				<variable name="isAgree" access="read,write,required"
 					mapped-name="isAgree" />
 			</controller>
+			<event type="task-assign">
+			  <action ref-name="mail_action_03" />
+			</event>
 			<event type="task-end">
 			  <action ref-name="EndCounterSigningAction" />
 			</event>

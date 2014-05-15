@@ -47,6 +47,7 @@ import com.glaf.core.domain.BlobItemEntity;
 import com.glaf.core.id.IdGenerator;
 import com.glaf.template.mapper.TemplateMapper;
 import com.glaf.template.query.TemplateQuery;
+import com.glaf.template.util.TemplateJsonFactory;
 import com.glaf.core.service.IBlobService;
 import com.glaf.template.Template;
 import com.glaf.template.TemplateXmlReader;
@@ -120,12 +121,11 @@ public class MxTemplateServiceImpl implements ITemplateService {
 			return null;
 		}
 		String cacheKey = "x_tpl_" + templateId;
-		if ( CacheFactory.getString(cacheKey) != null) {
+		if (CacheFactory.getString(cacheKey) != null) {
 			logger.debug("load " + templateId + " from cache.");
 			String text = CacheFactory.getString(cacheKey);
 			JSONObject jsonObject = JSON.parseObject(text);
-			Template tpl = new Template();
-			tpl = tpl.jsonToObject(jsonObject);
+			Template tpl = TemplateJsonFactory.jsonToObject(jsonObject);
 			return tpl;
 		}
 

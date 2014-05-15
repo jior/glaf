@@ -37,6 +37,7 @@ import org.jbpm.taskmgmt.exe.PooledActor;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 import org.jbpm.taskmgmt.exe.TaskMgmtInstance;
 
+import com.glaf.core.config.SystemConfig;
 import com.glaf.core.el.ExpressionTools;
 import com.glaf.core.identity.User;
 import com.glaf.core.security.IdentityFactory;
@@ -44,12 +45,12 @@ import com.glaf.core.todo.config.TodoConfig;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.UUID32;
-
 import com.glaf.mail.MailMessage;
 import com.glaf.mail.MailThread;
 import com.glaf.mail.util.MailTools;
 import com.glaf.template.Template;
 import com.glaf.template.TemplateContainer;
+import com.glaf.template.util.TemplateUtils;
 import com.glaf.jbpm.util.Constant;
 
 public class MailAction implements ActionHandler {
@@ -64,6 +65,8 @@ public class MailAction implements ActionHandler {
 	private String content;
 
 	private String taskName;
+
+	private String taskContent;
 
 	private String templateId;
 
@@ -97,6 +100,11 @@ public class MailAction implements ActionHandler {
 
 		context.put("x_process_name", processDefinition.getName());
 		context.put("x_process_title", processDefinition.getDescription());
+		context.put("task_subject", subject);
+		context.put("taskName", taskName);
+		context.put("task_name", taskName);
+		context.put("taskContent", taskContent);
+		context.put("task_content", taskContent);
 
 		if (StringUtils.isNotEmpty(templateId)) {
 			Template template = TemplateContainer.getContainer().getTemplate(
@@ -193,7 +201,7 @@ public class MailAction implements ActionHandler {
 			value = ExpressionTools.evaluate(mailTo, context);
 		}
 
-		logger.debug(value);
+		logger.debug("send actors:" + value);
 
 		if (StringUtils.isEmpty(value)) {
 			return;
@@ -212,6 +220,8 @@ public class MailAction implements ActionHandler {
 				userMap.put(user.getMail(), user);
 			}
 		}
+
+		logger.debug("send mailsTo:" + mailsTo);
 
 		if (mailsTo.size() == 0) {
 			return;
@@ -244,6 +254,7 @@ public class MailAction implements ActionHandler {
 			urlBuffer.append(link);
 			urlBuffer.append("&messageId=").append(messageId);
 
+			context.put("serviceUrl", SystemConfig.getServiceUrl());
 			context.put("appId", contextInstance.getVariable("appId"));
 			context.put("app_name", contextInstance.getVariable("app_name"));
 			context.put("rowId",
@@ -286,8 +297,12 @@ public class MailAction implements ActionHandler {
 			context.put("user", userMap.get(actorId));
 			context.put("mailToUser", userMap.get(actorId));
 
+			content = TemplateUtils.process(context, content);
+
+			logger.debug("content:" + content);
+
 			MailMessage mailMessage = new MailMessage();
-			mailMessage.setTemplateId(templateId);
+			// mailMessage.setTemplateId(templateId);
 			mailMessage.setMessageId(messageId);
 			mailMessage.setTo(mailAddress);
 			mailMessage.setSubject(subject);
@@ -315,6 +330,10 @@ public class MailAction implements ActionHandler {
 
 	public void setSubject(String subject) {
 		this.subject = subject;
+	}
+
+	public void setTaskContent(String taskContent) {
+		this.taskContent = taskContent;
 	}
 
 	public void setTaskName(String taskName) {
