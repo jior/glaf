@@ -18,9 +18,6 @@
 
 package com.glaf.core.web.rest;
 
-import java.io.InputStream;
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,24 +32,15 @@ import javax.ws.rs.core.MediaType;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.dom4j.Document;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.glaf.core.config.SystemProperties;
-import com.glaf.core.domain.SysData;
-import com.glaf.core.domain.SysDataLog;
+import com.glaf.core.business.DataServiceBean;
+
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.SysDataService;
-import com.glaf.core.util.Dom4jUtils;
-import com.glaf.core.util.FileUtils;
-import com.glaf.core.util.IOUtils;
-import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.RequestUtils;
-import com.glaf.core.util.JacksonUtils;
-import com.glaf.core.util.StringTools;
-import com.glaf.core.util.SysDataLogFactory;
-import com.glaf.core.xml.XmlBuilder;
 
 @Controller("/rs/data/service")
 @Path("/rs/data/service")
@@ -80,109 +68,16 @@ public class DataServiceResource {
 		if (dataType == null) {
 			dataType = "xml";
 		}
-		Map<String, Object> dataMap = RequestUtils.getParameterMap(request);
-		dataMap.put("queryString", request.getQueryString());
-		dataMap.put("dataType", dataType);
-		dataMap.put("actorId", loginContext.getActorId());
-		dataMap.put("id", id);
-
+		Map<String, Object> contextMap = RequestUtils.getParameterMap(request);
 		String ipAddress = RequestUtils.getIPAddress(request);
-		XmlBuilder builder = new XmlBuilder();
-		InputStream inputStream = null;
-		boolean hasPermission = false;
-		String systemName = "default";
-		SysData sysData = null;
-		try {
-			sysData = sysDataService.getSysData(id);
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
+		DataServiceBean bean = new DataServiceBean();
+		bean.setSysDataService(sysDataService);
+		if (StringUtils.equals(dataType, "json")) {
+			return bean.responseJson(id, loginContext.getActorId(), ipAddress,
+					contextMap);
 		}
-
-		if (sysData == null || sysData.getLocked() == 1) {
-			throw new RuntimeException(" data service '" + id
-					+ "' not available.");
-		}
-
-		if (StringUtils.isNotEmpty(sysData.getAddressPerms())) {
-			List<String> addressList = StringTools.split(sysData
-					.getAddressPerms());
-			for (String addr : addressList) {
-				if (StringUtils.equals(ipAddress, addr)) {
-					hasPermission = true;
-				}
-				if (addr.endsWith("*")) {
-					String tmp = addr.substring(0, addr.indexOf("*"));
-					if (StringUtils.contains(ipAddress, tmp)) {
-						hasPermission = true;
-					}
-				}
-			}
-			if (!hasPermission) {
-				throw new RuntimeException("Permission denied.");
-			}
-		}
-
-		if (StringUtils.isNotEmpty(sysData.getPerms())
-				&& !StringUtils.equalsIgnoreCase(sysData.getPerms(), "anyone")) {
-			if (loginContext.hasSystemPermission()
-					|| loginContext.hasAdvancedPermission()) {
-				hasPermission = true;
-			}
-			List<String> permissions = StringTools.split(sysData.getPerms());
-			for (String perm : permissions) {
-				if (loginContext.getPermissions().contains(perm)) {
-					hasPermission = true;
-				}
-				if (loginContext.getRoles().contains(perm)) {
-					hasPermission = true;
-				}
-				if (StringUtils.isNotEmpty(perm) && StringUtils.isNumeric(perm)) {
-					if (loginContext.getRoleIds()
-							.contains(Long.parseLong(perm))) {
-						hasPermission = true;
-					}
-				}
-			}
-			if (!hasPermission) {
-				throw new RuntimeException("Permission denied.");
-			}
-		}
-
-		long start = System.currentTimeMillis();
-		SysDataLog log = new SysDataLog();
-		try {
-			String filename = SystemProperties.getConfigRootPath()
-					+ sysData.getPath();
-			inputStream = FileUtils.getInputStream(filename);
-			log.setAccountId(loginContext.getUser().getId());
-			log.setActorId(loginContext.getActorId());
-			log.setCreateTime(new Date());
-			log.setIp(RequestUtils.getIPAddress(request));
-			log.setOperate(id);
-			log.setContent(JsonUtils.encode(dataMap));
-			dataMap.put("loginContext", loginContext);
-			dataMap.put("loginUser", loginContext.getUser());
-			Document doc = builder.process(systemName, inputStream, dataMap);
-			log.setFlag(9);
-			log.setModuleId("DS");
-
-			int timeMS = (int) (System.currentTimeMillis() - start);
-			logger.debug("用时（毫秒）:" + timeMS);
-			log.setTimeMS(timeMS);
-
-			if (StringUtils.equals(dataType, "json")) {
-				return JacksonUtils.xml2json(doc.asXML()).getBytes("UTF-8");
-			}
-
-			return Dom4jUtils.getBytesFromPrettyDocument(doc, "UTF-8");
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			log.setFlag(-1);
-			throw new RuntimeException(ex);
-		} finally {
-			IOUtils.closeStream(inputStream);
-			SysDataLogFactory.create(log);
-		}
+		return bean.responseXml(id, loginContext.getActorId(), ipAddress,
+				contextMap);
 	}
 
 }
