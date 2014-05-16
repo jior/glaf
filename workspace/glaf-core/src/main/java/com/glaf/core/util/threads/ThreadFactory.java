@@ -36,7 +36,7 @@ public class ThreadFactory {
 
 	private static volatile Executor executor;
 
-	private static Executor getExecutor() {
+	private static synchronized Executor getExecutor() {
 		if (executor == null) {
 			TaskQueue taskqueue = new TaskQueue();
 			TaskThreadFactory tf = new TaskThreadFactory("thread-exec-", true,
