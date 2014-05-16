@@ -18,9 +18,11 @@
 
 package com.glaf.core.util.threads;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import com.glaf.core.config.BaseConfiguration;
@@ -32,10 +34,20 @@ public class ThreadFactory {
 
 	private static volatile ExecutorService executorService;
 
-	private static Executor executor = null;
+	private static volatile Executor executor;
 
-	static {
-		init();
+	private static Executor getExecutor() {
+		if (executor == null) {
+			TaskQueue taskqueue = new TaskQueue();
+			TaskThreadFactory tf = new TaskThreadFactory("thread-exec-", true,
+					Thread.NORM_PRIORITY);
+			executor = new MxThreadPoolExecutor(conf.getInt(
+					"ThreadPool.minThreads", 5), conf.getInt(
+					"ThreadPool.maxThreads", 10), 60, TimeUnit.SECONDS,
+					taskqueue, tf);
+			taskqueue.setParent((MxThreadPoolExecutor) executor);
+		}
+		return executor;
 	}
 
 	private static ExecutorService getExecutorService() {
@@ -46,26 +58,22 @@ public class ThreadFactory {
 		return executorService;
 	}
 
-	private static void init() {
-		TaskQueue taskqueue = new TaskQueue();
-		TaskThreadFactory tf = new TaskThreadFactory("thread-exec-", true,
-				Thread.NORM_PRIORITY);
-		executor = new MxThreadPoolExecutor(conf.getInt(
-				"ThreadPool.minThreads", 5), conf.getInt(
-				"ThreadPool.maxThreads", 10), 60, TimeUnit.SECONDS, taskqueue,
-				tf);
-		taskqueue.setParent((MxThreadPoolExecutor) executor);
-	}
-
 	public static void run(java.lang.Runnable command) {
 		getExecutorService().execute(command);
 	}
 
-	protected static void runThread(java.lang.Runnable r) {
-		if (executor == null) {
-			init();
-		}
-		executor.execute(r);
+	public static void runThread(java.lang.Runnable r) {
+		getExecutor().execute(r);
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static Future submit(Callable task) {
+		return getExecutorService().submit(task);
+	}
+
+	@SuppressWarnings("rawtypes")
+	public static Future submit(java.lang.Runnable command) {
+		return getExecutorService().submit(command);
 	}
 
 	private ThreadFactory() {

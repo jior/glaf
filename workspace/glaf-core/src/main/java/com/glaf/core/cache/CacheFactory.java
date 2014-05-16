@@ -22,8 +22,6 @@ import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -37,6 +35,7 @@ import com.glaf.core.config.Configuration;
 import com.glaf.core.config.CustomProperties;
 import com.glaf.core.config.Environment;
 import com.glaf.core.context.ContextFactory;
+import com.glaf.core.util.threads.ThreadFactory;
 
 public class CacheFactory {
 	protected static final Log logger = LogFactory.getLog(CacheFactory.class);
@@ -44,7 +43,7 @@ public class CacheFactory {
 	protected static final ConcurrentMap<String, Cache> cacheMap = new ConcurrentHashMap<String, Cache>();
 	protected static final List<String> items = new ArrayList<String>();
 	protected static Configuration conf = BaseConfiguration.create();
-	protected static ExecutorService pool = Executors.newCachedThreadPool();
+ 
 
 	private static volatile ApplicationContext ctx;
 
@@ -96,6 +95,7 @@ public class CacheFactory {
 		return cache;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static String getString(final String key) {
 		boolean waitFor = true;
 		Callable<String> task = new Callable<String>() {
@@ -124,7 +124,7 @@ public class CacheFactory {
 		};
 
 		try {
-			Future<String> result = pool.submit(task);
+			Future<String> result = ThreadFactory.submit(task);
 			long start = System.currentTimeMillis();
 			// 如果需要等待执行结果
 			if (waitFor) {
