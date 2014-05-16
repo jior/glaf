@@ -166,6 +166,9 @@ class CacheManager {
 		if ("fourinone".equalsIgnoreCase(value)) {
 			className = "com.glaf.j2cache.fourinone.FourinoneCacheProvider";
 		}
+		if ("zookeeper".equalsIgnoreCase(value)) {
+			className = "com.glaf.j2cache.zookeeper.ZooKeeperCacheProvider";
+		}
 		if ("map".equalsIgnoreCase(value)) {
 			className = "com.glaf.j2cache.MapCacheProvider";
 		}
@@ -248,6 +251,7 @@ class CacheManager {
 
 	/**
 	 * 关闭缓存
+	 * 
 	 * @param level
 	 */
 	public final static void shutdown(int level) {

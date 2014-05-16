@@ -19,6 +19,8 @@
 package com.glaf.core.util.threads;
 
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import com.glaf.core.config.BaseConfiguration;
@@ -28,10 +30,20 @@ public class ThreadFactory {
 
 	protected final static Configuration conf = BaseConfiguration.create();
 
+	private static volatile ExecutorService executorService;
+
 	private static Executor executor = null;
 
 	static {
 		init();
+	}
+
+	private static ExecutorService getExecutorService() {
+		if (executorService == null) {
+			executorService = Executors.newFixedThreadPool(conf.getInt(
+					"ThreadPool.maxThreads", 50));
+		}
+		return executorService;
 	}
 
 	private static void init() {
@@ -45,7 +57,11 @@ public class ThreadFactory {
 		taskqueue.setParent((MxThreadPoolExecutor) executor);
 	}
 
-	public static void run(java.lang.Runnable r) {
+	public static void run(java.lang.Runnable command) {
+		getExecutorService().execute(command);
+	}
+
+	protected static void runThread(java.lang.Runnable r) {
 		if (executor == null) {
 			init();
 		}
