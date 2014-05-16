@@ -203,8 +203,8 @@ public class SystemConfig {
 
 	public static SystemProperty getProperty(String key) {
 		SystemProperty property = null;
-		String text = DistributedConfig.getString(SystemConfig.class.getName(),
-				key);
+		String text = ConfigFactory.getString(
+				SystemConfig.class.getSimpleName(), key);
 		if (StringUtils.isNotEmpty(text)) {
 			JSONObject jsonObject = JSON.parseObject(text);
 			property = SystemPropertyJsonFactory.jsonToObject(jsonObject);
@@ -310,7 +310,7 @@ public class SystemConfig {
 		if (!loading.get()) {
 			try {
 				loading.set(true);
-				DistributedConfig.clear(SystemConfig.class.getName());
+				ConfigFactory.clear(SystemConfig.class.getSimpleName());
 				ISystemPropertyService systemPropertyService = ContextFactory
 						.getBean("systemPropertyService");
 				List<SystemProperty> list = systemPropertyService
@@ -318,7 +318,7 @@ public class SystemConfig {
 				if (list != null && !list.isEmpty()) {
 					for (SystemProperty p : list) {
 						concurrentMap.put(p.getName(), p);
-						DistributedConfig.put(SystemConfig.class.getName(), p
+						ConfigFactory.put(SystemConfig.class.getSimpleName(), p
 								.getName(), SystemPropertyJsonFactory
 								.toJsonObject(p).toJSONString());
 					}
@@ -335,7 +335,7 @@ public class SystemConfig {
 	public static void setProperty(SystemProperty p) {
 		if (p != null && p.getName() != null) {
 			concurrentMap.put(p.getName(), p);
-			DistributedConfig.put(SystemConfig.class.getName(), p.getName(),
+			ConfigFactory.put(SystemConfig.class.getSimpleName(), p.getName(),
 					SystemPropertyJsonFactory.toJsonObject(p).toJSONString());
 		}
 	}

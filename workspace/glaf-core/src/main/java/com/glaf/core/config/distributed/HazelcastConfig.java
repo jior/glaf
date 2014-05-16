@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.core.config;
+package com.glaf.core.config.distributed;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.core.Hazelcast;

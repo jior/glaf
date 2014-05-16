@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.core.config;
+package com.glaf.core.config.distributed;
 
 import java.util.List;
 
@@ -29,6 +29,9 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.data.Stat;
 
+import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
+
 public class ZooKeeperConfig {
 	protected static final Log logger = LogFactory
 			.getLog(ZooKeeperConfig.class);
@@ -37,8 +40,8 @@ public class ZooKeeperConfig {
 
 	protected static volatile CuratorFramework zkClient = null;
 
-	protected static void checkRoot(String sid) {
-		String path = "/" + sid.replace('.', '_');
+	protected static void checkRoot(String regionName) {
+		String path = "/" + regionName.replace('.', '_');
 		try {
 			Stat stat = getClient().checkExists().forPath(path);
 			if (stat == null) {
@@ -53,9 +56,9 @@ public class ZooKeeperConfig {
 		}
 	}
 
-	public static void clear(String sid) {
-		checkRoot(sid);
-		String path = "/" + sid.replace('.', '_');
+	public static void clear(String regionName) {
+		checkRoot(regionName);
+		String path = "/" + regionName.replace('.', '_');
 		try {
 			List<String> children = getClient().getChildren().forPath(path);
 			if (children != null && !children.isEmpty()) {
@@ -88,9 +91,9 @@ public class ZooKeeperConfig {
 		return zkClient;
 	}
 
-	public static String getString(String sid, String key) {
-		checkRoot(sid);
-		String path = "/" + sid.replace('.', '_') + "/" + key;
+	public static String getString(String regionName, String key) {
+		checkRoot(regionName);
+		String path = "/" + regionName.replace('.', '_') + "/" + key;
 		try {
 			Stat stat = getClient().checkExists().forPath(path);
 			if (stat != null) {
@@ -106,10 +109,10 @@ public class ZooKeeperConfig {
 		return null;
 	}
 
-	public static void put(String sid, String key, String value) {
-		checkRoot(sid);
-		String path = "/" + sid.replace('.', '_') + "/" + key;
-		remove(sid, key);
+	public static void put(String regionName, String key, String value) {
+		checkRoot(regionName);
+		String path = "/" + regionName.replace('.', '_') + "/" + key;
+		remove(regionName, key);
 		try {
 			getClient().create().withMode(CreateMode.PERSISTENT)
 					.forPath(path, value.getBytes());
@@ -122,9 +125,9 @@ public class ZooKeeperConfig {
 		}
 	}
 
-	public static void remove(String sid, String key) {
-		checkRoot(sid);
-		String path = "/" + sid.replace('.', '_') + "/" + key;
+	public static void remove(String regionName, String key) {
+		checkRoot(regionName);
+		String path = "/" + regionName.replace('.', '_') + "/" + key;
 		try {
 			Stat stat = getClient().checkExists().forPath(path);
 			if (stat != null) {

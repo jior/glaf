@@ -53,7 +53,9 @@ public class MyBatisBatchTest extends AbstractTest {
 			}
 			sqlSession.commit();
 		} catch (Exception ex) {
-			sqlSession.rollback();
+			if (sqlSession != null) {
+				sqlSession.rollback();
+			}
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
