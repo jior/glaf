@@ -55,6 +55,11 @@
 				ctx.setActorId(actorId);
 				ctx.setProcessInstanceId(Long.parseLong(processInstanceId));
 				ctx.setDataFields(dataFields);
+				if(isAgree.equals("true")){
+                    ctx.setOpinion("同意");
+				}else{
+                    ctx.setOpinion("不同意");
+				}
 				boolean isOK = container.completeTask(ctx);
 				if(isOK){
 					System.out.println("{message:\"成功！\"}");

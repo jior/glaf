@@ -75,7 +75,7 @@ public class TaskCompleteListener implements TaskListener {
 			activityInstance.setType("userTask");
 
 			CommandContext commandContext = Context.getCommandContext();
-			;
+	 
 			MyBatisEntityDAO entityDAO = new MyBatisEntityDAO(commandContext
 					.getDbSqlSession().getSqlSession());
 			entityDAO.insert("insertActivityInstance", activityInstance);

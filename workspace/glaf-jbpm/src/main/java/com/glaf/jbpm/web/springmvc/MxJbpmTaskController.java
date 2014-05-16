@@ -465,12 +465,12 @@ public class MxJbpmTaskController {
 								item.setEndDate(ti.getEnd());
 								item.setTaskDescription(ti.getDescription());
 								item.setTaskName(ti.getName());
-								ActivityInstance wt = workedMap.get(ti.getId());
-								if (wt != null) {
-									item.setIsAgree(wt.getIsAgree());
-									item.setOpinion(wt.getContent());
-									item.setRowId(wt.getRowId());
-									item.setJson(wt.getVariable());
+								ActivityInstance activityInstance = workedMap.get(ti.getId());
+								if (activityInstance != null) {
+									item.setIsAgree(activityInstance.getIsAgree());
+									item.setOpinion(activityInstance.getContent());
+									item.setRowId(activityInstance.getRowId());
+									item.setJson(activityInstance.getVariable());
 								}
 								finishedTaskItems.add(item);
 							}

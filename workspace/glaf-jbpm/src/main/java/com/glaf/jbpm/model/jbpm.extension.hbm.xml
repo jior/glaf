@@ -102,7 +102,7 @@
 		<property name="content" column="CONTENT_" type="string"
 			length="1000" />
 		<property name="variable" column="VARIABLE_" type="string"
-			length="1000" />
+			length="2000" />
 		<property name="date" column="DATE_" type="timestamp" />
 	</class>
 

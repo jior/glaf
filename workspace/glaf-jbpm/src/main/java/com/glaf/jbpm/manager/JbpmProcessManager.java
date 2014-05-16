@@ -328,22 +328,23 @@ public class JbpmProcessManager {
 			}
 		}
 
-		ActivityInstance ActivityInstance = new ActivityInstance();
-		ActivityInstance.setActorId(actorId);
-		ActivityInstance.setPreviousActors(previousActorId);
-		ActivityInstance.setDate(new Date());
-		ActivityInstance.setProcessInstanceId(processInstanceId);
-		ActivityInstance.setTaskInstanceId(taskInstance.getId());
-		ActivityInstance.setIsAgree(isAgree);
+		ActivityInstance activityInstance = new ActivityInstance();
+		activityInstance.setActorId(actorId);
+		activityInstance.setPreviousActors(previousActorId);
+		activityInstance.setDate(new Date());
+		activityInstance.setProcessInstanceId(processInstanceId);
+		activityInstance.setTaskInstanceId(taskInstance.getId());
+		activityInstance.setIsAgree(isAgree);
 		if (ctx.getRowId() != null) {
-			ActivityInstance.setRowId(ctx.getRowId().toString());
+			activityInstance.setRowId(ctx.getRowId().toString());
 		}
-		ActivityInstance.setTitle(ctx.getTitle());
-		ActivityInstance.setContent(ctx.getOpinion());
+		activityInstance.setTitle(ctx.getTitle());
+		activityInstance.setContent(ctx.getOpinion());
+		logger.debug("审核意见:"+ctx.getOpinion());
 
 		if (task != null) {
-			ActivityInstance.setTaskName(task.getName());
-			ActivityInstance.setTaskDescription(task.getDescription());
+			activityInstance.setTaskName(task.getName());
+			activityInstance.setTaskDescription(task.getDescription());
 		}
 
 		if (StringUtils.isNotEmpty(ctx.getOpinion())) {
@@ -352,7 +353,7 @@ public class JbpmProcessManager {
 		dataMap.put(Constant.IS_AGREE, isAgree);
 		String json = JsonUtils.encode(dataMap);
 		if (json != null && json.getBytes().length < 2000) {
-			ActivityInstance.setVariable(json);
+			activityInstance.setVariable(json);
 		}
 
 		if (!StringUtils.equals(previousActorId, actorId)) {
@@ -376,7 +377,7 @@ public class JbpmProcessManager {
 			jbpmEntityDAO.save(jbpmContext, act);
 		}
 
-		jbpmEntityDAO.save(jbpmContext, ActivityInstance);
+		jbpmEntityDAO.save(jbpmContext, activityInstance);
 
 		logger.debug("end complete task.............................");
 

@@ -164,8 +164,8 @@ public class JbpmTaskManager {
 				jbpmContext, processInstanceId);
 		if (rows != null && rows.size() > 0) {
 			for (int i = 0; i < rows.size(); i++) {
-				ActivityInstance wt = rows.get(i);
-				workedMap.put(wt.getTaskInstanceId(), wt);
+				ActivityInstance activityInstance = rows.get(i);
+				workedMap.put(activityInstance.getTaskInstanceId(), activityInstance);
 			}
 		}
 		return workedMap;

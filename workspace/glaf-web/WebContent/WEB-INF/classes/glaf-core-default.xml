@@ -9,9 +9,15 @@
 
 
 	<property>
+		<name>distributed.config.enabled</name>
+		<value>true</value>
+	</property>
+
+
+	<!-- <property>
 		<name>distributed.config.provider</name>
 		<value>zookeeper</value>
-	</property>
+	</property> -->
  
 
 </configuration>
