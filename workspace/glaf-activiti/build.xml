@@ -52,7 +52,7 @@
 	</target>
 
 	<!-- 编译任务 -->
-	<target name="jar" depends="build" description="Create java jar file">
+	<target name="jar" description="Create java jar file">
 		<jar jarfile="${project.distname}-src.zip">
 			<fileset dir="." includes="*.bat,*.xml, src/**/*.*,mapping/**/*.xml,conf/**,jar-conf/**,bpmn/**" excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn" />
 		</jar>

@@ -44,17 +44,77 @@
       </activiti:executionListener>
     </extensionElements>
     <startEvent id="startevent1" name="开始"></startEvent>
-    <userTask id="usertask7" name="初审" activiti:assignee="${assignee}">
-      <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="assigneeList" activiti:elementVariable="assignee"></multiInstanceLoopCharacteristics>
+    <userTask id="usertask7" name="初审" activiti:assignee="assignee">
+	  <extensionElements>
+        <activiti:taskListener event="create" class="com.glaf.activiti.tasklistener.ProcessStarterListener"></activiti:taskListener>
+		<activiti:taskListener event="assignment" class="com.glaf.activiti.tasklistener.MailTaskListener">
+          <activiti:field name="mailTo">
+            <activiti:string><![CDATA[assigneeList]]></activiti:string>
+          </activiti:field>
+		  <activiti:field name="assigneeVar">
+            <activiti:string><![CDATA[assigneeList]]></activiti:string>
+          </activiti:field>
+		  <activiti:field name="taskName">
+            <activiti:string><![CDATA[usertask7]]></activiti:string>
+          </activiti:field>
+		  <activiti:field name="taskContent">
+            <activiti:string><![CDATA[初审]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="subject">
+            <activiti:string><![CDATA[初审]]></activiti:string>
+          </activiti:field>
+		  <activiti:field name="content">
+            <activiti:string><![CDATA[初审任务尚未完成]]></activiti:string>
+          </activiti:field>
+        </activiti:taskListener>
+      </extensionElements>
+	  <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="assigneeList" activiti:elementVariable="assignee"></multiInstanceLoopCharacteristics>
     </userTask>
     <exclusiveGateway id="exclusivegateway1" name="判断"></exclusiveGateway>
     <userTask id="usertask2" name="重新修改" activiti:assignee="joy">
       <extensionElements>
         <activiti:taskListener event="create" class="com.glaf.activiti.tasklistener.ProcessStarterListener"></activiti:taskListener>
+		<activiti:taskListener event="assignment" class="com.glaf.activiti.tasklistener.MailTaskListener">
+          <activiti:field name="mailTo">
+            <activiti:string><![CDATA[process_starter]]></activiti:string>
+          </activiti:field>
+		  <activiti:field name="taskName">
+            <activiti:string><![CDATA[usertask2]]></activiti:string>
+          </activiti:field>
+		  <activiti:field name="taskContent">
+            <activiti:string><![CDATA[重新修改]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="subject">
+            <activiti:string><![CDATA[重新修改]]></activiti:string>
+          </activiti:field>
+		  <activiti:field name="content">
+            <activiti:string><![CDATA[任务被退回了]]></activiti:string>
+          </activiti:field>
+        </activiti:taskListener>
       </extensionElements>
     </userTask>
     <userTask id="usertask3" name="复审" activiti:assignee="${assignee2}">
       <extensionElements>
+	    <activiti:taskListener event="assignment" class="com.glaf.activiti.tasklistener.MailTaskListener">
+          <activiti:field name="mailTo">
+            <activiti:string><![CDATA[assigneeList]]></activiti:string>
+          </activiti:field>
+		  <activiti:field name="assigneeVar">
+            <activiti:string><![CDATA[assigneeList2]]></activiti:string>
+          </activiti:field>
+		  <activiti:field name="taskName">
+            <activiti:string><![CDATA[usertask3]]></activiti:string>
+          </activiti:field>
+		  <activiti:field name="taskContent">
+            <activiti:string><![CDATA[复审]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="subject">
+            <activiti:string><![CDATA[复审]]></activiti:string>
+          </activiti:field>
+		  <activiti:field name="content">
+            <activiti:string><![CDATA[复审任务尚未完成]]></activiti:string>
+          </activiti:field>
+        </activiti:taskListener>
         <activiti:taskListener event="complete" class="com.glaf.activiti.tasklistener.VariableMappingListener">
           <activiti:field name="fromVar">
             <activiti:string><![CDATA[approve]]></activiti:string>
