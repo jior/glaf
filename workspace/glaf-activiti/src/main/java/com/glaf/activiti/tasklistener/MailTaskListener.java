@@ -190,7 +190,7 @@ public class MailTaskListener implements TaskListener {
 					.list();
 			if (tasks != null && !tasks.isEmpty()) {
 				logger.debug("tasks:" + tasks);
-				logger.debug("taskName:" + taskName.getExpressionText());
+				//logger.debug("taskName:" + taskName.getExpressionText());
 				StringBuffer buffer = new StringBuffer();
 				for (Task task : tasks) {
 					logger.debug("task def key:" + task.getTaskDefinitionKey());
