@@ -31,7 +31,7 @@ public final class ThreadFactory {
 
 	static {
 		tp.setMinThreads(conf.getInt("ThreadPool.minThreads", 5));
-		tp.setMaxThreads(conf.getInt("ThreadPool.maxThreads", 10));
+		tp.setMaxThreads(conf.getInt("ThreadPool.maxThreads", 50));
 		tp.setMaxIdleTimeMs(conf.getInt("ThreadPool.maxIdleTimeMs", 5000));
 		tp.setThreadsPriority(Thread.NORM_PRIORITY - 1);
 
