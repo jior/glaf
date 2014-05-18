@@ -50,11 +50,11 @@ public class TestThread extends Thread {
 			TestThread t = new TestThread(i);
 			ThreadFactory.execute(t);
 			System.out.println("i=" + i);
-			try {
-				Thread.sleep(i * 3);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+//			try {
+//				Thread.sleep(i * 3);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
 		}
 	}
 }

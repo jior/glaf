@@ -56,8 +56,7 @@ public class ThreadFactory {
 
 	private static ExecutorService getExecutorService() {
 		if (executorService == null) {
-			executorService = Executors.newFixedThreadPool(conf.getInt(
-					"ThreadPool.maxThreads", 50));
+			executorService = Executors.newCachedThreadPool();
 		}
 		return executorService;
 	}
