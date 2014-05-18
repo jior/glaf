@@ -36,6 +36,10 @@ public class ThreadFactory {
 
 	private static volatile Executor executor;
 
+	public static void execute(java.lang.Runnable r) {
+		getExecutor().execute(r);
+	}
+
 	private static synchronized Executor getExecutor() {
 		if (executor == null) {
 			TaskQueue taskqueue = new TaskQueue();
@@ -43,7 +47,7 @@ public class ThreadFactory {
 					Thread.NORM_PRIORITY);
 			executor = new MxThreadPoolExecutor(conf.getInt(
 					"ThreadPool.minThreads", 5), conf.getInt(
-					"ThreadPool.maxThreads", 10), 60, TimeUnit.SECONDS,
+					"ThreadPool.maxThreads", 50), 60, TimeUnit.SECONDS,
 					taskqueue, tf);
 			taskqueue.setParent((MxThreadPoolExecutor) executor);
 		}
@@ -60,10 +64,6 @@ public class ThreadFactory {
 
 	public static void run(java.lang.Runnable command) {
 		getExecutorService().execute(command);
-	}
-
-	public static void runThread(java.lang.Runnable r) {
-		getExecutor().execute(r);
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })

@@ -36,7 +36,7 @@ public class TestThread extends Thread {
 
 	public void run() {
 		try {
-			Thread.sleep(count * 3);
+			Thread.sleep(count * 2);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -48,7 +48,13 @@ public class TestThread extends Thread {
 	public static void main(String[] args) {
 		for (int i = 0; i < 200; i++) {
 			TestThread t = new TestThread(i);
-			ThreadFactory.run(t);
+			ThreadFactory.execute(t);
+			System.out.println("i=" + i);
+			try {
+				Thread.sleep(i * 3);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }
