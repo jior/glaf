@@ -19,7 +19,6 @@
 package com.glaf.core.util.threads;
 
 import java.util.concurrent.Callable;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -34,13 +33,17 @@ public class ThreadFactory {
 
 	private static volatile ExecutorService executorService;
 
-	private static volatile Executor executor;
+	private static volatile MxThreadPoolExecutor executor;
 
-	public static void execute(java.lang.Runnable r) {
-		getExecutor().execute(r);
+	public static void execute(Runnable command) {
+		getExecutor().execute(command);
 	}
 
-	private static synchronized Executor getExecutor() {
+	public static void execute(Runnable command, long timeout, TimeUnit unit) {
+		getExecutor().execute(command, timeout, unit);
+	}
+
+	private static synchronized MxThreadPoolExecutor getExecutor() {
 		if (executor == null) {
 			TaskQueue taskqueue = new TaskQueue();
 			TaskThreadFactory tf = new TaskThreadFactory("thread-exec-", true,
@@ -61,7 +64,7 @@ public class ThreadFactory {
 		return executorService;
 	}
 
-	public static void run(java.lang.Runnable command) {
+	public static void run(Runnable command) {
 		getExecutorService().execute(command);
 	}
 
@@ -71,7 +74,7 @@ public class ThreadFactory {
 	}
 
 	@SuppressWarnings("rawtypes")
-	public static Future submit(java.lang.Runnable command) {
+	public static Future submit(Runnable command) {
 		return getExecutorService().submit(command);
 	}
 

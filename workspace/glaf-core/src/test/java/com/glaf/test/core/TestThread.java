@@ -18,6 +18,8 @@
 
 package com.glaf.test.core;
 
+import java.util.concurrent.TimeUnit;
+
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.threads.ThreadFactory;
 
@@ -48,13 +50,13 @@ public class TestThread extends Thread {
 	public static void main(String[] args) {
 		for (int i = 0; i < 200; i++) {
 			TestThread t = new TestThread(i);
-			ThreadFactory.execute(t);
+			ThreadFactory.execute(t, 60, TimeUnit.SECONDS);
 			System.out.println("i=" + i);
-//			try {
-//				Thread.sleep(i * 3);
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
+			// try {
+			// Thread.sleep(i * 3);
+			// } catch (InterruptedException e) {
+			// e.printStackTrace();
+			// }
 		}
 	}
 }
