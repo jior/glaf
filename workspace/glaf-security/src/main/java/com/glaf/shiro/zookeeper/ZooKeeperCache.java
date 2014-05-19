@@ -38,7 +38,7 @@ public class ZooKeeperCache<K, V> implements Cache<K, V> {
 
 	private volatile String groupName;
 
-	public ZooKeeperCache(CuratorFramework zkClient, String groupName) {
+	public ZooKeeperCache(String groupName, CuratorFramework zkClient) {
 		if (zkClient == null) {
 			throw new IllegalArgumentException(
 					"zkClient argument cannot be null.");

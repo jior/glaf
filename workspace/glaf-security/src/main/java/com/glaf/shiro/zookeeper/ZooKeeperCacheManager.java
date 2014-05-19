@@ -41,7 +41,7 @@ public class ZooKeeperCacheManager implements CacheManager, Initializable,
 	}
 
 	public <K, V> Cache<K, V> getCache(String key) throws CacheException {
-		return new ZooKeeperCache<K, V>(zkClient, "/SHIRO_CACHE");
+		return new ZooKeeperCache<K, V>("/SHIRO_CACHE", zkClient);
 	}
 
 	public String getServers() {
