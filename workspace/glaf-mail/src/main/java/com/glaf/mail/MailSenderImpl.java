@@ -148,21 +148,15 @@ public class MailSenderImpl implements MailSender {
 			}
 		}
 
-		String encoding = mailMessage.getEncoding();
-
-		if (StringUtils.isEmpty(encoding)) {
-			encoding = "GBK";
-		}
-
 		String mailSubject = mailMessage.getSubject();
-		if (mailSubject != null) {
-			mailSubject = MimeUtility
-					.encodeText(new String(mailSubject.getBytes(), encoding),
-							encoding, "B");
-		}
-
 		if (mailSubject == null) {
 			mailSubject = "无主题";
+		}
+
+		if (mailSubject != null) {
+			// mailSubject = MimeUtility.encodeText(new
+			// String(mailSubject.getBytes(), encoding), encoding, "B");
+			mailSubject = MimeUtility.encodeWord(mailSubject);
 		}
 
 		mimeMessage.setSubject(mailSubject);
@@ -174,6 +168,7 @@ public class MailSenderImpl implements MailSender {
 
 		String serviceUrl = SystemConfig.getServiceUrl();
 
+		logger.debug("mailSubject:" + mailSubject);
 		logger.debug("serviceUrl:" + serviceUrl);
 
 		if (serviceUrl != null) {
