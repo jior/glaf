@@ -24,8 +24,6 @@ import org.apache.commons.logging.LogFactory;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.glaf.core.config.distributed.HazelcastConfig;
-import com.glaf.core.config.distributed.ZooKeeperConfig;
 
 /**
  * 分布式配置工厂类 如果需要进行分布式部署，需要将配置项写入分布式存储中
@@ -37,18 +35,11 @@ public class ConfigFactory {
 
 	protected static final ConfigChannel channel = ConfigChannel.getInstance();
 
-	protected static final String CONFIG_PROVIDER = "distributed.config.provider";
+	protected static final String DISTRIBUTED_ENABLED = "distributed.config.enabled";
 
 	public static void clear(String region) {
-		if (conf.getBoolean("distributed.config.enabled", false)) {
+		if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
 			channel.clear(region);
-		} else {
-			if (StringUtils.equals(conf.get(CONFIG_PROVIDER), "hazelcast")) {
-				HazelcastConfig.clear(region);
-			} else if (StringUtils.equals(conf.get(CONFIG_PROVIDER),
-					"zookeeper")) {
-				ZooKeeperConfig.clear(region);
-			}
 		}
 	}
 
@@ -62,42 +53,21 @@ public class ConfigFactory {
 	}
 
 	public static String getString(String region, String key) {
-		if (conf.getBoolean("distributed.config.enabled", false)) {
+		if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
 			return channel.getString(region, key);
-		} else {
-			if (StringUtils.equals(conf.get(CONFIG_PROVIDER), "hazelcast")) {
-				return HazelcastConfig.getString(region, key);
-			} else if (StringUtils.equals(conf.get(CONFIG_PROVIDER),
-					"zookeeper")) {
-				return ZooKeeperConfig.getString(region, key);
-			}
 		}
 		return null;
 	}
 
 	public static void put(String region, String key, String value) {
-		if (conf.getBoolean("distributed.config.enabled", false)) {
+		if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
 			channel.put(region, key, value);
-		} else {
-			if (StringUtils.equals(conf.get(CONFIG_PROVIDER), "hazelcast")) {
-				HazelcastConfig.put(region, key, value);
-			} else if (StringUtils.equals(conf.get(CONFIG_PROVIDER),
-					"zookeeper")) {
-				ZooKeeperConfig.put(region, key, value);
-			}
 		}
 	}
 
 	public static void remove(String region, String key) {
-		if (conf.getBoolean("distributed.config.enabled", false)) {
+		if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
 			channel.remove(region, key);
-		} else {
-			if (StringUtils.equals(conf.get(CONFIG_PROVIDER), "hazelcast")) {
-				HazelcastConfig.remove(region, key);
-			} else if (StringUtils.equals(conf.get(CONFIG_PROVIDER),
-					"zookeeper")) {
-				ZooKeeperConfig.remove(region, key);
-			}
 		}
 	}
 
