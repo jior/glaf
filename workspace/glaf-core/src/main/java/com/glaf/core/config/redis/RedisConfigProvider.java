@@ -32,18 +32,22 @@ import redis.clients.jedis.exceptions.JedisConnectionException;
  * Redis 分布式配置实现
  */
 public class RedisConfigProvider implements ConfigProvider {
+	protected static String host;
+	protected static int port;
+	protected static int timeout;
+	protected static String password;
+	protected static int database;
+	protected static JedisPool pool;
 
-	private static String host;
-	private static int port;
-	private static int timeout;
-	private static String password;
-	private static int database;
-
-	private static JedisPool pool;
-
-	@Override
-	public String name() {
-		return "redis";
+	public static Jedis getResource() {
+		Jedis jedis = null;
+		try {
+			jedis = pool.getResource();
+			return jedis;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new JedisConnectionException(ex);
+		}
 	}
 
 	/**
@@ -64,20 +68,33 @@ public class RedisConfigProvider implements ConfigProvider {
 		}
 	}
 
-	public static Jedis getResource() {
-		Jedis jedis = null;
-		try {
-			jedis = pool.getResource();
-			return jedis;
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			throw new JedisConnectionException(ex);
-		}
-	}
-
 	@Override
 	public Config buildConfig(String regionName, boolean autoCreate) {
 		return new RedisConfig(regionName);
+	}
+
+	protected boolean getProperty(Properties props, String key,
+			boolean defaultValue) {
+		return "true".equalsIgnoreCase(props.getProperty(key,
+				String.valueOf(defaultValue)).trim());
+	}
+
+	protected int getProperty(Properties props, String key, int defaultValue) {
+		try {
+			return Integer.parseInt(props.getProperty(key,
+					String.valueOf(defaultValue)).trim());
+		} catch (Exception e) {
+			return defaultValue;
+		}
+	}
+
+	protected String getProperty(Properties props, String key, String defaultValue) {
+		return props.getProperty(key, defaultValue).trim();
+	}
+
+	@Override
+	public String name() {
+		return "redis";
 	}
 
 	@Override
@@ -115,26 +132,5 @@ public class RedisConfigProvider implements ConfigProvider {
 	@Override
 	public void stop() {
 		pool.destroy();
-	}
-
-	private static String getProperty(Properties props, String key,
-			String defaultValue) {
-		return props.getProperty(key, defaultValue).trim();
-	}
-
-	private static int getProperty(Properties props, String key,
-			int defaultValue) {
-		try {
-			return Integer.parseInt(props.getProperty(key,
-					String.valueOf(defaultValue)).trim());
-		} catch (Exception e) {
-			return defaultValue;
-		}
-	}
-
-	private static boolean getProperty(Properties props, String key,
-			boolean defaultValue) {
-		return "true".equalsIgnoreCase(props.getProperty(key,
-				String.valueOf(defaultValue)).trim());
 	}
 }

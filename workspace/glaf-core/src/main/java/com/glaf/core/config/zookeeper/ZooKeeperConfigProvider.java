@@ -31,22 +31,7 @@ import com.glaf.core.config.ConfigProvider;
 
 public class ZooKeeperConfigProvider implements ConfigProvider {
 
-	private static int getProperty(Properties props, String key,
-			int defaultValue) {
-		try {
-			return Integer.parseInt(props.getProperty(key,
-					String.valueOf(defaultValue)).trim());
-		} catch (Exception e) {
-			return defaultValue;
-		}
-	}
-
-	private static String getProperty(Properties props, String key,
-			String defaultValue) {
-		return props.getProperty(key, defaultValue).trim();
-	}
-
-	private final ConcurrentMap<String, Config> concurrentMap = new ConcurrentHashMap<String, Config>();
+	protected final ConcurrentMap<String, Config> concurrentMap = new ConcurrentHashMap<String, Config>();
 
 	protected CuratorFramework zkClient;
 
@@ -80,6 +65,19 @@ public class ZooKeeperConfigProvider implements ConfigProvider {
 			zkClient.start();
 		}
 		return zkClient;
+	}
+
+	protected int getProperty(Properties props, String key, int defaultValue) {
+		try {
+			return Integer.parseInt(props.getProperty(key,
+					String.valueOf(defaultValue)).trim());
+		} catch (Exception e) {
+			return defaultValue;
+		}
+	}
+
+	protected String getProperty(Properties props, String key, String defaultValue) {
+		return props.getProperty(key, defaultValue).trim();
 	}
 
 	public String name() {

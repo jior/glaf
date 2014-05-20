@@ -32,9 +32,9 @@ import com.glaf.core.config.ConfigProvider;
 
 public class HazelcastConfigProvider implements ConfigProvider {
 
-	private final ConcurrentMap<String, Config> caches = new ConcurrentHashMap<String, Config>();
-	private HazelcastInstance hazelcastInstance;
-	private com.hazelcast.config.Config config;
+	protected final ConcurrentMap<String, Config> caches = new ConcurrentHashMap<String, Config>();
+	protected HazelcastInstance hazelcastInstance;
+	protected com.hazelcast.config.Config config;
 
 	public HazelcastConfigProvider() {
 		config = new com.hazelcast.config.Config();

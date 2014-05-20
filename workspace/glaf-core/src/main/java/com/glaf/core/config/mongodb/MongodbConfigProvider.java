@@ -25,7 +25,7 @@ import com.glaf.core.config.ConfigProvider;
 
 public class MongodbConfigProvider implements ConfigProvider {
 
-	private static MongodbConfig cache;
+	protected static MongodbConfig cache;
 
 	protected String servers = "127.0.0.1:27017";
 
@@ -50,7 +50,7 @@ public class MongodbConfigProvider implements ConfigProvider {
 		return expireMinutes;
 	}
 
-	private int getProperty(Properties props, String key, int defaultValue) {
+	protected int getProperty(Properties props, String key, int defaultValue) {
 		try {
 			return Integer.parseInt(props.getProperty(key,
 					String.valueOf(defaultValue)).trim());
@@ -59,7 +59,7 @@ public class MongodbConfigProvider implements ConfigProvider {
 		}
 	}
 
-	private String getProperty(Properties props, String key, String defaultValue) {
+	protected String getProperty(Properties props, String key, String defaultValue) {
 		return props.getProperty(key, defaultValue).trim();
 	}
 
