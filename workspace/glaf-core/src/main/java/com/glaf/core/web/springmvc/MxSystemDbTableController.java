@@ -76,7 +76,7 @@ public class MxSystemDbTableController {
 	protected ITablePageService tablePageService;
 
 	protected ISystemParamService systemParamService;
-
+	
 	@RequestMapping("/edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
@@ -520,6 +520,11 @@ public class MxSystemDbTableController {
 				}
 			}
 		}
+	}
+
+	@RequestMapping("/initHB")
+	public ModelAndView initHB(HttpServletRequest request, ModelMap modelMap) {
+		return new ModelAndView("/modules/sys/table/initHB", modelMap);
 	}
 
 	@ResponseBody

@@ -224,6 +224,11 @@
 		}
 	 }
 
+	 function updateTableSchema(){
+        var link = '<%=request.getContextPath()%>/mx/sys/table/initHB';
+	    art.dialog.open(link, { height: 225, width: 480, title: "更新数据库表", lock: true, scrollbars:"no" }, false);
+	 }
+
 	 function exportH2(){
 		 if(confirm("确定导出H2测试数据？")){
               window.open('<%=request.getContextPath()%>/mx/sys/table/exportDB?dbType=h2');
@@ -306,6 +311,9 @@
 
 	   <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'"
 	      onclick="javascript:updateHibernateDDL();">更新本数据库结构</a> 
+       
+	   <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-edit'"
+	      onclick="javascript:updateTableSchema();">更新数据库表</a>
 
 	   <a href="#" class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-list'"
 	      onclick="javascript:showData();">查看数据</a> 
