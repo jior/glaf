@@ -206,6 +206,7 @@ public class SystemConfig {
 		String text = ConfigFactory.getString(
 				SystemConfig.class.getSimpleName(), key);
 		if (StringUtils.isNotEmpty(text)) {
+			logger.debug("json:" + text);
 			JSONObject jsonObject = JSON.parseObject(text);
 			property = SystemPropertyJsonFactory.jsonToObject(jsonObject);
 		}
@@ -232,15 +233,16 @@ public class SystemConfig {
 	 * @return
 	 */
 	public static String getServiceUrl() {
-		ISystemPropertyService systemPropertyService = ContextFactory
-				.getBean("systemPropertyService");
-		SystemProperty property = systemPropertyService.getSystemProperty(
-				"SYS", "serviceUrl");
-		String serviceUrl = null;
-		if (property != null && property.getValue() != null) {
-			serviceUrl = property.getValue();
-		}
-		return serviceUrl;
+		// ISystemPropertyService systemPropertyService = ContextFactory
+		// .getBean("systemPropertyService");
+		// SystemProperty property = systemPropertyService.getSystemProperty(
+		// "SYS", "serviceUrl");
+		// String serviceUrl = null;
+		// if (property != null && property.getValue() != null) {
+		// serviceUrl = property.getValue();
+		// }
+		// return serviceUrl;
+		return getString("serviceUrl");
 	}
 
 	public static String getString(String key) {
