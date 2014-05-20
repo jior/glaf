@@ -58,13 +58,13 @@ public class RedisConfig implements Config {
 		Jedis jedis = null;
 		boolean broken = false;
 		try {
-			jedis = RedisConfigProvider.getResource();
+			jedis = RedisUtils.getResource();
 			jedis.del(region + ":*");
 		} catch (Exception e) {
 			broken = true;
 			throw new RuntimeException(e);
 		} finally {
-			RedisConfigProvider.returnResource(jedis, broken);
+			RedisUtils.returnResource(jedis, broken);
 		}
 	}
 
@@ -76,7 +76,7 @@ public class RedisConfig implements Config {
 		boolean broken = false;
 		Jedis jedis = null;
 		try {
-			jedis = RedisConfigProvider.getResource();
+			jedis = RedisUtils.getResource();
 			String[] okeys = new String[keys.size()];
 			for (int i = 0; i < okeys.length; i++) {
 				okeys[i] = getKeyName(keys.get(i));
@@ -86,7 +86,7 @@ public class RedisConfig implements Config {
 			broken = true;
 			throw new RuntimeException(e);
 		} finally {
-			RedisConfigProvider.returnResource(jedis, broken);
+			RedisUtils.returnResource(jedis, broken);
 		}
 	}
 
@@ -94,13 +94,13 @@ public class RedisConfig implements Config {
 		boolean broken = false;
 		Jedis jedis = null;
 		try {
-			jedis = RedisConfigProvider.getResource();
+			jedis = RedisUtils.getResource();
 			jedis.del(getKeyName(key));
 		} catch (Exception e) {
 			broken = true;
 			throw new RuntimeException(e);
 		} finally {
-			RedisConfigProvider.returnResource(jedis, broken);
+			RedisUtils.returnResource(jedis, broken);
 		}
 	}
 
@@ -112,7 +112,7 @@ public class RedisConfig implements Config {
 		boolean broken = false;
 		Jedis jedis = null;
 		try {
-			jedis = RedisConfigProvider.getResource();
+			jedis = RedisUtils.getResource();
 			byte[] b = jedis.get(getKeyName(key).getBytes());
 			if (b != null) {
 				object = SerializationUtils.unserialize(b);
@@ -121,7 +121,7 @@ public class RedisConfig implements Config {
 			log.error("Error occured when get data from L2 cache", e);
 			broken = true;
 		} finally {
-			RedisConfigProvider.returnResource(jedis, broken);
+			RedisUtils.returnResource(jedis, broken);
 		}
 		return object;
 	}
@@ -155,7 +155,7 @@ public class RedisConfig implements Config {
 		Jedis jedis = null;
 		boolean broken = false;
 		try {
-			jedis = RedisConfigProvider.getResource();
+			jedis = RedisUtils.getResource();
 			List<String> keys = new ArrayList<String>();
 			keys.addAll(jedis.keys(region + ":*"));
 			for (int i = 0; i < keys.size(); i++) {
@@ -166,7 +166,7 @@ public class RedisConfig implements Config {
 			broken = true;
 			throw new RuntimeException(e);
 		} finally {
-			RedisConfigProvider.returnResource(jedis, broken);
+			RedisUtils.returnResource(jedis, broken);
 		}
 	}
 
@@ -177,7 +177,7 @@ public class RedisConfig implements Config {
 			boolean broken = false;
 			Jedis jedis = null;
 			try {
-				jedis = RedisConfigProvider.getResource();
+				jedis = RedisUtils.getResource();
 				jedis.set(getKeyName(key).getBytes(),
 						SerializationUtils.serialize(value));
 			} catch (Exception ex) {
@@ -185,7 +185,7 @@ public class RedisConfig implements Config {
 				ex.printStackTrace();
 				throw new RuntimeException(ex);
 			} finally {
-				RedisConfigProvider.returnResource(jedis, broken);
+				RedisUtils.returnResource(jedis, broken);
 			}
 		}
 	}
@@ -197,7 +197,7 @@ public class RedisConfig implements Config {
 			boolean broken = false;
 			Jedis jedis = null;
 			try {
-				jedis = RedisConfigProvider.getResource();
+				jedis = RedisUtils.getResource();
 				jedis.set(getKeyName(key).getBytes(),
 						SerializationUtils.serialize(value));
 			} catch (Exception ex) {
@@ -205,7 +205,7 @@ public class RedisConfig implements Config {
 				ex.printStackTrace();
 				throw new RuntimeException(ex);
 			} finally {
-				RedisConfigProvider.returnResource(jedis, broken);
+				RedisUtils.returnResource(jedis, broken);
 			}
 		}
 	}

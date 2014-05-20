@@ -23,50 +23,18 @@ import com.glaf.core.config.Config;
 import com.glaf.core.config.ConfigProvider;
 import com.glaf.core.config.redis.RedisConfig;
 
-import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.exceptions.JedisConnectionException;
 
 /**
  * Redis 分布式配置实现
  */
 public class RedisConfigProvider implements ConfigProvider {
-	protected static String host;
-	protected static int port;
-	protected static int timeout;
-	protected static String password;
-	protected static int database;
-	protected static JedisPool pool;
-
-	public static Jedis getResource() {
-		Jedis jedis = null;
-		try {
-			jedis = pool.getResource();
-			return jedis;
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			throw new JedisConnectionException(ex);
-		}
-	}
-
-	/**
-	 * 释放资源
-	 * 
-	 * @param jedis
-	 * @param isBrokenResource
-	 */
-	public static void returnResource(Jedis jedis, boolean isBrokenResource) {
-		if (null == jedis) {
-			return;
-		}
-		if (isBrokenResource) {
-			pool.returnBrokenResource(jedis);
-			jedis = null;
-		} else {
-			pool.returnResource(jedis);
-		}
-	}
+	private String host;
+	private int port;
+	private int timeout;
+	private String password;
+	private int database;
 
 	@Override
 	public Config buildConfig(String regionName, boolean autoCreate) {
@@ -88,7 +56,8 @@ public class RedisConfigProvider implements ConfigProvider {
 		}
 	}
 
-	protected String getProperty(Properties props, String key, String defaultValue) {
+	protected String getProperty(Properties props, String key,
+			String defaultValue) {
 		return props.getProperty(key, defaultValue).trim();
 	}
 
@@ -125,12 +94,13 @@ public class RedisConfigProvider implements ConfigProvider {
 				"timeBetweenEvictionRunsMillis", 10));
 		config.setLifo(getProperty(props, "lifo", false));
 
-		pool = new JedisPool(config, host, port, timeout, password, database);
-
+		JedisPool jedisPool = new JedisPool(config, host, port, timeout,
+				password, database);
+		RedisUtils.setPool(jedisPool);
 	}
 
 	@Override
 	public void stop() {
-		pool.destroy();
+		RedisUtils.destroy();
 	}
 }
