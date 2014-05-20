@@ -300,7 +300,7 @@ public class MyBatisEntityDAOImpl extends SqlSessionDaoSupport implements
 	 * 
 	 * @return
 	 */
-	public IdBlock nextDbidBlock(String name) {
+	public synchronized IdBlock nextDbidBlock(String name) {
 		Dbid dbid = (Dbid) getSqlSession().selectOne("getNextDbId", name);
 		if (dbid == null) {
 			dbid = new Dbid();

@@ -47,7 +47,7 @@ public class MyBatisDbIdGenerator implements IdGenerator {
 		return Long.toString(this.nextId());
 	}
 
-	public String getNextId(String name) {
+	public synchronized String getNextId(String name) {
 		return Long.toString(this.nextId(name));
 	}
 
@@ -58,7 +58,7 @@ public class MyBatisDbIdGenerator implements IdGenerator {
 		return nextId++;
 	}
 
-	public Long nextId(String name) {
+	public synchronized Long nextId(String name) {
 		IdBlock idBlock = entityDAO.nextDbidBlock(name);
 		return idBlock.getNextId();
 	}
