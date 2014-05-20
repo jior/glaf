@@ -30,6 +30,7 @@ public class ResultThreadLocal {
 		if (threadLocalVaribles.get() != null) {
 			threadLocalVaribles.get().clear();
 		}
+		threadLocalVaribles.set(null);
 		threadLocalVaribles.remove();
 	}
 
