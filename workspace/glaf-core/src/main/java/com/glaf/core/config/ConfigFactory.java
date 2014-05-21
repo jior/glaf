@@ -46,7 +46,12 @@ public class ConfigFactory {
 
 	public static void clear(String region) {
 		if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
-			channel.clear(region);
+			try {
+				channel.clear(region);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				logger.error(ex);
+			}
 		}
 	}
 
@@ -83,6 +88,7 @@ public class ConfigFactory {
 					}
 				}
 			} catch (Exception ex) {
+				ex.printStackTrace();
 				logger.error(ex);
 			}
 		}
@@ -92,13 +98,23 @@ public class ConfigFactory {
 	public static void put(final String region, final String key,
 			final String value) {
 		if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
-			channel.put(region, key, value);
+			try {
+				channel.put(region, key, value);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				logger.error(ex);
+			}
 		}
 	}
 
 	public static void remove(String region, String key) {
 		if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
-			channel.remove(region, key);
+			try {
+				channel.remove(region, key);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				logger.error(ex);
+			}
 		}
 	}
 

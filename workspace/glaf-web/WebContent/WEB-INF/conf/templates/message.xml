@@ -3,14 +3,15 @@
 
 	<template name="sendToSupplier" description="供应商用户意见交流">
 		<sysType>1</sysType>
+		<templateType>freemarker</templateType>
 		<title>
 			<![CDATA[
-			合同项目制作意见交流(合同编号：${contractNo}；项目名称：${projectName})
+			合同项目制作意见交流(合同编号：${contractNo?if_exists}；项目名称：${projectName?if_exists})
 			]]>
 		</title>
 		<content>
 			<![CDATA[
-			合同项目制作意见交流(合同编号：${contractNo}；项目名称：${projectName})
+			合同项目制作意见交流(合同编号：${contractNo?if_exists}；项目名称：${projectName?if_exists})
 		    请在平台上积极解决贵公司合同制作中的问题。
 			]]>
 		</content>

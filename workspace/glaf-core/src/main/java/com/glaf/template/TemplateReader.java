@@ -22,12 +22,15 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import com.glaf.template.Template;
+import com.glaf.core.config.SystemProperties;
+import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.Tools;
 
 public class TemplateReader {
@@ -61,6 +64,17 @@ public class TemplateReader {
 						dataMap.put(em.getName(), em.getTextTrim());
 					}
 					Tools.populate(tpl, dataMap);
+				}
+				if (StringUtils.isEmpty(tpl.getContent())) {
+					if (StringUtils.isNoneEmpty(tpl.getDataFile())) {
+						String filename = SystemProperties.getConfigRootPath()
+								+ "/" + tpl.getDataFile();
+						try {
+							tpl.setContent(FileUtils.readFile(filename));
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
+					}
 				}
 				templates.add(tpl);
 			}

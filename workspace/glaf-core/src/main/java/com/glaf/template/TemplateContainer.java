@@ -18,39 +18,27 @@
 
 package com.glaf.template;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.glaf.core.context.ContextFactory;
-import com.glaf.template.service.ITemplateService;
+import com.glaf.template.config.TemplateConfig;
 
 public class TemplateContainer {
-	protected static final Log logger = LogFactory
-			.getLog(TemplateContainer.class);
-
-	private static TemplateContainer container = new TemplateContainer();
-
-	public static TemplateContainer getContainer() {
-		return container;
+	private static class TemplateContainerHolder {
+		public static TemplateContainer instance = new TemplateContainer();
 	}
 
-	private volatile ITemplateService templateService;
+	public static TemplateContainer getContainer() {
+		return TemplateContainerHolder.instance;
+	}
 
 	private TemplateContainer() {
-		templateService = (ITemplateService) ContextFactory
-				.getBean("templateService");
+
 	}
 
 	public Template getTemplate(String templateId) {
 		if (templateId == null) {
 			throw new RuntimeException(" templateId is null ");
 		}
-		Template template = templateService.getTemplate(templateId);
+		Template template = TemplateConfig.getTemplate(templateId);
 		return template;
-	}
-
-	public void reload() {
-		templateService.installAllTemplates();
 	}
 
 }

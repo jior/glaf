@@ -26,7 +26,8 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import com.glaf.core.util.JsonUtils;
-import com.glaf.template.config.TemplateProperties;
+
+import com.glaf.template.TemplateContainer;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -36,9 +37,28 @@ public class TemplateUtils {
 
 	private static final Configuration cfg = new Configuration();
 
+	public static void evaluate(com.glaf.template.Template template,
+			Map<String, Object> context, Writer writer) {
+		if (template != null && template.getContent() != null) {
+			if (template.getJson() != null) {
+				Map<String, Object> jsonMap = JsonUtils.decode(template
+						.getJson());
+				Set<Entry<String, Object>> entrySet = jsonMap.entrySet();
+				for (Entry<String, Object> entry : entrySet) {
+					String key = entry.getKey();
+					Object value = entry.getValue();
+					if (key != null && value != null) {
+						context.put(key, value);
+					}
+				}
+			}
+			TemplateUtils.process(context, template.getContent());
+		}
+	}
+
 	public static void evaluate(String templateId, Map<String, Object> context,
 			Writer writer) {
-		com.glaf.template.Template template = TemplateProperties
+		com.glaf.template.Template template = TemplateContainer.getContainer()
 				.getTemplate(templateId);
 		if (template != null && template.getContent() != null) {
 			if (template.getJson() != null) {

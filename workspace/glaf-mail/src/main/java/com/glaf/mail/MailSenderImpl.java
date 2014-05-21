@@ -42,10 +42,9 @@ import com.glaf.core.base.DataFile;
 import com.glaf.core.config.MailProperties;
 import com.glaf.core.config.SystemConfig;
 import com.glaf.core.context.ContextFactory;
-import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.UUID32;
 import com.glaf.template.Template;
-import com.glaf.template.config.TemplateProperties;
+import com.glaf.template.TemplateContainer;
 import com.glaf.template.util.TemplateUtils;
 import com.glaf.mail.config.JavaMailSenderConfiguration;
 import com.glaf.mail.util.MailTools;
@@ -182,11 +181,12 @@ public class MailSenderImpl implements MailSender {
 		mailMessage.setDataMap(dataMap);
 
 		if (StringUtils.isEmpty(mailMessage.getContent())) {
-			Template template = TemplateProperties.getTemplate(mailMessage
-					.getTemplateId());
+			Template template = TemplateContainer.getContainer().getTemplate(
+					mailMessage.getTemplateId());
 			if (template != null) {
 				String templateType = template.getTemplateType();
 				logger.debug("templateType:" + templateType);
+				// logger.debug("content:" + template.getContent());
 				if (StringUtils.equals(templateType, "eml")) {
 					if (template.getContent() != null) {
 						Mail m = mailHelper.getMail(template.getContent()
@@ -204,20 +204,18 @@ public class MailSenderImpl implements MailSender {
 								writer = null;
 								mailMessage.setContent(text);
 							} catch (Exception ex) {
+								ex.printStackTrace();
 								throw new RuntimeException(ex);
 							}
 						}
 					}
 				} else {
 					try {
-						Writer writer = new StringWriter();
-						TemplateUtils.evaluate(mailMessage.getTemplateId(),
-								dataMap, writer);
-						String text = writer.toString();
-						writer.close();
-						writer = null;
+						String text = TemplateUtils.process(dataMap,
+								template.getContent());
 						mailMessage.setContent(text);
 					} catch (Exception ex) {
+						ex.printStackTrace();
 						throw new RuntimeException(ex);
 					}
 				}
@@ -226,40 +224,22 @@ public class MailSenderImpl implements MailSender {
 
 		if (StringUtils.isNotEmpty(mailMessage.getContent())) {
 			String text = mailMessage.getContent();
-			if (StringUtils.isNotEmpty(mailMessage.getTemplateId())) {
-				Template template = TemplateProperties.getTemplate(mailMessage
-						.getTemplateId());
-				if (template != null) {
-					try {
-						template.setContent(text);
-						Writer writer = new StringWriter();
-						TemplateUtils.evaluate(mailMessage.getTemplateId(),
-								dataMap, writer);
-						text = writer.toString();
-						writer.close();
-						writer = null;
-					} catch (Exception ex) {
-						throw new RuntimeException(ex);
-					}
-				}
-
+			if (StringUtils.isNotEmpty(callbackUrl)) {
 				String href = callbackUrl + "?messageId="
 						+ mailMessage.getMessageId();
-
 				text = mailHelper.embedCallbackScript(text, href);
-
 				mailMessage.setContent(text);
-
-				if (LogUtils.isDebug()) {
-					logger.debug(text);
-				}
+				logger.debug(text);
+				messageHelper.setText(text, true);
 			}
 			messageHelper.setText(text, true);
 		}
 
+		logger.debug("mail body:" + mailMessage.getContent());
+
 		Collection<Object> files = mailMessage.getFiles();
 
-		if (files != null && files.size() > 0) {
+		if (files != null && !files.isEmpty()) {
 			Iterator<Object> iterator = files.iterator();
 			while (iterator.hasNext()) {
 				Object object = iterator.next();
@@ -269,11 +249,13 @@ public class MailSenderImpl implements MailSender {
 					String name = file.getName();
 					name = MailTools.chineseStringToAscii(name);
 					messageHelper.addAttachment(name, resource);
+					logger.debug("add attachment:" + name);
 				} else if (object instanceof DataSource) {
 					DataSource dataSource = (DataSource) object;
 					String name = dataSource.getName();
 					name = MailTools.chineseStringToAscii(name);
 					messageHelper.addAttachment(name, dataSource);
+					logger.debug("add attachment:" + name);
 				} else if (object instanceof DataFile) {
 					DataFile dataFile = (DataFile) object;
 					if (StringUtils.isNotEmpty(dataFile.getFilename())) {
@@ -282,6 +264,7 @@ public class MailSenderImpl implements MailSender {
 						InputStreamSource inputStreamSource = new MxMailInputSource(
 								dataFile);
 						messageHelper.addAttachment(name, inputStreamSource);
+						logger.debug("add attachment:" + name);
 					}
 				}
 			}
