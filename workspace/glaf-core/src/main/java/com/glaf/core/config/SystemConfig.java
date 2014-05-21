@@ -206,7 +206,7 @@ public class SystemConfig {
 		String text = ConfigFactory.getString(
 				SystemConfig.class.getSimpleName(), key);
 		if (StringUtils.isNotEmpty(text)) {
-			logger.debug("json:" + text);
+			//logger.debug("json:" + text);
 			JSONObject jsonObject = JSON.parseObject(text);
 			property = SystemPropertyJsonFactory.jsonToObject(jsonObject);
 		}

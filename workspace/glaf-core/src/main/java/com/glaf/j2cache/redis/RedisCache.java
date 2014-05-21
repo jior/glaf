@@ -107,6 +107,7 @@ public class RedisCache implements Cache {
 		try {
 			jedis = RedisUtils.getResource();
 			jedis.del(getKeyName(key));
+			log.debug(key + " remove from redis cache");
 		} catch (Exception e) {
 			broken = true;
 			throw new CacheException(e);
