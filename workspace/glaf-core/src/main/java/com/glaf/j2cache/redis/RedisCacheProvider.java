@@ -32,11 +32,11 @@ import redis.clients.jedis.JedisPoolConfig;
  * Redis 缓存实现
  */
 public class RedisCacheProvider implements CacheProvider {
-	private static String host;
-	private static int port;
-	private static int timeout;
-	private static String password;
-	private static int database;
+	private String host;
+	private int port;
+	private int timeout;
+	private String password;
+	private int database;
 	protected int expireMinutes;
 
 	@Override
