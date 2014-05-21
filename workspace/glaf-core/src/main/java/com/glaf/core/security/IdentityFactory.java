@@ -32,6 +32,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.cache.CacheFactory;
+import com.glaf.core.config.SystemConfig;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.identity.Agent;
 import com.glaf.core.identity.Role;
@@ -196,7 +197,8 @@ public class IdentityFactory {
 			}
 		}
 		String cacheKey = Constants.LOGIN_USER_CACHE + actorId;
-		if (CacheFactory.getString(cacheKey) != null) {
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& CacheFactory.getString(cacheKey) != null) {
 			String text = CacheFactory.getString(cacheKey);
 			JSONObject jsonObject = JSON.parseObject(text);
 			return LoginContextUtils.jsonToObject(jsonObject);
@@ -231,8 +233,10 @@ public class IdentityFactory {
 			logger.debug("user roles:" + roles);
 
 			loginContext.setRoles(roles);
-			CacheFactory.put(cacheKey, loginContext.toJsonObject()
-					.toJSONString());
+			if (SystemConfig.getBoolean("use_query_cache")) {
+				CacheFactory.put(cacheKey, loginContext.toJsonObject()
+						.toJSONString());
+			}
 			return loginContext;
 		}
 		return null;
@@ -307,15 +311,18 @@ public class IdentityFactory {
 	 */
 	public static User getUser(String actorId) {
 		String cacheKey = "mx_user_" + actorId;
-		if (CacheFactory.getString(cacheKey) != null) {
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& CacheFactory.getString(cacheKey) != null) {
 			String txt = CacheFactory.getString(cacheKey);
 			JSONObject json = JSON.parseObject(txt);
 			return UserJsonFactory.jsonToObject(json);
 		}
 		User user = (User) getEntityService().getById("getUserById", actorId);
 		if (user != null) {
-			JSONObject json = UserJsonFactory.toJsonObject(user);
-			CacheFactory.put(cacheKey, json.toJSONString());
+			if (SystemConfig.getBoolean("use_query_cache")) {
+				JSONObject json = UserJsonFactory.toJsonObject(user);
+				CacheFactory.put(cacheKey, json.toJSONString());
+			}
 		}
 		return user;
 	}
@@ -328,7 +335,8 @@ public class IdentityFactory {
 	 */
 	public static User getUserByUserId(Long userId) {
 		String cacheKey = "mx_user2_" + userId;
-		if (CacheFactory.getString(cacheKey) != null) {
+		if (SystemConfig.getBoolean("use_query_cache")
+				&& CacheFactory.getString(cacheKey) != null) {
 			String txt = CacheFactory.getString(cacheKey);
 			JSONObject json = JSON.parseObject(txt);
 			return UserJsonFactory.jsonToObject(json);
@@ -336,8 +344,10 @@ public class IdentityFactory {
 		User user = (User) getEntityService()
 				.getById("getUserByUserId", userId);
 		if (user != null) {
-			JSONObject json = UserJsonFactory.toJsonObject(user);
-			CacheFactory.put(cacheKey, json.toJSONString());
+			if (SystemConfig.getBoolean("use_query_cache")) {
+				JSONObject json = UserJsonFactory.toJsonObject(user);
+				CacheFactory.put(cacheKey, json.toJSONString());
+			}
 		}
 		return user;
 	}
@@ -360,7 +370,7 @@ public class IdentityFactory {
 		}
 		return userMap;
 	}
-	
+
 	public static List<User> getUsers() {
 		List<User> users = new ArrayList<User>();
 		List<Object> list = getEntityService().getList("getUsers", null);
