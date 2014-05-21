@@ -33,6 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.cache.ClearCacheJob;
+import com.glaf.core.config.ConfigFactory;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.util.ResponseUtils;
 
@@ -46,10 +47,19 @@ public class MxSystemCacheMgrController {
 	public ModelAndView clearAll(HttpServletRequest request, ModelMap modelMap) {
 		ClearCacheJob job = new ClearCacheJob();
 		try {
+			logger.debug("#################CacheFactory.clearAll##################");
 			job.clearAll();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+
+		try {
+			logger.debug("#################ConfigFactory.clearAll##################");
+			ConfigFactory.clearAll();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
 		modelMap.put("reloadOK", true);
 
 		String jx_view = request.getParameter("jx_view");

@@ -56,6 +56,9 @@ public class RedisCache implements Cache {
 		try {
 			jedis = RedisUtils.getResource();
 			jedis.del(region + ":*");
+			log.debug("###################################");
+			log.debug(region + " clear from redis ");
+			log.debug("###################################");
 		} catch (Exception e) {
 			broken = true;
 			throw new CacheException(e);

@@ -18,6 +18,7 @@
 
 package com.glaf.core.config;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -42,15 +43,36 @@ public class ConfigFactory {
 
 	protected static final String DISTRIBUTED_ENABLED = "distributed.config.enabled";
 
+	protected static List<String> regions = new java.util.concurrent.CopyOnWriteArrayList<String>();
+
 	protected static ExecutorService pool = Executors.newCachedThreadPool();
 
 	public static void clear(String region) {
 		if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
 			try {
 				channel.clear(region);
+				logger.debug("###################################");
+				logger.debug(region + " clear.");
+				logger.debug("###################################");
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				logger.error(ex);
+			}
+		}
+	}
+
+	public static void clearAll() {
+		if (regions != null && !regions.isEmpty()) {
+			for (String region : regions) {
+				try {
+					channel.clear(region);
+					logger.debug("###################################");
+					logger.debug(region + " clear.");
+					logger.debug("###################################");
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					logger.error(ex);
+				}
 			}
 		}
 	}
@@ -97,6 +119,9 @@ public class ConfigFactory {
 
 	public static void put(final String region, final String key,
 			final String value) {
+		if (!regions.contains(region)) {
+			regions.add(region);
+		}
 		if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
 			try {
 				channel.put(region, key, value);

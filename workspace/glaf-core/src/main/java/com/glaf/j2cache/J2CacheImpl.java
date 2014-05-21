@@ -42,6 +42,9 @@ public class J2CacheImpl implements Cache {
 	public void clear() {
 		String region = "glaf_" + Environment.getCurrentSystemName();
 		cacheChannel.clear(region);
+		logger.debug("###################################");
+		logger.debug(region + " clear from j2cache");
+		logger.debug("###################################");
 	}
 
 	public Object get(String key) {
@@ -66,11 +69,15 @@ public class J2CacheImpl implements Cache {
 	public void remove(String key) {
 		String region = "glaf_" + Environment.getCurrentSystemName();
 		cacheChannel.evict(region, key);
+		logger.debug(key + " remove from j2cache");
 	}
 
 	public void shutdown() {
 		String region = "glaf_" + Environment.getCurrentSystemName();
 		cacheChannel.clear(region);
+		logger.debug("###################################");
+		logger.debug(region + " clear from j2cache");
+		logger.debug("###################################");
 	}
 
 }
