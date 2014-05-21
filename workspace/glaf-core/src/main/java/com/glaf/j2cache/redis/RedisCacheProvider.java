@@ -25,62 +25,56 @@ import com.glaf.j2cache.CacheExpiredListener;
 import com.glaf.j2cache.CacheProvider;
 import com.glaf.j2cache.redis.RedisCache;
 
-import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.exceptions.JedisConnectionException;
 
 /**
  * Redis 缓存实现
  */
 public class RedisCacheProvider implements CacheProvider {
-
 	private static String host;
 	private static int port;
 	private static int timeout;
 	private static String password;
 	private static int database;
+	protected int expireMinutes;
 
-	private static JedisPool pool;
+	@Override
+	public Cache buildCache(String regionName, boolean autoCreate,
+			CacheExpiredListener listener) throws CacheException {
+		return new RedisCache(regionName, expireMinutes);
+	}
+
+	public int getExpireMinutes() {
+		return expireMinutes;
+	}
+
+	private boolean getProperty(Properties props, String key,
+			boolean defaultValue) {
+		return "true".equalsIgnoreCase(props.getProperty(key,
+				String.valueOf(defaultValue)).trim());
+	}
+
+	private int getProperty(Properties props, String key, int defaultValue) {
+		try {
+			return Integer.parseInt(props.getProperty(key,
+					String.valueOf(defaultValue)).trim());
+		} catch (Exception e) {
+			return defaultValue;
+		}
+	}
+
+	private String getProperty(Properties props, String key, String defaultValue) {
+		return props.getProperty(key, defaultValue).trim();
+	}
 
 	@Override
 	public String name() {
 		return "redis";
 	}
 
-	/**
-	 * 释放资源
-	 * 
-	 * @param jedis
-	 * @param isBrokenResource
-	 */
-	public static void returnResource(Jedis jedis, boolean isBrokenResource) {
-		if (null == jedis) {
-			return;
-		}
-		if (isBrokenResource) {
-			pool.returnBrokenResource(jedis);
-			jedis = null;
-		} else {
-			pool.returnResource(jedis);
-		}
-	}
-
-	public static Jedis getResource() {
-		Jedis jedis = null;
-		try {
-			jedis = pool.getResource();
-			return jedis;
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			throw new JedisConnectionException(ex);
-		}
-	}
-
-	@Override
-	public Cache buildCache(String regionName, boolean autoCreate,
-			CacheExpiredListener listener) throws CacheException {
-		return new RedisCache(regionName);
+	public void setExpireMinutes(int expireMinutes) {
+		this.expireMinutes = expireMinutes;
 	}
 
 	@Override
@@ -93,6 +87,7 @@ public class RedisCacheProvider implements CacheProvider {
 		port = getProperty(props, "port", 6379);
 		timeout = getProperty(props, "timeout", 2000);
 		database = getProperty(props, "database", 0);
+		expireMinutes = getProperty(props, "expireMinutes", 30);
 
 		config.setMaxTotal(getProperty(props, "maxTotal", 50));
 		config.setMaxIdle(getProperty(props, "maxIdle", 10));
@@ -111,33 +106,13 @@ public class RedisCacheProvider implements CacheProvider {
 				"timeBetweenEvictionRunsMillis", 10));
 		config.setLifo(getProperty(props, "lifo", false));
 
-		pool = new JedisPool(config, host, port, timeout, password, database);
-
+		JedisPool pool = new JedisPool(config, host, port, timeout, password,
+				database);
+		RedisUtils.setPool(pool);
 	}
 
 	@Override
 	public void stop() {
-		pool.destroy();
-	}
-
-	private static String getProperty(Properties props, String key,
-			String defaultValue) {
-		return props.getProperty(key, defaultValue).trim();
-	}
-
-	private static int getProperty(Properties props, String key,
-			int defaultValue) {
-		try {
-			return Integer.parseInt(props.getProperty(key,
-					String.valueOf(defaultValue)).trim());
-		} catch (Exception e) {
-			return defaultValue;
-		}
-	}
-
-	private static boolean getProperty(Properties props, String key,
-			boolean defaultValue) {
-		return "true".equalsIgnoreCase(props.getProperty(key,
-				String.valueOf(defaultValue)).trim());
+		RedisUtils.destroy();
 	}
 }

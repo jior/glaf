@@ -117,22 +117,23 @@ public class CacheChannel extends ReceiverAdapter implements
 	 * @return
 	 */
 	public CacheObject get(String region, Object key) {
-		CacheObject obj = new CacheObject();
-		obj.setRegion(region);
-		obj.setKey(key);
+		CacheObject object = new CacheObject();
+		object.setRegion(region);
+		object.setKey(key);
+		 
 		if (region != null && key != null) {
-			obj.setValue(CacheManager.get(LEVEL_1, region, key));
-			if (obj.getValue() == null) {
-				obj.setValue(CacheManager.get(LEVEL_2, region, key));
-				if (obj.getValue() != null) {
-					obj.setLevel(LEVEL_2);
-					CacheManager.set(LEVEL_1, region, key, obj.getValue());
+			object.setValue(CacheManager.get(LEVEL_1, region, key));
+			if (object.getValue() == null) {
+				object.setValue(CacheManager.get(LEVEL_2, region, key));
+				if (object.getValue() != null) {
+					object.setLevel(LEVEL_2);
+					CacheManager.set(LEVEL_1, region, key, object.getValue());
 				}
 			} else {
-				obj.setLevel(LEVEL_1);
+				object.setLevel(LEVEL_1);
 			}
 		}
-		return obj;
+		return object;
 	}
 
 	/**
@@ -145,9 +146,9 @@ public class CacheChannel extends ReceiverAdapter implements
 	 */
 	public void set(String region, Object key, Object value) {
 		if (region != null && key != null) {
-			if (value == null)
+			if (value == null) {
 				evict(region, key);
-			else {
+			} else {
 				// 分几种情况
 				// Object obj1 = CacheManager.get(LEVEL_1, region, key);
 				// Object obj2 = CacheManager.get(LEVEL_2, region, key);
@@ -216,7 +217,6 @@ public class CacheChannel extends ReceiverAdapter implements
 	@Override
 	@SuppressWarnings("rawtypes")
 	public void notifyElementExpired(String region, Object key) {
-
 		log.debug("Cache data expired, region=" + region + ",key=" + key);
 
 		// 删除二级缓存
@@ -257,10 +257,11 @@ public class CacheChannel extends ReceiverAdapter implements
 	 */
 	@SuppressWarnings("rawtypes")
 	protected void onDeleteCacheKey(String region, Object key) {
-		if (key instanceof List)
+		if (key instanceof List) {
 			CacheManager.batchEvict(LEVEL_1, region, (List) key);
-		else
+		} else {
 			CacheManager.evict(LEVEL_1, region, key);
+		}
 		log.debug("Received cache evict message, region=" + region + ",key="
 				+ key);
 	}
@@ -308,8 +309,9 @@ public class CacheChannel extends ReceiverAdapter implements
 		StringBuffer sb = new StringBuffer("Group Members Changed, LIST: ");
 		List<Address> addrs = view.getMembers();
 		for (int i = 0; i < addrs.size(); i++) {
-			if (i > 0)
+			if (i > 0) {
 				sb.append(',');
+			}
 			sb.append(addrs.get(i).toString());
 		}
 		log.info(sb.toString());

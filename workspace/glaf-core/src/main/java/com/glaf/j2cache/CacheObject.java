@@ -23,43 +23,52 @@ package com.glaf.j2cache;
  * 
  * @author oschina.net
  */
-public class CacheObject{
+public class CacheObject {
 
 	private String region;
 	private Object key;
 	private Object value;
 	private byte level;
+	private long createTimeMs;
 
-	public String getRegion() {
-		return region;
-	}
-
-	public void setRegion(String region) {
-		this.region = region;
+	public long getCreateTimeMs() {
+		return createTimeMs;
 	}
 
 	public Object getKey() {
 		return key;
 	}
 
-	public void setKey(Object key) {
-		this.key = key;
+	public byte getLevel() {
+		return level;
+	}
+
+	public String getRegion() {
+		return region;
 	}
 
 	public Object getValue() {
 		return value;
 	}
 
-	public void setValue(Object value) {
-		this.value = value;
+	public void setCreateTimeMs(long createTimeMs) {
+		this.createTimeMs = createTimeMs;
 	}
 
-	public byte getLevel() {
-		return level;
+	public void setKey(Object key) {
+		this.key = key;
 	}
 
 	public void setLevel(byte level) {
 		this.level = level;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	public void setValue(Object value) {
+		this.value = value;
 	}
 
 }

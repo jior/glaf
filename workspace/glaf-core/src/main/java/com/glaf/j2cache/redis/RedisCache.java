@@ -37,12 +37,16 @@ import com.glaf.core.util.SerializationUtils;
  */
 public class RedisCache implements Cache {
 
-	private final static Logger log = LoggerFactory.getLogger(RedisCache.class);
+	protected final static Logger log = LoggerFactory
+			.getLogger(RedisCache.class);
 
-	private String region;
+	protected String region;
 
-	public RedisCache(String region) {
+	protected int expireMinutes;
+
+	public RedisCache(String region, int expireMinutes) {
 		this.region = region;
+		this.expireMinutes = expireMinutes;
 	}
 
 	@Override
@@ -50,13 +54,13 @@ public class RedisCache implements Cache {
 		Jedis jedis = null;
 		boolean broken = false;
 		try {
-			jedis = RedisCacheProvider.getResource();
+			jedis = RedisUtils.getResource();
 			jedis.del(region + ":*");
 		} catch (Exception e) {
 			broken = true;
 			throw new CacheException(e);
 		} finally {
-			RedisCacheProvider.returnResource(jedis, broken);
+			RedisUtils.returnResource(jedis, broken);
 		}
 	}
 
@@ -73,13 +77,13 @@ public class RedisCache implements Cache {
 	@Override
 	@SuppressWarnings("rawtypes")
 	public void evict(List keys) throws CacheException {
-		if (keys == null || keys.size() == 0){
+		if (keys == null || keys.size() == 0) {
 			return;
 		}
 		boolean broken = false;
 		Jedis jedis = null;
 		try {
-			jedis = RedisCacheProvider.getResource();
+			jedis = RedisUtils.getResource();
 			String[] okeys = new String[keys.size()];
 			for (int i = 0; i < okeys.length; i++) {
 				okeys[i] = getKeyName(keys.get(i));
@@ -89,7 +93,7 @@ public class RedisCache implements Cache {
 			broken = true;
 			throw new CacheException(e);
 		} finally {
-			RedisCacheProvider.returnResource(jedis, broken);
+			RedisUtils.returnResource(jedis, broken);
 		}
 	}
 
@@ -98,13 +102,13 @@ public class RedisCache implements Cache {
 		boolean broken = false;
 		Jedis jedis = null;
 		try {
-			jedis = RedisCacheProvider.getResource();
+			jedis = RedisUtils.getResource();
 			jedis.del(getKeyName(key));
 		} catch (Exception e) {
 			broken = true;
 			throw new CacheException(e);
 		} finally {
-			RedisCacheProvider.returnResource(jedis, broken);
+			RedisUtils.returnResource(jedis, broken);
 		}
 	}
 
@@ -117,7 +121,7 @@ public class RedisCache implements Cache {
 		boolean broken = false;
 		Jedis jedis = null;
 		try {
-			jedis = RedisCacheProvider.getResource();
+			jedis = RedisUtils.getResource();
 			byte[] b = jedis.get(getKeyName(key).getBytes());
 			if (b != null) {
 				object = SerializationUtils.unserialize(b);
@@ -126,7 +130,7 @@ public class RedisCache implements Cache {
 			log.error("Error occured when get data from L2 cache", e);
 			broken = true;
 		} finally {
-			RedisCacheProvider.returnResource(jedis, broken);
+			RedisUtils.returnResource(jedis, broken);
 		}
 		return object;
 	}
@@ -157,7 +161,7 @@ public class RedisCache implements Cache {
 		Jedis jedis = null;
 		boolean broken = false;
 		try {
-			jedis = RedisCacheProvider.getResource();
+			jedis = RedisUtils.getResource();
 			List<String> keys = new ArrayList<String>();
 			keys.addAll(jedis.keys(region + ":*"));
 			for (int i = 0; i < keys.size(); i++) {
@@ -168,7 +172,7 @@ public class RedisCache implements Cache {
 			broken = true;
 			throw new CacheException(e);
 		} finally {
-			RedisCacheProvider.returnResource(jedis, broken);
+			RedisUtils.returnResource(jedis, broken);
 		}
 	}
 
@@ -180,7 +184,7 @@ public class RedisCache implements Cache {
 			boolean broken = false;
 			Jedis jedis = null;
 			try {
-				jedis = RedisCacheProvider.getResource();
+				jedis = RedisUtils.getResource();
 				jedis.set(getKeyName(key).getBytes(),
 						SerializationUtils.serialize(value));
 			} catch (Exception ex) {
@@ -188,7 +192,7 @@ public class RedisCache implements Cache {
 				ex.printStackTrace();
 				throw new CacheException(ex);
 			} finally {
-				RedisCacheProvider.returnResource(jedis, broken);
+				RedisUtils.returnResource(jedis, broken);
 			}
 		}
 	}
@@ -198,11 +202,4 @@ public class RedisCache implements Cache {
 		put(key, value);
 	}
 
-	public static void main(String[] args) {
-		RedisCache cache = new RedisCache("User");
-		System.out.println(cache.getKeyName("Hello"));
-		System.out.println(cache.getKeyName(2));
-		System.out.println(cache.getKeyName((byte) 2));
-		System.out.println(cache.getKeyName(2L));
-	}
 }
