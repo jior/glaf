@@ -174,7 +174,7 @@ public class TemplateReader {
 					Tools.populate(tpl, dataMap);
 				}
 				if (StringUtils.isEmpty(tpl.getContent())) {
-					if (StringUtils.isNoneEmpty(tpl.getDataFile())) {
+					if (StringUtils.isNotEmpty(tpl.getDataFile())) {
 						String filename = SystemProperties.getConfigRootPath()
 								+ "/" + tpl.getDataFile();
 						try {
