@@ -56,14 +56,14 @@ public class CacheServer {
 
 	public static void main(String[] args) {
 		Properties props = loadCacheConfig();
-		String host = "localhost";
+		String host = "127.0.0.1";
 		int port = 15818;
 		if (props.getProperty("port") != null) {
 			port = Integer.parseInt(props.getProperty("port"));
 		}
 		String[][] cacheServer = new String[][] {
-				{ "localhost", String.valueOf(port) },
-				{ "localhost", String.valueOf(port + 1) } };
+				{ "127.0.0.1", String.valueOf(port) },
+				{ "127.0.0.1", String.valueOf(port + 1) } };
 		BeanContext.startCache(host, port, cacheServer);
 	}
 

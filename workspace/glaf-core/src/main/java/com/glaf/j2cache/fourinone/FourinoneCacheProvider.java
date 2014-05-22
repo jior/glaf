@@ -78,7 +78,7 @@ public class FourinoneCacheProvider implements CacheProvider {
 
 	@Override
 	public void start(Properties props) throws CacheException {
-		host = getProperty(props, "host", "localhost");
+		host = getProperty(props, "host", "127.0.0.1");
 		port = getProperty(props, "port", 1998);
 	}
 

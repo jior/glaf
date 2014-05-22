@@ -88,7 +88,7 @@ public class ZooKeeperCacheProvider implements CacheProvider {
 	}
 
 	public void start(Properties props) {
-		servers = getProperty(props, "servers", "localhost:2181");
+		servers = getProperty(props, "servers", "127.0.0.1:2181");
 		connectionTimeoutMs = getProperty(props, "connectionTimeoutMs", 2000);
 	}
 
