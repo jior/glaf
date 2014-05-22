@@ -50,7 +50,7 @@ import com.glaf.template.query.TemplateQuery;
 import com.glaf.template.util.TemplateJsonFactory;
 import com.glaf.core.service.IBlobService;
 import com.glaf.template.Template;
-import com.glaf.template.TemplateXmlReader;
+import com.glaf.template.TemplateReader;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.LogUtils;
 
@@ -170,7 +170,7 @@ public class MxTemplateServiceImpl implements ITemplateService {
 	@Transactional
 	public void installAllTemplates() {
 		Map<String, Template> templateMap = this.getAllTemplate();
-		TemplateXmlReader reader = new TemplateXmlReader();
+		TemplateReader reader = new TemplateReader();
 		try {
 			String configPath = SystemProperties.getConfigRootPath()
 					+ CONFIG_PATH;
