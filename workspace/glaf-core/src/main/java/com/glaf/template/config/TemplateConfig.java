@@ -26,20 +26,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.glaf.core.config.ConfigFactory;
 import com.glaf.core.config.SystemProperties;
-import com.glaf.core.context.ContextFactory;
 import com.glaf.core.util.IOUtils;
 import com.glaf.template.Template;
 import com.glaf.template.TemplateReader;
-import com.glaf.template.service.ITemplateService;
-import com.glaf.template.util.TemplateJsonFactory;
 
 public class TemplateConfig {
 	private static Log logger = LogFactory.getLog(TemplateConfig.class);
@@ -48,8 +41,6 @@ public class TemplateConfig {
 
 	private static AtomicBoolean loading = new AtomicBoolean(false);
 
-	private volatile static ITemplateService templateService;
-
 	static {
 		try {
 			reload();
@@ -57,54 +48,17 @@ public class TemplateConfig {
 		}
 	}
 
-	public static ITemplateService getTemplateService() {
-		if (templateService == null) {
-			templateService = (ITemplateService) ContextFactory
-					.getBean("templateService");
-		}
-		return templateService;
-	}
-
 	public static Template getTemplate(String key) {
 		if (key == null) {
 			throw new RuntimeException(" template key is null ");
 		}
-		Template template = null;
-		String text = ConfigFactory.getString(
-				TemplateConfig.class.getSimpleName(), key.toLowerCase());
-		if (StringUtils.isNotEmpty(text)) {
-			logger.debug("json:" + text);
-			JSONObject jsonObject = JSON.parseObject(text);
-			template = TemplateJsonFactory.jsonToObject(jsonObject);
-		}
-
-		if (template == null) {
-			template = concurrentMap.get(key.toLowerCase());
-		}
-
+		Template template = concurrentMap.get(key.toLowerCase());
 		if (template == null) {
 			if (concurrentMap.isEmpty()) {
 				reload();
 			}
 			template = concurrentMap.get(key.toLowerCase());
 		}
-
-		if (template == null) {
-			template = getTemplateService().getTemplate(key);
-			if (template != null) {
-				concurrentMap.put(template.getName().toLowerCase(), template);
-				concurrentMap.put(template.getTemplateId().toLowerCase(),
-						template);
-				ConfigFactory.put(TemplateConfig.class.getSimpleName(),
-						template.getName().toLowerCase(), TemplateJsonFactory
-								.toJsonObject(template).toJSONString());
-				ConfigFactory.put(TemplateConfig.class.getSimpleName(),
-						template.getTemplateId().toLowerCase(),
-						TemplateJsonFactory.toJsonObject(template)
-								.toJSONString());
-			}
-		}
-
 		return template;
 	}
 
@@ -122,7 +76,6 @@ public class TemplateConfig {
 					String[] filelist = directory.list();
 					for (int i = 0; i < filelist.length; i++) {
 						String filename = config + filelist[i];
-						// logger.debug("read config:" + filename);
 						File file = new File(filename);
 						if (file.isFile() && file.getName().endsWith(".xml")) {
 							logger.debug("read config:" + filename);
@@ -134,23 +87,11 @@ public class TemplateConfig {
 									if (template.getName() != null) {
 										concurrentMap.put(template.getName()
 												.toLowerCase(), template);
-										ConfigFactory.put(TemplateConfig.class
-												.getSimpleName(), template
-												.getName().toLowerCase(),
-												TemplateJsonFactory
-														.toJsonObject(template)
-														.toJSONString());
 									}
 									if (template.getTemplateId() != null) {
 										concurrentMap.put(template
 												.getTemplateId().toLowerCase(),
 												template);
-										ConfigFactory.put(TemplateConfig.class
-												.getSimpleName(), template
-												.getTemplateId().toLowerCase(),
-												TemplateJsonFactory
-														.toJsonObject(template)
-														.toJSONString());
 									}
 								}
 							}

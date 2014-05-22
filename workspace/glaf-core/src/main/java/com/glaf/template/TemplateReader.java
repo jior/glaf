@@ -55,6 +55,7 @@ public class TemplateReader {
 		if (elements != null && !elements.isEmpty()) {
 			for (Element element : elements) {
 				Template tpl = new Template();
+				tpl.setTemplateId(element.attributeValue("id"));
 				tpl.setName(element.attributeValue("name"));
 				tpl.setDescription(element.attributeValue("description"));
 				List<Element> elems = element.elements();

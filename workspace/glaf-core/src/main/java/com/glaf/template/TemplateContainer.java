@@ -18,15 +18,27 @@
 
 package com.glaf.template;
 
+import com.glaf.core.context.ContextFactory;
 import com.glaf.template.config.TemplateConfig;
+import com.glaf.template.service.ITemplateService;
 
 public class TemplateContainer {
 	private static class TemplateContainerHolder {
 		public static TemplateContainer instance = new TemplateContainer();
 	}
 
+	private volatile static ITemplateService templateService;
+
 	public static TemplateContainer getContainer() {
 		return TemplateContainerHolder.instance;
+	}
+
+	public static ITemplateService getTemplateService() {
+		if (templateService == null) {
+			templateService = (ITemplateService) ContextFactory
+					.getBean("templateService");
+		}
+		return templateService;
 	}
 
 	private TemplateContainer() {
@@ -37,7 +49,10 @@ public class TemplateContainer {
 		if (templateId == null) {
 			throw new RuntimeException(" templateId is null ");
 		}
-		Template template = TemplateConfig.getTemplate(templateId);
+		Template template = getTemplateService().getTemplate(templateId);
+		if (template == null) {
+			template = TemplateConfig.getTemplate(templateId);
+		}
 		return template;
 	}
 
