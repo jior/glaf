@@ -52,14 +52,7 @@ public class TemplateReader {
 	@SuppressWarnings("unchecked")
 	public Map<String, Template> getTemplates(InputStream inputStream) {
 		Map<String, Template> dataMap = new java.util.HashMap<String, Template>();
-		SAXReader xmlReader = new SAXReader();
-		Document doc = null;
-		try {
-			doc = xmlReader.read(inputStream);
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		}
-		Element root = doc.getRootElement();
+		Element root = this.getRootElement(inputStream);
 		List<?> templates = root.elements("template");
 		if (templates != null && templates.size() > 0) {
 			Iterator<?> iterator = templates.iterator();
