@@ -71,7 +71,7 @@ public class TemplateReader {
 				if (elems != null && !elems.isEmpty()) {
 					Map<String, Object> rowMap = new java.util.HashMap<String, Object>();
 					for (Element em : elems) {
-						rowMap.put(em.getName(), em.getTextTrim());
+						rowMap.put(em.getName(), em.getStringValue());
 					}
 					Tools.populate(template, rowMap);
 				}
@@ -169,7 +169,7 @@ public class TemplateReader {
 				if (elems != null && !elems.isEmpty()) {
 					Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
 					for (Element em : elems) {
-						dataMap.put(em.getName(), em.getTextTrim());
+						dataMap.put(em.getName(), em.getStringValue());
 					}
 					Tools.populate(tpl, dataMap);
 				}
