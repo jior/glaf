@@ -28,6 +28,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
 
+import com.glaf.core.config.SystemConfig;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.domain.SysData;
@@ -80,9 +81,10 @@ public class DataServiceBean {
 			dataType = "xml";
 		}
 
+		contextMap.put("id", id);
 		contextMap.put("dataType", dataType);
 		contextMap.put("actorId", loginContext.getActorId());
-		contextMap.put("id", id);
+		contextMap.put("serviceUrl", SystemConfig.getServiceUrl());
 
 		XmlBuilder builder = new XmlBuilder();
 		InputStream inputStream = null;
