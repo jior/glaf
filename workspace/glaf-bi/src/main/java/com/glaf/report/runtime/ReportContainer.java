@@ -40,6 +40,10 @@ import com.glaf.report.service.IReportService;
 import com.glaf.report.xml.ReportDefinitionReader;
 
 public class ReportContainer {
+	private static class ReportContainerHolder {
+		private static final ReportContainer INSTANCE = new ReportContainer();
+	}
+
 	protected final static Log logger = LogFactory
 			.getLog(ReportContainer.class);
 
@@ -47,14 +51,30 @@ public class ReportContainer {
 
 	private final static String DEFAULT_CONFIG_PATH = "/conf/report";
 
-	private static ReportContainer container = new ReportContainer();
-
-	public final static ReportContainer getContainer() {
-		return container;
+	public static final ReportContainer getContainer() {
+		return ReportContainerHolder.INSTANCE;
 	}
 
 	private ReportContainer() {
+	}
 
+	public ReportDefinition getReportDefinition(String reportId) {
+		Map<String, ReportDefinition> reportMap = reload();
+		ReportDefinition rdf = reportMap.get(reportId);
+
+		if (rdf != null) {
+			if (rdf.getTemplateId() != null) {
+
+			} else if (rdf.getTemplateFile() != null) {
+				String filename = SystemProperties.getConfigRootPath() + sp
+						+ rdf.getTemplateFile();
+				logger.debug("read template:" + filename);
+				byte[] data = FileUtils.getBytes(filename);
+				rdf.setData(data);
+			}
+		}
+
+		return rdf;
 	}
 
 	public Map<String, ReportDefinition> reload() {
@@ -145,25 +165,6 @@ public class ReportContainer {
 			throw new RuntimeException(ex);
 		}
 		return reportMap;
-	}
-
-	public ReportDefinition getReportDefinition(String reportId) {
-		Map<String, ReportDefinition> reportMap = reload();
-		ReportDefinition rdf = reportMap.get(reportId);
-
-		if (rdf != null) {
-			if (rdf.getTemplateId() != null) {
-
-			} else if (rdf.getTemplateFile() != null) {
-				String filename = SystemProperties.getConfigRootPath() + sp
-						+ rdf.getTemplateFile();
-				logger.debug("read template:" + filename);
-				byte[] data = FileUtils.getBytes(filename);
-				rdf.setData(data);
-			}
-		}
-
-		return rdf;
 	}
 
 }

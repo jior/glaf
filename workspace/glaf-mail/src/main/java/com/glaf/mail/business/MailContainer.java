@@ -36,20 +36,42 @@ import com.glaf.mail.def.MailTemplate;
 import com.glaf.mail.xml.MailXmlReader;
 
 public class MailContainer {
+	private static class MailContainerHolder {
+		private static final MailContainer INSTANCE = new MailContainer();
+	}
+
 	protected final static Log logger = LogFactory.getLog(MailContainer.class);
 
 	private final static String sp = System.getProperty("file.separator");
 
 	private final static String DEFAULT_CONFIG_PATH = "/conf/mail";
 
-	private static MailContainer container = new MailContainer();
-
-	public final static MailContainer getContainer() {
-		return container;
+	public static final MailContainer getContainer() {
+		return MailContainerHolder.INSTANCE;
 	}
 
 	private MailContainer() {
+		
+	}
 
+	public MailTemplate getMailDefinition(String mailDefId) {
+		Map<String, MailTemplate> mailMap = reload();
+		MailTemplate mdf = mailMap.get(mailDefId);
+
+		if (mdf != null) {
+			if (mdf.getTemplateId() != null) {
+
+			} else if (mdf.getTemplatePath() != null) {
+				String filename = SystemProperties.getConfigRootPath() + sp
+						+ mdf.getTemplatePath();
+				logger.debug("read template:" + filename);
+				byte[] data = FileUtils.getBytes(filename);
+				mdf.setData(data);
+				mdf.setContent(new String(data));
+			}
+		}
+
+		return mdf;
 	}
 
 	public Map<String, MailTemplate> reload() {
@@ -99,26 +121,6 @@ public class MailContainer {
 		}
 
 		return mailMap;
-	}
-
-	public MailTemplate getMailDefinition(String mailDefId) {
-		Map<String, MailTemplate> mailMap = reload();
-		MailTemplate mdf = mailMap.get(mailDefId);
-
-		if (mdf != null) {
-			if (mdf.getTemplateId() != null) {
-
-			} else if (mdf.getTemplatePath() != null) {
-				String filename = SystemProperties.getConfigRootPath() + sp
-						+ mdf.getTemplatePath();
-				logger.debug("read template:" + filename);
-				byte[] data = FileUtils.getBytes(filename);
-				mdf.setData(data);
-				mdf.setContent(new String(data));
-			}
-		}
-
-		return mdf;
 	}
 
 }

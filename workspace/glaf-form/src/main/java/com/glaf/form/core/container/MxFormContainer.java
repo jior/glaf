@@ -29,10 +29,12 @@ import com.glaf.form.core.service.FormDataService;
 
 public class MxFormContainer {
 
-	private static MxFormContainer container = new MxFormContainer();
+	private static class MxFormContainerHolder {
+		private static final MxFormContainer INSTANCE = new MxFormContainer();
+	}
 
-	public static MxFormContainer getContainer() {
-		return container;
+	public static final MxFormContainer getContainer() {
+		return MxFormContainerHolder.INSTANCE;
 	}
 
 	private FormDataService formDataService;
