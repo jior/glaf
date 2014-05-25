@@ -126,7 +126,6 @@ class ConfigManager {
 	public static void initConfigProvider() {
 		InputStream configStream = null;
 		Properties props = new Properties();
-
 		try {
 			configStream = FileUtils.getInputStream(SystemProperties
 					.getConfigRootPath() + CONFIG_FILE);

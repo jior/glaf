@@ -30,22 +30,12 @@ public class ConfigChannel {
 	protected final static Logger log = LoggerFactory
 			.getLogger(ConfigChannel.class);
 
-	private static volatile ConfigChannel instance;
+	private static class ConfigChannelHolder {
+		public static ConfigChannel instance = new ConfigChannel();
+	}
 
-	/**
-	 * 单例方法
-	 * 
-	 * @return
-	 */
-	public final static ConfigChannel getInstance() {
-		if (instance == null) {
-			synchronized (ConfigChannel.class) {
-				if (instance == null) {
-					instance = new ConfigChannel();
-				}
-			}
-		}
-		return instance;
+	public static ConfigChannel getInstance() {
+		return ConfigChannelHolder.instance;
 	}
 
 	/**
