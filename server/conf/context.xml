@@ -111,7 +111,7 @@
           url="jdbc:mysql://localhost/glaf"/>  -->
 
 
-	<Resource name="jdbc/glafdb"
+	<!-- <Resource name="jdbc/glafdb"
           auth="Container"
           type="javax.sql.DataSource"
           factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
@@ -135,7 +135,7 @@
           username="sa"
           password="654321"
           driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-          url="jdbc:sqlserver://127.0.0.1:1433;databaseName=glafdb"/> 
+          url="jdbc:sqlserver://127.0.0.1:1433;databaseName=glafdb"/> --> 
 
 
 
