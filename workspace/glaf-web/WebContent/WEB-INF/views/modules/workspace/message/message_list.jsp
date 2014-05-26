@@ -11,7 +11,7 @@ int pageSize = Constants.PAGE_SIZE;
 com.glaf.core.util.PageResult pager = (com.glaf.core.util.PageResult)request.getAttribute("pager");
 List resultList = pager.getResults();
 String flag = (String)request.getAttribute("flag");
-System.out.println("resultList:"+resultList);
+//System.out.println("resultList:"+resultList);
 %>
 <html>
 <head>
