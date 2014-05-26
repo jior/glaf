@@ -46,20 +46,22 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 
 	@Override
 	public void afterPropertiesSet() {
-		String filename = SystemProperties.getAppPath() + "/WEB-INF/conf/jdbc/"
-				+ Environment.getCurrentSystemName() + ".jdbc.properties";
-		Properties props = PropertiesUtils.loadFilePathResource(filename);
-		if (props != null) {
-			try {
+		try {
+			String filename = SystemProperties.getAppPath()
+					+ "/WEB-INF/conf/jdbc/"
+					+ Environment.getCurrentSystemName() + ".jdbc.properties";
+			Properties props = PropertiesUtils.loadFilePathResource(filename);
+			if (props != null) {
 				ConnectionProvider provider = ConnectionProviderFactory
 						.createProvider(Environment.getCurrentSystemName(),
 								props);
 				targetDataSources.put(Environment.getCurrentSystemName(),
 						provider.getDataSource());
 				defaultTargetDataSource = provider.getDataSource();
-			} catch (Exception ex) {
-				ex.printStackTrace();
 			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ex);
 		}
 		setDefaultTargetDataSource(defaultTargetDataSource);
 		setTargetDataSources(targetDataSources);
