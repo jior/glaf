@@ -49,8 +49,10 @@ public class ConfigFactory {
 
 	public static void clear(String region) {
 		if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
+			String regionName = Environment.getCurrentSystemName() + "_"
+					+ region;
 			try {
-				channel.clear(region);
+				channel.clear(regionName);
 				logger.debug("###################################");
 				logger.debug(region + " clear.");
 				logger.debug("###################################");
@@ -65,7 +67,9 @@ public class ConfigFactory {
 		if (regions != null && !regions.isEmpty()) {
 			for (String region : regions) {
 				try {
-					channel.clear(region);
+					String regionName = Environment.getCurrentSystemName()
+							+ "_" + region;
+					channel.clear(regionName);
 					logger.debug("###################################");
 					logger.debug(region + " clear.");
 					logger.debug("###################################");
@@ -88,11 +92,15 @@ public class ConfigFactory {
 
 	public static String getString(final String region, final String key) {
 		if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
+			final String regionName = Environment.getCurrentSystemName() + "_"
+					+ region;
+			final String complexKey = Environment.getCurrentSystemName() + "_"
+					+ key;
 			boolean waitFor = true;
 			Callable<String> task = new Callable<String>() {
 				@Override
 				public String call() throws Exception {
-					return channel.getString(region, key);
+					return channel.getString(regionName, complexKey);
 				}
 			};
 			try {
@@ -123,8 +131,11 @@ public class ConfigFactory {
 			regions.add(region);
 		}
 		if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
+			String regionName = Environment.getCurrentSystemName() + "_"
+					+ region;
+			String complexKey = Environment.getCurrentSystemName() + "_" + key;
 			try {
-				channel.put(region, key, value);
+				channel.put(regionName, complexKey, value);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				logger.error(ex);
@@ -134,8 +145,11 @@ public class ConfigFactory {
 
 	public static void remove(String region, String key) {
 		if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
+			String regionName = Environment.getCurrentSystemName() + "_"
+					+ region;
+			String complexKey = Environment.getCurrentSystemName() + "_" + key;
 			try {
-				channel.remove(region, key);
+				channel.remove(regionName, complexKey);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				logger.error(ex);

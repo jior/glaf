@@ -70,15 +70,16 @@ public class BaseDataManager {
 		public static BaseDataManager instance = new BaseDataManager();
 	}
 
-	protected static Map<String, List<BaseDataInfo>> baseDataMap = new java.util.concurrent.ConcurrentHashMap<String, List<BaseDataInfo>>();
+	protected static final Map<String, List<BaseDataInfo>> baseDataMap = new java.util.concurrent.ConcurrentHashMap<String, List<BaseDataInfo>>();
 
-	protected static Map<String, String> jsonDataMap = new java.util.concurrent.ConcurrentHashMap<String, String>();
+	protected static final Map<String, String> jsonDataMap = new java.util.concurrent.ConcurrentHashMap<String, String>();
 
-	protected static Configuration conf = BaseConfiguration.create();
+	protected static final Configuration conf = BaseConfiguration.create();
 
-	protected static Log logger = LogFactory.getLog(BaseDataManager.class);
+	protected static final Log logger = LogFactory
+			.getLog(BaseDataManager.class);
 
-	protected static AtomicBoolean loading = new AtomicBoolean(false);
+	protected static final AtomicBoolean loading = new AtomicBoolean(false);
 
 	protected static final String CUSTOM_CONFIG = "/conf/props/base_data.properties";
 
@@ -121,8 +122,12 @@ public class BaseDataManager {
 	 * @return
 	 */
 	public List<BaseDataInfo> getBaseData(String key) {
-		if (baseDataMap.containsKey(key)) {
-			return (List<BaseDataInfo>) baseDataMap.get(key);
+		if (baseDataMap.isEmpty()) {
+			this.refreshBaseData();
+		}
+		String complexKey = Environment.getCurrentSystemName() + "_" + key;
+		if (baseDataMap.containsKey(complexKey)) {
+			return (List<BaseDataInfo>) baseDataMap.get(complexKey);
 		}
 		return null;
 	}
@@ -208,8 +213,9 @@ public class BaseDataManager {
 	}
 
 	public JSONArray getJSONArray(String key) {
-		if (jsonDataMap.containsKey(key)) {
-			String text = jsonDataMap.get(key);
+		String complexKey = Environment.getCurrentSystemName() + "_" + key;
+		if (jsonDataMap.containsKey(complexKey)) {
+			String text = jsonDataMap.get(complexKey);
 			return JSON.parseArray(text);
 		}
 		return null;
@@ -316,9 +322,9 @@ public class BaseDataManager {
 	 * @return
 	 */
 	public String getStringValue(int valueId, String key) {
-		BaseDataInfo obj = getValue(valueId, key);
-		if (obj != null) {
-			return obj.getName();
+		BaseDataInfo object = getValue(valueId, key);
+		if (object != null) {
+			return object.getName();
 		} else {
 			return "";
 		}
@@ -332,10 +338,10 @@ public class BaseDataManager {
 	 * @return
 	 */
 	public String getStringValue(Integer valueId, String key) {
-		Integer v = (valueId == null ? Integer.valueOf(0) : valueId);
-		BaseDataInfo obj = getValue(v.intValue(), key);
-		if (obj != null) {
-			return obj.getName();
+		Integer x = (valueId == null ? Integer.valueOf(0) : valueId);
+		BaseDataInfo object = getValue(x.intValue(), key);
+		if (object != null) {
+			return object.getName();
 		} else {
 			return "";
 		}
@@ -361,9 +367,9 @@ public class BaseDataManager {
 	 */
 	public String getStringValue(Long valueId, String key) {
 		Long v = (valueId == null ? Long.valueOf(0) : valueId);
-		BaseDataInfo obj = getValue(v.intValue(), key);
-		if (obj != null) {
-			return obj.getName();
+		BaseDataInfo object = getValue(v.intValue(), key);
+		if (object != null) {
+			return object.getName();
 		} else {
 			return "";
 		}
@@ -377,9 +383,9 @@ public class BaseDataManager {
 	 * @return
 	 */
 	public String getStringValue(String code, String key) {
-		BaseDataInfo obj = getValue(code, key);
-		if (obj != null) {
-			return obj.getName();
+		BaseDataInfo object = getValue(code, key);
+		if (object != null) {
+			return object.getName();
 		} else {
 			return "";
 		}
@@ -393,9 +399,9 @@ public class BaseDataManager {
 	 * @return
 	 */
 	public String getStringValueByNo(String no, String key) {
-		BaseDataInfo obj = getBaseDataWithNo(no, key);
-		if (obj != null) {
-			return obj.getName();
+		BaseDataInfo object = getBaseDataWithNo(no, key);
+		if (object != null) {
+			return object.getName();
 		} else {
 			return "";
 		}
@@ -700,7 +706,9 @@ public class BaseDataManager {
 					if (object instanceof BaseDataHandler) {
 						BaseDataHandler handler = (BaseDataHandler) object;
 						List<BaseDataInfo> list = handler.loadData();
-						baseDataMap.put(key, list);
+						String complexKey = Environment.getCurrentSystemName()
+								+ "_" + key;
+						baseDataMap.put(complexKey, list);
 					}
 				}
 			}
@@ -741,7 +749,9 @@ public class BaseDataManager {
 								dataList.add(bdf);
 							}
 						}
-						baseDataMap.put(key, dataList);
+						String complexKey = Environment.getCurrentSystemName()
+								+ "_" + key;
+						baseDataMap.put(complexKey, dataList);
 					}
 				}
 			}
@@ -768,7 +778,10 @@ public class BaseDataManager {
 						JsonDataHandler handler = (JsonDataHandler) object;
 						JSONArray jsonArray = handler.loadData();
 						if (jsonArray != null) {
-							jsonDataMap.put(key, jsonArray.toJSONString());
+							String complexKey = Environment
+									.getCurrentSystemName() + "_" + key;
+							jsonDataMap.put(complexKey,
+									jsonArray.toJSONString());
 						}
 					}
 				}
@@ -830,7 +843,9 @@ public class BaseDataManager {
 						tmp.add(bdi);
 					}
 				}
-				baseDataMap.put(Constants.SYS_DEPTS, tmp);
+				String complexKey = Environment.getCurrentSystemName() + "_"
+						+ Constants.SYS_DEPTS;
+				baseDataMap.put(complexKey, tmp);
 			}
 			logger.info("装载部门信息结束");
 
@@ -894,7 +909,9 @@ public class BaseDataManager {
 									+ bean.getValue());
 							tmp.add(bdi);
 						}
-						baseDataMap.put(treeNode.getCode(), tmp);
+						String complexKey = Environment.getCurrentSystemName()
+								+ "_" + treeNode.getCode();
+						baseDataMap.put(complexKey, tmp);
 					}
 				}
 			}
@@ -930,7 +947,9 @@ public class BaseDataManager {
 						tmp.add(bdi);
 					}
 				}
-				baseDataMap.put(Constants.SYS_FUNCTIONS, tmp);
+				String complexKey = Environment.getCurrentSystemName() + "_"
+						+ Constants.SYS_FUNCTIONS;
+				baseDataMap.put(complexKey, tmp);
 			}
 			logger.info("装载模块信息结束");
 		} catch (Exception e) {
@@ -989,7 +1008,9 @@ public class BaseDataManager {
 						tmp.add(bdi);
 					}
 				}
-				baseDataMap.put(Constants.SYS_USERS, tmp);
+				String complexKey = Environment.getCurrentSystemName() + "_"
+						+ Constants.SYS_USERS;
+				baseDataMap.put(complexKey, tmp);
 			}
 			logger.info("装载用户信息结束");
 		} catch (Exception e) {

@@ -379,6 +379,8 @@ public class MessageController {
 				WebUtil.getQueryMap(request), pageNo, pageSize);
 		request.setAttribute("pager", pager);
 		request.setAttribute("flag", flag);
+		
+		logger.debug("total:"+pager.getTotalRecordCount());
 
 		String x_view = ViewProperties.getString("message.showReceiveList");
 		if (StringUtils.isNotEmpty(x_view)) {
@@ -416,6 +418,8 @@ public class MessageController {
 				WebUtil.getQueryMap(request), pageNo, pageSize);
 		request.setAttribute("pager", pager);
 		request.setAttribute("flag", flag);
+		
+		logger.debug("total:"+pager.getTotalRecordCount());
 
 		String x_view = ViewProperties.getString("message.showSendedList");
 		if (StringUtils.isNotEmpty(x_view)) {

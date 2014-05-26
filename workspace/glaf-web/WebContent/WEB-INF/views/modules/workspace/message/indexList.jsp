@@ -1,6 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
-<%@ page import="java.net.*"%>
 <%@ page import="com.glaf.core.context.*"%>
 <%@ page import="com.glaf.core.util.*"%>
 <%@ page import="com.glaf.base.utils.*"%>

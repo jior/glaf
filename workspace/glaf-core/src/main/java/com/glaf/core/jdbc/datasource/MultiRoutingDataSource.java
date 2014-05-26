@@ -24,10 +24,13 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 import com.glaf.core.config.DBConfiguration;
@@ -35,70 +38,75 @@ import com.glaf.core.config.Environment;
 import com.glaf.core.jdbc.connection.ConnectionProvider;
 import com.glaf.core.jdbc.connection.ConnectionProviderFactory;
 
-public class MultiRoutingDataSource extends AbstractRoutingDataSource {
+public class MultiRoutingDataSource extends AbstractRoutingDataSource implements
+		ApplicationListener<ContextRefreshedEvent> {
 	protected final static Log logger = LogFactory
 			.getLog(MultiRoutingDataSource.class);
 
 	private static volatile ConcurrentMap<Object, Object> targetDataSources = new ConcurrentHashMap<Object, Object>();
 
+	private static volatile AtomicBoolean loading = new AtomicBoolean(false);
+
 	private static volatile Object defaultTargetDataSource;
-
-	private static volatile boolean LOAD_DATASOURCE_OK = false;
-
-	static {
-		reloadDS();
-	}
 
 	public MultiRoutingDataSource() {
 
 	}
 
 	private static void reloadDS() {
-		if (!LOAD_DATASOURCE_OK) {
-			logger.info("--------------MultiRoutingDataSource reloadDS()------------");
-			Map<Object, Object> dataSourceMap = new java.util.HashMap<Object, Object>();
-			Map<String, Properties> dataSourceProperties = DBConfiguration
-					.getDataSourceProperties();
-			Set<Entry<String, Properties>> entrySet = dataSourceProperties
-					.entrySet();
-			for (Entry<String, Properties> entry : entrySet) {
-				String name = entry.getKey();
-				Properties props = entry.getValue();
-				if (props != null && StringUtils.isNotEmpty(name)) {
-					try {
-						ConnectionProvider provider = ConnectionProviderFactory
-								.createProvider(name);
-						dataSourceMap.put(name, provider.getDataSource());
+		if (!loading.get()) {
+			try {
+				loading.set(true);
+				logger.info("--------------MultiRoutingDataSource reloadDS()------------");
+				Map<Object, Object> dataSourceMap = new java.util.HashMap<Object, Object>();
+				Map<String, Properties> dataSourceProperties = DBConfiguration
+						.getDataSourceProperties();
+				Set<Entry<String, Properties>> entrySet = dataSourceProperties
+						.entrySet();
+				for (Entry<String, Properties> entry : entrySet) {
+					String name = entry.getKey();
+					Properties props = entry.getValue();
+					if (props != null && StringUtils.isNotEmpty(name)) {
+						try {
+							ConnectionProvider provider = ConnectionProviderFactory
+									.createProvider(name);
+							dataSourceMap.put(name, provider.getDataSource());
 
-						if (StringUtils.equals(name,
-								Environment.DEFAULT_SYSTEM_NAME)) {
-							defaultTargetDataSource = provider.getDataSource();
+							if (StringUtils.equals(name,
+									Environment.DEFAULT_SYSTEM_NAME)) {
+								defaultTargetDataSource = provider
+										.getDataSource();
+							}
+						} catch (Exception ex) {
+							ex.printStackTrace();
+							logger.error(ex);
 						}
-					} catch (Exception ex) {
-						ex.printStackTrace();
-						logger.error(ex);
 					}
 				}
-			}
 
-			if (defaultTargetDataSource == null) {
-				Properties props = DBConfiguration
-						.getProperties(Environment.DEFAULT_SYSTEM_NAME);
-				if (props != null) {
-					ConnectionProvider provider = ConnectionProviderFactory
-							.createProvider(Environment.DEFAULT_SYSTEM_NAME,
-									props);
-					dataSourceMap.put(Environment.DEFAULT_SYSTEM_NAME,
-							provider.getDataSource());
+				if (defaultTargetDataSource == null) {
+					Properties props = DBConfiguration
+							.getProperties(Environment.DEFAULT_SYSTEM_NAME);
+					if (props != null) {
+						ConnectionProvider provider = ConnectionProviderFactory
+								.createProvider(
+										Environment.DEFAULT_SYSTEM_NAME, props);
+						dataSourceMap.put(Environment.DEFAULT_SYSTEM_NAME,
+								provider.getDataSource());
+					}
 				}
+
+				targetDataSources.clear();
+				targetDataSources.putAll(dataSourceMap);
+
+				logger.info("##datasources:" + targetDataSources.keySet());
+
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				throw new RuntimeException(ex);
+			} finally {
+				loading.set(false);
 			}
-
-			targetDataSources.clear();
-			targetDataSources.putAll(dataSourceMap);
-			LOAD_DATASOURCE_OK = true;
-
-			logger.info("##datasources:" + targetDataSources.keySet());
-
 		}
 	}
 
@@ -114,6 +122,14 @@ public class MultiRoutingDataSource extends AbstractRoutingDataSource {
 	protected synchronized Object determineCurrentLookupKey() {
 		logger.debug("currentSystemName:" + Environment.getCurrentSystemName());
 		return Environment.getCurrentSystemName();
+	}
+
+	@Override
+	public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+		logger.info("-----------------DataSource Launcher----------------------");
+		reloadDS();
+		setDefaultTargetDataSource(defaultTargetDataSource);
+		setTargetDataSources(targetDataSources);
 	}
 
 }

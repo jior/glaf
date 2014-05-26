@@ -70,7 +70,7 @@ public class Tools {
 	}
 
 	public static Map<String, Class<?>> getPropertyMap(Class<?> clazz) {
-		Map<String, Class<?>> dataMap = new java.util.concurrent.ConcurrentHashMap<String, Class<?>>();
+		Map<String, Class<?>> dataMap = new java.util.HashMap<String, Class<?>>();
 		PropertyDescriptor[] propertyDescriptor = BeanUtils
 				.getPropertyDescriptors(clazz);
 		for (int i = 0; i < propertyDescriptor.length; i++) {

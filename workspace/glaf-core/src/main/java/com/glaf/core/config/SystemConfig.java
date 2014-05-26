@@ -206,7 +206,7 @@ public class SystemConfig {
 		String text = ConfigFactory.getString(
 				SystemConfig.class.getSimpleName(), key);
 		if (StringUtils.isNotEmpty(text)) {
-			//logger.debug("json:" + text);
+			// logger.debug("json:" + text);
 			JSONObject jsonObject = JSON.parseObject(text);
 			property = SystemPropertyJsonFactory.jsonToObject(jsonObject);
 		}
@@ -214,7 +214,8 @@ public class SystemConfig {
 			if (concurrentMap.isEmpty()) {
 				reload();
 			}
-			property = concurrentMap.get(key);
+			String complexKey = Environment.getCurrentSystemName() + "_" + key;
+			property = concurrentMap.get(complexKey);
 		}
 		return property;
 	}
@@ -319,7 +320,9 @@ public class SystemConfig {
 						.getAllSystemProperties();
 				if (list != null && !list.isEmpty()) {
 					for (SystemProperty p : list) {
-						concurrentMap.put(p.getName(), p);
+						String complexKey = Environment.getCurrentSystemName()
+								+ "_" + p.getName();
+						concurrentMap.put(complexKey, p);
 						ConfigFactory.put(SystemConfig.class.getSimpleName(), p
 								.getName(), SystemPropertyJsonFactory
 								.toJsonObject(p).toJSONString());
@@ -336,7 +339,9 @@ public class SystemConfig {
 
 	public static void setProperty(SystemProperty p) {
 		if (p != null && p.getName() != null) {
-			concurrentMap.put(p.getName(), p);
+			String complexKey = Environment.getCurrentSystemName() + "_"
+					+ p.getName();
+			concurrentMap.put(complexKey, p);
 			ConfigFactory.put(SystemConfig.class.getSimpleName(), p.getName(),
 					SystemPropertyJsonFactory.toJsonObject(p).toJSONString());
 		}

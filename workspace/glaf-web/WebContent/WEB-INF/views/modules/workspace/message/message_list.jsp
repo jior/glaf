@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
-<%@ page import="java.net.*"%>
 <%@ page import="com.glaf.base.modules.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
@@ -10,9 +9,9 @@
 <%
 int pageSize = Constants.PAGE_SIZE;
 com.glaf.core.util.PageResult pager = (com.glaf.core.util.PageResult)request.getAttribute("pager");
-List list = pager.getResults();
+List resultList = pager.getResults();
 String flag = (String)request.getAttribute("flag");
-
+System.out.println("resultList:"+resultList);
 %>
 <html>
 <head>
@@ -77,7 +76,8 @@ function checkOperation(){
     </table></td>
   </tr>
   <tr>
-    <td class="box-mm" colspan="20"><html:form method="post" action="/workspace/message.do">
+    <td class="box-mm" colspan="20">
+	  <html:form method="post" action="/workspace/message.do">
         <table width="99%" border="0" align="center" cellpadding="0" cellspacing="0">
           <tr>
             <td><table border="0" cellspacing="0" cellpadding="0" class="x-tabs-box">
@@ -101,10 +101,10 @@ function checkOperation(){
                     </tr>
                     <%
                      int i = 0;
-                     if (list != null) {
-	                    Iterator iter = list.iterator();
+                     if (resultList != null && !resultList.isEmpty()) {
+	                    Iterator iter = resultList.iterator();
                         while (iter.hasNext()) {
-		                    Message bean = (Message) iter.next();
+		                    com.glaf.base.modules.workspace.model.Message bean = (com.glaf.base.modules.workspace.model.Message) iter.next();
                         
                         	SysUser sender = bean.getSender();
                         	
@@ -160,8 +160,11 @@ function checkOperation(){
 					<%
 					}
 					%>
-                      <input name="btn_del" id="btn_del" type="button" class="button" onClick="javascript:del(this.form);" value="删除" disabled="disabled">
-                      <input name="btn_reply" id="btn_reply" type="button" value="回复消息" class="button" onClick="javascript:replyMsg();" disabled="disabled"></td>
+                      <input name="btn_del" id="btn_del" type="button" class="button" 
+					         onClick="javascript:del(this.form);" value="删除" disabled="disabled">
+                      <input name="btn_reply" id="btn_reply" type="button" value="回复消息" class="button" 
+					         onClick="javascript:replyMsg();" disabled="disabled">
+					  </td>
                       <td align="right" valign="bottom">
 					    <%String params = "method=showReceiveList";%>
                         <jsp:include page="/WEB-INF/views/inc/show_page.jsp" flush="true">
@@ -178,7 +181,8 @@ function checkOperation(){
           </tr>
         </table>
       </html:form>
-    </td></tr>
+    </td>
+  </tr>
   <tr>
     <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr class="box">

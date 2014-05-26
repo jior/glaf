@@ -18,6 +18,7 @@
 
 package com.glaf.core.config;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Properties;
@@ -127,19 +128,23 @@ class ConfigManager {
 		InputStream configStream = null;
 		Properties props = new Properties();
 		try {
-			configStream = FileUtils.getInputStream(SystemProperties
-					.getConfigRootPath() + CONFIG_FILE);
-			props.load(configStream);
+			String filename = SystemProperties.getConfigRootPath()
+					+ CONFIG_FILE;
+			File file = new File(filename);
+			if (file.exists() && file.isFile()) {
+				configStream = FileUtils.getInputStream(filename);
+				props.load(configStream);
 
-			ConfigManager._provider = getProviderInstance(props
-					.getProperty("config.provider_class"));
-			ConfigManager._provider.start(getProviderProperties(props,
-					ConfigManager._provider));
-			log.info("Using ConfigProvider : " + _provider.getClass().getName());
+				ConfigManager._provider = getProviderInstance(props
+						.getProperty("config.provider_class"));
+				ConfigManager._provider.start(getProviderProperties(props,
+						ConfigManager._provider));
+				log.info("Using ConfigProvider : "
+						+ _provider.getClass().getName());
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			throw new RuntimeException(
-					"Unabled to initialize config providers", ex);
+			log.error("Unabled to initialize config providers", ex);
 		} finally {
 			IOUtils.closeStream(configStream);
 		}

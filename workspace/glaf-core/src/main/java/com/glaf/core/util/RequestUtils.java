@@ -50,18 +50,9 @@ import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.security.LoginContext;
 
 public class RequestUtils {
-	private static final int COOKIE_LIVING_SECONDS = 3600 * 2;
+	private static final int COOKIE_LIVING_SECONDS = 3600 * 8;
 
 	protected final static Log logger = LogFactory.getLog(RequestUtils.class);
-
-	private static final Map<String, Object> paramMap = new java.util.concurrent.ConcurrentHashMap<String, Object>();
-
-	static {
-		paramMap.put("submit", "submit");
-		paramMap.put("reset", "reset");
-		paramMap.put("button", "button");
-		paramMap.put("cancel", "cancel");
-	}
 
 	private static StringBuffer append(Object key, Object value,
 			StringBuffer queryString, String ampersand) {
