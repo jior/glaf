@@ -21,8 +21,8 @@ package com.glaf.jbpm.action;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -34,13 +34,16 @@ import org.jbpm.taskmgmt.exe.TaskInstance;
 import org.jbpm.taskmgmt.exe.TaskMgmtInstance;
 
 import com.glaf.jbpm.el.DefaultExpressionEvaluator;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 
 public class EndCounterSigningAction implements ActionHandler {
 
 	private static final Log logger = LogFactory
 			.getLog(EndCounterSigningAction.class);
 
-	private static ConcurrentMap<String, Object> cache = new ConcurrentHashMap<String, Object>();
+	private static Cache<String, Object> cache = CacheBuilder.newBuilder()
+			.maximumSize(1000).expireAfterAccess(5, TimeUnit.MINUTES).build();
 
 	private static final long serialVersionUID = 1L;
 
@@ -113,11 +116,13 @@ public class EndCounterSigningAction implements ActionHandler {
 			if (!taskInstance.hasEnded()) {
 				if ((actorId != null && actorId.equals(taskInstance
 						.getActorId()))) {
-					if (cache.get(String.valueOf(taskInstance.getId())) == null) {
+					if (cache
+							.getIfPresent(String.valueOf(taskInstance.getId())) == null) {
 						cache.put(String.valueOf(taskInstance.getId()), "1");
 					}
 				} else {
-					if (cache.get(String.valueOf(taskInstance.getId())) == null) {
+					if (cache
+							.getIfPresent(String.valueOf(taskInstance.getId())) == null) {
 						cache.put(String.valueOf(taskInstance.getId()), "1");
 						if (StringUtils.isNotEmpty(taskName)) {
 							if (!StringUtils.equals(taskName,
