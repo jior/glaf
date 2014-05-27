@@ -70,7 +70,7 @@ public class TaskListenerTypes {
 	}
 
 	static Map<String, Class<?>> initializeTaskListenerTypes() {
-		Map<String, Class<?>> types = new java.util.concurrent.ConcurrentHashMap<String, Class<?>>();
+		Map<String, Class<?>> types = new java.util.HashMap<String, Class<?>>();
 		String resource = SystemProperties.getString("activiti.taskListeners");
 		if (StringUtils.isEmpty(resource)) {
 			resource = DEFAULT_CONFIG;

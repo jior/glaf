@@ -20,8 +20,7 @@ package com.glaf.activiti.tasklistener;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.TimeUnit;
 
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.Expression;
@@ -36,6 +35,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.glaf.core.util.StringTools;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 
 public class CancelAllTaskListener implements TaskListener {
 	private static final long serialVersionUID = 1L;
@@ -43,7 +44,8 @@ public class CancelAllTaskListener implements TaskListener {
 	protected final static Log logger = LogFactory
 			.getLog(CancelAllTaskListener.class);
 
-	private static ConcurrentMap<String, Object> cache = new ConcurrentHashMap<String, Object>();
+	private static Cache<String, Object> cache = CacheBuilder.newBuilder()
+			.maximumSize(1000).expireAfterAccess(5, TimeUnit.MINUTES).build();
 
 	protected Expression conditionExpression;
 
@@ -115,7 +117,7 @@ public class CancelAllTaskListener implements TaskListener {
 
 				if (task instanceof TaskEntity) {
 					TaskEntity taskEntity = (TaskEntity) task;
-					if (cache.get(cacheKey) == null) {
+					if (cache.getIfPresent(cacheKey) == null) {
 						cache.put(cacheKey, "1");
 						logger.debug(taskEntity.getTaskDefinitionKey() + " ["
 								+ taskEntity.getName() + "] canceled");
