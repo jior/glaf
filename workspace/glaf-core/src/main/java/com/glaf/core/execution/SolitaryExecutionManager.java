@@ -33,6 +33,12 @@ import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.ClassUtils;
 import com.glaf.core.util.PropertiesUtils;
 
+/**
+ * 
+ * 可以指定一个配置文件，执行配置文件中指定的内容，路径是相对于应用配置SystemProperties.getConfigRootPath()的路径<br/>
+ * 如放到conf的test.properties，那么取值为/conf/test.properties
+ * 
+ */
 public class SolitaryExecutionManager {
 	private static class SolitaryExecutionManagerHolder {
 		public static SolitaryExecutionManager instance = new SolitaryExecutionManager();
@@ -56,7 +62,7 @@ public class SolitaryExecutionManager {
 	 * 
 	 * @param configFile
 	 *            相对于应用配置路径目录的文件
-	 *            如放到conf的TestEM.properties，那么取值为/conf/TestEM.properties
+	 *            如放到conf的exec.properties，那么取值为/conf/exec.properties
 	 */
 	public void execute(String configFile) {
 		if (!running.get()) {
