@@ -55,7 +55,7 @@ public class SolitaryExecutionManager {
 	 * 指定配置文件
 	 * 
 	 * @param configFile
-	 *            相对于/WEB-INF目录的文件，相对目录 以/开头
+	 *            相对于应用配置路径目录的文件
 	 *            如放到conf的TestEM.properties，那么取值为/conf/TestEM.properties
 	 */
 	public void execute(String configFile) {
@@ -105,8 +105,13 @@ public class SolitaryExecutionManager {
 	}
 
 	public static void main(String[] args) {
+		System.out.println("应用配置路径：" + SystemProperties.getConfigRootPath());
 		if (args != null && args.length == 1) {
 			SolitaryExecutionManager.getInstance().execute(args[0]);
+		} else {
+			System.out.println("请指定配置文件！");
+			throw new java.lang.IllegalArgumentException(
+					"config file is not specified");
 		}
 	}
 
