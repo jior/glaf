@@ -89,6 +89,7 @@ public class SolitaryExecutionManager {
 					}
 				}
 			} catch (Exception ex) {
+				ex.printStackTrace();
 				throw new RuntimeException(ex);
 			} finally {
 				running.set(false);

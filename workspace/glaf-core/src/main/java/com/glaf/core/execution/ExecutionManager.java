@@ -81,6 +81,7 @@ public class ExecutionManager {
 					}
 				}
 			} catch (Exception ex) {
+				ex.printStackTrace();
 				throw new RuntimeException(ex);
 			} finally {
 				Environment.setCurrentSystemName(defaultSystemName);
