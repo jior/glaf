@@ -32,12 +32,10 @@ import javax.ws.rs.core.MediaType;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.glaf.core.business.DataServiceBean;
-
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.SysDataService;
 import com.glaf.core.util.RequestUtils;
@@ -65,19 +63,23 @@ public class DataServiceResource {
 			@Context HttpServletRequest request) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		String dataType = request.getParameter("dataType");
+		String systemName = request.getParameter("systemName");
 		if (dataType == null) {
 			dataType = "xml";
+		}
+		if (systemName == null) {
+			systemName = com.glaf.core.config.Environment.DEFAULT_SYSTEM_NAME;
 		}
 		Map<String, Object> contextMap = RequestUtils.getParameterMap(request);
 		String ipAddress = RequestUtils.getIPAddress(request);
 		DataServiceBean bean = new DataServiceBean();
 		bean.setSysDataService(sysDataService);
 		if (StringUtils.equals(dataType, "json")) {
-			return bean.responseJson(id, loginContext.getActorId(), ipAddress,
-					contextMap);
+			return bean.responseJson(systemName, id, loginContext.getActorId(),
+					ipAddress, contextMap);
 		}
-		return bean.responseXml(id, loginContext.getActorId(), ipAddress,
-				contextMap);
+		return bean.responseXml(systemName, id, loginContext.getActorId(),
+				ipAddress, contextMap);
 	}
 
 }

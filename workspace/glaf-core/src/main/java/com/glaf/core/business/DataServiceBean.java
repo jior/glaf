@@ -73,8 +73,8 @@ public class DataServiceBean {
 	 *            参数
 	 * @return
 	 */
-	private byte[] response(String id, String actorId, String ipAddress,
-			String dataType, Map<String, Object> contextMap) {
+	private byte[] response(String systemName, String id, String actorId,
+			String ipAddress, String dataType, Map<String, Object> contextMap) {
 		LoginContext loginContext = IdentityFactory.getLoginContext(actorId);
 
 		if (dataType == null) {
@@ -89,7 +89,7 @@ public class DataServiceBean {
 		XmlBuilder builder = new XmlBuilder();
 		InputStream inputStream = null;
 		boolean hasPermission = false;
-		String systemName = "default";
+
 		SysData sysData = null;
 		try {
 			sysData = getSysDataService().getSysData(id);
@@ -198,7 +198,28 @@ public class DataServiceBean {
 	 */
 	public byte[] responseJson(String id, String actorId, String ipAddress,
 			Map<String, Object> contextMap) {
-		return this.response(id, actorId, ipAddress, "json", contextMap);
+		String systemName = com.glaf.core.config.Environment.DEFAULT_SYSTEM_NAME;
+		return this.response(systemName, id, actorId, ipAddress, "json",
+				contextMap);
+	}
+
+	/**
+	 * @param systemName
+	 *            系统名
+	 * @param id
+	 *            数据服务编号
+	 * @param actorId
+	 *            用户编号
+	 * @param ipAddress
+	 *            IP地址
+	 * @param contextMap
+	 *            参数
+	 * @return 返回JSON格式数据
+	 */
+	public byte[] responseJson(String systemName, String id, String actorId,
+			String ipAddress, Map<String, Object> contextMap) {
+		return this.response(systemName, id, actorId, ipAddress, "json",
+				contextMap);
 	}
 
 	/**
@@ -217,7 +238,31 @@ public class DataServiceBean {
 	 */
 	public byte[] responseXml(String id, String actorId, String ipAddress,
 			Map<String, Object> contextMap) {
-		return this.response(id, actorId, ipAddress, "xml", contextMap);
+		String systemName = com.glaf.core.config.Environment.DEFAULT_SYSTEM_NAME;
+		return this.response(systemName, id, actorId, ipAddress, "xml",
+				contextMap);
+	}
+
+	/**
+	 * 
+	 * @param systemName
+	 *            系统名
+	 * @param id
+	 *            数据服务编号
+	 * @param actorId
+	 *            用户编号
+	 * @param ipAddress
+	 *            IP地址
+	 * @param dataType
+	 *            数据类型
+	 * @param contextMap
+	 *            参数
+	 * @return 返回XML格式数据
+	 */
+	public byte[] responseXml(String systemName, String id, String actorId,
+			String ipAddress, Map<String, Object> contextMap) {
+		return this.response(systemName, id, actorId, ipAddress, "xml",
+				contextMap);
 	}
 
 	public void setSysDataService(SysDataService sysDataService) {
