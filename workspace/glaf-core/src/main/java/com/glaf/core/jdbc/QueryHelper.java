@@ -60,6 +60,8 @@ public class QueryHelper {
 
 	protected static Configuration conf = BaseConfiguration.create();
 
+	protected static TypeHandlerRegistry typeHandlerRegistry = new TypeHandlerRegistry();
+
 	public QueryHelper() {
 
 	}
@@ -784,7 +786,7 @@ public class QueryHelper {
 	}
 
 	public List<Map<String, Object>> getResults(ResultSet rs) {
-		TypeHandlerRegistry typeHandlerRegistry = new TypeHandlerRegistry();
+		logger.debug("--------------use mybatis results----------------");
 		try {
 			List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 			List<String> columns = new ArrayList<String>();
@@ -802,7 +804,8 @@ public class QueryHelper {
 								.getTypeHandler(Object.class);
 					}
 					typeHandlers.add(typeHandler);
-				} catch (Exception e) {
+				} catch (Exception ex) {
+					ex.printStackTrace();
 					typeHandlers.add(typeHandlerRegistry
 							.getTypeHandler(Object.class));
 				}

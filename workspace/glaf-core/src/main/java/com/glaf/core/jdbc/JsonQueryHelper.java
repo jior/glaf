@@ -56,6 +56,8 @@ import com.glaf.core.util.StringTools;
 public class JsonQueryHelper {
 	protected static final Log logger = LogFactory
 			.getLog(JsonQueryHelper.class);
+	
+	protected static TypeHandlerRegistry typeHandlerRegistry = new TypeHandlerRegistry();
 
 	protected static Configuration conf = BaseConfiguration.create();
 
@@ -789,10 +791,9 @@ public class JsonQueryHelper {
 	}
 
 	public JSONArray getResults(ResultSet rs) {
+		logger.debug("--------------use mybatis results----------------");
 		JSONArray result = new JSONArray();
-		TypeHandlerRegistry typeHandlerRegistry = new TypeHandlerRegistry();
 		try {
-
 			List<String> columns = new ArrayList<String>();
 			List<TypeHandler<?>> typeHandlers = new ArrayList<TypeHandler<?>>();
 			ResultSetMetaData rsmd = rs.getMetaData();
@@ -808,7 +809,8 @@ public class JsonQueryHelper {
 								.getTypeHandler(Object.class);
 					}
 					typeHandlers.add(typeHandler);
-				} catch (Exception e) {
+				} catch (Exception ex) {
+					ex.printStackTrace();
 					typeHandlers.add(typeHandlerRegistry
 							.getTypeHandler(Object.class));
 				}
