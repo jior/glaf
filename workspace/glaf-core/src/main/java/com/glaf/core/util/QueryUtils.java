@@ -19,12 +19,15 @@
 package com.glaf.core.util;
 
 import java.util.Collection;
+
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.glaf.core.base.LowerLinkedMap;
 import com.glaf.core.config.SystemConfig;
@@ -32,6 +35,7 @@ import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.query.QueryCondition;
 
 public class QueryUtils {
+	protected static final Log logger = LogFactory.getLog(QueryUtils.class);
 
 	public final static String newline = System.getProperty("line.separator");
 

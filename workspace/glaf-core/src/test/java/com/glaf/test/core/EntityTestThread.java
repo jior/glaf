@@ -1,12 +1,12 @@
-package com.glaf.test;
+package com.glaf.test.core;
 
 import com.glaf.core.service.EntityService;
 
-public class TestThread extends Thread{
+public class EntityTestThread extends Thread{
 
 	protected EntityService entityService;
 
-	public TestThread(EntityService entityService) {
+	public EntityTestThread(EntityService entityService) {
 		this.entityService = entityService;
 	}
 

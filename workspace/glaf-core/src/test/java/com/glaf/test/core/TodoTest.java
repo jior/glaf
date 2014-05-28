@@ -16,27 +16,20 @@
  * limitations under the License.
  */
 
-package com.glaf.test;
+package com.glaf.test.core;
 
 import org.junit.Test;
 
-import com.glaf.core.domain.SysLog;
-import com.glaf.core.service.ISysLogService;
+import com.glaf.core.todo.service.ISysTodoService;
+import com.glaf.test.AbstractTest;
 
-public class SysLogTest extends AbstractTest {
-	
-	protected ISysLogService sysLogService;
-	
+public class TodoTest extends AbstractTest {
+
+	protected ISysTodoService sysTodoService;
+
 	@Test
-	public void testInsertLogs() {
-		sysLogService = super.getBean("sysLogService");
-		for(int i=0;i<2000;i++){
-			SysLog bean=new SysLog();
-			bean.setAccount("test");
-			bean.setIp("127.0.0.1");
-			bean.setOperate("add");
-			sysLogService.create(bean);
-		}
+	public void testUserEntityList() {
+		sysTodoService = super.getBean("sysTodoService");
 	}
 
 }

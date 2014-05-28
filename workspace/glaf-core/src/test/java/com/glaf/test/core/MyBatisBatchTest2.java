@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.test;
+package com.glaf.test.core;
 
 import java.util.Date;
 
@@ -28,6 +28,7 @@ import org.junit.Test;
 import com.glaf.core.config.Environment;
 import com.glaf.core.domain.SysLog;
 import com.glaf.core.entity.hibernate.HibernateBeanFactory;
+import com.glaf.test.AbstractTest;
 
 public class MyBatisBatchTest2 extends AbstractTest {
 

@@ -47,7 +47,7 @@ public class JsonQueryTest extends AbstractTest {
 		paramMap.put("actorId", "joy");
 		JsonQueryHelper helper = new JsonQueryHelper();
 		JSONObject result = helper
-				.getSingleObject(
+				.selectOne(
 						" select u.ID as id, u.ACCOUNT as account, u.NAME as name, u.CODE as code, u.EMAIL as email, u.MOBILE as mobile, u.DEPTID as deptId from SYS_USER u where u.account = #{actorId} ",
 						paramMap);
 		logger.info(result.toJSONString());

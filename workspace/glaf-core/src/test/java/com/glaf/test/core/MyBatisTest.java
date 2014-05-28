@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.test;
+package com.glaf.test.core;
 
 import java.util.List;
 import java.util.Map;
@@ -28,6 +28,7 @@ import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.service.EntityService;
 import com.glaf.core.util.JdbcUtils;
 import com.glaf.core.util.ThreadFactory;
+import com.glaf.test.AbstractTest;
 
 public class MyBatisTest extends AbstractTest {
 
@@ -36,7 +37,7 @@ public class MyBatisTest extends AbstractTest {
 	@Test
 	public void testNextDbidBlock() {
 		entityService = super.getBean("entityService");
-		Thread thread = new TestThread(entityService);
+		Thread thread = new EntityTestThread(entityService);
 		for (int i = 0; i <= 1; i++) {
 			ThreadFactory.run(thread);
 		}

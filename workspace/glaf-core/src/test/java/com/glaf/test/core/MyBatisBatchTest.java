@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.test;
+package com.glaf.test.core;
 
 import java.util.Date;
 
@@ -26,6 +26,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Test;
 
 import com.glaf.core.domain.SysLog;
+import com.glaf.test.AbstractTest;
 
 public class MyBatisBatchTest extends AbstractTest {
 

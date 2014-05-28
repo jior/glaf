@@ -32,14 +32,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.type.TypeHandler;
+import org.apache.ibatis.type.TypeHandlerRegistry;
 
 import com.glaf.core.base.ResultModel;
 import com.glaf.core.base.RowModel;
+import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
 import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.dialect.Dialect;
 import com.glaf.core.domain.ColumnDefinition;
@@ -51,6 +57,8 @@ import com.glaf.core.util.StringTools;
 
 public class QueryHelper {
 	protected static final Log logger = LogFactory.getLog(QueryHelper.class);
+
+	protected static Configuration conf = BaseConfiguration.create();
 
 	public QueryHelper() {
 
@@ -78,151 +86,158 @@ public class QueryHelper {
 			}
 
 			rs = psmt.executeQuery();
-			rsmd = rs.getMetaData();
 
-			int count = rsmd.getColumnCount();
-			List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
+			if (conf.getBoolean("useMyBatisResultHandler", false)) {
 
-			for (int i = 1; i <= count; i++) {
-				int sqlType = rsmd.getColumnType(i);
-				ColumnDefinition column = new ColumnDefinition();
-				column.setColumnName(rsmd.getColumnName(i));
-				column.setColumnLabel(rsmd.getColumnLabel(i));
-				column.setJavaType(FieldType.getJavaType(sqlType));
-				column.setPrecision(rsmd.getPrecision(i));
-				column.setScale(rsmd.getScale(i));
-				if (column.getScale() == 0 && sqlType == Types.NUMERIC) {
-					column.setJavaType("Long");
+				resultList = this.getResults(rs);
+
+			} else {
+
+				rsmd = rs.getMetaData();
+
+				int count = rsmd.getColumnCount();
+				List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
+
+				for (int i = 1; i <= count; i++) {
+					int sqlType = rsmd.getColumnType(i);
+					ColumnDefinition column = new ColumnDefinition();
+					column.setColumnName(rsmd.getColumnName(i));
+					column.setColumnLabel(rsmd.getColumnLabel(i));
+					column.setJavaType(FieldType.getJavaType(sqlType));
+					column.setPrecision(rsmd.getPrecision(i));
+					column.setScale(rsmd.getScale(i));
+					if (column.getScale() == 0 && sqlType == Types.NUMERIC) {
+						column.setJavaType("Long");
+					}
+					columns.add(column);
 				}
-				columns.add(column);
-			}
-
-			while (rs.next()) {
-				int index = 0;
-				Map<String, Object> rowMap = new HashMap<String, Object>();
-				Iterator<ColumnDefinition> iterator = columns.iterator();
-				while (iterator.hasNext()) {
-					ColumnDefinition column = iterator.next();
-					String columnName = column.getColumnName();
-					String columnLabel = column.getColumnLabel();
-					String javaType = column.getJavaType();
-					index = index + 1;
-					if ("String".equals(javaType)) {
-						String value = rs.getString(columnName);
-						if (value != null) {
-							value = value.trim();
-							rowMap.put(columnName, value);
-							rowMap.put(columnLabel, value);
-							rowMap.put(columnName.toLowerCase(),
-									rowMap.get(columnName));
-							rowMap.put(columnLabel.toLowerCase(), value);
-						}
-					} else if ("Integer".equals(javaType)) {
-						try {
-							Integer value = rs.getInt(columnName);
-							rowMap.put(columnName, value);
-							rowMap.put(columnLabel, value);
-							rowMap.put(columnName.toLowerCase(),
-									rowMap.get(columnName));
-							rowMap.put(columnLabel.toLowerCase(), value);
-						} catch (Exception e) {
-							String str = rs.getString(columnName);
-							logger.error("错误的integer:" + str);
-							str = StringTools.replace(str, "$", "");
-							str = StringTools.replace(str, "￥", "");
-							str = StringTools.replace(str, ",", "");
-							NumberFormat fmt = NumberFormat.getInstance();
-							Number num = fmt.parse(str);
-							rowMap.put(columnName, num.intValue());
-							rowMap.put(columnLabel, rowMap.get(columnName));
-							rowMap.put(columnName.toLowerCase(),
-									rowMap.get(columnName));
-							rowMap.put(columnLabel.toLowerCase(),
-									rowMap.get(columnName));
-							logger.debug("修正后:" + num.intValue());
-						}
-					} else if ("Long".equals(javaType)) {
-						try {
-							Long value = rs.getLong(columnName);
-							rowMap.put(columnName, value);
-							rowMap.put(columnLabel, rowMap.get(columnName));
-							rowMap.put(columnName.toLowerCase(),
-									rowMap.get(columnName));
-							rowMap.put(columnLabel.toLowerCase(),
-									rowMap.get(columnName));
-						} catch (Exception e) {
-							String str = rs.getString(columnName);
-							logger.error("错误的long:" + str);
-							str = StringTools.replace(str, "$", "");
-							str = StringTools.replace(str, "￥", "");
-							str = StringTools.replace(str, ",", "");
-							NumberFormat fmt = NumberFormat.getInstance();
-							Number num = fmt.parse(str);
-							rowMap.put(columnName, num.longValue());
-							rowMap.put(columnLabel, num.longValue());
-							rowMap.put(columnName.toLowerCase(),
-									rowMap.get(columnName));
-							rowMap.put(columnLabel.toLowerCase(),
-									rowMap.get(columnName));
-							logger.debug("修正后:" + num.longValue());
-						}
-					} else if ("Double".equals(javaType)) {
-						try {
-							Double d = rs.getDouble(columnName);
-							rowMap.put(columnName, d);
-							rowMap.put(columnLabel, d);
-							rowMap.put(columnName.toLowerCase(),
-									rowMap.get(columnName));
-							rowMap.put(columnLabel.toLowerCase(),
-									rowMap.get(columnName));
-						} catch (Exception e) {
-							String str = rs.getString(columnName);
-							logger.error("错误的double:" + str);
-							str = StringTools.replace(str, "$", "");
-							str = StringTools.replace(str, "￥", "");
-							str = StringTools.replace(str, ",", "");
-							NumberFormat fmt = NumberFormat.getInstance();
-							Number num = fmt.parse(str);
-							rowMap.put(columnName, num.doubleValue());
-							rowMap.put(columnLabel, num.doubleValue());
-							rowMap.put(columnName.toLowerCase(),
-									rowMap.get(columnName));
-							rowMap.put(columnLabel.toLowerCase(),
-									rowMap.get(columnName));
-							logger.debug("修正后:" + num.doubleValue());
-						}
-					} else if ("Boolean".equals(javaType)) {
-						rowMap.put(columnName, rs.getBoolean(columnName));
-						rowMap.put(columnLabel, rowMap.get(columnName));
-						rowMap.put(columnName.toLowerCase(),
-								rowMap.get(columnName));
-						rowMap.put(columnLabel.toLowerCase(),
-								rowMap.get(columnName));
-					} else if ("Date".equals(javaType)) {
-						rowMap.put(columnName, rs.getTimestamp(columnName));
-						rowMap.put(columnLabel, rowMap.get(columnName));
-						rowMap.put(columnName.toLowerCase(),
-								rowMap.get(columnName));
-						rowMap.put(columnLabel.toLowerCase(),
-								rowMap.get(columnName));
-					} else if ("Blob".equals(javaType)) {
-						// ignore
-					} else {
-						Object value = rs.getObject(columnName);
-						if (value != null) {
-							if (value instanceof String) {
-								value = (String) value.toString().trim();
+				while (rs.next()) {
+					int index = 0;
+					Map<String, Object> rowMap = new HashMap<String, Object>();
+					Iterator<ColumnDefinition> iterator = columns.iterator();
+					while (iterator.hasNext()) {
+						ColumnDefinition column = iterator.next();
+						String columnName = column.getColumnName();
+						String columnLabel = column.getColumnLabel();
+						String javaType = column.getJavaType();
+						index = index + 1;
+						if ("String".equals(javaType)) {
+							String value = rs.getString(columnName);
+							if (value != null) {
+								value = value.trim();
+								rowMap.put(columnName, value);
+								rowMap.put(columnLabel, value);
+								rowMap.put(columnName.toLowerCase(),
+										rowMap.get(columnName));
+								rowMap.put(columnLabel.toLowerCase(), value);
 							}
-							rowMap.put(columnName, value);
+						} else if ("Integer".equals(javaType)) {
+							try {
+								Integer value = rs.getInt(columnName);
+								rowMap.put(columnName, value);
+								rowMap.put(columnLabel, value);
+								rowMap.put(columnName.toLowerCase(),
+										rowMap.get(columnName));
+								rowMap.put(columnLabel.toLowerCase(), value);
+							} catch (Exception e) {
+								String str = rs.getString(columnName);
+								logger.error("错误的integer:" + str);
+								str = StringTools.replace(str, "$", "");
+								str = StringTools.replace(str, "￥", "");
+								str = StringTools.replace(str, ",", "");
+								NumberFormat fmt = NumberFormat.getInstance();
+								Number num = fmt.parse(str);
+								rowMap.put(columnName, num.intValue());
+								rowMap.put(columnLabel, rowMap.get(columnName));
+								rowMap.put(columnName.toLowerCase(),
+										rowMap.get(columnName));
+								rowMap.put(columnLabel.toLowerCase(),
+										rowMap.get(columnName));
+								logger.debug("修正后:" + num.intValue());
+							}
+						} else if ("Long".equals(javaType)) {
+							try {
+								Long value = rs.getLong(columnName);
+								rowMap.put(columnName, value);
+								rowMap.put(columnLabel, rowMap.get(columnName));
+								rowMap.put(columnName.toLowerCase(),
+										rowMap.get(columnName));
+								rowMap.put(columnLabel.toLowerCase(),
+										rowMap.get(columnName));
+							} catch (Exception e) {
+								String str = rs.getString(columnName);
+								logger.error("错误的long:" + str);
+								str = StringTools.replace(str, "$", "");
+								str = StringTools.replace(str, "￥", "");
+								str = StringTools.replace(str, ",", "");
+								NumberFormat fmt = NumberFormat.getInstance();
+								Number num = fmt.parse(str);
+								rowMap.put(columnName, num.longValue());
+								rowMap.put(columnLabel, num.longValue());
+								rowMap.put(columnName.toLowerCase(),
+										rowMap.get(columnName));
+								rowMap.put(columnLabel.toLowerCase(),
+										rowMap.get(columnName));
+								logger.debug("修正后:" + num.longValue());
+							}
+						} else if ("Double".equals(javaType)) {
+							try {
+								Double d = rs.getDouble(columnName);
+								rowMap.put(columnName, d);
+								rowMap.put(columnLabel, d);
+								rowMap.put(columnName.toLowerCase(),
+										rowMap.get(columnName));
+								rowMap.put(columnLabel.toLowerCase(),
+										rowMap.get(columnName));
+							} catch (Exception e) {
+								String str = rs.getString(columnName);
+								logger.error("错误的double:" + str);
+								str = StringTools.replace(str, "$", "");
+								str = StringTools.replace(str, "￥", "");
+								str = StringTools.replace(str, ",", "");
+								NumberFormat fmt = NumberFormat.getInstance();
+								Number num = fmt.parse(str);
+								rowMap.put(columnName, num.doubleValue());
+								rowMap.put(columnLabel, num.doubleValue());
+								rowMap.put(columnName.toLowerCase(),
+										rowMap.get(columnName));
+								rowMap.put(columnLabel.toLowerCase(),
+										rowMap.get(columnName));
+								logger.debug("修正后:" + num.doubleValue());
+							}
+						} else if ("Boolean".equals(javaType)) {
+							rowMap.put(columnName, rs.getBoolean(columnName));
 							rowMap.put(columnLabel, rowMap.get(columnName));
 							rowMap.put(columnName.toLowerCase(),
 									rowMap.get(columnName));
 							rowMap.put(columnLabel.toLowerCase(),
 									rowMap.get(columnName));
+						} else if ("Date".equals(javaType)) {
+							rowMap.put(columnName, rs.getTimestamp(columnName));
+							rowMap.put(columnLabel, rowMap.get(columnName));
+							rowMap.put(columnName.toLowerCase(),
+									rowMap.get(columnName));
+							rowMap.put(columnLabel.toLowerCase(),
+									rowMap.get(columnName));
+						} else if ("Blob".equals(javaType)) {
+							// ignore
+						} else {
+							Object value = rs.getObject(columnName);
+							if (value != null) {
+								if (value instanceof String) {
+									value = (String) value.toString().trim();
+								}
+								rowMap.put(columnName, value);
+								rowMap.put(columnLabel, rowMap.get(columnName));
+								rowMap.put(columnName.toLowerCase(),
+										rowMap.get(columnName));
+								rowMap.put(columnLabel.toLowerCase(),
+										rowMap.get(columnName));
+							}
 						}
 					}
+					resultList.add(rowMap);
 				}
-				resultList.add(rowMap);
 			}
 
 			psmt.close();
@@ -275,162 +290,169 @@ public class QueryHelper {
 			}
 
 			rs = psmt.executeQuery();
-			rsmd = rs.getMetaData();
 
-			int count = rsmd.getColumnCount();
-			List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
+			if (conf.getBoolean("useMyBatisResultHandler", false)) {
 
-			for (int i = 1; i <= count; i++) {
-				int sqlType = rsmd.getColumnType(i);
-				ColumnDefinition column = new ColumnDefinition();
-				column.setColumnName(rsmd.getColumnName(i));
-				column.setColumnLabel(rsmd.getColumnLabel(i));
-				column.setJavaType(FieldType.getJavaType(sqlType));
-				column.setPrecision(rsmd.getPrecision(i));
-				column.setScale(rsmd.getScale(i));
-				if (column.getScale() == 0 && sqlType == Types.NUMERIC) {
-					column.setJavaType("Long");
+				resultList = this.getResults(rs);
+
+			} else {
+				rsmd = rs.getMetaData();
+
+				int count = rsmd.getColumnCount();
+				List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
+
+				for (int i = 1; i <= count; i++) {
+					int sqlType = rsmd.getColumnType(i);
+					ColumnDefinition column = new ColumnDefinition();
+					column.setColumnName(rsmd.getColumnName(i));
+					column.setColumnLabel(rsmd.getColumnLabel(i));
+					column.setJavaType(FieldType.getJavaType(sqlType));
+					column.setPrecision(rsmd.getPrecision(i));
+					column.setScale(rsmd.getScale(i));
+					if (column.getScale() == 0 && sqlType == Types.NUMERIC) {
+						column.setJavaType("Long");
+					}
+					columns.add(column);
 				}
-				columns.add(column);
-			}
 
-			if (!supportsPhysicalPage) {
-				this.skipRows(rs, start, pageSize);
-			}
+				if (!supportsPhysicalPage) {
+					this.skipRows(rs, start, pageSize);
+				}
 
-			int index = 0;
-			while (rs.next() && index++ < pageSize) {
-				Map<String, Object> rowMap = new HashMap<String, Object>();
-				Iterator<ColumnDefinition> iterator = columns.iterator();
-				while (iterator.hasNext()) {
-					ColumnDefinition column = iterator.next();
-					String columnName = column.getColumnName();
-					String columnLabel = column.getColumnLabel();
-					String javaType = column.getJavaType();
+				int index = 0;
+				while (rs.next() && index++ < pageSize) {
+					Map<String, Object> rowMap = new HashMap<String, Object>();
+					Iterator<ColumnDefinition> iterator = columns.iterator();
+					while (iterator.hasNext()) {
+						ColumnDefinition column = iterator.next();
+						String columnName = column.getColumnName();
+						String columnLabel = column.getColumnLabel();
+						String javaType = column.getJavaType();
 
-					if ("String".equals(javaType)) {
-						String value = rs.getString(columnName);
-						if (value != null) {
-							value = value.trim();
-							rowMap.put(columnName, value);
-							rowMap.put(columnLabel, rowMap.get(columnName));
-							rowMap.put(columnName.toLowerCase(),
-									rowMap.get(columnName));
-							rowMap.put(columnLabel.toLowerCase(),
-									rowMap.get(columnName));
-						}
-					} else if ("Integer".equals(javaType)) {
-						try {
-							Integer value = rs.getInt(columnName);
-							rowMap.put(columnName, value);
-							rowMap.put(columnLabel, rowMap.get(columnName));
-							rowMap.put(columnName.toLowerCase(),
-									rowMap.get(columnName));
-							rowMap.put(columnLabel.toLowerCase(),
-									rowMap.get(columnName));
-						} catch (Exception e) {
-							String str = rs.getString(columnName);
-							logger.error("错误的integer:" + str);
-							str = StringTools.replace(str, "$", "");
-							str = StringTools.replace(str, "￥", "");
-							str = StringTools.replace(str, ",", "");
-							NumberFormat fmt = NumberFormat.getInstance();
-							Number num = fmt.parse(str);
-							rowMap.put(columnName, num.intValue());
-							rowMap.put(columnLabel, rowMap.get(columnName));
-							rowMap.put(columnName.toLowerCase(),
-									rowMap.get(columnName));
-							rowMap.put(columnLabel.toLowerCase(),
-									rowMap.get(columnName));
-							logger.debug("修正后:" + num.intValue());
-						}
-					} else if ("Long".equals(javaType)) {
-						try {
-							Long value = rs.getLong(columnName);
-							rowMap.put(columnName, value);
-							rowMap.put(columnLabel, rowMap.get(columnName));
-							rowMap.put(columnName.toLowerCase(),
-									rowMap.get(columnName));
-							rowMap.put(columnLabel.toLowerCase(),
-									rowMap.get(columnName));
-						} catch (Exception e) {
-							String str = rs.getString(columnName);
-							logger.error("错误的long:" + str);
-							str = StringTools.replace(str, "$", "");
-							str = StringTools.replace(str, "￥", "");
-							str = StringTools.replace(str, ",", "");
-							NumberFormat fmt = NumberFormat.getInstance();
-							Number num = fmt.parse(str);
-							rowMap.put(columnName, num.longValue());
-							rowMap.put(columnLabel, rowMap.get(columnName));
-							rowMap.put(columnName.toLowerCase(),
-									rowMap.get(columnName));
-							rowMap.put(columnLabel.toLowerCase(),
-									rowMap.get(columnName));
-							logger.debug("修正后:" + num.longValue());
-						}
-					} else if ("Double".equals(javaType)) {
-						try {
-							Double d = rs.getDouble(columnName);
-							rowMap.put(columnName, d);
-							rowMap.put(columnLabel, rowMap.get(columnName));
-							rowMap.put(columnName.toLowerCase(),
-									rowMap.get(columnName));
-							rowMap.put(columnLabel.toLowerCase(),
-									rowMap.get(columnName));
-						} catch (Exception e) {
-							String str = rs.getString(columnName);
-							logger.error("错误的double:" + str);
-							str = StringTools.replace(str, "$", "");
-							str = StringTools.replace(str, "￥", "");
-							str = StringTools.replace(str, ",", "");
-							NumberFormat fmt = NumberFormat.getInstance();
-							Number num = fmt.parse(str);
-							rowMap.put(columnName, num.doubleValue());
-							rowMap.put(columnLabel, rowMap.get(columnName));
-							rowMap.put(columnName.toLowerCase(),
-									rowMap.get(columnName));
-							rowMap.put(columnLabel.toLowerCase(),
-									rowMap.get(columnName));
-							logger.debug("修正后:" + num.doubleValue());
-						}
-					} else if ("Boolean".equals(javaType)) {
-						rowMap.put(columnName, rs.getBoolean(columnName));
-						rowMap.put(columnLabel, rowMap.get(columnName));
-						rowMap.put(columnName.toLowerCase(),
-								rowMap.get(columnName));
-						rowMap.put(columnLabel.toLowerCase(),
-								rowMap.get(columnName));
-					} else if ("Date".equals(javaType)) {
-						rowMap.put(columnName, rs.getTimestamp(columnName));
-						rowMap.put(columnLabel, rowMap.get(columnName));
-						rowMap.put(columnName.toLowerCase(),
-								rowMap.get(columnName));
-						rowMap.put(columnLabel.toLowerCase(),
-								rowMap.get(columnName));
-					} else if ("Blob".equals(javaType)) {
-						rowMap.put(columnName, rs.getBytes(columnName));
-						rowMap.put(columnLabel, rowMap.get(columnName));
-						rowMap.put(columnName.toLowerCase(),
-								rowMap.get(columnName));
-						rowMap.put(columnLabel.toLowerCase(),
-								rowMap.get(columnName));
-					} else {
-						Object value = rs.getObject(columnName);
-						if (value != null) {
-							if (value instanceof String) {
-								value = (String) value.toString().trim();
+						if ("String".equals(javaType)) {
+							String value = rs.getString(columnName);
+							if (value != null) {
+								value = value.trim();
+								rowMap.put(columnName, value);
+								rowMap.put(columnLabel, rowMap.get(columnName));
+								rowMap.put(columnName.toLowerCase(),
+										rowMap.get(columnName));
+								rowMap.put(columnLabel.toLowerCase(),
+										rowMap.get(columnName));
 							}
-							rowMap.put(columnName, value);
+						} else if ("Integer".equals(javaType)) {
+							try {
+								Integer value = rs.getInt(columnName);
+								rowMap.put(columnName, value);
+								rowMap.put(columnLabel, rowMap.get(columnName));
+								rowMap.put(columnName.toLowerCase(),
+										rowMap.get(columnName));
+								rowMap.put(columnLabel.toLowerCase(),
+										rowMap.get(columnName));
+							} catch (Exception e) {
+								String str = rs.getString(columnName);
+								logger.error("错误的integer:" + str);
+								str = StringTools.replace(str, "$", "");
+								str = StringTools.replace(str, "￥", "");
+								str = StringTools.replace(str, ",", "");
+								NumberFormat fmt = NumberFormat.getInstance();
+								Number num = fmt.parse(str);
+								rowMap.put(columnName, num.intValue());
+								rowMap.put(columnLabel, rowMap.get(columnName));
+								rowMap.put(columnName.toLowerCase(),
+										rowMap.get(columnName));
+								rowMap.put(columnLabel.toLowerCase(),
+										rowMap.get(columnName));
+								logger.debug("修正后:" + num.intValue());
+							}
+						} else if ("Long".equals(javaType)) {
+							try {
+								Long value = rs.getLong(columnName);
+								rowMap.put(columnName, value);
+								rowMap.put(columnLabel, rowMap.get(columnName));
+								rowMap.put(columnName.toLowerCase(),
+										rowMap.get(columnName));
+								rowMap.put(columnLabel.toLowerCase(),
+										rowMap.get(columnName));
+							} catch (Exception e) {
+								String str = rs.getString(columnName);
+								logger.error("错误的long:" + str);
+								str = StringTools.replace(str, "$", "");
+								str = StringTools.replace(str, "￥", "");
+								str = StringTools.replace(str, ",", "");
+								NumberFormat fmt = NumberFormat.getInstance();
+								Number num = fmt.parse(str);
+								rowMap.put(columnName, num.longValue());
+								rowMap.put(columnLabel, rowMap.get(columnName));
+								rowMap.put(columnName.toLowerCase(),
+										rowMap.get(columnName));
+								rowMap.put(columnLabel.toLowerCase(),
+										rowMap.get(columnName));
+								logger.debug("修正后:" + num.longValue());
+							}
+						} else if ("Double".equals(javaType)) {
+							try {
+								Double d = rs.getDouble(columnName);
+								rowMap.put(columnName, d);
+								rowMap.put(columnLabel, rowMap.get(columnName));
+								rowMap.put(columnName.toLowerCase(),
+										rowMap.get(columnName));
+								rowMap.put(columnLabel.toLowerCase(),
+										rowMap.get(columnName));
+							} catch (Exception e) {
+								String str = rs.getString(columnName);
+								logger.error("错误的double:" + str);
+								str = StringTools.replace(str, "$", "");
+								str = StringTools.replace(str, "￥", "");
+								str = StringTools.replace(str, ",", "");
+								NumberFormat fmt = NumberFormat.getInstance();
+								Number num = fmt.parse(str);
+								rowMap.put(columnName, num.doubleValue());
+								rowMap.put(columnLabel, rowMap.get(columnName));
+								rowMap.put(columnName.toLowerCase(),
+										rowMap.get(columnName));
+								rowMap.put(columnLabel.toLowerCase(),
+										rowMap.get(columnName));
+								logger.debug("修正后:" + num.doubleValue());
+							}
+						} else if ("Boolean".equals(javaType)) {
+							rowMap.put(columnName, rs.getBoolean(columnName));
 							rowMap.put(columnLabel, rowMap.get(columnName));
 							rowMap.put(columnName.toLowerCase(),
 									rowMap.get(columnName));
 							rowMap.put(columnLabel.toLowerCase(),
 									rowMap.get(columnName));
+						} else if ("Date".equals(javaType)) {
+							rowMap.put(columnName, rs.getTimestamp(columnName));
+							rowMap.put(columnLabel, rowMap.get(columnName));
+							rowMap.put(columnName.toLowerCase(),
+									rowMap.get(columnName));
+							rowMap.put(columnLabel.toLowerCase(),
+									rowMap.get(columnName));
+						} else if ("Blob".equals(javaType)) {
+							rowMap.put(columnName, rs.getBytes(columnName));
+							rowMap.put(columnLabel, rowMap.get(columnName));
+							rowMap.put(columnName.toLowerCase(),
+									rowMap.get(columnName));
+							rowMap.put(columnLabel.toLowerCase(),
+									rowMap.get(columnName));
+						} else {
+							Object value = rs.getObject(columnName);
+							if (value != null) {
+								if (value instanceof String) {
+									value = (String) value.toString().trim();
+								}
+								rowMap.put(columnName, value);
+								rowMap.put(columnLabel, rowMap.get(columnName));
+								rowMap.put(columnName.toLowerCase(),
+										rowMap.get(columnName));
+								rowMap.put(columnLabel.toLowerCase(),
+										rowMap.get(columnName));
+							}
 						}
 					}
+					resultList.add(rowMap);
 				}
-				resultList.add(rowMap);
 			}
 
 			psmt.close();
@@ -761,199 +783,54 @@ public class QueryHelper {
 		return resultModel;
 	}
 
-	@SuppressWarnings("unchecked")
-	public Map<String, Object> getSingleObject(Connection conn,
-			SqlExecutor sqlExecutor) {
-		Map<String, Object> rowMap = new HashMap<String, Object>();
-		String sql = sqlExecutor.getSql();
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-		ResultSetMetaData rsmd = null;
+	public List<Map<String, Object>> getResults(ResultSet rs) {
+		TypeHandlerRegistry typeHandlerRegistry = new TypeHandlerRegistry();
 		try {
-
-			psmt = conn.prepareStatement(sql);
-			if (sqlExecutor.getParameter() != null) {
-				List<Object> values = (List<Object>) sqlExecutor.getParameter();
-				JdbcUtils.fillStatement(psmt, values);
-			}
-
-			rs = psmt.executeQuery();
-			rsmd = rs.getMetaData();
-
-			int count = rsmd.getColumnCount();
-			List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
-
-			for (int i = 1; i <= count; i++) {
-				int sqlType = rsmd.getColumnType(i);
-				ColumnDefinition column = new ColumnDefinition();
-				column.setColumnName(rsmd.getColumnName(i));
-				column.setColumnLabel(rsmd.getColumnLabel(i));
-				column.setJavaType(FieldType.getJavaType(sqlType));
-				column.setPrecision(rsmd.getPrecision(i));
-				column.setScale(rsmd.getScale(i));
-				if (column.getScale() == 0 && sqlType == Types.NUMERIC) {
-					column.setJavaType("Long");
-				}
-				columns.add(column);
-			}
-
-			if (rs.next()) {
-				Iterator<ColumnDefinition> iterator = columns.iterator();
-				while (iterator.hasNext()) {
-					ColumnDefinition column = iterator.next();
-					String columnName = column.getColumnName();
-					String columnLabel = column.getColumnLabel();
-					String javaType = column.getJavaType();
-
-					if ("String".equals(javaType)) {
-						String value = rs.getString(columnName);
-						if (value != null) {
-							value = value.trim();
-							rowMap.put(columnName, value);
-							rowMap.put(columnLabel, rowMap.get(columnName));
-							rowMap.put(columnName.toLowerCase(),
-									rowMap.get(columnName));
-							rowMap.put(columnLabel.toLowerCase(),
-									rowMap.get(columnName));
-						}
-					} else if ("Integer".equals(javaType)) {
-						try {
-							Integer value = rs.getInt(columnName);
-							rowMap.put(columnName, value);
-							rowMap.put(columnLabel, rowMap.get(columnName));
-							rowMap.put(columnName.toLowerCase(),
-									rowMap.get(columnName));
-							rowMap.put(columnLabel.toLowerCase(),
-									rowMap.get(columnName));
-						} catch (Exception e) {
-							String str = rs.getString(columnName);
-							logger.error("错误的integer:" + str);
-							str = StringTools.replace(str, "$", "");
-							str = StringTools.replace(str, "￥", "");
-							str = StringTools.replace(str, ",", "");
-							NumberFormat fmt = NumberFormat.getInstance();
-							Number num = fmt.parse(str);
-							rowMap.put(columnName, num.intValue());
-							rowMap.put(columnLabel, rowMap.get(columnName));
-							rowMap.put(columnName.toLowerCase(),
-									rowMap.get(columnName));
-							rowMap.put(columnLabel.toLowerCase(),
-									rowMap.get(columnName));
-							logger.debug("修正后:" + num.intValue());
-						}
-					} else if ("Long".equals(javaType)) {
-						try {
-							Long value = rs.getLong(columnName);
-							rowMap.put(columnName, value);
-							rowMap.put(columnLabel, rowMap.get(columnName));
-							rowMap.put(columnName.toLowerCase(),
-									rowMap.get(columnName));
-							rowMap.put(columnLabel.toLowerCase(),
-									rowMap.get(columnName));
-						} catch (Exception e) {
-							String str = rs.getString(columnName);
-							logger.error("错误的long:" + str);
-							str = StringTools.replace(str, "$", "");
-							str = StringTools.replace(str, "￥", "");
-							str = StringTools.replace(str, ",", "");
-							NumberFormat fmt = NumberFormat.getInstance();
-							Number num = fmt.parse(str);
-							rowMap.put(columnName, num.longValue());
-							rowMap.put(columnLabel, rowMap.get(columnName));
-							rowMap.put(columnName.toLowerCase(),
-									rowMap.get(columnName));
-							rowMap.put(columnLabel.toLowerCase(),
-									rowMap.get(columnName));
-							logger.debug("修正后:" + num.longValue());
-						}
-					} else if ("Double".equals(javaType)) {
-						try {
-							Double d = rs.getDouble(columnName);
-							rowMap.put(columnName, d);
-						} catch (Exception e) {
-							String str = rs.getString(columnName);
-							logger.error("错误的double:" + str);
-							str = StringTools.replace(str, "$", "");
-							str = StringTools.replace(str, "￥", "");
-							str = StringTools.replace(str, ",", "");
-							NumberFormat fmt = NumberFormat.getInstance();
-							Number num = fmt.parse(str);
-							rowMap.put(columnName, num.doubleValue());
-							rowMap.put(columnLabel, rowMap.get(columnName));
-							rowMap.put(columnName.toLowerCase(),
-									rowMap.get(columnName));
-							rowMap.put(columnLabel.toLowerCase(),
-									rowMap.get(columnName));
-							logger.debug("修正后:" + num.doubleValue());
-						}
-					} else if ("Boolean".equals(javaType)) {
-						rowMap.put(columnName, rs.getBoolean(columnName));
-						rowMap.put(columnLabel, rowMap.get(columnName));
-						rowMap.put(columnName.toLowerCase(),
-								rowMap.get(columnName));
-						rowMap.put(columnLabel.toLowerCase(),
-								rowMap.get(columnName));
-					} else if ("Date".equals(javaType)) {
-						rowMap.put(columnName, rs.getTimestamp(columnName));
-						rowMap.put(columnLabel, rowMap.get(columnName));
-						rowMap.put(columnName.toLowerCase(),
-								rowMap.get(columnName));
-						rowMap.put(columnLabel.toLowerCase(),
-								rowMap.get(columnName));
-					} else if ("Blob".equals(javaType)) {
-						rowMap.put(columnName, rs.getBytes(columnName));
-						rowMap.put(columnLabel, rowMap.get(columnName));
-						rowMap.put(columnName.toLowerCase(),
-								rowMap.get(columnName));
-						rowMap.put(columnLabel.toLowerCase(),
-								rowMap.get(columnName));
-					} else {
-						Object value = rs.getObject(columnName);
-						if (value != null) {
-							if (value instanceof String) {
-								value = (String) value.toString().trim();
-							}
-							rowMap.put(columnName, value);
-							rowMap.put(columnLabel, rowMap.get(columnName));
-							rowMap.put(columnName.toLowerCase(),
-									rowMap.get(columnName));
-							rowMap.put(columnLabel.toLowerCase(),
-									rowMap.get(columnName));
-						}
+			List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+			List<String> columns = new ArrayList<String>();
+			List<TypeHandler<?>> typeHandlers = new ArrayList<TypeHandler<?>>();
+			ResultSetMetaData rsmd = rs.getMetaData();
+			for (int i = 0, n = rsmd.getColumnCount(); i < n; i++) {
+				columns.add(rsmd.getColumnLabel(i + 1));
+				try {
+					Class<?> type = Resources.classForName(rsmd
+							.getColumnClassName(i + 1));
+					TypeHandler<?> typeHandler = typeHandlerRegistry
+							.getTypeHandler(type);
+					if (typeHandler == null) {
+						typeHandler = typeHandlerRegistry
+								.getTypeHandler(Object.class);
 					}
+					typeHandlers.add(typeHandler);
+				} catch (Exception e) {
+					typeHandlers.add(typeHandlerRegistry
+							.getTypeHandler(Object.class));
 				}
 			}
-			psmt.close();
-			rs.close();
-			return rowMap;
-		} catch (Exception ex) {
+			while (rs.next()) {
+				Map<String, Object> row = new HashMap<String, Object>();
+				for (int i = 0, n = columns.size(); i < n; i++) {
+					String name = columns.get(i);
+					TypeHandler<?> handler = typeHandlers.get(i);
+					Object value = handler.getResult(rs, name);
+					row.put(name, value);
+					row.put(name.toLowerCase(Locale.ENGLISH), value);
+					row.put(name.toUpperCase(Locale.ENGLISH), value);
+				}
+				list.add(row);
+			}
+			return list;
+		} catch (SQLException ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
-			JdbcUtils.close(psmt);
-			JdbcUtils.close(rs);
-		}
-	}
-
-	/**
-	 * 根据SQL语句获取结果集
-	 * 
-	 * @param sql
-	 * @param paramMap
-	 * @return
-	 */
-	public Map<String, Object> getSingleObject(String sql,
-			Map<String, Object> paramMap) {
-		SqlExecutor sqlExecutor = DBUtils.replaceSQL(sql, paramMap);
-		Connection conn = null;
-		try {
-			conn = DBConnectionFactory.getConnection();
-			return this.getSingleObject(conn, sqlExecutor);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			throw new RuntimeException(ex);
-		} finally {
-			JdbcUtils.close(conn);
+			try {
+				if (rs != null) {
+					rs.close();
+					rs = null;
+				}
+			} catch (SQLException e) {
+			}
 		}
 	}
 
@@ -1078,6 +955,37 @@ public class QueryHelper {
 		try {
 			conn = DBConnectionFactory.getConnection(systemName);
 			return this.getTotal(conn, sqlExecutor);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		} finally {
+			JdbcUtils.close(conn);
+		}
+	}
+
+	public Map<String, Object> selectOne(Connection conn,
+			SqlExecutor sqlExecutor) {
+		List<Map<String, Object>> results = getResultList(conn, sqlExecutor);
+		if (results != null && results.size() > 0) {
+			return results.get(0);
+		}
+		return null;
+	}
+
+	/**
+	 * 根据SQL语句获取结果集
+	 * 
+	 * @param sql
+	 * @param paramMap
+	 * @return
+	 */
+	public Map<String, Object> selectOne(String sql,
+			Map<String, Object> paramMap) {
+		SqlExecutor sqlExecutor = DBUtils.replaceSQL(sql, paramMap);
+		Connection conn = null;
+		try {
+			conn = DBConnectionFactory.getConnection();
+			return this.selectOne(conn, sqlExecutor);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
