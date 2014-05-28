@@ -23,11 +23,10 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.glaf.core.base.LowerLinkedMap;
 import com.glaf.core.config.SystemConfig;
 import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.query.QueryCondition;
@@ -174,14 +173,8 @@ public class QueryUtils {
 	}
 
 	public static Map<String, Object> lowerKeyMap(Map<String, Object> paramMap) {
-		Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
-		Set<Entry<String, Object>> entrySet = paramMap.entrySet();
-		for (Entry<String, Object> entry : entrySet) {
-			String key = entry.getKey();
-			Object value = entry.getValue();
-			dataMap.put(key, value);
-			dataMap.put(key.toLowerCase(), value);
-		}
+		Map<String, Object> dataMap = new LowerLinkedMap();
+		dataMap.putAll(paramMap);
 		return dataMap;
 	}
 

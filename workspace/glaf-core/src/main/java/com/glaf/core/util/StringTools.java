@@ -43,7 +43,8 @@ public final class StringTools {
 	private static final char[] AMP_ENCODE = "&amp;".toCharArray();
 	private static final char[] LT_ENCODE = "&lt;".toCharArray();
 	private static final char[] GT_ENCODE = "&gt;".toCharArray();
-	public static final String[] emptyStringArray = {};
+	private static final String[] emptyStringArray = {};
+	private static final char SEPARATOR = '_';
 
 	public static String arrayToString(String[] strs) {
 		if (strs.length == 0) {
@@ -54,23 +55,6 @@ public final class StringTools {
 		for (int idx = 1; idx < strs.length; idx++) {
 			sbuf.append(",");
 			sbuf.append(strs[idx]);
-		}
-		return sbuf.toString();
-	}
-
-	public static String listToString(List<String> strs) {
-		return listToString(strs, ",");
-	}
-
-	public static String listToString(List<String> strs, String separator) {
-		if (strs == null || strs.size() == 0) {
-			return "";
-		}
-		StringBuffer sbuf = new StringBuffer();
-		sbuf.append(strs.get(0));
-		for (int idx = 1; idx < strs.size(); idx++) {
-			sbuf.append(separator);
-			sbuf.append(strs.get(idx));
 		}
 		return sbuf.toString();
 	}
@@ -582,6 +566,23 @@ public final class StringTools {
 		return INT_PATTERN.matcher(str).matches();
 	}
 
+	public static String listToString(List<String> strs) {
+		return listToString(strs, ",");
+	}
+
+	public static String listToString(List<String> strs, String separator) {
+		if (strs == null || strs.size() == 0) {
+			return "";
+		}
+		StringBuffer sbuf = new StringBuffer();
+		sbuf.append(strs.get(0));
+		for (int idx = 1; idx < strs.size(); idx++) {
+			sbuf.append(separator);
+			sbuf.append(strs.get(idx));
+		}
+		return sbuf.toString();
+	}
+
 	public static String lower(String name) {
 		return name.substring(0, 1).toLowerCase() + name.substring(1);
 	}
@@ -620,6 +621,13 @@ public final class StringTools {
 			xx = xx + k;
 			System.out.println(xx);
 		}
+
+		System.out.println(toUnderLineName("ISOCertifiedStaff"));
+		System.out.println(toUnderLineName("CertifiedStaff"));
+		System.out.println(toUnderLineName("UserID"));
+		System.out.println(toCamelCase("iso_certified_staff"));
+		System.out.println(toCamelCase("certified_staff"));
+		System.out.println(toCamelCase("user_id"));
 	}
 
 	public static int parseInteger(String str) {
@@ -674,31 +682,6 @@ public final class StringTools {
 		return string;
 	}
 
-	public static String replaceFirst(String string, String oldString,
-			String newString) {
-		if (string == null) {
-			return null;
-		}
-		int i = 0;
-		if ((i = string.indexOf(oldString, i)) >= 0) {
-			char[] string2 = string.toCharArray();
-			char[] newString2 = newString.toCharArray();
-			int oLength = oldString.length();
-			StringBuilder buf = new StringBuilder(string2.length);
-			buf.append(string2, 0, i).append(newString2);
-			i += oLength;
-			int j = i;
-			if ((i = string.indexOf(oldString, i)) > 0) {
-				buf.append(string2, j, i - j).append(newString2);
-				i += oLength;
-				j = i;
-			}
-			buf.append(string2, j, string2.length - j);
-			return buf.toString();
-		}
-		return string;
-	}
-
 	public static String replace(String line, String oldString,
 			String newString, int[] count) {
 		if (line == null) {
@@ -725,6 +708,31 @@ public final class StringTools {
 			return buf.toString();
 		}
 		return line;
+	}
+
+	public static String replaceFirst(String string, String oldString,
+			String newString) {
+		if (string == null) {
+			return null;
+		}
+		int i = 0;
+		if ((i = string.indexOf(oldString, i)) >= 0) {
+			char[] string2 = string.toCharArray();
+			char[] newString2 = newString.toCharArray();
+			int oLength = oldString.length();
+			StringBuilder buf = new StringBuilder(string2.length);
+			buf.append(string2, 0, i).append(newString2);
+			i += oLength;
+			int j = i;
+			if ((i = string.indexOf(oldString, i)) > 0) {
+				buf.append(string2, j, i - j).append(newString2);
+				i += oLength;
+				j = i;
+			}
+			buf.append(string2, j, string2.length - j);
+			return buf.toString();
+		}
+		return string;
 	}
 
 	public static String replaceIgnoreCase(String line, String oldString,
@@ -941,6 +949,39 @@ public final class StringTools {
 		return collection;
 	}
 
+	public static String toCamelCase(String s) {
+		if (s == null) {
+			return null;
+		}
+
+		s = s.toLowerCase();
+
+		StringBuilder sb = new StringBuilder(s.length());
+		boolean upperCase = false;
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+
+			if (c == SEPARATOR) {
+				upperCase = true;
+			} else if (upperCase) {
+				sb.append(Character.toUpperCase(c));
+				upperCase = false;
+			} else {
+				sb.append(c);
+			}
+		}
+
+		return sb.toString();
+	}
+
+	public static String toCapitalizeCamelCase(String s) {
+		if (s == null) {
+			return null;
+		}
+		s = toCamelCase(s);
+		return s.substring(0, 1).toUpperCase() + s.substring(1);
+	}
+
 	public static String toCSVString(String s) {
 		StringBuffer sb = new StringBuffer(s.length() + 1);
 		sb.append('\'');
@@ -999,6 +1040,38 @@ public final class StringTools {
 			}
 		}
 		return wordList.toArray(new String[wordList.size()]);
+	}
+
+	public static String toUnderLineName(String s) {
+		if (s == null) {
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+		boolean upperCase = false;
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+
+			boolean nextUpperCase = true;
+
+			if (i < (s.length() - 1)) {
+				nextUpperCase = Character.isUpperCase(s.charAt(i + 1));
+			}
+
+			if ((i >= 0) && Character.isUpperCase(c)) {
+				if (!upperCase || !nextUpperCase) {
+					if (i > 0)
+						sb.append(SEPARATOR);
+				}
+				upperCase = true;
+			} else {
+				upperCase = false;
+			}
+
+			sb.append(Character.toLowerCase(c));
+		}
+
+		return sb.toString();
 	}
 
 	public static String unescapeFromXML(String string) {
