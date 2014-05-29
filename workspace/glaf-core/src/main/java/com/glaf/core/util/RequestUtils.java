@@ -120,15 +120,22 @@ public class RequestUtils {
 		if (StringUtils.isNotEmpty(value)) {
 			String c_x = decodeString(value);
 			c_x = StringUtils.replace(c_x, DigestUtils.md5Hex(ip), "");
-			JSONObject jsonObject = (JSONObject) JSON.parse(c_x);
-			Iterator<Entry<String, Object>> iterator = jsonObject.entrySet()
-					.iterator();
-			while (iterator.hasNext()) {
-				Entry<String, Object> entry = iterator.next();
-				String key = (String) entry.getKey();
-				Object val = entry.getValue();
-				if (val != null) {
-					cookieMap.put(key, val.toString());
+			JSONObject jsonObject = null;
+			try {
+				jsonObject = JSON.parseObject(c_x);
+			} catch (Exception ex) {
+				// Ignore Exception
+			}
+			if (jsonObject != null) {
+				Iterator<Entry<String, Object>> iterator = jsonObject
+						.entrySet().iterator();
+				while (iterator.hasNext()) {
+					Entry<String, Object> entry = iterator.next();
+					String key = (String) entry.getKey();
+					Object val = entry.getValue();
+					if (val != null) {
+						cookieMap.put(key, val.toString());
+					}
 				}
 			}
 		}
