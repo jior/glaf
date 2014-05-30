@@ -23,6 +23,9 @@
             <tx:method name="use*" propagation="REQUIRED"/>
 			<tx:method name="imp*" propagation="REQUIRED"/>
 			<tx:method name="do*" propagation="REQUIRED" />
+			<tx:method name="next*" propagation="REQUIRED" />
+			<tx:method name="nextId" propagation="REQUIRED" />
+			<tx:method name="getNextId" propagation="REQUIRED" />
             <tx:method name="get*" propagation="REQUIRED" read-only="true" />
             <tx:method name="count*" propagation="REQUIRED" read-only="true" />
             <tx:method name="find*" propagation="REQUIRED" read-only="true" />
