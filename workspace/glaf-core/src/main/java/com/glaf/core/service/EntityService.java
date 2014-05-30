@@ -143,6 +143,18 @@ public interface EntityService {
 	@Transactional
 	IdBlock nextDbidBlock(String name);
 
+	@Transactional
+	String getNextId();
+
+	@Transactional
+	String getNextId(String name);
+
+	@Transactional
+	Long nextId();
+
+	@Transactional
+	Long nextId(String name);
+
 	/**
 	 * 修改一条记录
 	 * 

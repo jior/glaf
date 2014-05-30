@@ -64,4 +64,43 @@ public class MultiRoutingDataSourceTest extends AbstractTest {
 		}
 	}
 
+	@Test
+	public void testMultiDS2() throws IOException {
+		sysLogService = super.getBean("sysLogService");
+		// 下面操作不可用在serice包的类中（事务原因），只能用于控制层或调度
+		String currentName = com.glaf.core.config.Environment
+				.getCurrentSystemName();// 记下之前的数据源环境，默认是default
+		try {
+
+			Environment.setCurrentSystemName("wechat");// 设置当前要做业务操作的数据源名称，如上面设置的ds02
+			// 你的service逻辑
+			// dataService.doYourBussiness(....);//调用Service方法，每个数据库上下文都是独立事务！！！
+			for (int i = 0; i < 100; i++) {
+				SysLog bean = new SysLog();
+				bean.setAccount("test");
+				bean.setCreateTime(new Date());
+				bean.setFlag(1);
+				bean.setIp("127.0.0.1");
+				bean.setOperate("insert");
+				sysLogService.create(bean);
+			}
+
+			Environment.setCurrentSystemName("yz");// 设置当前要做业务操作的数据源名称，如上面设置的ds02
+			// 你的service逻辑
+			// dataService.doYourBussiness(....);//调用Service方法，每个数据库上下文都是独立事务！！！
+			for (int i = 0; i < 100; i++) {
+				SysLog bean = new SysLog();
+				bean.setAccount("test");
+				bean.setCreateTime(new Date());
+				bean.setFlag(1);
+				bean.setIp("127.0.0.1");
+				bean.setOperate("insert");
+				sysLogService.create(bean);
+			}
+
+		} finally {
+			com.glaf.core.config.Environment.setCurrentSystemName(currentName);// 用完了记得还原
+		}
+	}
+
 }

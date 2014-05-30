@@ -132,4 +132,20 @@ public class SqlMapEntityServiceImpl implements EntityService {
 		return null;
 	}
 
+	public String getNextId() {
+		return null;
+	}
+
+	public String getNextId(String name) {
+		return null;
+	}
+
+	public Long nextId() {
+		return null;
+	}
+
+	public Long nextId(String name) {
+		return null;
+	}
+
 }

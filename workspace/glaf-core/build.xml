@@ -39,6 +39,9 @@
 	<jar jarfile="glaf-j2cache.jar"> 
       <fileset dir="bin" includes="com/glaf/j2cache/**/*.class,com/glaf/j2cache/**/*.xml,com/glaf/j2cache/**/*.properties"/> 
     </jar>  
+	<jar jarfile="glaf-mybatis2.jar"> 
+      <fileset dir="bin" includes="com/glaf/orm/mybatis2/**/*.class,com/glaf/orm/mybatis2/**/*.xml,com/glaf/orm/mybatis2/**/*.properties"/> 
+    </jar>  
     <jar jarfile="glaf-test.jar"> 
       <fileset dir="bin" includes="com/glaf/test/**/*.class,com/glaf/test/**/*.xml,com/glaf/test/**/*.properties"/> 
     </jar> 
