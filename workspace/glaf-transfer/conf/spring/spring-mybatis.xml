@@ -47,10 +47,12 @@
 
 	<bean id="entityService" class="com.glaf.core.service.impl.MyBatisEntityService">
 		<property name="entityDAO" ref="myBatisEntityDAO" />
+		<property name="idGenerator" ref="myBatisDbIdGenerator" />
 	</bean>
 
 	<bean id="myBatisEntityService" class="com.glaf.core.service.impl.MyBatisEntityService">
 		<property name="entityDAO" ref="myBatisEntityDAO" />
+		<property name="idGenerator" ref="myBatisDbIdGenerator" />
 	</bean>
 
 </beans>
