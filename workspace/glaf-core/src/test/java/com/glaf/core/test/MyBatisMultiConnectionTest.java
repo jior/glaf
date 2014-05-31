@@ -72,23 +72,26 @@ public class MyBatisMultiConnectionTest {
 		long time = System.currentTimeMillis() - start;
 		System.out.println("用时（耗秒）：" + (time));
 
-		start = System.currentTimeMillis();
-		session = null;
-		conn = null;
-		try {
-			conn = DBConnectionFactory.getConnection("yz");
-			session = sqlSessionFactory.openSession(conn);
-			TreeModel tree = session.selectOne("getTreeModelByCode", "SYS000");
-			System.out.println(tree.toJsonObject().toJSONString());
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		} finally {
-			if (session != null) {
-				session.close();
+		for (int i = 0; i < 100; i++) {
+			start = System.currentTimeMillis();
+			session = null;
+			conn = null;
+			try {
+				conn = DBConnectionFactory.getConnection("yz");
+				session = sqlSessionFactory.openSession(conn);
+				TreeModel tree = session.selectOne("getTreeModelByCode",
+						"SYS000");
+				System.out.println(tree.toJsonObject().toJSONString());
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			} finally {
+				if (session != null) {
+					session.close();
+				}
+				JdbcUtils.close(conn);
 			}
-			JdbcUtils.close(conn);
+			time = System.currentTimeMillis() - start;
+			System.out.println("用时（耗秒）：" + (time));
 		}
-		time = System.currentTimeMillis() - start;
-		System.out.println("用时（耗秒）：" + (time));
 	}
 }
