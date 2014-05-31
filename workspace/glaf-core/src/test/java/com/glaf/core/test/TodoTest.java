@@ -16,26 +16,20 @@
  * limitations under the License.
  */
 
-package com.glaf.test.core;
-
-import java.util.List;
+package com.glaf.core.test;
 
 import org.junit.Test;
 
-import com.glaf.core.base.TreeModel;
+import com.glaf.core.todo.service.ISysTodoService;
 import com.glaf.test.AbstractTest;
 
-public class TreeTest extends AbstractTest {
+public class TodoTest extends AbstractTest {
+
+	protected ISysTodoService sysTodoService;
 
 	@Test
-	public void testTree() {
-		List<TreeModel> treeModels = com.glaf.core.security.IdentityFactory
-				.getChildrenTreeModels(3L);
-		if (treeModels != null && !treeModels.isEmpty()) {
-			for (TreeModel treeModel : treeModels) {
-				logger.debug(treeModel.toJsonObject().toJSONString());
-			}
-		}
+	public void testUserEntityList() {
+		sysTodoService = super.getBean("sysTodoService");
 	}
 
 }

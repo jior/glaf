@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.test.core;
+package com.glaf.core.test;
 
 import org.junit.After;
 import org.junit.Before;

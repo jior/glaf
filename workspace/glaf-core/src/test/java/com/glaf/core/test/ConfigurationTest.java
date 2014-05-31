@@ -1,4 +1,4 @@
-package com.glaf.test.core;
+package com.glaf.core.test;
 
 import com.glaf.core.config.*;
 

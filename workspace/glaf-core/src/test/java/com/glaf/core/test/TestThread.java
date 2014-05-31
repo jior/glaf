@@ -16,23 +16,24 @@
  * limitations under the License.
  */
 
-package com.glaf.test.core;
+package com.glaf.core.test;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import com.glaf.core.util.DateUtils;
+import com.glaf.core.util.threads.ThreadFactory;
 
-public class TestThread2 extends Thread {
+public class TestThread extends Thread {
 
 	private int count;
 
-	public TestThread2(int count) {
+	public TestThread(int count) {
 		this.count = count;
 	}
 
 	public void start() {
-		System.out.println(count + "-------------start------------");
+		System.out.println("TestThread-" + count
+				+ "-------------start------------");
 	}
 
 	public void run() {
@@ -41,16 +42,21 @@ public class TestThread2 extends Thread {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		System.out.println(count + "-------------run------------");
+		System.out.println("TestThread-" + count
+				+ "-------------run------------");
 		System.out.println(DateUtils.getDateTime(new java.util.Date()));
 	}
 
 	public static void main(String[] args) {
-		ExecutorService executorService = Executors.newFixedThreadPool(10);
-		for (int i = 0; i < 500; i++) {
-			TestThread2 t = new TestThread2(i);
-			executorService.execute(t);
+		for (int i = 0; i < 200; i++) {
+			TestThread t = new TestThread(i);
+			ThreadFactory.execute(t, 60, TimeUnit.SECONDS);
+			System.out.println("i=" + i);
+			// try {
+			// Thread.sleep(i * 3);
+			// } catch (InterruptedException e) {
+			// e.printStackTrace();
+			// }
 		}
 	}
-
 }

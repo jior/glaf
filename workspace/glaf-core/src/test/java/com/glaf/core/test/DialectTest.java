@@ -1,4 +1,4 @@
-package com.glaf.test.core;
+package com.glaf.core.test;
 
 import java.util.HashMap;
 import java.util.Map;
