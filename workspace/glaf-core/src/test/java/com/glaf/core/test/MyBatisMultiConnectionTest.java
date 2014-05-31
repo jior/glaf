@@ -30,7 +30,6 @@ import com.alibaba.druid.util.JdbcUtils;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.identity.User;
 import com.glaf.core.jdbc.DBConnectionFactory;
-import com.glaf.core.util.PropertiesUtils;
 
 public class MyBatisMultiConnectionTest {
 
@@ -39,12 +38,13 @@ public class MyBatisMultiConnectionTest {
 	static {
 		try {
 			reader = Resources.getResourceAsReader("configuration.xml");
-			java.util.Properties properties = PropertiesUtils
-					.loadClassPathResource("/jdbc.properties");
-			sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader,
-					properties);
-		} catch (Exception e) {
-			e.printStackTrace();
+			// java.util.Properties properties =
+			// com.glaf.core.util.PropertiesUtils.loadClassPathResource("/jdbc.properties");
+			// sqlSessionFactory = new
+			// SqlSessionFactoryBuilder().build(reader,properties);
+			sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 	}
 
