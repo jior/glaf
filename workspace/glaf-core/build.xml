@@ -26,7 +26,8 @@
       <fileset dir="." excludes="**/*.cvs,**/*.bak,**/*.tmp,**/*.scc,**/*.svn" includes=".classpath, .project, .settings/**, *.bat, *.xml, *.txt, conf/**/*.*,template/**/*.*, jar-conf/**/*.*, mapping/**/*.*, sql/**/*.*, src/**/*.*,bpmn/**/*.zip,jpdl/**/*.zip"/> 
     </jar>  
     <jar jarfile="glaf-core.jar"> 
-      <fileset dir="bin" includes="com/glaf/core/**/*.class,com/glaf/core/**/*.xml,com/glaf/core/**/*.properties"/>  
+      <fileset dir="bin" includes="com/glaf/core/**/*.class,com/glaf/core/**/*.xml,com/glaf/core/**/*.properties"
+	           excludes="com/glaf/core/test/**/*.*"/> 
       <fileset dir="jar-conf" includes="**/*.xml,**/*.properties"/> 
     </jar>  
     <jar jarfile="glaf-core-min.jar"> 
