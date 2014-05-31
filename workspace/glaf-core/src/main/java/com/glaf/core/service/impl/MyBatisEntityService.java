@@ -50,7 +50,9 @@ public class MyBatisEntityService implements EntityService {
 	@Transactional
 	public void deleteAll(String statementId, List<Object> rows) {
 		if (rows != null && rows.size() > 0) {
-			entityDAO.deleteAll(statementId, rows);
+			for (Object object : rows) {
+				entityDAO.deleteById(statementId, object);
+			}
 		}
 	}
 

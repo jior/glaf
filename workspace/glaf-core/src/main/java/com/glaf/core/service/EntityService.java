@@ -39,7 +39,7 @@ public interface EntityService {
 	void delete(String statementId, Object parameterObject);
 
 	/**
-	 * 删除多条记录
+	 * 根据主键值删除多条记录
 	 * 
 	 * @param statementId
 	 * @param parameterObject
@@ -101,14 +101,11 @@ public interface EntityService {
 	 */
 	List<Object> getList(String statementId, Object parameterObject);
 
-	/**
-	 * 获取单个对象
-	 * 
-	 * @param statementId
-	 * @param parameterObject
-	 * @return
-	 */
-	Object getSingleObject(String statementId, Object parameterObject);
+	@Transactional
+	String getNextId();
+
+	@Transactional
+	String getNextId(String name);
 
 	/**
 	 * 获取一页记录
@@ -121,6 +118,15 @@ public interface EntityService {
 	 */
 	Paging getPage(int pageNo, int pageSize, SqlExecutor countExecutor,
 			SqlExecutor queryExecutor);
+
+	/**
+	 * 获取单个对象
+	 * 
+	 * @param statementId
+	 * @param parameterObject
+	 * @return
+	 */
+	Object getSingleObject(String statementId, Object parameterObject);
 
 	/**
 	 * 插入一条记录
@@ -142,12 +148,6 @@ public interface EntityService {
 
 	@Transactional
 	IdBlock nextDbidBlock(String name);
-
-	@Transactional
-	String getNextId();
-
-	@Transactional
-	String getNextId(String name);
 
 	@Transactional
 	Long nextId();
