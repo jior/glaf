@@ -1,6 +1,8 @@
 package ${packageName}.mapper;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import org.springframework.stereotype.Component;
 import ${packageName}.domain.*;
 import ${packageName}.query.*;

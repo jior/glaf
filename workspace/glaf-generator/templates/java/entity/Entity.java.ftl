@@ -40,6 +40,7 @@ public class ${entityName} implements Serializable, JSONable {
         @Temporal(TemporalType.TIMESTAMP)
         @Column(name = "${field.columnName}")	
 	<#elseif ( field.type== 'Clob' )>
+	@javax.persistence.Lob
         @Column(name = "${field.columnName}") 
 	<#elseif ( field.type== 'String' )>
         @Column(name = "${field.columnName}", length=${field.length?c}) 
@@ -49,7 +50,11 @@ public class ${entityName} implements Serializable, JSONable {
     <#else>
         @Transient
     </#if>
+        <#if ( field.type== 'Clob')>
+	protected String ${field.name};
+	<#else>
         protected ${field.type} ${field.name};
+	</#if>
 
   </#if>
 </#list>
@@ -72,10 +77,15 @@ public class ${entityName} implements Serializable, JSONable {
 <#if pojo_fields?exists>
 <#list  pojo_fields as field>	
   <#if  field.type?exists >
-	public ${field.type} get${field.firstUpperName}(){
+        <#if ( field.type== 'Clob')>
+	public String get${field.firstUpperName}(){
 	    return this.${field.name};
 	}
-
+	<#else>
+        public ${field.type} get${field.firstUpperName}(){
+	    return this.${field.name};
+	}
+	</#if>
   </#if>
 </#list>
 </#if>
@@ -84,10 +94,15 @@ public class ${entityName} implements Serializable, JSONable {
 <#if pojo_fields?exists>
 <#list  pojo_fields as field>	
   <#if  field.type?exists >
-	public void set${field.firstUpperName}(${field.type} ${field.name}) {
+        <#if ( field.type== 'Clob')>
+	public void set${field.firstUpperName}(String ${field.name}) {
 	    this.${field.name} = ${field.name}; 
-	}	 
-
+	}
+	<#else>
+        public void set${field.firstUpperName}(${field.type} ${field.name}) {
+	    this.${field.name} = ${field.name}; 
+	}
+	</#if>
   </#if>
 </#list>
 </#if>
