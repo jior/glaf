@@ -78,7 +78,8 @@ public class XmlWriter {
 				elem.addAttribute("title", field.getTitle());
 				elem.addAttribute("englishTitle", field.getEnglishTitle());
 
-				if (field.getLength() > 0) {
+				if (StringUtils.equals(field.getType(), "String")
+						&& field.getLength() > 0) {
 					elem.addAttribute("length",
 							String.valueOf(field.getLength()));
 				}
