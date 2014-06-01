@@ -45,7 +45,7 @@ public class SysLog implements Serializable, JSONable {
 	@Column(name = "ACCOUNT", length = 50)
 	private String account;
 
-	@Column(name = "IP", length = 100)
+	@Column(name = "IP", length = 200)
 	private String ip;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -58,7 +58,7 @@ public class SysLog implements Serializable, JSONable {
 	@Column(name = "OPERATE", length = 50)
 	private String operate;
 
-	@Column(name = "CONTENT", length = 500)
+	@Column(name = "CONTENT", length = 2000)
 	private String content;
 
 	@Column(name = "FLAG")
