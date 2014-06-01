@@ -12,7 +12,7 @@ CREATE TABLE SYS_APPLICATION(
         name varchar(255),
 	type varchar(50),
 	code varchar(255),
-        appdesc varchar(255),
+        appdesc varchar(500),
         url varchar(255),
         sort int,
         showmenu int,
@@ -25,7 +25,7 @@ CREATE TABLE SYS_APPLICATION(
 CREATE TABLE SYS_DEPARTMENT(
         id bigint NOT NULL,
         name varchar(255),
-        deptdesc varchar(255),
+        deptdesc varchar(500),
         createtime timestamp,
         sort int,
         deptno varchar(255),
@@ -51,7 +51,7 @@ CREATE TABLE SYS_FUNCTION(
         id bigint NOT NULL,
         name varchar(255),
 	code varchar(50),
-        funcdesc varchar(255),
+        funcdesc varchar(500),
         funcmethod varchar(255),
         sort int,
         appid bigint NOT NULL,
@@ -60,11 +60,14 @@ CREATE TABLE SYS_FUNCTION(
 
 CREATE TABLE SYS_LOG(
         id bigint NOT NULL,
-        account varchar(255),
+        account varchar(50),
+	moduleid varchar(50),
         ip varchar(255),
         createtime timestamp,
         operate varchar(255),
+	content varchar(2000),
         flag int,
+	timems int,
         PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
@@ -77,7 +80,7 @@ CREATE TABLE SYS_PERMISSION (
 CREATE TABLE SYS_ROLE(
         id bigint NOT NULL,
         name varchar(255),
-        roledesc varchar(255),
+        roledesc varchar(500),
         code varchar(255),
         sort int,
         PRIMARY KEY (id)
@@ -88,7 +91,7 @@ CREATE TABLE SYS_TREE (
         id bigint NOT NULL,
         parent bigint,
         name varchar(255),
-        nodedesc varchar(255),
+        nodedesc varchar(500),
 	cacheFlag varchar(1),
 	discriminator varchar(1),
 	moveable varchar(1),
@@ -293,7 +296,7 @@ CREATE TABLE MESSAGE(
         recver bigint,
         recverList varchar(2000) ,
         title varchar(500) ,
-        content varchar(2000) ,
+        content longtext ,
         createDate timestamp,
         readed int,
         category int,
@@ -317,30 +320,7 @@ CREATE TABLE MYMENU(
         PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
-CREATE TABLE SUBJECTCODE(
-        id bigint not null,
-        parent bigint,
-        subjectCode varchar(20),
-        subjectName varchar(100),
-        feeSum double ,
-        month1 double ,
-        month2 double ,
-        month3 double ,
-        month4 double ,
-        month5 double ,
-        month6 double ,
-        month7 double ,
-        month8 double ,
-        month9 double ,
-        month10 double ,
-        month11 double ,
-        month12 double ,
-        feeYear int ,
-        sort int ,
-        PRIMARY KEY (id)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
-
-
+ 
 CREATE TABLE ATTACHMENT (
 	id bigint  not null,
 	referId bigint  ,
@@ -356,26 +336,7 @@ CREATE TABLE ATTACHMENT (
 	PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 
-
-  CREATE TABLE MYAUDIT (
-	id bigint not null,
-	referId bigint ,
-	referType int ,
-	deptId bigint ,
-	deptName varchar (50) ,
-	headship varchar (100) ,
-	leaderName varchar (100) ,
-	leaderId bigint ,
-	createDate timestamp ,
-	memo longtext ,
-	flag int ,
-	crUser varchar (20) ,
-	crDate timestamp ,
-	edUser varchar (20) ,
-	edDate timestamp , 
-	PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
-
+ 
 
 create table SYS_DBID(
         name_ varchar(50)  not null,

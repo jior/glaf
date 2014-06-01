@@ -13,7 +13,7 @@ CREATE TABLE SYS_APPLICATION(
         name nvarchar(255),
 	type nvarchar(50),
 	code nvarchar(255),
-        appdesc nvarchar(255),
+        appdesc nvarchar(500),
         url nvarchar(255),
         sort int,
         showmenu int,
@@ -26,7 +26,7 @@ CREATE TABLE SYS_APPLICATION(
 CREATE TABLE SYS_DEPARTMENT(
         id bigint not null,
         name nvarchar(255),
-        deptdesc nvarchar(255),
+        deptdesc nvarchar(500),
         createtime datetime,
         sort int,
         deptno nvarchar(255),
@@ -52,7 +52,7 @@ CREATE TABLE SYS_FUNCTION(
         id bigint not null,
         name nvarchar(255),
 	code nvarchar(50),
-        funcdesc nvarchar(255),
+        funcdesc nvarchar(500),
         funcmethod nvarchar(255),
         sort int,
         appid bigint NOT NULL,
@@ -61,11 +61,14 @@ CREATE TABLE SYS_FUNCTION(
 
 CREATE TABLE SYS_LOG(
         id bigint not null,
-        account nvarchar(255),
+        account nvarchar(50),
+	moduleid nvarchar(50),
         ip nvarchar(255),
         createtime datetime,
         operate nvarchar(255),
+	content nvarchar(2000),
         flag int,
+	timems int,
         PRIMARY KEY (id)
 );
 
@@ -78,7 +81,7 @@ CREATE TABLE SYS_PERMISSION (
 CREATE TABLE SYS_ROLE(
         id bigint not null,
         name nvarchar(255),
-        roledesc nvarchar(255),
+        roledesc nvarchar(500),
         code nvarchar(255),
         sort int,
         PRIMARY KEY (id)
@@ -89,11 +92,11 @@ CREATE TABLE SYS_TREE (
         id bigint not null,
         parent bigint,
         name nvarchar(255),
-        nodedesc nvarchar(255),
+        nodedesc nvarchar(500),
 	cacheFlag nvarchar(1),
 	discriminator nvarchar(1),
 	moveable nvarchar(1),
-	treeId nvarchar(200),
+	treeId nvarchar(500),
         sort int,
         code nvarchar(255),
 	icon nvarchar(255),
@@ -140,7 +143,7 @@ CREATE TABLE SYS_USER_ROLE(
         authorizefrom bigint default 0,
         availdatestart datetime,
         availdateend datetime,
-        processdescription nvarchar(255),
+        processdescription nvarchar(500),
         PRIMARY KEY (id)
 );
 
@@ -148,7 +151,7 @@ CREATE TABLE SYS_DICTORY (
         id bigint not null,
         typeId bigint,
         name nvarchar(50),
-        dictDesc nvarchar(200),
+        dictDesc nvarchar(500),
         code nvarchar(50),
 	value_ nvarchar(2000),
         sort int,
@@ -225,7 +228,7 @@ CREATE TABLE SYS_TODO(
         title nvarchar(255),
         type nvarchar(50),
 	provider varchar(50),
-        sql_ text,
+        sql_ nvarchar(max) null,
 	sortno int,
         versionno bigint,
         PRIMARY KEY (id)
@@ -264,7 +267,7 @@ CREATE TABLE SYS_TODO_INSTANCE(
   CREATE TABLE SYS_SCHEDULER (
         id nvarchar(50) not null,
 	autoStartup int,
-        createBy nvarchar(255),
+        createBy nvarchar(50),
         createDate datetime,
 	title nvarchar(200),
         content nvarchar(500),
@@ -293,7 +296,7 @@ CREATE TABLE MESSAGE(
         recver bigint,
         recverList nvarchar(2000) ,
         title nvarchar(500) ,
-        content nvarchar(2000) ,
+        content nvarchar(max) null,
         createDate datetime,
         readed int,
         category int,
@@ -317,29 +320,6 @@ CREATE TABLE MYMENU(
         PRIMARY KEY (id)
 );
 
-CREATE TABLE SUBJECTCODE(
-        id bigint not null ,
-        parent bigint,
-        subjectCode nvarchar(20),
-        subjectName nvarchar(100),
-        feeSum double precision ,
-        month1 double precision ,
-        month2 double precision ,
-        month3 double precision ,
-        month4 double precision ,
-        month5 double precision ,
-        month6 double precision ,
-        month7 double precision ,
-        month8 double precision ,
-        month9 double precision ,
-        month10 double precision ,
-        month11 double precision ,
-        month12 double precision ,
-        feeYear int ,
-        sort int ,
-        PRIMARY KEY (id)
-    );
-
 
 CREATE TABLE ATTACHMENT (
 	id bigint  not null,
@@ -356,25 +336,7 @@ CREATE TABLE ATTACHMENT (
 	PRIMARY KEY (id)
 );
 
-
-  CREATE TABLE MYAUDIT (
-	id bigint not null,
-	referId bigint ,
-	referType int ,
-	deptId bigint ,
-	deptName nvarchar (50) ,
-	headship nvarchar (100) ,
-	leaderName nvarchar (100) ,
-	leaderId bigint ,
-	createDate datetime ,
-	memo text ,
-	flag int ,
-	crUser nvarchar (20) ,
-	crDate datetime ,
-	edUser nvarchar (20) ,
-	edDate datetime , 
-	PRIMARY KEY (id)
-);
+ 
 
 create table SYS_DBID(
         name_ nvarchar(50)  not null,
@@ -426,7 +388,7 @@ create table SYS_PARAMS(
         long_val bigint,
         service_key nvarchar(50) not null,
         string_val nvarchar(2000),
-        text_val text,
+        text_val nvarchar(max),
         title nvarchar(200),
         type_cd nvarchar(20) not null,
         primary key (id)

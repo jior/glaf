@@ -12,7 +12,7 @@ CREATE TABLE SYS_APPLICATION(
         name varchar(255),
 	type varchar(50),
 	code varchar(255),
-        appdesc varchar(255),
+        appdesc varchar(500),
         url varchar(255),
         sort integer,
         showmenu integer,
@@ -25,7 +25,7 @@ CREATE TABLE SYS_APPLICATION(
 CREATE TABLE SYS_DEPARTMENT(
         id bigint not null,
         name varchar(255),
-        deptdesc varchar(255),
+        deptdesc varchar(500),
         createtime timestamp,
         sort integer,
         deptno varchar(255),
@@ -51,7 +51,7 @@ CREATE TABLE SYS_FUNCTION(
         id bigint not null,
         name varchar(255),
 	code varchar(50),
-        funcdesc varchar(255),
+        funcdesc varchar(500),
         funcmethod varchar(255),
         sort integer,
         appid bigint  not null,
@@ -60,11 +60,14 @@ CREATE TABLE SYS_FUNCTION(
 
 CREATE TABLE SYS_LOG(
         id bigint not null,
-        account varchar(255),
+        account varchar(50),
+	moduleid varchar(50),
         ip varchar(255),
         createtime timestamp,
         operate varchar(255),
+	content varchar(2000),
         flag integer,
+	timems int,
         PRIMARY KEY (id)
 );
 
@@ -77,7 +80,7 @@ CREATE TABLE SYS_PERMISSION (
 CREATE TABLE SYS_ROLE(
         id bigint not null,
         name varchar(255),
-        roledesc varchar(255),
+        roledesc varchar(500),
         code varchar(255),
         sort integer,
         PRIMARY KEY (id)
@@ -88,7 +91,7 @@ CREATE TABLE SYS_TREE (
         id bigint not null,
         parent bigint,
         name varchar(255),
-        nodedesc varchar(255),
+        nodedesc varchar(500),
 	cacheFlag varchar(1),
 	discriminator varchar(1),
 	moveable varchar(1),
@@ -141,7 +144,7 @@ CREATE TABLE SYS_USER_ROLE(
         authorizefrom bigint default 0,
         availdatestart timestamp,
         availdateend timestamp,
-        processdescription varchar(255),
+        processdescription varchar(500),
         PRIMARY KEY (id)
 );
 
@@ -149,7 +152,7 @@ CREATE TABLE SYS_DICTORY (
         id bigint not null,
         typeId bigint,
         name varchar(50),
-        dictDesc varchar(200),
+        dictDesc varchar(500),
         code varchar(50),
 	value_ varchar(2000),
         sort integer,
@@ -294,7 +297,7 @@ CREATE TABLE MESSAGE(
         recver bigint,
         recverList varchar(2000) ,
         title varchar(500) ,
-        content varchar(2000) ,
+        content clob ,
         createDate timestamp,
         readed integer,
         category integer,
@@ -318,29 +321,6 @@ CREATE TABLE MYMENU(
         PRIMARY KEY (id)
 );
 
-CREATE TABLE SUBJECTCODE(
-        id bigint not null,
-        parent bigint,
-        subjectCode varchar(20),
-        subjectName varchar(100),
-        feeSum double precision ,
-        month1 double precision ,
-        month2 double precision ,
-        month3 double precision ,
-        month4 double precision ,
-        month5 double precision ,
-        month6 double precision ,
-        month7 double precision ,
-        month8 double precision ,
-        month9 double precision ,
-        month10 double precision ,
-        month11 double precision ,
-        month12 double precision ,
-        feeYear integer ,
-        sort integer ,
-        PRIMARY KEY (id)
-    );
-
 
 CREATE TABLE ATTACHMENT (
 	id bigint not null,
@@ -358,24 +338,6 @@ CREATE TABLE ATTACHMENT (
 );
 
 
-  CREATE TABLE MYAUDIT (
-	id bigint not null,
-	referId bigint ,
-	referType integer ,
-	deptId bigint ,
-	deptName varchar (50) ,
-	headship varchar (100) ,
-	leaderName varchar (100) ,
-	leaderId bigint ,
-	createDate timestamp ,
-	memo varchar (2000) ,
-	flag integer ,
-	crUser varchar (20) ,
-	crDate timestamp ,
-	edUser varchar (20) ,
-	edDate timestamp , 
-	PRIMARY KEY (id)
-);
 
 create table SYS_DBID(
         name_ varchar(50)  not null,
