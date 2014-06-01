@@ -1761,9 +1761,8 @@ public class DBUtils {
 					column.setNullable(false);
 				}
 
-				column.setName(StringTools.camelStyle(column.getColumnName()));
-				column.setEnglishTitle(StringTools.camelStyle(column
-						.getColumnName()));
+				column.setName(StringTools.camelStyle(name));
+				column.setEnglishTitle(StringTools.camelStyle(name));
 
 				columns.add(column);
 			}

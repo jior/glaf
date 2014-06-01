@@ -59,8 +59,7 @@ public class Database2XmlMapping {
 				List<String> primaryKeys = DBUtils.getPrimaryKeys(tableName);
 
 				for (FieldDefinition f : fields) {
-					f.setName(StringTools.lower(StringTools.camelStyle(f
-							.getName().toLowerCase())));
+					System.out.println(tableName+"--"+f.getName());
 					f.setTitle(f.getName());
 					if (!primaryKeys.isEmpty()) {
 						if (primaryKeys.contains(f.getColumnName()) || primaryKeys.contains(f.getColumnName().toLowerCase()) || primaryKeys.contains(f.getColumnName().toUpperCase())) {
@@ -90,8 +89,7 @@ public class Database2XmlMapping {
 				format.setNewLineAfterDeclaration(true);
 				format.setSuppressDeclaration(true);
 
-				String filename = classDefinition.getEntityName().toLowerCase()
-						+ ".mapping.xml";
+				String filename = classDefinition.getEntityName()+ ".mapping.xml";
 
 				String toFile = todir + "/" + filename;
 

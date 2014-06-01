@@ -52,6 +52,7 @@
 
 	     <java classname="com.glaf.generator.tools.Database2XmlMapping" fork="true">
 			<classpath refid="compile.classpath"/>
+			<jvmarg line=" -Ddatabase.column.original=true "/>
 			<arg line=" codegen/mapping "/>
 		</java> 
 

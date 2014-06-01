@@ -98,8 +98,10 @@ public class XmlWriter {
 					elem.addAttribute("editable",
 							String.valueOf(field.isEditable()));
 				}
-				elem.addAttribute("displayType",
-						String.valueOf(field.getDisplayType()));
+				if (field.getDisplayType() > 0) {
+					elem.addAttribute("displayType",
+							String.valueOf(field.getDisplayType()));
+				}
 			}
 		}
 		return doc;
