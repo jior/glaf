@@ -91,7 +91,7 @@ public class JavaCodeGen {
 		context.put("entityName", entityName);
 		context.put("modelName", modelName);
 		context.put("className", classDefinition.getClassName());
-		context.put("tableName", classDefinition.getTableName());
+		context.put("tableName", classDefinition.getTableName().toUpperCase());
 		context.put("newline", newline);
 		context.put("blank4", "    ");
 		context.put("blank8", "        ");
