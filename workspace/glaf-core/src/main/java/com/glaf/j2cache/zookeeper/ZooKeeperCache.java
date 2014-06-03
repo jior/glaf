@@ -163,11 +163,18 @@ public class ZooKeeperCache implements Cache {
 	public void put(Object key, Object value) throws CacheException {
 		checkRoot(regionName);
 		String path = "/" + regionName.replace('.', '_') + "/" + key;
-		remove(key.toString());
 		try {
-			getClient().create().withMode(CreateMode.PERSISTENT)
-					.forPath(path, SerializationUtils.serialize(value));
-			logger.debug("put key:" + key);
+			Stat stat = getClient().checkExists().forPath(path);
+			if (stat == null) {
+				getClient().create().withMode(CreateMode.PERSISTENT)
+						.inBackground()
+						.forPath(path, SerializationUtils.serialize(value));
+				logger.debug("add key:" + key);
+			} else {
+				getClient().setData().inBackground()
+						.forPath(path, SerializationUtils.serialize(value));
+				logger.debug("update key:" + key);
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			if (logger.isDebugEnabled()) {

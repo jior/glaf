@@ -17,6 +17,7 @@
  */
 package com.glaf.core.config.zookeeper;
 
+import java.nio.charset.Charset;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -31,6 +32,8 @@ public class ZooKeeperConfig implements Config {
 
 	protected static final Log logger = LogFactory
 			.getLog(ZooKeeperConfig.class);
+
+	private static final Charset CHARSET = Charset.forName("UTF-8");
 
 	protected CuratorFramework zkClient = null;
 
@@ -88,7 +91,7 @@ public class ZooKeeperConfig implements Config {
 			Stat stat = getClient().checkExists().forPath(path);
 			if (stat != null) {
 				byte[] data = getClient().getData().forPath(path);
-				return new String(data);
+				return new String(data, CHARSET);
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -102,11 +105,17 @@ public class ZooKeeperConfig implements Config {
 	public void put(final String key, final String value) {
 		checkRoot(regionName);
 		String path = "/" + regionName.replace('.', '_') + "/" + key;
-		remove(key);
 		try {
-			getClient().create().withMode(CreateMode.PERSISTENT)
-					.forPath(path, value.getBytes());
-			logger.debug("put key:" + key);
+			Stat stat = getClient().checkExists().forPath(path);
+			if (stat == null) {
+				getClient().create().withMode(CreateMode.PERSISTENT)
+						.inBackground().forPath(path, value.getBytes(CHARSET));
+				logger.debug("add key:" + key);
+			} else {
+				getClient().setData().inBackground()
+						.forPath(path, value.getBytes(CHARSET));
+				logger.debug("update key:" + key);
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			if (logger.isDebugEnabled()) {
