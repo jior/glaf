@@ -31,6 +31,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.ConnectionDefinition;
 import com.glaf.core.dialect.DB2Dialect;
 import com.glaf.core.dialect.Dialect;
@@ -40,6 +41,7 @@ import com.glaf.core.dialect.OracleDialect;
 import com.glaf.core.dialect.PostgreSQLDialect;
 import com.glaf.core.dialect.SQLServerDialect;
 import com.glaf.core.dialect.SQLiteDialect;
+import com.glaf.core.domain.util.ConnectionDefinitionJsonFactory;
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.util.Constants;
 import com.glaf.core.util.PropertiesUtils;
@@ -95,15 +97,15 @@ public class DBConfiguration {
 
 	public static final String HOST = "host";
 
-	public static final String USER = "user";
+	public static final String PORT = "port";
 
-	public static final String PASSWORD = "password";
+	public static final String DATABASE = "databaseName";
 
-	public static final String DATABASE_NAME = "databaseName";
+	public static final String SUBJECT = "subject";
 
 	protected static AtomicBoolean loading = new AtomicBoolean(false);
 
-	protected static ConcurrentMap<String, Properties> dataSourceProperties = new ConcurrentHashMap<String, Properties>();
+	protected static ConcurrentMap<String, ConnectionDefinition> dataSourceProperties = new ConcurrentHashMap<String, ConnectionDefinition>();
 
 	protected static ConcurrentMap<String, Properties> jdbcTemplateProperties = new ConcurrentHashMap<String, Properties>();
 
@@ -140,7 +142,10 @@ public class DBConfiguration {
 				if (DBConnectionFactory.checkConnection(p)) {
 					String url = p.getProperty(DBConfiguration.JDBC_URL);
 					String dbType = getDatabaseType(url);
-					dataSourceProperties.put(name, p);
+					ConnectionDefinition conn = toConnectionDefinition(p);
+					conn.setUrl(url);
+					conn.setType(dbType);
+					dataSourceProperties.put(name, conn);
 					dbTypes.put(name, dbType);
 				}
 			} catch (Exception ex) {
@@ -151,11 +156,17 @@ public class DBConfiguration {
 
 	/**
 	 * 添加数据源
-	 * @param name 名称
-	 * @param driver 驱动
-	 * @param url JDBC完整URL
-	 * @param user 数据库用户名
-	 * @param password 密码  
+	 * 
+	 * @param name
+	 *            名称
+	 * @param driver
+	 *            驱动
+	 * @param url
+	 *            JDBC完整URL
+	 * @param user
+	 *            数据库用户名
+	 * @param password
+	 *            密码
 	 */
 	public static void addDataSourceProperties(String name, String driver,
 			String url, String user, String password) {
@@ -170,7 +181,10 @@ public class DBConfiguration {
 				if (DBConnectionFactory.checkConnection(p)) {
 					String dbType = getDatabaseType(url);
 					p.put(JDBC_TYPE, dbType);
-					dataSourceProperties.put(name, p);
+					ConnectionDefinition conn = toConnectionDefinition(p);
+					conn.setUrl(url);
+					conn.setType(dbType);
+					dataSourceProperties.put(name, conn);
 					dbTypes.put(name, dbType);
 				}
 			} catch (Exception ex) {
@@ -180,42 +194,20 @@ public class DBConfiguration {
 	}
 
 	public static ConnectionDefinition getConnectionDefinition(String systemName) {
-		Properties props = dataSourceProperties.get(systemName);
-		if (props != null && !props.isEmpty()) {
-			ConnectionDefinition model = new ConnectionDefinition();
-			model.setDatasource(props.getProperty(JDBC_DATASOURCE));
-			model.setDriver(props.getProperty(JDBC_DRIVER));
-			model.setUrl(props.getProperty(JDBC_URL));
-			model.setName(props.getProperty(JDBC_NAME));
-			model.setUser(props.getProperty(JDBC_USER));
-			model.setPassword(props.getProperty(JDBC_PASSWORD));
-			model.setSubject(props.getProperty("subject"));
-			model.setProvider(props.getProperty(JDBC_PROVIDER));
-			model.setType(props.getProperty(JDBC_TYPE));
-
-			if (StringUtils.equals("true", props.getProperty(JDBC_AUTOCOMMIT))) {
-				model.setAutoCommit(true);
-			}
-
-			Properties p = new Properties();
-			Enumeration<?> e = props.keys();
-			while (e.hasMoreElements()) {
-				String key = (String) e.nextElement();
-				String value = props.getProperty(key);
-				p.put(key, value);
-			}
-			model.setProperties(p);
-			return model;
+		ConnectionDefinition model = dataSourceProperties.get(systemName);
+		if (model != null) {
+			JSONObject jsonObject = model.toJsonObject();
+			return ConnectionDefinitionJsonFactory.jsonToObject(jsonObject);
 		}
 		return null;
 	}
 
 	public static List<ConnectionDefinition> getConnectionDefinitions() {
 		List<ConnectionDefinition> rows = new java.util.ArrayList<ConnectionDefinition>();
-		Collection<Properties> list = dataSourceProperties.values();
+		Collection<ConnectionDefinition> list = dataSourceProperties.values();
 		if (list != null && !list.isEmpty()) {
-			for (Properties props : list) {
-				String name = props.getProperty(props.getProperty(JDBC_NAME));
+			for (ConnectionDefinition conn : list) {
+				String name = conn.getName();
 				ConnectionDefinition model = getConnectionDefinition(name);
 				rows.add(model);
 			}
@@ -233,13 +225,16 @@ public class DBConfiguration {
 
 	public static Properties getCurrentDataSourceProperties() {
 		String dsName = Environment.getCurrentSystemName();
-		Properties props = dataSourceProperties.get(dsName);
+		ConnectionDefinition conn = dataSourceProperties.get(dsName);
+		Properties props = toProperties(conn);
 		Properties p = new Properties();
-		Enumeration<?> e = props.keys();
-		while (e.hasMoreElements()) {
-			String key = (String) e.nextElement();
-			String value = props.getProperty(key);
-			p.put(key, value);
+		if (props != null) {
+			Enumeration<?> e = props.keys();
+			while (e.hasMoreElements()) {
+				String key = (String) e.nextElement();
+				String value = props.getProperty(key);
+				p.put(key, value);
+			}
 		}
 		return p;
 	}
@@ -322,12 +317,17 @@ public class DBConfiguration {
 	}
 
 	public static Map<String, Properties> getDataSourceProperties() {
-		return dataSourceProperties;
+		Map<String, Properties> map = new HashMap<String, Properties>();
+		if (dataSourceProperties != null && !dataSourceProperties.isEmpty()) {
+
+		}
+		return map;
 	}
 
 	public static Properties getDataSourcePropertiesByName(String name) {
 		logger.debug("->name:" + name);
-		Properties props = dataSourceProperties.get(name);
+		ConnectionDefinition conn = dataSourceProperties.get(name);
+		Properties props = toProperties(conn);
 		if (props == null || props.isEmpty()) {
 			props = getDefaultDataSourceProperties();
 		}
@@ -342,8 +342,9 @@ public class DBConfiguration {
 	}
 
 	public static Properties getDefaultDataSourceProperties() {
-		Properties props = dataSourceProperties
+		ConnectionDefinition conn = dataSourceProperties
 				.get(Environment.DEFAULT_SYSTEM_NAME);
+		Properties props = toProperties(conn);
 		if (props == null || props.isEmpty()) {
 			reloadDS();
 		}
@@ -418,13 +419,16 @@ public class DBConfiguration {
 		if (dataSourceProperties.isEmpty()) {
 			reloadDS();
 		}
-		Properties props = dataSourceProperties.get(name);
+		ConnectionDefinition conn = dataSourceProperties.get(name);
+		Properties props = toProperties(conn);
 		Properties p = new Properties();
-		Enumeration<?> e = props.keys();
-		while (e.hasMoreElements()) {
-			String key = (String) e.nextElement();
-			String value = props.getProperty(key);
-			p.put(key, value);
+		if (props != null) {
+			Enumeration<?> e = props.keys();
+			while (e.hasMoreElements()) {
+				String key = (String) e.nextElement();
+				String value = props.getProperty(key);
+				p.put(key, value);
+			}
 		}
 		return p;
 	}
@@ -525,8 +529,9 @@ public class DBConfiguration {
 														dbType);
 											}
 											dbTypes.put(name, dbType);
-											dataSourceProperties.put(name,
-													props);
+											ConnectionDefinition conn = toConnectionDefinition(props);
+											dataSourceProperties
+													.put(name, conn);
 										}
 									}
 								}
@@ -564,8 +569,8 @@ public class DBConfiguration {
 						logger.error(ex);
 					}
 				}
-				dataSourceProperties
-						.put(Environment.DEFAULT_SYSTEM_NAME, props);
+				ConnectionDefinition conn = toConnectionDefinition(props);
+				dataSourceProperties.put(Environment.DEFAULT_SYSTEM_NAME, conn);
 				if (dbType != null) {
 					dbTypes.put(Environment.DEFAULT_SYSTEM_NAME, dbType);
 				}
@@ -574,6 +579,61 @@ public class DBConfiguration {
 			}
 			logger.info("#datasources:" + dataSourceProperties.keySet());
 		}
+	}
+
+	public static ConnectionDefinition toConnectionDefinition(Properties props) {
+		if (props != null && !props.isEmpty()) {
+			ConnectionDefinition model = new ConnectionDefinition();
+			model.setDatasource(props.getProperty(JDBC_DATASOURCE));
+			model.setDriver(props.getProperty(JDBC_DRIVER));
+			model.setUrl(props.getProperty(JDBC_URL));
+			model.setName(props.getProperty(JDBC_NAME));
+			model.setUser(props.getProperty(JDBC_USER));
+			model.setPassword(props.getProperty(JDBC_PASSWORD));
+			model.setSubject(props.getProperty(SUBJECT));
+			model.setProvider(props.getProperty(JDBC_PROVIDER));
+			model.setType(props.getProperty(JDBC_TYPE));
+			model.setHost(props.getProperty(HOST));
+			model.setDatabase(props.getProperty(DATABASE));
+			if (StringUtils.isNotEmpty(props.getProperty(PORT))) {
+				model.setPort(Integer.parseInt(props.getProperty(PORT)));
+			}
+
+			if (StringUtils.equals("true", props.getProperty(JDBC_AUTOCOMMIT))) {
+				model.setAutoCommit(true);
+			}
+
+			Properties p = new Properties();
+			Enumeration<?> e = props.keys();
+			while (e.hasMoreElements()) {
+				String key = (String) e.nextElement();
+				String value = props.getProperty(key);
+				p.put(key, value);
+			}
+			model.setProperties(p);
+			return model;
+		}
+		return null;
+	}
+
+	public static Properties toProperties(ConnectionDefinition conn) {
+		if (conn != null) {
+			Properties props = new Properties();
+			props.setProperty(SUBJECT, conn.getSubject());
+			props.setProperty(JDBC_DATASOURCE, conn.getDatasource());
+			props.setProperty(JDBC_DRIVER, conn.getDriver());
+			props.setProperty(JDBC_URL, conn.getUrl());
+			props.setProperty(JDBC_NAME, conn.getName());
+			props.setProperty(JDBC_USER, conn.getUser());
+			props.setProperty(JDBC_PASSWORD, conn.getPassword());
+			props.setProperty(JDBC_PROVIDER, conn.getProvider());
+			props.setProperty(JDBC_TYPE, conn.getType());
+			props.setProperty(HOST, conn.getHost());
+			props.setProperty(PORT, String.valueOf(conn.getPort()));
+			props.setProperty(DATABASE, conn.getDatabase());
+			return props;
+		}
+		return null;
 	}
 
 	private DBConfiguration() {

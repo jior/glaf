@@ -18,7 +18,11 @@
 
 package com.glaf.core.base;
 
-public class ConnectionDefinition implements java.io.Serializable {
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.core.domain.util.ConnectionDefinitionJsonFactory;
+
+public class ConnectionDefinition implements java.io.Serializable, JSONable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -31,6 +35,12 @@ public class ConnectionDefinition implements java.io.Serializable {
 	protected String subject;
 
 	protected String datasource;
+	
+	protected String database;
+	
+	protected String host;
+	
+	protected int port;
 
 	protected String driver;
 
@@ -40,12 +50,56 @@ public class ConnectionDefinition implements java.io.Serializable {
 
 	protected String password;
 
+	protected String attribute;
+
 	protected boolean autoCommit;
 
 	protected java.util.Properties properties;
 
 	public ConnectionDefinition() {
 
+	}
+	
+	
+
+	public String getDatabase() {
+		return database;
+	}
+
+
+
+	public void setDatabase(String database) {
+		this.database = database;
+	}
+
+
+
+	public String getHost() {
+		return host;
+	}
+
+
+
+	public void setHost(String host) {
+		this.host = host;
+	}
+
+
+
+	public int getPort() {
+		return port;
+	}
+
+
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+
+
+	public String getAttribute() {
+		return attribute;
 	}
 
 	public String getDatasource() {
@@ -92,6 +146,14 @@ public class ConnectionDefinition implements java.io.Serializable {
 		return autoCommit;
 	}
 
+	public ConnectionDefinition jsonToObject(JSONObject jsonObject) {
+		return ConnectionDefinitionJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public void setAttribute(String attribute) {
+		this.attribute = attribute;
+	}
+
 	public void setAutoCommit(boolean autoCommit) {
 		this.autoCommit = autoCommit;
 	}
@@ -134,6 +196,14 @@ public class ConnectionDefinition implements java.io.Serializable {
 
 	public void setUser(String user) {
 		this.user = user;
+	}
+
+	public JSONObject toJsonObject() {
+		return ConnectionDefinitionJsonFactory.toJsonObject(this);
+	}
+
+	public ObjectNode toObjectNode() {
+		return ConnectionDefinitionJsonFactory.toObjectNode(this);
 	}
 
 }

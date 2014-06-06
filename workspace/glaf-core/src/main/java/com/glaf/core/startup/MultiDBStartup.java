@@ -111,7 +111,7 @@ public class MultiDBStartup implements Bootstrap {
 								}
 								logger.debug("databaseName:" + databaseName);
 								dataMap.put(DBConfiguration.HOST, host);
-								dataMap.put(DBConfiguration.DATABASE_NAME,
+								dataMap.put(DBConfiguration.DATABASE,
 										databaseName);
 								props.put(DBConfiguration.JDBC_USER,
 										rs.getString(3));

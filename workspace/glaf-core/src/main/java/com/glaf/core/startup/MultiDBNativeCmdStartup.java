@@ -115,17 +115,17 @@ public class MultiDBNativeCmdStartup implements Bootstrap {
 								}
 								logger.debug("databaseName:" + databaseName);
 								dataMap.put(DBConfiguration.HOST, host);
-								dataMap.put(DBConfiguration.DATABASE_NAME,
+								dataMap.put(DBConfiguration.DATABASE,
 										databaseName);
 								props.put(DBConfiguration.JDBC_USER,
 										rs.getString(3));
 								props.put(DBConfiguration.JDBC_PASSWORD,
 										rs.getString(4));
 								props.put(DBConfiguration.HOST, host);
-								props.put(DBConfiguration.DATABASE_NAME,
+								props.put(DBConfiguration.DATABASE,
 										databaseName);
-								props.put(DBConfiguration.USER, user);
-								props.put(DBConfiguration.PASSWORD, password);
+								props.put(DBConfiguration.JDBC_USER, user);
+								props.put(DBConfiguration.JDBC_PASSWORD, password);
 
 								logger.debug(dataMap);
 								String url = ExpressionTools.evaluate(old_url,
