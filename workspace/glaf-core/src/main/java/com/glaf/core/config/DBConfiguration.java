@@ -101,6 +101,8 @@ public class DBConfiguration {
 
 	public static final String DATABASE = "databaseName";
 
+	public static final String DATABASE_NAME = "databaseName";
+
 	public static final String SUBJECT = "subject";
 
 	protected static AtomicBoolean loading = new AtomicBoolean(false);
