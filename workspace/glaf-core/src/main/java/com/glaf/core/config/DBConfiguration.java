@@ -619,18 +619,33 @@ public class DBConfiguration {
 	public static Properties toProperties(ConnectionDefinition conn) {
 		if (conn != null) {
 			Properties props = new Properties();
-			props.setProperty(SUBJECT, conn.getSubject());
-			props.setProperty(JDBC_DATASOURCE, conn.getDatasource());
+			if (conn.getSubject() != null) {
+				props.setProperty(SUBJECT, conn.getSubject());
+			}
+			if (conn.getDatasource() != null) {
+				props.setProperty(JDBC_DATASOURCE, conn.getDatasource());
+			}
+			if (conn.getName() != null) {
+				props.setProperty(JDBC_NAME, conn.getName());
+			}
 			props.setProperty(JDBC_DRIVER, conn.getDriver());
 			props.setProperty(JDBC_URL, conn.getUrl());
-			props.setProperty(JDBC_NAME, conn.getName());
 			props.setProperty(JDBC_USER, conn.getUser());
-			props.setProperty(JDBC_PASSWORD, conn.getPassword());
-			props.setProperty(JDBC_PROVIDER, conn.getProvider());
-			props.setProperty(JDBC_TYPE, conn.getType());
-			props.setProperty(HOST, conn.getHost());
+			if (conn.getPassword() != null) {
+				props.setProperty(JDBC_PASSWORD, conn.getPassword());
+			}
+			if (conn.getProvider() != null) {
+				props.setProperty(JDBC_PROVIDER, conn.getProvider());
+			}
+			String type = getDatabaseType(conn.getUrl());
+			props.setProperty(JDBC_TYPE, type);
+			if (conn.getHost() != null) {
+				props.setProperty(HOST, conn.getHost());
+			}
 			props.setProperty(PORT, String.valueOf(conn.getPort()));
-			props.setProperty(DATABASE, conn.getDatabase());
+			if (conn.getDatabase() != null) {
+				props.setProperty(DATABASE, conn.getDatabase());
+			}
 			return props;
 		}
 		return null;

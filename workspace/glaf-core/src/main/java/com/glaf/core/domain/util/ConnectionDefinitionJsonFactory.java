@@ -59,6 +59,15 @@ public class ConnectionDefinitionJsonFactory {
 		if (jsonObject.containsKey("password")) {
 			model.setPassword(jsonObject.getString("password"));
 		}
+		if (jsonObject.containsKey("host")) {
+			model.setHost(jsonObject.getString("host"));
+		}
+		if (jsonObject.containsKey("port")) {
+			model.setPort(jsonObject.getInteger("port"));
+		}
+		if (jsonObject.containsKey("database")) {
+			model.setDatabase(jsonObject.getString("database"));
+		}
 		if (jsonObject.containsKey("attribute")) {
 			model.setAttribute(jsonObject.getString("attribute"));
 		}
@@ -94,6 +103,15 @@ public class ConnectionDefinitionJsonFactory {
 		if (model.getPassword() != null) {
 			jsonObject.put("password", model.getPassword());
 		}
+		if (model.getHost() != null) {
+			jsonObject.put("host", model.getHost());
+		}
+		if (model.getPort() != 0) {
+			jsonObject.put("port", model.getPort());
+		}
+		if (model.getDatabase() != null) {
+			jsonObject.put("database", model.getDatabase());
+		}
 		if (model.getAttribute() != null) {
 			jsonObject.put("attribute", model.getAttribute());
 		}
@@ -127,6 +145,15 @@ public class ConnectionDefinitionJsonFactory {
 		}
 		if (model.getPassword() != null) {
 			jsonObject.put("password", model.getPassword());
+		}
+		if (model.getHost() != null) {
+			jsonObject.put("host", model.getHost());
+		}
+		if (model.getPort() != 0) {
+			jsonObject.put("port", model.getPort());
+		}
+		if (model.getDatabase() != null) {
+			jsonObject.put("database", model.getDatabase());
 		}
 		if (model.getAttribute() != null) {
 			jsonObject.put("attribute", model.getAttribute());

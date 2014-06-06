@@ -35,11 +35,11 @@ public class ConnectionDefinition implements java.io.Serializable, JSONable {
 	protected String subject;
 
 	protected String datasource;
-	
+
 	protected String database;
-	
+
 	protected String host;
-	
+
 	protected int port;
 
 	protected String driver;
@@ -59,44 +59,30 @@ public class ConnectionDefinition implements java.io.Serializable, JSONable {
 	public ConnectionDefinition() {
 
 	}
-	
-	
 
 	public String getDatabase() {
 		return database;
 	}
 
-
-
 	public void setDatabase(String database) {
 		this.database = database;
 	}
-
-
 
 	public String getHost() {
 		return host;
 	}
 
-
-
 	public void setHost(String host) {
 		this.host = host;
 	}
-
-
 
 	public int getPort() {
 		return port;
 	}
 
-
-
 	public void setPort(int port) {
 		this.port = port;
 	}
-
-
 
 	public String getAttribute() {
 		return attribute;
