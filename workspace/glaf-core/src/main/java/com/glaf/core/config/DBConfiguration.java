@@ -149,6 +149,14 @@ public class DBConfiguration {
 		}
 	}
 
+	/**
+	 * 添加数据源
+	 * @param name 名称
+	 * @param driver 驱动
+	 * @param url JDBC完整URL
+	 * @param user 数据库用户名
+	 * @param password 密码  
+	 */
 	public static void addDataSourceProperties(String name, String driver,
 			String url, String user, String password) {
 		if (!dataSourceProperties.containsKey(name)) {
