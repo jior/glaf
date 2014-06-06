@@ -171,35 +171,44 @@ public class DBConfiguration {
 		}
 	}
 
+	public static ConnectionDefinition getConnectionDefinition(String systemName) {
+		Properties props = dataSourceProperties.get(systemName);
+		if (props != null && !props.isEmpty()) {
+			ConnectionDefinition model = new ConnectionDefinition();
+			model.setDatasource(props.getProperty(JDBC_DATASOURCE));
+			model.setDriver(props.getProperty(JDBC_DRIVER));
+			model.setUrl(props.getProperty(JDBC_URL));
+			model.setName(props.getProperty(JDBC_NAME));
+			model.setUser(props.getProperty(JDBC_USER));
+			model.setPassword(props.getProperty(JDBC_PASSWORD));
+			model.setSubject(props.getProperty("subject"));
+			model.setProvider(props.getProperty(JDBC_PROVIDER));
+			model.setType(props.getProperty(JDBC_TYPE));
+
+			if (StringUtils.equals("true", props.getProperty(JDBC_AUTOCOMMIT))) {
+				model.setAutoCommit(true);
+			}
+
+			Properties p = new Properties();
+			Enumeration<?> e = props.keys();
+			while (e.hasMoreElements()) {
+				String key = (String) e.nextElement();
+				String value = props.getProperty(key);
+				p.put(key, value);
+			}
+			model.setProperties(p);
+			return model;
+		}
+		return null;
+	}
+
 	public static List<ConnectionDefinition> getConnectionDefinitions() {
 		List<ConnectionDefinition> rows = new java.util.ArrayList<ConnectionDefinition>();
 		Collection<Properties> list = dataSourceProperties.values();
 		if (list != null && !list.isEmpty()) {
 			for (Properties props : list) {
-				ConnectionDefinition model = new ConnectionDefinition();
-				model.setDatasource(props.getProperty(JDBC_DATASOURCE));
-				model.setDriver(props.getProperty(JDBC_DRIVER));
-				model.setUrl(props.getProperty(JDBC_URL));
-				model.setName(props.getProperty(JDBC_NAME));
-				model.setUser(props.getProperty(JDBC_USER));
-				model.setPassword(props.getProperty(JDBC_PASSWORD));
-				model.setSubject(props.getProperty("subject"));
-				model.setProvider(props.getProperty(JDBC_PROVIDER));
-				model.setType(props.getProperty(JDBC_TYPE));
-
-				if (StringUtils.equals("true",
-						props.getProperty(JDBC_AUTOCOMMIT))) {
-					model.setAutoCommit(true);
-				}
-
-				Properties p = new Properties();
-				Enumeration<?> e = props.keys();
-				while (e.hasMoreElements()) {
-					String key = (String) e.nextElement();
-					String value = props.getProperty(key);
-					p.put(key, value);
-				}
-				model.setProperties(p);
+				String name = props.getProperty(props.getProperty(JDBC_NAME));
+				ConnectionDefinition model = getConnectionDefinition(name);
 				rows.add(model);
 			}
 		}
