@@ -31,6 +31,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.ConnectionDefinition;
 import com.glaf.core.dialect.DB2Dialect;
@@ -131,24 +132,27 @@ public class DBConfiguration {
 		reloadDS();
 	}
 
+	/**
+	 * 添加数据源
+	 * 
+	 * @param name
+	 *            名称
+	 * @param props
+	 *            属性
+	 */
 	public static void addDataSourceProperties(String name, Properties props) {
 		if (!dataSourceProperties.containsKey(name)) {
-			Properties p = new Properties();
-			Enumeration<?> e = props.keys();
-			while (e.hasMoreElements()) {
-				String key = (String) e.nextElement();
-				String value = props.getProperty(key);
-				p.put(key, value);
-			}
 			try {
-				if (DBConnectionFactory.checkConnection(p)) {
-					String url = p.getProperty(DBConfiguration.JDBC_URL);
+				if (DBConnectionFactory.checkConnection(props)) {
+					String url = props.getProperty(DBConfiguration.JDBC_URL);
+					ConnectionDefinition conn = toConnectionDefinition(props);
 					String dbType = getDatabaseType(url);
-					ConnectionDefinition conn = toConnectionDefinition(p);
 					conn.setUrl(url);
 					conn.setType(dbType);
-					dataSourceProperties.put(name, conn);
 					dbTypes.put(name, dbType);
+					dataSourceProperties.put(name, conn);
+					ConfigFactory.put(DBConfiguration.class.getSimpleName(),
+							name, conn.toJsonObject().toJSONString());
 				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -173,21 +177,23 @@ public class DBConfiguration {
 	public static void addDataSourceProperties(String name, String driver,
 			String url, String user, String password) {
 		if (!dataSourceProperties.containsKey(name)) {
-			Properties p = new Properties();
-			p.put(JDBC_NAME, name);
-			p.put(JDBC_DRIVER, driver);
-			p.put(JDBC_URL, url);
-			p.put(JDBC_USER, user);
-			p.put(JDBC_PASSWORD, password);
+			Properties props = new Properties();
+			props.put(JDBC_NAME, name);
+			props.put(JDBC_DRIVER, driver);
+			props.put(JDBC_URL, url);
+			props.put(JDBC_USER, user);
+			props.put(JDBC_PASSWORD, password);
 			try {
-				if (DBConnectionFactory.checkConnection(p)) {
+				if (DBConnectionFactory.checkConnection(props)) {
+					ConnectionDefinition conn = toConnectionDefinition(props);
 					String dbType = getDatabaseType(url);
-					p.put(JDBC_TYPE, dbType);
-					ConnectionDefinition conn = toConnectionDefinition(p);
 					conn.setUrl(url);
 					conn.setType(dbType);
-					dataSourceProperties.put(name, conn);
 					dbTypes.put(name, dbType);
+					props.put(JDBC_TYPE, dbType);
+					dataSourceProperties.put(name, conn);
+					ConfigFactory.put(DBConfiguration.class.getSimpleName(),
+							name, conn.toJsonObject().toJSONString());
 				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -199,6 +205,12 @@ public class DBConfiguration {
 		ConnectionDefinition model = dataSourceProperties.get(systemName);
 		if (model != null) {
 			JSONObject jsonObject = model.toJsonObject();
+			return ConnectionDefinitionJsonFactory.jsonToObject(jsonObject);
+		}
+		String text = ConfigFactory.getString(
+				DBConfiguration.class.getSimpleName(), systemName);
+		if (StringUtils.isNotEmpty(text)) {
+			JSONObject jsonObject = JSON.parseObject(text);
 			return ConnectionDefinitionJsonFactory.jsonToObject(jsonObject);
 		}
 		return null;
@@ -218,34 +230,27 @@ public class DBConfiguration {
 	}
 
 	public static String getCurrentDatabaseType() {
-		Properties props = getCurrentDataSourceProperties();
-		if (props != null) {
-			return props.getProperty(JDBC_TYPE);
+		String currentSystemName = Environment.getCurrentSystemName();
+		ConnectionDefinition conn = getConnectionDefinition(currentSystemName);
+		if (conn != null && conn.getType() != null) {
+			return conn.getType();
 		}
 		return null;
 	}
 
 	public static Properties getCurrentDataSourceProperties() {
-		String dsName = Environment.getCurrentSystemName();
-		ConnectionDefinition conn = dataSourceProperties.get(dsName);
+		String currentSystemName = Environment.getCurrentSystemName();
+		ConnectionDefinition conn = getConnectionDefinition(currentSystemName);
 		Properties props = toProperties(conn);
-		Properties p = new Properties();
-		if (props != null) {
-			Enumeration<?> e = props.keys();
-			while (e.hasMoreElements()) {
-				String key = (String) e.nextElement();
-				String value = props.getProperty(key);
-				p.put(key, value);
-			}
-		}
-		return p;
+		return props;
 	}
 
 	public static Dialect getCurrentDialect() {
 		Map<String, Dialect> dialects = getDialects();
-		Properties props = getCurrentDataSourceProperties();
-		if (props != null) {
-			String dbType = props.getProperty(JDBC_TYPE);
+		String currentSystemName = Environment.getCurrentSystemName();
+		ConnectionDefinition conn = getConnectionDefinition(currentSystemName);
+		if (conn != null && conn.getType() != null) {
+			String dbType = conn.getType();
 			if (dbType == null) {
 				dbType = getCurrentDatabaseType();
 			}
@@ -257,9 +262,10 @@ public class DBConfiguration {
 
 	public static String getCurrentDialectClass() {
 		Properties dialects = getDialectMappings();
-		Properties props = getDefaultDataSourceProperties();
-		if (props != null) {
-			String dbType = props.getProperty(JDBC_TYPE);
+		String currentSystemName = Environment.getCurrentSystemName();
+		ConnectionDefinition conn = getConnectionDefinition(currentSystemName);
+		if (conn != null && conn.getType() != null) {
+			String dbType = conn.getType();
 			if (dbType == null) {
 				dbType = getCurrentDatabaseType();
 			}
@@ -271,9 +277,10 @@ public class DBConfiguration {
 
 	public static String getCurrentHibernateDialect() {
 		Properties dialects = getHibernateDialectMappings();
-		Properties props = getDefaultDataSourceProperties();
-		if (props != null) {
-			String dbType = props.getProperty(JDBC_TYPE);
+		String currentSystemName = Environment.getCurrentSystemName();
+		ConnectionDefinition conn = getConnectionDefinition(currentSystemName);
+		if (conn != null && conn.getType() != null) {
+			String dbType = conn.getType();
 			if (dbType == null) {
 				dbType = getCurrentDatabaseType();
 			}
@@ -315,51 +322,42 @@ public class DBConfiguration {
 	}
 
 	public static String getDatabaseTypeByName(String systemName) {
-		return dbTypes.get(systemName);
+		if (dbTypes.get(systemName) != null) {
+			return dbTypes.get(systemName);
+		}
+		ConnectionDefinition conn = getConnectionDefinition(systemName);
+		if (conn != null && conn.getType() != null) {
+			return conn.getType();
+		}
+		return null;
 	}
 
 	public static Map<String, Properties> getDataSourceProperties() {
-		Map<String, Properties> map = new HashMap<String, Properties>();
+		Map<String, Properties> dsMap = new HashMap<String, Properties>();
 		if (dataSourceProperties != null && !dataSourceProperties.isEmpty()) {
-
+			Iterator<ConnectionDefinition> iterator = dataSourceProperties
+					.values().iterator();
+			while (iterator.hasNext()) {
+				ConnectionDefinition conn = iterator.next();
+				dsMap.put(conn.getName(), toProperties(conn));
+			}
 		}
-		return map;
+		return dsMap;
 	}
 
 	public static Properties getDataSourcePropertiesByName(String name) {
 		logger.debug("->name:" + name);
-		ConnectionDefinition conn = dataSourceProperties.get(name);
+		ConnectionDefinition conn = getConnectionDefinition(name);
 		Properties props = toProperties(conn);
 		if (props == null || props.isEmpty()) {
 			props = getDefaultDataSourceProperties();
 		}
-		Properties p = new Properties();
-		Enumeration<?> e = props.keys();
-		while (e.hasMoreElements()) {
-			String key = (String) e.nextElement();
-			String value = props.getProperty(key);
-			p.put(key, value);
-		}
-		return p;
+		return props;
 	}
 
 	public static Properties getDefaultDataSourceProperties() {
-		ConnectionDefinition conn = dataSourceProperties
-				.get(Environment.DEFAULT_SYSTEM_NAME);
-		Properties props = toProperties(conn);
-		if (props == null || props.isEmpty()) {
-			reloadDS();
-		}
-		Properties p = new Properties();
-		if (props != null && !props.isEmpty()) {
-			Enumeration<?> e = props.keys();
-			while (e.hasMoreElements()) {
-				String key = (String) e.nextElement();
-				String value = props.getProperty(key);
-				p.put(key, value);
-			}
-		}
-		return p;
+		Properties props = getDataSourcePropertiesByName(Environment.DEFAULT_SYSTEM_NAME);
+		return props;
 	}
 
 	public static String getDefaultHibernateDialect() {
@@ -421,18 +419,9 @@ public class DBConfiguration {
 		if (dataSourceProperties.isEmpty()) {
 			reloadDS();
 		}
-		ConnectionDefinition conn = dataSourceProperties.get(name);
+		ConnectionDefinition conn = getConnectionDefinition(name);
 		Properties props = toProperties(conn);
-		Properties p = new Properties();
-		if (props != null) {
-			Enumeration<?> e = props.keys();
-			while (e.hasMoreElements()) {
-				String key = (String) e.nextElement();
-				String value = props.getProperty(key);
-				p.put(key, value);
-			}
-		}
-		return p;
+		return props;
 	}
 
 	public static Properties getTemplateProperties(String name) {
@@ -516,25 +505,22 @@ public class DBConfiguration {
 								Properties props = PropertiesUtils
 										.loadProperties(new FileInputStream(
 												file));
-								if (props != null) {
-									if (DBConnectionFactory
-											.checkConnection(props)) {
-										String name = props
-												.getProperty(JDBC_NAME);
-										if (StringUtils.isNotEmpty(name)) {
-											String dbType = props
-													.getProperty(JDBC_TYPE);
-											if (StringUtils.isEmpty(dbType)) {
-												dbType = getDatabaseType(props
-														.getProperty(JDBC_URL));
-												props.setProperty(JDBC_TYPE,
-														dbType);
-											}
-											dbTypes.put(name, dbType);
-											ConnectionDefinition conn = toConnectionDefinition(props);
-											dataSourceProperties
-													.put(name, conn);
+								if (DBConnectionFactory.checkConnection(props)) {
+									String name = props.getProperty(JDBC_NAME);
+									if (StringUtils.isNotEmpty(name)) {
+										String dbType = props
+												.getProperty(JDBC_TYPE);
+										if (StringUtils.isEmpty(dbType)) {
+											dbType = getDatabaseType(props
+													.getProperty(JDBC_URL));
+											props.setProperty(JDBC_TYPE, dbType);
 										}
+										ConnectionDefinition conn = toConnectionDefinition(props);
+										dbTypes.put(name, dbType);
+										dataSourceProperties.put(name, conn);
+										ConfigFactory.put(DBConfiguration.class
+												.getSimpleName(), name, conn
+												.toJsonObject().toJSONString());
 									}
 								}
 							} catch (Exception ex) {
@@ -544,14 +530,12 @@ public class DBConfiguration {
 						}
 					}
 				}
-
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				logger.error(ex);
 			} finally {
 				loading.set(false);
 			}
-
 			String filename = SystemProperties.getConfigRootPath()
 					+ Constants.DEFAULT_JDBC_CONFIG;
 			File file = new File(filename);
@@ -578,6 +562,9 @@ public class DBConfiguration {
 				}
 				jdbcTemplateProperties.put(Environment.DEFAULT_SYSTEM_NAME,
 						props);
+				ConfigFactory.put(DBConfiguration.class.getSimpleName(),
+						Environment.DEFAULT_SYSTEM_NAME, conn.toJsonObject()
+								.toJSONString());
 			}
 			logger.info("#datasources:" + dataSourceProperties.keySet());
 		}
