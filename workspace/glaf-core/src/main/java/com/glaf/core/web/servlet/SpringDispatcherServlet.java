@@ -76,10 +76,10 @@ public class SpringDispatcherServlet extends DispatcherServlet {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		
+
 		ThreadContextHolder.setHttpRequest(request);
 		ThreadContextHolder.setHttpResponse(response);
-
+		ThreadContextHolder.setServletContext(request.getServletContext());
 		try {
 			super.doService(request, response);
 		} finally {

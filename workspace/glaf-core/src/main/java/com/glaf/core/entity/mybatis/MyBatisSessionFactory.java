@@ -35,6 +35,7 @@ import org.springframework.core.io.Resource;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.AnnotationUtils;
 import com.glaf.core.util.ClassUtils;
+import com.glaf.core.util.ThreadContextHolder;
 
 public class MyBatisSessionFactory {
 	private static final Log logger = LogFactory
@@ -59,6 +60,15 @@ public class MyBatisSessionFactory {
 			for (String className : entities) {
 				configuration.addMapper(ClassUtils.classForName(className));
 				logger.debug("add mapper class " + className);
+			}
+
+			if (ThreadContextHolder.getServletContext() != null) {
+				entities = AnnotationUtils.findMapper(
+						ThreadContextHolder.getServletContext(), "com.glaf");
+				for (String className : entities) {
+					configuration.addMapper(ClassUtils.classForName(className));
+					logger.debug("->add mapper class " + className);
+				}
 			}
 
 			String path = SystemProperties.getConfigRootPath() + "/conf/mapper";

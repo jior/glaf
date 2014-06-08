@@ -18,20 +18,23 @@
 
 package com.glaf.core.util;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class ThreadContextHolder {
 
+	private static ThreadLocal<ServletContext> servletContextThreadLocalHolder = new ThreadLocal<ServletContext>();
 	private static ThreadLocal<HttpServletRequest> HttpRequestThreadLocalHolder = new ThreadLocal<HttpServletRequest>();
 	private static ThreadLocal<HttpServletResponse> HttpResponseThreadLocalHolder = new ThreadLocal<HttpServletResponse>();
 
-	public static void clear(){
+	public static void clear() {
 		HttpRequestThreadLocalHolder.remove();
 		HttpResponseThreadLocalHolder.remove();
+		servletContextThreadLocalHolder.remove();
 	}
-	
+
 	public static HttpServletRequest getHttpRequest() {
 		return HttpRequestThreadLocalHolder.get();
 	}
@@ -44,12 +47,20 @@ public class ThreadContextHolder {
 		return getHttpRequest().getSession();
 	}
 
+	public static ServletContext getServletContext() {
+		return servletContextThreadLocalHolder.get();
+	}
+
 	public static void setHttpRequest(HttpServletRequest request) {
 		HttpRequestThreadLocalHolder.set(request);
 	}
 
 	public static void setHttpResponse(HttpServletResponse response) {
 		HttpResponseThreadLocalHolder.set(response);
+	}
+
+	public static void setServletContext(ServletContext servletContext) {
+		servletContextThreadLocalHolder.set(servletContext);
 	}
 
 	private ThreadContextHolder() {
