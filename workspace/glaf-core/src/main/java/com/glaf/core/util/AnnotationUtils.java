@@ -26,6 +26,7 @@ import java.util.TreeSet;
 
 import javax.servlet.ServletContext;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.scannotation.AnnotationDB;
@@ -49,6 +50,7 @@ public class AnnotationUtils {
 		try {
 			db.scanArchives(url);
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		}
 		return db;
@@ -72,6 +74,7 @@ public class AnnotationUtils {
 				db.scanArchives(url2);
 			}
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		}
 		return db;
@@ -127,6 +130,24 @@ public class AnnotationUtils {
 		return sortSet;
 	}
 
+	public static Collection<String> findMapper(String packagePrefix) {
+		AnnotationDB db = getAnnotationDB(packagePrefix);
+		Map<String, Set<String>> annotationIndex = db.getAnnotationIndex();
+		Set<String> entities = annotationIndex
+				.get("org.springframework.stereotype.Component");
+		Collection<String> sortSet = new TreeSet<String>();
+		if (entities != null && !entities.isEmpty()) {
+			for (String str : entities) {
+				//System.out.println(str);
+				if (packagePrefix != null && str.contains(packagePrefix)
+						&& StringUtils.contains(str, ".mapper.")) {
+					sortSet.add(str);
+				}
+			}
+		}
+		return sortSet;
+	}
+
 	public static Collection<String> findWebJPAEntity(
 			ServletContext servletContext, String packagePrefix) {
 		AnnotationDB db = new AnnotationDB();
@@ -153,8 +174,7 @@ public class AnnotationUtils {
 
 	public static void main(String[] args) throws Exception {
 		long start = System.currentTimeMillis();
-		Collection<String> entities = AnnotationUtils
-				.findJPAEntity("com.glaf");
+		Collection<String> entities = AnnotationUtils.findMapper("com.glaf");
 		long time = System.currentTimeMillis() - start;
 		for (String str : entities) {
 			System.out.println(str);
