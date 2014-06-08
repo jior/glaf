@@ -28,7 +28,7 @@ import javax.servlet.ServletContext;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
- 
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.config.DBConfiguration;
@@ -125,7 +125,8 @@ public class MultiDBNativeCmdStartup implements Bootstrap {
 								props.put(DBConfiguration.DATABASE,
 										databaseName);
 								props.put(DBConfiguration.JDBC_USER, user);
-								props.put(DBConfiguration.JDBC_PASSWORD, password);
+								props.put(DBConfiguration.JDBC_PASSWORD,
+										password);
 
 								logger.debug(dataMap);
 								String url = ExpressionTools.evaluate(old_url,

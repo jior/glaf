@@ -28,7 +28,7 @@ import javax.servlet.ServletContext;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
- 
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.config.DBConfiguration;
@@ -112,6 +112,9 @@ public class MultiDBStartup implements Bootstrap {
 								logger.debug("databaseName:" + databaseName);
 								dataMap.put(DBConfiguration.HOST, host);
 								dataMap.put(DBConfiguration.DATABASE,
+										databaseName);
+								props.put(DBConfiguration.HOST, host);
+								props.put(DBConfiguration.DATABASE,
 										databaseName);
 								props.put(DBConfiguration.JDBC_USER,
 										rs.getString(3));
