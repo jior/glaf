@@ -18,9 +18,19 @@
 
 package com.glaf.core.entity.mybatis;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
+import java.util.zip.ZipInputStream;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;
@@ -33,17 +43,18 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
 import com.glaf.core.config.SystemProperties;
-import com.glaf.core.util.AnnotationUtils;
-import com.glaf.core.util.ClassUtils;
-import com.glaf.core.util.ThreadContextHolder;
+import com.glaf.core.util.FileUtils;
+import com.glaf.core.util.IOUtils;
 
 public class MyBatisSessionFactory {
-	private static final Log logger = LogFactory
+	protected static final Log logger = LogFactory
 			.getLog(MyBatisSessionFactory.class);
 
 	private static class MyBatisSessionFactoryHolder {
 		public static MyBatisSessionFactory instance = new MyBatisSessionFactory();
 	}
+
+	private static int BUFFER = 8192;
 
 	private static SqlSessionFactory sqlSessionFactory;
 
@@ -51,27 +62,139 @@ public class MyBatisSessionFactory {
 		reloadSessionFactory();
 	}
 
+	public static Map<String, byte[]> getZipBytesMap(
+			ZipInputStream zipInputStream) {
+		Map<String, byte[]> zipMap = new java.util.HashMap<String, byte[]>();
+		java.util.zip.ZipEntry zipEntry = null;
+		ByteArrayOutputStream baos = null;
+		BufferedOutputStream bos = null;
+		byte tmpByte[] = null;
+		try {
+			while ((zipEntry = zipInputStream.getNextEntry()) != null) {
+				String name = zipEntry.getName();
+				if (StringUtils.endsWith(name, "Mapper.xml")) {
+					tmpByte = new byte[BUFFER];
+					baos = new ByteArrayOutputStream();
+					bos = new BufferedOutputStream(baos, BUFFER);
+					int i = 0;
+					while ((i = zipInputStream.read(tmpByte, 0, BUFFER)) != -1) {
+						bos.write(tmpByte, 0, i);
+					}
+					bos.flush();
+					byte[] bytes = baos.toByteArray();
+					IOUtils.closeStream(baos);
+					IOUtils.closeStream(baos);
+					zipMap.put(zipEntry.getName(), bytes);
+				}
+			}
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			IOUtils.closeStream(baos);
+			IOUtils.closeStream(baos);
+		}
+		return zipMap;
+	}
+
+	public static Map<String, byte[]> getLibMappers() {
+		List<String> includes = new ArrayList<String>();
+		includes.add("Mapper.xml");
+		Map<String, byte[]> dataMap = new HashMap<String, byte[]>();
+		String path = SystemProperties.getConfigRootPath() + "/lib";
+		File dir = new File(path);
+		File contents[] = dir.listFiles();
+		if (contents != null) {
+			ZipInputStream zipInputStream = null;
+			for (int i = 0; i < contents.length; i++) {
+				if (contents[i].isFile()
+						&& contents[i].getName().startsWith("glaf")
+						&& contents[i].getName().endsWith(".jar")) {
+					try {
+						zipInputStream = new ZipInputStream(
+								FileUtils.getInputStream(contents[i]
+										.getAbsolutePath()));
+						Map<String, byte[]> zipMap = getZipBytesMap(zipInputStream);
+						if (zipMap != null && !zipMap.isEmpty()) {
+							dataMap.putAll(zipMap);
+						}
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+				}
+			}
+		}
+		return dataMap;
+	}
+
+	public static List<String> getClassPathMappers() {
+		List<String> list = new ArrayList<String>();
+		String path = SystemProperties.getConfigRootPath()
+				+ "/classes/com/glaf";
+		loadMappers(list, new File(path));
+		return list;
+	}
+
+	private static void loadMappers(List<String> list, File dir) {
+		if (dir.isDirectory()) {
+			File contents[] = dir.listFiles();
+			if (contents != null) {
+				for (int i = 0; i < contents.length; i++) {
+					if (contents[i].isFile()
+							&& contents[i].getName().endsWith("Mapper.xml")) {
+						list.add(contents[i].getAbsolutePath());
+					} else {
+						loadMappers(list, contents[i]);
+					}
+				}
+			}
+		} else if (dir.isFile() && dir.getName().endsWith("Mapper.xml")) {
+			list.add(dir.getAbsolutePath());
+		}
+	}
+
 	protected static void reloadSessionFactory() {
 		long start = System.currentTimeMillis();
+		Set<String> mappers = new HashSet<String>();
+		Configuration configuration = new Configuration();
+		String path = SystemProperties.getConfigRootPath() + "/conf/mapper";
 		try {
-			Configuration configuration = new Configuration();
-			Collection<String> entities = AnnotationUtils
-					.findMapper("com.glaf");
-			for (String className : entities) {
-				configuration.addMapper(ClassUtils.classForName(className));
-				logger.debug("add mapper class " + className);
-			}
-
-			if (ThreadContextHolder.getServletContext() != null) {
-				entities = AnnotationUtils.findMapper(
-						ThreadContextHolder.getServletContext(), "com.glaf");
-				for (String className : entities) {
-					configuration.addMapper(ClassUtils.classForName(className));
-					logger.debug("->add mapper class " + className);
+			Map<String, byte[]> dataMap = getLibMappers();
+			for (int i = 0; i < dataMap.size(); i++) {
+				Set<Entry<String, byte[]>> entrySet = dataMap.entrySet();
+				for (Entry<String, byte[]> entry : entrySet) {
+					String key = entry.getKey();
+					if (key.indexOf("/") != -1) {
+						key = key.substring(key.lastIndexOf("/"), key.length());
+					}
+					byte[] bytes = entry.getValue();
+					String filename = path + "/" + key;
+					try {
+						FileUtils.save(filename, bytes);
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
 				}
 			}
 
-			String path = SystemProperties.getConfigRootPath() + "/conf/mapper";
+			List<String> list = getClassPathMappers();
+			for (int i = 0; i < list.size(); i++) {
+				Resource mapperLocation = new FileSystemResource(list.get(i));
+				try {
+					XMLMapperBuilder xmlMapperBuilder = new XMLMapperBuilder(
+							mapperLocation.getInputStream(), configuration,
+							mapperLocation.toString(),
+							configuration.getSqlFragments());
+					xmlMapperBuilder.parse();
+					mappers.add(mapperLocation.getFilename());
+				} catch (Exception e) {
+					throw new NestedIOException(
+							"Failed to parse mapping resource: '"
+									+ mapperLocation + "'", e);
+				} finally {
+					ErrorContext.instance().reset();
+				}
+			}
+
 			File dir = new File(path);
 			if (dir.exists() && dir.isDirectory()) {
 				File contents[] = dir.listFiles();
@@ -79,6 +202,9 @@ public class MyBatisSessionFactory {
 					for (int i = 0; i < contents.length; i++) {
 						if (contents[i].isFile()
 								&& contents[i].getName().endsWith("Mapper.xml")) {
+							if (mappers.contains(contents[i].getName())) {
+								continue;
+							}
 							Resource mapperLocation = new FileSystemResource(
 									contents[i]);
 							try {
@@ -99,7 +225,6 @@ public class MyBatisSessionFactory {
 					}
 				}
 			}
-
 			sqlSessionFactory = new SqlSessionFactoryBuilder()
 					.build(configuration);
 		} catch (Exception ex) {
