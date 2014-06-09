@@ -29,6 +29,10 @@ public class ContextUtils {
 
 	private static ConcurrentMap<Object, Object> dataMap = new ConcurrentHashMap<Object, Object>();
 
+	public static void clear(){
+		dataMap.clear();
+	}
+	
 	public static Object get(Object key) {
 		String sys_name = Constants.SYSTEM_NAME;
 		if (sys_name != null) {

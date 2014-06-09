@@ -18,6 +18,9 @@
 
 package com.glaf.core.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,11 +31,26 @@ public class ThreadContextHolder {
 	private static ThreadLocal<ServletContext> servletContextThreadLocalHolder = new ThreadLocal<ServletContext>();
 	private static ThreadLocal<HttpServletRequest> HttpRequestThreadLocalHolder = new ThreadLocal<HttpServletRequest>();
 	private static ThreadLocal<HttpServletResponse> HttpResponseThreadLocalHolder = new ThreadLocal<HttpServletResponse>();
+	private static ThreadLocal<Map<String, Object>> dataMapHolder = new ThreadLocal<Map<String, Object>>();
+
+	public static void addData(String key, Object value) {
+		Map<String, Object> dataMap = dataMapHolder.get();
+		if (dataMap == null) {
+			dataMap = new HashMap<String, Object>();
+			dataMapHolder.set(dataMap);
+		}
+		dataMap.put(key, value);
+	}
 
 	public static void clear() {
+		dataMapHolder.remove();
 		HttpRequestThreadLocalHolder.remove();
 		HttpResponseThreadLocalHolder.remove();
 		servletContextThreadLocalHolder.remove();
+	}
+
+	public static Map<String, Object> getDataMap() {
+		return dataMapHolder.get();
 	}
 
 	public static HttpServletRequest getHttpRequest() {
