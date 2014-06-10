@@ -37,6 +37,8 @@ public class MailMessage extends BaseMessage {
 
 	private String[] bcc;
 
+	private String replyTo;
+
 	private String encoding;
 
 	private boolean saveMessage;
@@ -108,6 +110,10 @@ public class MailMessage extends BaseMessage {
 		return mailId;
 	}
 
+	public String getReplyTo() {
+		return replyTo;
+	}
+
 	public String[] getTo() {
 		return this.to;
 	}
@@ -162,6 +168,10 @@ public class MailMessage extends BaseMessage {
 
 	public void setMailId(String mailId) {
 		this.mailId = mailId;
+	}
+
+	public void setReplyTo(String replyTo) {
+		this.replyTo = replyTo;
 	}
 
 	public void setSaveMessage(boolean saveMessage) {

@@ -96,8 +96,6 @@ public class MailSenderImpl implements MailSender {
 
 	public void send(JavaMailSender javaMailSender, MailMessage mailMessage)
 			throws Exception {
-		StringBuffer buffer = new StringBuffer();
-
 		if (StringUtils.isEmpty(mailMessage.getMessageId())) {
 			mailMessage.setMessageId(UUID32.getUUID());
 		}
@@ -122,29 +120,18 @@ public class MailSenderImpl implements MailSender {
 
 		if (mailMessage.getTo() != null) {
 			messageHelper.setTo(mailMessage.getTo());
-			String[] array = mailMessage.getTo();
-			for (int i = 0; i < array.length; i++) {
-				String elem = array[i];
-				buffer.append(elem).append(',');
-			}
 		}
 
 		if (mailMessage.getCc() != null) {
 			messageHelper.setCc(mailMessage.getCc());
-			String[] array = mailMessage.getCc();
-			for (int i = 0; i < array.length; i++) {
-				String elem = array[i];
-				buffer.append(elem).append(',');
-			}
 		}
 
 		if (mailMessage.getBcc() != null) {
 			messageHelper.setBcc(mailMessage.getBcc());
-			String[] array = mailMessage.getBcc();
-			for (int i = 0; i < array.length; i++) {
-				String elem = array[i];
-				buffer.append(elem).append(',');
-			}
+		}
+
+		if (mailMessage.getReplyTo() != null) {
+			messageHelper.setReplyTo(mailMessage.getReplyTo());
 		}
 
 		String mailSubject = mailMessage.getSubject();
