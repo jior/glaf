@@ -111,7 +111,7 @@ public class MailTableUtils {
 		column9.setJavaType("Long");
 		tableDefinition.addColumn(column9);
 
-		if (!DBUtils.tableExists(tableName)) {
+		if (!DBUtils.tableExists(conn, tableName)) {
 			DBUtils.createTable(conn, tableDefinition);
 		} else {
 			DBUtils.alterTable(conn, tableDefinition);
