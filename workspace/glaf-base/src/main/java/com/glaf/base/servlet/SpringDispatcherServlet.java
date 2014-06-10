@@ -48,6 +48,7 @@ public class SpringDispatcherServlet extends DispatcherServlet {
 	@Override
 	protected void doService(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
+		logger.debug("RequestURI:"+request.getRequestURI());
 		try {
 			String systemName = RequestUtils.getCurrentSystem(request);
 			if (systemName != null && !StringUtils.equals("GLAF", systemName)) {
