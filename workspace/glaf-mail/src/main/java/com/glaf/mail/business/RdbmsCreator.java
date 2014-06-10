@@ -19,17 +19,12 @@
 package com.glaf.mail.business;
 
 import java.sql.Connection;
-import java.sql.Statement;
-
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.util.DBUtils;
-import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.JdbcUtils;
-import com.glaf.core.util.StringTools;
 import com.glaf.mail.domain.MailStorage;
+import com.glaf.mail.util.MailTableUtils;
 
 public class RdbmsCreator implements StorageCreator {
 
@@ -39,27 +34,11 @@ public class RdbmsCreator implements StorageCreator {
 			return;
 		}
 		Connection conn = null;
-		Statement stmt = null;
 		try {
 			conn = DBConnectionFactory.getConnection();
-
-			String dbType = DBConnectionFactory.getDatabaseType(conn);
-			String filename = "com/glaf/mail/business/sql/create/mail."
-					+ dbType + ".create.sql";
-			Resource resource = new ClassPathResource(filename);
-
-			if (!resource.exists()) {
-				throw new RuntimeException(filename + " is not exists");
-			}
-			byte[] bytes = FileUtils.getBytes(resource.getInputStream());
-			String content = new String(bytes);
-			content = StringTools.replaceIgnoreCase(content, "${tableName}",
-					dataTable);
-			System.out.println(content);
-			stmt = conn.createStatement();
-			stmt.executeUpdate(content);
-			stmt.close();
-			stmt = null;
+			conn.setAutoCommit(false);
+			MailTableUtils.createTable(conn, dataTable);
+			conn.commit();
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		} finally {
