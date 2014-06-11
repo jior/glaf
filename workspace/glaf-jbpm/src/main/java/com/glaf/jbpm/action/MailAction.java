@@ -204,7 +204,7 @@ public class MailAction implements ActionHandler {
 		logger.debug("send actors:" + value);
 
 		if (StringUtils.isEmpty(value)) {
-			throw new RuntimeException("mail receipts is empty");
+			return;
 		}
 
 		Map<String, String> mailsTo = new HashMap<String, String>();
