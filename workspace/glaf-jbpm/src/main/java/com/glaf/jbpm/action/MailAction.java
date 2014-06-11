@@ -128,7 +128,7 @@ public class MailAction implements ActionHandler {
 		logger.debug("content:" + content);
 
 		if (StringUtils.isEmpty(subject) || StringUtils.isEmpty(content)) {
-			return;
+			throw new RuntimeException("subject or content is empty");
 		}
 
 		String process_starter = (String) contextInstance
@@ -204,7 +204,7 @@ public class MailAction implements ActionHandler {
 		logger.debug("send actors:" + value);
 
 		if (StringUtils.isEmpty(value)) {
-			return;
+			throw new RuntimeException("mail receipts is empty");
 		}
 
 		Map<String, String> mailsTo = new HashMap<String, String>();
@@ -224,7 +224,7 @@ public class MailAction implements ActionHandler {
 		logger.debug("send mailsTo:" + mailsTo);
 
 		if (mailsTo.size() == 0) {
-			return;
+			throw new RuntimeException("mail address is empty");
 		}
 
 		Iterator<String> iterator = mailsTo.keySet().iterator();
