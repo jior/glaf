@@ -25,25 +25,25 @@ import com.glaf.core.config.Configuration;
 
 public final class ThreadFactory {
 
-	protected final static QueuedThreadPool tp = new QueuedThreadPool();
+	protected final static QueuedThreadPool pool = new QueuedThreadPool();
 
 	protected final static Configuration conf = BaseConfiguration.create();
 
 	static {
-		tp.setMinThreads(conf.getInt("ThreadPool.minThreads", 5));
-		tp.setMaxThreads(conf.getInt("ThreadPool.maxThreads", 50));
-		tp.setMaxIdleTimeMs(conf.getInt("ThreadPool.maxIdleTimeMs", 5000));
-		tp.setThreadsPriority(Thread.NORM_PRIORITY - 1);
+		pool.setName("ThreadPool");
+		pool.setMinThreads(conf.getInt("ThreadPool.minThreads", 5));
+		pool.setMaxThreads(conf.getInt("ThreadPool.maxThreads", 50));
+		pool.setThreadsPriority(Thread.NORM_PRIORITY - 1);
 
 		try {
-			tp.start();
+			pool.start();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 
 	public static void run(java.lang.Runnable r) {
-		tp.dispatch(r);
+		pool.execute(r);
 	}
 
 	private ThreadFactory() {
