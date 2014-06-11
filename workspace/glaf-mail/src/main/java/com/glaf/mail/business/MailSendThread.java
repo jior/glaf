@@ -26,6 +26,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import com.glaf.core.config.SystemConfig;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.LogUtils;
@@ -91,6 +92,12 @@ public class MailSendThread implements Runnable {
 			logger.debug("send account:" + mailAccount);
 
 			String content = task.getContent();
+
+			if (StringUtils.isEmpty(task.getCallbackUrl())) {
+				String serviceUrl = SystemConfig.getServiceUrl();
+				String callbackUrl = serviceUrl + "/website/mail/receive/view";
+				task.setCallbackUrl(callbackUrl);
+			}
 
 			if (StringUtils.isNotEmpty(task.getCallbackUrl())) {
 				MxMailHelper mailHelper = new MxMailHelper();

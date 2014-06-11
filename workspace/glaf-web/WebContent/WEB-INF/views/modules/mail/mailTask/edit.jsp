@@ -3,7 +3,7 @@
     String serviceUrl = request.getScheme() + "://"
 					+ request.getServerName() + ":" + request.getServerPort()
 				    + request.getContextPath();
-	String callbackUrl = serviceUrl+"/rs/mail/receive/view";
+	String callbackUrl = serviceUrl+"/website/mail/receive/view";
 	String theme = com.glaf.core.util.RequestUtils.getTheme(request);
 	request.setAttribute("theme", theme);
 %>
@@ -31,14 +31,16 @@
                 });
 
 			function initData(){
-			    $('#iForm').form('load','<%=request.getContextPath()%>/rs/mail/mailTask/view/${taskId}');
+			    jQuery('#iForm').form('load','<%=request.getContextPath()%>/rs/mail/mailTask/view2/${taskId}');
+				
+				document.getElementById("storageId").value="${mailTask.storageId}";
 			}
 
 			function saveData(){
 				   document.getElementById("content").value=KE.html('content');
 			       var params = jQuery("#iForm").formSerialize();
 				   //alert(params);
-				    jQuery.ajax({
+				   jQuery.ajax({
 				   type: "POST",
 				   url: '<%=request.getContextPath()%>/rs/mail/mailTask/save',
 				   data: params,
@@ -73,20 +75,14 @@
 				 size="50"></input>
 				 </td>
 			</tr>
-			<tr>
-				 <td>回调地址</td>
-				 <td>
-                 <input id="callbackUrl" name="callbackUrl" class="x-text input-xlarge easyui-validatebox" type="text"
-				 size="50" value="<%=callbackUrl%>"></input>
-				 </td>
-			</tr>
+			 
 			<tr>
 				 <td>数据表</td>
 				 <td>
                     <select id="storageId" name="storageId">
-						<c:forEach items="${rows}" var="a">
-                                <option value="${a.id}">${a.subject}</option>
-						</c:forEach>
+					<c:forEach items="${rows}" var="a">
+                       <option value="${a.id}">${a.subject}</option>
+					</c:forEach>
                     </select>
 				 </td>
 			</tr>
@@ -175,9 +171,9 @@
  
   </div>
   <c:if test="${not empty taskId}">
-  <script type="text/javascript">
+   <script type="text/javascript">
          initData();
-  </script>
+   </script>
   </c:if>
 </body>
 </html>

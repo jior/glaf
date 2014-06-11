@@ -54,7 +54,7 @@
 			<tr>
 				 <td>主题</td>
 				 <td>
-                 <input id="subject" name="subject" required="true" size="50" class="x-text input-xlarge " type="text"
+                 <input id="subject" name="subject" required="true" size="50" class="x-text input-xlarge " type="text" value="${mailStorage.subject}"
 				 ></input>
 				 </td>
 			</tr>
@@ -67,7 +67,10 @@
 					<option value="2">Cassandra</option>
 					<option value="3">HBase</option> -->
                  </select>
-				 </td>
+                 <script type="text/javascript">
+                  document.getElementById("storageType").value="${mailStorage.storageType}";
+                 </script>
+				</td>
 			</tr>
 			<tr>
 				 <td>使用状态</td>
@@ -76,6 +79,9 @@
 						<option value="0" selected="selected">使用中</option>
 						<option value="1">存储空间满</option>
 				       </select>
+					   <script type="text/javascript">
+                         document.getElementById("status").value="${mailStorage.status}";
+                       </script>
 				 </td>
 			</tr>
 			<tr>

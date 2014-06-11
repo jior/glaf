@@ -58,7 +58,7 @@ public class MailAccount implements Serializable {
 	@Column(name = "USERNAME_", length = 100)
 	protected String username;
 
-	@Column(name = "PASSWORD_", length = 100)
+	@Column(name = "PASSWORD_", length = 200)
 	protected String password;
 
 	@Column(name = "POP3SERVER_", length = 100)

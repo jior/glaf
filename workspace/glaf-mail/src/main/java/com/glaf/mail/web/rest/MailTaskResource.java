@@ -634,4 +634,60 @@ public class MailTaskResource {
 			return responseJSON.toString().getBytes();
 		}
 	}
+	
+	@GET
+	@POST
+	@Path("/view2/{taskId}")
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] view2(@PathParam("taskId") String mailTaskId,
+			@Context HttpServletRequest request, @Context UriInfo uriInfo) {
+		MailTask mailTask = null;
+		if (StringUtils.isNotEmpty(mailTaskId)) {
+			mailTask = mailTaskService.getMailTask(mailTaskId);
+		}
+
+		ObjectNode responseJSON = new ObjectMapper().createObjectNode();
+		if (mailTask != null
+				&& StringUtils.equals(mailTask.getCreateBy(),
+						RequestUtils.getActorId(request))) {
+
+			responseJSON.put("id", mailTask.getId());
+			responseJSON.put("mailTaskId", mailTask.getId());
+			if (mailTask.getSubject() != null) {
+				responseJSON.put("subject", mailTask.getSubject());
+			}
+			if (mailTask.getCallbackUrl() != null) {
+				responseJSON.put("callbackUrl", mailTask.getCallbackUrl());
+			}
+
+			responseJSON.put("threadSize", mailTask.getThreadSize());
+
+			responseJSON.put("delayTime", mailTask.getDelayTime());
+
+			if (mailTask.getStartDate() != null) {
+				responseJSON.put("startDate",
+						DateUtils.getDateTime(mailTask.getStartDate()));
+			}
+			if (mailTask.getEndDate() != null) {
+				responseJSON.put("endDate",
+						DateUtils.getDateTime(mailTask.getEndDate()));
+			}
+
+			responseJSON.put("locked", String.valueOf(mailTask.getLocked()));
+
+			responseJSON.put("isHtml", String.valueOf(mailTask.isHtml()));
+
+			responseJSON.put("isBack", String.valueOf(mailTask.isBack()));
+
+			responseJSON.put("isUnSubscribe",
+					String.valueOf(mailTask.isUnSubscribe()));
+
+		}
+		try {
+			return responseJSON.toString().getBytes("UTF-8");
+		} catch (IOException e) {
+			return responseJSON.toString().getBytes();
+		}
+	}
 }

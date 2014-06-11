@@ -96,6 +96,13 @@ public class MailDataFacedeImpl implements MailDataFacede {
 						throw new RuntimeException(ex);
 					}
 				}
+			} else {
+				StorageCreator creator = new RdbmsCreator();
+				try {
+					creator.createStorage(storage);
+				} catch (Exception ex) {
+					throw new RuntimeException(ex);
+				}
 			}
 		}
 	}
@@ -621,7 +628,7 @@ public class MailDataFacedeImpl implements MailDataFacede {
 							mailItem);
 					try {
 						ThreadFactory.run(thread);
-						Thread.sleep(1000);
+						Thread.sleep(100);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}

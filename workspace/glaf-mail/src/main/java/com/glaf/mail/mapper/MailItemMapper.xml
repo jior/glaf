@@ -22,17 +22,95 @@
 
 
 	<insert id="insertMailItem" parameterType="com.glaf.mail.domain.MailItem">
-		insert into ${tableName} ( ID_, TASKID_, MAILTO_, SENDSTATUS_,
-		RECEIVESTATUS_,RETRYTIMES_, LASTMODIFIED_ )
-		values (
-		#{id,jdbcType=VARCHAR}
-		,#{taskId, jdbcType=VARCHAR}
-		,#{mailTo,jdbcType=VARCHAR}
-		,0
-		,0
-		,0
-		,#{lastModified, jdbcType=BIGINT}
-		)
+
+		insert into ${tableName}
+
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="accountId != null">
+				,ACCOUNTID_
+			</if>
+			<if test="taskId != null">
+				,TASKID_
+			</if>
+			<if test="mailTo != null">
+				,MAILTO_
+			</if>
+			<if test="sendDate != null">
+				,SENDDATE_
+			</if>
+			<if test="sendStatus != null">
+				,SENDSTATUS_
+			</if>
+			<if test="retryTimes != null">
+				,RETRYTIMES_
+			</if>
+			<if test="receiveIP != null">
+				,RECEIVEIP_
+			</if>
+			<if test="receiveDate != null">
+				,RECEIVEDATE_
+			</if>
+			<if test="contentType != null">
+				,CONTENTTYPE_
+			</if>
+			<if test="clientOS != null">
+				,CLIENTOS_
+			</if>
+			<if test="browser != null">
+				,BROWSER_
+			</if>
+			<if test="receiveStatus != null">
+				,RECEIVESTATUS_
+			</if>
+			<if test="lastModified != null">
+				,LASTMODIFIED_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=VARCHAR}
+
+			<if test="accountId != null">
+				,#{accountId, jdbcType=VARCHAR}
+			</if>
+			<if test="taskId != null">
+				,#{taskId, jdbcType=VARCHAR}
+			</if>
+			<if test="mailTo != null">
+				,#{mailTo, jdbcType=VARCHAR}
+			</if>
+			<if test="sendDate != null">
+				,#{sendDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="sendStatus != null">
+				,#{sendStatus, jdbcType=INTEGER}
+			</if>
+			<if test="retryTimes != null">
+				,#{retryTimes, jdbcType=INTEGER}
+			</if>
+			<if test="receiveIP != null">
+				,#{receiveIP, jdbcType=VARCHAR}
+			</if>
+			<if test="receiveDate != null">
+				,#{receiveDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="contentType != null">
+				,#{contentType, jdbcType=VARCHAR}
+			</if>
+			<if test="clientOS != null">
+				,#{clientOS, jdbcType=VARCHAR}
+			</if>
+			<if test="browser != null">
+				,#{browser, jdbcType=VARCHAR}
+			</if>
+			<if test="receiveStatus != null">
+				,#{receiveStatus, jdbcType=INTEGER}
+			</if>
+			<if test="lastModified != null">
+				,#{lastModified, jdbcType=BIGINT}
+			</if>
+		</trim>
 	</insert>
 
 
@@ -40,20 +118,38 @@
 
 		update ${tableName}
 		set
-		SENDDATE_ = #{sendDate, jdbcType=TIMESTAMP},
-		SENDSTATUS_ =
-		#{sendStatus, jdbcType=INTEGER},
-		RETRYTIMES_ =
-		#{retryTimes,
-		jdbcType=INTEGER},
-		ACCOUNTID_ = #{accountId,
-		jdbcType=VARCHAR},
-		RECEIVEIP_ = #{receiveIP, jdbcType=VARCHAR},
-		RECEIVEDATE_ =
-		#{receiveDate, jdbcType=TIMESTAMP},
-		RECEIVESTATUS_ =
-		#{receiveStatus,
-		jdbcType=INTEGER}
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="sendDate != null">
+				SENDDATE_ = #{sendDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="sendStatus != null">
+				SENDSTATUS_ = #{sendStatus, jdbcType=INTEGER},
+			</if>
+			<if test="retryTimes != null">
+				RETRYTIMES_ = #{retryTimes, jdbcType=INTEGER},
+			</if>
+			<if test="receiveIP != null">
+				RECEIVEIP_ = #{receiveIP, jdbcType=VARCHAR},
+			</if>
+			<if test="receiveDate != null">
+				RECEIVEDATE_ = #{receiveDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="contentType != null">
+				CONTENTTYPE_ = #{contentType, jdbcType=VARCHAR},
+			</if>
+			<if test="clientOS != null">
+				CLIENTOS_ = #{clientOS, jdbcType=VARCHAR},
+			</if>
+			<if test="browser != null">
+				BROWSER_ = #{browser, jdbcType=VARCHAR},
+			</if>
+			<if test="receiveStatus != null">
+				RECEIVESTATUS_ = #{receiveStatus, jdbcType=INTEGER},
+			</if>
+			<if test="lastModified != null">
+				LASTMODIFIED_ = #{lastModified, jdbcType=BIGINT},
+			</if>
+		</trim>
 		where
 		ID_ = #{id, jdbcType=VARCHAR}
 

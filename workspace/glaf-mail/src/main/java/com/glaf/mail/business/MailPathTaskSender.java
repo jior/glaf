@@ -140,6 +140,15 @@ public class MailPathTaskSender {
 			for (int i = 0; i < entries.length; i++) {
 				File file = entries[i];
 				if (file.exists() && file.isFile()) {
+					if (file.getName().equals("mail.properties")) {
+						continue;
+					}
+					if (file.getName().equals("hibernate.properties")) {
+						continue;
+					}
+					if (file.getName().endsWith("jdbc.properties")) {
+						continue;
+					}
 					String ext = FileUtils.getFileExt(file.getName());
 					if (StringUtils.isNotEmpty(mailTask.getExcludes())) {
 						if (StringUtils.containsIgnoreCase(
