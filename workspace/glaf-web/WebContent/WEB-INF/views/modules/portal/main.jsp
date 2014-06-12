@@ -54,7 +54,8 @@
 	function openTabs(subtitle,menuId){
 	  if(!$('#tabs').tabs('exists',subtitle)){
 		//alert(menuId);
-		openTabSize = openTabSize + 1;
+		//openTabSize = openTabSize + 1;
+		openTabSize = $("#tabs").tabs("tabs").length;
 		if(openTabSize > 10){
 			$('#tabs').tabs('close', 1);//关闭第二个,第一个为我的桌面，不能关闭
 		}
