@@ -18,6 +18,7 @@
 
 package com.glaf.activiti.service.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,14 @@ import org.activiti.engine.IdentityService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.impl.RepositoryServiceImpl;
+import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
+import org.activiti.engine.impl.pvm.PvmActivity;
+import org.activiti.engine.impl.pvm.PvmTransition;
+import org.activiti.engine.impl.pvm.process.ActivityImpl;
+import org.activiti.engine.impl.pvm.process.ProcessDefinitionImpl;
+import org.activiti.engine.impl.pvm.process.TransitionImpl;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
@@ -38,6 +47,7 @@ import com.glaf.activiti.model.DataField;
 import com.glaf.activiti.model.ProcessContext;
 import com.glaf.activiti.service.ActivitiProcessService;
 import com.glaf.core.util.Constants;
+import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.UUID32;
 
 @Service("activitiProcessService")
@@ -103,6 +113,94 @@ public class ActivitiProcessServiceImpl implements ActivitiProcessService {
 	}
 
 	/**
+	 * 取回任务
+	 * 
+	 * @param taskId
+	 * @return
+	 */
+	public byte[] callback(String taskId) {
+		Map<String, Object> variables = null;
+		try {
+			// 取得当前任务
+			HistoricTaskInstance historicTaskInstance = historyService
+					.createHistoricTaskInstanceQuery().taskId(taskId)
+					.singleResult();
+			// 取得流程实例
+			ProcessInstance processInstance = runtimeService
+					.createProcessInstanceQuery()
+					.processInstanceId(
+							historicTaskInstance.getProcessInstanceId())
+					.singleResult();
+			if (processInstance == null) {
+				return ResponseUtils.responseJsonResult(false, "流程已经结束");
+			}
+			variables = processInstance.getProcessVariables();
+			// 取得流程定义
+			ProcessDefinitionEntity definition = (ProcessDefinitionEntity) ((RepositoryServiceImpl) repositoryService)
+					.getDeployedProcessDefinition(historicTaskInstance
+							.getProcessDefinitionId());
+			if (definition == null) {
+				return ResponseUtils.responseJsonResult(false, "流程定义不存在");
+			}
+			// 取得下一步活动
+			ActivityImpl currActivity = ((ProcessDefinitionImpl) definition)
+					.findActivity(historicTaskInstance.getTaskDefinitionKey());
+			List<PvmTransition> nextTransitionList = currActivity
+					.getOutgoingTransitions();
+			for (PvmTransition nextTransition : nextTransitionList) {
+				PvmActivity nextActivity = nextTransition.getDestination();
+				List<HistoricTaskInstance> completeTasks = historyService
+						.createHistoricTaskInstanceQuery()
+						.processInstanceId(processInstance.getId())
+						.taskDefinitionKey(nextActivity.getId()).finished()
+						.list();
+				int finished = completeTasks.size();
+				if (finished > 0) {
+					return ResponseUtils.responseJsonResult(false,
+							"存在已经完成的活动，流程不能取回");
+				}
+				List<Task> nextTasks = taskService.createTaskQuery()
+						.processInstanceId(processInstance.getId())
+						.taskDefinitionKey(nextActivity.getId()).list();
+				for (Task nextTask : nextTasks) {
+					// 取活动，清除活动方向
+					List<PvmTransition> oriPvmTransitionList = new ArrayList<PvmTransition>();
+					List<PvmTransition> pvmTransitionList = nextActivity
+							.getOutgoingTransitions();
+					for (PvmTransition pvmTransition : pvmTransitionList) {
+						oriPvmTransitionList.add(pvmTransition);
+					}
+					pvmTransitionList.clear();
+					// 建立新方向
+					ActivityImpl nextActivityImpl = ((ProcessDefinitionImpl) definition)
+							.findActivity(nextTask.getTaskDefinitionKey());
+					TransitionImpl newTransition = nextActivityImpl
+							.createOutgoingTransition();
+					newTransition.setDestination(currActivity);
+					// 完成任务
+					taskService.complete(nextTask.getId(), variables);
+					historyService.deleteHistoricTaskInstance(nextTask.getId());
+					// 恢复方向
+					currActivity.getIncomingTransitions().remove(newTransition);
+					List<PvmTransition> pvmTList = nextActivity
+							.getOutgoingTransitions();
+					pvmTList.clear();
+					for (PvmTransition pvmTransition : oriPvmTransitionList) {
+						pvmTransitionList.add(pvmTransition);
+					}
+				}
+			}
+			historyService.deleteHistoricTaskInstance(historicTaskInstance
+					.getId());
+
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		}
+	}
+
+	/**
 	 * 分配任务给指定人
 	 * 
 	 * @param taskId
@@ -112,21 +210,6 @@ public class ActivitiProcessServiceImpl implements ActivitiProcessService {
 	 */
 	public void claimTask(String taskId, String actorId) {
 		taskService.claim(taskId, actorId);
-	}
-
-	protected List<Task> getUserTasks(String processInstanceId, String actorId) {
-		List<Task> tasks = new java.util.ArrayList<Task>();
-		TaskQuery query01 = taskService.createTaskQuery();
-		query01.processInstanceId(processInstanceId);
-		query01.taskAssignee(actorId);
-		List<Task> tasks01 = query01.list();
-		if (tasks01 != null && tasks01.size() > 0) {
-			for (Task task : tasks01) {
-				tasks.add(task);
-			}
-		}
-
-		return tasks;
 	}
 
 	/**
@@ -269,6 +352,101 @@ public class ActivitiProcessServiceImpl implements ActivitiProcessService {
 	 */
 	public void deleteTasks(List<String> taskIds) {
 		taskService.deleteTasks(taskIds);
+	}
+
+	protected List<Task> getUserTasks(String processInstanceId, String actorId) {
+		List<Task> tasks = new java.util.ArrayList<Task>();
+		TaskQuery query01 = taskService.createTaskQuery();
+		query01.processInstanceId(processInstanceId);
+		query01.taskAssignee(actorId);
+		List<Task> tasks01 = query01.list();
+		if (tasks01 != null && tasks01.size() > 0) {
+			for (Task task : tasks01) {
+				tasks.add(task);
+			}
+		}
+
+		return tasks;
+	}
+
+	/**
+	 * 驳回任务
+	 * 
+	 * @param taskId
+	 * @return
+	 */
+	public byte[] rollback(String taskId) {
+		Map<String, Object> variables = null;
+		try {
+			// 取得当前任务
+			HistoricTaskInstance historicTaskInstance = historyService
+					.createHistoricTaskInstanceQuery().taskId(taskId)
+					.singleResult();
+			// 取得流程实例
+			ProcessInstance processInstance = runtimeService
+					.createProcessInstanceQuery()
+					.processInstanceId(
+							historicTaskInstance.getProcessInstanceId())
+					.singleResult();
+			if (processInstance == null) {
+				return ResponseUtils.responseJsonResult(false, "流程已经结束");
+			}
+			variables = processInstance.getProcessVariables();
+			// 取得流程定义
+			ProcessDefinitionEntity definition = (ProcessDefinitionEntity) ((RepositoryServiceImpl) repositoryService)
+					.getDeployedProcessDefinition(historicTaskInstance
+							.getProcessDefinitionId());
+			if (definition == null) {
+				return ResponseUtils.responseJsonResult(false, "流程定义不存在");
+			}
+			// 取得上一步活动
+			ActivityImpl activity = ((ProcessDefinitionImpl) definition)
+					.findActivity(historicTaskInstance.getTaskDefinitionKey());
+			List<PvmTransition> nextTransitionList = activity
+					.getIncomingTransitions();
+			// 清除当前活动的出口
+			List<PvmTransition> oriPvmTransitionList = new ArrayList<PvmTransition>();
+			List<PvmTransition> pvmTransitionList = activity
+					.getOutgoingTransitions();
+			for (PvmTransition pvmTransition : pvmTransitionList) {
+				oriPvmTransitionList.add(pvmTransition);
+			}
+			pvmTransitionList.clear();
+
+			// 建立新出口
+			List<TransitionImpl> newTransitions = new ArrayList<TransitionImpl>();
+			for (PvmTransition nextTransition : nextTransitionList) {
+				PvmActivity nextActivity = nextTransition.getSource();
+				ActivityImpl nextActivityImpl = ((ProcessDefinitionImpl) definition)
+						.findActivity(nextActivity.getId());
+				TransitionImpl newTransition = activity
+						.createOutgoingTransition();
+				newTransition.setDestination(nextActivityImpl);
+				newTransitions.add(newTransition);
+			}
+			// 完成任务
+			List<Task> tasks = taskService
+					.createTaskQuery()
+					.processInstanceId(processInstance.getId())
+					.taskDefinitionKey(
+							historicTaskInstance.getTaskDefinitionKey()).list();
+			for (Task task : tasks) {
+				taskService.complete(task.getId(), variables);
+				historyService.deleteHistoricTaskInstance(task.getId());
+			}
+			// 恢复方向
+			for (TransitionImpl transitionImpl : newTransitions) {
+				activity.getOutgoingTransitions().remove(transitionImpl);
+			}
+			for (PvmTransition pvmTransition : oriPvmTransitionList) {
+				pvmTransitionList.add(pvmTransition);
+			}
+
+			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		}
 	}
 
 	/**

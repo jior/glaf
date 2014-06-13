@@ -64,6 +64,14 @@ public interface ActivitiProcessService {
 			String identityLinkType);
 
 	/**
+	 * 取回任务
+	 * 
+	 * @param taskId
+	 * @return
+	 */
+	byte[] callback(String taskId);
+
+	/**
 	 * 分配任务给指定人
 	 * 
 	 * @param taskId
@@ -135,6 +143,14 @@ public interface ActivitiProcessService {
 	 *            任务实例编号集合
 	 */
 	void deleteTasks(List<String> taskIds);
+
+	/**
+	 * 驳回任务
+	 * 
+	 * @param taskId
+	 * @return
+	 */
+	byte[] rollback(String taskId);
 
 	/**
 	 * 重新指派任务处理人
