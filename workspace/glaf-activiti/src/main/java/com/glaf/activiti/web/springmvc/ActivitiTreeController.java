@@ -113,10 +113,10 @@ public class ActivitiTreeController {
 							processInstance.getProcessDefinitionId());
 					arrayJSON.add(row);
 				}
-				responseJSON.put("rows", arrayJSON);
+				responseJSON.set("rows", arrayJSON);
 			}
 		} else {
-			responseJSON.put("rows", arrayJSON);
+			responseJSON.set("rows", arrayJSON);
 		}
 		try {
 			// logger.debug(responseJSON.toString());
@@ -166,7 +166,7 @@ public class ActivitiTreeController {
 						o.put("nlevel", 1);
 						arrayJSON.add(o);
 					}
-					row.put("children", arrayJSON);
+					row.set("children", arrayJSON);
 				}
 			}
 		}
@@ -226,10 +226,10 @@ public class ActivitiTreeController {
 							processInstance.getProcessDefinitionId());
 					arrayJSON.add(row);
 				}
-				responseJSON.put("rows", arrayJSON);
+				responseJSON.set("rows", arrayJSON);
 			}
 		} else {
-			responseJSON.put("rows", arrayJSON);
+			responseJSON.set("rows", arrayJSON);
 		}
 		try {
 			// logger.debug(responseJSON.toString());

@@ -186,9 +186,9 @@ public class MailTaskResource {
 			if (list != null && !list.isEmpty()) {
 				ArrayNode rowsJSON = new ObjectMapper().createArrayNode();
 				if ("yui".equals(gridType)) {
-					responseJSON.put("records", rowsJSON);
+					responseJSON.set("records", rowsJSON);
 				} else {
-					responseJSON.put("rows", rowsJSON);
+					responseJSON.set("rows", rowsJSON);
 				}
 
 				for (MailTask mailTask : list) {
@@ -317,9 +317,9 @@ public class MailTaskResource {
 				if (list != null && !list.isEmpty()) {
 					ArrayNode rowsJSON = new ObjectMapper().createArrayNode();
 					if ("yui".equals(gridType)) {
-						responseJSON.put("records", rowsJSON);
+						responseJSON.set("records", rowsJSON);
 					} else {
-						responseJSON.put("rows", rowsJSON);
+						responseJSON.set("rows", rowsJSON);
 					}
 
 					responseJSON.put("lastRow", list.get(list.size() - 1)

@@ -91,7 +91,7 @@ public class MxSchedulerResource {
 		ObjectNode responseJSON = new ObjectMapper().createObjectNode();
 
 		ArrayNode schedulersJSON = new ObjectMapper().createArrayNode();
-		responseJSON.put("schedulers", schedulersJSON);
+		responseJSON.set("schedulers", schedulersJSON);
 
 		for (Scheduler scheduler : list) {
 			ObjectNode schedulerJSON = new ObjectMapper().createObjectNode();

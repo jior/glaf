@@ -165,8 +165,8 @@ public class ActivitiResource {
 				flowJSON.put("isHighLighted", isHighLighted);
 			}
 
-			flowJSON.put("xPointArray", xPointArray);
-			flowJSON.put("yPointArray", yPointArray);
+			flowJSON.set("xPointArray", xPointArray);
+			flowJSON.set("yPointArray", yPointArray);
 
 			sequenceFlowArray.add(flowJSON);
 		}
@@ -225,7 +225,7 @@ public class ActivitiResource {
 				}
 
 				if (timerDeclarationArray.size() > 0) {
-					propertiesJSON.put(key, timerDeclarationArray);
+					propertiesJSON.set(key, timerDeclarationArray);
 				}
 
 			} else if ("eventDefinitions".equals(key)) {
@@ -257,7 +257,7 @@ public class ActivitiResource {
 				}
 
 				if (eventDefinitionsArray.size() > 0) {
-					propertiesJSON.put(key, eventDefinitionsArray);
+					propertiesJSON.set(key, eventDefinitionsArray);
 				}
 
 			} else if ("errorEventDefinitions".equals(key)) {
@@ -287,7 +287,7 @@ public class ActivitiResource {
 				}
 
 				if (errorEventDefinitionsArray.size() > 0) {
-					propertiesJSON.put(key, errorEventDefinitionsArray);
+					propertiesJSON.set(key, errorEventDefinitionsArray);
 				}
 			}
 		}
@@ -345,14 +345,14 @@ public class ActivitiResource {
 				}
 
 				if (processInstanceArray.size() > 0) {
-					propertiesJSON.put("processDefinitons",
+					propertiesJSON.set("processDefinitons",
 							processInstanceArray);
 				}
 			}
 		}
 
 		activityJSON.put("activityId", activity.getId());
-		activityJSON.put("properties", propertiesJSON);
+		activityJSON.set("properties", propertiesJSON);
 
 		if (multiInstance != null) {
 			activityJSON.put("multiInstance", multiInstance);
@@ -363,7 +363,7 @@ public class ActivitiResource {
 		}
 
 		if (nestedActivityArray.size() > 0) {
-			activityJSON.put("nestedActivities", nestedActivityArray);
+			activityJSON.set("nestedActivities", nestedActivityArray);
 		}
 
 		if (isInterrupting != null) {
@@ -442,7 +442,7 @@ public class ActivitiResource {
 		JsonNode pdrJSON = getProcessDefinitionResponse(processDefinition);
 
 		if (pdrJSON != null) {
-			responseJSON.put("processDefinition", pdrJSON);
+			responseJSON.set("processDefinition", pdrJSON);
 		}
 
 		// Highlighted activities
@@ -458,11 +458,12 @@ public class ActivitiResource {
 				activityArray.add(activityName);
 			}
 
-			for (String flow : highLightedFlows)
+			for (String flow : highLightedFlows){
 				flowsArray.add(flow);
+			}
 
-			responseJSON.put("highLightedActivities", activityArray);
-			responseJSON.put("highLightedFlows", flowsArray);
+			responseJSON.set("highLightedActivities", activityArray);
+			responseJSON.set("highLightedFlows", flowsArray);
 		}
 
 		// Pool shape, if process is participant in collaboration
@@ -485,7 +486,7 @@ public class ActivitiResource {
 			participantProcessJSON.put("width", pProc.getWidth());
 			participantProcessJSON.put("height", pProc.getHeight());
 
-			responseJSON.put("participantProcess", participantProcessJSON);
+			responseJSON.set("participantProcess", participantProcessJSON);
 		}
 
 		// Draw lanes
@@ -522,7 +523,7 @@ public class ActivitiResource {
 							flowNodeIdsArray.add(flowNodeId);
 						}
 
-						laneJSON.put("flowNodeIds", flowNodeIdsArray);
+						laneJSON.set("flowNodeIds", flowNodeIdsArray);
 
 						laneArray.add(laneJSON);
 					}
@@ -537,13 +538,13 @@ public class ActivitiResource {
 					laneSetJSON.put("name", "");
 				}
 
-				laneSetJSON.put("lanes", laneArray);
+				laneSetJSON.set("lanes", laneArray);
 
 				laneSetArray.add(laneSetJSON);
 			}
 
 			if (laneSetArray.size() > 0) {
-				responseJSON.put("laneSets", laneSetArray);
+				responseJSON.set("laneSets", laneSetArray);
 			}
 		}
 
@@ -555,8 +556,8 @@ public class ActivitiResource {
 			getActivity(activity, activityArray, sequenceFlowArray);
 		}
 
-		responseJSON.put("activities", activityArray);
-		responseJSON.put("sequenceFlows", sequenceFlowArray);
+		responseJSON.set("activities", activityArray);
+		responseJSON.set("sequenceFlows", sequenceFlowArray);
 
 		return responseJSON;
 	}
@@ -607,8 +608,8 @@ public class ActivitiResource {
 			e.printStackTrace();
 		}
 
-		responseJSON.put("activities", activitiesArray);
-		responseJSON.put("flows", flowsArray);
+		responseJSON.set("activities", activitiesArray);
+		responseJSON.set("flows", flowsArray);
 
 		return responseJSON;
 	}

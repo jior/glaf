@@ -185,8 +185,8 @@ public class MxQueryResource {
 			arrayJSON.add(json);
 		}
 
-		responseJSON.put("data", arrayJSON);
-		responseJSON.put("rows", arrayJSON);
+		responseJSON.set("data", arrayJSON);
+		responseJSON.set("rows", arrayJSON);
 		responseJSON.put("total", queries.size());
 		responseJSON.put("totalCount", queries.size());
 		responseJSON.put("totalRecords", queries.size());

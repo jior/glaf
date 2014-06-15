@@ -164,7 +164,7 @@ public class MxTableResource {
 			rowsJSON.add(rowJSON);
 		}
 
-		responseJSON.put("rows", rowsJSON);
+		responseJSON.set("rows", rowsJSON);
 
 		try {
 			return responseJSON.toString().getBytes("UTF-8");
@@ -188,7 +188,7 @@ public class MxTableResource {
 		ObjectNode responseJSON = new ObjectMapper().createObjectNode();
 
 		ArrayNode tablesJSON = new ObjectMapper().createArrayNode();
-		responseJSON.put("tables", tablesJSON);
+		responseJSON.set("tables", tablesJSON);
 
 		for (TableDefinition table : tables) {
 			ObjectNode tableJSON = new ObjectMapper().createObjectNode();
@@ -243,7 +243,7 @@ public class MxTableResource {
 				columnsJSON.add(columnJSON);
 			}
 
-			tableJSON.put("columns", columnsJSON);
+			tableJSON.set("columns", columnsJSON);
 		}
 
 		try {
@@ -447,9 +447,9 @@ public class MxTableResource {
 		}
 
 		if ("yui".equals(gridType)) {
-			responseJSON.put("records", rowsJSON);
+			responseJSON.set("records", rowsJSON);
 		} else {
-			responseJSON.put("rows", rowsJSON);
+			responseJSON.set("rows", rowsJSON);
 		}
 
 		try {
@@ -607,7 +607,7 @@ public class MxTableResource {
 				.getTableDefinition(tableName);
 		ObjectNode responseJSON = tableDefinition.toObjectNode();
 		ArrayNode columnsJSON = new ObjectMapper().createArrayNode();
-		responseJSON.put("columns", columnsJSON);
+		responseJSON.set("columns", columnsJSON);
 
 		for (ColumnDefinition column : tableDefinition.getColumns()) {
 			ObjectNode columnJSON = column.toObjectNode();

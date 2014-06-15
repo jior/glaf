@@ -224,15 +224,15 @@ public class MxSystemParamResource {
 							}
 							editor.put("type", inputType);
 							if (options.size() > 0) {
-								editor.put("options", options);
+								editor.set("options", options);
 							}
-							json.put("editor", editor);
+							json.set("editor", editor);
 						}
 					}
 
 					rowsJSON.add(json);
 				}
-				responseJSON.put("rows", rowsJSON);
+				responseJSON.set("rows", rowsJSON);
 			}
 			logger.debug(responseJSON.toString());
 			return responseJSON.toString().getBytes("UTF-8");
@@ -312,9 +312,9 @@ public class MxSystemParamResource {
 			if (list != null && !list.isEmpty()) {
 				ArrayNode rowsJSON = new ObjectMapper().createArrayNode();
 				if ("yui".equals(gridType)) {
-					responseJSON.put("records", rowsJSON);
+					responseJSON.set("records", rowsJSON);
 				} else {
-					responseJSON.put("rows", rowsJSON);
+					responseJSON.set("rows", rowsJSON);
 				}
 
 				// int sortNo = 0;

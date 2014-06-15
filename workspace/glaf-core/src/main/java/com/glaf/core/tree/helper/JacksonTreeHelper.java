@@ -80,7 +80,7 @@ public class JacksonTreeHelper {
 					Iterator<String> iterator = objectNode.fieldNames();
 					while (iterator.hasNext()) {
 						String nodeName = iterator.next();
-						row.put(nodeName, objectNode.get(nodeName));
+						row.set(nodeName, objectNode.get(nodeName));
 					}
 				}
 
@@ -198,7 +198,7 @@ public class JacksonTreeHelper {
 				array.add(child);
 				this.buildTree(child, component, checkedNodes, nodeMap);
 			}
-			row.put("children", array);
+			row.set("children", array);
 		}
 
 	}
@@ -233,7 +233,7 @@ public class JacksonTreeHelper {
 					array.add(child);
 				}
 			}
-			row.put("children", array);
+			row.set("children", array);
 		}
 	}
 
@@ -310,7 +310,7 @@ public class JacksonTreeHelper {
 								child.put("checked", Boolean.valueOf(false));
 							}
 							array.add(child);
-							object.put("children", array);
+							object.set("children", array);
 							this.buildTree(child, component, checkedNodes,
 									nodeMap);
 						}
@@ -352,7 +352,7 @@ public class JacksonTreeHelper {
 							this.buildTree(child, component, checkedNodes,
 									nodeMap);
 						}
-						object.put("children", array);
+						object.set("children", array);
 					}
 				}
 			}
@@ -497,7 +497,7 @@ public class JacksonTreeHelper {
 								}
 							}
 						}
-						object.put("children", array);
+						object.set("children", array);
 					}
 				}
 			}

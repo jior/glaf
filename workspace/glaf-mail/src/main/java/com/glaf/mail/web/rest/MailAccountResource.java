@@ -170,9 +170,9 @@ public class MailAccountResource {
 			if (list != null && !list.isEmpty()) {
 				ArrayNode rowsJSON = new ObjectMapper().createArrayNode();
 				if ("yui".equals(gridType)) {
-					responseJSON.put("records", rowsJSON);
+					responseJSON.set("records", rowsJSON);
 				} else {
-					responseJSON.put("rows", rowsJSON);
+					responseJSON.set("rows", rowsJSON);
 				}
 
 				for (MailAccount mailAccount : list) {

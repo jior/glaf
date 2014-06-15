@@ -182,7 +182,7 @@ public class TreeJsonFactory {
 				ObjectNode json = toObjectNode(treeModel);
 				array.add(json);
 			}
-			jsonObject.put("children", array);
+			jsonObject.set("children", array);
 		}
 
 		return jsonObject;

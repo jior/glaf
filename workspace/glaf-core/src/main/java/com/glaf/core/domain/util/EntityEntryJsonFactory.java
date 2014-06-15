@@ -277,7 +277,7 @@ public class EntityEntryJsonFactory {
 				}
 				rows.add(json);
 			}
-			jsonObject.put("entryPoints", rows);
+			jsonObject.set("entryPoints", rows);
 		}
 		
 		return jsonObject;

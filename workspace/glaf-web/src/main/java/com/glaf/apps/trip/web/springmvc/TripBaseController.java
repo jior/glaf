@@ -10,7 +10,6 @@ import org.apache.commons.logging.LogFactory;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import com.alibaba.fastjson.*;
 

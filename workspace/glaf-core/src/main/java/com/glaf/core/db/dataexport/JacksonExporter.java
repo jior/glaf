@@ -64,7 +64,7 @@ public class JacksonExporter {
 		ObjectNode rootJSON = new ObjectMapper().createObjectNode();
 
 		ObjectNode repositoryJSON = new ObjectMapper().createObjectNode();
-		rootJSON.put("Repository", repositoryJSON);
+		rootJSON.set("Repository", repositoryJSON);
 
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -117,7 +117,7 @@ public class JacksonExporter {
 				columnsJSON.add(columnJSON);
 			}
 
-			repositoryJSON.put("MetaData", columnsJSON);
+			repositoryJSON.set("MetaData", columnsJSON);
 
 			int index = 0;
 			int pageSize = 0;
@@ -184,7 +184,7 @@ public class JacksonExporter {
 					String filename = rootDir + FileUtils.sp + prefix + "_"
 							+ pageSize + ".json";
 
-					repositoryJSON.put("RowSet", rowsJSON);
+					repositoryJSON.set("RowSet", rowsJSON);
 
 					boolean success = false;
 					int retry = 0;
@@ -211,7 +211,7 @@ public class JacksonExporter {
 				pageSize = pageSize + 1;
 				String filename = rootDir + FileUtils.sp + prefix + "_"
 						+ pageSize + ".json";
-				repositoryJSON.put("RowSet", rowsJSON);
+				repositoryJSON.set("RowSet", rowsJSON);
 				boolean success = false;
 				int retry = 0;
 				while (retry <= 2 && !success) {

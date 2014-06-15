@@ -18,10 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.apache.commons.lang3.StringUtils;
 import com.alibaba.fastjson.*;
 
-import com.glaf.core.identity.*;
-import com.glaf.core.security.*;
 import com.glaf.core.util.*;
-
 
 import com.glaf.apps.trip.model.Trip;
 import com.glaf.apps.trip.query.TripQuery;
@@ -30,7 +27,8 @@ import com.glaf.apps.trip.service.TripService;
 @Controller
 @Path("/rs/apps/trip")
 public class TripResourceRest {
-	protected static final Log logger = LogFactory.getLog(TripResourceRest.class);
+	protected static final Log logger = LogFactory
+			.getLog(TripResourceRest.class);
 
 	protected TripService tripService;
 
@@ -42,7 +40,7 @@ public class TripResourceRest {
 			throws IOException {
 		String rowIds = request.getParameter("ids");
 		if (rowIds != null) {
- 			List<String> ids = StringTools.split(rowIds);
+			List<String> ids = StringTools.split(rowIds);
 			if (ids != null && !ids.isEmpty()) {
 				tripService.deleteByIds(ids);
 			}
@@ -54,8 +52,9 @@ public class TripResourceRest {
 	@Path("/delete")
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] deleteById(@Context HttpServletRequest request) throws IOException {
-                tripService.deleteById(request.getParameter("id"));
+	public byte[] deleteById(@Context HttpServletRequest request)
+			throws IOException {
+		tripService.deleteById(request.getParameter("id"));
 		return ResponseUtils.responseJsonResult(true);
 	}
 
@@ -69,7 +68,7 @@ public class TripResourceRest {
 		TripQuery query = new TripQuery();
 		Tools.populate(query, params);
 
-                String gridType = ParamUtils.getString(params, "gridType");
+		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
 			gridType = "easyui";
 		}
@@ -77,13 +76,12 @@ public class TripResourceRest {
 		int limit = 10;
 		String orderName = null;
 		String order = null;
-	 
+
 		int pageNo = ParamUtils.getInt(params, "page");
 		limit = ParamUtils.getInt(params, "rows");
 		start = (pageNo - 1) * limit;
 		orderName = ParamUtils.getString(params, "sortName");
 		order = ParamUtils.getString(params, "sortOrder");
-		 
 
 		if (start < 0) {
 			start = 0;
@@ -104,28 +102,27 @@ public class TripResourceRest {
 			result.put("limit", limit);
 			result.put("pageSize", limit);
 
-                        if (StringUtils.isNotEmpty(orderName)) {
+			if (StringUtils.isNotEmpty(orderName)) {
 				query.setSortOrder(orderName);
 				if (StringUtils.equals(order, "desc")) {
 					query.setSortOrder(" desc ");
 				}
 			}
 
-			Map<String, User> userMap = IdentityFactory.getUserMap();
 			List<Trip> list = tripService.getTripsByQueryCriteria(start, limit,
 					query);
 
 			if (list != null && !list.isEmpty()) {
 				JSONArray rowsJSON = new JSONArray();
-				 
+
 				result.put("rows", rowsJSON);
-				 
+
 				for (Trip trip : list) {
 					JSONObject rowJSON = trip.toJsonObject();
 					rowJSON.put("id", trip.getId());
 					rowJSON.put("tripId", trip.getId());
 					rowJSON.put("startIndex", ++start);
- 					rowsJSON.add(rowJSON);
+					rowsJSON.add(rowJSON);
 				}
 
 			}
@@ -142,41 +139,42 @@ public class TripResourceRest {
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	public byte[] saveTrip(@Context HttpServletRequest request) {
-	        Map<String, Object> params = RequestUtils.getParameterMap(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		Trip trip = new Trip();
 		try {
-		    Tools.populate(trip, params);
+			Tools.populate(trip, params);
 
-                    trip.setWfStatus(RequestUtils.getInt(request, "wfStatus"));
-                    trip.setStartDate(RequestUtils.getDate(request, "startDate"));
-                    trip.setCause(request.getParameter("cause"));
-                    trip.setStatus(RequestUtils.getInt(request, "status"));
-                    trip.setProcessName(request.getParameter("processName"));
-                    trip.setEndDate(RequestUtils.getDate(request, "endDate"));
-                    trip.setCreateBy(request.getParameter("createBy"));
-                    trip.setCreateByName(request.getParameter("createByName"));
-                    trip.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
-                    trip.setApplyDate(RequestUtils.getDate(request, "applyDate"));
-                    trip.setTransType(request.getParameter("transType"));
-                    trip.setWfStartDate(RequestUtils.getDate(request, "wfStartDate"));
-                    trip.setProcessInstanceId(RequestUtils.getLong(request, "processInstanceId"));
-                    trip.setDays(RequestUtils.getDouble(request, "days"));
-                    trip.setMoney(RequestUtils.getDouble(request, "money"));
-                    trip.setWfEndDate(RequestUtils.getDate(request, "wfEndDate"));
-                    trip.setLocked(RequestUtils.getInt(request, "locked"));
-                    trip.setDeleteFlag(RequestUtils.getInt(request, "deleteFlag"));
-                    trip.setCreateDate(RequestUtils.getDate(request, "createDate"));
+			trip.setWfStatus(RequestUtils.getInt(request, "wfStatus"));
+			trip.setStartDate(RequestUtils.getDate(request, "startDate"));
+			trip.setCause(request.getParameter("cause"));
+			trip.setStatus(RequestUtils.getInt(request, "status"));
+			trip.setProcessName(request.getParameter("processName"));
+			trip.setEndDate(RequestUtils.getDate(request, "endDate"));
+			trip.setCreateBy(request.getParameter("createBy"));
+			trip.setCreateByName(request.getParameter("createByName"));
+			trip.setUpdateDate(RequestUtils.getDate(request, "updateDate"));
+			trip.setApplyDate(RequestUtils.getDate(request, "applyDate"));
+			trip.setTransType(request.getParameter("transType"));
+			trip.setWfStartDate(RequestUtils.getDate(request, "wfStartDate"));
+			trip.setProcessInstanceId(RequestUtils.getLong(request,
+					"processInstanceId"));
+			trip.setDays(RequestUtils.getDouble(request, "days"));
+			trip.setMoney(RequestUtils.getDouble(request, "money"));
+			trip.setWfEndDate(RequestUtils.getDate(request, "wfEndDate"));
+			trip.setLocked(RequestUtils.getInt(request, "locked"));
+			trip.setDeleteFlag(RequestUtils.getInt(request, "deleteFlag"));
+			trip.setCreateDate(RequestUtils.getDate(request, "createDate"));
 
-		    this.tripService.save(trip);
+			this.tripService.save(trip);
 
-		    return ResponseUtils.responseJsonResult(true);
+			return ResponseUtils.responseJsonResult(true);
 		} catch (Exception ex) {
-		    ex.printStackTrace();
+			ex.printStackTrace();
 		}
 		return ResponseUtils.responseJsonResult(false);
 	}
 
-        @javax.annotation.Resource
+	@javax.annotation.Resource
 	public void setTripService(TripService tripService) {
 		this.tripService = tripService;
 	}
@@ -189,14 +187,14 @@ public class TripResourceRest {
 	public byte[] view(@Context HttpServletRequest request) throws IOException {
 		Trip trip = null;
 		if (StringUtils.isNotEmpty(request.getParameter("id"))) {
-                  trip = tripService.getTrip(request.getParameter("id"));
+			trip = tripService.getTrip(request.getParameter("id"));
 		}
 		JSONObject result = new JSONObject();
 		if (trip != null) {
-		    result =  trip.toJsonObject();
-		    Map<String, User> userMap = IdentityFactory.getUserMap();
-		    result.put("id", trip.getId());
-		    result.put("tripId", trip.getId());
+			result = trip.toJsonObject();
+
+			result.put("id", trip.getId());
+			result.put("tripId", trip.getId());
 		}
 		return result.toJSONString().getBytes("UTF-8");
 	}
