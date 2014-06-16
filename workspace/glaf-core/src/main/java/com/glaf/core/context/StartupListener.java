@@ -28,12 +28,16 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.startup.BootstrapManager;
 import com.glaf.core.util.QuartzUtils;
 
 public class StartupListener extends ContextLoaderListener implements
 		ServletContextListener {
+
+	protected static Configuration conf = BaseConfiguration.create();
 
 	private static class SchedulerRunner extends Thread {
 		public void run() {
@@ -76,7 +80,8 @@ public class StartupListener extends ContextLoaderListener implements
 		if (ctx != null) {
 			logger.info("设置应用环境上下文......");
 			ContextFactory.setContext(ctx);
-			if (ContextFactory.hasBean("scheduler")) {
+			if (conf.getBoolean("scheduler.enabled", true)
+					&& ContextFactory.hasBean("scheduler")) {
 				SchedulerRunner runner = new SchedulerRunner();
 				runner.start();
 			}
