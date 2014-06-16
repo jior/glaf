@@ -36,13 +36,6 @@ public class JbpmObjectFactory {
 		return canDeleteProcessInstance;
 	}
 
-	public static String getDefaultActors() {
-		if (conf.get("jbpm.defaultActors") != null) {
-			return conf.get("jbpm.defaultActors");
-		}
-		return null;
-	}
-
 	public static int getMailRepeatCount() {
 		int repeatCount = conf.getInt("mail.repeatCount", 1);
 		if (repeatCount > 3) {
@@ -52,12 +45,6 @@ public class JbpmObjectFactory {
 			repeatCount = 0;
 		}
 		return repeatCount;
-	}
-
-	public static boolean isDefaultActorEnable() {
-		boolean isDefaultActorEnable = conf.getBoolean(
-				"jbpm.isDefaultActorEnable", false);
-		return isDefaultActorEnable;
 	}
 
 	private JbpmObjectFactory() {

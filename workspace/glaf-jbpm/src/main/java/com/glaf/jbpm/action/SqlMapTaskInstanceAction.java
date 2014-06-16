@@ -45,7 +45,6 @@ import org.jbpm.taskmgmt.exe.TaskMgmtInstance;
 import com.glaf.core.identity.User;
 import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.StringTools;
-import com.glaf.jbpm.config.JbpmObjectFactory;
 import com.glaf.jbpm.db.mybatis2.SqlMapContainer;
 import com.glaf.jbpm.el.DefaultExpressionEvaluator;
 import com.glaf.jbpm.util.Constant;
@@ -144,6 +143,31 @@ public class SqlMapTaskInstanceAction implements ActionHandler {
 	 * 如果不能获取任务参与者是否离开本节点（任务节点）
 	 */
 	protected boolean leaveNodeIfActorNotAvailable;
+
+	/**
+	 * 是否发送邮件
+	 */
+	protected String sendMail;
+
+	/**
+	 * 邮件标题
+	 */
+	protected String subject;
+
+	/**
+	 * 邮件内容
+	 */
+	protected String content;
+
+	/**
+	 * 任务内容
+	 */
+	protected String taskContent;
+
+	/**
+	 * 邮件模板编号
+	 */
+	protected String templateId;
 
 	public SqlMapTaskInstanceAction() {
 
@@ -325,19 +349,6 @@ public class SqlMapTaskInstanceAction implements ActionHandler {
 				return;
 			}
 
-			if (JbpmObjectFactory.isDefaultActorEnable()) {
-				String defaultActors = JbpmObjectFactory.getDefaultActors();
-				if (StringUtils.isNotEmpty(defaultActors)) {
-					StringTokenizer st2 = new StringTokenizer(defaultActors,
-							",");
-					while (st2.hasMoreTokens()) {
-						String elem = st2.nextToken();
-						if (StringUtils.isNotEmpty(elem)) {
-							actorIds.add(elem);
-						}
-					}
-				}
-			}
 		}
 
 		if (actorIds.size() > 0) {
@@ -394,63 +405,21 @@ public class SqlMapTaskInstanceAction implements ActionHandler {
 					}
 				}
 			}
+			if (StringUtils.isNotEmpty(sendMail)
+					&& StringUtils.equals(sendMail, "true")) {
+				MailBean mailBean = new MailBean();
+				mailBean.setContent(content);
+				mailBean.setSubject(subject);
+				mailBean.setTaskContent(taskContent);
+				mailBean.setTaskName(taskName);
+				mailBean.setTemplateId(templateId);
+				mailBean.execute(ctx, actorIds);
+			}
 		}
 	}
 
-	public String getDeptId() {
-		return deptId;
-	}
-
-	public List<Object> getDeptIds() {
-		return deptIds;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public String getDynamicActors() {
-		return dynamicActors;
-	}
-
-	public String getExpression() {
-		return expression;
-	}
-
-	public String getObjectId() {
-		return objectId;
-	}
-
-	public String getObjectValue() {
-		return objectValue;
-	}
-
-	public String getQueryId() {
-		return queryId;
-	}
-
-	public String getRoleId() {
-		return roleId;
-	}
-
-	public List<Object> getRoleIds() {
-		return roleIds;
-	}
-
-	public String getTaskName() {
-		return taskName;
-	}
-
-	public String getTransitionName() {
-		return transitionName;
-	}
-
-	public boolean isLeaveNodeIfActorNotAvailable() {
-		return leaveNodeIfActorNotAvailable;
-	}
-
-	public boolean isPooled() {
-		return isPooled;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public void setDeptId(String deptId) {
@@ -502,8 +471,24 @@ public class SqlMapTaskInstanceAction implements ActionHandler {
 		this.roleIds = roleIds;
 	}
 
+	public void setSendMail(String sendMail) {
+		this.sendMail = sendMail;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public void setTaskContent(String taskContent) {
+		this.taskContent = taskContent;
+	}
+
 	public void setTaskName(String taskName) {
 		this.taskName = taskName;
+	}
+
+	public void setTemplateId(String templateId) {
+		this.templateId = templateId;
 	}
 
 	public void setTransitionName(String transitionName) {

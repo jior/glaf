@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns="urn:jbpm.org:jpdl-3.2"  name="Test">
+
+	<description>测试流程</description>
+	
+	<swimlane name="starter">
+		<assignment class="com.glaf.jbpm.assignment.GeneralAssignment">
+		</assignment>
+	</swimlane>
+
+	<swimlane name="submiter">
+		<assignment
+			class="com.glaf.jbpm.assignment.ProcessStarterAssignment">
+		</assignment>
+	</swimlane>
+
+	<action name="create_task01"
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task01</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>R004</roleId>
+		<deptId>#P{deptId02}</deptId>
+	</action>
+
+	<action name="create_task02"
+		class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task02</taskName>
+		<queryId>getXYDeptRoleUsers</queryId>
+		<roleId>R002</roleId>
+		<deptId>#P{deptId03}</deptId>
+	</action>
+
+	<action name="mail_action_01" class="com.glaf.jbpm.action.MailAction">
+		<mailTo>x_running</mailTo>
+		<taskName>task01</taskName> 
+		<subject>A角色审核</subject>
+		<templateId>sendToSupplier</templateId>
+	</action>
+
+	<action name="mail_action_02" class="com.glaf.jbpm.action.MailAction">
+		<mailTo>x_running</mailTo>
+		<taskName>task02</taskName>
+		<subject>B角色审核</subject>
+		<templateId>sendToSupplier</templateId>
+	</action>
+
+	<action name="xyz_1000" class="com.glaf.jbpm.action.SQLAction">
+		<sql>
+			UPDATE TEST 
+			SET PROCESSNAME_='Test',
+			PROCESSINSTANCEID_ = ?,WFSTATUS_ = 1000 WHERE ID_ = ?
+		</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>processInstanceId</key>
+				<value>#{processInstanceId}</value>
+			</element>
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	<action name="xyz_1001" class="com.glaf.jbpm.action.SQLAction">
+		<sql>
+			UPDATE TEST SET
+			WFSTATUS_ = 1001 
+			WHERE ID_ = ?
+		</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	<action name="xyz_1002" class="com.glaf.jbpm.action.SQLAction">
+		<sql>
+			UPDATE TEST SET
+			WFSTATUS_ = 1002 
+			WHERE ID_ = ?
+		</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	<action name="xyz_5555" class="com.glaf.jbpm.action.SQLAction">
+		<sql>
+			UPDATE TEST SET
+			WFSTATUS_ = 5555 
+			WHERE ID_ = ?
+		</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	<action name="xyz_9999" class="com.glaf.jbpm.action.SQLAction">
+		<sql>
+			UPDATE TEST SET
+			WFSTATUS_ = 9999 
+			WHERE ID_ = ?
+		</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	
+
+	<start-state name="开始">
+		<task name="task00" description="启动流程" swimlane="starter">
+			<event type="task-create">
+				<action ref-name="xyz_1000" />
+			</event>
+		</task>
+		<transition to="A角色审批"></transition>
+	</start-state>
+
+
+	<task-node name="A角色审批" create-tasks="false" end-tasks="true" signal="first">
+		<event type="node-enter">
+			<action ref-name="create_task01" />
+			<action ref-name="xyz_1001" />
+		</event>
+		<task name="task01" description="A角色审批" >
+			<event type="task-assign">
+			  <action ref-name="mail_action_01" />
+			</event>
+			<event type="task-end">
+				<action ref-name="EndCounterSigningAction" />
+			</event>
+		</task>
+		<transition to="A角色审批通过？"></transition>
+	</task-node>
+
+	<decision name="A角色审批通过？">
+		<transition to="不通过" name="不通过"></transition>
+		<transition to="B角色审批" name="通过">
+		      <condition expression="#{isAgree eq 'true'}" />
+		</transition>
+	</decision>
+
+	<task-node name="B角色审批" create-tasks="false" end-tasks="true" signal="last">
+		<event type="node-enter">
+			<action ref-name="create_task02" />
+			<action ref-name="xyz_1002" />
+		</event>
+		<task name="task02" description="B角色审批" >
+			<event type="task-assign">
+			  <action ref-name="mail_action_02" />
+			</event>
+			<event type="task-end">
+				<action ref-name="EndCounterSigningAction" />
+			</event>
+		</task>
+		<transition to="B角色审批通过？"></transition>
+	</task-node>
+
+	<decision name="B角色审批通过？">
+		<transition to="不通过" name="不通过"></transition>
+		<transition to="结束" name="通过">
+		      <condition expression="#{isAgree eq 'true'}" />
+		</transition>
+	</decision>
+
+	<node name="不通过">
+		<transition to="重新提交"></transition>
+	</node>
+
+	<task-node name="重新提交">
+		<event type="node-enter">
+			<action ref-name="xyz_5555" />
+		</event>
+	    <task name="task555" description="重新修改" swimlane="submiter">
+		</task>
+		<transition to="A角色审批"></transition>
+	</task-node>
+
+
+	<end-state name="结束">
+		<event type="node-enter">
+			<action ref-name="xyz_9999" />
+		</event>
+	</end-state>
+
+
+</process-definition>

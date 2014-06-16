@@ -21,7 +21,6 @@ package com.glaf.jbpm.assignment;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -33,7 +32,7 @@ import org.jbpm.taskmgmt.def.AssignmentHandler;
 import org.jbpm.taskmgmt.exe.Assignable;
 
 import com.glaf.core.util.LogUtils;
-import com.glaf.jbpm.config.JbpmObjectFactory;
+import com.glaf.jbpm.action.MailBean;
 import com.glaf.jbpm.container.ProcessContainer;
 
 /**
@@ -61,24 +60,33 @@ public class GeneralAssignment implements AssignmentHandler {
 	 */
 	private String roleId;
 
+	/**
+	 * 是否发送邮件
+	 */
+	protected String sendMail;
+
+	/**
+	 * 邮件标题
+	 */
+	protected String subject;
+
+	/**
+	 * 邮件内容
+	 */
+	protected String content;
+
+	/**
+	 * 任务内容
+	 */
+	protected String taskContent;
+
+	/**
+	 * 邮件模板编号
+	 */
+	protected String templateId;
+
 	public GeneralAssignment() {
 		helper = new AssignableHelper();
-	}
-
-	public String getDynamicActors() {
-		return dynamicActors;
-	}
-
-	public void setDynamicActors(String dynamicActors) {
-		this.dynamicActors = dynamicActors;
-	}
-
-	public String getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(String roleId) {
-		this.roleId = roleId;
 	}
 
 	public void assign(Assignable assignable, ExecutionContext ctx) {
@@ -127,19 +135,6 @@ public class GeneralAssignment implements AssignmentHandler {
 			actorIds.addAll(x_actorIds);
 		}
 
-		if (JbpmObjectFactory.isDefaultActorEnable()) {
-			String defaultActors = JbpmObjectFactory.getDefaultActors();
-			if (StringUtils.isNotEmpty(defaultActors)) {
-				StringTokenizer st2 = new StringTokenizer(defaultActors, ",");
-				while (st2.hasMoreTokens()) {
-					String elem = st2.nextToken();
-					if (StringUtils.isNotEmpty(elem)) {
-						actorIds.add(elem);
-					}
-				}
-			}
-		}
-
 		if (actorIds.size() > 0) {
 			if (LogUtils.isDebug()) {
 				logger.debug("actorIds size:" + actorIds.size());
@@ -163,9 +158,49 @@ public class GeneralAssignment implements AssignmentHandler {
 				}
 				assignable.setPooledActors(array);
 			}
+
+			if (StringUtils.isNotEmpty(sendMail)
+					&& StringUtils.equals(sendMail, "true")) {
+				MailBean mailBean = new MailBean();
+				mailBean.setContent(content);
+				mailBean.setSubject(subject);
+				mailBean.setTaskContent(taskContent);
+				mailBean.setTaskName(taskName);
+				mailBean.setTemplateId(templateId);
+				mailBean.execute(ctx, actorIds);
+			}
+
 		} else {
 			throw new JbpmException(" actorId is null ");
 		}
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public void setDynamicActors(String dynamicActors) {
+		this.dynamicActors = dynamicActors;
+	}
+
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
+	}
+
+	public void setSendMail(String sendMail) {
+		this.sendMail = sendMail;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public void setTaskContent(String taskContent) {
+		this.taskContent = taskContent;
+	}
+
+	public void setTemplateId(String templateId) {
+		this.templateId = templateId;
 	}
 
 }

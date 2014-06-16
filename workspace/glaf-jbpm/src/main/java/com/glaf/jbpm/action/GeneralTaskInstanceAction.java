@@ -38,7 +38,6 @@ import org.jbpm.taskmgmt.def.Task;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 import org.jbpm.taskmgmt.exe.TaskMgmtInstance;
 
-import com.glaf.jbpm.config.JbpmObjectFactory;
 import com.glaf.jbpm.container.ProcessContainer;
 import com.glaf.jbpm.util.Constant;
 
@@ -186,18 +185,7 @@ public class GeneralTaskInstanceAction implements ActionHandler {
 			actorIds.addAll(x_actorIds);
 		}
 
-		if (actorIds.size() == 0 && JbpmObjectFactory.isDefaultActorEnable()) {
-			String defaultActors = JbpmObjectFactory.getDefaultActors();
-			if (StringUtils.isNotEmpty(defaultActors)) {
-				StringTokenizer st2 = new StringTokenizer(defaultActors, ",");
-				while (st2.hasMoreTokens()) {
-					String elem = st2.nextToken();
-					if (StringUtils.isNotEmpty(elem)) {
-						actorIds.add(elem);
-					}
-				}
-			}
-		}
+		
 
 		if (actorIds.size() > 0) {
 

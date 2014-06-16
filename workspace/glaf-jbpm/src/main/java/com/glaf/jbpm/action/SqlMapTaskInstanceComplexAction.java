@@ -155,6 +155,31 @@ public class SqlMapTaskInstanceComplexAction implements ActionHandler {
 	 */
 	protected boolean leaveNodeIfActorNotAvailable;
 
+	/**
+	 * 是否发送邮件
+	 */
+	protected String sendMail;
+
+	/**
+	 * 邮件标题
+	 */
+	protected String subject;
+
+	/**
+	 * 邮件内容
+	 */
+	protected String content;
+
+	/**
+	 * 任务内容
+	 */
+	protected String taskContent;
+
+	/**
+	 * 邮件模板编号
+	 */
+	protected String templateId;
+
 	public SqlMapTaskInstanceComplexAction() {
 
 	}
@@ -363,6 +388,17 @@ public class SqlMapTaskInstanceComplexAction implements ActionHandler {
 									}
 								}
 							}
+
+							if (StringUtils.isNotEmpty(sendMail)
+									&& StringUtils.equals(sendMail, "true")) {
+								MailBean mailBean = new MailBean();
+								mailBean.setContent(content);
+								mailBean.setSubject(subject);
+								mailBean.setTaskContent(taskContent);
+								mailBean.setTaskName(taskName);
+								mailBean.setTemplateId(templateId);
+								mailBean.execute(ctx, actorIds);
+							}
 						}
 					}
 				}
@@ -565,6 +601,17 @@ public class SqlMapTaskInstanceComplexAction implements ActionHandler {
 						}
 					}
 				}
+
+				if (StringUtils.isNotEmpty(sendMail)
+						&& StringUtils.equals(sendMail, "true")) {
+					MailBean mailBean = new MailBean();
+					mailBean.setContent(content);
+					mailBean.setSubject(subject);
+					mailBean.setTaskContent(taskContent);
+					mailBean.setTaskName(taskName);
+					mailBean.setTemplateId(templateId);
+					mailBean.execute(ctx, actorIds);
+				}
 			} else {
 				if (leaveNodeIfActorNotAvailable) {
 					contextInstance.setVariable(Constant.IS_AGREE, "true");
@@ -579,64 +626,8 @@ public class SqlMapTaskInstanceComplexAction implements ActionHandler {
 		}
 	}
 
-	public String getDeptId() {
-		return deptId;
-	}
-
-	public List<Object> getDeptIds() {
-		return deptIds;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public String getDynamicActors() {
-		return dynamicActors;
-	}
-
-	public String getExpression() {
-		return expression;
-	}
-
-	public String getObjectId() {
-		return objectId;
-	}
-
-	public String getObjectValue() {
-		return objectValue;
-	}
-
-	public String getPooledExpression() {
-		return pooledExpression;
-	}
-
-	public String getQueryId() {
-		return queryId;
-	}
-
-	public String getRoleId() {
-		return roleId;
-	}
-
-	public List<Object> getRoleIds() {
-		return roleIds;
-	}
-
-	public String getTaskName() {
-		return taskName;
-	}
-
-	public String getTransitionName() {
-		return transitionName;
-	}
-
-	public boolean isLeaveNodeIfActorNotAvailable() {
-		return leaveNodeIfActorNotAvailable;
-	}
-
-	public boolean isPooled() {
-		return isPooled;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public void setDeptId(String deptId) {
@@ -692,8 +683,24 @@ public class SqlMapTaskInstanceComplexAction implements ActionHandler {
 		this.roleIds = roleIds;
 	}
 
+	public void setSendMail(String sendMail) {
+		this.sendMail = sendMail;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public void setTaskContent(String taskContent) {
+		this.taskContent = taskContent;
+	}
+
 	public void setTaskName(String taskName) {
 		this.taskName = taskName;
+	}
+
+	public void setTemplateId(String templateId) {
+		this.templateId = templateId;
 	}
 
 	public void setTransitionName(String transitionName) {
