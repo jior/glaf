@@ -65,62 +65,80 @@ public class MultiPooledTaskInstanceAction implements ActionHandler {
 
 	private static final long serialVersionUID = 1L;
 
+	public static void main(String[] args) throws Exception {
+		String actorIdxy = "{joy,sam},{pp,qq},{kit,cora},{eyb2000,huangcw}";
+		StringTokenizer st2 = new StringTokenizer(actorIdxy, ";");
+		while (st2.hasMoreTokens()) {
+			String elem2 = st2.nextToken();
+			if (StringUtils.isNotEmpty(elem2)) {
+				elem2 = elem2.trim();
+				if ((elem2.length() > 0 && elem2.charAt(0) == '{')
+						&& elem2.endsWith("}")) {
+					elem2 = elem2.substring(elem2.indexOf("{") + 1,
+							elem2.indexOf("}"));
+					Set<String> actorIds = new HashSet<String>();
+					StringTokenizer st4 = new StringTokenizer(elem2, ",");
+					while (st4.hasMoreTokens()) {
+						String elem4 = st4.nextToken();
+						elem4 = elem4.trim();
+						if (elem4.length() > 0) {
+							actorIds.add(elem4);
+						}
+					}
+					System.out.println(actorIds);
+				}
+			}
+		}
+	}
+
 	/**
 	 * 动态设置的参与者的参数名，环境变量可以通过contextInstance.getVariable()取得
 	 * 例如：contextInstance.getVariable("SendDocAuditor");
 	 */
-	String dynamicActors;
+	protected String dynamicActors;
 
 	/**
 	 * 如果不能获取任务参与者是否离开本节点（任务节点）
 	 */
-	boolean leaveNodeIfActorNotAvailable;
+	protected boolean leaveNodeIfActorNotAvailable;
 
 	/**
 	 * 转移路径的名称
 	 */
-	String transitionName;
+	protected String transitionName;
 
 	/**
 	 * 任务名称
 	 */
-	String taskName;
+	protected String taskName;
+
+	/**
+	 * 是否发送邮件
+	 */
+	protected String sendMail;
+
+	/**
+	 * 邮件标题
+	 */
+	protected String subject;
+
+	/**
+	 * 邮件内容
+	 */
+	protected String content;
+
+	/**
+	 * 任务内容
+	 */
+	protected String taskContent;
+
+	/**
+	 * 邮件模板编号
+	 */
+	protected String templateId;
 
 	public MultiPooledTaskInstanceAction() {
 
-	}
-
-	public String getDynamicActors() {
-		return dynamicActors;
-	}
-
-	public void setDynamicActors(String dynamicActors) {
-		this.dynamicActors = dynamicActors;
-	}
-
-	public String getTaskName() {
-		return taskName;
-	}
-
-	public void setTaskName(String taskName) {
-		this.taskName = taskName;
-	}
-
-	public String getTransitionName() {
-		return transitionName;
-	}
-
-	public void setTransitionName(String transitionName) {
-		this.transitionName = transitionName;
-	}
-
-	public boolean isLeaveNodeIfActorNotAvailable() {
-		return leaveNodeIfActorNotAvailable;
-	}
-
-	public void setLeaveNodeIfActorNotAvailable(
-			boolean leaveNodeIfActorNotAvailable) {
-		this.leaveNodeIfActorNotAvailable = leaveNodeIfActorNotAvailable;
 	}
 
 	public void execute(ExecutionContext ctx) {
@@ -197,6 +215,16 @@ public class MultiPooledTaskInstanceAction implements ActionHandler {
 									}
 									taskInstance.setPooledActors(pooledIds);
 								}
+								if (StringUtils.isNotEmpty(sendMail)
+										&& StringUtils.equals(sendMail, "true")) {
+									MailBean mailBean = new MailBean();
+									mailBean.setContent(content);
+									mailBean.setSubject(subject);
+									mailBean.setTaskContent(taskContent);
+									mailBean.setTaskName(taskName);
+									mailBean.setTemplateId(templateId);
+									mailBean.execute(ctx, actorIds);
+								}
 							}
 						}
 					}
@@ -219,30 +247,41 @@ public class MultiPooledTaskInstanceAction implements ActionHandler {
 
 	}
 
-	public static void main(String[] args) throws Exception {
-		String actorIdxy = "{joy,sam},{pp,qq},{kit,cora},{eyb2000,huangcw}";
-		StringTokenizer st2 = new StringTokenizer(actorIdxy, ";");
-		while (st2.hasMoreTokens()) {
-			String elem2 = st2.nextToken();
-			if (StringUtils.isNotEmpty(elem2)) {
-				elem2 = elem2.trim();
-				if ((elem2.length() > 0 && elem2.charAt(0) == '{')
-						&& elem2.endsWith("}")) {
-					elem2 = elem2.substring(elem2.indexOf("{") + 1,
-							elem2.indexOf("}"));
-					Set<String> actorIds = new HashSet<String>();
-					StringTokenizer st4 = new StringTokenizer(elem2, ",");
-					while (st4.hasMoreTokens()) {
-						String elem4 = st4.nextToken();
-						elem4 = elem4.trim();
-						if (elem4.length() > 0) {
-							actorIds.add(elem4);
-						}
-					}
-					System.out.println(actorIds);
-				}
-			}
-		}
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public void setDynamicActors(String dynamicActors) {
+		this.dynamicActors = dynamicActors;
+	}
+
+	public void setLeaveNodeIfActorNotAvailable(
+			boolean leaveNodeIfActorNotAvailable) {
+		this.leaveNodeIfActorNotAvailable = leaveNodeIfActorNotAvailable;
+	}
+
+	public void setSendMail(String sendMail) {
+		this.sendMail = sendMail;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public void setTaskContent(String taskContent) {
+		this.taskContent = taskContent;
+	}
+
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
+	}
+
+	public void setTemplateId(String templateId) {
+		this.templateId = templateId;
+	}
+
+	public void setTransitionName(String transitionName) {
+		this.transitionName = transitionName;
 	}
 
 }

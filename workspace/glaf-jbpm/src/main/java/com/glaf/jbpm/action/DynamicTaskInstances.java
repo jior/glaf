@@ -18,7 +18,9 @@
 
 package com.glaf.jbpm.action;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.StringTokenizer;
 
 import org.apache.commons.lang3.StringUtils;
@@ -63,41 +65,33 @@ public class DynamicTaskInstances implements ActionHandler {
 	 */
 	protected boolean leaveNodeIfActorNotAvailable;
 
+	/**
+	 * 是否发送邮件
+	 */
+	protected String sendMail;
+
+	/**
+	 * 邮件标题
+	 */
+	protected String subject;
+
+	/**
+	 * 邮件内容
+	 */
+	protected String content;
+
+	/**
+	 * 任务内容
+	 */
+	protected String taskContent;
+
+	/**
+	 * 邮件模板编号
+	 */
+	protected String templateId;
+
 	public DynamicTaskInstances() {
 
-	}
-
-	public String getDynamicActors() {
-		return dynamicActors;
-	}
-
-	public void setDynamicActors(String dynamicActors) {
-		this.dynamicActors = dynamicActors;
-	}
-
-	public String getTaskName() {
-		return taskName;
-	}
-
-	public void setTaskName(String taskName) {
-		this.taskName = taskName;
-	}
-
-	public String getTransitionName() {
-		return transitionName;
-	}
-
-	public void setTransitionName(String transitionName) {
-		this.transitionName = transitionName;
-	}
-
-	public boolean isLeaveNodeIfActorNotAvailable() {
-		return leaveNodeIfActorNotAvailable;
-	}
-
-	public void setLeaveNodeIfActorNotAvailable(
-			boolean leaveNodeIfActorNotAvailable) {
-		this.leaveNodeIfActorNotAvailable = leaveNodeIfActorNotAvailable;
 	}
 
 	public void execute(ExecutionContext ctx) {
@@ -129,17 +123,29 @@ public class DynamicTaskInstances implements ActionHandler {
 			String actorIdxy = (String) contextInstance
 					.getVariable(dynamicActors);
 			if (StringUtils.isNotEmpty(actorIdxy)) {
+				Collection<String> actorIds = new HashSet<String>();
 				StringTokenizer st2 = new StringTokenizer(actorIdxy, ",");
 				while (st2.hasMoreTokens()) {
 					String actorId = st2.nextToken();
 					if (StringUtils.isNotEmpty(actorId)) {
 						TaskInstance taskInstance = tmi.createTaskInstance(
 								task, token);
+						actorIds.add(actorId);
 						taskInstance.setActorId(actorId);
 						taskInstance.setCreate(new Date());
 						taskInstance.setSignalling(task.isSignalling());
 						hasActors = true;
 					}
+				}
+				if (StringUtils.isNotEmpty(sendMail)
+						&& StringUtils.equals(sendMail, "true")) {
+					MailBean mailBean = new MailBean();
+					mailBean.setContent(content);
+					mailBean.setSubject(subject);
+					mailBean.setTaskContent(taskContent);
+					mailBean.setTaskName(taskName);
+					mailBean.setTemplateId(templateId);
+					mailBean.execute(ctx, actorIds);
 				}
 			}
 		}
@@ -156,5 +162,42 @@ public class DynamicTaskInstances implements ActionHandler {
 			}
 		}
 
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public void setDynamicActors(String dynamicActors) {
+		this.dynamicActors = dynamicActors;
+	}
+
+	public void setLeaveNodeIfActorNotAvailable(
+			boolean leaveNodeIfActorNotAvailable) {
+		this.leaveNodeIfActorNotAvailable = leaveNodeIfActorNotAvailable;
+	}
+
+	public void setSendMail(String sendMail) {
+		this.sendMail = sendMail;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public void setTaskContent(String taskContent) {
+		this.taskContent = taskContent;
+	}
+
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
+	}
+
+	public void setTemplateId(String templateId) {
+		this.templateId = templateId;
+	}
+
+	public void setTransitionName(String transitionName) {
+		this.transitionName = transitionName;
 	}
 }

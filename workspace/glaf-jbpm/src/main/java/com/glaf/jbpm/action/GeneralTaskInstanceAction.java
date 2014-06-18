@@ -185,8 +185,6 @@ public class GeneralTaskInstanceAction implements ActionHandler {
 			actorIds.addAll(x_actorIds);
 		}
 
-		
-
 		if (actorIds.size() > 0) {
 
 			Task task = null;
