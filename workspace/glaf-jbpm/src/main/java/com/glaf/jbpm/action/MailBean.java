@@ -131,7 +131,7 @@ public class MailBean {
 			Template template = TemplateContainer.getContainer().getTemplate(
 					templateId);
 			if (template != null) {
-				logger.debug(template);
+				//logger.debug(template);
 				if (StringUtils.isEmpty(subject)) {
 					subject = template.getTitle();
 				}
@@ -146,7 +146,7 @@ public class MailBean {
 		}
 
 		logger.debug("subject:" + subject);
-		logger.debug("content:" + content);
+		//logger.debug("content:" + content);
 
 		if (StringUtils.isEmpty(subject) || StringUtils.isEmpty(content)) {
 			throw new RuntimeException("subject or content is empty");
