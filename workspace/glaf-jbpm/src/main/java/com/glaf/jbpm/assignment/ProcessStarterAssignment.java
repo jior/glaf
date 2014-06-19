@@ -19,7 +19,9 @@
 package com.glaf.jbpm.assignment;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -31,6 +33,7 @@ import org.jbpm.taskmgmt.exe.Assignable;
 import org.jbpm.taskmgmt.exe.TaskInstance;
 import org.jbpm.taskmgmt.exe.TaskMgmtInstance;
 
+import com.glaf.jbpm.action.MailBean;
 import com.glaf.jbpm.util.Constant;
 
 public class ProcessStarterAssignment implements AssignmentHandler {
@@ -38,6 +41,31 @@ public class ProcessStarterAssignment implements AssignmentHandler {
 			.getLog(ProcessStarterAssignment.class);
 
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 是否发送邮件
+	 */
+	protected String sendMail;
+
+	/**
+	 * 邮件标题
+	 */
+	protected String subject;
+
+	/**
+	 * 邮件内容
+	 */
+	protected String content;
+
+	/**
+	 * 任务内容
+	 */
+	protected String taskContent;
+
+	/**
+	 * 邮件模板编号
+	 */
+	protected String templateId;
 
 	public ProcessStarterAssignment() {
 
@@ -76,8 +104,40 @@ public class ProcessStarterAssignment implements AssignmentHandler {
 
 		if (StringUtils.isNotEmpty(actorId)) {
 			assignable.setActorId(actorId);
+			if (StringUtils.isNotEmpty(sendMail)
+					&& StringUtils.equals(sendMail, "true")) {
+				Set<String> actorIds = new HashSet<String>();
+				actorIds.add(actorId);
+				MailBean mailBean = new MailBean();
+				mailBean.setContent(content);
+				mailBean.setSubject(subject);
+				mailBean.setTaskContent(taskContent);
+				mailBean.setTemplateId(templateId);
+				mailBean.execute(ctx, actorIds);
+			}
 			return;
 		}
 
 	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public void setSendMail(String sendMail) {
+		this.sendMail = sendMail;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public void setTaskContent(String taskContent) {
+		this.taskContent = taskContent;
+	}
+
+	public void setTemplateId(String templateId) {
+		this.templateId = templateId;
+	}
+
 }
