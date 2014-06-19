@@ -25,6 +25,7 @@ import java.util.StringTokenizer;
 
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.DelegateTask;
+import org.activiti.engine.delegate.Expression;
 import org.activiti.engine.delegate.TaskListener;
 import org.activiti.engine.impl.context.Context;
 import org.activiti.engine.impl.interceptor.CommandContext;
@@ -40,6 +41,7 @@ import com.glaf.activiti.extension.factory.ExtensionFactory;
 import com.glaf.activiti.extension.model.ExtensionEntity;
 import com.glaf.activiti.extension.model.ExtensionFieldEntity;
 import com.glaf.activiti.extension.service.ActivitiExtensionService;
+import com.glaf.activiti.mail.MailBean;
 import com.glaf.activiti.util.ThreadHolder;
 import com.glaf.core.el.Mvel2ExpressionEvaluator;
 import com.glaf.core.util.Constants;
@@ -48,10 +50,22 @@ import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.StringTools;
 
 public class ExtensionTaskCreateListener implements TaskListener {
- 
+
 	private static final long serialVersionUID = 1L;
 	private static final Log logger = LogFactory
 			.getLog(ExtensionTaskCreateListener.class);
+
+	protected Expression sendMail;
+
+	protected Expression subject;
+
+	protected Expression content;
+
+	protected Expression taskName;
+
+	protected Expression taskContent;
+
+	protected Expression templateId;
 
 	protected List<String> getDeptRoleUsers(DelegateExecution execution,
 			SqlSession sqlSession, ExtensionEntity extension) {
@@ -172,8 +186,9 @@ public class ExtensionTaskCreateListener implements TaskListener {
 				.getSqlSession();
 		service.setSqlSession(sqlSession);
 		DelegateExecution execution = delegateTask.getExecution();
-		ExecutionEntity executionEntity = commandContext.getExecutionEntityManager()
-				.findExecutionById(execution.getId());
+		ExecutionEntity executionEntity = commandContext
+				.getExecutionEntityManager().findExecutionById(
+						execution.getId());
 		String processDefinitionId = executionEntity.getProcessDefinitionId();
 		ProcessDefinitionEntity processDefinitionEntity = commandContext
 				.getProcessDefinitionEntityManager().findProcessDefinitionById(
@@ -270,9 +285,43 @@ public class ExtensionTaskCreateListener implements TaskListener {
 					delegateTask.setAssignee(actorIds.get(0));
 				}
 			}
+			if (sendMail != null
+					&& StringUtils.equals(sendMail.getExpressionText(), "true")) {
+				MailBean bean = new MailBean();
+				bean.setSubject(subject);
+				bean.setContent(content);
+				bean.setTaskContent(taskContent);
+				bean.setTaskName(taskName);
+				bean.setTemplateId(templateId);
+				bean.sendMail(execution, actorIds);
+			}
 		} else {
 
 		}
+	}
+
+	public void setContent(Expression content) {
+		this.content = content;
+	}
+
+	public void setSendMail(Expression sendMail) {
+		this.sendMail = sendMail;
+	}
+
+	public void setSubject(Expression subject) {
+		this.subject = subject;
+	}
+
+	public void setTaskContent(Expression taskContent) {
+		this.taskContent = taskContent;
+	}
+
+	public void setTaskName(Expression taskName) {
+		this.taskName = taskName;
+	}
+
+	public void setTemplateId(Expression templateId) {
+		this.templateId = templateId;
 	}
 
 }

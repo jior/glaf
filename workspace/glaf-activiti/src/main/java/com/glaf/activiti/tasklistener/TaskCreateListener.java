@@ -31,12 +31,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.glaf.activiti.mail.MailBean;
 import com.glaf.activiti.util.ExecutionUtils;
 import com.glaf.core.dao.MyBatisEntityDAO;
 
 public class TaskCreateListener implements TaskListener {
 	private static final long serialVersionUID = 1L;
-	
+
 	protected final static Log logger = LogFactory
 			.getLog(TaskCreateListener.class);
 
@@ -47,6 +48,18 @@ public class TaskCreateListener implements TaskListener {
 	protected Expression message;
 
 	protected Expression sql;
+
+	protected Expression sendMail;
+
+	protected Expression subject;
+
+	protected Expression content;
+
+	protected Expression taskName;
+
+	protected Expression taskContent;
+
+	protected Expression templateId;
 
 	public void notify(DelegateTask delegateTask) {
 		logger.debug("----------------------------------------------------");
@@ -121,6 +134,17 @@ public class TaskCreateListener implements TaskListener {
 						} else {
 							delegateTask.setAssignee(candidateUsers.get(0));
 						}
+						if (sendMail != null
+								&& StringUtils.equals(
+										sendMail.getExpressionText(), "true")) {
+							MailBean bean = new MailBean();
+							bean.setSubject(subject);
+							bean.setContent(content);
+							bean.setTaskContent(taskContent);
+							bean.setTaskName(taskName);
+							bean.setTemplateId(templateId);
+							bean.sendMail(execution, candidateUsers);
+						}
 					}
 					if (candidateGroups.size() > 0) {
 						delegateTask.addCandidateGroups(candidateGroups);
@@ -133,8 +157,8 @@ public class TaskCreateListener implements TaskListener {
 		}
 	}
 
-	public void setSql(Expression sql) {
-		this.sql = sql;
+	public void setContent(Expression content) {
+		this.content = content;
 	}
 
 	public void setMessage(Expression message) {
@@ -145,8 +169,32 @@ public class TaskCreateListener implements TaskListener {
 		this.roleId = roleId;
 	}
 
+	public void setSendMail(Expression sendMail) {
+		this.sendMail = sendMail;
+	}
+
+	public void setSql(Expression sql) {
+		this.sql = sql;
+	}
+
 	public void setStatementId(Expression statementId) {
 		this.statementId = statementId;
+	}
+
+	public void setSubject(Expression subject) {
+		this.subject = subject;
+	}
+
+	public void setTaskContent(Expression taskContent) {
+		this.taskContent = taskContent;
+	}
+
+	public void setTaskName(Expression taskName) {
+		this.taskName = taskName;
+	}
+
+	public void setTemplateId(Expression templateId) {
+		this.templateId = templateId;
 	}
 
 }

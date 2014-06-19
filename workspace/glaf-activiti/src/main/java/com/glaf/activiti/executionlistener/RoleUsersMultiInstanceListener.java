@@ -35,7 +35,7 @@ import com.glaf.core.dao.MyBatisEntityDAO;
 import com.glaf.core.util.StringTools;
 
 public class RoleUsersMultiInstanceListener implements ExecutionListener {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	protected final static Log logger = LogFactory
@@ -117,7 +117,6 @@ public class RoleUsersMultiInstanceListener implements ExecutionListener {
 							execution.setVariable("assigneeList", assigneeList);
 						}
 					}
-
 				}
 			}
 
