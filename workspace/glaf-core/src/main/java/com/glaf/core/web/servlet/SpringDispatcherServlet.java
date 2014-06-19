@@ -28,6 +28,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
 import com.glaf.core.config.*;
+import com.glaf.core.jdbc.ConnectionThreadHolder;
 import com.glaf.core.security.*;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ThreadContextHolder;
@@ -89,6 +90,7 @@ public class SpringDispatcherServlet extends DispatcherServlet {
 			Environment.clear();
 			Authentication.clear();
 			ThreadContextHolder.clear();
+			ConnectionThreadHolder.closeAndClear();
 		}
 
 	}

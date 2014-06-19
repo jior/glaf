@@ -28,6 +28,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
 import com.glaf.core.config.Environment;
+import com.glaf.core.jdbc.ConnectionThreadHolder;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ThreadContextHolder;
 import com.glaf.base.modules.sys.model.SysUser;
@@ -48,7 +49,7 @@ public class SpringDispatcherServlet extends DispatcherServlet {
 	@Override
 	protected void doService(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		logger.debug("RequestURI:"+request.getRequestURI());
+		logger.debug("RequestURI:" + request.getRequestURI());
 		try {
 			String systemName = RequestUtils.getCurrentSystem(request);
 			if (systemName != null && !StringUtils.equals("GLAF", systemName)) {
@@ -89,6 +90,7 @@ public class SpringDispatcherServlet extends DispatcherServlet {
 			Environment.clear();
 			Authentication.clear();
 			ThreadContextHolder.clear();
+			ConnectionThreadHolder.closeAndClear();
 			com.glaf.core.security.Authentication.clear();
 		}
 

@@ -121,6 +121,9 @@ public class DBConnectionFactory {
 					}
 				}
 			}
+			if (connection != null) {
+				ConnectionThreadHolder.addConnection(connection);
+			}
 			return connection;
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -152,6 +155,9 @@ public class DBConnectionFactory {
 			} else {
 				DataSource ds = ContextFactory.getBean("dataSource");
 				connection = ds.getConnection();
+			}
+			if (connection != null) {
+				ConnectionThreadHolder.addConnection(connection);
 			}
 			return connection;
 		} catch (Exception ex) {
