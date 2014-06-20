@@ -134,6 +134,30 @@ public final class StringTools {
 		return string.substring(0, length);
 	}
 
+	/**
+	 * 删除字符串中的空格
+	 * 
+	 * @param in
+	 * @return
+	 */
+	public static String cleanWhitespace(String in) {
+		char[] inArray = in.toCharArray();
+		StringBuilder out = new StringBuilder(inArray.length);
+		boolean lastWasSpace = false;
+		for (int i = 0; i < inArray.length; i++) {
+			char c = inArray[i];
+			if (Character.isWhitespace(c)) {
+				if (!lastWasSpace)
+					out.append(' ');
+				lastWasSpace = true;
+			} else {
+				out.append(c);
+				lastWasSpace = false;
+			}
+		}
+		return out.toString();
+	}
+
 	public static String collectionToString(Collection<?> collection) {
 		if (collection == null || collection.isEmpty()) {
 			return "";
@@ -375,6 +399,91 @@ public final class StringTools {
 			out.append(input, last, i - last);
 		}
 		return out.toString();
+	}
+
+	/**************************************************************************
+	 * Find index of search character in str. This ignores content in () and
+	 * 'texts'
+	 * 
+	 * @param str
+	 *            string
+	 * @param search
+	 *            search character
+	 * @return index or -1 if not found
+	 */
+	public static int findIndexOf(String str, char search) {
+		return findIndexOf(str, search, search);
+	}
+
+	/**
+	 * Find index of search characters in str. This ignores content in () and
+	 * 'texts'
+	 * 
+	 * @param str
+	 *            string
+	 * @param search1
+	 *            first search character
+	 * @param search2
+	 *            second search character (or)
+	 * @return index or -1 if not found
+	 */
+	public static int findIndexOf(String str, char search1, char search2) {
+		if (str == null) {
+			return -1;
+		}
+		int endIndex = -1;
+		int parCount = 0;
+		boolean ignoringText = false;
+		int size = str.length();
+		while (++endIndex < size) {
+			char c = str.charAt(endIndex);
+			if (c == '\'')
+				ignoringText = !ignoringText;
+			else if (!ignoringText) {
+				if (parCount == 0 && (c == search1 || c == search2))
+					return endIndex;
+				else if (c == ')')
+					parCount--;
+				else if (c == '(')
+					parCount++;
+			}
+		}
+		return -1;
+	}
+
+	/**
+	 * Find index of search character in str. This ignores content in () and
+	 * 'texts'
+	 * 
+	 * @param str
+	 *            string
+	 * @param search
+	 *            search character
+	 * @return index or -1 if not found
+	 */
+	public static int findIndexOf(String str, String search) {
+		if (str == null || search == null || search.length() == 0) {
+			return -1;
+		}
+		int endIndex = -1;
+		int parCount = 0;
+		boolean ignoringText = false;
+		int size = str.length();
+		while (++endIndex < size) {
+			char c = str.charAt(endIndex);
+			if (c == '\'')
+				ignoringText = !ignoringText;
+			else if (!ignoringText) {
+				if (parCount == 0 && c == search.charAt(0)) {
+					if (str.substring(endIndex).startsWith(search))
+						return endIndex;
+				} else if (c == ')')
+					parCount--;
+				else if (c == '(')
+					parCount++;
+			}
+		}
+		return -1;
 	}
 
 	public static String formatLine(String sourceString, int length) {

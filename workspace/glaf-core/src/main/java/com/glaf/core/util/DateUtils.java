@@ -19,6 +19,7 @@
 package com.glaf.core.util;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
@@ -73,6 +74,35 @@ public class DateUtils {
 		return calendar1.before(calendar2);
 	}
 
+	/**
+	 * 取两日期差异天数
+	 * 
+	 * @param fromDate
+	 * @param toDate
+	 * @return
+	 */
+	public static long dateDiff(Date fromDate, Date toDate) {
+		return dateDiff(getDateTime(DATE_PATTERN, fromDate),
+				getDateTime(DATE_PATTERN, toDate));
+	}
+
+	public static long dateDiff(String beginDateStr, String endDateStr) {
+		long day = 0;
+		java.text.SimpleDateFormat format = new java.text.SimpleDateFormat(
+				"yyyy-MM-dd");
+		java.util.Date beginDate;
+		java.util.Date endDate;
+		try {
+			beginDate = format.parse(beginDateStr);
+			endDate = format.parse(endDateStr);
+			day = (endDate.getTime() - beginDate.getTime())
+					/ (24 * 60 * 60 * 1000);
+		} catch (java.text.ParseException ex) {
+			ex.printStackTrace();
+		}
+		return day;
+	}
+
 	public static BigDecimal getCurrentTimeAsNumber() {
 		String returnStr = null;
 		SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -80,45 +110,15 @@ public class DateUtils {
 		returnStr = f.format(date);
 		return new BigDecimal(returnStr);
 	}
-	
-	/**
-	 * 取两日期差异天数
-	 * @param fromDate
-	 * @param toDate
-	 * @return
-	 */
-	public static long dateDiff(Date fromDate, Date toDate){
-		return dateDiff(getDateTime(DATE_PATTERN, fromDate),getDateTime(DATE_PATTERN, toDate));
-	}
-	
-	public static long dateDiff(String beginDateStr, String endDateStr) {
-        long day = 0;
-        java.text.SimpleDateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd");
-        java.util.Date beginDate;
-        java.util.Date endDate;
-        try {
-            beginDate = format.parse(beginDateStr);
-            endDate = format.parse(endDateStr);
-            day = (endDate.getTime() - beginDate.getTime())/ (24 * 60 * 60 * 1000);
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        return day;
-    }
 
-	
 	/**
-	 * 得到几天前的时间
+	 * 按指定格式将java.util.Date日期转换为字符串 例如:2009-10-01
 	 * 
 	 * @param date
-	 * @param day
 	 * @return
 	 */
-	public static Date getDateBefore(Date date, int day) {
-		Calendar now = Calendar.getInstance();
-		now.setTime(date);
-		now.set(Calendar.DATE, now.get(Calendar.DATE) - day);
-		return now.getTime();
+	public static String getDate(java.util.Date date) {
+		return getDateTime(DATE_PATTERN, date);
 	}
 
 	/**
@@ -135,51 +135,18 @@ public class DateUtils {
 		return now.getTime();
 	}
 
-
 	/**
-	 * 根据年月取每月的天数
-	 * 
-	 * @param year
-	 * @param month
-	 * @return
-	 */
-	public static int getYearMonthDays(int year, int month) {
-		int days = 31;
-		switch (month) {
-		case 1:
-		case 3:
-		case 5:
-		case 7:
-		case 8:
-		case 10:
-		case 12:
-			days = 31;
-			break;
-		case 4:
-		case 6:
-		case 9:
-		case 11:
-			days = 30;
-			break;
-		case 2:
-			if (year % 4 == 0 || year % 100 == 0 || year % 400 == 0) {
-				days = 29;
-				break;
-			}
-			days = 28;
-			break;
-		}
-		return days;
-	}
-
-	/**
-	 * 按指定格式将java.util.Date日期转换为字符串 例如:2009-10-01
+	 * 得到几天前的时间
 	 * 
 	 * @param date
+	 * @param day
 	 * @return
 	 */
-	public static String getDate(java.util.Date date) {
-		return getDateTime(DATE_PATTERN, date);
+	public static Date getDateBefore(Date date, int day) {
+		Calendar now = Calendar.getInstance();
+		now.setTime(date);
+		now.set(Calendar.DATE, now.get(Calendar.DATE) - day);
+		return now.getTime();
 	}
 
 	/**
@@ -363,6 +330,42 @@ public class DateUtils {
 		return Integer.parseInt(ret);
 	}
 
+	/**
+	 * 根据年月取每月的天数
+	 * 
+	 * @param year
+	 * @param month
+	 * @return
+	 */
+	public static int getYearMonthDays(int year, int month) {
+		int days = 31;
+		switch (month) {
+		case 1:
+		case 3:
+		case 5:
+		case 7:
+		case 8:
+		case 10:
+		case 12:
+			days = 31;
+			break;
+		case 4:
+		case 6:
+		case 9:
+		case 11:
+			days = 30;
+			break;
+		case 2:
+			if (year % 4 == 0 || year % 100 == 0 || year % 400 == 0) {
+				days = 29;
+				break;
+			}
+			days = 28;
+			break;
+		}
+		return days;
+	}
+
 	public static void main(String[] args) {
 		System.out.println(DateUtils.getDate(new Date()));
 		System.out.println(DateUtils.getDateTime(new Date()));
@@ -406,10 +409,11 @@ public class DateUtils {
 		System.out.println(DateUtils.toDate("2009-12-25 13"));
 		System.out.println(DateUtils.toDate("2009-12-25 10:45"));
 		System.out.println(DateUtils.toDate("2009-12-25 22:45:50"));
-		
-		
-		System.out.println(dateDiff(DateUtils.toDate("2013-10-25"),DateUtils.toDate("2013-10-29")));
-		Date toDate = DateUtils.getDateAfter(DateUtils.toDate("2013-03-21"), 60);
+
+		System.out.println(dateDiff(DateUtils.toDate("2013-10-25"),
+				DateUtils.toDate("2013-10-29")));
+		Date toDate = DateUtils
+				.getDateAfter(DateUtils.toDate("2013-03-21"), 60);
 		System.out.println(getDateTime(toDate));
 		long daysDiff = DateUtils.dateDiff(new Date(), toDate);
 		System.out.println(daysDiff);
@@ -436,6 +440,16 @@ public class DateUtils {
 			}
 		}
 		throw new RuntimeException("Unable to parse the date: " + str);
+	}
+
+	public static Timestamp removeTime(Timestamp ts) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(ts);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		return new Timestamp(cal.getTimeInMillis());
 	}
 
 	public static java.util.Date toDate(long ts) {
