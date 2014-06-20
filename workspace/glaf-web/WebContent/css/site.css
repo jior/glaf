@@ -55,7 +55,7 @@ a:hover {
 	width:65px;
 	height:21px;
 	border-style:none;
-	cursor:hand;
+	cursor:pointer;
 }
 
 .topbar {
@@ -103,14 +103,14 @@ a:hover {
 	width:57px;
 	height:27px;
 	border-style:none;
-	cursor:hand;
+	cursor:pointer;
 }
 .clear-search {
   background:url(../images/clear.jpg);
 	width:57px;
 	height:27px;
 	border-style:none;
-	cursor:hand;
+	cursor:pointer;
 }
 .btn {
   background:url(../images/s_11.jpg);
@@ -118,7 +118,7 @@ a:hover {
 	height:21px;
 	line-height:21px;
 	border-style:none;
-	cursor:hand;
+	cursor:pointer;
 }
 .button{
   background: url(../images/button_xp.gif);
@@ -130,7 +130,7 @@ a:hover {
   line-height: 16px;
   font-family: Arial, Verdana, sans-serif;
   font-size: 10px;
-	cursor:hand;
+	cursor:pointer;
 }
 .buttonMid{
   background: url(../images/button_mid.gif);
@@ -142,7 +142,7 @@ a:hover {
   line-height: 16px;
   font-family: Arial, Verdana, sans-serif;
   font-size: 10px;
-	cursor:hand;
+	cursor:pointer;
 }
 .buttonMiddle{
   background: url(../images/button_middle.gif);
@@ -154,7 +154,7 @@ a:hover {
   line-height: 16px;
   font-family: Arial, Verdana, sans-serif;
   font-size: 10px;
-	cursor:hand;
+	cursor:pointer;
 }
 .buttonBig{
   background: url(../images/button_big.gif);
@@ -166,7 +166,7 @@ a:hover {
   line-height: 16px;
   font-family: Arial, Verdana, sans-serif;
   font-size: 10px; 
-  cursor:hand;
+  cursor:pointer;
 }
 /* tabs-box */
 .tabs-box {
