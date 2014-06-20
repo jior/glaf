@@ -224,7 +224,7 @@ public class MailAction implements ActionHandler {
 		logger.debug("send mailsTo:" + mailsTo);
 
 		if (mailsTo.size() == 0) {
-			throw new RuntimeException("mail address is empty");
+			return;
 		}
 
 		Iterator<String> iterator = mailsTo.keySet().iterator();
