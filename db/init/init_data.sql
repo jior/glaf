@@ -241,13 +241,14 @@ insert into SYS_DICTORY_DEF (id, nodeid, name, columnname, title, type, length, 
 insert into SYS_PROPERTY (id_, description_, locked_, name_, title_, type_, value_, category_, initvalue_) values ('1', '系统名称', 0, 'res_system_name', '系统名称', null, 'GLAF基础应用框架', 'SYS', null);
 insert into SYS_PROPERTY (id_, description_, locked_, name_, title_, type_, value_, category_, initvalue_) values ('2', '系统版本', 0, 'res_version', '系统版本', null, 'V3.0', 'SYS', null);
 insert into SYS_PROPERTY (id_, description_, locked_, name_, title_, type_, value_, category_, initvalue_) values ('3', '版权信息', 0, 'res_copyright', '版权信息', null, 'GLAF 版权所有', 'SYS', null);
-insert into SYS_PROPERTY (id_, description_, locked_, name_, title_, type_, value_, category_, initvalue_) values ('4', null, 0, 'res_mail_from', '邮件发送者', null, 'jior2008@gmail.com', 'SYS', null);
+insert into SYS_PROPERTY (id_, description_, locked_, name_, title_, type_, value_, category_, initvalue_) values ('4', null, 0, 'res_mail_from', '邮件发送者', null, 'admin@localhost', 'SYS', null);
 insert into SYS_PROPERTY (id_, category_, description_, initvalue_, locked_, name_, title_, type_, value_, inputtype_) values ('5', 'SYS', '限定每个账号只能在一处登录', '[{"name":"限制","value":"true"},{"name":"不限制","value":"false"}]', 0, 'login_limit', '系统登录账号限制', null, 'true', 'combobox');
 insert into SYS_PROPERTY (id_, description_, locked_, name_, title_, type_, value_, category_, initvalue_) values ('6', '在线用户检测时间（秒）', 0, 'login_time_check', '在线用户检测时间（秒）', null, '600', 'SYS', null);
 insert into SYS_PROPERTY (id_, description_, locked_, name_, title_, type_, value_, category_, initvalue_) values ('8', '允许接入系统的IP地址', 0, 'login.allow.ip', '允许接入系统的IP地址', null, '', 'SYS', null);
 insert into SYS_PROPERTY (id_, category_, description_, initvalue_, locked_, name_, title_, type_, value_, inputtype_) values ('9', 'SYS', '文件存储方式', '[{"name":"数据库","value":"DATABASE"},{"name":"硬盘","value":"DISK"}]', 0, 'fs_storage_strategy', '文件存储方式', null, 'DATABASE', 'combobox');
 insert into sys_property (id_, category_, description_, initvalue_, locked_, name_, title_, type_, value_, inputtype_) values ('10', 'SYS', '存储备份到Mongodb', '[{"name":"是","value":"true"},{"name":"否","value":"false"}]', 0, 'fs_storage_mongodb', '存储备份到Mongodb', null, 'false', 'combobox');
 insert into sys_property (id_, category_, description_, initvalue_, locked_, name_, title_, type_, value_, inputtype_) values ('11', 'SYS', '启用查询缓存', '[{"name":"是","value":"true"},{"name":"否","value":"false"}]', 0, 'use_query_cache', '启用查询缓存', null, 'false', 'combobox');
+insert into sys_property (id_, description_, locked_, name_, title_, type_, value_, category_, initvalue_) values ('14', null, 0, 'res_mail_to_dev', '问题报告接收邮箱', null, 'jior2008@gmail.com', 'SYS', null);
 
 
 insert into SYS_PROPERTY (id_, description_, locked_, name_, title_, type_, value_, category_, initvalue_) values ('101', '当天的6位年月格式（YYYYMM），如201312', 0, 'curr_yyyymm', '当前年月', null, '', 'RPT', '${curr_yyyymm}');
