@@ -997,6 +997,46 @@ public class QueryHelper {
 		}
 	}
 
+	public Map<String, Object> selectOne(String systemName,
+			SqlExecutor sqlExecutor) {
+		Connection conn = null;
+		try {
+			conn = DBConnectionFactory.getConnection(systemName);
+			List<Map<String, Object>> results = getResultList(conn, sqlExecutor);
+			if (results != null && results.size() > 0) {
+				return results.get(0);
+			}
+			return null;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		} finally {
+			JdbcUtils.close(conn);
+		}
+	}
+
+	/**
+	 * 根据SQL语句获取结果集
+	 * 
+	 * @param sql
+	 * @param paramMap
+	 * @return
+	 */
+	public Map<String, Object> selectOne(String systemName, String sql,
+			Map<String, Object> paramMap) {
+		SqlExecutor sqlExecutor = DBUtils.replaceSQL(sql, paramMap);
+		Connection conn = null;
+		try {
+			conn = DBConnectionFactory.getConnection(systemName);
+			return this.selectOne(conn, sqlExecutor);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		} finally {
+			JdbcUtils.close(conn);
+		}
+	}
+
 	protected void skipRows(ResultSet rs, int start) throws SQLException {
 		if (rs.getType() != ResultSet.TYPE_FORWARD_ONLY) {
 			if (start != 0) {

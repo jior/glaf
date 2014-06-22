@@ -891,6 +891,23 @@ public class RequestUtils {
 		return request.getParameter(name);
 	}
 
+	/**
+	 * 获取系统名称 （即要访问的数据源定义名称）
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public static String getSystemName(HttpServletRequest request) {
+		String systemName = request.getParameter("systemName");
+		if (StringUtils.isEmpty(systemName)) {
+			systemName = getCurrentSystem(request);
+		}
+		if (StringUtils.isEmpty(systemName)) {
+			systemName = com.glaf.core.config.Environment.DEFAULT_SYSTEM_NAME;
+		}
+		return systemName;
+	}
+
 	public static String getTheme(HttpServletRequest request) {
 		String theme = "default";
 		Cookie[] cookies = request.getCookies();
