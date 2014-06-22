@@ -166,11 +166,19 @@
 	}
 
 	function loadGridData(url){
-        jQuery.post(url,{qq:'xx'},function(data){
-            //var text = JSON.stringify(data); 
-            //alert(text);
-            jQuery('#mydatagrid').datagrid('loadData', data);
-        },'json');
+            //var params = jQuery("#iForm").formSerialize();
+	    jQuery.ajax({
+			type: "POST",
+			url:  url,
+			//data: params,
+			dataType:  'json',
+			error: function(data){
+				alert('服务器处理错误！');
+			},
+			success: function(data){
+				jQuery('#mydatagrid').datagrid('loadData', data);
+			}
+		});
 	}
 
 	function searchData(){
