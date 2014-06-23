@@ -90,6 +90,11 @@ public class ResponseUtils {
 							"ISO8859_1");
 					contentDisposition = "attachment;filename=\"" + filename
 							+ "\"";
+				} else if (userAgent.indexOf("Gecko") != -1) {
+					filename = new String(fileOrgName.getBytes("GBK"),
+							"ISO8859_1");
+					contentDisposition = "attachment;filename=\"" + filename
+							+ "\"";
 				}
 			}
 			if (contentDisposition == null) {
