@@ -42,23 +42,6 @@
         <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
     </aop:config>
 
-	<!-- <tx:advice id="txAdvice" transaction-manager="transactionManager">
-		<tx:attributes>
-			<tx:method name="get*" propagation="SUPPORTS" read-only="true" />
-			<tx:method name="find*" propagation="SUPPORTS" read-only="true" />
-			<tx:method name="load*" propagation="SUPPORTS" read-only="true" />
-			<tx:method name="query*" propagation="SUPPORTS" read-only="true" />
-			<tx:method name="search*" propagation="SUPPORTS" read-only="true" />
-			<tx:method name="*" propagation="REQUIRED" />
-		</tx:attributes>
-	</tx:advice>
-
-	<aop:config proxy-target-class="true">
-		<aop:pointcut id="serviceOperation"
-			expression="execution(* com.glaf.**..*Service.*(..))" />
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
-	</aop:config> -->
-
 	<tx:annotation-driven transaction-manager="transactionManager" mode="aspectj" proxy-target-class="true"/>
 
 	<aop:config proxy-target-class="true"/>
