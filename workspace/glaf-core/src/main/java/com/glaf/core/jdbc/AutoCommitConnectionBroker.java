@@ -26,6 +26,7 @@ import java.sql.SQLException;
  * 
  */
 public class AutoCommitConnectionBroker {
+
 	private static class ConnectionReference {
 		protected Connection connection;
 		protected int referenceCount;
@@ -55,15 +56,16 @@ public class AutoCommitConnectionBroker {
 				connReference.referenceCount++;
 				return connReference.connection;
 			}
-		} catch (SQLException e) {
+		} catch (SQLException ex) {
 		}
 
-		Connection connection = DBConnectionFactory.getConnection();
+		Connection connection = null;
 		try {
+			connection = DBConnectionFactory.getConnection();
 			connection
 					.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
 			connection.setAutoCommit(true);
-		} catch (SQLException e) {
+		} catch (SQLException ex) {
 		}
 		connReference = new ConnectionReference(connection);
 		threadLocalConnection.set(connReference);
@@ -84,13 +86,13 @@ public class AutoCommitConnectionBroker {
 				threadLocalConnection.set(null);
 				try {
 					connReference.connection.close();
-				} catch (SQLException e) {
+				} catch (SQLException ex) {
 				}
 			}
 		} else {
 			try {
 				conn.close();
-			} catch (SQLException e) {
+			} catch (SQLException ex) {
 			}
 		}
 	}
