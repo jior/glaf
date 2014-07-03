@@ -16,8 +16,11 @@ package com.glaf.core.security;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.security.Key;
 import java.security.KeyStore;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.Provider;
 import java.security.PublicKey;
@@ -227,6 +230,33 @@ public class SecurityUtils {
 		}
 	}
 
+	public static String hash(String plaintext) {
+		MessageDigest md = null;
+
+		try {
+			md = MessageDigest.getInstance("SHA"); // SHA-1 generator instance
+		} catch (NoSuchAlgorithmException e) {
+			throw new RuntimeException(e.getMessage());
+		}
+
+		try {
+			md.update(plaintext.getBytes("UTF-8")); // Message summary
+			// generation
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e.getMessage());
+		}
+
+		byte raw[] = md.digest(); // Message summary reception
+		try {
+			String hash = new String(
+					org.apache.commons.codec.binary.Base64.encodeBase64(raw),
+					"UTF-8");
+			return hash;
+		} catch (UnsupportedEncodingException use) {
+			throw new RuntimeException(use);
+		}
+	}
+
 	private static byte[] hex2byte(byte[] b) {
 		if ((b.length % 2) != 0) {
 			throw new IllegalArgumentException();
@@ -237,6 +267,21 @@ public class SecurityUtils {
 			b2[n / 2] = (byte) Integer.parseInt(item, 16);
 		}
 		return b2;
+	}
+
+	public static void main(String[] args) {
+		long start = System.currentTimeMillis();
+		for (int i = 0; i < 10000; i++) {
+			String key = UUID32.getUUID();
+			String data = "glaf_product_" + i;
+			String enc_data = SecurityUtils.encode(key, data);
+			// System.out.println(enc_data);
+			System.out.println(SecurityUtils.decode(key, enc_data));
+		}
+		long times = System.currentTimeMillis() - start;
+		System.out.println("总共耗时(毫秒):" + times);
+		System.out.println(SecurityUtils.hash("12345678"));
+		System.out.println(SecurityUtils.hash("111111"));
 	}
 
 	/**
@@ -381,19 +426,6 @@ public class SecurityUtils {
 
 	private SecurityUtils() {
 
-	}
-
-	public static void main(String[] args) {
-		long start = System.currentTimeMillis();
-		for (int i = 0; i < 10000; i++) {
-			String key = UUID32.getUUID();
-			String data = "glaf_product_" + i;
-			String enc_data = SecurityUtils.encode(key, data);
-			// System.out.println(enc_data);
-			System.out.println(SecurityUtils.decode(key, enc_data));
-		}
-		long times = System.currentTimeMillis() - start;
-		System.out.println("总共耗时(毫秒):" + times);
 	}
 
 }
