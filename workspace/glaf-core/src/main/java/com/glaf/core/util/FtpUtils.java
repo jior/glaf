@@ -51,6 +51,7 @@ public class FtpUtils {
 			logger.info("disconnect success");
 		} catch (IOException ex) {
 			logger.error("disconnect error", ex);
+			throw new RuntimeException(ex);
 		}
 	}
 
@@ -80,6 +81,7 @@ public class FtpUtils {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			logger.error("login failed", ex);
+			throw new RuntimeException(ex);
 		}
 	}
 
@@ -122,6 +124,7 @@ public class FtpUtils {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			logger.error("download error", ex);
+			throw new RuntimeException(ex);
 		} finally {
 			IOUtils.closeStream(in);
 			IOUtils.closeStream(out);
@@ -148,6 +151,7 @@ public class FtpUtils {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			logger.error("download error", ex);
+			throw new RuntimeException(ex);
 		}
 	}
 
@@ -195,6 +199,7 @@ public class FtpUtils {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			logger.error("download error", ex);
+			throw new RuntimeException(ex);
 		} finally {
 			IOUtils.closeStream(in);
 			IOUtils.closeStream(out);
@@ -232,7 +237,7 @@ public class FtpUtils {
 	 * @param input
 	 *            本地输入流
 	 */
-	public static void upload(String remoteFile, byte[] bytes) {
+	public static boolean upload(String remoteFile, byte[] bytes) {
 		ByteArrayInputStream bais = null;
 		BufferedInputStream bis = null;
 		try {
@@ -247,9 +252,11 @@ public class FtpUtils {
 			} else {
 				logger.info("upload failure");
 			}
+			return flag;
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			logger.error("upload error", ex);
+			throw new RuntimeException(ex);
 		} finally {
 			IOUtils.closeStream(bis);
 			IOUtils.closeStream(bais);
@@ -264,7 +271,7 @@ public class FtpUtils {
 	 * @param input
 	 *            本地文件流
 	 */
-	public static void upload(String remoteFile, InputStream input) {
+	public static boolean upload(String remoteFile, InputStream input) {
 		try {
 			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 			ftpClient.enterLocalPassiveMode();
@@ -275,9 +282,11 @@ public class FtpUtils {
 			} else {
 				logger.info("upload failure");
 			}
+			return flag;
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			logger.error("upload error", ex);
+			throw new RuntimeException(ex);
 		}
 	}
 
@@ -289,7 +298,7 @@ public class FtpUtils {
 	 * @param localFile
 	 *            本地文件全路径
 	 */
-	public static void upload(String remoteFile, String localFile) {
+	public static boolean upload(String remoteFile, String localFile) {
 		InputStream input = null;
 		try {
 			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
@@ -303,9 +312,11 @@ public class FtpUtils {
 			} else {
 				logger.info("upload failure");
 			}
+			return flag;
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			logger.error("upload error", ex);
+			throw new RuntimeException(ex);
 		} finally {
 			IOUtils.closeStream(input);
 		}
@@ -321,16 +332,17 @@ public class FtpUtils {
 	 * @param bytes
 	 *            本地字节流
 	 */
-	public static void upload(String remotePath, String remoteFile, byte[] bytes) {
+	public static boolean upload(String remotePath, String remoteFile,
+			byte[] bytes) {
 		try {
 			if (remotePath != null && remotePath.length() != 0) {
 				ftpClient.changeWorkingDirectory(remotePath);
 			}
-			upload(remoteFile, bytes);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			logger.error("upload error", ex);
+			logger.error("change working directory error", ex);
 		}
+		return upload(remoteFile, bytes);
 	}
 
 	/**
@@ -343,17 +355,17 @@ public class FtpUtils {
 	 * @param input
 	 *            本地输入流
 	 */
-	public static void upload(String remotePath, String remoteFile,
+	public static boolean upload(String remotePath, String remoteFile,
 			InputStream input) {
 		try {
 			if (remotePath != null && remotePath.length() != 0) {
 				ftpClient.changeWorkingDirectory(remotePath);
 			}
-			upload(remoteFile, input);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			logger.error("upload error", ex);
+			logger.error("change working directory error", ex);
 		}
+		return upload(remoteFile, input);
 	}
 
 	/**
@@ -366,16 +378,16 @@ public class FtpUtils {
 	 * @param localFile
 	 *            本地文件全路径
 	 */
-	public static void upload(String remotePath, String remoteFile,
+	public static boolean upload(String remotePath, String remoteFile,
 			String localFile) {
 		try {
 			if (remotePath != null && remotePath.length() != 0) {
 				ftpClient.changeWorkingDirectory(remotePath);
 			}
-			upload(remoteFile, localFile);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			logger.error("upload error", ex);
+			logger.error("change working directory error", ex);
 		}
+		return upload(remoteFile, localFile);
 	}
 }
