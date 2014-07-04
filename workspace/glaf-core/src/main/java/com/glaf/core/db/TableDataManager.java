@@ -565,6 +565,9 @@ public class TableDataManager {
 					if (list != null && !list.isEmpty()) {
 						for (Map<String, Object> dataMap : list) {
 							Object id = ParamUtils.getObject(dataMap, "id");
+							if (id == null) {
+								id = ParamUtils.getObject(dataMap, "ID");
+							}
 							String aggregationKey = ParamUtils.getString(
 									dataMap, "aggregationKey");
 							keyMap.put(aggregationKey, id);
@@ -583,6 +586,9 @@ public class TableDataManager {
 				if (list != null && !list.isEmpty()) {
 					for (Map<String, Object> dataMap : list) {
 						Object id = ParamUtils.getObject(dataMap, "id");
+						if (id == null) {
+							id = ParamUtils.getObject(dataMap, "ID");
+						}
 						String aggregationKey = ParamUtils.getString(dataMap,
 								"aggregationKey");
 						keyMap.put(aggregationKey, id);
@@ -761,6 +767,9 @@ public class TableDataManager {
 					if (dataMap.get("id") != null) {
 						keys.add(dataMap.get("id").toString());
 					}
+					if (dataMap.get("ID") != null) {
+						keys.add(dataMap.get("ID").toString());
+					}
 				}
 			}
 
@@ -790,26 +799,34 @@ public class TableDataManager {
 	}
 
 	public void saveOrUpdate(String systemName,
-			TableDefinition tableDefinition, boolean updatable,
-			List<Map<String, Object>> rows) {
+			TableDefinition tableDefinition, List<Map<String, Object>> rows) {
 		if (tableDefinition.getTableName() != null) {
 			tableDefinition.setTableName(tableDefinition.getTableName()
 					.toUpperCase());
 		}
-		String tableName = tableDefinition.getTableName();
+
 		String idColumnName = null;
-		List<Map<String, Object>> rowIds = null;
-		List<ColumnDefinition> columns = tableDefinition.getColumns();
-		if (columns != null && !columns.isEmpty()) {
-			for (ColumnDefinition column : columns) {
-				if (column.isPrimaryKey()) {
-					idColumnName = column.getColumnName();
-					idColumnName = idColumnName.toLowerCase();
-					rowIds = this.getTablePrimaryKeyMap(systemName, tableName,
-							idColumnName);
-					break;
+		if (tableDefinition.getIdColumn() != null) {
+			idColumnName = tableDefinition.getIdColumn().getColumnName();
+		}
+
+		if (idColumnName == null) {
+			List<ColumnDefinition> columns = tableDefinition.getColumns();
+			if (columns != null && !columns.isEmpty()) {
+				for (ColumnDefinition column : columns) {
+					if (column.isPrimaryKey()) {
+						idColumnName = column.getColumnName();
+						break;
+					}
 				}
 			}
+		}
+
+		List<Map<String, Object>> rowIds = null;
+		if (idColumnName != null) {
+			String tableName = tableDefinition.getTableName();
+			rowIds = this.getTablePrimaryKeyMap(systemName, tableName,
+					idColumnName.toLowerCase());
 		}
 
 		Collection<String> keys = new HashSet<String>();
@@ -821,8 +838,14 @@ public class TableDataManager {
 				if (dataMap.get("id") != null) {
 					keys.add(dataMap.get("id").toString());
 				}
+				if (dataMap.get("ID") != null) {
+					keys.add(dataMap.get("ID").toString());
+				}
 			}
 		}
+
+		logger.debug("rowIds:" + rowIds);
+		logger.debug("keys:" + keys);
 
 		List<Map<String, Object>> inertRows = new java.util.ArrayList<Map<String, Object>>();
 		List<Map<String, Object>> updateRows = new java.util.ArrayList<Map<String, Object>>();

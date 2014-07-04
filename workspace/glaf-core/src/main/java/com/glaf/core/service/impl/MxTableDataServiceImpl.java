@@ -520,6 +520,9 @@ public class MxTableDataServiceImpl implements ITableDataService {
 					if (list != null && !list.isEmpty()) {
 						for (Map<String, Object> dataMap : list) {
 							Object id = ParamUtils.getObject(dataMap, "id");
+							if (id == null) {
+								id = ParamUtils.getObject(dataMap, "ID");
+							}
 							String aggregationKey = ParamUtils.getString(
 									dataMap, "aggregationKey");
 							keyMap.put(aggregationKey, id);
@@ -538,6 +541,9 @@ public class MxTableDataServiceImpl implements ITableDataService {
 				if (list != null && !list.isEmpty()) {
 					for (Map<String, Object> dataMap : list) {
 						Object id = ParamUtils.getObject(dataMap, "id");
+						if (id == null) {
+							id = ParamUtils.getObject(dataMap, "ID");
+						}
 						String aggregationKey = ParamUtils.getString(dataMap,
 								"aggregationKey");
 						keyMap.put(aggregationKey, id);
@@ -697,6 +703,9 @@ public class MxTableDataServiceImpl implements ITableDataService {
 					if (dataMap.get("id") != null) {
 						keys.add(dataMap.get("id").toString());
 					}
+					if (dataMap.get("ID") != null) {
+						keys.add(dataMap.get("ID").toString());
+					}
 				}
 			}
 
@@ -757,6 +766,9 @@ public class MxTableDataServiceImpl implements ITableDataService {
 				Map<String, Object> dataMap = iter.next();
 				if (dataMap.get("id") != null) {
 					keys.add(dataMap.get("id").toString());
+				}
+				if (dataMap.get("ID") != null) {
+					keys.add(dataMap.get("ID").toString());
 				}
 			}
 		}
