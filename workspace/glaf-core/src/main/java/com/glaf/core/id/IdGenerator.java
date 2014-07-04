@@ -18,14 +18,21 @@
 
 package com.glaf.core.id;
 
+import org.springframework.transaction.annotation.Transactional;
+
+@Transactional
 public interface IdGenerator {
 
+	@Transactional
 	String getNextId();
-	
+
+	@Transactional
 	String getNextId(String name);
 
+	@Transactional
 	Long nextId();
-	
+
+	@Transactional
 	Long nextId(String name);
 
 }

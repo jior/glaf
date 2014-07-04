@@ -15,9 +15,13 @@ package com.glaf.core.id;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.core.dao.EntityDAO;
 
+@Service("idGenerator")
+@Transactional
 public class MyBatisDbIdGenerator implements IdGenerator {
 	protected final static Log logger = LogFactory
 			.getLog(MyBatisDbIdGenerator.class);
@@ -32,6 +36,7 @@ public class MyBatisDbIdGenerator implements IdGenerator {
 		logger.info("----------------MyBatis3DbIdGenerator--------------");
 	}
 
+	@Transactional
 	protected synchronized void getNewBlock() {
 		IdBlock idBlock = entityDAO.nextDbidBlock();
 		this.nextId = idBlock.getNextId();
@@ -43,14 +48,17 @@ public class MyBatisDbIdGenerator implements IdGenerator {
 		}
 	}
 
+	@Transactional
 	public synchronized String getNextId() {
 		return Long.toString(this.nextId());
 	}
 
+	@Transactional
 	public synchronized String getNextId(String name) {
 		return Long.toString(this.nextId(name));
 	}
 
+	@Transactional
 	public synchronized Long nextId() {
 		if (lastId < nextId) {
 			getNewBlock();
@@ -58,6 +66,7 @@ public class MyBatisDbIdGenerator implements IdGenerator {
 		return nextId++;
 	}
 
+	@Transactional
 	public synchronized Long nextId(String name) {
 		IdBlock idBlock = entityDAO.nextDbidBlock(name);
 		return idBlock.getNextId();

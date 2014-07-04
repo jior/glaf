@@ -140,6 +140,10 @@ public class MxTableDataServiceImpl implements ITableDataService {
 		}
 		return tableDataMapper.getTableDataByPrimaryKey(model);
 	}
+	
+	public List<Map<String, Object>> getTableKeyMap(TableModel model){
+		return tableDataMapper.getTablePrimaryKeyMap(model);
+	}
 
 	@Transactional(readOnly = true)
 	public List<Map<String, Object>> getTablePrimaryKeyMap(String tableName,
@@ -281,6 +285,17 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	}
 
 	@Transactional
+	public void insertAllTableData(List<TableModel> rows) {
+		logger.debug("#currentSystemName:"+Environment.getCurrentSystemName());
+		for (TableModel model : rows) {
+			if (model.getTableName() != null) {
+				model.setTableName(model.getTableName().toUpperCase());
+			}
+			tableDataMapper.insertTableData(model);
+		}
+	}
+
+	@Transactional
 	public void insertTableData(List<TableModel> rows) {
 		if (rows != null && !rows.isEmpty()) {
 			for (TableModel t : rows) {
@@ -393,17 +408,6 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			model.setTableName(model.getTableName().toUpperCase());
 		}
 		tableDataMapper.insertTableData(model);
-	}
-
-	@Transactional
-	public void insertAllTableData(List<TableModel> rows) {
-		logger.debug("#currentSystemName:"+Environment.getCurrentSystemName());
-		for (TableModel model : rows) {
-			if (model.getTableName() != null) {
-				model.setTableName(model.getTableName().toUpperCase());
-			}
-			tableDataMapper.insertTableData(model);
-		}
 	}
 
 	@Transactional

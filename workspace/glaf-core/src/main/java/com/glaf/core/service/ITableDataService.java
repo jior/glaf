@@ -42,6 +42,8 @@ public interface ITableDataService {
 
 	List<Dbid> getAllDbids();
 	
+	List<Map<String, Object>> getTableKeyMap(TableModel model);
+	
 	
 	/**
 	 * 获取一页数据
