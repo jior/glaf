@@ -140,8 +140,8 @@ public class MxTableDataServiceImpl implements ITableDataService {
 		}
 		return tableDataMapper.getTableDataByPrimaryKey(model);
 	}
-	
-	public List<Map<String, Object>> getTableKeyMap(TableModel model){
+
+	public List<Map<String, Object>> getTableKeyMap(TableModel model) {
 		return tableDataMapper.getTablePrimaryKeyMap(model);
 	}
 
@@ -286,7 +286,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 
 	@Transactional
 	public void insertAllTableData(List<TableModel> rows) {
-		logger.debug("#currentSystemName:"+Environment.getCurrentSystemName());
+		logger.debug("#currentSystemName:" + Environment.getCurrentSystemName());
 		for (TableModel model : rows) {
 			if (model.getTableName() != null) {
 				model.setTableName(model.getTableName().toUpperCase());
@@ -331,6 +331,14 @@ public class MxTableDataServiceImpl implements ITableDataService {
 						c.setColumnName(name);
 						c.setJavaType(javaType);
 						Object value = dataMap.get(name);
+						if (value == null) {
+							value = dataMap.get(name.toLowerCase());
+						}
+						if (value == null) {
+							if (column.getName() != null) {
+								value = dataMap.get(column.getName());
+							}
+						}
 						if (value != null) {
 							if ("Integer".equals(javaType)) {
 								value = ParamUtils.getInt(dataMap, name);
@@ -376,8 +384,13 @@ public class MxTableDataServiceImpl implements ITableDataService {
 					c.setColumnName(name);
 					c.setJavaType(javaType);
 					Object value = dataMap.get(name);
-					if (value != null) {
+					if (value == null) {
 						value = dataMap.get(name.toLowerCase());
+					}
+					if (value == null) {
+						if (column.getName() != null) {
+							value = dataMap.get(column.getName());
+						}
 					}
 					if (value != null) {
 						if ("Integer".equals(javaType)) {
@@ -1065,6 +1078,14 @@ public class MxTableDataServiceImpl implements ITableDataService {
 						c.setColumnName(name);
 						c.setJavaType(javaType);
 						Object value = dataMap.get(name);
+						if (value == null) {
+							value = dataMap.get(name.toLowerCase());
+						}
+						if (value == null) {
+							if (column.getName() != null) {
+								value = dataMap.get(column.getName());
+							}
+						}
 						if (value != null) {
 							if ("Integer".equals(javaType)) {
 								value = ParamUtils.getInt(dataMap, name);
@@ -1114,8 +1135,13 @@ public class MxTableDataServiceImpl implements ITableDataService {
 					c.setColumnName(name);
 					c.setJavaType(javaType);
 					Object value = dataMap.get(name);
-					if (value != null) {
+					if (value == null) {
 						value = dataMap.get(name.toLowerCase());
+					}
+					if (value == null) {
+						if (column.getName() != null) {
+							value = dataMap.get(column.getName());
+						}
 					}
 					if (value != null) {
 						if ("Integer".equals(javaType)) {

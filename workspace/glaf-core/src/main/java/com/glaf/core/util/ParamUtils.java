@@ -272,7 +272,7 @@ public class ParamUtils {
 		}
 		return result;
 	}
-	
+
 	public static Object getObject(Map<String, Object> dataMap, String key) {
 		if (dataMap == null || key == null) {
 			return null;
@@ -326,7 +326,8 @@ public class ParamUtils {
 			if (value instanceof String) {
 				result = DateUtils.toTimestamp(value.toString());
 			} else if (value instanceof Date) {
-				result = (Timestamp) value;
+				Date date = (Date) value;
+				result = new Timestamp(date.getTime());
 			} else if (value instanceof Timestamp) {
 				result = (Timestamp) value;
 			}

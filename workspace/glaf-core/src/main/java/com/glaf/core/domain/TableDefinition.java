@@ -531,6 +531,7 @@ public class TableDefinition implements java.io.Serializable,
 	public void setIdColumn(ColumnDefinition idColumn) {
 		this.idColumn = idColumn;
 		this.idColumn.setPrimaryKey(true);
+		this.addColumn(idColumn);
 	}
 
 	public void setIdField(FieldDefinition idField) {

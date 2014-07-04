@@ -29,6 +29,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.glaf.core.entity.SqlExecutor;
 
 public final class JdbcUtils {
@@ -49,6 +51,15 @@ public final class JdbcUtils {
 				rs = null;
 			}
 		} catch (SQLException ex) {
+		}
+	}
+
+	public static void close(SqlSession session) {
+		try {
+			if (session != null) {
+				session.close();
+			}
+		} catch (Exception ex) {
 		}
 	}
 
@@ -111,7 +122,7 @@ public final class JdbcUtils {
 		SqlExecutor sqlExecutor = new SqlExecutor();
 		List<Object> values = new java.util.ArrayList<Object>();
 		Map<String, Object> dataMap = lowerKeyMap(params);
-		StringBuffer sb = new StringBuffer(sql.length()+1000);
+		StringBuffer sb = new StringBuffer(sql.length() + 1000);
 		int begin = 0;
 		int end = 0;
 		boolean flag = false;
@@ -144,6 +155,15 @@ public final class JdbcUtils {
 		sqlExecutor.setParameter(values);
 		sqlExecutor.setSql(sb.toString());
 		return sqlExecutor;
+	}
+
+	public static void rollback(Connection con) {
+		try {
+			if (con != null && !con.isClosed()) {
+				con.rollback();
+			}
+		} catch (SQLException ex) {
+		}
 	}
 
 	private JdbcUtils() {

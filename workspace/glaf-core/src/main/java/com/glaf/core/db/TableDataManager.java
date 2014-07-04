@@ -35,7 +35,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-
 import com.glaf.core.base.ColumnModel;
 import com.glaf.core.base.TableModel;
 import com.glaf.core.context.ContextFactory;
@@ -63,6 +62,8 @@ public class TableDataManager {
 
 	protected ITableDefinitionService tableDefinitionService;
 
+	protected SqlSessionFactory sqlSessionFactory;
+
 	public TableDataManager() {
 
 	}
@@ -72,6 +73,13 @@ public class TableDataManager {
 			entityService = ContextFactory.getBean("entityService");
 		}
 		return entityService;
+	}
+
+	public SqlSessionFactory getSqlSessionFactory() {
+		if (sqlSessionFactory == null) {
+			sqlSessionFactory = MyBatisSessionFactory.getSessionFactory();
+		}
+		return sqlSessionFactory;
 	}
 
 	public ITableDataService getTableDataService() {
@@ -96,22 +104,20 @@ public class TableDataManager {
 		idColumn.setColumnName(columnName);
 		tableModel.setTableName(tableName.toUpperCase());
 		tableModel.setIdColumn(idColumn);
-		SqlSessionFactory sqlSessionFactory = MyBatisSessionFactory
-				.getSessionFactory();
 		SqlSession sqlSession = null;
 		Connection conn = null;
 		try {
 			conn = DBConnectionFactory.getConnection(systemName);
-			sqlSession = sqlSessionFactory.openSession();
-			return sqlSession.selectList("getTablePrimaryKeyMap", tableModel);
+			sqlSession = getSqlSessionFactory().openSession(conn);
+			List<Map<String, Object>> list = sqlSession.selectList(
+					"getTablePrimaryKeyMap", tableModel);
+			return list;
 		} catch (Exception ex) {
 			logger.error(ex);
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
-			if (sqlSession != null) {
-				sqlSession.close();
-			}
+			JdbcUtils.close(sqlSession);
 			JdbcUtils.close(conn);
 		}
 	}
@@ -238,27 +244,23 @@ public class TableDataManager {
 			for (TableModel tableData : inertRows) {
 				tableData.setTableName(tableDefinition.getTableName());
 				logger.debug(tableData.toString());
-				SqlSessionFactory sqlSessionFactory = MyBatisSessionFactory
-						.getSessionFactory();
 				SqlSession sqlSession = null;
 				Connection conn = null;
 				try {
 					conn = DBConnectionFactory.getConnection(systemName);
-					sqlSession = sqlSessionFactory.openSession(
-							ExecutorType.BATCH, false);
+					conn.setAutoCommit(false);
+					sqlSession = getSqlSessionFactory().openSession(
+							ExecutorType.BATCH, conn);
 					sqlSession.insert("insertTableData", tableData);
 					sqlSession.commit();
+					conn.commit();
 				} catch (Exception ex) {
-					if (sqlSession != null) {
-						sqlSession.rollback();
-					}
+					JdbcUtils.rollback(conn);
 					logger.error(ex);
 					ex.printStackTrace();
 					throw new RuntimeException(ex);
 				} finally {
-					if (sqlSession != null) {
-						sqlSession.close();
-					}
+					JdbcUtils.close(sqlSession);
 					JdbcUtils.close(conn);
 				}
 			}
@@ -268,14 +270,13 @@ public class TableDataManager {
 	}
 
 	public void insertAllTableData(String systemName, List<TableModel> rows) {
-		SqlSessionFactory sqlSessionFactory = MyBatisSessionFactory
-				.getSessionFactory();
 		SqlSession sqlSession = null;
 		Connection conn = null;
 		try {
 			conn = DBConnectionFactory.getConnection(systemName);
-			sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH,
-					false);
+			conn.setAutoCommit(false);
+			sqlSession = getSqlSessionFactory().openSession(ExecutorType.BATCH,
+					conn);
 			for (TableModel model : rows) {
 				if (model.getTableName() != null) {
 					model.setTableName(model.getTableName().toUpperCase());
@@ -283,31 +284,27 @@ public class TableDataManager {
 				sqlSession.insert("insertTableData", model);
 			}
 			sqlSession.commit();
+			conn.commit();
 		} catch (Exception ex) {
-			if (sqlSession != null) {
-				sqlSession.rollback();
-			}
+			JdbcUtils.rollback(conn);
 			logger.error(ex);
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
-			if (sqlSession != null) {
-				sqlSession.close();
-			}
+			JdbcUtils.close(sqlSession);
 			JdbcUtils.close(conn);
 		}
 	}
 
 	public void insertTableData(String systemName, List<TableModel> rows) {
 		if (rows != null && !rows.isEmpty()) {
-			SqlSessionFactory sqlSessionFactory = MyBatisSessionFactory
-					.getSessionFactory();
 			SqlSession sqlSession = null;
 			Connection conn = null;
 			try {
 				conn = DBConnectionFactory.getConnection(systemName);
-				sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH,
-						false);
+				conn.setAutoCommit(false);
+				sqlSession = getSqlSessionFactory().openSession(
+						ExecutorType.BATCH, conn);
 				for (TableModel t : rows) {
 					if (t.getTableName() != null) {
 						t.setTableName(t.getTableName().toUpperCase());
@@ -315,17 +312,14 @@ public class TableDataManager {
 					sqlSession.insert("insertTableData", t);
 				}
 				sqlSession.commit();
+				conn.commit();
 			} catch (Exception ex) {
-				if (sqlSession != null) {
-					sqlSession.rollback();
-				}
+				JdbcUtils.rollback(conn);
 				logger.error(ex);
 				ex.printStackTrace();
 				throw new RuntimeException(ex);
 			} finally {
-				if (sqlSession != null) {
-					sqlSession.close();
-				}
+				JdbcUtils.close(sqlSession);
 				JdbcUtils.close(conn);
 			}
 		}
@@ -333,24 +327,23 @@ public class TableDataManager {
 
 	public void insertTableData(String systemName, String tableName,
 			List<Map<String, Object>> rows) {
-		TableDefinition tableDefinition = tableDefinitionService
+		TableDefinition tableDefinition = getTableDefinitionService()
 				.getTableDefinition(tableName);
 		if (tableDefinition != null) {
 			if (tableDefinition.getTableName() != null) {
 				tableDefinition.setTableName(tableDefinition.getTableName()
 						.toUpperCase());
 			}
-			List<ColumnDefinition> columns = tableDefinitionService
+			List<ColumnDefinition> columns = getTableDefinitionService()
 					.getColumnDefinitionsByTableName(tableName);
 			if (columns != null && !columns.isEmpty()) {
-				SqlSessionFactory sqlSessionFactory = MyBatisSessionFactory
-						.getSessionFactory();
 				SqlSession sqlSession = null;
 				Connection conn = null;
 				try {
 					conn = DBConnectionFactory.getConnection(systemName);
-					sqlSession = sqlSessionFactory.openSession(
-							ExecutorType.BATCH, false);
+					conn.setAutoCommit(false);
+					sqlSession = getSqlSessionFactory().openSession(
+							ExecutorType.BATCH, conn);
 					Iterator<Map<String, Object>> iterator = rows.iterator();
 					while (iterator.hasNext()) {
 						TableModel table = new TableModel();
@@ -363,6 +356,14 @@ public class TableDataManager {
 							c.setColumnName(name);
 							c.setJavaType(javaType);
 							Object value = dataMap.get(name);
+							if (value == null) {
+								value = dataMap.get(name.toLowerCase());
+							}
+							if (value == null) {
+								if (column.getName() != null) {
+									value = dataMap.get(column.getName());
+								}
+							}
 							if (value != null) {
 								if ("Integer".equals(javaType)) {
 									value = ParamUtils.getInt(dataMap, name);
@@ -385,17 +386,14 @@ public class TableDataManager {
 						sqlSession.insert("insertTableData", table);
 					}
 					sqlSession.commit();
+					conn.commit();
 				} catch (Exception ex) {
-					if (sqlSession != null) {
-						sqlSession.rollback();
-					}
+					JdbcUtils.rollback(conn);
 					logger.error(ex);
 					ex.printStackTrace();
 					throw new RuntimeException(ex);
 				} finally {
-					if (sqlSession != null) {
-						sqlSession.close();
-					}
+					JdbcUtils.close(sqlSession);
 					JdbcUtils.close(conn);
 				}
 			}
@@ -410,14 +408,13 @@ public class TableDataManager {
 		}
 		List<ColumnDefinition> columns = tableDefinition.getColumns();
 		if (columns != null && !columns.isEmpty()) {
-			SqlSessionFactory sqlSessionFactory = MyBatisSessionFactory
-					.getSessionFactory();
 			SqlSession sqlSession = null;
 			Connection conn = null;
 			try {
 				conn = DBConnectionFactory.getConnection(systemName);
-				sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH,
-						false);
+				conn.setAutoCommit(false);
+				sqlSession = getSqlSessionFactory().openSession(
+						ExecutorType.BATCH, conn);
 				Iterator<Map<String, Object>> iterator = rows.iterator();
 				while (iterator.hasNext()) {
 					TableModel table = new TableModel();
@@ -430,8 +427,13 @@ public class TableDataManager {
 						c.setColumnName(name);
 						c.setJavaType(javaType);
 						Object value = dataMap.get(name);
-						if (value != null) {
+						if (value == null) {
 							value = dataMap.get(name.toLowerCase());
+						}
+						if (value == null) {
+							if (column.getName() != null) {
+								value = dataMap.get(column.getName());
+							}
 						}
 						if (value != null) {
 							if ("Integer".equals(javaType)) {
@@ -452,28 +454,24 @@ public class TableDataManager {
 						}
 					}
 					sqlSession.insert("insertTableData", table);
-					sqlSession.commit();
 				}
+				sqlSession.commit();
+				conn.commit();
 			} catch (Exception ex) {
-				if (sqlSession != null) {
-					sqlSession.rollback();
-				}
+				JdbcUtils.rollback(conn);
 				logger.error(ex);
 				ex.printStackTrace();
 				throw new RuntimeException(ex);
 			} finally {
-				if (sqlSession != null) {
-					sqlSession.close();
-				}
+				JdbcUtils.close(sqlSession);
 				JdbcUtils.close(conn);
 			}
 		}
-
 	}
 
 	public void saveAll(String systemName, String tableName, String seqNo,
 			Collection<TableModel> rows) {
-		TableDefinition tableDefinition = tableDefinitionService
+		TableDefinition tableDefinition = getTableDefinitionService()
 				.getTableDefinition(tableName);
 		if (tableDefinition != null && tableDefinition.getIdColumn() != null
 				&& tableDefinition.getAggregationKeys() != null) {
@@ -690,14 +688,13 @@ public class TableDataManager {
 				}
 			}
 
-			SqlSessionFactory sqlSessionFactory = MyBatisSessionFactory
-					.getSessionFactory();
 			SqlSession sqlSession = null;
 			Connection conn = null;
 			try {
 				conn = DBConnectionFactory.getConnection(systemName);
-				sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH,
-						false);
+				conn.setAutoCommit(false);
+				sqlSession = getSqlSessionFactory().openSession(
+						ExecutorType.BATCH, conn);
 				if (!inertRows.isEmpty()) {
 					logger.debug("inert rows size:" + inertRows.size());
 					for (TableModel tableData : inertRows) {
@@ -715,17 +712,14 @@ public class TableDataManager {
 					}
 				}
 				sqlSession.commit();
+				conn.commit();
 			} catch (Exception ex) {
-				if (sqlSession != null) {
-					sqlSession.rollback();
-				}
+				JdbcUtils.rollback(conn);
 				logger.error(ex);
 				ex.printStackTrace();
 				throw new RuntimeException(ex);
 			} finally {
-				if (sqlSession != null) {
-					sqlSession.close();
-				}
+				JdbcUtils.close(sqlSession);
 				JdbcUtils.close(conn);
 			}
 			return rows;
@@ -736,7 +730,7 @@ public class TableDataManager {
 
 	public void saveOrUpdate(String systemName, String tableName,
 			boolean updatable, List<Map<String, Object>> rows) {
-		TableDefinition tableDefinition = tableDefinitionService
+		TableDefinition tableDefinition = getTableDefinitionService()
 				.getTableDefinition(tableName);
 		if (tableDefinition != null) {
 			if (tableDefinition.getTableName() != null) {
@@ -745,7 +739,7 @@ public class TableDataManager {
 			}
 			String idColumnName = null;
 			List<Map<String, Object>> rowIds = null;
-			List<ColumnDefinition> columns = tableDefinitionService
+			List<ColumnDefinition> columns = getTableDefinitionService()
 					.getColumnDefinitionsByTableName(tableName);
 			if (columns != null && !columns.isEmpty()) {
 				for (ColumnDefinition column : columns) {
@@ -1032,37 +1026,34 @@ public class TableDataManager {
 		if (rows == null || rows.isEmpty()) {
 			return;
 		}
-		TableDefinition tableDefinition = tableDefinitionService
+		TableDefinition tableDefinition = getTableDefinitionService()
 				.getTableDefinition(tableName);
 		if (tableDefinition != null && tableDefinition.getIdColumn() != null) {
 			if (tableDefinition.getTableName() != null) {
 				tableDefinition.setTableName(tableDefinition.getTableName()
 						.toUpperCase());
 			}
-			SqlSessionFactory sqlSessionFactory = MyBatisSessionFactory
-					.getSessionFactory();
+
 			SqlSession sqlSession = null;
 			Connection conn = null;
 			try {
 				conn = DBConnectionFactory.getConnection(systemName);
-				sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH,
-						false);
+				conn.setAutoCommit(false);
+				sqlSession = getSqlSessionFactory().openSession(
+						ExecutorType.BATCH, conn);
 				for (int i = 0, len = rows.size(); i < len; i++) {
 					JSONObject jsonObject = rows.getJSONObject(i);
 					this.saveTableData(sqlSession, tableName, jsonObject);
 				}
 				sqlSession.commit();
+				conn.commit();
 			} catch (Exception ex) {
-				if (sqlSession != null) {
-					sqlSession.rollback();
-				}
+				JdbcUtils.rollback(conn);
 				logger.error(ex);
 				ex.printStackTrace();
 				throw new RuntimeException(ex);
 			} finally {
-				if (sqlSession != null) {
-					sqlSession.close();
-				}
+				JdbcUtils.close(sqlSession);
 				JdbcUtils.close(conn);
 			}
 		}
@@ -1070,6 +1061,10 @@ public class TableDataManager {
 
 	public void setEntityService(EntityService entityService) {
 		this.entityService = entityService;
+	}
+
+	public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+		this.sqlSessionFactory = sqlSessionFactory;
 	}
 
 	public void setTableDataService(ITableDataService tableDataService) {
@@ -1083,14 +1078,13 @@ public class TableDataManager {
 
 	public void updateTableData(String systemName, List<TableModel> rows) {
 		if (rows != null && !rows.isEmpty()) {
-			SqlSessionFactory sqlSessionFactory = MyBatisSessionFactory
-					.getSessionFactory();
 			SqlSession sqlSession = null;
 			Connection conn = null;
 			try {
 				conn = DBConnectionFactory.getConnection(systemName);
-				sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH,
-						false);
+				conn.setAutoCommit(false);
+				sqlSession = getSqlSessionFactory().openSession(
+						ExecutorType.BATCH, conn);
 				for (TableModel t : rows) {
 					if (t.getTableName() != null) {
 						t.setTableName(t.getTableName().toUpperCase());
@@ -1098,17 +1092,14 @@ public class TableDataManager {
 					sqlSession.update("updateTableDataByPrimaryKey", t);
 				}
 				sqlSession.commit();
+				conn.commit();
 			} catch (Exception ex) {
-				if (sqlSession != null) {
-					sqlSession.rollback();
-				}
+				JdbcUtils.rollback(conn);
 				logger.error(ex);
 				ex.printStackTrace();
 				throw new RuntimeException(ex);
 			} finally {
-				if (sqlSession != null) {
-					sqlSession.close();
-				}
+				JdbcUtils.close(sqlSession);
 				JdbcUtils.close(conn);
 			}
 		}
@@ -1126,14 +1117,13 @@ public class TableDataManager {
 			List<ColumnDefinition> columns = getTableDefinitionService()
 					.getColumnDefinitionsByTableName(tableName);
 			if (columns != null && !columns.isEmpty()) {
-				SqlSessionFactory sqlSessionFactory = MyBatisSessionFactory
-						.getSessionFactory();
 				SqlSession sqlSession = null;
 				Connection conn = null;
 				try {
 					conn = DBConnectionFactory.getConnection(systemName);
-					sqlSession = sqlSessionFactory.openSession(
-							ExecutorType.BATCH, false);
+					conn.setAutoCommit(false);
+					sqlSession = getSqlSessionFactory().openSession(
+							ExecutorType.BATCH, conn);
 					Iterator<Map<String, Object>> iterator = rows.iterator();
 					while (iterator.hasNext()) {
 						TableModel table = new TableModel();
@@ -1146,6 +1136,14 @@ public class TableDataManager {
 							c.setColumnName(name);
 							c.setJavaType(javaType);
 							Object value = dataMap.get(name);
+							if (value == null) {
+								value = dataMap.get(name.toLowerCase());
+							}
+							if (value == null) {
+								if (column.getName() != null) {
+									value = dataMap.get(column.getName());
+								}
+							}
 							if (value != null) {
 								if ("Integer".equals(javaType)) {
 									value = ParamUtils.getInt(dataMap, name);
@@ -1172,17 +1170,14 @@ public class TableDataManager {
 						sqlSession.update("updateTableDataByPrimaryKey", table);
 					}
 					sqlSession.commit();
+					conn.commit();
 				} catch (Exception ex) {
-					if (sqlSession != null) {
-						sqlSession.rollback();
-					}
+					JdbcUtils.rollback(conn);
 					logger.error(ex);
 					ex.printStackTrace();
 					throw new RuntimeException(ex);
 				} finally {
-					if (sqlSession != null) {
-						sqlSession.close();
-					}
+					JdbcUtils.close(sqlSession);
 					JdbcUtils.close(conn);
 				}
 			}
@@ -1197,14 +1192,13 @@ public class TableDataManager {
 		}
 		List<ColumnDefinition> columns = tableDefinition.getColumns();
 		if (columns != null && !columns.isEmpty()) {
-			SqlSessionFactory sqlSessionFactory = MyBatisSessionFactory
-					.getSessionFactory();
 			SqlSession sqlSession = null;
 			Connection conn = null;
 			try {
 				conn = DBConnectionFactory.getConnection(systemName);
-				sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH,
-						false);
+				conn.setAutoCommit(false);
+				sqlSession = getSqlSessionFactory().openSession(
+						ExecutorType.BATCH, conn);
 				Iterator<Map<String, Object>> iterator = rows.iterator();
 				while (iterator.hasNext()) {
 					TableModel table = new TableModel();
@@ -1217,8 +1211,13 @@ public class TableDataManager {
 						c.setColumnName(name);
 						c.setJavaType(javaType);
 						Object value = dataMap.get(name);
-						if (value != null) {
+						if (value == null) {
 							value = dataMap.get(name.toLowerCase());
+						}
+						if (value == null) {
+							if (column.getName() != null) {
+								value = dataMap.get(column.getName());
+							}
 						}
 						if (value != null) {
 							if ("Integer".equals(javaType)) {
@@ -1245,17 +1244,14 @@ public class TableDataManager {
 					sqlSession.update("updateTableDataByPrimaryKey", table);
 				}
 				sqlSession.commit();
+				conn.commit();
 			} catch (Exception ex) {
-				if (sqlSession != null) {
-					sqlSession.rollback();
-				}
+				JdbcUtils.rollback(conn);
 				logger.error(ex);
 				ex.printStackTrace();
 				throw new RuntimeException(ex);
 			} finally {
-				if (sqlSession != null) {
-					sqlSession.close();
-				}
+				JdbcUtils.close(sqlSession);
 				JdbcUtils.close(conn);
 			}
 		}
