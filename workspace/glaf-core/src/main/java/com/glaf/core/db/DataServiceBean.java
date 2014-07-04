@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.core.business;
+package com.glaf.core.db;
 
 import java.io.InputStream;
 import java.util.Date;

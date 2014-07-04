@@ -35,7 +35,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.glaf.core.business.DataServiceBean;
+import com.glaf.core.db.DataServiceBean;
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.SysDataService;
 import com.glaf.core.util.RequestUtils;

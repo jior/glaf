@@ -35,8 +35,8 @@ import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.glaf.core.business.TransformTable;
 import com.glaf.core.context.ContextFactory;
+import com.glaf.core.db.TransformTable;
 import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.domain.QueryDefinition;
 import com.glaf.core.domain.TableDefinition;
