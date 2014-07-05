@@ -372,6 +372,58 @@ public class DBUtils {
 		}
 	}
 
+	public static void alterTable(String systemName,
+			TableDefinition tableDefinition) {
+		List<String> cloumns = new java.util.ArrayList<String>();
+		Connection connection = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			connection = DBConnectionFactory.getConnection(systemName);
+			String dbType = DBConnectionFactory.getDatabaseType(connection);
+			stmt = connection.createStatement();
+			rs = stmt.executeQuery("select * from "
+					+ tableDefinition.getTableName() + " where 1=0 ");
+			ResultSetMetaData rss = rs.getMetaData();
+			int columnCount = rss.getColumnCount();
+			for (int i = 1; i <= columnCount; i++) {
+				String column = rss.getColumnName(i);
+				cloumns.add(column.toUpperCase());
+			}
+
+			logger.debug(tableDefinition.getTableName() + " cloumns:" + cloumns);
+
+			stmt.close();
+			rs.close();
+			stmt = null;
+			rs = null;
+
+			Collection<ColumnDefinition> fields = tableDefinition.getColumns();
+			for (ColumnDefinition field : fields) {
+				if (field.getColumnName() != null
+						&& !cloumns.contains(field.getColumnName()
+								.toUpperCase())) {
+					String sql = getMyAddColumnSql(dbType,
+							tableDefinition.getTableName(), field);
+					if (sql != null && sql.length() > 0) {
+						Statement statement = connection.createStatement();
+						logger.info("alter table "
+								+ tableDefinition.getTableName() + ":\n" + sql);
+						statement.execute(sql);
+						statement.close();
+						statement = null;
+					}
+				}
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		} finally {
+			JdbcUtils.close(connection);
+		}
+	}
+
 	/**
 	 * 创建数据库表，如果已经存在，则不重建
 	 * 
@@ -410,6 +462,30 @@ public class DBUtils {
 		Connection connection = null;
 		try {
 			connection = DBConnectionFactory.getConnection();
+			connection.setAutoCommit(false);
+			String dbType = DBConnectionFactory.getDatabaseType(connection);
+			String sql = getCreateTableSql(dbType, classDefinition);
+			if (sql != null && sql.length() > 0) {
+				Statement statement = connection.createStatement();
+				logger.info("create table " + classDefinition.getTableName()
+						+ ":\n" + sql);
+				statement.execute(sql);
+				statement.close();
+				connection.commit();
+				statement = null;
+			}
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			JdbcUtils.close(connection);
+		}
+	}
+
+	public static void createTable(String systemName,
+			TableDefinition classDefinition) {
+		Connection connection = null;
+		try {
+			connection = DBConnectionFactory.getConnection(systemName);
 			connection.setAutoCommit(false);
 			String dbType = DBConnectionFactory.getDatabaseType(connection);
 			String sql = getCreateTableSql(dbType, classDefinition);
@@ -2446,6 +2522,26 @@ public class DBUtils {
 		Connection conn = null;
 		try {
 			conn = DBConnectionFactory.getConnection();
+			return tableExists(conn, tableName);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		} finally {
+			JdbcUtils.close(conn);
+		}
+	}
+
+	/**
+	 * 判断表是否已经存在
+	 * 
+	 * @param systemName
+	 * @param tableName
+	 * @return
+	 */
+	public static boolean tableExists(String systemName, String tableName) {
+		Connection conn = null;
+		try {
+			conn = DBConnectionFactory.getConnection(systemName);
 			return tableExists(conn, tableName);
 		} catch (Exception ex) {
 			ex.printStackTrace();

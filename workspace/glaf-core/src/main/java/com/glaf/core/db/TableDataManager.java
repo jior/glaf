@@ -111,6 +111,7 @@ public class TableDataManager {
 			sqlSession = getSqlSessionFactory().openSession(conn);
 			List<Map<String, Object>> list = sqlSession.selectList(
 					"getTablePrimaryKeyMap", tableModel);
+			logger.debug(list);
 			return list;
 		} catch (Exception ex) {
 			logger.error(ex);
@@ -125,6 +126,7 @@ public class TableDataManager {
 	public Collection<TableModel> insertAll(String systemName,
 			TableDefinition tableDefinition, String seqNo,
 			Collection<TableModel> rows) {
+		com.glaf.core.config.Environment.setCurrentSystemName(systemName);
 		logger.debug("tableDefinition=" + tableDefinition);
 		logger.debug("idColumn=" + tableDefinition.getIdColumn().toString());
 		if (tableDefinition.getTableName() != null) {
@@ -327,6 +329,7 @@ public class TableDataManager {
 
 	public void insertTableData(String systemName, String tableName,
 			List<Map<String, Object>> rows) {
+		com.glaf.core.config.Environment.setCurrentSystemName(systemName);
 		TableDefinition tableDefinition = getTableDefinitionService()
 				.getTableDefinition(tableName);
 		if (tableDefinition != null) {
@@ -362,6 +365,10 @@ public class TableDataManager {
 							if (value == null) {
 								if (column.getName() != null) {
 									value = dataMap.get(column.getName());
+									if (value == null) {
+										value = dataMap.get(column.getName()
+												.toLowerCase());
+									}
 								}
 							}
 							if (value != null) {
@@ -433,6 +440,10 @@ public class TableDataManager {
 						if (value == null) {
 							if (column.getName() != null) {
 								value = dataMap.get(column.getName());
+								if (value == null) {
+									value = dataMap.get(column.getName()
+											.toLowerCase());
+								}
 							}
 						}
 						if (value != null) {
@@ -471,6 +482,7 @@ public class TableDataManager {
 
 	public void saveAll(String systemName, String tableName, String seqNo,
 			Collection<TableModel> rows) {
+		com.glaf.core.config.Environment.setCurrentSystemName(systemName);
 		TableDefinition tableDefinition = getTableDefinitionService()
 				.getTableDefinition(tableName);
 		if (tableDefinition != null && tableDefinition.getIdColumn() != null
@@ -482,6 +494,7 @@ public class TableDataManager {
 	public Collection<TableModel> saveAll(String systemName,
 			TableDefinition tableDefinition, String seqNo,
 			Collection<TableModel> rows) {
+		com.glaf.core.config.Environment.setCurrentSystemName(systemName);
 		logger.debug("tableDefinition=" + tableDefinition);
 		logger.debug("idColumn=" + tableDefinition.getIdColumn().toString());
 		if (tableDefinition.getTableName() != null) {
@@ -736,6 +749,7 @@ public class TableDataManager {
 
 	public void saveOrUpdate(String systemName, String tableName,
 			boolean updatable, List<Map<String, Object>> rows) {
+		com.glaf.core.config.Environment.setCurrentSystemName(systemName);
 		TableDefinition tableDefinition = getTableDefinitionService()
 				.getTableDefinition(tableName);
 		if (tableDefinition != null) {
@@ -881,9 +895,9 @@ public class TableDataManager {
 	 * @param tableName
 	 * @param jsonObject
 	 */
-
-	public void saveTableData(SqlSession sqlSession, String tableName,
-			JSONObject jsonObject) {
+	public void saveTableData(SqlSession sqlSession, String systemName,
+			String tableName, JSONObject jsonObject) {
+		com.glaf.core.config.Environment.setCurrentSystemName(systemName);
 		TableDefinition tableDefinition = getTableDefinitionService()
 				.getTableDefinition(tableName);
 		if (tableDefinition != null && tableDefinition.getIdColumn() != null) {
@@ -1043,12 +1057,12 @@ public class TableDataManager {
 	 * @param tableName
 	 * @param rows
 	 */
-
 	public void saveTableData(String systemName, String tableName,
 			JSONArray rows) {
 		if (rows == null || rows.isEmpty()) {
 			return;
 		}
+		com.glaf.core.config.Environment.setCurrentSystemName(systemName);
 		TableDefinition tableDefinition = getTableDefinitionService()
 				.getTableDefinition(tableName);
 		if (tableDefinition != null && tableDefinition.getIdColumn() != null) {
@@ -1066,7 +1080,8 @@ public class TableDataManager {
 						ExecutorType.BATCH, conn);
 				for (int i = 0, len = rows.size(); i < len; i++) {
 					JSONObject jsonObject = rows.getJSONObject(i);
-					this.saveTableData(sqlSession, tableName, jsonObject);
+					this.saveTableData(sqlSession, systemName, tableName,
+							jsonObject);
 				}
 				sqlSession.commit();
 				conn.commit();
@@ -1130,6 +1145,7 @@ public class TableDataManager {
 
 	public void updateTableData(String systemName, String tableName,
 			List<Map<String, Object>> rows) {
+		com.glaf.core.config.Environment.setCurrentSystemName(systemName);
 		TableDefinition tableDefinition = getTableDefinitionService()
 				.getTableDefinition(tableName);
 		if (tableDefinition != null) {
@@ -1165,6 +1181,10 @@ public class TableDataManager {
 							if (value == null) {
 								if (column.getName() != null) {
 									value = dataMap.get(column.getName());
+									if (value == null) {
+										value = dataMap.get(column.getName()
+												.toLowerCase());
+									}
 								}
 							}
 							if (value != null) {
@@ -1240,6 +1260,10 @@ public class TableDataManager {
 						if (value == null) {
 							if (column.getName() != null) {
 								value = dataMap.get(column.getName());
+								if (value == null) {
+									value = dataMap.get(column.getName()
+											.toLowerCase());
+								}
 							}
 						}
 						if (value != null) {

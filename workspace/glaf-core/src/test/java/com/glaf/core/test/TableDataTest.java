@@ -36,6 +36,8 @@ import com.glaf.core.util.DBUtils;
 public class TableDataTest {
 	protected static final Log logger = LogFactory.getLog(TableDataTest.class);
 
+	protected final static String SYS_NAME = "yz";
+
 	protected TableDataManager mgr = new TableDataManager();
 
 	public TableDefinition getTableDefinition(String tableName) {
@@ -122,10 +124,10 @@ public class TableDataTest {
 	@Test
 	public void testCreateTable() {
 		TableDefinition tableDefinition = this.getTableDefinition("TEST_DATA");
-		if (!DBUtils.tableExists("TEST_DATA")) {
-			DBUtils.createTable(tableDefinition);
+		if (!DBUtils.tableExists(SYS_NAME, "TEST_DATA")) {
+			DBUtils.createTable(SYS_NAME, tableDefinition);
 		} else {
-			DBUtils.alterTable(tableDefinition);
+			DBUtils.alterTable(SYS_NAME, tableDefinition);
 		}
 	}
 
@@ -142,12 +144,12 @@ public class TableDataTest {
 			dataMap.put("TIMEMS_", System.currentTimeMillis());
 			list.add(dataMap);
 		}
-		mgr.insertTableData("default", tableDefinition, list);
+		mgr.insertTableData(SYS_NAME, tableDefinition, list);
 	}
 
 	@Test
 	public void testGetTablePrimaryKeyMap() {
-		List<Map<String, Object>> list = mgr.getTablePrimaryKeyMap("default",
+		List<Map<String, Object>> list = mgr.getTablePrimaryKeyMap(SYS_NAME,
 				"TEST_DATA", "ID_");
 		for (Map<String, Object> dataMap : list) {
 			logger.debug(dataMap);
@@ -167,7 +169,7 @@ public class TableDataTest {
 			dataMap.put("TIMEMS_", System.currentTimeMillis());
 			list.add(dataMap);
 		}
-		mgr.updateTableData("default", tableDefinition, list);
+		mgr.updateTableData(SYS_NAME, tableDefinition, list);
 	}
 
 	@Test
@@ -181,15 +183,15 @@ public class TableDataTest {
 			dataMap.put("ACCOUNTID_", i * i);
 			dataMap.put("CREATETIME_", new Date());
 			dataMap.put("FLAG_", 2);
-			dataMap.put("TIMEMS_", System.currentTimeMillis());
+			dataMap.put("TIMEMS_", i * i * i);
 			list.add(dataMap);
 		}
-		mgr.saveOrUpdate("default", tableDefinition, list);
+		mgr.saveOrUpdate(SYS_NAME, tableDefinition, list);
 	}
 
 	@Test
 	public void testGetTableByPrimaryKey() {
-		List<Map<String, Object>> list = mgr.getTablePrimaryKeyMap("default",
+		List<Map<String, Object>> list = mgr.getTablePrimaryKeyMap(SYS_NAME,
 				"TEST_DATA", "ID_");
 		for (Map<String, Object> dataMap : list) {
 			logger.debug(dataMap);
