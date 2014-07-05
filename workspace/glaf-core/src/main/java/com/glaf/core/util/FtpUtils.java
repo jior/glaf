@@ -28,6 +28,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
@@ -35,22 +38,90 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
+
 public class FtpUtils {
 
 	protected final static Logger logger = LoggerFactory
 			.getLogger(FtpUtils.class);
 
+	protected static Configuration conf = BaseConfiguration.create();
+
 	protected static FTPClient ftpClient;
+
+	private static void changeToDirectory(String remoteFile) {
+		if (!remoteFile.startsWith("/")) {
+			throw new RuntimeException(" path must start with '/'");
+		}
+		if (remoteFile.startsWith("/") && remoteFile.indexOf("/") > 0) {
+			try {
+				ftpClient.changeWorkingDirectory("/");
+				String tmp = "";
+				remoteFile = remoteFile.substring(0,
+						remoteFile.lastIndexOf("/"));
+				StringTokenizer token = new StringTokenizer(remoteFile, "/");
+				while (token.hasMoreTokens()) {
+					String str = token.nextToken();
+					tmp = tmp + "/" + str;
+					ftpClient.changeWorkingDirectory(tmp);
+				}
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
 
 	/**
 	 * 关闭FTP
 	 */
 	public static void closeConnect() {
 		try {
+			ftpClient.logout();
 			ftpClient.disconnect();
 			logger.info("disconnect success");
 		} catch (IOException ex) {
 			logger.error("disconnect error", ex);
+			throw new RuntimeException(ex);
+		}
+	}
+
+	/**
+	 * 根据配置文件中的定义信息连接FTP服务器
+	 */
+	public static void connectServer() {
+		String ip = conf.get("ftp.host", "127.0.0.1");
+		int port = conf.getInt("ftp.port", 21);
+		String user = conf.get("ftp.user", "admin");
+		String password = conf.get("ftp.password", "admin");
+		try {
+			ftpClient = new FTPClient();
+			ftpClient.connect(ip, port);
+			ftpClient.login(user, password);
+			logger.info("login success!");
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			logger.error("login failed", ex);
+			throw new RuntimeException(ex);
+		}
+	}
+
+	/**
+	 * 根据配置文件中的定义信息连接FTP服务器
+	 */
+	public static void connectServer(String prefix) {
+		String ip = conf.get(prefix + ".ftp.host", "127.0.0.1");
+		int port = conf.getInt(prefix + ".ftp.port", 21);
+		String user = conf.get(prefix + ".ftp.user", "admin");
+		String password = conf.get(prefix + ".ftp.password", "admin");
+		try {
+			ftpClient = new FTPClient();
+			ftpClient.connect(ip, port);
+			ftpClient.login(user, password);
+			logger.info("login success!");
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			logger.error("login failed", ex);
 			throw new RuntimeException(ex);
 		}
 	}
@@ -65,19 +136,14 @@ public class FtpUtils {
 	 *            用户名
 	 * @param password
 	 *            密码
-	 * @param path
-	 *            服务器上的路径
 	 */
 	public static void connectServer(String ip, int port, String user,
-			String password, String path) {
+			String password) {
 		try {
 			ftpClient = new FTPClient();
 			ftpClient.connect(ip, port);
 			ftpClient.login(user, password);
 			logger.info("login success!");
-			if (path != null && path.length() != 0) {
-				ftpClient.changeWorkingDirectory(path);
-			}
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			logger.error("login failed", ex);
@@ -85,10 +151,63 @@ public class FtpUtils {
 		}
 	}
 
+	/**
+	 * 删除FTP文件
+	 * 
+	 * @param remotePath
+	 *            FTP路径，必须以"/"开头
+	 */
+	public static void deleteFile(String remotePath) {
+		if (!remotePath.startsWith("/")) {
+			throw new RuntimeException(" path must start with '/'");
+		}
+		try {
+			if (remotePath.indexOf("/") != -1) {
+				String tmp = "";
+				List<String> dirs = new ArrayList<String>();
+				StringTokenizer token = new StringTokenizer(remotePath, "/");
+				while (token.hasMoreTokens()) {
+					String str = token.nextToken();
+					tmp = tmp + "/" + str;
+					dirs.add(tmp);
+				}
+				for (int i = 0; i < dirs.size() - 1; i++) {
+					ftpClient.changeWorkingDirectory(dirs.get(i));
+				}
+				String dir = remotePath.substring(
+						remotePath.lastIndexOf("/") + 1, remotePath.length());
+				logger.debug("rm " + dir);
+				ftpClient.deleteFile(dir);
+			} else {
+				ftpClient.deleteFile(remotePath);
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			logger.error("mkdirs error", ex);
+			throw new RuntimeException(ex);
+		}
+	}
+
+	/**
+	 * 下载文件
+	 * 
+	 * @param remoteFile
+	 *            FTP文件，必须以"/"开头
+	 * @param localFile
+	 *            本地文件全路径
+	 */
 	public static void download(String remoteFile, String localFile) {
+		if (!remoteFile.startsWith("/")) {
+			throw new RuntimeException(" path must start with '/'");
+		}
 		InputStream in = null;
 		OutputStream out = null;
 		try {
+			if (remoteFile.startsWith("/") && remoteFile.indexOf("/") > 0) {
+				changeToDirectory(remoteFile);
+				remoteFile = remoteFile.substring(
+						remoteFile.lastIndexOf("/") + 1, remoteFile.length());
+			}
 			// 设置被动模式
 			ftpClient.enterLocalPassiveMode();
 			// 设置以二进制方式传输
@@ -106,6 +225,9 @@ public class FtpUtils {
 					.getBytes("GBK"), "ISO-8859-1"));
 			byte[] bytes = new byte[4096];
 			long step = lRemoteSize / 100;
+			if (step == 0) {
+				step = 1;
+			}
 			long progress = 0;
 			long localSize = 0L;
 			int c;
@@ -132,35 +254,22 @@ public class FtpUtils {
 	}
 
 	/**
-	 * 根据传输文件下载
+	 * 下载文件
 	 * 
-	 * @param remotePath
-	 *            FTP路径
 	 * @param remoteFile
-	 *            FTP文件
-	 * @param localFile
-	 *            本地文件全路径
+	 *            FTP文件，必须以"/"开头
 	 */
-	public static void download(String remotePath, String remoteFile,
-			String localFile) {
-		try {
-			if (remotePath != null && remotePath.length() != 0) {
-				ftpClient.changeWorkingDirectory(remotePath);
-			}
-			download(remoteFile, localFile);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error("download error", ex);
-			throw new RuntimeException(ex);
-		}
-	}
-
 	public static byte[] getBytes(String remoteFile) {
 		byte[] bytes = null;
 		InputStream in = null;
 		ByteArrayOutputStream out = null;
 		BufferedOutputStream bos = null;
 		try {
+			if (remoteFile.startsWith("/") && remoteFile.indexOf("/") > 0) {
+				changeToDirectory(remoteFile);
+				remoteFile = remoteFile.substring(
+						remoteFile.lastIndexOf("/") + 1, remoteFile.length());
+			}
 			// 设置被动模式
 			ftpClient.enterLocalPassiveMode();
 			// 设置以二进制方式传输
@@ -179,6 +288,9 @@ public class FtpUtils {
 					.getBytes("GBK"), "ISO-8859-1"));
 			byte[] buff = new byte[4096];
 			long step = lRemoteSize / 100;
+			if (step == 0) {
+				step = 1;
+			}
 			long progress = 0;
 			long localSize = 0L;
 			int c;
@@ -207,40 +319,104 @@ public class FtpUtils {
 		return bytes;
 	}
 
+	public static FTPClient getFtpClient() {
+		return ftpClient;
+	}
+
 	/**
-	 * 根据传输文件下载
+	 * 创建FTP文件目录
 	 * 
 	 * @param remotePath
-	 *            FTP路径
-	 * @param remoteFile
-	 *            FTP文件
-	 * @param localFile
-	 *            本地文件全路径
+	 *            FTP路径，必须以"/"开头
 	 */
-	public static byte[] getBytes(String remotePath, String remoteFile) {
-		try {
-			if (remotePath != null && remotePath.length() != 0) {
-				ftpClient.changeWorkingDirectory(remotePath);
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error("download error", ex);
+	public static void mkdirs(String remotePath) {
+		if (!remotePath.startsWith("/")) {
+			throw new RuntimeException(" path must start with '/'");
 		}
-		return getBytes(remoteFile);
+		try {
+			ftpClient.changeWorkingDirectory("/");
+
+			if (remotePath.indexOf("/") != -1) {
+				String tmp = "";
+				StringTokenizer token = new StringTokenizer(remotePath, "/");
+				while (token.hasMoreTokens()) {
+					String str = token.nextToken();
+					tmp = tmp + "/" + str;
+					ftpClient.mkd(str);
+					ftpClient.changeWorkingDirectory(tmp);
+				}
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			logger.error("mkdirs error", ex);
+			throw new RuntimeException(ex);
+		}
+	}
+
+	/**
+	 * 删除FTP文件目录
+	 * 
+	 * @param remotePath
+	 *            FTP路径，必须以"/"开头
+	 */
+	public static void removeDirectory(String remotePath) {
+		if (!remotePath.startsWith("/")) {
+			throw new RuntimeException(" path must start with '/'");
+		}
+		try {
+
+			ftpClient.changeWorkingDirectory("/");
+
+			if (remotePath.indexOf("/") != -1) {
+				String tmp = "";
+				List<String> dirs = new ArrayList<String>();
+				StringTokenizer token = new StringTokenizer(remotePath, "/");
+				while (token.hasMoreTokens()) {
+					String str = token.nextToken();
+					tmp = tmp + "/" + str;
+					dirs.add(tmp);
+				}
+				for (int i = 0; i < dirs.size() - 1; i++) {
+					ftpClient.changeWorkingDirectory(dirs.get(i));
+				}
+				String dir = remotePath.substring(
+						remotePath.lastIndexOf("/") + 1, remotePath.length());
+				logger.debug("rm " + dir);
+				ftpClient.removeDirectory(dir);
+			} else {
+				ftpClient.rmd(remotePath);
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			logger.error("mkdirs error", ex);
+			throw new RuntimeException(ex);
+		}
 	}
 
 	/**
 	 * 根据文件路径上传
 	 * 
 	 * @param remoteFile
-	 *            FTP文件
+	 *            FTP文件，必须以"/"开头
 	 * @param input
 	 *            本地输入流
 	 */
 	public static boolean upload(String remoteFile, byte[] bytes) {
+		if (!remoteFile.startsWith("/")) {
+			throw new RuntimeException(" path must start with '/'");
+		}
 		ByteArrayInputStream bais = null;
 		BufferedInputStream bis = null;
 		try {
+
+			mkdirs(remoteFile.substring(0, remoteFile.lastIndexOf("/")));
+
+			if (remoteFile.startsWith("/") && remoteFile.indexOf("/") > 0) {
+				changeToDirectory(remoteFile);
+				remoteFile = remoteFile.substring(
+						remoteFile.lastIndexOf("/") + 1, remoteFile.length());
+			}
+
 			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 			ftpClient.enterLocalPassiveMode();
 			ftpClient.setFileTransferMode(FTP.STREAM_TRANSFER_MODE);
@@ -267,12 +443,23 @@ public class FtpUtils {
 	 * 根据文件路径上传
 	 * 
 	 * @param remoteFile
-	 *            FTP文件
+	 *            FTP文件，必须以"/"开头
 	 * @param input
 	 *            本地文件流
 	 */
 	public static boolean upload(String remoteFile, InputStream input) {
+		if (!remoteFile.startsWith("/")) {
+			throw new RuntimeException(" path must start with '/'");
+		}
 		try {
+
+			mkdirs(remoteFile.substring(0, remoteFile.lastIndexOf("/")));
+
+			if (remoteFile.startsWith("/") && remoteFile.indexOf("/") > 0) {
+				changeToDirectory(remoteFile);
+				remoteFile = remoteFile.substring(
+						remoteFile.lastIndexOf("/") + 1, remoteFile.length());
+			}
 			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 			ftpClient.enterLocalPassiveMode();
 			ftpClient.setFileTransferMode(FTP.STREAM_TRANSFER_MODE);
@@ -294,13 +481,25 @@ public class FtpUtils {
 	 * 根据文件路径上传
 	 * 
 	 * @param remoteFile
-	 *            FTP文件
+	 *            FTP文件，必须以"/"开头
 	 * @param localFile
 	 *            本地文件全路径
 	 */
 	public static boolean upload(String remoteFile, String localFile) {
+		if (!remoteFile.startsWith("/")) {
+			throw new RuntimeException(" path must start with '/'");
+		}
 		InputStream input = null;
 		try {
+
+			mkdirs(remoteFile.substring(0, remoteFile.lastIndexOf("/")));
+
+			if (remoteFile.startsWith("/") && remoteFile.indexOf("/") > 0) {
+				changeToDirectory(remoteFile);
+				remoteFile = remoteFile.substring(
+						remoteFile.lastIndexOf("/") + 1, remoteFile.length());
+			}
+
 			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 			ftpClient.enterLocalPassiveMode();
 			ftpClient.setFileTransferMode(FTP.STREAM_TRANSFER_MODE);
@@ -322,72 +521,4 @@ public class FtpUtils {
 		}
 	}
 
-	/**
-	 * 根据文件路径上传
-	 * 
-	 * @param remotePath
-	 *            FTP路径
-	 * @param remoteFile
-	 *            FTP文件
-	 * @param bytes
-	 *            本地字节流
-	 */
-	public static boolean upload(String remotePath, String remoteFile,
-			byte[] bytes) {
-		try {
-			if (remotePath != null && remotePath.length() != 0) {
-				ftpClient.changeWorkingDirectory(remotePath);
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error("change working directory error", ex);
-		}
-		return upload(remoteFile, bytes);
-	}
-
-	/**
-	 * 根据文件路径上传
-	 * 
-	 * @param remotePath
-	 *            FTP路径
-	 * @param remoteFile
-	 *            FTP文件
-	 * @param input
-	 *            本地输入流
-	 */
-	public static boolean upload(String remotePath, String remoteFile,
-			InputStream input) {
-		try {
-			if (remotePath != null && remotePath.length() != 0) {
-				ftpClient.changeWorkingDirectory(remotePath);
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error("change working directory error", ex);
-		}
-		return upload(remoteFile, input);
-	}
-
-	/**
-	 * 根据文件路径上传
-	 * 
-	 * @param remotePath
-	 *            FTP路径
-	 * @param remoteFile
-	 *            FTP文件
-	 * @param localFile
-	 *            本地文件全路径
-	 */
-	public static boolean upload(String remotePath, String remoteFile,
-			String localFile) {
-		try {
-			if (remotePath != null && remotePath.length() != 0) {
-				ftpClient.changeWorkingDirectory(remotePath);
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error("change working directory error", ex);
-		}
-		return upload(remoteFile, localFile);
-	}
 }
