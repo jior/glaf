@@ -36,7 +36,7 @@ import com.glaf.core.util.DBUtils;
 public class TableDataTest {
 	protected static final Log logger = LogFactory.getLog(TableDataTest.class);
 
-	protected final static String SYS_NAME = "yz";
+	protected final static String SYS_NAME = "default";
 
 	protected TableDataManager mgr = new TableDataManager();
 
