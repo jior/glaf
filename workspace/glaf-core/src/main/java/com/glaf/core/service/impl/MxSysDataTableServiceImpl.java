@@ -147,7 +147,7 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 			Object value = entry.getValue();
 			if (value != null) {
 				newData.put(key, value);
-				newData.put(key.toLowerCase(), value);
+				newData.put(key.toUpperCase(), value);
 			}
 		}
 		SysDataField idField = null;
@@ -169,9 +169,9 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 			throw new java.lang.RuntimeException("primary key not found.");
 		}
 
-		Object idValue = newData.get(idField.getColumnName().toLowerCase());
+		Object idValue = newData.get(idField.getColumnName().toUpperCase());
 		if (idValue == null) {
-			idValue = newData.get(idField.getName().toLowerCase());
+			idValue = newData.get(idField.getName().toUpperCase());
 		}
 
 		TableModel row = new TableModel();
@@ -226,7 +226,7 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 						field.getColumnName())) {
 					continue;
 				}
-				String name = field.getColumnName().toLowerCase();
+				String name = field.getColumnName().toUpperCase();
 				String javaType = field.getDataType();
 				ColumnModel c = new ColumnModel();
 				c.setColumnName(field.getColumnName());
@@ -249,7 +249,7 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 					c.setValue(value);
 					row.addColumn(c);
 				} else {
-					name = field.getName().toLowerCase();
+					name = field.getName().toUpperCase();
 					value = newData.get(name);
 					if (value != null) {
 						if ("Integer".equals(javaType)) {
@@ -348,13 +348,13 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 				Object value = entry.getValue();
 				if (value != null) {
 					newData.put(key, value);
-					newData.put(key.toLowerCase(), value);
+					newData.put(key.toUpperCase(), value);
 				}
 			}
 
-			Object idValue = newData.get(idField.getColumnName().toLowerCase());
+			Object idValue = newData.get(idField.getColumnName().toUpperCase());
 			if (idValue == null) {
-				idValue = newData.get(idField.getName().toLowerCase());
+				idValue = newData.get(idField.getName().toUpperCase());
 			}
 
 			TableModel row = new TableModel();
@@ -411,7 +411,7 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 							field.getColumnName())) {
 						continue;
 					}
-					String name = field.getColumnName().toLowerCase();
+					String name = field.getColumnName().toUpperCase();
 					String javaType = field.getDataType();
 					ColumnModel c = new ColumnModel();
 					c.setColumnName(field.getColumnName());
@@ -434,7 +434,7 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 						c.setValue(value);
 						row.addColumn(c);
 					} else {
-						name = field.getName().toLowerCase();
+						name = field.getName().toUpperCase();
 						value = newData.get(name);
 						if (value != null) {
 							if ("Integer".equals(javaType)) {

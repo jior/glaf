@@ -34,6 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+
 import com.glaf.core.base.ColumnModel;
 import com.glaf.core.base.TableModel;
 import com.glaf.core.config.Environment;
@@ -63,21 +64,21 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	protected final static Log logger = LogFactory
 			.getLog(MxTableDataServiceImpl.class);
 
-	protected ColumnDefinitionMapper columnDefinitionMapper;
-
 	protected EntityDAO entityDAO;
 
-	protected IdGenerator idGenerator;
-
 	protected IdMapper idMapper;
+
+	protected IdGenerator idGenerator;
 
 	protected SqlSession sqlSession;
 
 	protected TableDataMapper tableDataMapper;
 
-	protected ITableDefinitionService tableDefinitionService;
-
 	protected TablePageMapper tablePageMapper;
+
+	protected ColumnDefinitionMapper columnDefinitionMapper;
+
+	protected ITableDefinitionService tableDefinitionService;
 
 	public MxTableDataServiceImpl() {
 
@@ -178,7 +179,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			idColumn.setJavaType(idCol.getJavaType());
 			idColumn.setValueExpression(idCol.getValueExpression());
 			exprColumns.add(idCol);
-			exprMap.put(idCol.getColumnName().toLowerCase(),
+			exprMap.put(idCol.getColumnName().toUpperCase(),
 					idCol.getValueExpression());
 		}
 
@@ -187,7 +188,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 		while (iter.hasNext()) {
 			ColumnDefinition cell = iter.next();
 			if (StringUtils.isNotEmpty(cell.getValueExpression())) {
-				exprMap.put(cell.getColumnName().toLowerCase(),
+				exprMap.put(cell.getColumnName().toUpperCase(),
 						cell.getValueExpression());
 				exprColumns.add(cell);
 			}
@@ -220,7 +221,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			}
 
 			for (ColumnModel cell : tableData.getColumns()) {
-				String expr = exprMap.get(cell.getColumnName().toLowerCase());
+				String expr = exprMap.get(cell.getColumnName().toUpperCase());
 				if (StringUtils.isNotEmpty(expr)) {
 					if (ExpressionConstants.NOW_EXPRESSION.equals(expr)
 							|| ExpressionConstants.CURRENT_YYYYMMDD_EXPRESSION
@@ -309,8 +310,10 @@ public class MxTableDataServiceImpl implements ITableDataService {
 
 	@Transactional
 	public void insertTableData(String tableName, List<Map<String, Object>> rows) {
+		tableName = tableName.toUpperCase();
 		TableDefinition tableDefinition = tableDefinitionService
 				.getTableDefinition(tableName);
+		logger.debug("tableDefinition:" + tableDefinition);
 		if (tableDefinition != null) {
 			if (tableDefinition.getTableName() != null) {
 				tableDefinition.setTableName(tableDefinition.getTableName()
@@ -319,6 +322,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			List<ColumnDefinition> columns = tableDefinitionService
 					.getColumnDefinitionsByTableName(tableName);
 			if (columns != null && !columns.isEmpty()) {
+				logger.debug("columns size:" + columns.size());
 				Iterator<Map<String, Object>> iterator = rows.iterator();
 				while (iterator.hasNext()) {
 					TableModel table = new TableModel();
@@ -332,11 +336,15 @@ public class MxTableDataServiceImpl implements ITableDataService {
 						c.setJavaType(javaType);
 						Object value = dataMap.get(name);
 						if (value == null) {
-							value = dataMap.get(name.toLowerCase());
+							value = dataMap.get(name.toUpperCase());
 						}
 						if (value == null) {
 							if (column.getName() != null) {
 								value = dataMap.get(column.getName());
+								if (value == null) {
+									value = dataMap.get(column.getName()
+											.toUpperCase());
+								}
 							}
 						}
 						if (value != null) {
@@ -385,7 +393,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 					c.setJavaType(javaType);
 					Object value = dataMap.get(name);
 					if (value == null) {
-						value = dataMap.get(name.toLowerCase());
+						value = dataMap.get(name.toUpperCase());
 					}
 					if (value == null) {
 						if (column.getName() != null) {
@@ -672,6 +680,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	@Transactional
 	public void saveOrUpdate(String tableName, boolean updatable,
 			List<Map<String, Object>> rows) {
+		tableName = tableName.toUpperCase();
 		TableDefinition tableDefinition = tableDefinitionService
 				.getTableDefinition(tableName);
 		if (tableDefinition != null) {
@@ -750,7 +759,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			for (ColumnDefinition column : columns) {
 				if (column.isPrimaryKey()) {
 					idColumnName = column.getColumnName();
-					idColumnName = idColumnName.toLowerCase();
+					idColumnName = idColumnName.toUpperCase();
 					rowIds = this
 							.getTablePrimaryKeyMap(tableName, idColumnName);
 					break;
@@ -780,7 +789,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 			Map<String, Object> dataMap = iterator.next();
 			Object id = dataMap.get(idColumnName);
 			if (id == null) {
-				id = dataMap.get(idColumnName.toLowerCase());
+				id = dataMap.get(idColumnName.toUpperCase());
 			}
 			if (id != null) {
 				if (keys.contains(id.toString())) {
@@ -812,6 +821,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 		if (rows == null || rows.isEmpty()) {
 			return;
 		}
+		tableName = tableName.toUpperCase();
 		TableDefinition tableDefinition = tableDefinitionService
 				.getTableDefinition(tableName);
 		if (tableDefinition != null && tableDefinition.getIdColumn() != null) {
@@ -834,6 +844,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 	 */
 	@Transactional
 	public void saveTableData(String tableName, JSONObject jsonObject) {
+		tableName = tableName.toUpperCase();
 		TableDefinition tableDefinition = tableDefinitionService
 				.getTableDefinition(tableName);
 		if (tableDefinition != null && tableDefinition.getIdColumn() != null) {
@@ -1068,6 +1079,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 
 	@Transactional
 	public void updateTableData(String tableName, List<Map<String, Object>> rows) {
+		tableName = tableName.toUpperCase();
 		TableDefinition tableDefinition = tableDefinitionService
 				.getTableDefinition(tableName);
 		if (tableDefinition != null) {
@@ -1091,11 +1103,15 @@ public class MxTableDataServiceImpl implements ITableDataService {
 						c.setJavaType(javaType);
 						Object value = dataMap.get(name);
 						if (value == null) {
-							value = dataMap.get(name.toLowerCase());
+							value = dataMap.get(name.toUpperCase());
 						}
 						if (value == null) {
 							if (column.getName() != null) {
 								value = dataMap.get(column.getName());
+								if (value == null) {
+									value = dataMap.get(column.getName()
+											.toUpperCase());
+								}
 							}
 						}
 						if (value != null) {
@@ -1148,7 +1164,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 					c.setJavaType(javaType);
 					Object value = dataMap.get(name);
 					if (value == null) {
-						value = dataMap.get(name.toLowerCase());
+						value = dataMap.get(name.toUpperCase());
 					}
 					if (value == null) {
 						if (column.getName() != null) {

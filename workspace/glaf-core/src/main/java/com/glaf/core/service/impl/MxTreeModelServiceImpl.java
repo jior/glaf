@@ -39,10 +39,8 @@ import com.glaf.core.service.ITreeModelService;
 @Transactional(readOnly = true)
 public class MxTreeModelServiceImpl implements ITreeModelService {
 
-	
 	protected EntityDAO entityDAO;
 
-	 
 	protected IdGenerator idGenerator;
 
 	public MxTreeModelServiceImpl() {
@@ -179,6 +177,7 @@ public class MxTreeModelServiceImpl implements ITreeModelService {
 				TreeModel treeModel = iterator.next();
 				codeMap.put(treeModel.getCode(), treeModel);
 				codeMap.put(treeModel.getCode().toLowerCase(), treeModel);
+				codeMap.put(treeModel.getCode().toUpperCase(), treeModel);
 			}
 		}
 		return codeMap;
@@ -241,6 +240,7 @@ public class MxTreeModelServiceImpl implements ITreeModelService {
 				TreeModel treeModel = iterator.next();
 				codeMap.put(treeModel.getCode(), treeModel);
 				codeMap.put(treeModel.getCode().toLowerCase(), treeModel);
+				codeMap.put(treeModel.getCode().toUpperCase(), treeModel);
 			}
 		}
 		return codeMap;
