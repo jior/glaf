@@ -183,7 +183,7 @@ public class FtpUtils {
 			}
 		} catch (IOException ex) {
 			ex.printStackTrace();
-			logger.error("mkdirs error", ex);
+			logger.error("deleteFile error", ex);
 			throw new RuntimeException(ex);
 		}
 	}
@@ -388,7 +388,7 @@ public class FtpUtils {
 			}
 		} catch (IOException ex) {
 			ex.printStackTrace();
-			logger.error("mkdirs error", ex);
+			logger.error("removeDirectory error", ex);
 			throw new RuntimeException(ex);
 		}
 	}

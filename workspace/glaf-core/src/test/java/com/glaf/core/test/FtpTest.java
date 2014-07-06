@@ -26,14 +26,17 @@ public class FtpTest {
 
 	@Test
 	public void testUpload() {
-		FtpUtils.connectServer("127.0.0.1", 21, "admin", "admin");
-		FtpUtils.upload("/xx/yy/123.tx", "123".getBytes());
-		byte[] bytes = FtpUtils.getBytes("/xx/yy/123.tx");
-		System.out.println(new String(bytes));
-		FtpUtils.mkdirs("/aaa/bbb/ccc");
-		FtpUtils.removeDirectory("/aaa/bbb/ccc");
-		FtpUtils.deleteFile("/xx/yy/123.tx");
-		FtpUtils.closeConnect();
+		try {
+			FtpUtils.connectServer("127.0.0.1", 21, "admin", "admin");
+			FtpUtils.upload("/xx/yy/123.tx", "123".getBytes());
+			byte[] bytes = FtpUtils.getBytes("/xx/yy/123.tx");
+			System.out.println(new String(bytes));
+			FtpUtils.mkdirs("/aaa/bbb/ccc");
+			FtpUtils.removeDirectory("/aaa/bbb/ccc");
+			FtpUtils.deleteFile("/xx/yy/123.tx");
+		} finally {
+			FtpUtils.closeConnect();
+		}
 	}
 
 }
