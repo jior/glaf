@@ -39,6 +39,7 @@ import org.apache.commons.pool.ObjectPool;
 import org.apache.commons.pool.impl.GenericObjectPool;
 import org.apache.commons.pool.impl.StackKeyedObjectPoolFactory;
 
+import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.exceptions.NoConnectionAvailableException;
 import com.glaf.core.exceptions.PoolNotFoundException;
 
@@ -153,21 +154,21 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 		String dbSessionConfig = null;
 		String rdbms = null;
 
-		poolName = properties.getProperty("jdbc.name", "default");
+		poolName = properties.getProperty(DBConfiguration.JDBC_NAME, "default");
 		externalPoolClassName = properties
 				.getProperty("db.externalPoolClassName");
-		dbDriver = properties.getProperty("jdbc.driver");
-		dbServer = properties.getProperty("jdbc.url");
-		dbLogin = properties.getProperty("jdbc.user");
-		dbPassword = properties.getProperty("jdbc.password");
-		minConns = Integer.parseInt(properties
-				.getProperty("jdbc.minConns", "1"));
-		maxConns = Integer.parseInt(properties.getProperty("jdbc.maxConns",
-				"20"));
-		maxConnTime = Double.parseDouble(properties.getProperty("maxConnTime",
-				"0.5"));
+		dbDriver = properties.getProperty(DBConfiguration.JDBC_DRIVER);
+		dbServer = properties.getProperty(DBConfiguration.JDBC_URL);
+		dbLogin = properties.getProperty(DBConfiguration.JDBC_USER);
+		dbPassword = properties.getProperty(DBConfiguration.JDBC_PASSWORD);
+		minConns = Integer.parseInt(properties.getProperty(
+				DBConfiguration.POOL_MIN_SIZE, "1"));
+		maxConns = Integer.parseInt(properties.getProperty(
+				DBConfiguration.POOL_MAX_SIZE, "20"));
+		maxConnTime = Double.parseDouble(properties.getProperty(
+				DBConfiguration.POOL_TIMEOUT, "0.5"));
 		dbSessionConfig = properties.getProperty("jdbc.sessionConfig");
-		rdbms = properties.getProperty("jdbc.type");
+		rdbms = properties.getProperty(DBConfiguration.JDBC_TYPE);
 		if (rdbms != null && rdbms.equalsIgnoreCase("postgresql")) {
 			dbServer += "/" + properties.getProperty("jdbc.sid");
 		}

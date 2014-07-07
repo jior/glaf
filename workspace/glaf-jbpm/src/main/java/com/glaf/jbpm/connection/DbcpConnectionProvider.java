@@ -25,6 +25,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.cfg.Environment;
 import org.hibernate.connection.ConnectionProvider;
+import org.hibernate.util.PropertiesHelper;
 
 import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.exceptions.PoolNotFoundException;
@@ -34,6 +35,9 @@ public class DbcpConnectionProvider extends ConnectionProviderImpl implements
 		ConnectionProvider {
 	protected final static Log logger = LogFactory
 			.getLog(DbcpConnectionProvider.class);
+
+	private final static String MIN_POOL_SIZE = "minPoolSize";
+	private final static String MAX_POOL_SIZE = "maxPoolSize";
 
 	public DbcpConnectionProvider() {
 
@@ -61,21 +65,60 @@ public class DbcpConnectionProvider extends ConnectionProviderImpl implements
 			if (properties == null) {
 				properties = DBConfiguration.getDefaultDataSourceProperties();
 			}
+			Integer minPoolSize = PropertiesHelper.getInteger(MIN_POOL_SIZE,
+					properties);
+			Integer maxPoolSize = PropertiesHelper.getInteger(MAX_POOL_SIZE,
+					properties);
+			if (minPoolSize == null) {
+				minPoolSize = 1;
+			}
+			if (maxPoolSize == null) {
+				maxPoolSize = 20;
+			}
+			if (minPoolSize < 1) {
+				minPoolSize = 1;
+			}
+			if (maxPoolSize < 10) {
+				maxPoolSize = 10;
+			}
+			if (maxPoolSize > 100) {
+				maxPoolSize = 100;
+			}
+			if (minPoolSize > maxPoolSize) {
+				minPoolSize = maxPoolSize;
+			}
 			String jdbcDriverClass = properties.getProperty(Environment.DRIVER);
 			String jdbcUrl = properties.getProperty(Environment.URL);
 			String user = properties.getProperty(Environment.USER);
 			String password = properties.getProperty(Environment.PASS);
-			String type = DBConfiguration.getDatabaseType(jdbcUrl);
-			properties.setProperty("jdbc.name", "jbpm");
-			properties.setProperty("jdbc.type", type);
-			properties.setProperty("jdbc.driver", jdbcDriverClass);
-			properties.setProperty("jdbc.url", jdbcUrl);
-			properties.setProperty("jdbc.user", user);
-			properties.setProperty("jdbc.password", password);
+
+			properties.setProperty(DBConfiguration.JDBC_NAME, "jbpm");
+
+			if (jdbcDriverClass != null) {
+				properties.setProperty(DBConfiguration.JDBC_DRIVER,
+						jdbcDriverClass);
+			}
+			if (jdbcUrl != null) {
+				String type = DBConfiguration.getDatabaseType(jdbcUrl);
+				properties.setProperty(DBConfiguration.JDBC_URL, jdbcUrl);
+				properties.setProperty(DBConfiguration.JDBC_TYPE, type);
+			}
+			if (user != null) {
+				properties.setProperty(DBConfiguration.JDBC_USER, user);
+			}
+			if (password != null) {
+				properties.setProperty(DBConfiguration.JDBC_PASSWORD, password);
+			}
+
+			properties.setProperty(DBConfiguration.POOL_MIN_SIZE,
+					String.valueOf(minPoolSize));
+			properties.setProperty(DBConfiguration.POOL_MAX_SIZE,
+					String.valueOf(maxPoolSize));
 
 			super.create(properties, false, "jbpm");
 		} catch (PoolNotFoundException ex) {
 			ex.printStackTrace();
+			logger.error(ex);
 			throw new HibernateException(ex);
 		}
 	}
