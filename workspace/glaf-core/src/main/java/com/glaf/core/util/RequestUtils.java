@@ -866,7 +866,8 @@ public class RequestUtils {
 	}
 
 	public static String getServiceUrl(HttpServletRequest request) {
-		String serviceUrl = "http://" + request.getServerName();
+		String scheme = request.getScheme();
+		String serviceUrl = scheme + "://" + request.getServerName();
 		if (request.getServerPort() != 80) {
 			serviceUrl += ":" + request.getServerPort();
 		}
