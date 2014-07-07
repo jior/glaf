@@ -149,7 +149,6 @@
 	<classpathentry kind="lib" path="lib/zookeeper.jar"/>
 	<classpathentry kind="lib" path="conf"/>
 	<classpathentry kind="lib" path="jar-conf"/>
-	<classpathentry kind="lib" path="lib/sqlite-jdbc.jar"/>
 	<classpathentry kind="lib" path="lib/mchange-commons-java.jar"/>
 	<classpathentry kind="lib" path="lib/mongo-java-driver.jar"/>
 	<classpathentry kind="lib" path="lib/commons-pool2.jar"/>

@@ -22,7 +22,7 @@ package com.glaf.core.exceptions;
  * Thrown to indicate that database connection does not exist.
  * 
  */
-public class NoConnectionAvailableException extends Exception {
+public class NoConnectionAvailableException extends RuntimeException {
   private static final long serialVersionUID = 1L;
 
   /**

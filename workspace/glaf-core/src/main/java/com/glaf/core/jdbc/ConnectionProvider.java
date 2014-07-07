@@ -37,7 +37,7 @@ public interface ConnectionProvider {
 	CallableStatement getCallableStatement(String poolName, String strSql)
 			throws Exception;
 
-	Connection getConnection() throws NoConnectionAvailableException;
+	Connection getConnection() throws SQLException;
 
 	PreparedStatement getPreparedStatement(Connection conn, String strSql)
 			throws SQLException;
@@ -56,6 +56,8 @@ public interface ConnectionProvider {
 	Statement getStatement(String poolName) throws Exception;
 
 	String getStatus();
+
+	void closeConnection(Connection conn) throws SQLException;
 
 	Connection getTransactionConnection()
 			throws NoConnectionAvailableException, SQLException;

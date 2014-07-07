@@ -46,11 +46,15 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 	protected final static Log logger = LogFactory
 			.getLog(ConnectionProviderImpl.class);
 	protected String contextName = "glaf";
-	protected String defaultPoolName = "default";
+	protected String defaultPoolName = "";
 	protected String dbServer = "";
 	protected String rdbms = "";
 
 	private static ExternalConnectionPool externalConnectionPool;
+
+	public ConnectionProviderImpl() {
+
+	}
 
 	public ConnectionProviderImpl(Properties properties)
 			throws PoolNotFoundException {
@@ -104,6 +108,7 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 		Class.forName("org.apache.commons.dbcp.PoolingDriver");
 		PoolingDriver driver = (PoolingDriver) DriverManager
 				.getDriver("jdbc:apache:commons:dbcp:");
+		logger.debug(contextName + "_" + name);
 		driver.registerPool(contextName + "_" + name, connectionPool);
 
 		if (this.defaultPoolName == null || this.defaultPoolName.equals("")) {
@@ -116,22 +121,21 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 	/**
 	 * Close for transactional connections
 	 */
-	private boolean closeConnection(Connection conn) {
+	public void closeConnection(Connection conn) throws SQLException {
 		if (conn == null) {
-			return false;
+			return;
 		}
 		try {
 			conn.setAutoCommit(true);
 			conn.close();
-		} catch (Exception ex) {
+		} catch (SQLException ex) {
 			ex.printStackTrace();
 			logger.error("Error on closeConnection", ex);
-			return false;
+			throw ex;
 		}
-		return true;
 	}
 
-	private void create(Properties properties, boolean isRelative,
+	protected void create(Properties properties, boolean isRelative,
 			String _context) throws PoolNotFoundException {
 		logger.debug("Creating ConnectionProviderImpl");
 		if (_context != null && !_context.equals("")) {
@@ -144,12 +148,12 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 		String dbLogin = null;
 		String dbPassword = null;
 		int minConns = 1;
-		int maxConns = 100;
+		int maxConns = 20;
 		double maxConnTime = 0.5;
 		String dbSessionConfig = null;
 		String rdbms = null;
 
-		poolName = properties.getProperty("jdbc.name");
+		poolName = properties.getProperty("jdbc.name", "default");
 		externalPoolClassName = properties
 				.getProperty("db.externalPoolClassName");
 		dbDriver = properties.getProperty("jdbc.driver");
@@ -159,7 +163,7 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 		minConns = Integer.parseInt(properties
 				.getProperty("jdbc.minConns", "1"));
 		maxConns = Integer.parseInt(properties.getProperty("jdbc.maxConns",
-				"100"));
+				"20"));
 		maxConnTime = Double.parseDouble(properties.getProperty("maxConnTime",
 				"0.5"));
 		dbSessionConfig = properties.getProperty("jdbc.sessionConfig");
@@ -174,7 +178,6 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 			logger.debug("dbDriver: " + dbDriver);
 			logger.debug("dbServer: " + dbServer);
 			logger.debug("dbLogin: " + dbLogin);
-			logger.debug("dbPassword: " + dbPassword);
 			logger.debug("minConns: " + minConns);
 			logger.debug("maxConns: " + maxConns);
 			logger.debug("maxConnTime: " + Double.toString(maxConnTime));
@@ -196,12 +199,13 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 					maxConns, maxConnTime, dbSessionConfig, rdbms, poolName);
 		} catch (Exception ex) {
 			logger.error(ex);
+			ex.printStackTrace();
 			throw new PoolNotFoundException(
 					"Failed when creating database connections pool", ex);
 		}
 	}
 
-	private void create(String file, boolean isRelative, String _context)
+	protected void create(String file, boolean isRelative, String _context)
 			throws PoolNotFoundException {
 		Properties properties = new Properties();
 		try {
@@ -248,14 +252,15 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 
 	public CallableStatement getCallableStatement(String poolName,
 			String SQLCallableStatement) throws Exception {
-		if (poolName == null || poolName.equals(""))
+		if (poolName == null || poolName.equals("")) {
 			throw new PoolNotFoundException(
 					"Can't get the pool. No pool name specified");
+		}
 		Connection conn = getConnection(poolName);
 		return getCallableStatement(conn, SQLCallableStatement);
 	}
 
-	public Connection getConnection() throws NoConnectionAvailableException {
+	public Connection getConnection() {
 		return getConnection(defaultPoolName);
 	}
 
@@ -270,7 +275,7 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 			throw new NoConnectionAvailableException(
 					"Couldn´t get a connection for an unnamed pool");
 		}
-
+		logger.debug("poolName:" + poolName);
 		// try to get the connection from the session to use a single connection
 		// for the whole request
 		Connection conn = SessionInfo.getSessionConnection();
@@ -303,6 +308,8 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 			throw new NoConnectionAvailableException(
 					"Couldn´t get a connection for an unnamed pool");
 		}
+		logger.debug("poolName:" + poolName);
+		logger.debug("name:" + (contextName + "_" + poolName));
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection("jdbc:apache:commons:dbcp:"
@@ -312,6 +319,7 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 			// it shouldn't be reused
 			SessionInfo.setDBSessionInfo(conn);
 		} catch (SQLException ex) {
+			ex.printStackTrace();
 			logger.error("Error getting connection", ex);
 			throw new NoConnectionAvailableException(
 					"There are no connections available in jdbc:apache:commons:dbcp:"

@@ -26,43 +26,49 @@ import java.sql.Statement;
 import java.util.Properties;
 
 import org.apache.commons.dbcp.ConnectionFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 class DriverManagerConnectionFactory implements ConnectionFactory {
+	protected final static Log logger = LogFactory
+			.getLog(DriverManagerConnectionFactory.class);
 	protected String _connectUri;
-	protected String _uname;
-	protected String _passwd;
+	protected String _user;
+	protected String _password;
 	protected Properties _props;
 	protected String _dbSessionConfig;
-	protected String _rdbsm;
+	protected String _rdbms;
 
 	public DriverManagerConnectionFactory(String connectUri, Properties props) {
 		_connectUri = null;
-		_uname = null;
-		_passwd = null;
+		_user = null;
+		_password = null;
 		_props = null;
 		_connectUri = connectUri;
 		_props = props;
 	}
 
-	public DriverManagerConnectionFactory(String connectUri, String uname,
-			String passwd, String dbSessionConfig, String rdbsm) {
+	public DriverManagerConnectionFactory(String connectUri, String user,
+			String password, String dbSessionConfig, String rdbms) {
 		_props = null;
 		_dbSessionConfig = null;
 		_connectUri = connectUri;
-		_uname = uname;
-		_passwd = passwd;
+		_user = user;
+		_password = password;
 		_dbSessionConfig = dbSessionConfig;
-		_rdbsm = rdbsm;
+		_rdbms = rdbms;
 	}
 
 	public Connection createConnection() throws SQLException {
 		Connection conn = null;
 		if (null == _props) {
-			if (_uname == null) {
+			if (_user == null) {
 				conn = DriverManager.getConnection(_connectUri);
 			} else {
-				conn = DriverManager
-						.getConnection(_connectUri, _uname, _passwd);
+				logger.debug("url:" + _connectUri);
+				logger.debug("user:" + _user);
+				conn = DriverManager.getConnection(_connectUri, _user,
+						_password);
 			}
 		} else {
 			conn = DriverManager.getConnection(_connectUri, _props);
@@ -78,11 +84,12 @@ class DriverManagerConnectionFactory implements ConnectionFactory {
 		ResultSet rset = null;
 		try {
 			stmt = conn.createStatement();
-			if (!_dbSessionConfig.equals("")) {
+			if (_dbSessionConfig != null
+					&& _dbSessionConfig.trim().length() > 0) {
 				rset = stmt.executeQuery(_dbSessionConfig);
 			}
 			// set infrastructure for auditing
-			SessionInfo.initDB(conn, _rdbsm);
+			SessionInfo.initDB(conn, _rdbms);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {
