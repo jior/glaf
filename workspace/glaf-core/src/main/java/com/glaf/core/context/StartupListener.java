@@ -30,6 +30,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.glaf.core.config.BaseConfiguration;
 import com.glaf.core.config.Configuration;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.startup.BootstrapManager;
 import com.glaf.core.util.QuartzUtils;
@@ -65,6 +66,7 @@ public class StartupListener extends ContextLoaderListener implements
 		com.glaf.core.context.ApplicationContext.setAppPath(root);
 		com.glaf.core.context.ApplicationContext.setContextPath(event
 				.getServletContext().getContextPath());
+		System.setProperty("webapp.root", SystemProperties.getAppPath());
 		if (DBConnectionFactory.checkConnection()) {
 			this.beforeContextInitialized(context);
 			super.contextInitialized(event);
