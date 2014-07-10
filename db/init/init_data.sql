@@ -38,69 +38,69 @@ insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (2, 1, 'Êı¾
 insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (3, 1, 'Ó¦ÓÃÄ£¿é', '', 998, '02');
 insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (4, 2, '»ù´¡Êı¾İ', '', 997, '011');
 insert into SYS_TREE (id, parent, name, nodedesc, sort, code, discriminator) values (5, 2, '²¿ÃÅ½á¹¹', '²¿ÃÅ½á¹¹', 996, '012','D');
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code, discriminator) values (6, 5, '¼¼Êõ²¿', '¼¼Êõ²¿', 995, 'JS000','D');
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (8, 3, 'ÏµÍ³¹ÜÀí', 'ÏµÍ³¹ÜÀí', 994, '');
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (10, 3, '°²È«ÉèÖÃ', '°²È«ÉèÖÃ', 993, '');
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (11, 8, 'ÏµÍ³Ä¿Â¼', 'ÏµÍ³Ä¿Â¼', 992, '');
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (12, 10, '²¿ÃÅ¹ÜÀí', '²¿ÃÅ¹ÜÀí', 991, '');
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (14, 10, '½ÇÉ«¹ÜÀí', '½ÇÉ«¹ÜÀí', 990, '');
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (15, 10, 'Ä£¿é¹ÜÀí', 'Ä£¿é¹ÜÀí', 989, '');
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (16, 8, '×Öµä¹ÜÀí', '×Öµä¹ÜÀí', 988, '');
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (17, 8, 'ÇøÓò¹ÜÀí', 'ÇøÓò¹ÜÀí', 987, '');
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (20, 3, '¸öÈËÉèÖÃ', '¸öÈËÉèÖÃ', 986, '');
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (21, 20, 'ĞŞ¸ÄÃÜÂë', 'ĞŞ¸ÄÃÜÂë', 985, '');
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (22, 20, 'ĞŞ¸Ä¸öÈËĞÅÏ¢', 'ĞŞ¸Ä¸öÈËĞÅÏ¢', 984, '');
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (26, 8, 'Êı¾İÖØÔØ', 'Êı¾İÖØÔØ', 983, '');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code, discriminator) values (6, 5, 'ÏµÍ³¹ÜÀí²¿', 'ÏµÍ³¹ÜÀí²¿', 995, 'SYS000','D');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (8, 3, 'ÏµÍ³¹ÜÀí', 'ÏµÍ³¹ÜÀí', 994, '8');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (10, 3, '°²È«ÉèÖÃ', '°²È«ÉèÖÃ', 993, '10');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (11, 8, 'ÏµÍ³Ä¿Â¼', 'ÏµÍ³Ä¿Â¼', 992, '11');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (12, 10, '²¿ÃÅ¹ÜÀí', '²¿ÃÅ¹ÜÀí', 991, '12');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (14, 10, '½ÇÉ«¹ÜÀí', '½ÇÉ«¹ÜÀí', 990, '14');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (15, 10, 'Ä£¿é¹ÜÀí', 'Ä£¿é¹ÜÀí', 989, '15');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (16, 8, '×Öµä¹ÜÀí', '×Öµä¹ÜÀí', 988, '16');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (17, 8, 'ÇøÓò¹ÜÀí', 'ÇøÓò¹ÜÀí', 987, '17');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (20, 3, '¸öÈËÉèÖÃ', '¸öÈËÉèÖÃ', 986, '20');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (21, 20, 'ĞŞ¸ÄÃÜÂë', 'ĞŞ¸ÄÃÜÂë', 985, '21');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (22, 20, 'ĞŞ¸Ä¸öÈËĞÅÏ¢', 'ĞŞ¸Ä¸öÈËĞÅÏ¢', 984, '22');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (26, 8, 'Êı¾İÖØÔØ', 'Êı¾İÖØÔØ', 983, '26');
 
-insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (42, 3, 'Í³¼Æ±¨±í', 'Í³¼Æ±¨±í', 890, '');
-insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (43, 42, '²éÑ¯¹ÜÀí', '²éÑ¯¹ÜÀí', 889, '');
-insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (44, 42, '±í¹ÜÀí', '±í¹ÜÀí', 888, '');
-insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (45, 42, 'Í¼±í¹ÜÀí', 'Í¼±í¹ÜÀí', 887, '');
-insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (46, 42, '±¨±í¹ÜÀí', '±¨±í¹ÜÀí', 886, '');
-insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (47, 42, '±¨±í·¢ËÍ¹ÜÀí', '±¨±í·¢ËÍ¹ÜÀí', 885, '');
-insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (48, 42, 'µ÷¶È¹ÜÀí', 'µ÷¶È¹ÜÀí', 884, '');
-insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (49, 42, 'ÈÎÎñ¹ÜÀí', 'ÈÎÎñ¹ÜÀí', 883, '');
-insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (50, 42, '²ÎÊıÉèÖÃ', '²ÎÊıÉèÖÃ', 882, '');
+insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (42, 3, 'Í³¼Æ±¨±í', 'Í³¼Æ±¨±í', 890, '42');
+insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (43, 42, '²éÑ¯¹ÜÀí', '²éÑ¯¹ÜÀí', 889, '43');
+insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (44, 42, '±í¹ÜÀí', '±í¹ÜÀí', 888, '44');
+insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (45, 42, 'Í¼±í¹ÜÀí', 'Í¼±í¹ÜÀí', 887, '45');
+insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (46, 42, '±¨±í¹ÜÀí', '±¨±í¹ÜÀí', 886, '46');
+insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (47, 42, '±¨±í·¢ËÍ¹ÜÀí', '±¨±í·¢ËÍ¹ÜÀí', 885, '47');
+insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (48, 42, 'µ÷¶È¹ÜÀí', 'µ÷¶È¹ÜÀí', 884, '48');
+insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (49, 42, 'ÈÎÎñ¹ÜÀí', 'ÈÎÎñ¹ÜÀí', 883, '49');
+insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (50, 42, '²ÎÊıÉèÖÃ', '²ÎÊıÉèÖÃ', 882, '50');
 insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (51, 42, 'Ä£°å¹ÜÀí', 'Ä£°å¹ÜÀí', 881, 'template');
-insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (52, 42, '×¥È¡¹ÜÀí', '×¥È¡¹ÜÀí', 880, '');
+insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (52, 42, '×¥È¡¹ÜÀí', '×¥È¡¹ÜÀí', 880, '52');
 
 
-insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (53, 3, 'ActivitiÁ÷³Ì¹ÜÀí', 'ActivitiÁ÷³Ì¹ÜÀí', 590, '');
-insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (54, 53, '·¢²¼Á÷³Ì°ü', '·¢²¼Á÷³Ì°ü', 589, '');
-insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (55, 53, 'Á÷³Ì¶¨Òå', 'Á÷³Ì¶¨Òå', 588, '');
-insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (56, 53, 'Á÷³ÌÊµÀı', 'Á÷³ÌÊµÀı', 587, '');
-insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (57, 53, 'ÀúÊ·Á÷³ÌÊµÀı', 'ÀúÊ·Á÷³ÌÊµÀı', 586, '');
-insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (58, 53, 'ÈÎÎñÁĞ±í', 'ÈÎÎñÁĞ±í', 585, '');
-insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (59, 53, 'Á÷³ÌÑİÊ¾', 'Á÷³ÌÑİÊ¾', 584, '');
+insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (53, 3, 'ActivitiÁ÷³Ì¹ÜÀí', 'ActivitiÁ÷³Ì¹ÜÀí', 590, '53');
+insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (54, 53, '·¢²¼Á÷³Ì°ü', '·¢²¼Á÷³Ì°ü', 589, '54');
+insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (55, 53, 'Á÷³Ì¶¨Òå', 'Á÷³Ì¶¨Òå', 588, '55');
+insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (56, 53, 'Á÷³ÌÊµÀı', 'Á÷³ÌÊµÀı', 587, '56');
+insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (57, 53, 'ÀúÊ·Á÷³ÌÊµÀı', 'ÀúÊ·Á÷³ÌÊµÀı', 586, '57');
+insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (58, 53, 'ÈÎÎñÁĞ±í', 'ÈÎÎñÁĞ±í', 585, '58');
+insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (59, 53, 'Á÷³ÌÑİÊ¾', 'Á÷³ÌÑİÊ¾', 584, '59');
 
 insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (308, 51, '´òÓ¡Ä£°å', '´òÓ¡Ä£°å', 0, 'print_tpl');
 insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (312, 51, 'ÓÊ¼şÄ£°å', 'ÓÊ¼şÄ£°å', 0, 'mail_tpl');
 
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (34, 3, 'Á÷³Ì¹ÜÀí', 'Á÷³Ì¹ÜÀí', 34, '');
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (435, 34, 'Á÷³Ì·¢²¼', 'Á÷³Ì·¢²¼', 435, '');
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (437, 34, 'Á÷³ÌÑİÊ¾', 'Á÷³ÌÑİÊ¾', 437, '');
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (438, 34, 'Á÷³Ì¼à¿Ø', 'Á÷³Ì¼à¿Ø', 438, '');
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (449, 8, '¹¤×÷ÈÕÀú', '¹¤×÷ÈÕÀú', 449, '');
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (450, 8, 'ÏµÍ³²ÎÊı', 'ÏµÍ³²ÎÊı', 450, '');
-insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (452, 8, 'ÓÊ¼ş·şÎñÉèÖÃ', 'ÓÊ¼ş·şÎñÉèÖÃ', 452, '');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (34, 3, 'Á÷³Ì¹ÜÀí', 'Á÷³Ì¹ÜÀí', 34, '34');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (435, 34, 'Á÷³Ì·¢²¼', 'Á÷³Ì·¢²¼', 435, '435');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (437, 34, 'Á÷³ÌÑİÊ¾', 'Á÷³ÌÑİÊ¾', 437, '437');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (438, 34, 'Á÷³Ì¼à¿Ø', 'Á÷³Ì¼à¿Ø', 438, '438');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (449, 8, '¹¤×÷ÈÕÀú', '¹¤×÷ÈÕÀú', 449, '449');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (450, 8, 'ÏµÍ³²ÎÊı', 'ÏµÍ³²ÎÊı', 450, '450');
+insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (452, 8, 'ÓÊ¼ş·şÎñÉèÖÃ', 'ÓÊ¼ş·şÎñÉèÖÃ', 452, '452');
 
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (494, 8, 'TODOÅäÖÃ', 'TODOÅäÖÃ', 494, '');
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (495, 8, 'µ÷¶È¹ÜÀí', 'µ÷¶È¹ÜÀí', 495, '');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (494, 8, 'TODOÅäÖÃ', 'TODOÅäÖÃ', 494, '494');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (495, 8, 'µ÷¶È¹ÜÀí', 'µ÷¶È¹ÜÀí', 495, '495');
 insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (498, 4, '»õ±ÒÀàĞÍ', '»õ±ÒÀàĞÍ', 498, 'money');
 
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (512, 10, 'ÊÚÈ¨¹ÜÀí', 'ÊÚÈ¨¹ÜÀí', 512, '');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (512, 10, 'ÊÚÈ¨¹ÜÀí', 'ÊÚÈ¨¹ÜÀí', 512, '512');
 
 
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (701, 3, 'ÄÚÈİ¹ÜÀí', 'ÄÚÈİ¹ÜÀí', 0, '');
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (702, 701, 'ĞÂÎÅ¹ÜÀí', 'ĞÂÎÅ¹ÜÀí', 0, '');
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (703, 701, '¹«¸æ¹ÜÀí', '¹«¸æ¹ÜÀí', 0, '');
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (720, 1, 'ÄÚÈİ¹ÜÀí·ÖÀà', '', 0, '');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (701, 3, 'ÄÚÈİ¹ÜÀí', 'ÄÚÈİ¹ÜÀí', 0, '701');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (702, 701, 'ĞÂÎÅ¹ÜÀí', 'ĞÂÎÅ¹ÜÀí', 0, '702');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (703, 701, '¹«¸æ¹ÜÀí', '¹«¸æ¹ÜÀí', 0, '703');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (720, 1, 'ÄÚÈİ¹ÜÀí·ÖÀà', '', 0, '720');
 insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (721, 720, 'ĞÂÎÅ', 'ĞÂÎÅ', 0, 'news');
 insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (722, 721, '¹«Ë¾ĞÂÎÅ', '¹«Ë¾ĞÂÎÅ', 0, 'news_01');
 insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (723, 721, 'Òµ½çĞÂÎÅ', 'Òµ½çĞÂÎÅ', 0, 'news_02');
 insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (731, 720, '¹«¸æ', '¹«¸æ', 0, 'bulletin');
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (732, 731, 'ÆÕÍ¨', '', 0, '');
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (733, 731, 'ÖØÒª', '', 0, '');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (732, 731, 'ÆÕÍ¨', '', 0, '732');
+insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (733, 731, 'ÖØÒª', '', 0, '733');
 
 
 insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (750, 1, '±¨±í·ÖÀà', '', 0, 'report_category');
@@ -114,7 +114,7 @@ insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (756, 750, 
 
 
 /*³õÊ¼»¯²¿ÃÅĞÅÏ¢*/
-insert into SYS_DEPARTMENT (id, name, deptdesc, createtime, sort, deptno, code, code2, status, fincode, nodeid) values (1, 'ÏµÍ³¹ÜÀí²¿', 'ÏµÍ³¹ÜÀí²¿', null, 284, 'SYS000', 'SYS', 'S', 0, 'SYS000', 10000);
+insert into SYS_DEPARTMENT (id, name, deptdesc, createtime, sort, deptno, code, code2, status, fincode, nodeid) values (1, 'ÏµÍ³¹ÜÀí²¿', 'ÏµÍ³¹ÜÀí²¿', null, 284, 'SYS000', 'SYS', 'S', 0, 'SYS000', 6);
  
 /*³õÊ¼»¯ÓÃ»§ĞÅÏ¢*/
 insert into SYS_USER (id, deptId, account, password, code, name, blocked, createTime, lastLoginTime, lastLoginIP, mobile, email, telephone, evection, gender, headship, userType, fax, accountType, dumpFlag, adminFlag) values (1, 6, 'root', 'lueSGJZetyySpUndWjMB', 'root', 'root', 0, null, null, '127.0.0.1', '111', 'root@127.0.0.1', '111', 0, 0, '¹ÜÀíÔ±', 40, null, 0, 0, '1');

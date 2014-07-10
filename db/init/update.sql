@@ -15,14 +15,6 @@ and ID in (
 );
 
 
-update SYS_TREE set DISCRIMINATOR='P' where DISCRIMINATOR is null
-and ID in (
-  select T.ID from SYS_TREE T
-  inner join SYS_TEMPLATE X
-  on T.ID = X.NODEID_
-);
-
-
 update SYS_TREE set DISCRIMINATOR='Y' where DISCRIMINATOR is null
 and ID in (
   select T.ID from SYS_TREE T
