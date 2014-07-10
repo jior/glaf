@@ -279,18 +279,25 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 		// try to get the connection from the session to use a single connection
 		// for the whole request
 		Connection conn = SessionInfo.getSessionConnection();
-		if (conn == null) {
-			// No connection in the session, take a new one and attach it to the
-			// session
-			if (externalConnectionPool != null) {
-				conn = externalConnectionPool.getConnection();
+		try {
+			if (conn == null || conn.isClosed()) {
+				// No connection in the session, take a new one and attach it to
+				// the
+				// session
+				if (externalConnectionPool != null) {
+					conn = externalConnectionPool.getConnection();
+				} else {
+					conn = getNewConnection(poolName);
+				}
+				SessionInfo.setSessionConnection(conn);
 			} else {
-				conn = getNewConnection(poolName);
+				// Update session info if needed
+				SessionInfo.setDBSessionInfo(conn, true);
 			}
-			SessionInfo.setSessionConnection(conn);
-		} else {
-			// Update session info if needed
-			SessionInfo.setDBSessionInfo(conn, true);
+		} catch (SQLException ex) {
+			logger.error(ex);
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
 		}
 		return conn;
 	}
