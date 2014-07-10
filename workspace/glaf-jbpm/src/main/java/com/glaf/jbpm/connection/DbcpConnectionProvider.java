@@ -52,7 +52,7 @@ public class DbcpConnectionProvider extends ConnectionProviderImpl implements
 	@Override
 	public void close() throws HibernateException {
 		try {
-			super.destroy();
+			super.close();
 		} catch (Exception ex) {
 			throw new HibernateException(ex);
 		}

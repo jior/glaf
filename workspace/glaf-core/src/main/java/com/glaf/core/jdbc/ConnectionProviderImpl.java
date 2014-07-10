@@ -20,14 +20,12 @@ package com.glaf.core.jdbc;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Properties;
+
+import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.ConnectionFactory;
 import org.apache.commons.dbcp.PoolableConnectionFactory;
@@ -42,6 +40,7 @@ import org.apache.commons.pool.impl.StackKeyedObjectPoolFactory;
 import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.exceptions.NoConnectionAvailableException;
 import com.glaf.core.exceptions.PoolNotFoundException;
+import com.glaf.core.jdbc.connection.ConnectionProvider;
 
 public class ConnectionProviderImpl implements ConnectionProvider {
 	protected final static Log logger = LogFactory
@@ -50,8 +49,6 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 	protected String defaultPoolName = "";
 	protected String dbServer = "";
 	protected String rdbms = "";
-
-	private static ExternalConnectionPool externalConnectionPool;
 
 	public ConnectionProviderImpl() {
 
@@ -122,6 +119,21 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 		}
 	}
 
+	public void close() {
+		close(defaultPoolName);
+	}
+
+	public void close(String name) {
+		PoolingDriver driver = null;
+		try {
+			driver = (PoolingDriver) DriverManager
+					.getDriver("jdbc:apache:commons:dbcp:");
+			driver.closePool(name);
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+
 	/**
 	 * Close for transactional connections
 	 */
@@ -185,15 +197,6 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 			logger.debug("rdbms: " + rdbms);
 		}
 
-		if (externalPoolClassName != null) {
-			try {
-				externalConnectionPool = ExternalConnectionPool
-						.getInstance(externalPoolClassName);
-			} catch (Throwable e) {
-				externalConnectionPool = null;
-			}
-		}
-
 		try {
 			addNewPool(dbDriver, dbServer, dbLogin, dbPassword, minConns,
 					maxConns, maxConnTime, dbSessionConfig, rdbms, poolName);
@@ -217,49 +220,6 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 		}
 	}
 
-	public void destroy() throws Exception {
-		destroy(defaultPoolName);
-	}
-
-	public void destroy(String name) throws Exception {
-		PoolingDriver driver = (PoolingDriver) DriverManager
-				.getDriver("jdbc:apache:commons:dbcp:");
-		driver.closePool(name);
-	}
-
-	public CallableStatement getCallableStatement(Connection conn,
-			String SQLCallableStatement) throws SQLException {
-		if (conn == null || SQLCallableStatement == null
-				|| SQLCallableStatement.equals("")) {
-			return null;
-		}
-		CallableStatement cs = null;
-		try {
-			cs = conn.prepareCall(SQLCallableStatement);
-		} catch (SQLException ex) {
-			logger.error("getCallableStatement: " + SQLCallableStatement + "\n"
-					+ ex);
-			releaseConnection(conn);
-			throw ex;
-		}
-		return (cs);
-	}
-
-	public CallableStatement getCallableStatement(String SQLCallableStatement)
-			throws Exception {
-		return getCallableStatement(defaultPoolName, SQLCallableStatement);
-	}
-
-	public CallableStatement getCallableStatement(String poolName,
-			String SQLCallableStatement) throws Exception {
-		if (poolName == null || poolName.equals("")) {
-			throw new PoolNotFoundException(
-					"Can't get the pool. No pool name specified");
-		}
-		Connection conn = getConnection(poolName);
-		return getCallableStatement(conn, SQLCallableStatement);
-	}
-
 	public Connection getConnection() {
 		return getConnection(defaultPoolName);
 	}
@@ -281,18 +241,8 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 		Connection conn = SessionInfo.getSessionConnection();
 		try {
 			if (conn == null || conn.isClosed()) {
-				// No connection in the session, take a new one and attach it to
-				// the
-				// session
-				if (externalConnectionPool != null) {
-					conn = externalConnectionPool.getConnection();
-				} else {
-					conn = getNewConnection(poolName);
-				}
+				conn = getNewConnection(poolName);
 				SessionInfo.setSessionConnection(conn);
-			} else {
-				// Update session info if needed
-				SessionInfo.setDBSessionInfo(conn, true);
 			}
 		} catch (SQLException ex) {
 			logger.error(ex);
@@ -300,10 +250,6 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 			throw new RuntimeException(ex);
 		}
 		return conn;
-	}
-
-	private Connection getNewConnection() throws NoConnectionAvailableException {
-		return getNewConnection(defaultPoolName);
 	}
 
 	/**
@@ -321,10 +267,6 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 		try {
 			conn = DriverManager.getConnection("jdbc:apache:commons:dbcp:"
 					+ contextName + "_" + poolName);
-			// Set session info for the connection, but do not attach the
-			// connection to the session since
-			// it shouldn't be reused
-			SessionInfo.setDBSessionInfo(conn);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			logger.error("Error getting connection", ex);
@@ -361,216 +303,16 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 		}
 	}
 
-	public PreparedStatement getPreparedStatement(Connection conn,
-			String SQLPreparedStatement) throws SQLException {
-		if (conn == null || SQLPreparedStatement == null
-				|| SQLPreparedStatement.equals("")) {
-			return null;
-		}
-		PreparedStatement ps = null;
+	public void configure(Properties properties) {
 		try {
-			logger.debug("preparedStatement requested");
-			ps = conn.prepareStatement(SQLPreparedStatement,
-					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
-			logger.debug("preparedStatement received");
-		} catch (SQLException ex) {
-			logger.error("getPreparedStatement: " + SQLPreparedStatement + "\n"
-					+ ex);
-			releaseConnection(conn);
-			throw ex;
-		}
-		return (ps);
-	}
-
-	public PreparedStatement getPreparedStatement(String SQLPreparedStatement)
-			throws Exception {
-		return getPreparedStatement(defaultPoolName, SQLPreparedStatement);
-	}
-
-	public PreparedStatement getPreparedStatement(String poolName,
-			String SQLPreparedStatement) throws Exception {
-		if (poolName == null || poolName.equals("")) {
-			throw new PoolNotFoundException(
-					"Can't get the pool. No pool name specified");
-		}
-		logger.debug("connection requested");
-		Connection conn = getConnection(poolName);
-		logger.debug("connection established");
-		return getPreparedStatement(conn, SQLPreparedStatement);
-	}
-
-	public String getRDBMS() {
-		return rdbms;
-	}
-
-	public Statement getStatement() throws Exception {
-		return getStatement(defaultPoolName);
-	}
-
-	public Statement getStatement(Connection conn) throws SQLException {
-		if (conn == null) {
-			return null;
-		}
-		try {
-			return (conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY));
-		} catch (SQLException e) {
-			logger.error("getStatement: " + e);
-			releaseConnection(conn);
-			throw e;
-		}
-	}
-
-	public Statement getStatement(String poolName) throws Exception {
-		if (poolName == null || poolName.equals("")) {
-			throw new PoolNotFoundException(
-					"Can't get the pool. No pool name specified");
-		}
-		Connection conn = getConnection(poolName);
-		return getStatement(conn);
-	}
-
-	/**
-	 * Returns the actual status of the dynamic pool.
-	 */
-	public String getStatus() {
-		StringBuffer strResultado = new StringBuffer();
-		strResultado.append("Not implemented yet");
-		return strResultado.toString();
-	}// End getStatus()
-
-	public Connection getTransactionConnection()
-			throws NoConnectionAvailableException, SQLException {
-		Connection conn = getNewConnection();
-		if (conn == null) {
-			throw new NoConnectionAvailableException(
-					"Couldn´t get an available connection");
-		}
-		conn.setAutoCommit(false);
-		return conn;
-	}
-
-	public void releaseCallableStatement(CallableStatement callableStatement)
-			throws SQLException {
-		if (callableStatement == null) {
-			return;
-		}
-		Connection conn = null;
-		try {
-			conn = callableStatement.getConnection();
-			callableStatement.close();
-			releaseConnection(conn);
-		} catch (SQLException ex) {
-			logger.error("releaseCallableStatement: " + ex);
-			releaseConnection(conn);
-			throw ex;
-		}
-	}
-
-	public void releaseCommitConnection(Connection conn) throws SQLException {
-		if (conn == null) {
-			return;
-		}
-		conn.commit();
-		closeConnection(conn);
-	}
-
-	public boolean releaseConnection(Connection conn) {
-		if (conn == null) {
-			return false;
-		}
-		try {
-			// Set autocommit, this makes not necessary to explicitly commit,
-			// all prepared statements are
-			// commited
-			conn.setAutoCommit(true);
-			if (SessionInfo.getSessionConnection() == null) {
-				// close connection if it's not attached to session, other case
-				// it will be closed when the
-				// request is done
-				logger.debug("close connection directly (no connection in session)");
-				if (!conn.isClosed()) {
-					conn.close();
-				}
-			}
-		} catch (Exception ex) {
+			create(properties, false, "glaf");
+		} catch (PoolNotFoundException ex) {
 			ex.printStackTrace();
-			logger.error("Error on releaseConnection", ex);
-			return false;
-		}
-		return true;
-	}
-
-	public void releasePreparedStatement(PreparedStatement preparedStatement)
-			throws SQLException {
-		if (preparedStatement == null) {
-			return;
-		}
-		Connection conn = null;
-		try {
-			conn = preparedStatement.getConnection();
-			preparedStatement.close();
-			releaseConnection(conn);
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			logger.error("releasePreparedStatement: " + ex);
-			releaseConnection(conn);
-			throw ex;
 		}
 	}
 
-	public void releaseRollbackConnection(Connection conn) throws SQLException {
-		if (conn == null) {
-			return;
-		}
-		// prevent extra exception if the connection is already closed
-		// especially needed here because rollback occurs in case of
-		// application exceptions also. If the conn.isClosed and a rollback
-		// is done then the real app exception is hidden.
-		if (conn.isClosed()) {
-			return;
-		}
-		conn.rollback();
-		closeConnection(conn);
+	public DataSource getDataSource() {
+		return null;
 	}
 
-	public void releaseStatement(Statement statement) throws SQLException {
-		if (statement == null) {
-			return;
-		}
-		Connection conn = null;
-		try {
-			conn = statement.getConnection();
-			statement.close();
-			releaseConnection(conn);
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-			logger.error("releaseStatement: " + ex);
-			releaseConnection(conn);
-			throw ex;
-		}
-	}
-
-	public void releaseTransactionalPreparedStatement(
-			PreparedStatement preparedStatement) throws SQLException {
-		if (preparedStatement == null) {
-			return;
-		}
-		preparedStatement.close();
-	}
-
-	public void releaseTransactionalStatement(Statement statement)
-			throws SQLException {
-		if (statement == null) {
-			return;
-		}
-		statement.close();
-	}
-
-	public void reload(String file, boolean isRelative, String _context)
-			throws Exception {
-		destroy();
-		create(file, isRelative, _context);
-	}
 }

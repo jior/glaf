@@ -18,11 +18,12 @@
 
 package com.glaf.core.test;
 
-import java.sql.Connection;
+import java.sql.*;
 import java.util.Properties;
 
 import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.jdbc.*;
+import com.glaf.core.jdbc.connection.ConnectionProvider;
 import com.glaf.core.util.JdbcUtils;
 
 public class ConnectionProviderTest {
@@ -33,11 +34,20 @@ public class ConnectionProviderTest {
 		for (int i = 0; i < 1000; i++) {
 			long start = System.currentTimeMillis();
 			Connection conn = null;
+			Statement stmt = null;
+			ResultSet rs = null;
 			try {
 				conn = p.getConnection();
+				stmt = conn.createStatement();
+				rs = stmt.executeQuery(" select * from sys_user ");
+				while (rs.next()) {
+					System.out.println(rs.getString(1) + " " + rs.getString(2));
+				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			} finally {
+				JdbcUtils.close(rs);
+				JdbcUtils.close(stmt);
 				JdbcUtils.close(conn);
 			}
 			System.out.println("time(ms):"

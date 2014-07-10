@@ -19,8 +19,6 @@
 package com.glaf.core.jdbc;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.apache.commons.logging.Log;
@@ -74,7 +72,7 @@ public class SessionInfo {
 	 * Sets all session information to null. Called at the end of http-request
 	 * handling, to reset the audit information for that thread.
 	 */
-	public static void init() {
+	public static void reset() {
 		sessionId.set(null);
 		userId.set(null);
 		processType.set(null);
@@ -111,33 +109,6 @@ public class SessionInfo {
 	 */
 	public static void initDB(Connection conn, String rdbms) {
 
-		if (rdbms != null && rdbms.equals("postgresql")) {
-			// Create temporary table
-			PreparedStatement psQuery = null;
-			PreparedStatement psCreate = null;
-			try {
-				psQuery = getPreparedStatement(
-						conn,
-						"select count(*) from information_schema.tables where table_name='ad_context_info' and table_type = 'LOCAL TEMPORARY'");
-				ResultSet rs = psQuery.executeQuery();
-
-				if (rs.next() && rs.getString(1).equals("0")) {
-					StringBuffer sql = new StringBuffer();
-					sql.append("CREATE TEMPORARY TABLE AD_CONTEXT_INFO");
-					sql.append("(AD_USER_ID VARCHAR(32), ");
-					sql.append("  AD_SESSION_ID VARCHAR(32),");
-					sql.append("  PROCESSTYPE VARCHAR(60), ");
-					sql.append("  PROCESSID VARCHAR(32)) on commit preserve rows");
-					psCreate = getPreparedStatement(conn, sql.toString());
-					psCreate.execute();
-				}
-			} catch (Exception e) {
-				logger.error("Error initializating audit infrastructure", e);
-			} finally {
-				releasePreparedStatement(psQuery);
-				releasePreparedStatement(psCreate);
-			}
-		}
 	}
 
 	/**
@@ -167,7 +138,7 @@ public class SessionInfo {
 	}
 
 	/**
-	 * Inserts in the session table the information about the Openbravo session.
+	 * Inserts in the session table the information about the session.
 	 * 
 	 * @param conn
 	 *            Connection where the session information will be stored in
@@ -177,29 +148,6 @@ public class SessionInfo {
 			return;
 		}
 		logger.debug("set session info");
-		// Clean up temporary table
-		PreparedStatement psCleanUp = null;
-		PreparedStatement psInsert = null;
-		try {
-			psCleanUp = getPreparedStatement(conn,
-					"delete from ad_context_info");
-			psCleanUp.executeUpdate();
-
-			psInsert = getPreparedStatement(
-					conn,
-					"insert into ad_context_info (ad_user_id, ad_session_id, processType, processId) values (?, ?, ?, ?)");
-			psInsert.setString(1, SessionInfo.getUserId());
-			psInsert.setString(2, SessionInfo.getSessionId());
-			psInsert.setString(3, SessionInfo.getProcessType());
-			psInsert.setString(4, SessionInfo.getProcessId());
-			psInsert.executeUpdate();
-			changedInfo.set(false);
-		} catch (Exception e) {
-			logger.error("Error setting audit info", e);
-		} finally {
-			releasePreparedStatement(psCleanUp);
-			releasePreparedStatement(psInsert);
-		}
 	}
 
 	/**
@@ -228,52 +176,12 @@ public class SessionInfo {
 			if (conn == null || conn.isClosed()) {
 				return null;
 			}
-		} catch (SQLException e) {
-			logger.error("Error checking connection", e);
+		} catch (SQLException ex) {
+			logger.error("Error checking connection", ex);
 			return null;
 		}
 		logger.debug("Reuse session's connection");
 		return conn;
-	}
-
-	private static PreparedStatement getPreparedStatement(Connection conn,
-			String SQLPreparedStatement) throws SQLException {
-		if (conn == null || SQLPreparedStatement == null
-				|| SQLPreparedStatement.equals(""))
-			return null;
-		PreparedStatement ps = null;
-
-		try {
-			if (logger.isDebugEnabled())
-				logger.debug("preparedStatement requested");
-			ps = conn.prepareStatement(SQLPreparedStatement,
-					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
-			if (logger.isDebugEnabled())
-				logger.debug("preparedStatement received");
-		} catch (SQLException e) {
-			logger.error("getPreparedStatement: " + SQLPreparedStatement + "\n"
-					+ e);
-			if (conn != null) {
-				try {
-					conn.setAutoCommit(true);
-					conn.close();
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			}
-		}
-		return (ps);
-	}
-
-	private static void releasePreparedStatement(PreparedStatement ps) {
-		if (ps != null) {
-			try {
-				ps.close();
-			} catch (Exception e) {
-				logger.error("Error closing PreparedStatement", e);
-			}
-		}
 	}
 
 	public static void setUserId(String user) {
