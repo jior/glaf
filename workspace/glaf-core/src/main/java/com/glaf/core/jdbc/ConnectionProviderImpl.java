@@ -169,9 +169,6 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 				DBConfiguration.POOL_TIMEOUT, "0.5"));
 		dbSessionConfig = properties.getProperty("jdbc.sessionConfig");
 		rdbms = properties.getProperty(DBConfiguration.JDBC_TYPE);
-		if (rdbms != null && rdbms.equalsIgnoreCase("postgresql")) {
-			dbServer += "/" + properties.getProperty("jdbc.sid");
-		}
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("poolName: " + poolName);
