@@ -78,7 +78,7 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void addNewPool(String dbDriver, String dbServer, String dbLogin,
-			String dbPassword, int minConns, int maxConns, double maxConnTime,
+			String dbPassword, int minConns, int maxConns, long maxConnTime,
 			String dbSessionConfig, String rdbms, String name) throws Exception {
 		logger.debug("Loading underlying JDBC driver.");
 		try {
@@ -95,6 +95,9 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 		connectionPool.setTestOnBorrow(false);
 		connectionPool.setTestOnReturn(false);
 		connectionPool.setTestWhileIdle(false);
+		connectionPool.setMaxActive(maxConns);
+		connectionPool.setMaxWait(maxConnTime);
+		connectionPool.setMinIdle(minConns);
 
 		KeyedObjectPoolFactory keyedObject = new StackKeyedObjectPoolFactory();
 		ConnectionFactory connectionFactory = new DriverManagerConnectionFactory(
@@ -123,12 +126,11 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 	 * Close for transactional connections
 	 */
 	public void closeConnection(Connection conn) throws SQLException {
-		if (conn == null) {
-			return;
-		}
 		try {
-			conn.setAutoCommit(true);
-			conn.close();
+			if (conn != null && !conn.isClosed()) {
+				conn.setAutoCommit(true);
+				conn.close();
+			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			logger.error("Error on closeConnection", ex);
@@ -150,7 +152,7 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 		String dbPassword = null;
 		int minConns = 1;
 		int maxConns = 20;
-		double maxConnTime = 0.5;
+		long maxConnTime = 30;
 		String dbSessionConfig = null;
 		String rdbms = null;
 
@@ -165,8 +167,8 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 				DBConfiguration.POOL_MIN_SIZE, "1"));
 		maxConns = Integer.parseInt(properties.getProperty(
 				DBConfiguration.POOL_MAX_SIZE, "20"));
-		maxConnTime = Double.parseDouble(properties.getProperty(
-				DBConfiguration.POOL_TIMEOUT, "0.5"));
+		maxConnTime = Long.parseLong(properties.getProperty(
+				DBConfiguration.POOL_TIMEOUT, "30"));
 		dbSessionConfig = properties.getProperty("jdbc.sessionConfig");
 		rdbms = properties.getProperty(DBConfiguration.JDBC_TYPE);
 
