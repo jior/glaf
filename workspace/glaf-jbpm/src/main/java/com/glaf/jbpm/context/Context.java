@@ -37,12 +37,13 @@ public class Context {
 		try {
 			if (jbpmContext != null) {
 				jbpmContext.close();
+				jbpmContext = null;
 			}
 		} catch (Exception ex) {
 			if (LogUtils.isDebug()) {
-				logger.debug(ex);
 				ex.printStackTrace();
 			}
+			logger.error(ex);
 			throw new JbpmException("Can't close jbpm context ", ex);
 		} finally {
 			jbpmContext = null;

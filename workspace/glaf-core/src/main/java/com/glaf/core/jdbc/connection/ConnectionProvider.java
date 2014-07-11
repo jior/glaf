@@ -26,23 +26,10 @@ import javax.sql.DataSource;
 
 public interface ConnectionProvider {
 	/**
-	 * Initialize the connection provider from given properties.
-	 * 
-	 * @param props
+	 * Release all resources held by this provider
 	 * 
 	 */
-	public void configure(Properties props);
-
-	/**
-	 * Grab a connection, with the autocommit mode specified by
-	 * <tt>jdbc.autocommit</tt>.
-	 * 
-	 * @return a JDBC connection
-	 * @throws SQLException
-	 */
-	public Connection getConnection() throws SQLException;
-
-	public DataSource getDataSource();
+	void close();
 
 	/**
 	 * Dispose of a used connection.
@@ -51,13 +38,25 @@ public interface ConnectionProvider {
 	 *            a JDBC connection
 	 * @throws SQLException
 	 */
-	public void closeConnection(Connection conn) throws SQLException;
+	void closeConnection(Connection conn) throws SQLException;
 
 	/**
-	 * Release all resources held by this provider 
+	 * Initialize the connection provider from given properties.
 	 * 
-	 * @throws RuntimeException
+	 * @param props
+	 * 
 	 */
-	public void close();
+	void configure(Properties props);
+
+	/**
+	 * Grab a connection, with the autocommit mode specified by
+	 * <tt>jdbc.autocommit</tt>.
+	 * 
+	 * @return a JDBC connection
+	 * @throws SQLException
+	 */
+	Connection getConnection() throws SQLException;
+
+	DataSource getDataSource();
 
 }

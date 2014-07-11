@@ -38,7 +38,6 @@ import org.apache.commons.pool.impl.GenericObjectPool;
 import org.apache.commons.pool.impl.StackKeyedObjectPoolFactory;
 
 import com.glaf.core.config.DBConfiguration;
-import com.glaf.core.exceptions.NoConnectionAvailableException;
 import com.glaf.core.exceptions.PoolNotFoundException;
 import com.glaf.core.jdbc.connection.ConnectionProvider;
 
@@ -150,6 +149,14 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 		}
 	}
 
+	public void configure(Properties properties) {
+		try {
+			create(properties, false, "glaf");
+		} catch (PoolNotFoundException ex) {
+			ex.printStackTrace();
+		}
+	}
+
 	protected void create(Properties properties, boolean isRelative,
 			String _context) throws PoolNotFoundException {
 		logger.debug("Creating ConnectionProviderImpl");
@@ -220,7 +227,7 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 		}
 	}
 
-	public Connection getConnection() {
+	public Connection getConnection() throws SQLException {
 		return getConnection(defaultPoolName);
 	}
 
@@ -229,13 +236,11 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 	 * thread, to always get the same connection for all getConnection() calls
 	 * inside a request.
 	 */
-	public Connection getConnection(String poolName)
-			throws NoConnectionAvailableException {
+	public Connection getConnection(String poolName) throws SQLException {
 		if (poolName == null || poolName.equals("")) {
-			throw new NoConnectionAvailableException(
+			throw new SQLException(
 					"Couldn´t get a connection for an unnamed pool");
 		}
-		logger.debug("poolName:" + poolName);
 		// try to get the connection from the session to use a single connection
 		// for the whole request
 		Connection conn = SessionInfo.getSessionConnection();
@@ -247,18 +252,21 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 		} catch (SQLException ex) {
 			logger.error(ex);
 			ex.printStackTrace();
-			throw new RuntimeException(ex);
+			throw ex;
 		}
 		return conn;
+	}
+
+	public DataSource getDataSource() {
+		return null;
 	}
 
 	/**
 	 * Gets a new connection without trying to obtain the sessions's one
 	 */
-	private Connection getNewConnection(String poolName)
-			throws NoConnectionAvailableException {
+	private Connection getNewConnection(String poolName) throws SQLException {
 		if (poolName == null || poolName.equals("")) {
-			throw new NoConnectionAvailableException(
+			throw new SQLException(
 					"Couldn´t get a connection for an unnamed pool");
 		}
 		logger.debug("poolName:" + poolName);
@@ -270,7 +278,7 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			logger.error("Error getting connection", ex);
-			throw new NoConnectionAvailableException(
+			throw new SQLException(
 					"There are no connections available in jdbc:apache:commons:dbcp:"
 							+ contextName + "_" + poolName);
 		}
@@ -301,18 +309,6 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 		} else {
 			return connectionPool;
 		}
-	}
-
-	public void configure(Properties properties) {
-		try {
-			create(properties, false, "glaf");
-		} catch (PoolNotFoundException ex) {
-			ex.printStackTrace();
-		}
-	}
-
-	public DataSource getDataSource() {
-		return null;
 	}
 
 }

@@ -19,6 +19,7 @@
 package com.glaf.jbpm.container;
 
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -171,7 +172,17 @@ public class ProcessContainer {
 	}
 
 	public JbpmContext createJbpmContext() {
-		return getJbpmConfiguration().createJbpmContext();
+		JbpmContext jbpmContext = getJbpmConfiguration().createJbpmContext();
+		java.sql.Connection conn = null;
+		try {
+			conn = jbpmContext.getConnection();
+			if (conn == null || conn.isClosed()) {
+				jbpmContext = null;
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		return jbpmContext;
 	}
 
 	/**
@@ -764,6 +775,7 @@ public class ProcessContainer {
 				inputStream = FileUtils.getInputStream(filename);
 				jbpmConfiguration = JbpmConfiguration
 						.parseInputStream(inputStream);
+				logger.info("load jbpm config:" + filename);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			} finally {

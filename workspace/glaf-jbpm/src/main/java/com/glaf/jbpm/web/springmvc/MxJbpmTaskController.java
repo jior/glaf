@@ -71,6 +71,57 @@ public class MxJbpmTaskController {
 
 	}
 
+	@RequestMapping("/activityInstances")
+	public ModelAndView activityInstances(HttpServletRequest request,
+			ModelMap modelMap) {
+		Map<String, Object> paramMap = RequestUtils.getParameterMap(request);
+		Long processInstanceId = ParamUtils.getLong(paramMap,
+				"processInstanceId");
+		ProcessInstance processInstance;
+		JbpmContext jbpmContext = null;
+		try {
+			Map<String, User> userMap = ProcessContainer.getContainer()
+					.getUserMap();
+			if (processInstanceId != null) {
+				List<TaskItem> taskItems = ProcessContainer.getContainer()
+						.getTaskItemsByProcessInstanceId(processInstanceId);
+				jbpmContext = ProcessContainer.getContainer()
+						.createJbpmContext();
+				processInstance = jbpmContext.getProcessInstance(Long
+						.valueOf(processInstanceId));
+				if (processInstance != null) {
+					Map<String, Object> variables = new java.util.HashMap<String, Object>();
+					variables.putAll(processInstance.getContextInstance()
+							.getVariables());
+					modelMap.put("processInstance", processInstance);
+					modelMap.put("variables", variables);
+					modelMap.put("taskItems", taskItems);
+					modelMap.put("userMap", userMap);
+				}
+			}
+		} catch (Exception ex) {
+			if (LogUtils.isDebug()) {
+				logger.debug(ex);
+				ex.printStackTrace();
+			}
+		} finally {
+			Context.close(jbpmContext);
+		}
+
+		String jx_view = request.getParameter("jx_view");
+
+		if (StringUtils.isNotEmpty(jx_view)) {
+			return new ModelAndView(jx_view, modelMap);
+		}
+
+		String x_view = ViewProperties.getString("jbpm_task.ActivityInstances");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/jbpm/task/ActivityInstances", modelMap);
+	}
+
 	@RequestMapping("/chooseUser")
 	public ModelAndView chooseUser(ModelMap modelMap, HttpServletRequest request) {
 		String processInstanceId = request.getParameter("processInstanceId");
@@ -338,57 +389,6 @@ public class MxJbpmTaskController {
 
 	}
 
-	@RequestMapping("/ActivityInstances")
-	public ModelAndView ActivityInstances(HttpServletRequest request,
-			ModelMap modelMap) {
-		Map<String, Object> paramMap = RequestUtils.getParameterMap(request);
-		Long processInstanceId = ParamUtils.getLong(paramMap,
-				"processInstanceId");
-		ProcessInstance processInstance;
-		JbpmContext jbpmContext = null;
-		try {
-			Map<String, User> userMap = ProcessContainer.getContainer()
-					.getUserMap();
-			if (processInstanceId != null) {
-				List<TaskItem> taskItems = ProcessContainer.getContainer()
-						.getTaskItemsByProcessInstanceId(processInstanceId);
-				jbpmContext = ProcessContainer.getContainer()
-						.createJbpmContext();
-				processInstance = jbpmContext.getProcessInstance(Long
-						.valueOf(processInstanceId));
-				if (processInstance != null) {
-					Map<String, Object> variables = new java.util.HashMap<String, Object>();
-					variables.putAll(processInstance.getContextInstance()
-							.getVariables());
-					modelMap.put("processInstance", processInstance);
-					modelMap.put("variables", variables);
-					modelMap.put("taskItems", taskItems);
-					modelMap.put("userMap", userMap);
-				}
-			}
-		} catch (Exception ex) {
-			if (LogUtils.isDebug()) {
-				logger.debug(ex);
-				ex.printStackTrace();
-			}
-		} finally {
-			Context.close(jbpmContext);
-		}
-
-		String jx_view = request.getParameter("jx_view");
-
-		if (StringUtils.isNotEmpty(jx_view)) {
-			return new ModelAndView(jx_view, modelMap);
-		}
-
-		String x_view = ViewProperties.getString("jbpm_task.ActivityInstances");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-
-		return new ModelAndView("/jbpm/task/ActivityInstances", modelMap);
-	}
-
 	@RequestMapping("/suspend")
 	@ResponseBody
 	public void suspend(HttpServletRequest request, ModelMap modelMap) {
@@ -465,10 +465,13 @@ public class MxJbpmTaskController {
 								item.setEndDate(ti.getEnd());
 								item.setTaskDescription(ti.getDescription());
 								item.setTaskName(ti.getName());
-								ActivityInstance activityInstance = workedMap.get(ti.getId());
+								ActivityInstance activityInstance = workedMap
+										.get(ti.getId());
 								if (activityInstance != null) {
-									item.setIsAgree(activityInstance.getIsAgree());
-									item.setOpinion(activityInstance.getContent());
+									item.setIsAgree(activityInstance
+											.getIsAgree());
+									item.setOpinion(activityInstance
+											.getContent());
 									item.setRowId(activityInstance.getRowId());
 									item.setJson(activityInstance.getVariable());
 								}
@@ -486,14 +489,19 @@ public class MxJbpmTaskController {
 					modelMap.put("userMap", userMap);
 				}
 			}
-		} catch (Exception ex) {
+		} catch (Throwable ex) {
 			if (LogUtils.isDebug()) {
 				logger.debug(ex);
 				ex.printStackTrace();
 			}
 		} finally {
-			Context.close(jbpmContext);
+			try {
+				Context.close(jbpmContext);
+			} catch (java.lang.Throwable ex) {
+			}
 		}
+
+		logger.debug("----------------------------view task---------------------");
 
 		String jx_view = request.getParameter("jx_view");
 

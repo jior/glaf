@@ -99,9 +99,13 @@ public class JbpmProcessImageTag extends TagSupport {
 			throw new JspException("table couldn't be displayed", e);
 		} catch (DocumentException e) {
 			throw new JspException("table couldn't be displayed", e);
+		} catch (Throwable ex) {
 		} finally {
 			release();
-			Context.close(jbpmContext);
+			try {
+				Context.close(jbpmContext);
+			} catch (java.lang.Throwable ex) {
+			}
 		}
 		return EVAL_PAGE;
 	}
