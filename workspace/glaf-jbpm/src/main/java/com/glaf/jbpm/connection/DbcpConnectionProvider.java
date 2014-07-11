@@ -45,18 +45,8 @@ import com.glaf.core.util.JdbcUtils;
 import com.glaf.core.util.PropertiesHelper;
 
 public class DbcpConnectionProvider implements ConnectionProvider {
-
 	private static final Logger log = LoggerFactory
 			.getLogger(DbcpConnectionProvider.class);
-
-	private final static String MIN_POOL_SIZE = "minPoolSize";
-	private final static String MAX_POOL_SIZE = "maxPoolSize";
-	private final static String INITIAL_POOL_SIZE = "initialPoolSize";
-	private final static String MAX_IDLE_TIME = "maxIdleTime";
-	private final static String MAX_STATEMENTS = "maxStatements";
-	private final static String ACQUIRE_INCREMENT = "acquireIncrement";
-	private final static String IDLE_CONNECTION_TEST_PERIOD = "idleConnectionTestPeriod";
-
 	private volatile DataSource ds;
 	private volatile Integer isolation;
 	private volatile boolean autocommit;
@@ -119,16 +109,6 @@ public class DbcpConnectionProvider implements ConnectionProvider {
 								// passwords
 		}
 
-		Integer minPoolSize = PropertiesHelper.getInteger(MIN_POOL_SIZE, props);
-		Integer maxPoolSize = PropertiesHelper.getInteger(MAX_POOL_SIZE, props);
-		Integer maxIdleTime = PropertiesHelper.getInteger(MAX_IDLE_TIME, props);
-		Integer maxStatements = PropertiesHelper.getInteger(MAX_STATEMENTS,
-				props);
-		Integer acquireIncrement = PropertiesHelper.getInteger(
-				ACQUIRE_INCREMENT, props);
-		Integer idleTestPeriod = PropertiesHelper.getInteger(
-				IDLE_CONNECTION_TEST_PERIOD, props);
-
 		Properties properties = new Properties();
 
 		for (Iterator<Object> ii = props.keySet().iterator(); ii.hasNext();) {
@@ -139,39 +119,9 @@ public class DbcpConnectionProvider implements ConnectionProvider {
 			}
 		}
 
-		Integer initialPoolSize = PropertiesHelper.getInteger(
-				INITIAL_POOL_SIZE, props);
-		if (initialPoolSize == null && minPoolSize != null) {
-			properties.put(INITIAL_POOL_SIZE, String.valueOf(minPoolSize)
-					.trim());
-		}
-
-		if (initialPoolSize == null) {
-			initialPoolSize = 2;
-		}
-		if (minPoolSize == null) {
-			minPoolSize = 2;
-		}
-		if (maxPoolSize == null) {
-			maxPoolSize = 20;
-		}
-		if (maxIdleTime == null) {
-			maxIdleTime = 60;
-		}
-		if (maxStatements == null) {
-			maxStatements = 200;
-		}
-		if (acquireIncrement == null) {
-			acquireIncrement = 1;
-		}
-		if (idleTestPeriod == null) {
-			idleTestPeriod = 120;
-		}
-
 		// Create the actual pool of connections
 		ObjectPool connectionPool = new GenericObjectPool(null);
 
-		// Apply any properties
 		if (props.getProperty("hibernate.connection.maxIdle") != null) {
 			int value = PropertiesHelper.getInt("hibernate.connection.maxIdle",
 					props, 0);
@@ -243,8 +193,14 @@ public class DbcpConnectionProvider implements ConnectionProvider {
 		// Create a factory for caching the PreparedStatements
 		KeyedObjectPoolFactory kpf = null;
 
-		if (maxStatements > 0) {
-			kpf = new StackKeyedObjectPoolFactory(null, maxStatements);
+		if (props.getProperty("hibernate.connection.maxStatements") != null) {
+			int value = PropertiesHelper.getInt(
+					"hibernate.connection.maxStatements", props, 0);
+			if (value > 0) {
+				kpf = new StackKeyedObjectPoolFactory(null, value);
+			}
+		} else {
+			kpf = new StackKeyedObjectPoolFactory(null, 200);
 		}
 
 		// Wrap the connections and statements with pooled variants

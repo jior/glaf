@@ -184,10 +184,10 @@ public class DruidConnectionProvider implements ConnectionProvider {
 			ds.setDriverClassName(jdbcDriverClass);
 			ds.setUsername(props.getProperty(Environment.USER));
 			ds.setPassword(props.getProperty(Environment.PASS));
-		} catch (Exception e) {
-			log.error("could not instantiate Druid connection pool", e);
+		} catch (Exception ex) {
+			log.error("could not instantiate Druid connection pool", ex);
 			throw new HibernateException(
-					"Could not instantiate Druid connection pool", e);
+					"Could not instantiate Druid connection pool", ex);
 		}
 
 		String i = props.getProperty(Environment.ISOLATION);
