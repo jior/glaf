@@ -91,9 +91,6 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 		connectionPool.setTestOnBorrow(false);
 		connectionPool.setTestOnReturn(false);
 		connectionPool.setTestWhileIdle(false);
-		connectionPool.setMaxActive(maxConns);
-		connectionPool.setMaxWait(maxConnTime);
-		connectionPool.setMinIdle(minConns);
 
 		KeyedObjectPoolFactory keyedObject = new StackKeyedObjectPoolFactory();
 		ConnectionFactory connectionFactory = new DriverManagerConnectionFactory(
@@ -247,7 +244,9 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 		try {
 			if (conn == null || conn.isClosed()) {
 				conn = getNewConnection(poolName);
-				SessionInfo.setSessionConnection(conn);
+				if (conn != null && !conn.isClosed()) {
+					SessionInfo.setSessionConnection(conn);
+				}
 			}
 		} catch (SQLException ex) {
 			logger.error(ex);
@@ -275,6 +274,10 @@ public class ConnectionProviderImpl implements ConnectionProvider {
 		try {
 			conn = DriverManager.getConnection("jdbc:apache:commons:dbcp:"
 					+ contextName + "_" + poolName);
+			logger.debug("get new connection:" + (contextName + "_" + poolName));
+			if (conn != null && conn.isClosed()) {
+				logger.error("get closed connection!");
+			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 			logger.error("Error getting connection", ex);
