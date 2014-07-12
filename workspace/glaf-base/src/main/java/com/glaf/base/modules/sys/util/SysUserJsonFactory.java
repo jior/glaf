@@ -162,8 +162,7 @@ public class SysUserJsonFactory {
 			if (array != null && !array.isEmpty()) {
 				for (int i = 0, len = array.size(); i < len; i++) {
 					JSONObject json = array.getJSONObject(i);
-					SysUserRole m = new SysUserRole();
-					SysUserRole r = m.jsonToObject(json);
+					SysUserRole r = SysUserRoleJsonFactory.jsonToObject(json);
 					model.getUserRoles().add(r);
 				}
 			}
@@ -174,8 +173,7 @@ public class SysUserJsonFactory {
 			if (array != null && !array.isEmpty()) {
 				for (int i = 0, len = array.size(); i < len; i++) {
 					JSONObject json = array.getJSONObject(i);
-					SysDeptRole m = new SysDeptRole();
-					SysDeptRole r = m.jsonToObject(json);
+					SysDeptRole r = SysDeptRoleJsonFactory.jsonToObject(json);
 					model.getRoles().add(r);
 				}
 			}
@@ -186,8 +184,7 @@ public class SysUserJsonFactory {
 			if (array != null && !array.isEmpty()) {
 				for (int i = 0, len = array.size(); i < len; i++) {
 					JSONObject json = array.getJSONObject(i);
-					SysFunction m = new SysFunction();
-					SysFunction r = m.jsonToObject(json);
+					SysFunction r = SysFunctionJsonFactory.jsonToObject(json);
 					model.getFunctions().add(r);
 				}
 			}
@@ -198,8 +195,8 @@ public class SysUserJsonFactory {
 			if (array != null && !array.isEmpty()) {
 				for (int i = 0, len = array.size(); i < len; i++) {
 					JSONObject json = array.getJSONObject(i);
-					SysApplication m = new SysApplication();
-					SysApplication r = m.jsonToObject(json);
+					SysApplication r = SysApplicationJsonFactory
+							.jsonToObject(json);
 					model.getApps().add(r);
 				}
 			}

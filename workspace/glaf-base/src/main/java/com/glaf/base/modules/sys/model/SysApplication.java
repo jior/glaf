@@ -157,6 +157,9 @@ public class SysApplication implements Serializable, JSONable {
 	}
 
 	public Set<SysFunction> getFunctions() {
+		if (functions == null) {
+			functions = new HashSet<SysFunction>();
+		}
 		return functions;
 	}
 

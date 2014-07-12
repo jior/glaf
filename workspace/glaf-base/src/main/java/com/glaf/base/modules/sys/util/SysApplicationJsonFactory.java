@@ -21,8 +21,10 @@ package com.glaf.base.modules.sys.util;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.sys.model.SysApplication;
+import com.glaf.base.modules.sys.model.SysFunction;
 import com.glaf.core.util.DateUtils;
 
 public class SysApplicationJsonFactory {
@@ -86,6 +88,17 @@ public class SysApplicationJsonFactory {
 		}
 		if (jsonObject.containsKey("updateDate")) {
 			model.setUpdateDate(jsonObject.getDate("updateDate"));
+		}
+
+		if (jsonObject.containsKey("functions")) {
+			JSONArray array = jsonObject.getJSONArray("functions");
+			if (array != null && !array.isEmpty()) {
+				for (int i = 0, len = array.size(); i < len; i++) {
+					JSONObject json = array.getJSONObject(i);
+					SysFunction f = SysFunctionJsonFactory.jsonToObject(json);
+					model.getFunctions().add(f);
+				}
+			}
 		}
 
 		return model;
@@ -153,6 +166,14 @@ public class SysApplicationJsonFactory {
 					DateUtils.getDateTime(model.getUpdateDate()));
 		}
 
+		if (model.getFunctions() != null && !model.getFunctions().isEmpty()) {
+			JSONArray array = new JSONArray();
+			for (SysFunction f : model.getFunctions()) {
+				array.add(f.toJsonObject());
+			}
+			jsonObject.put("functions", array);
+		}
+
 		return jsonObject;
 	}
 
@@ -198,6 +219,15 @@ public class SysApplicationJsonFactory {
 			jsonObject.put("updateDate_datetime",
 					DateUtils.getDateTime(model.getUpdateDate()));
 		}
+
+		if (model.getFunctions() != null && !model.getFunctions().isEmpty()) {
+			ArrayNode array = new ObjectMapper().createArrayNode();
+			for (SysFunction f : model.getFunctions()) {
+				array.add(f.toObjectNode());
+			}
+			jsonObject.set("functions", array);
+		}
+
 		return jsonObject;
 	}
 

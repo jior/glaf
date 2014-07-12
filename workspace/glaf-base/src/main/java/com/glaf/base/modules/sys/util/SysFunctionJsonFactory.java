@@ -85,6 +85,7 @@ public class SysFunctionJsonFactory {
 		if (model.getFuncMethod() != null) {
 			jsonObject.put("funcMethod", model.getFuncMethod());
 		}
+
 		jsonObject.put("sort", model.getSort());
 		jsonObject.put("appId", model.getAppId());
 		return jsonObject;

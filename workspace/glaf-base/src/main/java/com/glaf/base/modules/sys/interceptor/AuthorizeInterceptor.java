@@ -78,9 +78,14 @@ public class AuthorizeInterceptor implements MethodBeforeAdvice {
 					ip = request.getRemoteHost();
 					SysUser user = RequestUtil.getLoginUser(request);
 					if (user != null) {
+						//logger.debug(user.toJsonObject().toJSONString());
 						account = user.getAccount();
 						if (StringUtils.equals(user.getAdminFlag(), "1")) {
 							authorized = true;
+						}
+						if (user.isSystemAdmin()) {
+							authorized = true;
+							logger.debug(account+" is admin");
 						}
 					}
 					// logger.debug("IP:" + ip + ", Account:" + account);
@@ -88,7 +93,7 @@ public class AuthorizeInterceptor implements MethodBeforeAdvice {
 			}
 		}
 		methodName = objectName + "." + methodName;
-		//logger.debug("methodName:" + methodName);
+		// logger.debug("methodName:" + methodName);
 
 		// 拦截的功能在系统功能列表中
 		if (findSysFunction(methodName)) {

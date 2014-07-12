@@ -23,6 +23,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.base.modules.sys.model.SysDeptRole;
+import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.core.util.DateUtils;
 
 public class SysDeptRoleJsonFactory {
@@ -64,6 +65,11 @@ public class SysDeptRoleJsonFactory {
 		if (jsonObject.containsKey("createBy")) {
 			model.setCreateBy(jsonObject.getString("createBy"));
 		}
+		if (jsonObject.containsKey("role")) {
+			JSONObject json = jsonObject.getJSONObject("role");
+			SysRole role = SysRoleJsonFactory.jsonToObject(json);
+			model.setRole(role);
+		}
 
 		return model;
 	}
@@ -102,6 +108,9 @@ public class SysDeptRoleJsonFactory {
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());
 		}
+		if (model.getRole() != null) {
+			jsonObject.put("role", model.getRole().toJsonObject());
+		}
 		return jsonObject;
 	}
 
@@ -127,6 +136,9 @@ public class SysDeptRoleJsonFactory {
 		}
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());
+		}
+		if (model.getRole() != null) {
+			jsonObject.set("role", model.getRole().toObjectNode());
 		}
 		return jsonObject;
 	}
