@@ -110,7 +110,7 @@ public class XmlExporter {
 			rsmd = rs.getMetaData();
 			int count = rsmd.getColumnCount();
 
-			List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+			List<ColumnDefinition> columns = new java.util.ArrayList<ColumnDefinition>();
 
 			Element meta = root.addElement("MetaData");
 			for (int i = 1; i <= count; i++) {
@@ -127,7 +127,7 @@ public class XmlExporter {
 				}
 				columns.add(column);
 				Element e = meta.addElement("Column");
-				e.addAttribute("Name", column.getColumnLabel());
+				e.addAttribute("Name", column.getColumnLabel().toUpperCase());
 				e.addAttribute("Type", column.getJavaType());
 				if (!StringUtils.equalsIgnoreCase(column.getJavaType(), "Date")) {
 					if (column.getPrecision() > 0) {
@@ -157,46 +157,47 @@ public class XmlExporter {
 					if (columnLabel == null) {
 						columnLabel = columnName;
 					}
+					columnLabel = columnLabel.toUpperCase();
 					String javaType = column.getJavaType();
 					if ("String".equals(javaType)) {
 						String value = rs.getString(column.getOrdinal());
 						if (value != null) {
-							row.addElement(columnLabel).setText(value);
+							row.addElement(columnLabel).addCDATA(value);
 						}
 					} else if ("Integer".equals(javaType)) {
 						Integer value = rs.getInt(column.getOrdinal());
 						if (value != null) {
-							row.addElement(columnLabel).setText(
+							row.addElement(columnLabel).addCDATA(
 									String.valueOf(value));
 						}
 					} else if ("Long".equals(javaType)) {
 						Long value = rs.getLong(column.getOrdinal());
 						if (value != null) {
-							row.addElement(columnLabel).setText(
+							row.addElement(columnLabel).addCDATA(
 									String.valueOf(value));
 						}
 					} else if ("Double".equals(javaType)) {
 						Double value = rs.getDouble(column.getOrdinal());
 						if (value != null) {
-							row.addElement(columnLabel).setText(
+							row.addElement(columnLabel).addCDATA(
 									String.valueOf(value));
 						}
 					} else if ("Boolean".equals(javaType)) {
 						Boolean value = rs.getBoolean(column.getOrdinal());
 						if (value != null) {
-							row.addElement(columnLabel).setText(
+							row.addElement(columnLabel).addCDATA(
 									String.valueOf(value));
 						}
 					} else if ("Date".equals(javaType)) {
 						Timestamp value = rs.getTimestamp(column.getOrdinal());
 						if (value != null) {
-							row.addElement(columnLabel).setText(
+							row.addElement(columnLabel).addCDATA(
 									DateUtils.getDateTime(value));
 						}
 					} else {
 						Object value = rs.getObject(column.getOrdinal());
 						if (value != null) {
-							row.addElement(columnLabel).setText(
+							row.addElement(columnLabel).addCDATA(
 									value.toString());
 						}
 					}
@@ -235,7 +236,7 @@ public class XmlExporter {
 					try {
 						retry++;
 						FileUtils.mkdirs(rootDir);
-						Dom4jUtils.savePrettyDoument(doc, filename, "GBK");
+						Dom4jUtils.savePrettyDoument(doc, filename, "UTF-8");
 						logger.debug("save file:" + filename);
 						success = true;
 					} catch (Exception ex) {

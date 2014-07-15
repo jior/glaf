@@ -102,7 +102,7 @@ public class JacksonExporter {
 				}
 				columns.add(column);
 				ObjectNode columnJSON = new ObjectMapper().createObjectNode();
-				columnJSON.put("Name", column.getColumnLabel());
+				columnJSON.put("Name", column.getColumnLabel().toUpperCase());
 				columnJSON.put("Type", column.getJavaType());
 				if (!StringUtils.equalsIgnoreCase(column.getJavaType(), "Date")) {
 					if (column.getPrecision() > 0) {
@@ -135,6 +135,7 @@ public class JacksonExporter {
 					if (columnLabel == null) {
 						columnLabel = columnName;
 					}
+					columnLabel = columnLabel.toUpperCase();
 					String javaType = column.getJavaType();
 					if ("String".equals(javaType)) {
 						String value = rs.getString(column.getOrdinal());

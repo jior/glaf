@@ -53,8 +53,8 @@ public class JsonToDbImporter {
 		JsonToDbImporter imp = new JsonToDbImporter();
 		Connection conn = null;
 		try {
-			conn = DBConnectionFactory.getConnection("src");
-			imp.importToDB(new File("/tmp"), conn);
+			conn = DBConnectionFactory.getConnection("default");
+			imp.importToDB(new File("./data/json"), conn);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
@@ -88,10 +88,11 @@ public class JsonToDbImporter {
 		byte[] bytes = FileUtils.getBytes(file);
 		String content = new String(bytes, "UTF-8");
 		JSONObject jsonObject = JSONObject.parseObject(content);
-		JSONArray meta = jsonObject.getJSONArray("MetaData");
+		JSONObject rootJson = jsonObject.getJSONObject("Repository");
+		JSONArray meta = rootJson.getJSONArray("MetaData");
 
-		if (jsonObject.getString("TableName") != null) {
-			tableName = jsonObject.getString("TableName");
+		if (rootJson.getString("TableName") != null) {
+			tableName = rootJson.getString("TableName");
 			logger.debug("tableName:" + tableName);
 		}
 
@@ -99,7 +100,7 @@ public class JsonToDbImporter {
 		sqlBuffer.append(" select ");
 		String primaryKeyColumn = null;
 		ColumnDefinition idColumn = null;
-		List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+		List<ColumnDefinition> columns = new java.util.ArrayList<ColumnDefinition>();
 		int length = meta.size();
 		for (int i = 0; i < length; i++) {
 			JSONObject obj = meta.getJSONObject(i);
@@ -154,7 +155,9 @@ public class JsonToDbImporter {
 		sb.append(" insert into ").append(tableName).append(" (");
 
 		int index = 0;
-		columns.add(idColumn);
+		if (idColumn != null) {
+			columns.add(idColumn);
+		}
 		for (ColumnDefinition column : columns) {
 			index++;
 			sb.append(column.getColumnName());
@@ -180,7 +183,7 @@ public class JsonToDbImporter {
 		PreparedStatement psmt = null;
 		try {
 
-			JSONArray rows = jsonObject.getJSONArray("RowSet");
+			JSONArray rows = rootJson.getJSONArray("RowSet");
 			int size = rows.size();
 			if (size > 0) {
 				autoCommit = conn.getAutoCommit();

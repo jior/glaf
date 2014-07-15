@@ -104,7 +104,7 @@ public class FastJsonExporter {
 				}
 				columns.add(column);
 				JSONObject columnJSON = new JSONObject();
-				columnJSON.put("Name", column.getColumnLabel());
+				columnJSON.put("Name", column.getColumnLabel().toUpperCase());
 				columnJSON.put("Type", column.getJavaType());
 				if (!StringUtils.equalsIgnoreCase(column.getJavaType(), "Date")) {
 					if (column.getPrecision() > 0) {
@@ -137,6 +137,7 @@ public class FastJsonExporter {
 					if (columnLabel == null) {
 						columnLabel = columnName;
 					}
+					columnLabel = columnLabel.toUpperCase();
 					String javaType = column.getJavaType();
 					if ("String".equals(javaType)) {
 						String value = rs.getString(column.getOrdinal());

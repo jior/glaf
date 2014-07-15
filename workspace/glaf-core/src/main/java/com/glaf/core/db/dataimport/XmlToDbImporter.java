@@ -56,7 +56,7 @@ public class XmlToDbImporter {
 		Connection conn = null;
 		try {
 			conn = DBConnectionFactory.getConnection("default");
-			imp.importToDB(new File("./data/sys"), conn);
+			imp.importToDB(new File("./data/xml"), conn);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
@@ -90,7 +90,7 @@ public class XmlToDbImporter {
 		sqlBuffer.append(" select ");
 		String primaryKeyColumn = null;
 		ColumnDefinition idColumn = null;
-		List<ColumnDefinition> columns = new java.util.concurrent.CopyOnWriteArrayList<ColumnDefinition>();
+		List<ColumnDefinition> columns = new java.util.ArrayList<ColumnDefinition>();
 		int length = metas.size();
 		for (int i = 0; i < length; i++) {
 			Element elem = (Element) metas.get(i);
@@ -145,7 +145,11 @@ public class XmlToDbImporter {
 		sb.append(" insert into ").append(tableName).append(" (");
 
 		int index = 0;
-		columns.add(idColumn);
+		
+		if(idColumn != null){
+		    columns.add(idColumn);
+		}
+		
 		for (ColumnDefinition column : columns) {
 			index++;
 			sb.append(column.getColumnName());
