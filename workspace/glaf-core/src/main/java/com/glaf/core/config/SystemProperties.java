@@ -34,6 +34,8 @@ public class SystemProperties {
 
 	protected static AtomicBoolean loading = new AtomicBoolean(false);
 
+	protected static final String DEPLOYMENT_SYSTEM_NAME = "deploymentSystemName";
+
 	private static volatile String ROOT_CONF_PATH = null;
 
 	private static volatile String ROOT_APP_PATH = null;
@@ -71,6 +73,29 @@ public class SystemProperties {
 			reload();
 		}
 		return ROOT_CONF_PATH;
+	}
+
+	/**
+	 * 获取系统部署名称
+	 * 
+	 * @return
+	 */
+	public static String getDeploymentSystemName() {
+		return System.getProperty(DEPLOYMENT_SYSTEM_NAME);
+	}
+
+	/**
+	 * 获取主数据库数据源配置文件
+	 * 
+	 * @return
+	 */
+	public static String getMasterDataSourceConfigFile() {
+		String deploymentSystemName = getDeploymentSystemName();
+		if (deploymentSystemName != null && deploymentSystemName.length() > 0) {
+			return Constants.DEPLOYMENT_JDBC_PATH + deploymentSystemName
+					+ "/jdbc.properties";
+		}
+		return Constants.DEFAULT_MASTER_JDBC_CONFIG;
 	}
 
 	public static double getDouble(String key) {

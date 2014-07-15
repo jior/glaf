@@ -238,6 +238,18 @@ public class DBConfiguration {
 		return null;
 	}
 
+	/**
+	 * 获取主库数据源属性
+	 * 
+	 * @return
+	 */
+	public static Properties getMasterDataSourceProperties() {
+		String configFile = SystemProperties.getMasterDataSourceConfigFile();
+		String filename = SystemProperties.getConfigRootPath() + configFile;
+		Properties props = PropertiesUtils.loadFilePathResource(filename);
+		return props;
+	}
+
 	public static Properties getCurrentDataSourceProperties() {
 		String currentSystemName = Environment.getCurrentSystemName();
 		ConnectionDefinition conn = getConnectionDefinition(currentSystemName);
@@ -490,8 +502,18 @@ public class DBConfiguration {
 		if (!loading.get()) {
 			try {
 				loading.set(true);
-				String path = SystemProperties.getConfigRootPath()
-						+ Constants.JDBC_CONFIG;
+				String path = null;
+				String deploymentSystemName = SystemProperties
+						.getDeploymentSystemName();
+				if (deploymentSystemName != null
+						&& deploymentSystemName.length() > 0) {
+					path = SystemProperties.getConfigRootPath()
+							+ Constants.DEPLOYMENT_JDBC_PATH
+							+ deploymentSystemName + "/jdbc/";
+				} else {
+					path = SystemProperties.getConfigRootPath()
+							+ Constants.JDBC_CONFIG;
+				}
 				logger.info("datasource path:" + path);
 				File dir = new File(path);
 				if (dir.exists() && dir.isDirectory()) {
@@ -537,7 +559,7 @@ public class DBConfiguration {
 				loading.set(false);
 			}
 			String filename = SystemProperties.getConfigRootPath()
-					+ Constants.DEFAULT_JDBC_CONFIG;
+					+ SystemProperties.getMasterDataSourceConfigFile();
 			File file = new File(filename);
 			if (file.exists() && file.isFile()) {
 				logger.info("load default jdbc config:" + filename);

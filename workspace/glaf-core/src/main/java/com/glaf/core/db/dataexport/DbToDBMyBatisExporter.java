@@ -36,11 +36,11 @@ import com.glaf.core.base.TableModel;
 import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.config.Environment;
 import com.glaf.core.context.ContextFactory;
+import com.glaf.core.db.TableDataManager;
 import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.query.TablePageQuery;
-import com.glaf.core.service.ITableDataService;
 import com.glaf.core.service.ITablePageService;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.JdbcUtils;
@@ -148,8 +148,7 @@ public class DbToDBMyBatisExporter {
 
 				ITablePageService tablePageService = ContextFactory
 						.getBean("tablePageService");
-				ITableDataService tableDataService = ContextFactory
-						.getBean("tableDataService");
+				TableDataManager dataManager = new TableDataManager();
 				TablePageQuery query = new TablePageQuery();
 				query.tableName(tableName);
 				List<TableModel> inserList = new ArrayList<TableModel>();
@@ -197,7 +196,7 @@ public class DbToDBMyBatisExporter {
 							inserList.add(tableModel);
 						}
 						Environment.setCurrentSystemName(jdbc_name);
-						tableDataService.insertAllTableData(inserList);
+						dataManager.insertAllTableData(jdbc_name, inserList);
 						inserList.clear();
 					}
 					rows.clear();

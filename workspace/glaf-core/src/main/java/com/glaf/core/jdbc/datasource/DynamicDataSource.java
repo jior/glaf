@@ -30,6 +30,7 @@ import com.glaf.core.config.Environment;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.jdbc.connection.ConnectionProvider;
 import com.glaf.core.jdbc.connection.ConnectionProviderFactory;
+import com.glaf.core.util.Constants;
 import com.glaf.core.util.PropertiesUtils;
 
 public class DynamicDataSource extends AbstractRoutingDataSource {
@@ -47,9 +48,19 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 	@Override
 	public void afterPropertiesSet() {
 		try {
-			String filename = SystemProperties.getAppPath()
-					+ "/WEB-INF/conf/jdbc/"
-					+ Environment.getCurrentSystemName() + ".jdbc.properties";
+			String path = null;
+			String deploymentSystemName = SystemProperties
+					.getDeploymentSystemName();
+			if (deploymentSystemName != null
+					&& deploymentSystemName.length() > 0) {
+				path = SystemProperties.getConfigRootPath()
+						+ Constants.DEPLOYMENT_JDBC_PATH + deploymentSystemName
+						+ "/jdbc/";
+			} else {
+				path = SystemProperties.getConfigRootPath() + "/conf/jdbc/";
+			}
+			String filename = path + Environment.getCurrentSystemName()
+					+ ".jdbc.properties";
 			Properties props = PropertiesUtils.loadFilePathResource(filename);
 			if (props != null) {
 				ConnectionProvider provider = ConnectionProviderFactory

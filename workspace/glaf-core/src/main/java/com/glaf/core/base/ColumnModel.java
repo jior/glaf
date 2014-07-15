@@ -160,7 +160,7 @@ public class ColumnModel implements java.io.Serializable,
 		if (columnName == null) {
 			if (other.columnName != null)
 				return false;
-		} else if (!columnName.equals(other.columnName))
+		} else if (!columnName.equalsIgnoreCase(other.columnName))
 			return false;
 		return true;
 	}

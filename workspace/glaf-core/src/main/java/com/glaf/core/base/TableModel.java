@@ -139,15 +139,19 @@ public class TableModel implements java.io.Serializable {
 		column.setCollectionValues(collection);
 		column.setValue(collection);
 		column.setTable(this);
-		columns.add(column);
+		if (!columns.contains(column)) {
+			columns.add(column);
+		}
 	}
 
 	public void addColumn(ColumnModel column) {
 		if (columns == null) {
 			columns = new java.util.ArrayList<ColumnModel>();
 		}
-		column.setTable(this);
-		columns.add(column);
+		if (!columns.contains(column)) {
+			column.setTable(this);
+			columns.add(column);
+		}
 	}
 
 	@SuppressWarnings({ "rawtypes" })
@@ -163,7 +167,9 @@ public class TableModel implements java.io.Serializable {
 		}
 		column.setValue(value);
 		column.setTable(this);
-		columns.add(column);
+		if (!columns.contains(column)) {
+			columns.add(column);
+		}
 	}
 
 	public void addDateColumn(String columnName, Date value) {

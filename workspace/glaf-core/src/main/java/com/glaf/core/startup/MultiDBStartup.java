@@ -36,6 +36,7 @@ import com.glaf.core.config.Environment;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.el.ExpressionTools;
 import com.glaf.core.jdbc.DBConnectionFactory;
+import com.glaf.core.util.Constants;
 import com.glaf.core.util.PropertiesUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.threads.ThreadFactory;
@@ -136,12 +137,22 @@ public class MultiDBStartup implements Bootstrap {
 								 * 检查连接信息，如果正确，保存配置
 								 */
 								if (DBConnectionFactory.checkConnection(props)) {
-									String filename = SystemProperties
-											.getConfigRootPath()
-											+ "/conf/jdbc/"
-											+ host
-											+ "_"
-											+ name
+									String path = null;
+									String deploymentSystemName = SystemProperties
+											.getDeploymentSystemName();
+									if (deploymentSystemName != null
+											&& deploymentSystemName.length() > 0) {
+										path = SystemProperties
+												.getConfigRootPath()
+												+ Constants.DEPLOYMENT_JDBC_PATH
+												+ deploymentSystemName
+												+ "/jdbc/";
+									} else {
+										path = SystemProperties
+												.getConfigRootPath()
+												+ "/conf/jdbc/";
+									}
+									String filename = path + host + "_" + name
 											+ ".properties";
 									PropertiesUtils.save(filename, props);
 									logger.info("成功保存数据库配置文件:" + filename);

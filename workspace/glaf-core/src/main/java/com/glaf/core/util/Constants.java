@@ -34,7 +34,9 @@ public final class Constants {
 
 	public static final String LOGIN_IP = "LOGIN_IP";
 
-	public static final String DEFAULT_JDBC_CONFIG = "/conf/jdbc.properties";
+	public static final String DEFAULT_MASTER_JDBC_CONFIG = "/conf/jdbc.properties";
+
+	public static final String DEPLOYMENT_JDBC_PATH = "/conf/deployment/";
 
 	public static final String JDBC_CONFIG = "/conf/jdbc";
 
