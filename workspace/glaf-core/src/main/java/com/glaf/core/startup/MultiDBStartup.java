@@ -37,6 +37,7 @@ import com.glaf.core.config.SystemProperties;
 import com.glaf.core.el.ExpressionTools;
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.util.Constants;
+import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.PropertiesUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.threads.ThreadFactory;
@@ -152,6 +153,7 @@ public class MultiDBStartup implements Bootstrap {
 												.getConfigRootPath()
 												+ "/conf/jdbc/";
 									}
+									FileUtils.mkdirs(path);
 									String filename = path + host + "_" + name
 											+ ".properties";
 									PropertiesUtils.save(filename, props);

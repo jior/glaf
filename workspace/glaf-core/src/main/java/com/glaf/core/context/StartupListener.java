@@ -18,6 +18,8 @@
 
 package com.glaf.core.context;
 
+import java.io.IOException;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -33,6 +35,8 @@ import com.glaf.core.config.Configuration;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.startup.BootstrapManager;
+import com.glaf.core.util.Constants;
+import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.QuartzUtils;
 
 public class StartupListener extends ContextLoaderListener implements
@@ -73,6 +77,23 @@ public class StartupListener extends ContextLoaderListener implements
 			this.setupContext(context);
 		} else {
 			logger.error("数据库连接错误，请检查配置。");
+		}
+		if (SystemProperties.getDeploymentSystemName() != null) {
+			String deploymentSystemName = SystemProperties
+					.getDeploymentSystemName();
+			String path = SystemProperties.getConfigRootPath()
+					+ Constants.DEPLOYMENT_JDBC_PATH + deploymentSystemName
+					+ "/jdbc";
+			try {
+				FileUtils.mkdirs(path);
+			} catch (IOException ex) {
+			}
+			String log_path = SystemProperties.getConfigRootPath() + "/logs/"
+					+ deploymentSystemName;
+			try {
+				FileUtils.mkdirs(log_path);
+			} catch (IOException ex) {
+			}
 		}
 	}
 
