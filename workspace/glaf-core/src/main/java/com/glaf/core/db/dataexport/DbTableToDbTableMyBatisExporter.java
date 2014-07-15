@@ -33,11 +33,11 @@ import com.glaf.core.config.BaseConfiguration;
 import com.glaf.core.config.Configuration;
 import com.glaf.core.config.Environment;
 import com.glaf.core.context.ContextFactory;
+import com.glaf.core.db.TableDataManager;
 import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.query.TablePageQuery;
-import com.glaf.core.service.ITableDataService;
 import com.glaf.core.service.ITablePageService;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.JdbcUtils;
@@ -128,10 +128,9 @@ public class DbTableToDbTableMyBatisExporter {
 
 				logger.debug("select sql=" + sb.toString());
 
-				ITableDataService tableDataService = ContextFactory
-						.getBean("tableDataService");
 				ITablePageService tablePageService = ContextFactory
 						.getBean("tablePageService");
+				TableDataManager dataManager = new TableDataManager();
 				TablePageQuery query = new TablePageQuery();
 				query.tableName(tableName);
 				List<Map<String, Object>> rows = new java.util.concurrent.CopyOnWriteArrayList<Map<String, Object>>();
@@ -153,8 +152,7 @@ public class DbTableToDbTableMyBatisExporter {
 					}
 
 					if (rows != null && !rows.isEmpty()) {
-						Environment.setCurrentSystemName(destSystemName);
-						tableDataService.saveOrUpdate(tbl, true, rows);
+						dataManager.saveOrUpdate(destSystemName, tbl, rows);
 						rows.clear();
 					}
 				}

@@ -36,11 +36,11 @@ import com.glaf.core.base.TableModel;
 import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.config.Environment;
 import com.glaf.core.context.ContextFactory;
+import com.glaf.core.db.TableDataManager;
 import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.query.TablePageQuery;
-import com.glaf.core.service.ITableDataService;
 import com.glaf.core.service.ITablePageService;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.FieldType;
@@ -56,11 +56,11 @@ public class QueryToDBMyBatisExporter {
 
 	public static void main(String[] args) {
 		QueryToDBMyBatisExporter exp = new QueryToDBMyBatisExporter();
-		exp.exportTable("default", "sqlite", "/data/glafdb2.db", "sys_tree",
+		exp.exportTable("default", "sqlite", "./data/glafdb1.db", "sys_tree",
 				"select * from sys_tree");
-		exp.exportTable("default", "sqlite", "/data/glafdb2.db",
+		exp.exportTable("default", "sqlite", "./data/glafdb2.db",
 				"sys_department", "select * from sys_department");
-		exp.exportTable("default", "sqlite", "/data/glafdb2.db",
+		exp.exportTable("default", "sqlite", "./data/glafdb3.db",
 				"sys_application", "select * from sys_application");
 		// exp.exportTable("default", "/data/glafdb", "sys_tree");
 		// ITablePageService tablePageService = ContextFactory
@@ -86,7 +86,7 @@ public class QueryToDBMyBatisExporter {
 			String tableName, String querySQL) {
 		Environment.setCurrentSystemName(systemName);
 		Properties props = new Properties();
-		String jdbc_name = "db_exp_" + dbtype;
+		String jdbc_name = "db_exp_" + dbtype + dbPath;
 		if (StringUtils.equals(dbtype, "h2")) {
 			props.setProperty("jdbc.name", jdbc_name);
 			props.setProperty("jdbc.type", "h2");
@@ -175,8 +175,7 @@ public class QueryToDBMyBatisExporter {
 
 				ITablePageService tablePageService = ContextFactory
 						.getBean("tablePageService");
-				ITableDataService tableDataService = ContextFactory
-						.getBean("tableDataService");
+				TableDataManager dataManager = new TableDataManager();
 				TablePageQuery query = new TablePageQuery();
 				query.tableName(tableName);
 				List<TableModel> inserList = new ArrayList<TableModel>();
@@ -223,8 +222,7 @@ public class QueryToDBMyBatisExporter {
 							}
 							inserList.add(tableModel);
 						}
-						Environment.setCurrentSystemName(jdbc_name);
-						tableDataService.insertAllTableData(inserList);
+						dataManager.insertAllTableData(jdbc_name, inserList);
 						inserList.clear();
 					}
 					rows.clear();
