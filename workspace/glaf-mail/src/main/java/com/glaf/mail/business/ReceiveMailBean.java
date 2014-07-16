@@ -356,7 +356,7 @@ public class ReceiveMailBean {
 			logger.debug(mailService.nextId());
 			for (int i = 0; i < count; i++) {
 				MimeMessage msg = (MimeMessage) msgs[i];
-				if (mailService.getMailByMessageId(msg.getMessageID()) == null) {
+				if (msg.getMessageID() != null && mailService.getMailByMessageId(msg.getMessageID()) == null) {
 					try {
 						mail = new Mail();
 						mail.setUsername(username);
