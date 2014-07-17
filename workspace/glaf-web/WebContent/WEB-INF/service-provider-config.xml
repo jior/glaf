@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 
+     This file configures the ServiceProvider ServiceLocator/Factory to 
+     use specific classes at runtime to implement certain functionality.
+     
+     Each runtime class is configured using a bean tag. The bean tag
+     contains the name of the bean, the runtime class which should be
+     used and if the bean is a singleton or not. 
+     The bean name is often equal to the name of the standard OpenBravo
+     class which is replaced by the bean configured here.
+-->
+
+<provider>
+
+	<bean>
+		<name>simple</name>
+		<class>com.glaf.core.provider.SimpleService</class>
+		<singleton>true</singleton>
+	</bean>
+
+</provider>
