@@ -28,8 +28,8 @@ import java.util.Map;
  * 
  */
 
-public class ModelObject {
-
+public class ModelObject implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
 	private String id = null;
 	private boolean active = true;
 	private String name;
@@ -37,49 +37,21 @@ public class ModelObject {
 
 	private Map<String, Object> data = new HashMap<String, Object>();
 
-	public void set(String propertyName, Object value) {
-		// TODO: externalise the strings
-		if (propertyName.compareTo("id") == 0) {
-			setId((String) value);
-			return;
-		} else if (propertyName.compareTo("active") == 0) {
-			setActive((Boolean) value);
-			return;
-		}
-		data.put(propertyName, value);
-	}
-
 	public Object get(String propertyName) {
-		// TODO: externalise the strings
-		if (propertyName.compareTo("id") == 0)
+		if (propertyName.compareTo("id") == 0) {
 			return getId();
-		else if (propertyName.compareTo("active") == 0)
+		} else if (propertyName.compareTo("active") == 0) {
 			return isActive();
+		}
 		return data.get(propertyName);
-	}
-
-	public boolean isNew() {
-		return id == null;
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public Map<String, Object> getData() {
 		return data;
+	}
+
+	public String getId() {
+		return id;
 	}
 
 	public String getIdentifier() {
@@ -90,12 +62,39 @@ public class ModelObject {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public Date getUpdated() {
 		return updated;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public boolean isNew() {
+		return id == null;
+	}
+
+	public void set(String propertyName, Object value) {
+		if (propertyName.compareTo("id") == 0) {
+			setId((String) value);
+			return;
+		} else if (propertyName.compareTo("active") == 0) {
+			setActive((Boolean) value);
+			return;
+		}
+		data.put(propertyName, value);
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public void setUpdated(Date updated) {

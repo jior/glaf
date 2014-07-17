@@ -21,7 +21,8 @@ package com.glaf.core.provider;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -36,8 +37,8 @@ import com.glaf.core.util.BaseClassLoader;
  * 
  */
 class ServiceProviderConfigReader {
-	private static final Logger log = Logger
-			.getLogger(ServiceProviderConfigReader.class);
+	protected static final Log log = LogFactory
+			.getLog(ServiceProviderConfigReader.class);
 
 	void read(String prefix, InputStream is) {
 		try {

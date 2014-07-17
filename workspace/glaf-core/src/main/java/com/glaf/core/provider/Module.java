@@ -26,13 +26,26 @@ package com.glaf.core.provider;
  */
 
 public class Module extends ModelObject {
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private Integer seqno;
 	private String javaPackage;
 
+	public String getJavaPackage() {
+		return javaPackage;
+	}
+
 	@Override
 	public String getName() {
 		return name;
+	}
+
+	public Integer getSeqno() {
+		return seqno;
+	}
+
+	public void setJavaPackage(String javaPackage) {
+		this.javaPackage = javaPackage;
 	}
 
 	@Override
@@ -40,19 +53,7 @@ public class Module extends ModelObject {
 		this.name = name;
 	}
 
-	public Integer getSeqno() {
-		return seqno;
-	}
-
 	public void setSeqno(Integer seqno) {
 		this.seqno = seqno;
-	}
-
-	public String getJavaPackage() {
-		return javaPackage;
-	}
-
-	public void setJavaPackage(String javaPackage) {
-		this.javaPackage = javaPackage;
 	}
 }

@@ -28,8 +28,6 @@ public class ModelProvider implements Singleton {
 
 	private static ModelProvider instance;
 
-	private List<Module> modules;
-
 	/**
 	 * Returns the singleton instance providing the ModelProvider functionality.
 	 * 
@@ -48,17 +46,6 @@ public class ModelProvider implements Singleton {
 	}
 
 	/**
-	 * Makes it possible to override the default ModelProvider with a custom
-	 * implementation.
-	 * 
-	 * @param instance
-	 *            the custom ModelProvider
-	 */
-	public static synchronized void setInstance(ModelProvider instance) {
-		ModelProvider.instance = instance;
-	}
-
-	/**
 	 * Creates a new ModelProvider, initializes it and sets it in the instance
 	 * here.
 	 */
@@ -70,10 +57,23 @@ public class ModelProvider implements Singleton {
 			setInstance(localProvider);
 			// initialize it
 			// ......
-		} catch (final Exception e) {
-			throw new RuntimeException(e);
+		} catch (final Exception ex) {
+			throw new RuntimeException(ex);
 		}
 	}
+
+	/**
+	 * Makes it possible to override the default ModelProvider with a custom
+	 * implementation.
+	 * 
+	 * @param instance
+	 *            the custom ModelProvider
+	 */
+	public static synchronized void setInstance(ModelProvider instance) {
+		ModelProvider.instance = instance;
+	}
+
+	private List<Module> modules;
 
 	public List<Module> getModules() {
 		return modules;

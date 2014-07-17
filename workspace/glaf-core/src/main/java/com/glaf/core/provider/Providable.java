@@ -24,4 +24,5 @@ package com.glaf.core.provider;
  * 
  */
 public interface Providable {
+
 }
