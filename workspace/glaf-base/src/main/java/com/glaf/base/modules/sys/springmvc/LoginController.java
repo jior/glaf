@@ -286,8 +286,8 @@ public class LoginController {
 		java.util.Random random = new java.util.Random();
 		String rand = Math.abs(random.nextInt(9999))
 				+ com.glaf.core.util.UUID32.getUUID()
-				+ Math.abs(random.nextInt(9999));
-		session = request.getSession(true);
+				+ Math.abs(random.nextInt(9999)) 
+				+ SystemConfig.getToken();
 		if (session != null) {
 			session.setAttribute("x_y", rand);
 		}
