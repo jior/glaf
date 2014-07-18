@@ -18,12 +18,15 @@
 
 package com.glaf.core.provider;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.Hashtable;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import com.glaf.core.config.SystemProperties;
 
 /**
  * The ServiceProvider provides the runtime instances of model entities as well
@@ -64,6 +67,9 @@ public class ServiceProvider {
 	 * @return true if the clz is registered
 	 */
 	public boolean isRegistered(Class<?> clz) {
+		if (registrations.isEmpty()) {
+			this.register();
+		}
 		return isRegistered(clz.getName());
 	}
 
@@ -75,7 +81,23 @@ public class ServiceProvider {
 	 * @return true if a registration exists
 	 */
 	public boolean isRegistered(String name) {
+		if (registrations.isEmpty()) {
+			this.register();
+		}
 		return registrations.get(name) != null;
+	}
+
+	protected void register() {
+		final ServiceProviderConfigReader reader = new ServiceProviderConfigReader();
+		String configFile = SystemProperties.getConfigRootPath() + "/"
+				+ CONFIG_FILE_NAME;
+		File file = new File(configFile);
+		if (file == null || !file.exists()) {
+			configFile = SystemProperties.getConfigRootPath() + "/conf/"
+					+ CONFIG_FILE_NAME;
+		}
+		log.debug("configFile:" + configFile);
+		reader.read(null, configFile);
 	}
 
 	protected void register(String prefix, InputStream is) {
@@ -135,6 +157,7 @@ public class ServiceProvider {
 	 *            registration is not overwritten
 	 */
 	public void register(String name, Class<?> instanceClass, boolean overwrite) {
+		log.debug("register service:" + name);
 		final Registration reg = new Registration();
 		reg.setSingleton(Singleton.class.isAssignableFrom(instanceClass));
 		reg.setInstanceClass(instanceClass);
@@ -210,6 +233,9 @@ public class ServiceProvider {
 	 * @throws ServiceProviderException
 	 */
 	public Object get(String name) {
+		if (!registrations.containsKey(name)) {
+			this.register();
+		}
 		final Registration reg = registrations.get(name);
 		if (reg == null) {
 			throw new ServiceProviderException("No registration for name "

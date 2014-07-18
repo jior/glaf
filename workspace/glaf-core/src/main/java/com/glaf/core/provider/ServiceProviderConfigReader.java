@@ -55,8 +55,9 @@ class ServiceProviderConfigReader {
 			final SAXReader reader = new SAXReader();
 			final Document doc = reader.read(new FileInputStream(fileLocation));
 			process(prefix, doc);
-		} catch (final Exception e) {
-			throw new ServiceProviderException(e);
+		} catch (final Exception ex) {
+			ex.printStackTrace();
+			throw new ServiceProviderException(ex);
 		}
 	}
 
@@ -85,6 +86,7 @@ class ServiceProviderConfigReader {
 				ServiceProvider.getInstance().register(prefix + "." + name,
 						clz, true);
 			} else {
+				
 				ServiceProvider.getInstance().register(name, clz, true);
 			}
 		}

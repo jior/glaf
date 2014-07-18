@@ -29,7 +29,9 @@ import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.io.SAXReader;
 
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.Check;
+import com.glaf.core.util.PropertiesUtils;
 
 /**
  * This class implements a central location where the Core.properties are read
@@ -88,6 +90,11 @@ public class ServicePropertiesProvider {
 		if (coreProperties == null) {
 			readPropertiesFromDevelopmentProject();
 		}
+		if (coreProperties == null) {
+			String filename = SystemProperties.getConfigRootPath()
+					+ "/Core.properties";
+			coreProperties = PropertiesUtils.loadFilePathResource(filename);
+		}
 		return coreProperties;
 	}
 
@@ -113,20 +120,29 @@ public class ServicePropertiesProvider {
 
 	public Document getFormatXMLDocument() {
 		if (formatXML == null) {
-			final File file = getFileFromDevelopmentPath("Format.xml");
-			if (file != null) {
+			File file = getFileFromDevelopmentPath("Format.xml");
+			if (file != null && file.exists() && file.isFile()) {
 				try {
 					SAXReader reader = new SAXReader();
 					formatXML = reader.read(new FileReader(file));
-				} catch (Exception e) {
-					throw new IllegalStateException(e);
+				} catch (Exception ex) {
+					throw new IllegalStateException(ex);
+				}
+			} else {
+				file = new File(SystemProperties.getConfigRootPath()
+						+ "/Format.xml");
+				try {
+					SAXReader reader = new SAXReader();
+					formatXML = reader.read(new FileReader(file));
+				} catch (Exception ex) {
+					throw new IllegalStateException(ex);
 				}
 			}
 		}
 		return formatXML;
 	}
 
-	// tries to read the properties from the openbravo development project
+	// tries to read the properties from the development project
 	private void readPropertiesFromDevelopmentProject() {
 		final File propertiesFile = getFileFromDevelopmentPath("Core.properties");
 		if (propertiesFile == null) {
@@ -173,9 +189,12 @@ public class ServicePropertiesProvider {
 		log.debug("Setting Core.properties through a file");
 		coreProperties = new Properties();
 		try {
-			final FileInputStream fis = new FileInputStream(fileLocation);
-			coreProperties.load(fis);
-			fis.close();
+			File file = new File(fileLocation);
+			if (file.exists() && file.isFile()) {
+				final FileInputStream fis = new FileInputStream(file);
+				coreProperties.load(fis);
+				fis.close();
+			}
 		} catch (final Exception e) {
 			throw new RuntimeException(e);
 		}
