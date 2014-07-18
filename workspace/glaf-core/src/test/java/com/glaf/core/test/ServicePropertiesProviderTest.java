@@ -35,8 +35,12 @@ public class ServicePropertiesProviderTest {
 			String key = (String) e.nextElement();
 			System.out.println(key + "=" + props.getProperty(key));
 		}
-		System.out.println(ServiceProvider.getInstance().get("simpleService"));
-		System.out.println(ServiceProvider.getInstance().get(SimpleService.class));
+		for (int i = 0; i < 10; i++) {
+			System.out.println(ServiceProvider.getInstance().get(
+					"simpleService"));
+			System.out.println(ServiceProvider.getInstance().get(
+					SimpleService.class));
+		}
 	}
 
 }
