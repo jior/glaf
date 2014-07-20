@@ -14,7 +14,7 @@
 <provider>
 
 	<bean>
-		<name>simple</name>
+		<name>simpleService</name>
 		<class>com.glaf.core.provider.SimpleService</class>
 		<singleton>true</singleton>
 	</bean>
