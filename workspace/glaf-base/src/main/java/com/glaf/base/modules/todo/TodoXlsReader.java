@@ -30,8 +30,8 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.glaf.core.todo.Todo;
+import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.Tools;
-import com.glaf.base.utils.ParamUtil;
 
 public class TodoXlsReader {
 
@@ -100,13 +100,13 @@ public class TodoXlsReader {
 
 			if (dataMap.get("code") != null) {
 
-				String id = ParamUtil.getString(dataMap, "id");
-				if (!keys.contains(ParamUtil.getString(dataMap, "code"))) {
+				String id = ParamUtils.getString(dataMap, "id");
+				if (!keys.contains(ParamUtils.getString(dataMap, "code"))) {
 					if (id != null && StringUtils.isNotEmpty(id)) {
 						Todo model = new Todo();
 						Tools.populate(model, dataMap);
-						if (ParamUtil.getInt(dataMap, "limitDay") > 0) {
-							model.setLimitDay(ParamUtil.getInt(dataMap,
+						if (ParamUtils.getInt(dataMap, "limitDay") > 0) {
+							model.setLimitDay(ParamUtils.getInt(dataMap,
 									"limitDay"));
 						}
 						todos.add(model);
