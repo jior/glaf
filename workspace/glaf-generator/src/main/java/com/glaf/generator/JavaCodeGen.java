@@ -258,7 +258,7 @@ public class JavaCodeGen {
 		f3.setTitle("创建人");
 		f3.setType("String");
 		f3.setLength(50);
-		//classDefinition.addField(f3);
+		// classDefinition.addField(f3);
 
 		FieldDefinition f4 = new ColumnDefinition();
 		f4.setName("createDate");
@@ -266,7 +266,7 @@ public class JavaCodeGen {
 		f4.setEnglishTitle("createDate");
 		f4.setTitle("创建日期");
 		f4.setType("Date");
-		//classDefinition.addField(f4);
+		// classDefinition.addField(f4);
 
 		FieldDefinition f5 = new ColumnDefinition();
 		f5.setName("updateDate");
@@ -274,7 +274,7 @@ public class JavaCodeGen {
 		f5.setEnglishTitle("updateDate");
 		f5.setTitle("修改日期");
 		f5.setType("Date");
-		//classDefinition.addField(f5);
+		// classDefinition.addField(f5);
 
 		FieldDefinition f6 = new ColumnDefinition();
 		f6.setName("updateBy");
@@ -283,7 +283,7 @@ public class JavaCodeGen {
 		f6.setTitle("修改人");
 		f6.setType("String");
 		f6.setLength(50);
-		//classDefinition.addField(f6);
+		// classDefinition.addField(f6);
 
 		Map<String, FieldDefinition> fields = classDefinition.getFields();
 
@@ -458,6 +458,8 @@ public class JavaCodeGen {
 		context.put("query_params", b04.toString());
 		context.put("query_paramMap", b05.toString());
 		context.put("displaySize", displaySize);
+		context.put("jbpmSupport", classDefinition.isJbpmSupport());
+		context.put("classDefinition", classDefinition);
 
 		String configLocation = config;
 
@@ -479,7 +481,20 @@ public class JavaCodeGen {
 		List<CodeDef> rows = reader.read(inputStream);
 		if (rows != null && !rows.isEmpty()) {
 			for (CodeDef def : rows) {
-				String value = def.getTemplate();
+				String expression = def.getExpression();
+				if (StringUtils.isNotEmpty(expression)) {
+					Object value = Mvel2ExpressionEvaluator.evaluate(
+							expression, context);
+					if (value != null) {
+						if (value instanceof Boolean) {
+							Boolean b = (Boolean) value;
+							if (!b.booleanValue()) {
+								continue;
+							}
+						}
+					}
+				}
+				String tpl = def.getTemplate();
 				String processor = def.getProcessor();
 				if (processor != null) {
 					Class<?> c = ClassUtils.loadClass(processor);
@@ -497,7 +512,7 @@ public class JavaCodeGen {
 				} else {
 					StringWriter writer = new StringWriter();
 					try {
-						Template temp = cfg.getTemplate(value);
+						Template temp = cfg.getTemplate(tpl);
 						temp.process(context, writer);
 						writer.flush();
 					} catch (Exception ex) {

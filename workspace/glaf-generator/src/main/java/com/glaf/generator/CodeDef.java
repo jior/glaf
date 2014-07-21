@@ -18,18 +18,12 @@ public class CodeDef {
 
 	private String content;
 
+	private String expression;
+
 	private Map<String, String> properties = new HashMap<String, String>();
 
 	public CodeDef() {
 
-	}
-
-	public String getEncoding() {
-		return encoding;
-	}
-
-	public void setEncoding(String encoding) {
-		this.encoding = encoding;
 	}
 
 	public void addProperty(String name, String value) {
@@ -38,6 +32,14 @@ public class CodeDef {
 
 	public String getContent() {
 		return content;
+	}
+
+	public String getEncoding() {
+		return encoding;
+	}
+
+	public String getExpression() {
+		return expression;
 	}
 
 	public String getName() {
@@ -66,6 +68,14 @@ public class CodeDef {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
+	}
+
+	public void setExpression(String expression) {
+		this.expression = expression;
 	}
 
 	public void setName(String name) {
