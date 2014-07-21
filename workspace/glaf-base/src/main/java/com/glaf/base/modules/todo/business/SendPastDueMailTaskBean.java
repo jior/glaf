@@ -41,6 +41,8 @@ import com.glaf.core.todo.service.ISysTodoService;
 import com.glaf.core.todo.util.TodoUtils;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.FileUtils;
+import com.glaf.template.Template;
+import com.glaf.template.TemplateContainer;
 import com.glaf.template.util.TemplateUtils;
 import com.glaf.jbpm.config.JbpmBaseConfiguration;
 import com.glaf.jbpm.container.ProcessContainer;
@@ -95,10 +97,26 @@ public class SendPastDueMailTaskBean {
 		if (conf.get("RunningTasks_subject") != null) {
 			subject = conf.get("RunningTasks_subject");
 		}
-		String filename = SystemProperties.getConfigRootPath() + tpl_path;
+
+		String templateId = conf.get("RunningTasks_templateId");
 		String content = null;
+		if (StringUtils.isNotEmpty(templateId)) {
+			Template template = TemplateContainer.getContainer().getTemplate(
+					templateId);
+			if (template != null) {
+				if (StringUtils.isEmpty(subject)) {
+					subject = template.getTitle();
+				}
+				content = template.getContent();
+			}
+		}
+
 		try {
-			content = new String(FileUtils.getBytes(filename), "UTF-8");
+			if (StringUtils.isEmpty(content)) {
+				String filename = SystemProperties.getConfigRootPath()
+						+ tpl_path;
+				content = new String(FileUtils.getBytes(filename), "UTF-8");
+			}
 			if (StringUtils.isNotEmpty(subject)
 					&& StringUtils.isNotEmpty(content)) {
 				WorkCalendarService workCalendarService = ContextFactory
