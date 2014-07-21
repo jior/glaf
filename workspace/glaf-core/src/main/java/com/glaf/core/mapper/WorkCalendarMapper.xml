@@ -2,9 +2,9 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.glaf.base.modules.sys.mapper.WorkCalendarMapper">
+<mapper namespace="com.glaf.core.mapper.WorkCalendarMapper">
 
-	<resultMap id="workCalendarResultMap"	type="com.glaf.base.modules.sys.model.WorkCalendar">
+	<resultMap id="workCalendarResultMap"	type="com.glaf.core.domain.WorkCalendar">
 		<id property="id" column="ID" jdbcType="BIGINT" />
 		<result property="freeDay" column="FREEDAY" jdbcType="INTEGER"/>
 		<result property="freeMonth" column="FREEMONTH" jdbcType="INTEGER"/>
@@ -12,7 +12,7 @@
 	</resultMap>
 
  
-	<insert id="insertWorkCalendar" parameterType="com.glaf.base.modules.sys.model.WorkCalendar">
+	<insert id="insertWorkCalendar" parameterType="com.glaf.core.domain.WorkCalendar">
 		insert into SYS_WORKCALENDAR 
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		    ID
@@ -43,7 +43,7 @@
 	</insert>
 
 	 
-	<update id="updateWorkCalendar" parameterType="com.glaf.base.modules.sys.model.WorkCalendar">
+	<update id="updateWorkCalendar" parameterType="com.glaf.core.domain.WorkCalendar">
 		update SYS_WORKCALENDAR
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">		
@@ -68,7 +68,7 @@
         where ID =	#{id}
 	</delete>
 	
-	<delete id="deleteWorkCalendars" parameterType="com.glaf.base.modules.sys.query.WorkCalendarQuery">
+	<delete id="deleteWorkCalendars" parameterType="com.glaf.core.query.WorkCalendarQuery">
 		delete from SYS_WORKCALENDAR
 		where ( 
  			  ID IN
@@ -85,14 +85,14 @@
 
 
 	<select id="getWorkCalendars" 
-		parameterType="com.glaf.base.modules.sys.query.WorkCalendarQuery"
+		parameterType="com.glaf.core.query.WorkCalendarQuery"
 		resultMap="workCalendarResultMap">
 		select E.*
 		<include refid="selectWorkCalendarsSql" />
 	</select>
 
 	<select id="getWorkCalendarCount" 
-		parameterType="com.glaf.base.modules.sys.query.WorkCalendarQuery"
+		parameterType="com.glaf.core.query.WorkCalendarQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectWorkCalendarsSql" />

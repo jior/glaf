@@ -25,10 +25,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.glaf.base.modules.sys.service.SysUserService;
-import com.glaf.base.modules.sys.service.WorkCalendarService;
 import com.glaf.base.modules.todo.business.TodoJobBean;
 import com.glaf.base.modules.todo.service.TodoService;
 import com.glaf.core.context.ContextFactory;
+import com.glaf.core.service.WorkCalendarService;
 
 public class TodoQuartzJob {
 

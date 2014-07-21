@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.service.mybatis;
+package com.glaf.core.service.impl;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -30,10 +30,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.base.modules.sys.mapper.WorkCalendarMapper;
-import com.glaf.base.modules.sys.model.WorkCalendar;
-import com.glaf.base.modules.sys.query.WorkCalendarQuery;
-import com.glaf.base.modules.sys.service.WorkCalendarService;
+import com.glaf.core.mapper.WorkCalendarMapper;
+import com.glaf.core.domain.WorkCalendar;
+import com.glaf.core.query.WorkCalendarQuery;
+import com.glaf.core.service.WorkCalendarService;
 import com.glaf.core.id.IdGenerator;
 
 @Service("workCalendarService")

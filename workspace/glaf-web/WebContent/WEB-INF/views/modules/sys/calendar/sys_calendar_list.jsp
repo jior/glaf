@@ -138,7 +138,7 @@
 	
 	function changeDate(){
 		var params = jQuery("#iForm").formSerialize();
-		window.location.href="<%=request.getContextPath()%>/mx/system/calendar?"+params;
+		window.location.href="<%=request.getContextPath()%>/mx/sys/calendar?"+params;
 	}
 	 
 </script>

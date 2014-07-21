@@ -16,10 +16,10 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.query;
+package com.glaf.core.query;
 
 import java.util.*;
-import com.glaf.core.query.DataQuery;
+ 
 
 public class WorkCalendarQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;

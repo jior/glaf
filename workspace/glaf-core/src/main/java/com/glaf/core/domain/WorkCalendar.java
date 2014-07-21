@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.model;
+package com.glaf.core.domain;
 
 import java.io.Serializable;
 
@@ -27,7 +27,7 @@ import javax.persistence.Table;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.glaf.base.modules.sys.util.WorkCalendarJsonFactory;
+import com.glaf.core.domain.util.WorkCalendarJsonFactory;
 import com.glaf.core.base.JSONable;
 
 @Entity

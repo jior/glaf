@@ -28,13 +28,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.glaf.base.modules.sys.service.WorkCalendarService;
 import com.glaf.core.config.Configuration;
 import com.glaf.core.config.SystemConfig;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.identity.User;
 import com.glaf.core.security.IdentityFactory;
+import com.glaf.core.service.WorkCalendarService;
 import com.glaf.core.todo.Todo;
 import com.glaf.core.todo.TodoTotal;
 import com.glaf.core.todo.service.ISysTodoService;

@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.rest;
+package com.glaf.core.web.rest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.POST;
@@ -29,9 +29,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.glaf.base.modules.sys.model.WorkCalendar;
-import com.glaf.base.modules.sys.service.WorkCalendarService;
-import com.glaf.base.utils.ParamUtil;
+import com.glaf.core.domain.WorkCalendar;
+import com.glaf.core.service.WorkCalendarService;
+import com.glaf.core.util.RequestUtils;
 
 @Controller("/rs/sys/workCalendar")
 @Path("/rs/sys/workCalendar")
@@ -53,9 +53,9 @@ public class WorkCalendarResource {
 	@POST
 	public void createData(@Context HttpServletRequest request,
 			@Context UriInfo uriInfo) {
-		int year = ParamUtil.getIntParameter(request, "year", 0);
-		int month = ParamUtil.getIntParameter(request, "month", 0);
-		int day = ParamUtil.getIntParameter(request, "day", 0);
+		int year = RequestUtils.getIntParameter(request, "year", 0);
+		int month = RequestUtils.getIntParameter(request, "month", 0);
+		int day = RequestUtils.getIntParameter(request, "day", 0);
 		WorkCalendar calendar = workCalendarService.find(year, month, day);
 		if (calendar == null) {
 			calendar = new WorkCalendar();
@@ -78,9 +78,9 @@ public class WorkCalendarResource {
 	@POST
 	public void deleteData(@Context HttpServletRequest request,
 			@Context UriInfo uriInfo) {
-		int year = ParamUtil.getIntParameter(request, "year", 0);
-		int month = ParamUtil.getIntParameter(request, "month", 0);
-		int day = ParamUtil.getIntParameter(request, "day", 0);
+		int year = RequestUtils.getIntParameter(request, "year", 0);
+		int month = RequestUtils.getIntParameter(request, "month", 0);
+		int day = RequestUtils.getIntParameter(request, "day", 0);
 		WorkCalendar calendar = workCalendarService.find(year, month, day);
 		if (calendar != null) {
 			workCalendarService.delete(calendar.getId());

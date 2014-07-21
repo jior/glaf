@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.sys.springmvc;
+package com.glaf.core.web.springmvc;
 
 import java.util.Calendar;
 import java.util.List;
@@ -33,14 +33,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.glaf.base.modules.sys.model.WorkCalendar;
-import com.glaf.base.modules.sys.service.WorkCalendarService;
-import com.glaf.base.utils.ParamUtil;
 import com.glaf.core.config.ViewProperties;
+import com.glaf.core.domain.WorkCalendar;
+import com.glaf.core.service.WorkCalendarService;
+import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
 
 @Controller("/sys/workCalendar")
-@RequestMapping("/sys/workCalendar.do")
+@RequestMapping("/sys/workCalendar")
 public class WorkCalendarController {
 	private static final Log logger = LogFactory
 			.getLog(WorkCalendarController.class);
@@ -55,7 +55,7 @@ public class WorkCalendarController {
 	 * @param day
 	 */
 	@ResponseBody
-	@RequestMapping(params = "method=createData")
+	@RequestMapping("/createData")
 	public byte[] createData(@RequestParam(value = "year") int year,
 			@RequestParam(value = "month") int month,
 			@RequestParam(value = "day") int day) {
@@ -84,7 +84,7 @@ public class WorkCalendarController {
 	 * @param day
 	 */
 	@ResponseBody
-	@RequestMapping(params = "method=deleteData")
+	@RequestMapping("/deleteData")
 	public byte[] deleteData(@RequestParam(value = "year") int year,
 			@RequestParam(value = "month") int month,
 			@RequestParam(value = "day") int day) {
@@ -114,13 +114,13 @@ public class WorkCalendarController {
 	 * @param modelMap
 	 * @return
 	 */
-	@RequestMapping(params = "method=showCalendar")
+	@RequestMapping("/showCalendar")
 	public ModelAndView showCalendar(HttpServletRequest request,
 			ModelMap modelMap) {
 		Calendar cal = Calendar.getInstance();
-		int month = ParamUtil.getIntParameter(request, "month",
+		int month = RequestUtils.getIntParameter(request, "month",
 				cal.get(Calendar.MONTH));
-		int year = ParamUtil.getIntParameter(request, "year",
+		int year = RequestUtils.getIntParameter(request, "year",
 				cal.get(Calendar.YEAR));
 
 		cal.set(Calendar.MONTH, month); // 设置月份
@@ -175,10 +175,10 @@ public class WorkCalendarController {
 	 * @param modelMap
 	 * @return
 	 */
-	@RequestMapping(params = "method=showList")
+	@RequestMapping("/showList")
 	public ModelAndView showList(HttpServletRequest request, ModelMap modelMap) {
 		Calendar cal = Calendar.getInstance();
-		int year = ParamUtil.getIntParameter(request, "year",
+		int year = RequestUtils.getIntParameter(request, "year",
 				cal.get(Calendar.YEAR));
 		request.setAttribute("year", String.valueOf(year));
 

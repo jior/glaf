@@ -261,6 +261,27 @@ public class RequestUtils {
 		return false;
 	}
 
+	/**
+	 * 获取字段值
+	 * 
+	 * @param request
+	 *            HttpServletRequest request对象
+	 * @param param
+	 *            String 参数
+	 * @param value
+	 *            String 比较值
+	 * @return boolean 和比较值相同则返回true，否则返回false
+	 */
+	public static boolean getBooleanParameter(HttpServletRequest request,
+			String param, String value) {
+		String temp = getParameter(request, param);
+		if (temp != null && temp.equals(value)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public static String getCookieValue(HttpServletRequest request, String name) {
 		String value = null;
 		Cookie[] cookies = request.getCookies();
@@ -424,6 +445,32 @@ public class RequestUtils {
 	}
 
 	/**
+	 * 获取int型字段值
+	 * 
+	 * @param request
+	 *            HttpServletRequest request对象
+	 * @param param
+	 *            String 参数
+	 * @param defaultNum
+	 *            int 缺省值
+	 * @return int 返回值
+	 */
+	public static int getIntParameter(HttpServletRequest request, String param,
+			int defaultNum) {
+		String temp = getParameter(request, param);
+		if (!"".equals(temp)) {
+			int num = defaultNum;
+			try {
+				num = Integer.parseInt(temp);
+			} catch (Exception ignored) {
+			}
+			return num;
+		} else {
+			return defaultNum;
+		}
+	}
+
+	/**
 	 * 获取Web客户端的真实IP地址
 	 * 
 	 * @param request
@@ -581,6 +628,32 @@ public class RequestUtils {
 				}
 			}
 		}
+		return value;
+	}
+
+	/**
+	 * 获取字段值
+	 * 
+	 * @param request
+	 *            HttpServletRequest request对象
+	 * @param param
+	 *            String 参数
+	 * @param defaultValue
+	 *            String 缺省值
+	 * @return String 返回值，缺省为空
+	 */
+	public static String getParameter(HttpServletRequest request, String param,
+			String defaultValue) {
+		String value = request.getParameter(param);
+		if (value == null || value.length() == 0) {
+			if (defaultValue != null)
+				value = defaultValue;
+			else
+				value = "";
+		} else {
+			value = value.trim();
+		}
+
 		return value;
 	}
 
