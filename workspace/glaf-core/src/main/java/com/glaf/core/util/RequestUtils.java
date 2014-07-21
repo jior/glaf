@@ -560,6 +560,29 @@ public class RequestUtils {
 	}
 
 	/**
+	 * 获取long型字段值
+	 * 
+	 * @param request
+	 * @param param
+	 * @param defaultNum
+	 * @return
+	 */
+	public static long getLongParameter(HttpServletRequest request,
+			String param, long defaultNum) {
+		String temp = getParameter(request, param);
+		if (!"".equals(temp)) {
+			long num = defaultNum;
+			try {
+				num = Integer.parseInt(temp);
+			} catch (Exception ignored) {
+			}
+			return num;
+		} else {
+			return defaultNum;
+		}
+	}
+
+	/**
 	 * 从request中封装一个对象
 	 * 
 	 * @param pRequest
