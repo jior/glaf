@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.todo.job;
+package com.glaf.jbpm.job;
 
 import java.util.Date;
 
@@ -26,7 +26,7 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import com.glaf.base.modules.todo.business.SendPastDueMailTaskBean;
+import com.glaf.jbpm.business.SendPastDueMailTaskBean;
 import com.glaf.core.util.DateUtils;
 
 public class SendPastDueMailTaskJob implements Job {

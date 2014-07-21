@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.base.modules.todo.business;
+package com.glaf.jbpm.business;
 
 import java.util.Collection;
 import java.util.Date;
