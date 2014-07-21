@@ -138,7 +138,7 @@ insert into SYS_APPLICATION (id, name, appdesc, url, sort, showmenu, nodeid) val
 insert into SYS_APPLICATION (id, name, appdesc, url, sort, showmenu, nodeid) values (36, '流程监控', '流程监控', '/mx/jbpm/tree', 36, 1, 438);
 insert into SYS_APPLICATION (id, name, appdesc, url, sort, showmenu, nodeid) values (435, '流程发布', '', '/mx/jbpm/deploy', 435, 1, 435);
 insert into SYS_APPLICATION (id, name, appdesc, url, sort, showmenu, nodeid) values (437, '流程演示', '', '/workflow/test/index.jsp', 437, 1, 437);
-insert into SYS_APPLICATION (id, name, appdesc, url, sort, showmenu, nodeid) values (449, '工作日历', '工作日历', '/sys/workCalendar.do?method=showList', 449, 1, 449);
+insert into SYS_APPLICATION (id, name, appdesc, url, sort, showmenu, nodeid) values (449, '工作日历', '工作日历', '/sys/workCalendar/showList', 449, 1, 449);
 insert into SYS_APPLICATION (id, name, appdesc, url, sort, showmenu, nodeid) values (450, '系统参数', '系统参数', '/mx/sys/property/edit?category=SYS', 450, 1, 450);
 insert into SYS_APPLICATION (id, name, appdesc, url, sort, showmenu, nodeid) values (452, '邮件服务设置', '邮件服务设置', '/mx/sys/mailConfig', 452, 1, 452);
 insert into SYS_APPLICATION (id, name, appdesc, url, sort, showmenu, nodeid) values (512, '授权管理', '', '/sys/sysUserRole.do?method=showUsers', 512, 2, 512);
