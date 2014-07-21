@@ -6,7 +6,6 @@
 	<classpathentry kind="src" path="src/test/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/glaf-core"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/glaf-jbpm"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/glaf-ui"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/ant-tools.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/antlr.jar"/>
@@ -152,5 +151,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/glaf-security"/>
 	<classpathentry kind="lib" path="conf"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/glaf-mail"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/glaf-jbpm"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
