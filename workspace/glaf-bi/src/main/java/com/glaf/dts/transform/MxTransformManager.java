@@ -264,7 +264,10 @@ public class MxTransformManager {
 			while (rs.next()) {
 				Map<String, Object> rowMap = new java.util.HashMap<String, Object>();
 				for (int i = 1; i <= count; i++) {
-					String columnName = rsmd.getColumnName(i);
+					String columnName = rsmd.getColumnLabel(i);
+					if (null == columnName || 0 == columnName.length()) {
+						columnName = rsmd.getColumnName(i);
+					}
 					try {
 						rowMap.put(columnName, rs.getObject(i));
 					} catch (SQLException ex) {
@@ -368,7 +371,7 @@ public class MxTransformManager {
 				int sqlType = rsmd.getColumnType(i);
 				ColumnDefinition column = new ColumnDefinition();
 				column.setColumnName(rsmd.getColumnName(i));
-
+                column.setColumnLabel(rsmd.getColumnLabel(i));
 				column.setJavaType(FieldType.getJavaType(sqlType));
 				column.setPrecision(rsmd.getPrecision(i));
 				column.setScale(rsmd.getScale(i));

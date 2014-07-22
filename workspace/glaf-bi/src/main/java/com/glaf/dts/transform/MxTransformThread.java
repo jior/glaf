@@ -172,6 +172,7 @@ public class MxTransformThread implements java.lang.Runnable {
 				int sqlType = rsmd.getColumnType(i);
 				ColumnDefinition column = new ColumnDefinition();
 				column.setColumnName(rsmd.getColumnName(i));
+				column.setColumnLabel(rsmd.getColumnLabel(i));
 				column.setJavaType(FieldType.getJavaType(sqlType));
 				column.setPrecision(rsmd.getPrecision(i));
 				column.setScale(rsmd.getScale(i));
