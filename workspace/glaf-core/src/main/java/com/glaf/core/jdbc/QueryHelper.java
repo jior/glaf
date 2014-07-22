@@ -50,6 +50,7 @@ import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.dialect.Dialect;
 import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.entity.SqlExecutor;
+import com.glaf.core.util.CaseInsensitiveHashMap;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.FieldType;
 import com.glaf.core.util.JdbcUtils;
@@ -1061,6 +1062,22 @@ public class QueryHelper {
 				rs.next();
 			}
 		}
+	}
+
+	public Map<String, Object> toMap(ResultSet rs) throws SQLException {
+		Map<String, Object> result = new CaseInsensitiveHashMap();
+		ResultSetMetaData rsmd = rs.getMetaData();
+		int cols = rsmd.getColumnCount();
+
+		for (int i = 1; i <= cols; i++) {
+			String columnName = rsmd.getColumnLabel(i);
+			if (null == columnName || 0 == columnName.length()) {
+				columnName = rsmd.getColumnName(i);
+			}
+			result.put(columnName, rs.getObject(i));
+		}
+
+		return result;
 	}
 
 }
