@@ -101,14 +101,15 @@ public class QueryHelper {
 				int count = rsmd.getColumnCount();
 				List<ColumnDefinition> columns = new ArrayList<ColumnDefinition>();
 
-				for (int i = 1; i <= count; i++) {
-					int sqlType = rsmd.getColumnType(i);
+				for (int index = 1; index <= count; index++) {
+					int sqlType = rsmd.getColumnType(index);
 					ColumnDefinition column = new ColumnDefinition();
-					column.setColumnName(rsmd.getColumnName(i));
-					column.setColumnLabel(rsmd.getColumnLabel(i));
+					column.setIndex(index);
+					column.setColumnName(rsmd.getColumnName(index));
+					column.setColumnLabel(rsmd.getColumnLabel(index));
 					column.setJavaType(FieldType.getJavaType(sqlType));
-					column.setPrecision(rsmd.getPrecision(i));
-					column.setScale(rsmd.getScale(i));
+					column.setPrecision(rsmd.getPrecision(index));
+					column.setScale(rsmd.getScale(index));
 					if (column.getScale() == 0 && sqlType == Types.NUMERIC) {
 						column.setJavaType("Long");
 					}
@@ -120,12 +121,15 @@ public class QueryHelper {
 					Iterator<ColumnDefinition> iterator = columns.iterator();
 					while (iterator.hasNext()) {
 						ColumnDefinition column = iterator.next();
-						String columnName = column.getColumnName();
 						String columnLabel = column.getColumnLabel();
+						String columnName = column.getColumnName();
+						if (null == columnName || 0 == columnName.length()) {
+							columnName = column.getColumnLabel();
+						}
 						String javaType = column.getJavaType();
 						index = index + 1;
 						if ("String".equals(javaType)) {
-							String value = rs.getString(columnName);
+							String value = rs.getString(column.getIndex());
 							if (value != null) {
 								value = value.trim();
 								rowMap.put(columnName, value);
@@ -136,14 +140,14 @@ public class QueryHelper {
 							}
 						} else if ("Integer".equals(javaType)) {
 							try {
-								Integer value = rs.getInt(columnName);
+								Integer value = rs.getInt(column.getIndex());
 								rowMap.put(columnName, value);
 								rowMap.put(columnLabel, value);
 								rowMap.put(columnName.toLowerCase(),
 										rowMap.get(columnName));
 								rowMap.put(columnLabel.toLowerCase(), value);
 							} catch (Exception e) {
-								String str = rs.getString(columnName);
+								String str = rs.getString(column.getIndex());
 								logger.error("错误的integer:" + str);
 								str = StringTools.replace(str, "$", "");
 								str = StringTools.replace(str, "￥", "");
@@ -160,7 +164,7 @@ public class QueryHelper {
 							}
 						} else if ("Long".equals(javaType)) {
 							try {
-								Long value = rs.getLong(columnName);
+								Long value = rs.getLong(column.getIndex());
 								rowMap.put(columnName, value);
 								rowMap.put(columnLabel, rowMap.get(columnName));
 								rowMap.put(columnName.toLowerCase(),
@@ -168,7 +172,7 @@ public class QueryHelper {
 								rowMap.put(columnLabel.toLowerCase(),
 										rowMap.get(columnName));
 							} catch (Exception e) {
-								String str = rs.getString(columnName);
+								String str = rs.getString(column.getIndex());
 								logger.error("错误的long:" + str);
 								str = StringTools.replace(str, "$", "");
 								str = StringTools.replace(str, "￥", "");
@@ -185,7 +189,7 @@ public class QueryHelper {
 							}
 						} else if ("Double".equals(javaType)) {
 							try {
-								Double d = rs.getDouble(columnName);
+								Double d = rs.getDouble(column.getIndex());
 								rowMap.put(columnName, d);
 								rowMap.put(columnLabel, d);
 								rowMap.put(columnName.toLowerCase(),
@@ -193,7 +197,7 @@ public class QueryHelper {
 								rowMap.put(columnLabel.toLowerCase(),
 										rowMap.get(columnName));
 							} catch (Exception e) {
-								String str = rs.getString(columnName);
+								String str = rs.getString(column.getIndex());
 								logger.error("错误的double:" + str);
 								str = StringTools.replace(str, "$", "");
 								str = StringTools.replace(str, "￥", "");
@@ -209,14 +213,16 @@ public class QueryHelper {
 								logger.debug("修正后:" + num.doubleValue());
 							}
 						} else if ("Boolean".equals(javaType)) {
-							rowMap.put(columnName, rs.getBoolean(columnName));
+							rowMap.put(columnName,
+									rs.getBoolean(column.getIndex()));
 							rowMap.put(columnLabel, rowMap.get(columnName));
 							rowMap.put(columnName.toLowerCase(),
 									rowMap.get(columnName));
 							rowMap.put(columnLabel.toLowerCase(),
 									rowMap.get(columnName));
 						} else if ("Date".equals(javaType)) {
-							rowMap.put(columnName, rs.getTimestamp(columnName));
+							rowMap.put(columnName,
+									rs.getTimestamp(column.getIndex()));
 							rowMap.put(columnLabel, rowMap.get(columnName));
 							rowMap.put(columnName.toLowerCase(),
 									rowMap.get(columnName));
@@ -225,7 +231,7 @@ public class QueryHelper {
 						} else if ("Blob".equals(javaType)) {
 							// ignore
 						} else {
-							Object value = rs.getObject(columnName);
+							Object value = rs.getObject(column.getIndex());
 							if (value != null) {
 								if (value instanceof String) {
 									value = (String) value.toString().trim();
@@ -243,12 +249,10 @@ public class QueryHelper {
 				}
 			}
 
-			psmt.close();
-			rs.close();
-
 			logger.debug(">resultList size=" + resultList.size());
 			return resultList;
 		} catch (Exception ex) {
+			logger.error(ex);
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
@@ -263,7 +267,7 @@ public class QueryHelper {
 	 * @param sqlExecutor
 	 *            查询语句
 	 * @param start
-	 *            开始记录游标
+	 *            开始记录游标，从0开始
 	 * @param pageSize
 	 *            每页记录数
 	 * @return
@@ -290,6 +294,7 @@ public class QueryHelper {
 			if (sqlExecutor.getParameter() != null) {
 				List<Object> values = (List<Object>) sqlExecutor.getParameter();
 				JdbcUtils.fillStatement(psmt, values);
+				logger.debug(">>values=" + values);
 			}
 
 			rs = psmt.executeQuery();
@@ -307,6 +312,7 @@ public class QueryHelper {
 				for (int i = 1; i <= count; i++) {
 					int sqlType = rsmd.getColumnType(i);
 					ColumnDefinition column = new ColumnDefinition();
+					column.setIndex(i);
 					column.setColumnName(rsmd.getColumnName(i));
 					column.setColumnLabel(rsmd.getColumnLabel(i));
 					column.setJavaType(FieldType.getJavaType(sqlType));
@@ -319,21 +325,32 @@ public class QueryHelper {
 				}
 
 				if (!supportsPhysicalPage) {
+					logger.debug("---------------------skipRows:" + start);
 					this.skipRows(rs, start, pageSize);
 				}
 
-				int index = 0;
-				while (rs.next() && index++ < pageSize) {
+				logger.debug("---------------------columns:" + columns.size());
+				logger.debug("---------------------start:" + start);
+				logger.debug("---------------------pageSize:" + pageSize);
+				//int index = 0;
+				while (rs.next()) {
+					//index++;
+					//logger.debug("---------------------row index:" + index);
+
 					Map<String, Object> rowMap = new HashMap<String, Object>();
 					Iterator<ColumnDefinition> iterator = columns.iterator();
 					while (iterator.hasNext()) {
 						ColumnDefinition column = iterator.next();
-						String columnName = column.getColumnName();
 						String columnLabel = column.getColumnLabel();
+						String columnName = column.getColumnName();
+						if (null == columnName || 0 == columnName.length()) {
+							columnName = column.getColumnLabel();
+						}
+
 						String javaType = column.getJavaType();
 
 						if ("String".equals(javaType)) {
-							String value = rs.getString(columnName);
+							String value = rs.getString(column.getIndex());
 							if (value != null) {
 								value = value.trim();
 								rowMap.put(columnName, value);
@@ -345,7 +362,7 @@ public class QueryHelper {
 							}
 						} else if ("Integer".equals(javaType)) {
 							try {
-								Integer value = rs.getInt(columnName);
+								Integer value = rs.getInt(column.getIndex());
 								rowMap.put(columnName, value);
 								rowMap.put(columnLabel, rowMap.get(columnName));
 								rowMap.put(columnName.toLowerCase(),
@@ -353,7 +370,7 @@ public class QueryHelper {
 								rowMap.put(columnLabel.toLowerCase(),
 										rowMap.get(columnName));
 							} catch (Exception e) {
-								String str = rs.getString(columnName);
+								String str = rs.getString(column.getIndex());
 								logger.error("错误的integer:" + str);
 								str = StringTools.replace(str, "$", "");
 								str = StringTools.replace(str, "￥", "");
@@ -370,7 +387,7 @@ public class QueryHelper {
 							}
 						} else if ("Long".equals(javaType)) {
 							try {
-								Long value = rs.getLong(columnName);
+								Long value = rs.getLong(column.getIndex());
 								rowMap.put(columnName, value);
 								rowMap.put(columnLabel, rowMap.get(columnName));
 								rowMap.put(columnName.toLowerCase(),
@@ -378,7 +395,7 @@ public class QueryHelper {
 								rowMap.put(columnLabel.toLowerCase(),
 										rowMap.get(columnName));
 							} catch (Exception e) {
-								String str = rs.getString(columnName);
+								String str = rs.getString(column.getIndex());
 								logger.error("错误的long:" + str);
 								str = StringTools.replace(str, "$", "");
 								str = StringTools.replace(str, "￥", "");
@@ -395,7 +412,7 @@ public class QueryHelper {
 							}
 						} else if ("Double".equals(javaType)) {
 							try {
-								Double d = rs.getDouble(columnName);
+								Double d = rs.getDouble(column.getIndex());
 								rowMap.put(columnName, d);
 								rowMap.put(columnLabel, rowMap.get(columnName));
 								rowMap.put(columnName.toLowerCase(),
@@ -403,7 +420,7 @@ public class QueryHelper {
 								rowMap.put(columnLabel.toLowerCase(),
 										rowMap.get(columnName));
 							} catch (Exception e) {
-								String str = rs.getString(columnName);
+								String str = rs.getString(column.getIndex());
 								logger.error("错误的double:" + str);
 								str = StringTools.replace(str, "$", "");
 								str = StringTools.replace(str, "￥", "");
@@ -419,28 +436,31 @@ public class QueryHelper {
 								logger.debug("修正后:" + num.doubleValue());
 							}
 						} else if ("Boolean".equals(javaType)) {
-							rowMap.put(columnName, rs.getBoolean(columnName));
+							rowMap.put(columnName,
+									rs.getBoolean(column.getIndex()));
 							rowMap.put(columnLabel, rowMap.get(columnName));
 							rowMap.put(columnName.toLowerCase(),
 									rowMap.get(columnName));
 							rowMap.put(columnLabel.toLowerCase(),
 									rowMap.get(columnName));
 						} else if ("Date".equals(javaType)) {
-							rowMap.put(columnName, rs.getTimestamp(columnName));
+							rowMap.put(columnName,
+									rs.getTimestamp(column.getIndex()));
 							rowMap.put(columnLabel, rowMap.get(columnName));
 							rowMap.put(columnName.toLowerCase(),
 									rowMap.get(columnName));
 							rowMap.put(columnLabel.toLowerCase(),
 									rowMap.get(columnName));
 						} else if ("Blob".equals(javaType)) {
-							rowMap.put(columnName, rs.getBytes(columnName));
+							rowMap.put(columnName,
+									rs.getBytes(column.getIndex()));
 							rowMap.put(columnLabel, rowMap.get(columnName));
 							rowMap.put(columnName.toLowerCase(),
 									rowMap.get(columnName));
 							rowMap.put(columnLabel.toLowerCase(),
 									rowMap.get(columnName));
 						} else {
-							Object value = rs.getObject(columnName);
+							Object value = rs.getObject(column.getIndex());
 							if (value != null) {
 								if (value instanceof String) {
 									value = (String) value.toString().trim();
@@ -458,12 +478,10 @@ public class QueryHelper {
 				}
 			}
 
-			psmt.close();
-			rs.close();
-
 			logger.debug(">resultList size = " + resultList.size());
 			return resultList;
 		} catch (Exception ex) {
+			logger.error(ex);
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
@@ -482,7 +500,7 @@ public class QueryHelper {
 	 * @param conn
 	 *            数据库连接对象
 	 * @param start
-	 *            开始记录游标
+	 *            开始记录游标，从0开始
 	 * @param pageSize
 	 *            每页记录数
 	 * @param sql
@@ -532,6 +550,7 @@ public class QueryHelper {
 			for (int i = 1; i <= count; i++) {
 				int sqlType = rsmd.getColumnType(i);
 				ColumnDefinition column = new ColumnDefinition();
+				column.setIndex(i);
 				column.setColumnName(rsmd.getColumnName(i));
 				column.setColumnLabel(rsmd.getColumnLabel(i));
 				column.setJavaType(FieldType.getJavaType(sqlType));
@@ -562,18 +581,17 @@ public class QueryHelper {
 					c.setJavaType(column.getJavaType());
 					c.setPrecision(column.getPrecision());
 					c.setScale(column.getScale());
-					String columnName = column.getColumnName();
 					String javaType = column.getJavaType();
 					index = index + 1;
 					if ("String".equals(javaType)) {
-						String value = rs.getString(columnName);
+						String value = rs.getString(column.getIndex());
 						c.setValue(value);
 					} else if ("Integer".equals(javaType)) {
 						try {
-							Integer value = rs.getInt(columnName);
+							Integer value = rs.getInt(column.getIndex());
 							c.setValue(value);
 						} catch (Exception e) {
-							String str = rs.getString(columnName);
+							String str = rs.getString(column.getIndex());
 							str = StringTools.replace(str, "$", "");
 							str = StringTools.replace(str, "￥", "");
 							str = StringTools.replace(str, ",", "");
@@ -583,10 +601,10 @@ public class QueryHelper {
 						}
 					} else if ("Long".equals(javaType)) {
 						try {
-							Long value = rs.getLong(columnName);
+							Long value = rs.getLong(column.getIndex());
 							c.setValue(value);
 						} catch (Exception e) {
-							String str = rs.getString(columnName);
+							String str = rs.getString(column.getIndex());
 							str = StringTools.replace(str, "$", "");
 							str = StringTools.replace(str, "￥", "");
 							str = StringTools.replace(str, ",", "");
@@ -596,10 +614,10 @@ public class QueryHelper {
 						}
 					} else if ("Double".equals(javaType)) {
 						try {
-							Double value = rs.getDouble(columnName);
+							Double value = rs.getDouble(column.getIndex());
 							c.setValue(value);
 						} catch (Exception e) {
-							String str = rs.getString(columnName);
+							String str = rs.getString(column.getIndex());
 							str = StringTools.replace(str, "$", "");
 							str = StringTools.replace(str, "￥", "");
 							str = StringTools.replace(str, ",", "");
@@ -608,19 +626,21 @@ public class QueryHelper {
 							c.setValue(num.doubleValue());
 						}
 					} else if ("Boolean".equals(javaType)) {
-						Boolean value = rs.getBoolean(columnName);
+						Boolean value = rs.getBoolean(column.getIndex());
 						c.setValue(value);
 					} else if ("Date".equals(javaType)) {
-						Timestamp value = rs.getTimestamp(columnName);
+						Timestamp value = rs.getTimestamp(column.getIndex());
 						c.setValue(value);
 					} else {
-						c.setValue(rs.getObject(columnName));
+						c.setValue(rs.getObject(column.getIndex()));
 					}
 					rowModel.addColumn(c);
 				}
 				resultModel.addRow(rowModel);
 			}
 		} catch (Exception ex) {
+			logger.error(ex);
+			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
 			JdbcUtils.close(psmt);
@@ -669,6 +689,7 @@ public class QueryHelper {
 	 * 
 	 * @param sql
 	 * @param start
+	 *            ，从0开始
 	 * @param pageSize
 	 * @param paramMap
 	 * @return
@@ -737,6 +758,7 @@ public class QueryHelper {
 	 * @param systemName
 	 * @param sql
 	 * @param firstResult
+	 *            ，从0开始
 	 * @param maxResults
 	 * @param paramMap
 	 * @return
@@ -761,7 +783,7 @@ public class QueryHelper {
 	 * @param conn
 	 *            JDBC连接
 	 * @param start
-	 *            开始记录位置
+	 *            开始记录位置，从0开始
 	 * @param pageSize
 	 *            每页记录数
 	 * @param tableName
@@ -825,6 +847,7 @@ public class QueryHelper {
 			}
 			return list;
 		} catch (SQLException ex) {
+			logger.error(ex);
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
@@ -873,6 +896,7 @@ public class QueryHelper {
 				}
 			}
 		} catch (Exception ex) {
+			logger.error(ex);
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
@@ -932,6 +956,8 @@ public class QueryHelper {
 				}
 			}
 		} catch (Exception ex) {
+			logger.error(ex);
+			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
 			JdbcUtils.close(psmt);

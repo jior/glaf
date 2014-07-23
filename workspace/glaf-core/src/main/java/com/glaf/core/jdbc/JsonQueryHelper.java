@@ -56,7 +56,7 @@ import com.glaf.core.util.StringTools;
 public class JsonQueryHelper {
 	protected static final Log logger = LogFactory
 			.getLog(JsonQueryHelper.class);
-	
+
 	protected static TypeHandlerRegistry typeHandlerRegistry = new TypeHandlerRegistry();
 
 	protected static Configuration conf = BaseConfiguration.create();
@@ -99,6 +99,7 @@ public class JsonQueryHelper {
 				for (int i = 1; i <= count; i++) {
 					int sqlType = rsmd.getColumnType(i);
 					ColumnDefinition column = new ColumnDefinition();
+					column.setIndex(i);
 					column.setColumnName(rsmd.getColumnName(i));
 					column.setColumnLabel(rsmd.getColumnLabel(i));
 					column.setJavaType(FieldType.getJavaType(sqlType));
@@ -116,12 +117,15 @@ public class JsonQueryHelper {
 					Iterator<ColumnDefinition> iterator = columns.iterator();
 					while (iterator.hasNext()) {
 						ColumnDefinition column = iterator.next();
-						String columnName = column.getColumnName();
 						String columnLabel = column.getColumnLabel();
+						String columnName = column.getColumnName();
+						if (null == columnName || 0 == columnName.length()) {
+							columnName = column.getColumnLabel();
+						}
 						String javaType = column.getJavaType();
 						index = index + 1;
 						if ("String".equals(javaType)) {
-							String value = rs.getString(columnName);
+							String value = rs.getString(column.getIndex());
 							if (value != null) {
 								value = value.trim();
 								rowMap.put(columnName, value);
@@ -132,14 +136,14 @@ public class JsonQueryHelper {
 							}
 						} else if ("Integer".equals(javaType)) {
 							try {
-								Integer value = rs.getInt(columnName);
+								Integer value = rs.getInt(column.getIndex());
 								rowMap.put(columnName, value);
 								rowMap.put(columnLabel, value);
 								rowMap.put(columnName.toLowerCase(),
 										rowMap.get(columnName));
 								rowMap.put(columnLabel.toLowerCase(), value);
 							} catch (Exception e) {
-								String str = rs.getString(columnName);
+								String str = rs.getString(column.getIndex());
 								logger.error("错误的integer:" + str);
 								str = StringTools.replace(str, "$", "");
 								str = StringTools.replace(str, "￥", "");
@@ -156,7 +160,7 @@ public class JsonQueryHelper {
 							}
 						} else if ("Long".equals(javaType)) {
 							try {
-								Long value = rs.getLong(columnName);
+								Long value = rs.getLong(column.getIndex());
 								rowMap.put(columnName, value);
 								rowMap.put(columnLabel, rowMap.get(columnName));
 								rowMap.put(columnName.toLowerCase(),
@@ -164,7 +168,7 @@ public class JsonQueryHelper {
 								rowMap.put(columnLabel.toLowerCase(),
 										rowMap.get(columnName));
 							} catch (Exception e) {
-								String str = rs.getString(columnName);
+								String str = rs.getString(column.getIndex());
 								logger.error("错误的long:" + str);
 								str = StringTools.replace(str, "$", "");
 								str = StringTools.replace(str, "￥", "");
@@ -181,7 +185,7 @@ public class JsonQueryHelper {
 							}
 						} else if ("Double".equals(javaType)) {
 							try {
-								Double d = rs.getDouble(columnName);
+								Double d = rs.getDouble(column.getIndex());
 								rowMap.put(columnName, d);
 								rowMap.put(columnLabel, d);
 								rowMap.put(columnName.toLowerCase(),
@@ -189,7 +193,7 @@ public class JsonQueryHelper {
 								rowMap.put(columnLabel.toLowerCase(),
 										rowMap.get(columnName));
 							} catch (Exception e) {
-								String str = rs.getString(columnName);
+								String str = rs.getString(column.getIndex());
 								logger.error("错误的double:" + str);
 								str = StringTools.replace(str, "$", "");
 								str = StringTools.replace(str, "￥", "");
@@ -205,14 +209,16 @@ public class JsonQueryHelper {
 								logger.debug("修正后:" + num.doubleValue());
 							}
 						} else if ("Boolean".equals(javaType)) {
-							rowMap.put(columnName, rs.getBoolean(columnName));
+							rowMap.put(columnName,
+									rs.getBoolean(column.getIndex()));
 							rowMap.put(columnLabel, rowMap.get(columnName));
 							rowMap.put(columnName.toLowerCase(),
 									rowMap.get(columnName));
 							rowMap.put(columnLabel.toLowerCase(),
 									rowMap.get(columnName));
 						} else if ("Date".equals(javaType)) {
-							rowMap.put(columnName, rs.getTimestamp(columnName));
+							rowMap.put(columnName,
+									rs.getTimestamp(column.getIndex()));
 							rowMap.put(columnLabel, rowMap.get(columnName));
 							rowMap.put(columnName.toLowerCase(),
 									rowMap.get(columnName));
@@ -221,7 +227,7 @@ public class JsonQueryHelper {
 						} else if ("Blob".equals(javaType)) {
 							// ignore
 						} else {
-							Object value = rs.getObject(columnName);
+							Object value = rs.getObject(column.getIndex());
 							if (value != null) {
 								if (value instanceof String) {
 									value = (String) value.toString().trim();
@@ -239,12 +245,10 @@ public class JsonQueryHelper {
 				}
 			}
 
-			psmt.close();
-			rs.close();
-
 			logger.debug(">result size=" + result.size());
 			return result;
 		} catch (Exception ex) {
+			logger.error(ex);
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
@@ -303,6 +307,7 @@ public class JsonQueryHelper {
 				for (int i = 1; i <= count; i++) {
 					int sqlType = rsmd.getColumnType(i);
 					ColumnDefinition column = new ColumnDefinition();
+					column.setIndex(i);
 					column.setColumnName(rsmd.getColumnName(i));
 					column.setColumnLabel(rsmd.getColumnLabel(i));
 					column.setJavaType(FieldType.getJavaType(sqlType));
@@ -324,12 +329,15 @@ public class JsonQueryHelper {
 					Iterator<ColumnDefinition> iterator = columns.iterator();
 					while (iterator.hasNext()) {
 						ColumnDefinition column = iterator.next();
-						String columnName = column.getColumnName();
 						String columnLabel = column.getColumnLabel();
+						String columnName = column.getColumnName();
+						if (null == columnName || 0 == columnName.length()) {
+							columnName = column.getColumnLabel();
+						}
 						String javaType = column.getJavaType();
 
 						if ("String".equals(javaType)) {
-							String value = rs.getString(columnName);
+							String value = rs.getString(column.getIndex());
 							if (value != null) {
 								value = value.trim();
 								rowMap.put(columnName, value);
@@ -341,7 +349,7 @@ public class JsonQueryHelper {
 							}
 						} else if ("Integer".equals(javaType)) {
 							try {
-								Integer value = rs.getInt(columnName);
+								Integer value = rs.getInt(column.getIndex());
 								rowMap.put(columnName, value);
 								rowMap.put(columnLabel, rowMap.get(columnName));
 								rowMap.put(columnName.toLowerCase(),
@@ -349,7 +357,7 @@ public class JsonQueryHelper {
 								rowMap.put(columnLabel.toLowerCase(),
 										rowMap.get(columnName));
 							} catch (Exception e) {
-								String str = rs.getString(columnName);
+								String str = rs.getString(column.getIndex());
 								logger.error("错误的integer:" + str);
 								str = StringTools.replace(str, "$", "");
 								str = StringTools.replace(str, "￥", "");
@@ -366,7 +374,7 @@ public class JsonQueryHelper {
 							}
 						} else if ("Long".equals(javaType)) {
 							try {
-								Long value = rs.getLong(columnName);
+								Long value = rs.getLong(column.getIndex());
 								rowMap.put(columnName, value);
 								rowMap.put(columnLabel, rowMap.get(columnName));
 								rowMap.put(columnName.toLowerCase(),
@@ -374,7 +382,7 @@ public class JsonQueryHelper {
 								rowMap.put(columnLabel.toLowerCase(),
 										rowMap.get(columnName));
 							} catch (Exception e) {
-								String str = rs.getString(columnName);
+								String str = rs.getString(column.getIndex());
 								logger.error("错误的long:" + str);
 								str = StringTools.replace(str, "$", "");
 								str = StringTools.replace(str, "￥", "");
@@ -391,7 +399,7 @@ public class JsonQueryHelper {
 							}
 						} else if ("Double".equals(javaType)) {
 							try {
-								Double d = rs.getDouble(columnName);
+								Double d = rs.getDouble(column.getIndex());
 								rowMap.put(columnName, d);
 								rowMap.put(columnLabel, rowMap.get(columnName));
 								rowMap.put(columnName.toLowerCase(),
@@ -399,7 +407,7 @@ public class JsonQueryHelper {
 								rowMap.put(columnLabel.toLowerCase(),
 										rowMap.get(columnName));
 							} catch (Exception e) {
-								String str = rs.getString(columnName);
+								String str = rs.getString(column.getIndex());
 								logger.error("错误的double:" + str);
 								str = StringTools.replace(str, "$", "");
 								str = StringTools.replace(str, "￥", "");
@@ -415,28 +423,31 @@ public class JsonQueryHelper {
 								logger.debug("修正后:" + num.doubleValue());
 							}
 						} else if ("Boolean".equals(javaType)) {
-							rowMap.put(columnName, rs.getBoolean(columnName));
+							rowMap.put(columnName,
+									rs.getBoolean(column.getIndex()));
 							rowMap.put(columnLabel, rowMap.get(columnName));
 							rowMap.put(columnName.toLowerCase(),
 									rowMap.get(columnName));
 							rowMap.put(columnLabel.toLowerCase(),
 									rowMap.get(columnName));
 						} else if ("Date".equals(javaType)) {
-							rowMap.put(columnName, rs.getTimestamp(columnName));
+							rowMap.put(columnName,
+									rs.getTimestamp(column.getIndex()));
 							rowMap.put(columnLabel, rowMap.get(columnName));
 							rowMap.put(columnName.toLowerCase(),
 									rowMap.get(columnName));
 							rowMap.put(columnLabel.toLowerCase(),
 									rowMap.get(columnName));
 						} else if ("Blob".equals(javaType)) {
-							rowMap.put(columnName, rs.getBytes(columnName));
+							rowMap.put(columnName,
+									rs.getBytes(column.getIndex()));
 							rowMap.put(columnLabel, rowMap.get(columnName));
 							rowMap.put(columnName.toLowerCase(),
 									rowMap.get(columnName));
 							rowMap.put(columnLabel.toLowerCase(),
 									rowMap.get(columnName));
 						} else {
-							Object value = rs.getObject(columnName);
+							Object value = rs.getObject(column.getIndex());
 							if (value != null) {
 								if (value instanceof String) {
 									value = (String) value.toString().trim();
@@ -453,12 +464,11 @@ public class JsonQueryHelper {
 					result.add(rowMap);
 				}
 			}
-			psmt.close();
-			rs.close();
 
 			logger.debug(">resultList size = " + result.size());
 			return result;
 		} catch (Exception ex) {
+			logger.error(ex);
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
@@ -534,6 +544,7 @@ public class JsonQueryHelper {
 				for (int i = 1; i <= count; i++) {
 					int sqlType = rsmd.getColumnType(i);
 					ColumnDefinition column = new ColumnDefinition();
+					column.setIndex(i);
 					column.setColumnName(rsmd.getColumnName(i));
 					column.setColumnLabel(rsmd.getColumnLabel(i));
 					column.setJavaType(FieldType.getJavaType(sqlType));
@@ -549,9 +560,10 @@ public class JsonQueryHelper {
 					this.skipRows(rs, start);
 				}
 
-				int k = 0;
-				while (rs.next() && k++ < pageSize) {
-					int index = 0;
+				int index = 0;
+				while (rs.next()) {
+					index++;
+					//logger.debug("---------------------row index:" + index);
 					JSONObject rowJson = new JSONObject();
 					Iterator<ColumnDefinition> iterator = columns.iterator();
 					while (iterator.hasNext()) {
@@ -559,19 +571,22 @@ public class JsonQueryHelper {
 						ColumnDefinition c = new ColumnDefinition();
 						c.setColumnName(column.getColumnName());
 						c.setColumnLabel(column.getColumnLabel());
-						String columnName = column.getColumnName();
 						String columnLabel = column.getColumnLabel();
+						String columnName = column.getColumnName();
+						if (null == columnName || 0 == columnName.length()) {
+							columnName = column.getColumnLabel();
+						}
 						String javaType = column.getJavaType();
-						index = index + 1;
+						 
 						if ("String".equals(javaType)) {
-							String value = rs.getString(columnName);
+							String value = rs.getString(column.getIndex());
 							c.setValue(value);
 						} else if ("Integer".equals(javaType)) {
 							try {
-								Integer value = rs.getInt(columnName);
+								Integer value = rs.getInt(column.getIndex());
 								c.setValue(value);
 							} catch (Exception e) {
-								String str = rs.getString(columnName);
+								String str = rs.getString(column.getIndex());
 								str = StringTools.replace(str, "$", "");
 								str = StringTools.replace(str, "￥", "");
 								str = StringTools.replace(str, ",", "");
@@ -581,10 +596,10 @@ public class JsonQueryHelper {
 							}
 						} else if ("Long".equals(javaType)) {
 							try {
-								Long value = rs.getLong(columnName);
+								Long value = rs.getLong(column.getIndex());
 								c.setValue(value);
 							} catch (Exception e) {
-								String str = rs.getString(columnName);
+								String str = rs.getString(column.getIndex());
 								str = StringTools.replace(str, "$", "");
 								str = StringTools.replace(str, "￥", "");
 								str = StringTools.replace(str, ",", "");
@@ -594,10 +609,10 @@ public class JsonQueryHelper {
 							}
 						} else if ("Double".equals(javaType)) {
 							try {
-								Double value = rs.getDouble(columnName);
+								Double value = rs.getDouble(column.getIndex());
 								c.setValue(value);
 							} catch (Exception e) {
-								String str = rs.getString(columnName);
+								String str = rs.getString(column.getIndex());
 								str = StringTools.replace(str, "$", "");
 								str = StringTools.replace(str, "￥", "");
 								str = StringTools.replace(str, ",", "");
@@ -606,23 +621,27 @@ public class JsonQueryHelper {
 								c.setValue(num.doubleValue());
 							}
 						} else if ("Boolean".equals(javaType)) {
-							Boolean value = rs.getBoolean(columnName);
+							Boolean value = rs.getBoolean(column.getIndex());
 							c.setValue(value);
 						} else if ("Date".equals(javaType)) {
-							Timestamp value = rs.getTimestamp(columnName);
+							Timestamp value = rs
+									.getTimestamp(column.getIndex());
 							c.setValue(value);
 						} else {
-							c.setValue(rs.getObject(columnName));
+							c.setValue(rs.getObject(column.getIndex()));
 						}
-						rowJson.put("index", k);
-						rowJson.put("sortNo", k);
+						rowJson.put("index", index);
+						rowJson.put("sortNo", index);
 						rowJson.put(columnName, c.getValue());
 						rowJson.put(columnLabel, c.getValue());
 					}
 					result.add(rowJson);
 				}
 			}
+			logger.debug(">result size = " + result.size());
 		} catch (Exception ex) {
+			logger.error(ex);
+			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
 			JdbcUtils.close(psmt);
@@ -829,6 +848,7 @@ public class JsonQueryHelper {
 			}
 			return result;
 		} catch (SQLException ex) {
+			logger.error(ex);
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
@@ -877,6 +897,7 @@ public class JsonQueryHelper {
 				}
 			}
 		} catch (Exception ex) {
+			logger.error(ex);
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
@@ -936,6 +957,8 @@ public class JsonQueryHelper {
 				}
 			}
 		} catch (Exception ex) {
+			logger.error(ex);
+			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
 			JdbcUtils.close(psmt);
@@ -998,6 +1021,7 @@ public class JsonQueryHelper {
 			for (int i = 1; i <= count; i++) {
 				int sqlType = rsmd.getColumnType(i);
 				ColumnDefinition column = new ColumnDefinition();
+				column.setIndex(i);
 				column.setColumnName(rsmd.getColumnName(i));
 				column.setColumnLabel(rsmd.getColumnLabel(i));
 				column.setJavaType(FieldType.getJavaType(sqlType));
@@ -1013,12 +1037,15 @@ public class JsonQueryHelper {
 				Iterator<ColumnDefinition> iterator = columns.iterator();
 				while (iterator.hasNext()) {
 					ColumnDefinition column = iterator.next();
-					String columnName = column.getColumnName();
 					String columnLabel = column.getColumnLabel();
+					String columnName = column.getColumnName();
+					if (null == columnName || 0 == columnName.length()) {
+						columnName = column.getColumnLabel();
+					}
 					String javaType = column.getJavaType();
 
 					if ("String".equals(javaType)) {
-						String value = rs.getString(columnName);
+						String value = rs.getString(column.getIndex());
 						if (value != null) {
 							value = value.trim();
 							result.put(columnName, value);
@@ -1030,7 +1057,7 @@ public class JsonQueryHelper {
 						}
 					} else if ("Integer".equals(javaType)) {
 						try {
-							Integer value = rs.getInt(columnName);
+							Integer value = rs.getInt(column.getIndex());
 							result.put(columnName, value);
 							result.put(columnLabel, result.get(columnName));
 							result.put(columnName.toLowerCase(),
@@ -1038,7 +1065,7 @@ public class JsonQueryHelper {
 							result.put(columnLabel.toLowerCase(),
 									result.get(columnName));
 						} catch (Exception e) {
-							String str = rs.getString(columnName);
+							String str = rs.getString(column.getIndex());
 							logger.error("错误的integer:" + str);
 							str = StringTools.replace(str, "$", "");
 							str = StringTools.replace(str, "￥", "");
@@ -1055,7 +1082,7 @@ public class JsonQueryHelper {
 						}
 					} else if ("Long".equals(javaType)) {
 						try {
-							Long value = rs.getLong(columnName);
+							Long value = rs.getLong(column.getIndex());
 							result.put(columnName, value);
 							result.put(columnLabel, result.get(columnName));
 							result.put(columnName.toLowerCase(),
@@ -1063,7 +1090,7 @@ public class JsonQueryHelper {
 							result.put(columnLabel.toLowerCase(),
 									result.get(columnName));
 						} catch (Exception e) {
-							String str = rs.getString(columnName);
+							String str = rs.getString(column.getIndex());
 							logger.error("错误的long:" + str);
 							str = StringTools.replace(str, "$", "");
 							str = StringTools.replace(str, "￥", "");
@@ -1080,10 +1107,10 @@ public class JsonQueryHelper {
 						}
 					} else if ("Double".equals(javaType)) {
 						try {
-							Double d = rs.getDouble(columnName);
+							Double d = rs.getDouble(column.getIndex());
 							result.put(columnName, d);
 						} catch (Exception e) {
-							String str = rs.getString(columnName);
+							String str = rs.getString(column.getIndex());
 							logger.error("错误的double:" + str);
 							str = StringTools.replace(str, "$", "");
 							str = StringTools.replace(str, "￥", "");
@@ -1099,28 +1126,29 @@ public class JsonQueryHelper {
 							logger.debug("修正后:" + num.doubleValue());
 						}
 					} else if ("Boolean".equals(javaType)) {
-						result.put(columnName, rs.getBoolean(columnName));
+						result.put(columnName, rs.getBoolean(column.getIndex()));
 						result.put(columnLabel, result.get(columnName));
 						result.put(columnName.toLowerCase(),
 								result.get(columnName));
 						result.put(columnLabel.toLowerCase(),
 								result.get(columnName));
 					} else if ("Date".equals(javaType)) {
-						result.put(columnName, rs.getTimestamp(columnName));
+						result.put(columnName,
+								rs.getTimestamp(column.getIndex()));
 						result.put(columnLabel, result.get(columnName));
 						result.put(columnName.toLowerCase(),
 								result.get(columnName));
 						result.put(columnLabel.toLowerCase(),
 								result.get(columnName));
 					} else if ("Blob".equals(javaType)) {
-						result.put(columnName, rs.getBytes(columnName));
+						result.put(columnName, rs.getBytes(column.getIndex()));
 						result.put(columnLabel, result.get(columnName));
 						result.put(columnName.toLowerCase(),
 								result.get(columnName));
 						result.put(columnLabel.toLowerCase(),
 								result.get(columnName));
 					} else {
-						Object value = rs.getObject(columnName);
+						Object value = rs.getObject(column.getIndex());
 						if (value != null) {
 							if (value instanceof String) {
 								value = (String) value.toString().trim();
@@ -1135,10 +1163,10 @@ public class JsonQueryHelper {
 					}
 				}
 			}
-			psmt.close();
-			rs.close();
+
 			return result;
 		} catch (Exception ex) {
+			logger.error(ex);
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {

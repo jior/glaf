@@ -18,42 +18,40 @@
 
 package com.glaf.core.test;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.glaf.core.jdbc.JsonQueryHelper;
+import com.glaf.core.jdbc.QueryHelper;
 
-public class JsonQueryTest {
+public class QueryHelperTest {
 
-	protected static final Log logger = LogFactory.getLog(JsonQueryTest.class);
+	protected static final Log logger = LogFactory
+			.getLog(QueryHelperTest.class);
 
 	@Test
 	public void testListQuery() {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		JsonQueryHelper helper = new JsonQueryHelper();
-		JSONArray result = helper
-				.getJSONArray(
-						"select d.ID as id, d.ID as deptId, d.NAME as name, d.CODE as code, d.DEPTDESC as desc, d.FINCODE as fincode  from SYS_DEPARTMENT d ",
+		QueryHelper helper = new QueryHelper();
+		List<Map<String, Object>> result = helper
+				.getResultList(
+						"select d.ID as id, d.ID as deptId, d.NAME as name, d.CODE as code, d.DEPTDESC as desc, d.FINCODE as fincode  from SYS_DEPARTMENT d order by d.ID asc ",
 						paramMap, 0, 100);
-		logger.info(result.toJSONString());
+		logger.info(result);
 	}
 
 	@Test
 	public void testSingleQuery() {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("actorId", "joy");
-		JsonQueryHelper helper = new JsonQueryHelper();
-		JSONObject result = helper
+		QueryHelper helper = new QueryHelper();
+		Map<String, Object> result = helper
 				.selectOne(
 						" select u.ID as id, u.ACCOUNT as account, u.NAME as name, u.CODE as code, u.EMAIL as email, u.MOBILE as mobile, u.DEPTID as deptId from SYS_USER u where u.account = #{actorId} ",
 						paramMap);
-		logger.info(result.toJSONString());
+		logger.info(result);
 	}
 
 }

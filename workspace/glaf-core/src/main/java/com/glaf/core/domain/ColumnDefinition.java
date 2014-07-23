@@ -71,6 +71,9 @@ public class ColumnDefinition implements
 	@Column(name = "DATACODE_", length = 50)
 	protected String dataCode;
 
+	@javax.persistence.Transient
+	protected int index;
+
 	/**
 	 * 数据库类型
 	 */
@@ -494,6 +497,10 @@ public class ColumnDefinition implements
 
 	public String getId() {
 		return id;
+	}
+
+	public int getIndex() {
+		return index;
 	}
 
 	public String getInputType() {
@@ -930,6 +937,10 @@ public class ColumnDefinition implements
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
 	}
 
 	public void setInputType(String inputType) {
