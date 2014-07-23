@@ -121,7 +121,7 @@ public class CancelAllTaskListener implements TaskListener {
 						cache.put(cacheKey, "1");
 						logger.debug(taskEntity.getTaskDefinitionKey() + " ["
 								+ taskEntity.getName() + "] canceled");
-						taskEntity.complete();
+						//taskEntity.complete();
 					}
 				}
 			}
