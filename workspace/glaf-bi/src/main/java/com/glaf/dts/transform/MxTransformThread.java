@@ -284,16 +284,14 @@ public class MxTransformThread implements java.lang.Runnable {
 				resultList.add(rowModel);
 			}
 
-			psmt.close();
-			psmt = null;
-			rs.close();
-			rs = null;
 		} catch (Exception ex) {
 			success = false;
 			ex.printStackTrace();
 			logger.error(ex);
 			throw new RuntimeException(ex);
 		} finally {
+			JdbcUtils.close(rs);
+			JdbcUtils.close(psmt);
 			JdbcUtils.close(conn);
 			if (!success) {
 				if (task != null) {

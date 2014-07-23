@@ -143,7 +143,10 @@ public class MxTransformManager {
 			while (rs.next()) {
 				Map<String, Object> rowMap = new java.util.HashMap<String, Object>();
 				for (int i = 1; i <= count; i++) {
-					String columnName = rsmd.getColumnName(i);
+					String columnName = rsmd.getColumnLabel(i);
+					if (null == columnName || 0 == columnName.length()) {
+						columnName = rsmd.getColumnName(i);
+					}
 					try {
 						rowMap.put(columnName, rs.getObject(i));
 					} catch (SQLException ex) {
@@ -153,17 +156,17 @@ public class MxTransformManager {
 				resultList.add(rowMap);
 			}
 
-			psmt.close();
-			rs.close();
-
 			query.setResultList(resultList);
 
 			// logger.debug(">resultList=" + resultList);
 			return resultList;
 		} catch (Exception ex) {
+			logger.error(ex);
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
+			JdbcUtils.close(rs);
+			JdbcUtils.close(psmt);
 			JdbcUtils.close(conn);
 			logger.debug("-------------------------1 start------------------------");
 		}
@@ -202,7 +205,10 @@ public class MxTransformManager {
 				while (rs.next()) {
 					Map<String, Object> rowMap = new java.util.HashMap<String, Object>();
 					for (int i = 1; i <= count; i++) {
-						String columnName = rsmd.getColumnName(i);
+						String columnName = rsmd.getColumnLabel(i);
+						if (null == columnName || 0 == columnName.length()) {
+							columnName = rsmd.getColumnName(i);
+						}
 						try {
 							rowMap.put(columnName, rs.getObject(i));
 						} catch (SQLException ex) {
@@ -211,12 +217,7 @@ public class MxTransformManager {
 					}
 					resultList.add(rowMap);
 					tmpResultList.add(rowMap);
-
 				}
-
-				psmt.close();
-				rs.close();
-
 				// logger.debug("resultList :" + tmpResultList);
 				tmpResultList.clear();
 			}
@@ -227,9 +228,12 @@ public class MxTransformManager {
 
 			return resultList;
 		} catch (Exception ex) {
+			logger.error(ex);
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
+			JdbcUtils.close(rs);
+			JdbcUtils.close(psmt);
 			JdbcUtils.close(conn);
 			logger.debug("-------------------------3 end------------------------");
 		}
@@ -277,18 +281,18 @@ public class MxTransformManager {
 				resultList.add(rowMap);
 			}
 
-			psmt.close();
-			rs.close();
-
 			query.setResultList(resultList);
 
 			// logger.debug("resultList:" + resultList);
 
 			return resultList;
 		} catch (Exception ex) {
+			logger.error(ex);
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
+			JdbcUtils.close(rs);
+			JdbcUtils.close(psmt);
 			JdbcUtils.close(conn);
 			logger.debug("-------------------------2 end------------------------");
 		}
@@ -371,7 +375,7 @@ public class MxTransformManager {
 				int sqlType = rsmd.getColumnType(i);
 				ColumnDefinition column = new ColumnDefinition();
 				column.setColumnName(rsmd.getColumnName(i));
-                column.setColumnLabel(rsmd.getColumnLabel(i));
+				column.setColumnLabel(rsmd.getColumnLabel(i));
 				column.setJavaType(FieldType.getJavaType(sqlType));
 				column.setPrecision(rsmd.getPrecision(i));
 				column.setScale(rsmd.getScale(i));
@@ -389,12 +393,14 @@ public class MxTransformManager {
 				logger.debug("precision:" + rsmd.getPrecision(i));
 				logger.debug("scale:" + rsmd.getScale(i));
 			}
-			psmt.close();
-			rs.close();
+
 		} catch (Exception ex) {
+			logger.error(ex);
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
+			JdbcUtils.close(rs);
+			JdbcUtils.close(psmt);
 			JdbcUtils.close(conn);
 		}
 		return table;
@@ -446,7 +452,8 @@ public class MxTransformManager {
 				this.transformMany(query, target);
 			}
 		} else {
-			this.transformSingle(query, target, new java.util.HashMap<String, Object>());
+			this.transformSingle(query, target,
+					new java.util.HashMap<String, Object>());
 		}
 	}
 
