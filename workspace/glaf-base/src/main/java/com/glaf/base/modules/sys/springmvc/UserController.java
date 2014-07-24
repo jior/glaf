@@ -76,47 +76,6 @@ public class UserController {
 
 	protected SysUserService sysUserService;
 
-	/**
-	 * 显示修改页面
-	 * 
-	 * @param request
-	 * @param modelMap
-	 * @return
-	 */
-	@RequestMapping(params = "method=prepareModifyInfo")
-	public ModelAndView prepareModifyInfo(HttpServletRequest request,
-			ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-		request.removeAttribute("parent");
-		SysUser user = RequestUtil.getLoginUser(request);
-		SysUser bean = sysUserService.findByAccount(user.getAccount());
-		request.setAttribute("bean", bean);
-
-		if (bean != null && StringUtils.isNotEmpty(bean.getSuperiorIds())) {
-			List<String> userIds = StringTools.split(bean.getSuperiorIds());
-			StringBuffer buffer = new StringBuffer();
-			if (userIds != null && !userIds.isEmpty()) {
-				for (String userId : userIds) {
-					SysUser u = sysUserService.findByAccount(userId);
-					if (u != null) {
-						buffer.append(u.getName()).append("[")
-								.append(u.getAccount()).append("] ");
-					}
-				}
-				request.setAttribute("x_users_name", buffer.toString());
-			}
-		}
-
-		String x_view = ViewProperties
-				.getString("identity.user.prepareModifyInfo");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-
-		return new ModelAndView("/modules/identity/user/user_change_info",
-				modelMap);
-	}
-
 	@RequestMapping(params = "method=json")
 	@ResponseBody
 	public byte[] json(HttpServletRequest request) throws IOException {
@@ -206,6 +165,47 @@ public class UserController {
 		}
 
 		return new ModelAndView("/modules/identity/user/list", modelMap);
+	}
+
+	/**
+	 * 显示修改页面
+	 * 
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(params = "method=prepareModifyInfo")
+	public ModelAndView prepareModifyInfo(HttpServletRequest request,
+			ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		request.removeAttribute("parent");
+		SysUser user = RequestUtil.getLoginUser(request);
+		SysUser bean = sysUserService.findByAccount(user.getAccount());
+		request.setAttribute("bean", bean);
+
+		if (bean != null && StringUtils.isNotEmpty(bean.getSuperiorIds())) {
+			List<String> userIds = StringTools.split(bean.getSuperiorIds());
+			StringBuffer buffer = new StringBuffer();
+			if (userIds != null && !userIds.isEmpty()) {
+				for (String userId : userIds) {
+					SysUser u = sysUserService.findByAccount(userId);
+					if (u != null) {
+						buffer.append(u.getName()).append("[")
+								.append(u.getAccount()).append("] ");
+					}
+				}
+				request.setAttribute("x_users_name", buffer.toString());
+			}
+		}
+
+		String x_view = ViewProperties
+				.getString("identity.user.prepareModifyInfo");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/modules/identity/user/user_change_info",
+				modelMap);
 	}
 
 	/**
@@ -387,6 +387,58 @@ public class UserController {
 		}
 	}
 
+	@javax.annotation.Resource
+	public void setSysDepartmentService(
+			SysDepartmentService sysDepartmentService) {
+		this.sysDepartmentService = sysDepartmentService;
+	}
+
+	@javax.annotation.Resource
+	public void setSysDeptRoleService(SysDeptRoleService sysDeptRoleService) {
+		this.sysDeptRoleService = sysDeptRoleService;
+	}
+
+	@javax.annotation.Resource
+	public void setSysRoleService(SysRoleService sysRoleService) {
+		this.sysRoleService = sysRoleService;
+	}
+
+	@javax.annotation.Resource
+	public void setSysTreeService(SysTreeService sysTreeService) {
+		this.sysTreeService = sysTreeService;
+	}
+
+	@javax.annotation.Resource
+	public void setSysUserService(SysUserService sysUserService) {
+		this.sysUserService = sysUserService;
+	}
+
+	/**
+	 * 显示角色
+	 * 
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(params = "method=showRole")
+	public ModelAndView showRole(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String actorId = request.getParameter("actorId");
+
+		SysUser user = sysUserService.findByAccountWithAll(actorId);
+		request.setAttribute("user", user);
+		request.setAttribute("list",
+				sysDeptRoleService.getRoleList(user.getDepartment().getId()));
+
+		String x_view = ViewProperties.getString("user.showRole");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		// 显示列表页面
+		return new ModelAndView("/modules/identity/user/user_role", modelMap);
+	}
+
 	/**
 	 * 显示用户信息页面
 	 * 
@@ -430,32 +482,6 @@ public class UserController {
 		}
 
 		return new ModelAndView("/modules/identity/user/user_view", modelMap);
-	}
-
-	@javax.annotation.Resource
-	public void setSysDepartmentService(
-			SysDepartmentService sysDepartmentService) {
-		this.sysDepartmentService = sysDepartmentService;
-	}
-
-	@javax.annotation.Resource
-	public void setSysDeptRoleService(SysDeptRoleService sysDeptRoleService) {
-		this.sysDeptRoleService = sysDeptRoleService;
-	}
-
-	@javax.annotation.Resource
-	public void setSysRoleService(SysRoleService sysRoleService) {
-		this.sysRoleService = sysRoleService;
-	}
-
-	@javax.annotation.Resource
-	public void setSysTreeService(SysTreeService sysTreeService) {
-		this.sysTreeService = sysTreeService;
-	}
-
-	@javax.annotation.Resource
-	public void setSysUserService(SysUserService sysUserService) {
-		this.sysUserService = sysUserService;
 	}
 
 }

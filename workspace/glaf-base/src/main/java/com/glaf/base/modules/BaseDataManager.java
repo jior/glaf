@@ -56,6 +56,7 @@ import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserRoleService;
 import com.glaf.base.modules.sys.service.SysUserService;
+import com.glaf.core.cache.ClearCacheJob;
 import com.glaf.core.config.*;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.db.DbTableChecker;
@@ -1030,6 +1031,8 @@ public class BaseDataManager {
 		if (!loading.get()) {
 			try {
 				loading.set(true);
+				ClearCacheJob job = new ClearCacheJob();
+				job.clearAll();
 				initBaseData();
 				HttpServletRequest request = ThreadContextHolder
 						.getHttpRequest();

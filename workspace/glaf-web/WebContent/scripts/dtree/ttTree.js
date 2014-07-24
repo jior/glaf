@@ -45,6 +45,8 @@ function ttTree(rootNode,suburl,config){
   	this.subTreeUrl = suburl;
   else
 	this.subTreeUrl = "/sys/tree.do?method=getSubTree&id=";
+  //alert(rootNode.id);
+  //alert(this.subTreeUrl);
   for(var name in config) this[name] = config[name];	
   this.obj = "tree";//
   this.lastClick = rootNode.id;//上次点击

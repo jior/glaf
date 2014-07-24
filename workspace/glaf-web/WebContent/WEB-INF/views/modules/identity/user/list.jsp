@@ -60,13 +60,18 @@
 
  
     function formatterKeys(val, row){
-		var str = "<a href='javascript:viewUser(\""+row.actorId+"\");'>查看</a>";
+		var str = "<a href='javascript:viewUser(\""+row.actorId+"\");'>查看</a>&nbsp;<a href='javascript:viewUserRoles(\""+row.actorId+"\");'>角色</a>";
 	    return str;
 	}
 
 	function viewUser(actorId){
 		var link = '<%=request.getContextPath()%>/identity/user.do?method=view&actorId='+actorId;
 		art.dialog.open(link, { height: 420, width: 480, title: "查看用户信息", lock: true, scrollbars:"no" }, false);
+	}
+
+	function viewUserRoles(actorId){
+		var link = '<%=request.getContextPath()%>/identity/user.do?method=showRole&actorId='+actorId;
+		art.dialog.open(link, { height: 380, width: 480, title: "查看用户角色", lock: true, scrollbars:"no" }, false);
 	}
 
     

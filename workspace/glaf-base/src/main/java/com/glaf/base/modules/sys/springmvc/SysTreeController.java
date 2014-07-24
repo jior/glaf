@@ -101,11 +101,13 @@ public class SysTreeController {
 	 */
 	@RequestMapping(params = "method=getSubTree")
 	public ModelAndView getSubTree(HttpServletRequest request, ModelMap modelMap) {
+		logger.debug("----------------------getSubTree---------------------");
 		RequestUtils.setRequestParameterToAttribute(request);
 		int id = ParamUtil.getIntParameter(request, "id", 0);
 		List<SysTree> list = sysTreeService.getSysTreeList(id);
 		Collections.sort(list);
 		request.setAttribute("list", list);
+		logger.debug(list);
 
 		String x_view = ViewProperties.getString("tree.getSubTree");
 		if (StringUtils.isNotEmpty(x_view)) {
@@ -354,8 +356,7 @@ public class SysTreeController {
 	@RequestMapping(params = "method=showLeft")
 	public ModelAndView showLeft(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		ModelAndView forward = new ModelAndView("/modules/sys/tree/tree_left",
-				modelMap);
+
 		int parent = ParamUtil.getIntParameter(request, "parent",
 				SysConstants.TREE_ROOT);
 		request.setAttribute("parent", sysTreeService.findById(parent));
@@ -367,8 +368,7 @@ public class SysTreeController {
 			return new ModelAndView(x_view, modelMap);
 		}
 
-		// 显示列表页面
-		return forward;
+		return new ModelAndView("/modules/sys/tree/tree_left", modelMap);
 	}
 
 	/**
