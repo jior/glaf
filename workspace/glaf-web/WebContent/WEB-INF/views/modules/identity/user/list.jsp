@@ -60,7 +60,10 @@
 
  
     function formatterKeys(val, row){
-		var str = "<a href='javascript:viewUser(\""+row.actorId+"\");'>查看</a>&nbsp;<a href='javascript:viewUserRoles(\""+row.actorId+"\");'>角色</a>";
+		var str = "<a href='javascript:viewUser(\""+row.actorId+"\");'>查看</a>&nbsp;<a href='javascript:viewUserRoles(\""+row.actorId+"\");'>角色</a>"
+		<shiro:hasPermission name="SystemAdministrator">
+		  str = str+"&nbsp;<a href='javascript:viewUserPerms(\""+row.actorId+"\");'>权限</a>";
+		</shiro:hasPermission>
 	    return str;
 	}
 
@@ -72,6 +75,11 @@
 	function viewUserRoles(actorId){
 		var link = '<%=request.getContextPath()%>/identity/user.do?method=showRole&actorId='+actorId;
 		art.dialog.open(link, { height: 380, width: 480, title: "查看用户角色", lock: true, scrollbars:"no" }, false);
+	}
+
+	function viewUserPerms(actorId){
+		var link = '<%=request.getContextPath()%>/identity/user.do?method=showPerms&parentId=3&actorId='+actorId;
+		art.dialog.open(link, { height: 420, width: 480, title: "查看用户权限", lock: true, scrollbars:"no" }, false);
 	}
 
     

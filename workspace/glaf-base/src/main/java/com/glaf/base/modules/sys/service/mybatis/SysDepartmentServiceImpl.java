@@ -222,7 +222,7 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 	}
 
 	public void findNestingDepartment(List<SysDepartment> list, long deptId) {
-		SysDepartment node = this.findById(deptId);
+		SysDepartment node = this.getSysDepartment(deptId);
 		if (node != null) {
 			this.findNestingDepartment(list, node);
 		}
@@ -240,13 +240,19 @@ public class SysDepartmentServiceImpl implements SysDepartmentService {
 			return;
 		}
 		SysTree tree = node.getNode();
-		if (tree.getParentId() == 0) {// 找到根节点
-			logger.debug("findFirstNode:" + node.getId());
-			list.add(node);
-		} else {
-			SysTree treeParent = sysTreeService.findById(tree.getParentId());
-			SysDepartment parent = treeParent.getDepartment();
-			findNestingDepartment(list, parent);
+		if (tree == null) {
+			tree = sysTreeService.findById(node.getNodeId());
+		}
+		if (tree != null) {
+			if (tree.getParentId() == 0) {// 找到根节点
+				logger.debug("findFirstNode:" + node.getId());
+				list.add(node);
+			} else {
+				SysTree treeParent = sysTreeService
+						.findById(tree.getParentId());
+				SysDepartment parent = treeParent.getDepartment();
+				findNestingDepartment(list, parent);
+			}
 		}
 		list.add(node);
 	}

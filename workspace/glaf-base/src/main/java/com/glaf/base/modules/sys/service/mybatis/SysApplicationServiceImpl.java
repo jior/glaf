@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.RowBounds;
@@ -501,6 +502,20 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 
 			List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
 			for (SysTree tree : treeList) {
+				if (StringUtils.isNotEmpty(tree.getUrl())) {
+					if (StringUtils.startsWith(tree.getUrl(), "/")) {
+						if (StringUtils
+								.isNotEmpty(SystemConfig.getServiceUrl())) {
+							String link = SystemConfig.getServiceUrl()
+									+ tree.getUrl();
+							tree.setUrl(link);
+						} else {
+							String link = ApplicationContext.getContextPath()
+									+ tree.getUrl();
+							tree.setUrl(link);
+						}
+					}
+				}
 				treeModels.add(tree);
 			}
 			TreeHelper treeHelper = new TreeHelper();

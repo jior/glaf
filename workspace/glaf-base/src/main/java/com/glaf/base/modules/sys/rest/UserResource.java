@@ -41,8 +41,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.base.modules.sys.model.SysDepartment;
+import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.query.SysUserQuery;
+import com.glaf.base.modules.sys.service.SysApplicationService;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysDeptRoleService;
 import com.glaf.base.modules.sys.service.SysRoleService;
@@ -64,6 +66,8 @@ import com.glaf.core.util.Tools;
 @Path("/rs/identity/user")
 public class UserResource {
 	protected static final Log logger = LogFactory.getLog(UserResource.class);
+
+	protected SysApplicationService sysApplicationService;
 
 	protected SysDepartmentService sysDepartmentService;
 
@@ -280,10 +284,15 @@ public class UserResource {
 	}
 
 	@javax.annotation.Resource
+	public void setSysApplicationService(
+			SysApplicationService sysApplicationService) {
+		this.sysApplicationService = sysApplicationService;
+	}
+
+	@javax.annotation.Resource
 	public void setSysDepartmentService(
 			SysDepartmentService sysDepartmentService) {
 		this.sysDepartmentService = sysDepartmentService;
-
 	}
 
 	@javax.annotation.Resource
@@ -299,12 +308,33 @@ public class UserResource {
 	@javax.annotation.Resource
 	public void setSysTreeService(SysTreeService sysTreeService) {
 		this.sysTreeService = sysTreeService;
-
 	}
 
 	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
+	}
+
+	@GET
+	@POST
+	@Path("treeJson")
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	@ResponseBody
+	public byte[] treeJson(@Context HttpServletRequest request,
+			@Context UriInfo uriInfo) throws IOException {
+		JSONObject result = new JSONObject();
+		Long parentId = RequestUtils.getLong(request, "parentId");
+		if (parentId == null) {
+			parentId = 3L;
+		}
+		String actorId = request.getParameter("actorId");
+		SysTree root = sysTreeService.findById(parentId);
+		if (root != null && actorId != null) {
+			org.json.JSONArray jsonArray = sysApplicationService.getUserMenu(
+					parentId, actorId);
+			return jsonArray.toString().getBytes("UTF-8");
+		}
+		return result.toString().getBytes("UTF-8");
 	}
 
 }

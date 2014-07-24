@@ -129,7 +129,6 @@ public class UserController {
 					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
-
 			}
 		} else {
 			result.put("total", total);
@@ -411,6 +410,30 @@ public class UserController {
 	@javax.annotation.Resource
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
+	}
+
+	/**
+	 * 显示角色权限
+	 * 
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(params = "method=showPerms")
+	public ModelAndView showPerms(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		String actorId = request.getParameter("actorId");
+
+		SysUser user = sysUserService.findByAccountWithAll(actorId);
+		request.setAttribute("user", user);
+
+		String x_view = ViewProperties.getString("user.showPerms");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		// 显示列表页面
+		return new ModelAndView("/modules/identity/user/user_perm", modelMap);
 	}
 
 	/**
