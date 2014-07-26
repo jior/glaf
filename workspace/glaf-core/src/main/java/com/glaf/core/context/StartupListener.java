@@ -24,6 +24,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
@@ -70,7 +71,17 @@ public class StartupListener extends ContextLoaderListener implements
 		com.glaf.core.context.ApplicationContext.setAppPath(root);
 		com.glaf.core.context.ApplicationContext.setContextPath(event
 				.getServletContext().getContextPath());
-		System.setProperty("webapp.root", SystemProperties.getAppPath());
+		String webAppRootKey = event.getServletContext().getInitParameter(
+				"webAppRootKey");
+		if (StringUtils.isNotEmpty(webAppRootKey)) {
+			System.setProperty(webAppRootKey, SystemProperties.getAppPath());
+		} else {
+			System.setProperty("webapp.root", SystemProperties.getAppPath());
+		}
+		for (int i = 1; i <= 20; i++) {
+			System.setProperty("webapp" + i + ".root",
+					SystemProperties.getAppPath());
+		}
 		if (DBConnectionFactory.checkConnection()) {
 			this.beforeContextInitialized(context);
 			super.contextInitialized(event);
