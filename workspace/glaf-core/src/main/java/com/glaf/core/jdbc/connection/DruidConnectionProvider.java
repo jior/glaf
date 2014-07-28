@@ -42,7 +42,7 @@ public class DruidConnectionProvider implements ConnectionProvider {
 	private final static String MIN_POOL_SIZE = "minPoolSize";
 	private final static String MAX_POOL_SIZE = "maxPoolSize";
 	private final static String INITIAL_POOL_SIZE = "initialPoolSize";
-	private final static String MAX_IDLE_TIME = "maxIdleTime";
+	private final static String MAX_WAIT = "maxWait";
 	private final static String MAX_STATEMENTS = "maxStatements";
 	private final static String ACQUIRE_INCREMENT = "acquireIncrement";
 	private final static String IDLE_CONNECTION_TEST_PERIOD = "idleConnectionTestPeriod";
@@ -101,14 +101,15 @@ public class DruidConnectionProvider implements ConnectionProvider {
 					props);
 			Integer maxPoolSize = PropertiesHelper.getInteger(MAX_POOL_SIZE,
 					props);
-			Integer maxIdleTime = PropertiesHelper.getInteger(MAX_IDLE_TIME,
-					props);
+
 			Integer maxStatements = PropertiesHelper.getInteger(MAX_STATEMENTS,
 					props);
 			Integer acquireIncrement = PropertiesHelper.getInteger(
 					ACQUIRE_INCREMENT, props);
 			Integer idleTestPeriod = PropertiesHelper.getInteger(
 					IDLE_CONNECTION_TEST_PERIOD, props);
+
+			Integer maxWait = PropertiesHelper.getInteger(MAX_WAIT, props);
 
 			Properties properties = new Properties();
 
@@ -136,17 +137,15 @@ public class DruidConnectionProvider implements ConnectionProvider {
 			}
 
 			if (initialPoolSize == null) {
-				initialPoolSize = 10;
+				initialPoolSize = 5;
 			}
 			if (minPoolSize == null) {
-				minPoolSize = 10;
+				minPoolSize = 5;
 			}
 			if (maxPoolSize == null) {
-				maxPoolSize = 100;
+				maxPoolSize = 50;
 			}
-			if (maxIdleTime == null) {
-				maxIdleTime = 60;
-			}
+
 			if (maxStatements == null) {
 				maxStatements = 200;
 			}
@@ -154,7 +153,10 @@ public class DruidConnectionProvider implements ConnectionProvider {
 				acquireIncrement = 1;
 			}
 			if (idleTestPeriod == null) {
-				idleTestPeriod = 120;
+				idleTestPeriod = 60;
+			}
+			if (maxWait == null) {
+				maxWait = 60;
 			}
 
 			Properties allProps = (Properties) props.clone();
@@ -167,18 +169,19 @@ public class DruidConnectionProvider implements ConnectionProvider {
 			ds.setInitialSize(initialPoolSize);
 			ds.setMinIdle(minPoolSize);
 			ds.setMaxActive(maxPoolSize);
-			ds.setMaxWait(60*1000L);//60秒
+			ds.setMaxWait(3600 * 1000L);// 3600秒
 
-			ds.setDefaultAutoCommit(true);
 			ds.setTestOnReturn(false);
 			ds.setTestOnBorrow(false);
-			ds.setLogAbandoned(true);//将当前关闭动作记录到日志 
-			ds.setRemoveAbandoned(true);//对于长时间不使用的连接强制关闭  
-			ds.setRemoveAbandonedTimeout(1800);//超过30分钟开始关闭空闲连接  
+			ds.setTestWhileIdle(false);
+			ds.setLogAbandoned(true);// 将当前关闭动作记录到日志
+			ds.setRemoveAbandoned(true);// 对于长时间不使用的连接强制关闭
+			ds.setRemoveAbandonedTimeout(1800);// 超过30分钟开始关闭空闲连接
 
-			ds.setTimeBetweenEvictionRunsMillis(((long) idleTestPeriod) * 1000L);
+			ds.setTimeBetweenEvictionRunsMillis(idleTestPeriod * 1000L);// 间隔多久才进行一次检测，检测需要关闭的空闲连接
 			ds.setMaxOpenPreparedStatements(maxStatements);
-			ds.setMinEvictableIdleTimeMillis(((long) maxIdleTime) * 1000L);
+			ds.setMinEvictableIdleTimeMillis(60 * 1000L);
+			ds.setMaxWait(maxWait * 1000L);
 
 			ds.setConnectProperties(allProps);
 			ds.setUrl(jdbcUrl);
