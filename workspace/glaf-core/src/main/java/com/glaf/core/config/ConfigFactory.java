@@ -51,6 +51,10 @@ public class ConfigFactory {
 		if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
 			String regionName = Environment.getCurrentSystemName() + "_"
 					+ region;
+			if (SystemProperties.getDeploymentSystemName() != null) {
+				regionName = SystemProperties.getDeploymentSystemName() + "_"
+						+ Environment.getCurrentSystemName() + "_" + region;
+			}
 			try {
 				channel.clear(regionName);
 				logger.debug("###################################");
@@ -69,6 +73,11 @@ public class ConfigFactory {
 				try {
 					String regionName = Environment.getCurrentSystemName()
 							+ "_" + region;
+					if (SystemProperties.getDeploymentSystemName() != null) {
+						regionName = SystemProperties.getDeploymentSystemName()
+								+ "_" + Environment.getCurrentSystemName()
+								+ "_" + region;
+					}
 					channel.clear(regionName);
 					logger.debug("###################################");
 					logger.debug(region + " clear.");
@@ -92,15 +101,25 @@ public class ConfigFactory {
 
 	public static String getString(final String region, final String key) {
 		if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
-			final String regionName = Environment.getCurrentSystemName() + "_"
+			String regionName = Environment.getCurrentSystemName() + "_"
 					+ region;
-			final String complexKey = Environment.getCurrentSystemName() + "_"
-					+ key;
+			String complexKey = Environment.getCurrentSystemName() + "_" + key;
+			if (SystemProperties.getDeploymentSystemName() != null) {
+				regionName = SystemProperties.getDeploymentSystemName() + "_"
+						+ Environment.getCurrentSystemName() + "_" + region;
+			}
+			if (SystemProperties.getDeploymentSystemName() != null) {
+				complexKey = SystemProperties.getDeploymentSystemName() + "_"
+						+ Environment.getCurrentSystemName() + "_" + key;
+			}
+			final String regionName2 = regionName;
+			final String complexKey2 = complexKey;
+
 			boolean waitFor = true;
 			Callable<String> task = new Callable<String>() {
 				@Override
 				public String call() throws Exception {
-					return channel.getString(regionName, complexKey);
+					return channel.getString(regionName2, complexKey2);
 				}
 			};
 			try {
@@ -134,6 +153,14 @@ public class ConfigFactory {
 			String regionName = Environment.getCurrentSystemName() + "_"
 					+ region;
 			String complexKey = Environment.getCurrentSystemName() + "_" + key;
+			if (SystemProperties.getDeploymentSystemName() != null) {
+				regionName = SystemProperties.getDeploymentSystemName() + "_"
+						+ Environment.getCurrentSystemName() + "_" + region;
+			}
+			if (SystemProperties.getDeploymentSystemName() != null) {
+				complexKey = SystemProperties.getDeploymentSystemName() + "_"
+						+ Environment.getCurrentSystemName() + "_" + key;
+			}
 			try {
 				channel.put(regionName, complexKey, value);
 			} catch (Exception ex) {
@@ -148,6 +175,14 @@ public class ConfigFactory {
 			String regionName = Environment.getCurrentSystemName() + "_"
 					+ region;
 			String complexKey = Environment.getCurrentSystemName() + "_" + key;
+			if (SystemProperties.getDeploymentSystemName() != null) {
+				regionName = SystemProperties.getDeploymentSystemName() + "_"
+						+ Environment.getCurrentSystemName() + "_" + region;
+			}
+			if (SystemProperties.getDeploymentSystemName() != null) {
+				complexKey = SystemProperties.getDeploymentSystemName() + "_"
+						+ Environment.getCurrentSystemName() + "_" + key;
+			}
 			try {
 				channel.remove(regionName, complexKey);
 			} catch (Exception ex) {

@@ -36,6 +36,7 @@ import com.glaf.core.config.BaseConfiguration;
 import com.glaf.core.config.Configuration;
 import com.glaf.core.config.CustomProperties;
 import com.glaf.core.config.Environment;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.context.ContextFactory;
 
 public class CacheFactory {
@@ -103,6 +104,14 @@ public class CacheFactory {
 					if (cache != null) {
 						String cacheKey = Environment.getCurrentSystemName()
 								+ "_" + CACHE_PREFIX + key;
+						if (SystemProperties.getDeploymentSystemName() != null) {
+							cacheKey = SystemProperties
+									.getDeploymentSystemName()
+									+ "_"
+									+ Environment.getCurrentSystemName()
+									+ "_"
+									+ CACHE_PREFIX + key;
+						}
 						cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
 						Object value = cache.get(cacheKey);
 						if (value != null) {
@@ -147,6 +156,11 @@ public class CacheFactory {
 			if (cache != null && key != null && value != null) {
 				String cacheKey = Environment.getCurrentSystemName() + "_"
 						+ CACHE_PREFIX + key;
+				if (SystemProperties.getDeploymentSystemName() != null) {
+					cacheKey = SystemProperties.getDeploymentSystemName() + "_"
+							+ Environment.getCurrentSystemName() + "_"
+							+ CACHE_PREFIX + key;
+				}
 				cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
 				int limitSize = conf.getInt("cache.limitSize", 1024000);// 1024KB
 				if (value.length() < limitSize) {
@@ -199,6 +213,11 @@ public class CacheFactory {
 			if (cache != null) {
 				String cacheKey = Environment.getCurrentSystemName() + "_"
 						+ CACHE_PREFIX + key;
+				if (SystemProperties.getDeploymentSystemName() != null) {
+					cacheKey = SystemProperties.getDeploymentSystemName() + "_"
+							+ Environment.getCurrentSystemName() + "_"
+							+ CACHE_PREFIX + key;
+				}
 				cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
 				cache.remove(cacheKey);
 				items.remove(cacheKey);
