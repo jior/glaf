@@ -113,7 +113,7 @@ public class StartupListener extends ContextLoaderListener implements
 			File file = new File(SystemProperties.getConfigRootPath() + "/key");
 			if (!(file.exists() || file.isFile())) {
 				StringBuffer sb = new StringBuffer();
-				for (int i = 0; i < 10; i++) {
+				for (int i = 0; i < 32; i++) {
 					sb.append(UUID32.getUUID());
 				}
 				FileUtils.save(SystemProperties.getConfigRootPath() + "/key",
