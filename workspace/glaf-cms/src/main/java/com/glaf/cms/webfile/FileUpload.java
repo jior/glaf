@@ -106,6 +106,8 @@ public class FileUpload {
 			throw new SecurityException("Physical path is denied (1035).");
 		}
 		if (StringUtils.endsWith(sourceFilePathName, "mail.properties")
+				|| StringUtils.endsWith(sourceFilePathName, "key")
+				|| StringUtils.containsAny(sourceFilePathName, "jdbc")
 				|| StringUtils.endsWith(sourceFilePathName, "jdbc.properties")
 				|| StringUtils
 						.endsWith(sourceFilePathName, "hibernate.cfg.xml")) {

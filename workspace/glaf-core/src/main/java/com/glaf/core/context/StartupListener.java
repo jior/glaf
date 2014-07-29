@@ -18,6 +18,7 @@
 
 package com.glaf.core.context;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletContext;
@@ -39,6 +40,7 @@ import com.glaf.core.startup.BootstrapManager;
 import com.glaf.core.util.Constants;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.QuartzUtils;
+import com.glaf.core.util.UUID32;
 
 public class StartupListener extends ContextLoaderListener implements
 		ServletContextListener {
@@ -105,6 +107,20 @@ public class StartupListener extends ContextLoaderListener implements
 				FileUtils.mkdirs(log_path);
 			} catch (IOException ex) {
 			}
+		}
+
+		try {
+			File file = new File(SystemProperties.getConfigRootPath() + "/key");
+			if (!(file.exists() || file.isFile())) {
+				StringBuffer sb = new StringBuffer();
+				for (int i = 0; i < 10; i++) {
+					sb.append(UUID32.getUUID());
+				}
+				FileUtils.save(SystemProperties.getConfigRootPath() + "/key",
+						sb.toString().getBytes());
+			}
+		} catch (Exception ex) {
+
 		}
 	}
 
