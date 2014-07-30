@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition xmlns="urn:jbpm.org:jpdl-3.2"
+	name="PMS_PACKAGE_RESEARCH">
+	<description> 包装需求调查审核 </description>
+	<!--开始 -->
+	<swimlane name="starter">
+		<assignment class="com.glaf.jbpm.assignment.GeneralAssignment">
+		</assignment>
+	</swimlane>
+
+	<swimlane name="submiter">
+		<assignment class="com.glaf.jbpm.assignment.ProcessStarterAssignment">
+		</assignment>
+	</swimlane>
+
+
+	<!--动态设置参与者#P{roleId} #P{deptId} -->
+	<action name="create_taskDynamic_PQ" class="com.glaf.jbpm.action.DynamicTaskInstances">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task03</taskName>
+		<dynamicActors>x_runtime_PQ</dynamicActors>
+	</action>
+
+	<action name="create_taskDynamic_PC" class="com.glaf.jbpm.action.DynamicTaskInstances">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task05</taskName>
+		<dynamicActors>x_runtime_PC</dynamicActors>
+	</action>
+
+	<!--任务启动 -->
+	<action name="xyz1000" class="com.glaf.jbpm.action.SQLAction">
+		<sql>
+			UPDATE PMS_PACKAGERESEARCH
+			SET
+			SPROCESSNAME='PMS_PACKAGE_RESEARCH',
+			IPROCESSINSTANCEID = ?,IWFSTATUS
+			= 1000 WHERE IRESEARCHID = ?
+		</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>processInstanceId</key>
+				<value>#{processInstanceId}</value>
+			</element>
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	<!--已提交(配套待审核) -->
+	<action name="create_task01" class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task01</taskName>
+		<queryId>getWholeRoleUsers</queryId>
+		<roleId>PSC_AUDIT</roleId>
+		<deptId>#P{PSC_deptIds}</deptId>
+	</action>
+
+	<action name="xyz1001" class="com.glaf.jbpm.action.SQLAction">
+		<sql>
+			UPDATE PMS_PACKAGERESEARCH
+			SET ISTATUS=20 ,IWFSTATUS = 1001 WHERE
+			IRESEARCHID = ?
+		</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	<!--配套已接收 -->
+	<action name="xyz1002" class="com.glaf.jbpm.action.SQLAction">
+		<sql>
+			UPDATE PMS_PACKAGERESEARCH
+			SET ISTATUS=30 ,IWFSTATUS = 1002 WHERE
+			IRESEARCHID = ?
+		</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	<!--品质管理科_分派审核人 -->
+	<action name="create_task02" class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task02</taskName>
+		<queryId>getWholeRoleUsers</queryId>
+		<roleId>PQ_AUDIT_ASSIGN</roleId>
+		<deptId>#P{PQ_deptIds}</deptId>
+	</action>
+
+	<!--生产管理部门_分派审核人 -->
+	<action name="create_task04" class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task04</taskName>
+		<queryId>getWholeRoleUsers</queryId>
+		<roleId>PC_AUDIT_ASSIGN</roleId>
+		<deptId>#P{PC_deptIds}</deptId>
+	</action>
+
+	<!--各生产部门_分派审核人 -->
+	<action name="create_taskDynamic06_AF" class="com.glaf.jbpm.action.DynamicTaskInstances">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task06_AF</taskName>
+		<dynamicActors>x_runtime_AF</dynamicActors>
+	</action>
+
+	<action name="create_taskDynamic06_PA" class="com.glaf.jbpm.action.DynamicTaskInstances">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task06_PA</taskName>
+		<dynamicActors>x_runtime_PA</dynamicActors>
+	</action>
+
+	<action name="create_taskDynamic06_PO" class="com.glaf.jbpm.action.DynamicTaskInstances">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task06_PO</taskName>
+		<dynamicActors>x_runtime_PO</dynamicActors>
+	</action>
+
+	<action name="create_taskDynamic06_PR" class="com.glaf.jbpm.action.DynamicTaskInstances">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task06_PR</taskName>
+		<dynamicActors>x_runtime_PR</dynamicActors>
+	</action>
+
+	<action name="create_taskDynamic06_WE" class="com.glaf.jbpm.action.DynamicTaskInstances">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task06_WE</taskName>
+		<dynamicActors>x_runtime_WE</dynamicActors>
+	</action>
+
+	<!-- 各生产部门确认 -->
+	<action name="create_taskDynamic07_AF" class="com.glaf.jbpm.action.DynamicTaskInstances">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task07_AF</taskName>
+		<dynamicActors>x_runtime_AF</dynamicActors>
+	</action>
+
+	<action name="create_taskDynamic07_PO" class="com.glaf.jbpm.action.DynamicTaskInstances">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task07_PO</taskName>
+		<dynamicActors>x_runtime_PO</dynamicActors>
+	</action>
+
+	<action name="create_taskDynamic07_PA" class="com.glaf.jbpm.action.DynamicTaskInstances">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task07_PA</taskName>
+		<dynamicActors>x_runtime_PA</dynamicActors>
+	</action>
+
+	<action name="create_taskDynamic07_PR" class="com.glaf.jbpm.action.DynamicTaskInstances">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task07_PR</taskName>
+		<dynamicActors>x_runtime_PR</dynamicActors>
+	</action>
+
+	<action name="create_taskDynamic07_WE" class="com.glaf.jbpm.action.DynamicTaskInstances">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task07_WE</taskName>
+		<dynamicActors>x_runtime_WE</dynamicActors>
+	</action>
+
+	<!--事物局最后判定 （PP、PC、车间）已审核 -->
+	<action name="create_task08" class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task08</taskName>
+		<queryId>getWholeRoleUsers</queryId>
+		<roleId>TRA_AUDIT</roleId>
+		<deptId>#P{TRA_deptIds}</deptId>
+	</action>
+
+	<action name="xyz1008" class="com.glaf.jbpm.action.SQLAction">
+		<sql>
+			UPDATE PMS_PACKAGERESEARCH
+			SET ISTATUS=40 ,IWFSTATUS = 1008 WHERE
+			IRESEARCHID = ?
+		</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	<!--退回给供应商重新修改 -->
+	<action name="xyz_reject_modify" class="com.glaf.jbpm.action.SQLAction">
+		<sql>
+			UPDATE PMS_PACKAGERESEARCH
+			SET
+			IJUDGEFLAG=0,IJUDGERSFLAG=0,SJUDGERESULT='',ISTATUS=15,IWFSTATUS =
+			1500 WHERE IRESEARCHID = ?
+		</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	<action name="create_task10" class="com.glaf.jbpm.action.SqlMapTaskInstanceAction">
+		<leaveNodeIfActorNotAvailable>true</leaveNodeIfActorNotAvailable>
+		<taskName>task10</taskName>
+		<queryId>getWholeRoleUsers</queryId>
+		<roleId>TRA_AUDIT</roleId>
+		<deptId>#P{TRA_deptIds}</deptId>
+	</action>
+
+	<action name="xyz_judgeFlag" class="com.glaf.jbpm.action.SQLAction">
+		<sql>
+			UPDATE PMS_PACKAGERESEARCH
+			SET
+			IJUDGEFLAG=1,IJUDGERSFLAG=0,IWFSTATUS = 1020 WHERE IRESEARCHID = ?
+		</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	<!--流程结束 包装已生效 -->
+	<action name="xyz_9999" class="com.glaf.jbpm.action.SQLAction">
+		<sql>
+			UPDATE PMS_PACKAGERESEARCH
+			SET
+			ISTATUS=50,DEFFECTIVEDATETIME=sysdate,IWFSTATUS = 9999
+			WHERE
+			IRESEARCHID = ?
+		</sql>
+		<elements element-type="org.dom4j.Element">
+			<element value-type="java.lang.String">
+				<key>rowId</key>
+				<value>#{rowId}</value>
+			</element>
+		</elements>
+	</action>
+
+	<action name="joinAction" class="com.glaf.jbpm.action.JoinAction">
+		<expression>#{ isAgree eq 'false' }</expression>
+		<includes>task02,task03,task04,task05,task06_AF,task06_PA,task06_PO,task06_PR,task06_WE,task07</includes>
+	</action>
+
+	<action name="EndCounterSigningAction" class="com.glaf.jbpm.action.EndCounterSigningAction">
+		<expression>#{isAgree eq 'false'}</expression>
+	</action>
+
+	<start-state name="包装提案审核开始">
+		<task name="task00" description="启动流程" swimlane="starter">
+			<event type="task-create">
+				<action ref-name="xyz1000" />
+			</event>
+		</task>
+		<transition to="配套科确认" name="to 配套科"></transition>
+	</start-state>
+
+	<task-node name="配套科确认" create-tasks="false" end-tasks="true"
+		signal="first">
+		<event type="node-enter">
+			<action ref-name="create_task01" />
+			<action ref-name="xyz1001" />
+		</event>
+		<task name="task01" description="包装提案确认">
+		</task>
+		<transition to="配套科是否通过?"></transition>
+	</task-node>
+
+	<decision name="配套科是否通过?">
+		<transition to="重新提交" name="退回供应商"></transition>
+		<transition to="各审核部门审核开始" name="通过">
+			<condition expression="#{isAgree eq 'true'}" />
+		</transition>
+	</decision>
+
+	<fork name="各审核部门审核开始">
+		<event type="node-enter">
+			<action ref-name="xyz1002" />
+		</event>
+		<transition to="各生产部门是否第一次确认?" name="是否第一次确认?">
+			<condition expression="#{'true' eq rejectToDepts}" />
+		</transition>
+		<transition to="PQ是否第一次确认?" name="to PQ是否第一次确认?"></transition>
+		<transition to="PC是否第一次确认?" name="to PC是否第一次确认?"></transition>
+	</fork>
+
+	<task-node name="PQ分派审核人" create-tasks="false" end-tasks="true" signal="first">
+		<event type="node-enter">
+			<action ref-name="create_task02" />
+		</event>
+		<transition to="PQ_包装提案确认"></transition>
+		<task name="task02" description="品质科_分派审核人">
+		</task>
+	</task-node>
+
+	<task-node name="PQ_包装提案确认" create-tasks="false" end-tasks="true" signal="first">
+		<event type="node-enter">
+			<action ref-name="create_taskDynamic_PQ" />
+		</event>
+		<task name="task03" description="品质科_包装提案确认">
+		</task>
+		<transition to="各审核部门审核结束"></transition>
+	</task-node>
+
+	<task-node name="PC_分派审核人" create-tasks="false" end-tasks="true" signal="first">
+		<event type="node-enter">
+			<action ref-name="create_task04" />
+		</event>
+		<task name="task04" description="生产管理科_分派审核人">
+		</task>
+		<transition to="PC_包装提案确认"></transition>
+	</task-node>
+
+	<task-node name="PC_包装提案确认" create-tasks="false" end-tasks="true" signal="first">
+		<event type="node-enter">
+			<action ref-name="create_taskDynamic_PC" />
+		</event>
+		<task name="task05" description="生产管理科_包装提案确认">
+		</task>
+		<transition to="各审核部门审核结束"></transition>
+	</task-node>
+
+	<decision name="PQ是否第一次确认?">
+		<transition to="PQ_包装提案确认" name="to 品质科确认">
+			<condition expression="#{'true' eq rejectToDepts}" />
+		</transition>
+		<transition to="PQ分派审核人" name="to 分派审核人"></transition>
+	</decision>
+
+	<decision name="PC是否第一次确认?">
+		<transition to="PC_包装提案确认" name="to 生产管理科确认">
+			<condition expression="#{'true' eq rejectToDepts}" />
+		</transition>
+		<transition to="PC_分派审核人" name="to 分派审核人"></transition>
+	</decision>
+
+	<task-node name="AF分派" create-tasks="false" end-tasks="true" signal="first">
+		<event type="node-enter">
+			<action ref-name="create_taskDynamic06_AF" />
+		</event>
+		<transition to="生产部门"></transition>
+		<task name="task06_AF" description="总装科_分派审核人"></task>
+	</task-node>
+
+	<task-node name="PO分派" create-tasks="false" end-tasks="true" signal="first">
+		<event type="node-enter">
+			<action ref-name="create_taskDynamic06_PO" />
+		</event>
+		<transition to="生产部门"></transition>
+		<task name="task06_PO" description="合成树脂科_分派审核人"></task>
+	</task-node>
+
+	<task-node name="PA分派" create-tasks="false" end-tasks="true" signal="first">
+		<event type="node-enter">
+			<action ref-name="create_taskDynamic06_PA" />
+		</event>
+		<transition to="生产部门"></transition>
+		<task name="task06_PA" description="涂装科_分派审核人"></task>
+	</task-node>
+
+	<task-node name="PR分派" create-tasks="false" end-tasks="true" signal="first">
+		<event type="node-enter">
+			<action ref-name="create_taskDynamic06_PR" />
+		</event>
+		<transition to="生产部门"></transition>
+		<task name="task06_PR" description="冲压科_分派审核人"></task>
+	</task-node>
+
+	<task-node name="WE分派" create-tasks="false" end-tasks="true" signal="first">
+		<event type="node-enter">
+			<action ref-name="create_taskDynamic06_WE" />
+		</event>
+		<transition to="生产部门"></transition>
+		<task name="task06_WE" description="焊装科_分派审核人"></task>
+	</task-node>
+
+	<join name="生产部门">
+		<transition to="各生产部门确认"></transition>
+	</join>
+
+	<task-node name="各生产部门确认" create-tasks="false" end-tasks="true" signal="last">
+		<event type="node-enter">
+			<action ref-name="create_taskDynamic07_AF" />
+			<action ref-name="create_taskDynamic07_PO" />
+			<action ref-name="create_taskDynamic07_PA" />
+			<action ref-name="create_taskDynamic07_PR" />
+			<action ref-name="create_taskDynamic07_WE" />
+		</event>
+		<task name="task07_AF" description="AF_包装提案确认"></task>
+		<task name="task07_PO" description="PO_包装提案确认"></task>
+		<task name="task07_PA" description="PA_包装提案确认"></task>
+		<task name="task07_PR" description="PR_包装提案确认"></task>
+		<task name="task07_WE" description="WE_包装提案确认"></task>
+		<transition to="各审核部门审核结束"></transition>
+	</task-node>
+
+	<join name="各审核部门审核结束">
+		<transition to="事物局最后判定" name="to 事物局"></transition>
+		<event type="node-leave">
+			<action ref-name="xyz1008" />
+		</event>
+	</join>
+
+	<task-node name="事物局最后判定" create-tasks="false" end-tasks="true" signal="first">
+		<event type="node-enter">
+			<action ref-name="create_task08" />
+		</event>
+		<task name="task08" description="事物局最后判定">
+		</task>
+		<transition to="事物局审核类型判定" name="to 事物局审核类型判定"></transition>
+	</task-node>
+
+	<decision name="事物局审核类型判定">
+		<transition to="实物判定录入" name="to 实物判定录入">
+			<condition expression="#{'true' eq judgeFlag}" />
+		</transition>
+		<transition to="事物局审核是否通过" name="to 是否通过">
+		</transition>
+	</decision>
+
+	<task-node name="实物判定录入" create-tasks="false" end-tasks="true" signal="first">
+		<event type="node-enter">
+			<action ref-name="create_task10" />
+			<action ref-name="xyz_judgeFlag" />
+		</event>
+		<task name="task10" description="实物判定录入">
+		</task>
+		<transition to="事物局最后判定" name="to 事物局最后判定"></transition>
+	</task-node>
+
+	<decision name="事物局审核是否通过">
+		<transition to="退回类型判定" name="退回">
+			<condition expression="#{'true' eq rejectToDepts || 'true' eq rejectToSupply}" />
+		</transition>
+		<transition to="包装提案审核结束" name="通过">
+		</transition>
+	</decision>
+
+	<task-node name="重新提交">
+		<task name="task09" description="填报和提交包装提案" swimlane="submiter">
+		</task>
+		<transition to="配套科确认" name="重新提交包装提案"></transition>
+		<event type="node-enter">
+			<action ref-name="xyz_reject_modify" />
+		</event>
+	</task-node>
+
+	<decision name="退回类型判定">
+		<transition to="各审核部门审核开始" name="to 各审核部门">
+			<condition expression="#{'true' eq rejectToDepts}" />
+		</transition>
+		<transition to="重新提交" name="退回供应商">
+			<condition expression="#{'true' eq rejectToSupply}" />
+		</transition>
+	</decision>
+
+	<fork name="各生产部门分派审核人">
+		<transition to="PO分派"></transition>
+		<transition to="PA分派" name="to PA分派"></transition>
+		<transition to="AF分派" name="to AF分派"></transition>
+		<transition to="PR分派" name="to PR分派"></transition>
+		<transition to="WE分派" name="to WE分派"></transition>
+	</fork>
+
+	<decision name="各生产部门是否第一次确认?">
+		<transition to="各生产部门分派审核人" name="to 分派审核人"></transition>
+		<transition to="各生产部门审核" name="to 各生产部门审核"></transition>
+	</decision>
+
+	<node name="各生产部门审核">
+		<transition to="各生产部门确认"></transition>
+	</node>
+
+	<end-state name="包装提案审核结束">
+		<event type="node-enter">
+			<action ref-name="xyz_9999" />
+		</event>
+	</end-state>
+
+</process-definition>
