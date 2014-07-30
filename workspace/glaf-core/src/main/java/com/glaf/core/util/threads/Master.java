@@ -66,8 +66,8 @@ public class Master {
 	public void submit(Object job) {
 		workQueue.add(job);
 	}
-	
-	public static void main(String[] args){
+
+	public static void main(String[] args) {
 		System.out.println(Runtime.getRuntime().availableProcessors());
 	}
 }
