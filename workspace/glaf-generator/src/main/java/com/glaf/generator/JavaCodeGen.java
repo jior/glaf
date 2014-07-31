@@ -286,8 +286,20 @@ public class JavaCodeGen {
 		// classDefinition.addField(f6);
 
 		Map<String, FieldDefinition> fields = classDefinition.getFields();
+		List<FieldDefinition> values = new ArrayList<FieldDefinition>();
+		Iterator<FieldDefinition> iter = fields.values().iterator();
+		while (iter.hasNext()) {
+			FieldDefinition field = iter.next();
+			if (classDefinition.getIdField() != null
+					&& StringUtils.equalsIgnoreCase(classDefinition
+							.getIdField().getColumnName(), field
+							.getColumnName())) {
+				continue;
+			}
+			values.add(field);
+		}
 
-		context.put("pojo_fields", fields.values());
+		context.put("pojo_fields", values);
 
 		StringBuffer b04 = new StringBuffer();
 		StringBuffer b05 = new StringBuffer();
