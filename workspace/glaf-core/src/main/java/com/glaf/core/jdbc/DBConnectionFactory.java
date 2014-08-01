@@ -61,6 +61,7 @@ public class DBConnectionFactory {
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			logger.error(ex);
 		} finally {
 			JdbcUtils.close(connection);
 		}
@@ -86,6 +87,7 @@ public class DBConnectionFactory {
 			}
 			return false;
 		} catch (Exception ex) {
+			logger.error(ex);
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
@@ -126,6 +128,7 @@ public class DBConnectionFactory {
 			}
 			return connection;
 		} catch (Exception ex) {
+			logger.error(ex);
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		}
@@ -161,6 +164,7 @@ public class DBConnectionFactory {
 			}
 			return connection;
 		} catch (Exception ex) {
+			logger.error(ex);
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		}
@@ -200,6 +204,7 @@ public class DBConnectionFactory {
 			con = dataSource.getConnection();
 			dbType = getDatabaseType(con);
 		} catch (Exception ex) {
+			logger.error(ex);
 			throw new RuntimeException(ex);
 		} finally {
 			JdbcUtils.close(con);
