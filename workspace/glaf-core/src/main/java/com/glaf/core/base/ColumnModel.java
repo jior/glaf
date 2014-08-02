@@ -21,6 +21,8 @@ package com.glaf.core.base;
 import java.util.Collection;
 import java.util.Date;
 
+import com.glaf.core.util.SearchFilter;
+
 public class ColumnModel implements java.io.Serializable,
 		java.lang.Comparable<ColumnModel> {
 
@@ -120,6 +122,8 @@ public class ColumnModel implements java.io.Serializable,
 	 * 取值表达式
 	 */
 	protected String valueExpression;
+
+	protected String operator = SearchFilter.EQUALS;
 
 	public ColumnModel() {
 
@@ -226,6 +230,13 @@ public class ColumnModel implements java.io.Serializable,
 
 	public String getName() {
 		return name;
+	}
+
+	public String getOperator() {
+		if (operator == null) {
+			operator = SearchFilter.EQUALS;
+		}
+		return operator;
 	}
 
 	public int getPosition() {
@@ -351,6 +362,10 @@ public class ColumnModel implements java.io.Serializable,
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setOperator(String operator) {
+		this.operator = operator;
 	}
 
 	public void setPosition(int position) {

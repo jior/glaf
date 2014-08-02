@@ -351,15 +351,15 @@
 							jdbcType=BOOLEAN}
 						</when>
 						<when test="column.javaType == 'Integer'">
-							and ${column.columnName} = #{column.value,
+							and ${column.columnName} ${column.operator} #{column.value,
 							jdbcType=INTEGER}
 						</when>
 						<when test="column.javaType == 'Long'">
-							and ${column.columnName} = #{column.value,
+							and ${column.columnName} ${column.operator} #{column.value,
 							jdbcType=BIGINT}
 						</when>
 						<when test="column.javaType == 'Double'">
-							and ${column.columnName} = #{column.value,
+							and ${column.columnName} ${column.operator} #{column.value,
 							jdbcType=DOUBLE}
 						</when>
 						<when test="column.javaType == 'Collection'">
@@ -373,7 +373,7 @@
 							</if>
 						</when>
 						<otherwise>
-							and ${column.columnName} = #{column.value,
+							and ${column.columnName} ${column.operator} #{column.value,
 							jdbcType=VARCHAR}
 						</otherwise>
 					</choose>
@@ -401,15 +401,15 @@
 							jdbcType=BOOLEAN}
 						</when>
 						<when test="column.javaType == 'Integer'">
-							and ${column.columnName} = #{column.value,
+							and ${column.columnName} ${column.operator} #{column.value,
 							jdbcType=INTEGER}
 						</when>
 						<when test="column.javaType == 'Long'">
-							and ${column.columnName} = #{column.value,
+							and ${column.columnName} ${column.operator} #{column.value,
 							jdbcType=BIGINT}
 						</when>
 						<when test="column.javaType == 'Double'">
-							and ${column.columnName} = #{column.value,
+							and ${column.columnName} ${column.operator} #{column.value,
 							jdbcType=DOUBLE}
 						</when>
 						<when test="column.javaType == 'Collection'">
@@ -423,7 +423,7 @@
 							</if>
 						</when>
 						<otherwise>
-							and ${column.columnName} = #{column.value,
+							and ${column.columnName} ${column.operator} #{column.value,
 							jdbcType=VARCHAR}
 						</otherwise>
 					</choose>
