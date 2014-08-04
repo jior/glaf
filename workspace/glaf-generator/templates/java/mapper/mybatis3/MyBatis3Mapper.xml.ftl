@@ -290,7 +290,7 @@
   <#list  pojo_fields as field>
   <#if field.name?exists && field.columnName?exists && field.type?exists>
    <#if field.name != 'processInstanceId'>
-	<#if field.type?exists && ( field.type== 'Integer' || field.type== 'Long' || field.type== 'Double' || field.type== 'Date')>
+	<#if field.type?exists && ( field.type== 'Integer' || field.type== 'Long' )>
 
 			<if test="${field.name} != null">
 				and E.${field.columnName} = #GG{${field.name}}
@@ -311,8 +311,18 @@
                   #GG{x_${field.name}}
                 </foreach>
 			</if>
+      
+	<#elseif field.type?exists && (field.type== 'Double' || field.type== 'Date')>
 
-	  <#elseif field.type?exists && ( field.type== 'String')>
+			<if test="${field.name}GreaterThanOrEqual != null">
+				and E.${field.columnName} &gt;= #GG{${field.name}GreaterThanOrEqual}
+            </if>
+
+			<if test="${field.name}LessThanOrEqual != null">
+				and E.${field.columnName} &lt;= #GG{${field.name}LessThanOrEqual}
+            </if>
+
+	<#elseif field.type?exists && ( field.type== 'String')>
 	        
 			<if test="${field.name} != null and ${field.name} != '' ">
 				and E.${field.columnName} = #GG{${field.name}}

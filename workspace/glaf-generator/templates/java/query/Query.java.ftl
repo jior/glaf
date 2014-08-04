@@ -3,26 +3,27 @@ package ${packageName}.query;
 import java.util.*;
 import com.glaf.core.query.DataQuery;
 
-
-/**
- * 
- * ≤È—Ø¿‡
- *
- */
 public class ${entityName}Query extends DataQuery {
         private static final long serialVersionUID = 1L;
 	protected List<${idField.type}> ${idField.name}s;
+	protected Collection<String> appActorIds;
  <#if pojo_fields?exists>
     <#list  pojo_fields as field>
-     <#if field.name != 'processInstanceId'>
-      <#if field.type?exists && ( field.type== 'Integer' || field.type== 'Long' || field.type== 'Double' || field.type== 'Date')>
+     <#if field.name != 'processInstanceId' >
+      <#if field.type?exists && ( field.type== 'Integer' || field.type== 'Long')>
   	protected ${field.type} ${field.firstLowerName};
   	protected ${field.type} ${field.firstLowerName}GreaterThanOrEqual;
   	protected ${field.type} ${field.firstLowerName}LessThanOrEqual;
   	protected List<${field.type}> ${field.firstLowerName}s;
       <#elseif field.type?exists && ( field.type== 'Boolean')>
   	protected ${field.type} ${field.firstLowerName};
-       <#elseif field.type?exists && ( field.type== 'String')>
+      <#elseif field.type?exists && ( field.type== 'Date')>
+        protected ${field.type} ${field.firstLowerName}GreaterThanOrEqual;
+  	protected ${field.type} ${field.firstLowerName}LessThanOrEqual;
+      <#elseif field.type?exists && ( field.type== 'Double')>
+  	protected ${field.type} ${field.firstLowerName}GreaterThanOrEqual;
+  	protected ${field.type} ${field.firstLowerName}LessThanOrEqual;
+      <#elseif field.type?exists && ( field.type== 'String')>
   	protected ${field.type} ${field.firstLowerName};
   	protected ${field.type} ${field.firstLowerName}Like;
   	protected List<${field.type}> ${field.firstLowerName}s;
@@ -35,10 +36,18 @@ public class ${entityName}Query extends DataQuery {
 
     }
 
+    public Collection<String> getAppActorIds() {
+	return appActorIds;
+    }
+
+    public void setAppActorIds(Collection<String> appActorIds) {
+	this.appActorIds = appActorIds;
+    }
+
  <#if pojo_fields?exists>
     <#list  pojo_fields as field>
-      <#if field.name != 'processInstanceId'>
-        <#if field.type?exists && ( field.type== 'Integer' || field.type== 'Long' || field.type== 'Double' || field.type== 'Date')>
+     <#if field.name != 'processInstanceId' >
+        <#if field.type?exists && ( field.type== 'Integer' || field.type== 'Long' )>
 
     public ${field.type} get${field.firstUpperName}(){
         return ${field.firstLowerName};
@@ -54,6 +63,15 @@ public class ${entityName}Query extends DataQuery {
 
     public List<${field.type}> get${field.firstUpperName}s(){
 	return ${field.firstLowerName}s;
+    }
+	<#elseif field.type?exists && ( field.type== 'Double' || field.type== 'Date')>
+
+    public ${field.type} get${field.firstUpperName}GreaterThanOrEqual(){
+        return ${field.firstLowerName}GreaterThanOrEqual;
+    }
+
+    public ${field.type} get${field.firstUpperName}LessThanOrEqual(){
+	return ${field.firstLowerName}LessThanOrEqual;
     }
 
 	<#elseif field.type?exists && ( field.type== 'Boolean')>
@@ -92,8 +110,8 @@ public class ${entityName}Query extends DataQuery {
  
  <#if pojo_fields?exists>
     <#list  pojo_fields as field>
-      <#if field.name != 'processInstanceId'>
-        <#if field.type?exists && ( field.type== 'Integer' || field.type== 'Long' || field.type== 'Double' || field.type== 'Date')>
+      <#if field.name != 'processInstanceId' >
+        <#if field.type?exists && ( field.type== 'Integer' || field.type== 'Long' )>
 
     public void set${field.firstUpperName}(${field.type} ${field.firstLowerName}){
         this.${field.firstLowerName} = ${field.firstLowerName};
@@ -109,6 +127,16 @@ public class ${entityName}Query extends DataQuery {
 
     public void set${field.firstUpperName}s(List<${field.type}> ${field.firstLowerName}s){
         this.${field.firstLowerName}s = ${field.firstLowerName}s;
+    }
+
+	<#elseif field.type?exists && ( field.type== 'Double' || field.type== 'Date')>
+
+    public void set${field.firstUpperName}GreaterThanOrEqual(${field.type} ${field.firstLowerName}GreaterThanOrEqual){
+        this.${field.firstLowerName}GreaterThanOrEqual = ${field.firstLowerName}GreaterThanOrEqual;
+    }
+
+    public void set${field.firstUpperName}LessThanOrEqual(${field.type} ${field.firstLowerName}LessThanOrEqual){
+	this.${field.firstLowerName}LessThanOrEqual = ${field.firstLowerName}LessThanOrEqual;
     }
 
 	<#elseif field.type?exists && ( field.type== 'Boolean')>
@@ -139,8 +167,8 @@ public class ${entityName}Query extends DataQuery {
 
  <#if pojo_fields?exists>
     <#list  pojo_fields as field>
-      <#if field.name != 'processInstanceId'>
-        <#if field.type?exists && ( field.type== 'Integer' || field.type== 'Long' || field.type== 'Double' || field.type== 'Date')>
+      <#if field.name != 'processInstanceId' >
+        <#if field.type?exists && ( field.type== 'Integer' || field.type== 'Long')>
 
     public ${entityName}Query ${field.firstLowerName}(${field.type} ${field.firstLowerName}){
 	if (${field.firstLowerName} == null) {
@@ -173,6 +201,26 @@ public class ${entityName}Query extends DataQuery {
         this.${field.firstLowerName}s = ${field.firstLowerName}s;
         return this;
     }
+
+    <#elseif field.type?exists && ( field.type== 'Double' || field.type== 'Date')>
+
+
+    public ${entityName}Query ${field.firstLowerName}GreaterThanOrEqual(${field.type} ${field.firstLowerName}GreaterThanOrEqual){
+	if (${field.firstLowerName}GreaterThanOrEqual == null) {
+	    throw new RuntimeException("${field.firstLowerName} is null");
+        }         
+	this.${field.firstLowerName}GreaterThanOrEqual = ${field.firstLowerName}GreaterThanOrEqual;
+        return this;
+    }
+
+    public ${entityName}Query ${field.firstLowerName}LessThanOrEqual(${field.type} ${field.firstLowerName}LessThanOrEqual){
+        if (${field.firstLowerName}LessThanOrEqual == null) {
+            throw new RuntimeException("${field.firstLowerName} is null");
+        }
+        this.${field.firstLowerName}LessThanOrEqual = ${field.firstLowerName}LessThanOrEqual;
+        return this;
+    }
+
 
         <#elseif field.type?exists && ( field.type== 'Boolean')>
 
