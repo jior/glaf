@@ -41,7 +41,6 @@ import com.glaf.core.util.SerializationUtils;
  */
 public class CacheChannel extends ReceiverAdapter implements
 		CacheExpiredListener {
-
 	private final static Logger log = LoggerFactory
 			.getLogger(CacheChannel.class);
 
@@ -54,9 +53,10 @@ public class CacheChannel extends ReceiverAdapter implements
 	public final static byte LEVEL_2 = 2;
 
 	private String name;
+
 	private JChannel channel;
 
-	private static volatile CacheChannel instance;
+	private static volatile CacheChannel instance = new CacheChannel("default");
 
 	/**
 	 * 单例方法
@@ -120,7 +120,7 @@ public class CacheChannel extends ReceiverAdapter implements
 		CacheObject object = new CacheObject();
 		object.setRegion(region);
 		object.setKey(key);
-		 
+
 		if (region != null && key != null) {
 			object.setValue(CacheManager.get(LEVEL_1, region, key));
 			if (object.getValue() == null) {
