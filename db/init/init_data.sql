@@ -87,6 +87,7 @@ insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (452, 8, '”
 insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (494, 8, 'TODO≈‰÷√', 'TODO≈‰÷√', 494, '494');
 insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (495, 8, 'µ˜∂»π‹¿Ì', 'µ˜∂»π‹¿Ì', 495, '495');
 insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (498, 4, 'ªı±“¿‡–Õ', 'ªı±“¿‡–Õ', 498, 'money');
+insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (499, 4, '’Àªß¿‡–Õ', '’Àªß¿‡–Õ', 499, 'AccountType');
 
 insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (512, 10, ' ⁄»®π‹¿Ì', ' ⁄»®π‹¿Ì', 512, '512');
 
@@ -216,6 +217,9 @@ insert into SYS_DICTORY (id, typeId, code, name, sort, dictDesc, blocked, ext1, 
 insert into SYS_DICTORY (id, typeId, code, name, sort, dictDesc, blocked, ext1, ext2) values (4, 498, 'HKD', '∏€±“', 4, null, 0, '', '');
 insert into SYS_DICTORY (id, typeId, code, name, sort, dictDesc, blocked, ext1, ext2) values (5, 498, 'EUR', '≈∑‘™', 5, null, 0, '', '');
  
+insert into SYS_DICTORY (id, typeId, code, name, sort, dictDesc, blocked, value) values (11, 499, '0', 'ƒ¨»œ', 1, null, 0, '/mx/my/main');
+insert into SYS_DICTORY (id, typeId, code, name, sort, dictDesc, blocked, value) values (12, 499, '1', 'Õ¯’æ', 2, null, 0, '/website/main');
+insert into SYS_DICTORY (id, typeId, code, name, sort, dictDesc, blocked, value) values (13, 499, '2', 'Œ¢–≈', 3, null, 0, '/mx/wechat/main');
 
 insert into SYS_DICTORY_DEF (id, nodeid, name, columnname, title, type, length, sort, required, target) values (4,  0, 'ext1',  'EXT1', '',  'String', 200, 3, 0, 'SYS_DICTORY');
 insert into SYS_DICTORY_DEF (id, nodeid, name, columnname, title, type, length, sort, required, target) values (5,  0, 'ext2',  'EXT2', '',  'String', 200, 4, 0, 'SYS_DICTORY');
