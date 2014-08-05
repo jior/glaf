@@ -132,6 +132,7 @@ public class ExecutionProperties {
 					}
 				}
 			} catch (Exception ex) {
+				ex.printStackTrace();
 				throw new RuntimeException(ex);
 			} finally {
 				loading.set(false);

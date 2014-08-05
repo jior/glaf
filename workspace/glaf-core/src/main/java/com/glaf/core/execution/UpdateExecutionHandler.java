@@ -59,12 +59,14 @@ public class UpdateExecutionHandler implements ExecutionHandler {
 
 	@Override
 	public void execute(String content) {
+		FileExecutionHelper helper = new FileExecutionHelper();
 		String currentSystemName = Environment.getCurrentSystemName();
 		Connection conn = null;
 		Statement stmt = null;
 		try {
 			conn = DBConnectionFactory.getConnection(currentSystemName);
 			if (conn != null) {
+				helper.createTable(conn);
 				String path = SystemProperties.getConfigRootPath()
 						+ "/conf/bootstrap/update";
 				File dir = new File(path);
@@ -75,12 +77,22 @@ public class UpdateExecutionHandler implements ExecutionHandler {
 								&& StringUtils.endsWith(contents[i].getName(),
 										".sql")) {
 							try {
-								conn.setAutoCommit(false);
-								String ddlStatements = FileUtils
-										.readFile(contents[i].getAbsolutePath());
-								DBUtils.executeSchemaResourceIgnoreException(
-										conn, ddlStatements);
-								conn.commit();
+								if (!helper.exists(conn, "update_sql",
+										contents[i])) {
+									long lastModified = helper.lastModified(
+											conn, "update_sql", contents[i]);
+									if (contents[i].lastModified() > lastModified) {
+										conn.setAutoCommit(false);
+										String ddlStatements = FileUtils
+												.readFile(contents[i]
+														.getAbsolutePath());
+										DBUtils.executeSchemaResourceIgnoreException(
+												conn, ddlStatements);
+										helper.save(conn, "update_sql",
+												contents[i]);
+										conn.commit();
+									}
+								}
 							} catch (Exception ex) {
 								ex.printStackTrace();
 								logger.error(ex);
@@ -90,9 +102,18 @@ public class UpdateExecutionHandler implements ExecutionHandler {
 										".xml")) {
 							XmlToDbImporter imp = new XmlToDbImporter();
 							try {
-								conn.setAutoCommit(false);
-								imp.doImport(contents[i], conn);
-								conn.commit();
+								if (!helper.exists(conn, "import_xml",
+										contents[i])) {
+									long lastModified = helper.lastModified(
+											conn, "import_xml", contents[i]);
+									if (contents[i].lastModified() > lastModified) {
+										conn.setAutoCommit(false);
+										imp.doImport(contents[i], conn);
+										helper.save(conn, "import_xml",
+												contents[i]);
+										conn.commit();
+									}
+								}
 							} catch (Exception ex) {
 								ex.printStackTrace();
 								logger.error(ex);

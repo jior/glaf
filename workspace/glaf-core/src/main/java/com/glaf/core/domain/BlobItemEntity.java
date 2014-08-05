@@ -47,6 +47,10 @@ public class BlobItemEntity implements DataFile, Serializable, BlobItem,
 		JSONable {
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@Column(name = "ID_", length = 50, nullable = false)
+	protected String id;
+
 	@Column(name = "BUSINESSKEY_", length = 50)
 	protected String businessKey;
 
@@ -75,10 +79,6 @@ public class BlobItemEntity implements DataFile, Serializable, BlobItem,
 
 	@Column(name = "FILENAME_", length = 500)
 	protected String filename;
-
-	@Id
-	@Column(name = "ID_", length = 50, nullable = false)
-	protected String id;
 
 	@Transient
 	protected transient InputStream inputStream = null;
@@ -326,7 +326,5 @@ public class BlobItemEntity implements DataFile, Serializable, BlobItem,
 		return ToStringBuilder.reflectionToString(this,
 				ToStringStyle.MULTI_LINE_STYLE);
 	}
-
-	 
 
 }
