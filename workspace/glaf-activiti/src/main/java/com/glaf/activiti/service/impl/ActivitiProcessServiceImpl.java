@@ -20,6 +20,7 @@ package com.glaf.activiti.service.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -367,6 +368,85 @@ public class ActivitiProcessServiceImpl implements ActivitiProcessService {
 		}
 
 		return tasks;
+	}
+
+	/**
+	 * 驳回任务
+	 * 
+	 * @param processInstanceId
+	 *            流程实例编号
+	 * @param destTaskDefKey
+	 *            任务定义key
+	 * @param rejectMessage
+	 *            驳回原因
+	 */
+	public void rejectTask(String processInstanceId, String destTaskDefKey,
+			String rejectMessage) {
+		// 获得当前任务的对应实列
+		Task taskEntity = taskService.createTaskQuery()
+				.processInstanceId(processInstanceId).singleResult();
+		// 当前任务key
+		String taskDefKey = taskEntity.getTaskDefinitionKey();
+		// 获得当前流程的定义模型
+		ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity) ((RepositoryServiceImpl) repositoryService)
+				.getDeployedProcessDefinition(taskEntity
+						.getProcessDefinitionId());
+
+		// 获得当前流程定义模型的所有任务节点
+		List<ActivityImpl> activityList = processDefinition.getActivities();
+		// 获得当前活动节点和驳回的目标节点
+		ActivityImpl currActivity = null;// 当前活动节点
+		ActivityImpl destActivity = null;// 驳回目标节点
+		int sign = 0;
+		for (ActivityImpl activityImpl : activityList) {
+			// 确定当前活动activity节点
+			if (taskDefKey.equals(activityImpl.getId())) {
+				currActivity = activityImpl;
+				sign++;
+			} else if (destTaskDefKey.equals(activityImpl.getId())) {
+				destActivity = activityImpl;
+				sign++;
+			}
+			if (sign == 2) {
+				break;// 如果两个节点都获得,退出跳出循环
+			}
+		}
+
+		// 保存当前活动节点的流程想参数
+		List<PvmTransition> hisPvmTransitionList = new ArrayList<PvmTransition>(
+				0);
+		for (PvmTransition pvmTransition : currActivity
+				.getOutgoingTransitions()) {
+			hisPvmTransitionList.add(pvmTransition);
+		}
+
+		// 清空当前活动几点的所有流出项
+		currActivity.getOutgoingTransitions().clear();
+
+		// 为当前节点动态创建新的流出项
+		TransitionImpl newTransitionImpl = currActivity
+				.createOutgoingTransition();
+		// 为当前活动节点新的流出目标指定流程目标
+		newTransitionImpl.setDestination(destActivity);
+
+		// 保存驳回意见
+		taskEntity.setDescription(rejectMessage);// 设置驳回意见
+		taskService.saveTask(taskEntity);
+
+		// 设定驳回标志
+		Map<String, Object> variables = new HashMap<String, Object>();
+
+		// 执行当前任务驳回到目标任务
+		taskService.complete(taskEntity.getId(), variables);
+
+		// 清除目标节点的新流入项
+		destActivity.getIncomingTransitions().remove(newTransitionImpl);
+
+		// 清除原活动节点的临时流程项
+		currActivity.getOutgoingTransitions().clear();
+
+		// 还原原活动节点流出项参数
+		currActivity.getOutgoingTransitions().addAll(hisPvmTransitionList);
 	}
 
 	/**

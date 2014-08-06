@@ -147,6 +147,19 @@ public interface ActivitiProcessService {
 	/**
 	 * 驳回任务
 	 * 
+	 * @param processInstanceId
+	 *            流程实例编号
+	 * @param destTaskDefKey
+	 *            任务定义key
+	 * @param rejectMessage
+	 *            驳回原因
+	 */
+	void rejectTask(String processInstanceId, String destTaskDefKey,
+			String rejectMessage);
+
+	/**
+	 * 驳回任务
+	 * 
 	 * @param taskId
 	 * @return
 	 */
