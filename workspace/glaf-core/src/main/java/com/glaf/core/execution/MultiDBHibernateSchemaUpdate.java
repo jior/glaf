@@ -43,6 +43,8 @@ public class MultiDBHibernateSchemaUpdate {
 					System.out.println(sessionFactory);
 					System.out.println("<br>成功！");
 				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			} finally {
 				Environment.setCurrentSystemName(systemName);
 			}
