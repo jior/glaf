@@ -30,6 +30,7 @@ import org.apache.commons.logging.LogFactory;
 import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.domain.util.BlobItemDomainFactory;
 import com.glaf.core.util.DBUtils;
+import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.JdbcUtils;
 import com.glaf.core.util.UUID32;
@@ -107,8 +108,8 @@ public class FileExecutionHelper {
 
 	public void save(Connection connection, String serviceKey, File file) {
 		String sql = "  insert into "
-				+ " SYS_LOB (ID_, BUSINESSKEY_, FILEID_, SERVICEKEY_, NAME_, TYPE_, FILENAME_, PATH_, LASTMODIFIED_, LOCKED_, STATUS_, DATA_)"
-				+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+				+ " SYS_LOB (ID_, BUSINESSKEY_, FILEID_, SERVICEKEY_, NAME_, TYPE_, FILENAME_, PATH_, LASTMODIFIED_, LOCKED_, STATUS_, DATA_, CREATEBY_, CREATEDATE_)"
+				+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 		PreparedStatement psmt = null;
 		try {
 			psmt = connection.prepareStatement(sql);
@@ -124,6 +125,8 @@ public class FileExecutionHelper {
 			psmt.setInt(10, 0);
 			psmt.setInt(11, 1);
 			psmt.setBytes(12, FileUtils.getBytes(file));
+			psmt.setString(13, "system");
+			psmt.setTimestamp(14, DateUtils.toTimestamp(new java.util.Date()));
 			psmt.executeUpdate();
 		} catch (Exception ex) {
 			logger.error(ex);
