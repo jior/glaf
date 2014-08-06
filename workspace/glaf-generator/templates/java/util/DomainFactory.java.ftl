@@ -13,8 +13,10 @@ import com.glaf.core.util.DBUtils;
  */
 public class ${entityName}DomainFactory {
 
+    public final static String TABLENAME = "${tableName}";
+
     public static TableDefinition getTableDefinition(){
-        return getTableDefinition("${tableName}");
+        return getTableDefinition(TABLENAME);
     }
 
     public static TableDefinition getTableDefinition(String tableName) {
@@ -55,8 +57,8 @@ public class ${entityName}DomainFactory {
 
 	 
     public static TableDefinition createTable() {
-        TableDefinition tableDefinition = getTableDefinition("${tableName}");
-        if (!DBUtils.tableExists(tableName)) {
+        TableDefinition tableDefinition = getTableDefinition(TABLENAME);
+        if (!DBUtils.tableExists(TABLENAME)) {
             DBUtils.createTable(tableDefinition);
         } else {
             DBUtils.alterTable(tableDefinition);
