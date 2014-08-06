@@ -62,7 +62,6 @@ import com.glaf.core.cache.ClearCacheJob;
 import com.glaf.core.config.*;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.db.DbTableChecker;
-import com.glaf.core.execution.MultiDBHibernateSchemaUpdate;
 import com.glaf.core.service.EntityService;
 import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.core.startup.BootstrapManager;
@@ -1076,8 +1075,6 @@ public class BaseDataManager {
 		if (!loading.get()) {
 			try {
 				loading.set(true);
-				MultiDBHibernateSchemaUpdate schema = new MultiDBHibernateSchemaUpdate();
-				schema.execute();
 				ClearCacheJob job = new ClearCacheJob();
 				job.clearAll();
 				initBaseData();

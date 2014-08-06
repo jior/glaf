@@ -50,6 +50,7 @@ import com.glaf.base.modules.sys.service.DictoryService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.utils.ParamUtil;
 import com.glaf.core.config.ViewProperties;
+import com.glaf.core.execution.MultiDBHibernateSchemaUpdate;
 import com.glaf.core.res.MessageUtils;
 import com.glaf.core.res.ViewMessage;
 import com.glaf.core.res.ViewMessages;
@@ -351,6 +352,8 @@ public class SysDictoryController {
 	@RequestMapping(params = "method=saveLoadDictory", method = RequestMethod.POST)
 	public ModelAndView saveLoadDictory(HttpServletRequest request,
 			ModelMap modelMap) {
+		MultiDBHibernateSchemaUpdate schema = new MultiDBHibernateSchemaUpdate();
+		schema.execute();
 		BaseDataManager.getInstance().refreshBaseData();
 		ViewMessages messages = new ViewMessages();
 		messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
