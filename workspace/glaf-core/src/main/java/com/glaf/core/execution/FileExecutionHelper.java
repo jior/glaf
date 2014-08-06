@@ -45,8 +45,9 @@ public class FileExecutionHelper {
 			autoCommit = connection.getAutoCommit();
 			connection.setAutoCommit(false);
 			TableDefinition tableDefinition = BlobItemDomainFactory
-					.getTableDefinition("SYS_LOB");
-			if (!DBUtils.tableExists(connection, "SYS_LOB")) {
+					.getTableDefinition();
+			if (!DBUtils.tableExists(connection,
+					BlobItemDomainFactory.TABLENAME)) {
 				DBUtils.createTable(connection, tableDefinition);
 			} else {
 				DBUtils.alterTable(connection, tableDefinition);
@@ -61,7 +62,8 @@ public class FileExecutionHelper {
 	}
 
 	public boolean exists(Connection connection, String serviceKey, File file) {
-		String sql = " select ID_ from SYS_LOB where SERVICEKEY_ = ? and FILENAME_ = ?  ";
+		String sql = " select ID_ from " + BlobItemDomainFactory.TABLENAME
+				+ " where SERVICEKEY_ = ? and FILENAME_ = ?  ";
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		try {
@@ -84,7 +86,9 @@ public class FileExecutionHelper {
 	}
 
 	public long lastModified(Connection connection, String serviceKey, File file) {
-		String sql = " select LASTMODIFIED_ from SYS_LOB where SERVICEKEY_ = ? and FILENAME_ = ? order by LASTMODIFIED_ desc ";
+		String sql = " select LASTMODIFIED_ from "
+				+ BlobItemDomainFactory.TABLENAME
+				+ " where SERVICEKEY_ = ? and FILENAME_ = ? order by LASTMODIFIED_ desc ";
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		try {
@@ -107,8 +111,9 @@ public class FileExecutionHelper {
 	}
 
 	public void save(Connection connection, String serviceKey, File file) {
-		String sql = "  insert into "
-				+ " SYS_LOB (ID_, BUSINESSKEY_, FILEID_, SERVICEKEY_, NAME_, TYPE_, FILENAME_, PATH_, LASTMODIFIED_, LOCKED_, STATUS_, DATA_, CREATEBY_, CREATEDATE_)"
+		String sql = " insert into "
+				+ BlobItemDomainFactory.TABLENAME
+				+ " (ID_, BUSINESSKEY_, FILEID_, SERVICEKEY_, NAME_, TYPE_, FILENAME_, PATH_, LASTMODIFIED_, LOCKED_, STATUS_, DATA_, CREATEBY_, CREATEDATE_)"
 				+ " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 		PreparedStatement psmt = null;
 		try {

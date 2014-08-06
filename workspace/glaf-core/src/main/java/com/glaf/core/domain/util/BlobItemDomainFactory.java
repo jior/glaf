@@ -29,6 +29,32 @@ import com.glaf.core.util.DBUtils;
  */
 public class BlobItemDomainFactory {
 
+	public final static String TABLENAME = "SYS_LOB";
+
+	public static TableDefinition createTable() {
+		TableDefinition tableDefinition = getTableDefinition(TABLENAME);
+		if (!DBUtils.tableExists(TABLENAME)) {
+			DBUtils.createTable(tableDefinition);
+		} else {
+			DBUtils.alterTable(tableDefinition);
+		}
+		return tableDefinition;
+	}
+
+	public static TableDefinition createTable(String tableName) {
+		TableDefinition tableDefinition = getTableDefinition(tableName);
+		if (!DBUtils.tableExists(tableName)) {
+			DBUtils.createTable(tableDefinition);
+		} else {
+			DBUtils.alterTable(tableDefinition);
+		}
+		return tableDefinition;
+	}
+
+	public static TableDefinition getTableDefinition() {
+		return getTableDefinition(TABLENAME);
+	}
+
 	public static TableDefinition getTableDefinition(String tableName) {
 		tableName = tableName.toUpperCase();
 		TableDefinition tableDefinition = new TableDefinition();
@@ -147,16 +173,6 @@ public class BlobItemDomainFactory {
 		data.setJavaType("Blob");
 		tableDefinition.addColumn(data);
 
-		return tableDefinition;
-	}
-
-	public static TableDefinition createTable(String tableName) {
-		TableDefinition tableDefinition = getTableDefinition(tableName);
-		if (!DBUtils.tableExists(tableName)) {
-			DBUtils.createTable(tableDefinition);
-		} else {
-			DBUtils.alterTable(tableDefinition);
-		}
 		return tableDefinition;
 	}
 
