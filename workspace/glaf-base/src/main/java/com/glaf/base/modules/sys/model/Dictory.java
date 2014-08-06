@@ -237,7 +237,7 @@ public class Dictory implements Serializable, JSONable {
 	/**
 	 * 值
 	 */
-	@Column(name = "VALUE_", length = 200)
+	@Column(name = "VALUE_", length = 2000)
 	protected String value;
 
 	public Dictory() {

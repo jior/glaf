@@ -217,9 +217,9 @@ insert into SYS_DICTORY (id, typeId, code, name, sort, dictDesc, blocked, ext1, 
 insert into SYS_DICTORY (id, typeId, code, name, sort, dictDesc, blocked, ext1, ext2) values (4, 498, 'HKD', '¸Û±Ò', 4, null, 0, '', '');
 insert into SYS_DICTORY (id, typeId, code, name, sort, dictDesc, blocked, ext1, ext2) values (5, 498, 'EUR', 'Å·Ôª', 5, null, 0, '', '');
  
-insert into SYS_DICTORY (id, typeId, code, name, sort, dictDesc, blocked, value) values (11, 499, '0', 'Ä¬ÈÏ', 1, null, 0, '/mx/my/main');
-insert into SYS_DICTORY (id, typeId, code, name, sort, dictDesc, blocked, value) values (12, 499, '1', 'ÍøÕ¾', 2, null, 0, '/website/main');
-insert into SYS_DICTORY (id, typeId, code, name, sort, dictDesc, blocked, value) values (13, 499, '2', 'Î¢ÐÅ', 3, null, 0, '/mx/wechat/main');
+insert into SYS_DICTORY (id, typeId, code, name, sort, dictDesc, blocked, value_) values (11, 499, '0', 'Ä¬ÈÏ', 1, null, 0, '/mx/my/main');
+insert into SYS_DICTORY (id, typeId, code, name, sort, dictDesc, blocked, value_) values (12, 499, '1', 'ÍøÕ¾', 2, null, 0, '/website/main');
+insert into SYS_DICTORY (id, typeId, code, name, sort, dictDesc, blocked, value_) values (13, 499, '2', 'Î¢ÐÅ', 3, null, 0, '/mx/wechat/main');
 
 insert into SYS_DICTORY_DEF (id, nodeid, name, columnname, title, type, length, sort, required, target) values (4,  0, 'ext1',  'EXT1', '',  'String', 200, 3, 0, 'SYS_DICTORY');
 insert into SYS_DICTORY_DEF (id, nodeid, name, columnname, title, type, length, sort, required, target) values (5,  0, 'ext2',  'EXT2', '',  'String', 200, 4, 0, 'SYS_DICTORY');
