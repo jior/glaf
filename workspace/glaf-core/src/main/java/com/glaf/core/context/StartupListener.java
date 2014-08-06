@@ -35,6 +35,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import com.glaf.core.config.BaseConfiguration;
 import com.glaf.core.config.Configuration;
 import com.glaf.core.config.SystemProperties;
+import com.glaf.core.execution.ExecutionManager;
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.startup.BootstrapManager;
 import com.glaf.core.util.Constants;
@@ -44,6 +45,7 @@ import com.glaf.core.util.UUID32;
 
 public class StartupListener extends ContextLoaderListener implements
 		ServletContextListener {
+	private static final Log logger = LogFactory.getLog(StartupListener.class);
 
 	protected static Configuration conf = BaseConfiguration.create();
 
@@ -60,10 +62,12 @@ public class StartupListener extends ContextLoaderListener implements
 		}
 	}
 
-	private static final Log logger = LogFactory.getLog(StartupListener.class);
-
 	public void beforeContextInitialized(ServletContext context) {
-		BootstrapManager.getInstance().startup(context);
+		try {
+			BootstrapManager.getInstance().startup(context);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	public void contextInitialized(ServletContextEvent event) {
@@ -121,6 +125,11 @@ public class StartupListener extends ContextLoaderListener implements
 			}
 		} catch (Exception ex) {
 
+		}
+		try {
+			ExecutionManager.getInstance().execute();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 	}
 
