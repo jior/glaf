@@ -48,6 +48,12 @@
 		<template>/templates/java/util/JsonFactory.java.ftl</template>
 		<encoding>UTF-8</encoding>
 	</definition>
+	<definition name="DomainFactory">
+		<savePath>/java/util</savePath>
+		<saveName>${entityName}DomainFactory.java</saveName>
+		<template>/templates/java/util/DomainFactory.java.ftl</template>
+		<encoding>UTF-8</encoding>
+	</definition>
 	<!-- <definition name="spring-service-context">
 		<savePath>/java/service</savePath>
 		<saveName>${entityName}-spring-context.xml</saveName>
