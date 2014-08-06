@@ -13,6 +13,10 @@ import com.glaf.core.util.DBUtils;
  */
 public class ${entityName}DomainFactory {
 
+    public static TableDefinition getTableDefinition(){
+        return getTableDefinition("${tableName}");
+    }
+
     public static TableDefinition getTableDefinition(String tableName) {
         tableName = tableName.toUpperCase();
         TableDefinition tableDefinition = new TableDefinition();
@@ -50,6 +54,17 @@ public class ${entityName}DomainFactory {
      }
 
 	 
+    public static TableDefinition createTable() {
+        TableDefinition tableDefinition = getTableDefinition("${tableName}");
+        if (!DBUtils.tableExists(tableName)) {
+            DBUtils.createTable(tableDefinition);
+        } else {
+            DBUtils.alterTable(tableDefinition);
+        }
+        return tableDefinition;
+    }
+
+
     public static TableDefinition createTable(String tableName) {
         TableDefinition tableDefinition = getTableDefinition(tableName);
         if (!DBUtils.tableExists(tableName)) {
@@ -59,7 +74,6 @@ public class ${entityName}DomainFactory {
         }
         return tableDefinition;
     }
-
 
     private ${entityName}DomainFactory() {
 
