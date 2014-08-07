@@ -195,7 +195,7 @@
 		from ${tableName} E
 		
 		<#if classDefinition.jbpmSupport >
-		<if test=" workedProcessFlag == 'WD' and appActorIds != null and appActorIds.size != 0  ">
+		<if test=" workedProcessFlag == 'WD' and appActorIds != null and appActorIds.size() &gt; 0  ">
            inner join JBPM_TASKINSTANCE T
 		   on E.PROCESSINSTANCEID_ = T.PROCINST_
 		</if>
@@ -204,7 +204,7 @@
 		<where>
 		       1 = 1  
 			  <#if classDefinition.jbpmSupport >
-			   <if test="workedProcessFlag == 'WD' and appActorIds != null and appActorIds.size != 0 ">
+			   <if test="workedProcessFlag == 'WD' and appActorIds != null and appActorIds.size() &gt; 0 ">
 			     and ( T.END_ IS NOT NULL)
                  and ( T.ACTORID_ in
                  <foreach item="x_actorId" index="index" collection="appActorIds" 
@@ -214,7 +214,7 @@
 				 )
 			   </if>
 
-			   <if test="workedProcessFlag == 'PD' and appActorIds != null and appActorIds.size != 0 ">
+			   <if test="workedProcessFlag == 'PD' and appActorIds != null and appActorIds.size() &gt; 0 ">
 			      and E.PROCESSINSTANCEID_ in (
 				          SELECT a.PROCINST_
 						  FROM JBPM_TASKINSTANCE a 
@@ -246,7 +246,7 @@
                  )
 			   </if>
 
-			   <if test="workedProcessFlag == 'ALL' and appActorIds != null and appActorIds.size != 0 ">
+			   <if test="workedProcessFlag == 'ALL' and appActorIds != null and appActorIds.size() &gt; 0 ">
 			      and E.PROCESSINSTANCEID_ in (
 				          SELECT a.PROCINST_
 						  FROM JBPM_TASKINSTANCE a 
@@ -277,7 +277,7 @@
 			   </if>
 
 
-			<if test="processInstanceIds != null and processInstanceIds.size != 0">
+			<if test="processInstanceIds != null and processInstanceIds.size() &gt; 0">
 				and E.PROCESSINSTANCEID_ IN
 				<foreach item="x_processInstanceId" index="index"
 					collection="processInstanceIds" open="(" separator="," close=")">
@@ -304,7 +304,7 @@
 				and E.${field.columnName} &lt;= #GG{${field.name}LessThanOrEqual}
             </if>
 
-			<if test="${field.name}s != null and ${field.name}s.size != 0">
+			<if test="${field.name}s != null and ${field.name}s.size() &gt; 0">
 			    and E.${field.columnName} IN
                 <foreach item="x_${field.name}" index="index" collection="${field.name}s" 
                      open="(" separator="," close=")">
@@ -332,7 +332,7 @@
 				and E.${field.columnName} like #GG{${field.name}Like}
             </if>
 
-			<if test="${field.name}s != null and ${field.name}s.size != 0">
+			<if test="${field.name}s != null and ${field.name}s.size() &gt; 0">
 			    and E.${field.columnName} IN
                 <foreach item="x_${field.name}" index="index" collection="${field.name}s" 
                      open="(" separator="," close=")">

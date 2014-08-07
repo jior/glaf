@@ -194,7 +194,7 @@
 				and E.${field.columnName} &lt;= #GG{${field.name}LessThanOrEqual}
             </if>
 
-			<if test="${field.name}s != null and ${field.name}s.size != 0">
+			<if test="${field.name}s != null and ${field.name}s.size() &gt; 0">
 			    and E.${field.columnName} IN
                 <foreach item="x_${field.name}" index="index" collection="${field.name}s" 
                      open="(" separator="," close=")">
@@ -212,7 +212,7 @@
 				and E.${field.columnName} like #GG{${field.name}Like}
             </if>
 
-			<if test="${field.name}s != null and ${field.name}s.size != 0">
+			<if test="${field.name}s != null and ${field.name}s.size() &gt; 0">
 			    and E.${field.columnName} IN
                 <foreach item="x_${field.name}" index="index" collection="${field.name}s" 
                      open="(" separator="," close=")">
