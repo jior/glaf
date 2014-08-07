@@ -38,6 +38,7 @@
 		<mapper resource="org/activiti/db/mapping/entity/Task.xml" />
 		<mapper resource="org/activiti/db/mapping/entity/VariableInstance.xml" />
 		<mapper resource="org/activiti/db/mapping/entity/EventSubscription.xml" />
+		<mapper resource="org/activiti/db/mapping/entity/EventLogEntry.xml" />
 
 		<mapper resource="com/glaf/activiti/persistence/ActivityInstance.xml" />
 		<mapper resource="com/glaf/activiti/persistence/Extension.xml" />
