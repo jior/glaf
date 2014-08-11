@@ -24,6 +24,11 @@ import com.glaf.core.util.FtpUtils;
 
 public class FtpTest {
 
+	public static void main(String[] args) {
+		FtpTest test = new FtpTest();
+		test.testUpload();
+	}
+
 	@Test
 	public void testUpload() {
 		try {

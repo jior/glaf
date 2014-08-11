@@ -48,7 +48,7 @@ public class FtpUtils {
 
 	protected static Configuration conf = BaseConfiguration.create();
 
-	protected static FTPClient ftpClient;
+	protected static ThreadLocal<FTPClient> ftpClientLocal = new ThreadLocal<FTPClient>();
 
 	private static void changeToDirectory(String remoteFile) {
 		if (!remoteFile.startsWith("/")) {
@@ -56,7 +56,7 @@ public class FtpUtils {
 		}
 		if (remoteFile.startsWith("/") && remoteFile.indexOf("/") > 0) {
 			try {
-				ftpClient.changeWorkingDirectory("/");
+				getFTPClient().changeWorkingDirectory("/");
 				String tmp = "";
 				remoteFile = remoteFile.substring(0,
 						remoteFile.lastIndexOf("/"));
@@ -64,7 +64,7 @@ public class FtpUtils {
 				while (token.hasMoreTokens()) {
 					String str = token.nextToken();
 					tmp = tmp + "/" + str;
-					ftpClient.changeWorkingDirectory(tmp);
+					getFTPClient().changeWorkingDirectory(tmp);
 				}
 			} catch (IOException ex) {
 				ex.printStackTrace();
@@ -77,8 +77,10 @@ public class FtpUtils {
 	 */
 	public static void closeConnect() {
 		try {
-			ftpClient.logout();
-			ftpClient.disconnect();
+			getFTPClient().logout();
+			getFTPClient().disconnect();
+			ftpClientLocal.remove();
+			ftpClientLocal.set(null);
 			logger.info("disconnect success");
 		} catch (IOException ex) {
 			logger.error("disconnect error", ex);
@@ -109,9 +111,10 @@ public class FtpUtils {
 		String user = conf.get("ftp.user", "admin");
 		String password = conf.get("ftp.password", "admin");
 		try {
-			ftpClient = new FTPClient();
+			FTPClient ftpClient = new FTPClient();
 			ftpClient.connect(ip, port);
 			ftpClient.login(user, password);
+			ftpClientLocal.set(ftpClient);
 			logger.info("login success!");
 			return ftpClient;
 		} catch (IOException ex) {
@@ -130,9 +133,10 @@ public class FtpUtils {
 		String user = conf.get(prefix + ".ftp.user", "admin");
 		String password = conf.get(prefix + ".ftp.password", "admin");
 		try {
-			ftpClient = new FTPClient();
+			FTPClient ftpClient = new FTPClient();
 			ftpClient.connect(ip, port);
 			ftpClient.login(user, password);
+			ftpClientLocal.set(ftpClient);
 			logger.info("login success!");
 			return ftpClient;
 		} catch (IOException ex) {
@@ -156,9 +160,10 @@ public class FtpUtils {
 	public static FTPClient connectServer(String ip, int port, String user,
 			String password) {
 		try {
-			ftpClient = new FTPClient();
+			FTPClient ftpClient = new FTPClient();
 			ftpClient.connect(ip, port);
 			ftpClient.login(user, password);
+			ftpClientLocal.set(ftpClient);
 			logger.info("login success!");
 			return ftpClient;
 		} catch (IOException ex) {
@@ -189,14 +194,14 @@ public class FtpUtils {
 					dirs.add(tmp);
 				}
 				for (int i = 0; i < dirs.size() - 1; i++) {
-					ftpClient.changeWorkingDirectory(dirs.get(i));
+					getFTPClient().changeWorkingDirectory(dirs.get(i));
 				}
 				String dir = remotePath.substring(
 						remotePath.lastIndexOf("/") + 1, remotePath.length());
 				logger.debug("rm " + dir);
-				ftpClient.deleteFile(dir);
+				getFTPClient().deleteFile(dir);
 			} else {
-				ftpClient.deleteFile(remotePath);
+				getFTPClient().deleteFile(remotePath);
 			}
 		} catch (IOException ex) {
 			ex.printStackTrace();
@@ -226,11 +231,11 @@ public class FtpUtils {
 						remoteFile.lastIndexOf("/") + 1, remoteFile.length());
 			}
 			// 设置被动模式
-			ftpClient.enterLocalPassiveMode();
+			getFTPClient().enterLocalPassiveMode();
 			// 设置以二进制方式传输
-			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-			FTPFile[] files = ftpClient.listFiles(new String(remoteFile
-					.getBytes("GBK"), "ISO-8859-1"));
+			getFTPClient().setFileType(FTP.BINARY_FILE_TYPE);
+			FTPFile[] files = getFTPClient().listFiles(
+					new String(remoteFile.getBytes("GBK"), "ISO-8859-1"));
 			if (files.length != 1) {
 				logger.warn("remote file is not exists");
 				return;
@@ -238,8 +243,8 @@ public class FtpUtils {
 			long lRemoteSize = files[0].getSize();
 			File file = new File(localFile);
 			out = new FileOutputStream(file);
-			in = ftpClient.retrieveFileStream(new String(remoteFile
-					.getBytes("GBK"), "ISO-8859-1"));
+			in = getFTPClient().retrieveFileStream(
+					new String(remoteFile.getBytes("GBK"), "ISO-8859-1"));
 			byte[] bytes = new byte[4096];
 			long step = lRemoteSize / 100;
 			if (step == 0) {
@@ -288,11 +293,11 @@ public class FtpUtils {
 						remoteFile.lastIndexOf("/") + 1, remoteFile.length());
 			}
 			// 设置被动模式
-			ftpClient.enterLocalPassiveMode();
+			getFTPClient().enterLocalPassiveMode();
 			// 设置以二进制方式传输
-			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-			FTPFile[] files = ftpClient.listFiles(new String(remoteFile
-					.getBytes("GBK"), "ISO-8859-1"));
+			getFTPClient().setFileType(FTP.BINARY_FILE_TYPE);
+			FTPFile[] files = getFTPClient().listFiles(
+					new String(remoteFile.getBytes("GBK"), "ISO-8859-1"));
 			if (files.length != 1) {
 				logger.warn("remote file is not exists");
 				return null;
@@ -301,8 +306,8 @@ public class FtpUtils {
 
 			out = new ByteArrayOutputStream();
 			bos = new BufferedOutputStream(out);
-			in = ftpClient.retrieveFileStream(new String(remoteFile
-					.getBytes("GBK"), "ISO-8859-1"));
+			in = getFTPClient().retrieveFileStream(
+					new String(remoteFile.getBytes("GBK"), "ISO-8859-1"));
 			byte[] buff = new byte[4096];
 			long step = lRemoteSize / 100;
 			if (step == 0) {
@@ -337,7 +342,11 @@ public class FtpUtils {
 	}
 
 	public static FTPClient getFtpClient() {
-		return ftpClient;
+		return getFTPClient();
+	}
+
+	public static FTPClient getFTPClient() {
+		return ftpClientLocal.get();
 	}
 
 	/**
@@ -351,7 +360,7 @@ public class FtpUtils {
 			throw new RuntimeException(" path must start with '/'");
 		}
 		try {
-			ftpClient.changeWorkingDirectory("/");
+			getFTPClient().changeWorkingDirectory("/");
 
 			if (remotePath.indexOf("/") != -1) {
 				String tmp = "";
@@ -359,8 +368,8 @@ public class FtpUtils {
 				while (token.hasMoreTokens()) {
 					String str = token.nextToken();
 					tmp = tmp + "/" + str;
-					ftpClient.mkd(str);
-					ftpClient.changeWorkingDirectory(tmp);
+					getFTPClient().mkd(str);
+					getFTPClient().changeWorkingDirectory(tmp);
 				}
 			}
 		} catch (IOException ex) {
@@ -382,7 +391,7 @@ public class FtpUtils {
 		}
 		try {
 
-			ftpClient.changeWorkingDirectory("/");
+			getFTPClient().changeWorkingDirectory("/");
 
 			if (remotePath.indexOf("/") != -1) {
 				String tmp = "";
@@ -394,14 +403,14 @@ public class FtpUtils {
 					dirs.add(tmp);
 				}
 				for (int i = 0; i < dirs.size() - 1; i++) {
-					ftpClient.changeWorkingDirectory(dirs.get(i));
+					getFTPClient().changeWorkingDirectory(dirs.get(i));
 				}
 				String dir = remotePath.substring(
 						remotePath.lastIndexOf("/") + 1, remotePath.length());
 				logger.debug("rm " + dir);
-				ftpClient.removeDirectory(dir);
+				getFTPClient().removeDirectory(dir);
 			} else {
-				ftpClient.rmd(remotePath);
+				getFTPClient().rmd(remotePath);
 			}
 		} catch (IOException ex) {
 			ex.printStackTrace();
@@ -434,12 +443,12 @@ public class FtpUtils {
 						remoteFile.lastIndexOf("/") + 1, remoteFile.length());
 			}
 
-			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-			ftpClient.enterLocalPassiveMode();
-			ftpClient.setFileTransferMode(FTP.STREAM_TRANSFER_MODE);
+			getFTPClient().setFileType(FTP.BINARY_FILE_TYPE);
+			getFTPClient().enterLocalPassiveMode();
+			getFTPClient().setFileTransferMode(FTP.STREAM_TRANSFER_MODE);
 			bais = new ByteArrayInputStream(bytes);
 			bis = new BufferedInputStream(bais);
-			boolean flag = ftpClient.storeFile(remoteFile, bis);
+			boolean flag = getFTPClient().storeFile(remoteFile, bis);
 			if (flag) {
 				logger.info("upload success");
 			} else {
@@ -477,10 +486,10 @@ public class FtpUtils {
 				remoteFile = remoteFile.substring(
 						remoteFile.lastIndexOf("/") + 1, remoteFile.length());
 			}
-			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-			ftpClient.enterLocalPassiveMode();
-			ftpClient.setFileTransferMode(FTP.STREAM_TRANSFER_MODE);
-			boolean flag = ftpClient.storeFile(remoteFile, input);
+			getFTPClient().setFileType(FTP.BINARY_FILE_TYPE);
+			getFTPClient().enterLocalPassiveMode();
+			getFTPClient().setFileTransferMode(FTP.STREAM_TRANSFER_MODE);
+			boolean flag = getFTPClient().storeFile(remoteFile, input);
 			if (flag) {
 				logger.info("upload success");
 			} else {
@@ -517,12 +526,12 @@ public class FtpUtils {
 						remoteFile.lastIndexOf("/") + 1, remoteFile.length());
 			}
 
-			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
-			ftpClient.enterLocalPassiveMode();
-			ftpClient.setFileTransferMode(FTP.STREAM_TRANSFER_MODE);
+			getFTPClient().setFileType(FTP.BINARY_FILE_TYPE);
+			getFTPClient().enterLocalPassiveMode();
+			getFTPClient().setFileTransferMode(FTP.STREAM_TRANSFER_MODE);
 			File file = new File(localFile);
 			input = new FileInputStream(file);
-			boolean flag = ftpClient.storeFile(remoteFile, input);
+			boolean flag = getFTPClient().storeFile(remoteFile, input);
 			if (flag) {
 				logger.info("upload success");
 			} else {
