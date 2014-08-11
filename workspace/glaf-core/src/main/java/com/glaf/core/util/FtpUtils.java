@@ -87,9 +87,23 @@ public class FtpUtils {
 	}
 
 	/**
+	 * 关闭FTP
+	 */
+	public static void closeConnect(FTPClient ftpClient) {
+		try {
+			ftpClient.logout();
+			ftpClient.disconnect();
+			logger.info("disconnect success");
+		} catch (IOException ex) {
+			logger.error("disconnect error", ex);
+			throw new RuntimeException(ex);
+		}
+	}
+
+	/**
 	 * 根据配置文件中的定义信息连接FTP服务器
 	 */
-	public static void connectServer() {
+	public static FTPClient connectServer() {
 		String ip = conf.get("ftp.host", "127.0.0.1");
 		int port = conf.getInt("ftp.port", 21);
 		String user = conf.get("ftp.user", "admin");
@@ -99,6 +113,7 @@ public class FtpUtils {
 			ftpClient.connect(ip, port);
 			ftpClient.login(user, password);
 			logger.info("login success!");
+			return ftpClient;
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			logger.error("login failed", ex);
@@ -109,7 +124,7 @@ public class FtpUtils {
 	/**
 	 * 根据配置文件中的定义信息连接FTP服务器
 	 */
-	public static void connectServer(String prefix) {
+	public static FTPClient connectServer(String prefix) {
 		String ip = conf.get(prefix + ".ftp.host", "127.0.0.1");
 		int port = conf.getInt(prefix + ".ftp.port", 21);
 		String user = conf.get(prefix + ".ftp.user", "admin");
@@ -119,6 +134,7 @@ public class FtpUtils {
 			ftpClient.connect(ip, port);
 			ftpClient.login(user, password);
 			logger.info("login success!");
+			return ftpClient;
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			logger.error("login failed", ex);
@@ -137,13 +153,14 @@ public class FtpUtils {
 	 * @param password
 	 *            密码
 	 */
-	public static void connectServer(String ip, int port, String user,
+	public static FTPClient connectServer(String ip, int port, String user,
 			String password) {
 		try {
 			ftpClient = new FTPClient();
 			ftpClient.connect(ip, port);
 			ftpClient.login(user, password);
 			logger.info("login success!");
+			return ftpClient;
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			logger.error("login failed", ex);
