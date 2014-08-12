@@ -99,6 +99,7 @@ public class SecurityUtils {
 			cipher.init(Cipher.DECRYPT_MODE, secretKey, paramSpec);
 			return new String(cipher.doFinal(hex2byte(data.getBytes())));
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			throw new SecurityException(ex);
 		}
 	}

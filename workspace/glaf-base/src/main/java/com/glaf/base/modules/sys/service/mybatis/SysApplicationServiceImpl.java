@@ -97,7 +97,11 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 		if (bean.getId() == 0) {
 			bean.setId(idGenerator.nextId());
 		}
+		if (StringUtils.isEmpty(bean.getCode())) {
+			bean.setCode("app_" + bean.getId());
+		}
 		if (bean.getNode() != null) {
+			bean.getNode().setCode(bean.getCode());
 			bean.getNode().setDiscriminator("A");
 			bean.getNode().setCreateBy(bean.getCreateBy());
 			sysTreeService.create(bean.getNode());
@@ -795,9 +799,13 @@ public class SysApplicationServiceImpl implements SysApplicationService {
 	public boolean update(SysApplication bean) {
 		String cacheKey = "sys_app_" + bean.getId();
 		bean.setUpdateDate(new Date());
+		if (StringUtils.isEmpty(bean.getCode())) {
+			bean.setCode("app_" + bean.getId());
+		}
 		this.sysApplicationMapper.updateSysApplication(bean);
 		CacheFactory.remove(cacheKey);
 		if (bean.getNode() != null) {
+			bean.getNode().setCode(bean.getCode());
 			bean.getNode().setLocked(bean.getLocked());
 			bean.getNode().setUpdateBy(bean.getUpdateBy());
 			sysTreeService.update(bean.getNode());
