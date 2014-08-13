@@ -44,6 +44,7 @@ import com.glaf.core.dialect.SQLServerDialect;
 import com.glaf.core.dialect.SQLiteDialect;
 import com.glaf.core.domain.util.ConnectionDefinitionJsonFactory;
 import com.glaf.core.jdbc.DBConnectionFactory;
+import com.glaf.core.security.SecurityUtils;
 import com.glaf.core.util.Constants;
 import com.glaf.core.util.PropertiesUtils;
 
@@ -111,6 +112,8 @@ public class DBConfiguration {
 	protected static ConcurrentMap<String, ConnectionDefinition> dataSourceProperties = new ConcurrentHashMap<String, ConnectionDefinition>();
 
 	protected static ConcurrentMap<String, Properties> jdbcTemplateProperties = new ConcurrentHashMap<String, Properties>();
+
+	protected static ConcurrentMap<String, String> jsonProperties = new ConcurrentHashMap<String, String>();
 
 	protected static ConcurrentMap<Integer, String> ISOLATION_LEVELS = new ConcurrentHashMap<Integer, String>();
 
@@ -201,6 +204,34 @@ public class DBConfiguration {
 		}
 	}
 
+	public static String encodeJson(Properties props) {
+		JSONObject jsonObject = new JSONObject();
+		Enumeration<?> e = props.keys();
+		while (e.hasMoreElements()) {
+			String key = (String) e.nextElement();
+			String value = props.getProperty(key);
+			jsonObject.put(key, value);
+		}
+		String content = jsonObject.toJSONString();
+		String path = SystemProperties.getConfigRootPath() + "/key";
+		String key = SystemProperties.getSecurityKey(path);
+		content = SecurityUtils.encode(key, content);
+		return content;
+	}
+
+	public static String encodeJsonCurrentSystem() {
+		String systemName = Environment.getCurrentSystemName();
+		if (jsonProperties.containsKey(systemName)) {
+			return jsonProperties.get(systemName);
+		}
+		Properties props = getDataSourcePropertiesByName(systemName);
+		if (props != null) {
+			String content = encodeJson(props);
+			jsonProperties.put(systemName, content);
+		}
+		return jsonProperties.get(systemName);
+	}
+
 	public static ConnectionDefinition getConnectionDefinition(String systemName) {
 		ConnectionDefinition model = dataSourceProperties.get(systemName);
 		if (model != null) {
@@ -236,18 +267,6 @@ public class DBConfiguration {
 			return conn.getType();
 		}
 		return null;
-	}
-
-	/**
-	 * 获取主库数据源属性
-	 * 
-	 * @return
-	 */
-	public static Properties getMasterDataSourceProperties() {
-		String configFile = SystemProperties.getMasterDataSourceConfigFile();
-		String filename = SystemProperties.getConfigRootPath() + configFile;
-		Properties props = PropertiesUtils.loadFilePathResource(filename);
-		return props;
 	}
 
 	public static Properties getCurrentDataSourceProperties() {
@@ -425,6 +444,18 @@ public class DBConfiguration {
 				"org.hibernate.dialect.SQLServerDialect");
 		dialectMappings.setProperty("db2", "org.hibernate.dialect.DB2Dialect");
 		return dialectMappings;
+	}
+
+	/**
+	 * 获取主库数据源属性
+	 * 
+	 * @return
+	 */
+	public static Properties getMasterDataSourceProperties() {
+		String configFile = SystemProperties.getMasterDataSourceConfigFile();
+		String filename = SystemProperties.getConfigRootPath() + configFile;
+		Properties props = PropertiesUtils.loadFilePathResource(filename);
+		return props;
 	}
 
 	public static Properties getProperties(String name) {

@@ -18,7 +18,10 @@
 
 package com.glaf.core.config;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.lang3.StringUtils;
@@ -26,6 +29,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 import com.glaf.core.util.Constants;
+import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.StringTools;
 
 public class SystemProperties {
@@ -33,6 +37,8 @@ public class SystemProperties {
 	private static final Configuration conf = BaseConfiguration.create();
 
 	protected static AtomicBoolean loading = new AtomicBoolean(false);
+
+	protected final static ConcurrentMap<String, String> concurrentMap = new ConcurrentHashMap<String, String>();
 
 	protected static final String DEPLOYMENT_SYSTEM_NAME = "deploymentSystemName";
 
@@ -84,20 +90,6 @@ public class SystemProperties {
 		return System.getProperty(DEPLOYMENT_SYSTEM_NAME);
 	}
 
-	/**
-	 * 获取主数据库数据源配置文件
-	 * 
-	 * @return
-	 */
-	public static String getMasterDataSourceConfigFile() {
-		String deploymentSystemName = getDeploymentSystemName();
-		if (deploymentSystemName != null && deploymentSystemName.length() > 0) {
-			return Constants.DEPLOYMENT_JDBC_PATH + deploymentSystemName
-					+ "/jdbc.properties";
-		}
-		return Constants.DEFAULT_MASTER_JDBC_CONFIG;
-	}
-
 	public static double getDouble(String key) {
 		if (hasObject(key)) {
 			String value = conf.get(key);
@@ -141,6 +133,34 @@ public class SystemProperties {
 			return Long.parseLong(value);
 		}
 		return 0;
+	}
+
+	/**
+	 * 获取主数据库数据源配置文件
+	 * 
+	 * @return
+	 */
+	public static String getMasterDataSourceConfigFile() {
+		String deploymentSystemName = getDeploymentSystemName();
+		if (deploymentSystemName != null && deploymentSystemName.length() > 0) {
+			return Constants.DEPLOYMENT_JDBC_PATH + deploymentSystemName
+					+ "/jdbc.properties";
+		}
+		return Constants.DEFAULT_MASTER_JDBC_CONFIG;
+	}
+
+	public static String getSecurityKey(String path) {
+		if (concurrentMap.containsKey(path)) {
+			return concurrentMap.get(path);
+		}
+
+		File file = new File(path);
+		if (file.exists() && file.isFile()) {
+			String content = FileUtils.readFile(path);
+			concurrentMap.put(path, content);
+		}
+
+		return concurrentMap.get(path);
 	}
 
 	public static String getString(String key) {
