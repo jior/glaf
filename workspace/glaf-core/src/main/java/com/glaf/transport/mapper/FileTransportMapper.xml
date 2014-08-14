@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.transport.mapper.FileTransportMapper">
+
+	<resultMap id="fileTransportResultMap" type="com.glaf.transport.domain.FileTransport">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="nodeId" column="NODEID_" jdbcType="BIGINT" />
+		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="code" column="CODE_" jdbcType="VARCHAR" />
+		<result property="host" column="HOST_" jdbcType="VARCHAR" />
+		<result property="port" column="PORT_" jdbcType="INTEGER" />
+		<result property="user" column="USER_" jdbcType="VARCHAR" />
+		<result property="password" column="PASSWORD_" jdbcType="VARCHAR" />
+		<result property="key" column="KEY_" jdbcType="VARCHAR" />
+		<result property="path" column="PATH_" jdbcType="VARCHAR" />
+		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
+		<result property="active" column="ACTIVE_" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="insertFileTransport" parameterType="com.glaf.transport.domain.FileTransport">
+		insert into SYS_FILE_TRANSPORT
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="nodeId != null">
+				,NODEID_
+			</if>
+			<if test="title != null">
+				,TITLE_
+			</if>
+			<if test="code != null">
+				,CODE_
+			</if>
+			<if test="host != null">
+				,HOST_
+			</if>
+			<if test="port != null">
+				,PORT_
+			</if>
+			<if test="user != null">
+				,USER_
+			</if>
+			<if test="password != null">
+				,PASSWORD_
+			</if>
+			<if test="key != null">
+				,KEY_
+			</if>
+			<if test="path != null">
+				,PATH_
+			</if>
+			<if test="type != null">
+				,TYPE_
+			</if>
+			<if test="active != null">
+				,ACTIVE_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="nodeId != null">
+				,#{nodeId, jdbcType=BIGINT}
+			</if>
+			<if test="title != null">
+				,#{title, jdbcType=VARCHAR}
+			</if>
+			<if test="code != null">
+				,#{code, jdbcType=VARCHAR}
+			</if>
+			<if test="host != null">
+				,#{host, jdbcType=VARCHAR}
+			</if>
+			<if test="port != null">
+				,#{port, jdbcType=INTEGER}
+			</if>
+			<if test="user != null">
+				,#{user, jdbcType=VARCHAR}
+			</if>
+			<if test="password != null">
+				,#{password, jdbcType=VARCHAR}
+			</if>
+			<if test="key != null">
+				,#{key, jdbcType=VARCHAR}
+			</if>
+			<if test="path != null">
+				,#{path, jdbcType=VARCHAR}
+			</if>
+			<if test="type != null">
+				,#{type, jdbcType=VARCHAR}
+			</if>
+			<if test="active != null">
+				,#{active, jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateFileTransport" parameterType="com.glaf.transport.domain.FileTransport">
+		update SYS_FILE_TRANSPORT
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="host != null">
+				HOST_ = #{host, jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				TITLE_ = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				CODE_ = #{code, jdbcType=VARCHAR},
+			</if>
+			<if test="port != null">
+				PORT_ = #{port, jdbcType=INTEGER},
+			</if>
+			<if test="user != null">
+				USER_ = #{user, jdbcType=VARCHAR},
+			</if>
+			<if test="key != null">
+				KEY_ = #{key, jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				PASSWORD_ = #{password, jdbcType=VARCHAR},
+			</if>
+			<if test="path != null">
+				PATH_ = #{path, jdbcType=VARCHAR},
+			</if>
+			<if test="active != null">
+				ACTIVE_ = #{active, jdbcType=VARCHAR},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteFileTransportById" parameterType="long">
+		delete from
+		SYS_FILE_TRANSPORT
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteFileTransports" parameterType="com.glaf.transport.query.FileTransportQuery">
+		delete from SYS_FILE_TRANSPORT
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getFileTransportById" parameterType="long"
+		resultMap="fileTransportResultMap">
+		select * from SYS_FILE_TRANSPORT where ID_ = #{id}
+	</select>
+
+
+	<select id="getFileTransports" parameterType="com.glaf.transport.query.FileTransportQuery"
+		resultMap="fileTransportResultMap">
+		select distinct E.*
+		<include refid="selectFileTransportsSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.ID_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getFileTransportCount" parameterType="com.glaf.transport.query.FileTransportQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectFileTransportsSql" />
+	</select>
+
+
+	<sql id="selectFileTransportsSql">
+
+		from SYS_FILE_TRANSPORT E
+
+		<where>
+			1 = 1
+
+			<if test="nodeId != null">
+				and E.NODEID_ = #{nodeId}
+			</if>
+
+			<if test="nodeIds != null and nodeIds.size() &gt; 0">
+				and E.NODEID_ IN
+				<foreach item="x_nodeId" index="index" collection="nodeIds"
+					open="(" separator="," close=")">
+					#{x_nodeId}
+				</foreach>
+			</if>
+
+			<if test="code != null and code != '' ">
+				and E.CODE_ = #{code}
+			</if>
+
+			<if test="host != null and host != '' ">
+				and E.HOST_ = #{host}
+			</if>
+
+			<if test="hostLike != null and hostLike != '' ">
+				and E.HOST_ like #{hostLike}
+			</if>
+
+			<if test="type != null and type != '' ">
+				and E.TYPE_ = #{type}
+			</if>
+
+			<if test="types != null and types.size() &gt; 0">
+				and E.TYPE_ IN
+				<foreach item="x_type" index="index" collection="types"
+					open="(" separator="," close=")">
+					#{x_type}
+				</foreach>
+			</if>
+
+			<if test="active != null and active != '' ">
+				and E.ACTIVE_ = #{active}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>
