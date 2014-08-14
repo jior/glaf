@@ -66,7 +66,7 @@ public class FileTransport implements Serializable, JSONable {
 	@Column(name = "KEY_", length = 1024)
 	protected String key;
 
-	@Column(name = "PATH_", length = 100)
+	@Column(name = "PATH_", length = 200)
 	protected String path;
 
 	@Column(name = "TYPE_", length = 50)

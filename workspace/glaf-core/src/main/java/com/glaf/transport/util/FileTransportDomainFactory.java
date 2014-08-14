@@ -59,6 +59,13 @@ public class FileTransportDomainFactory {
 		title.setLength(100);
 		tableDefinition.addColumn(title);
 
+		ColumnDefinition code = new ColumnDefinition();
+		code.setName("code");
+		code.setColumnName("CODE_");
+		code.setJavaType("String");
+		code.setLength(50);
+		tableDefinition.addColumn(code);
+
 		ColumnDefinition host = new ColumnDefinition();
 		host.setName("host");
 		host.setColumnName("HOST_");
@@ -97,7 +104,7 @@ public class FileTransportDomainFactory {
 		path.setName("path");
 		path.setColumnName("PATH_");
 		path.setJavaType("String");
-		path.setLength(100);
+		path.setLength(200);
 		tableDefinition.addColumn(path);
 
 		ColumnDefinition type = new ColumnDefinition();
