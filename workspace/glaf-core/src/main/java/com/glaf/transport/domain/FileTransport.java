@@ -75,6 +75,9 @@ public class FileTransport implements Serializable, JSONable {
 	@Column(name = "ACTIVE_", length = 1)
 	protected String active;
 
+	@Column(name = "PROVIDERCLASS_", length = 100)
+	protected String providerClass;
+
 	@javax.persistence.Transient
 	protected String connectionString;
 
@@ -139,6 +142,10 @@ public class FileTransport implements Serializable, JSONable {
 		return this.port;
 	}
 
+	public String getProviderClass() {
+		return providerClass;
+	}
+
 	public String getTitle() {
 		return title;
 	}
@@ -201,6 +208,10 @@ public class FileTransport implements Serializable, JSONable {
 
 	public void setPort(Integer port) {
 		this.port = port;
+	}
+
+	public void setProviderClass(String providerClass) {
+		this.providerClass = providerClass;
 	}
 
 	public void setTitle(String title) {

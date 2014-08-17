@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="java.util.*"%>
+<%@ page import="com.glaf.transport.provider.*"%>
 <%@ page import="com.glaf.core.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -174,6 +175,27 @@
              </script>
 		</td>
 	</tr>
+	<tr>
+		<td width="20%" height="24">实现类&nbsp;</td>
+		<td height="24">
+			<select id="providerClass" name="providerClass" nullable="no" chname="实现类">
+			<%
+			  ProviderProperties.reload();
+			  Properties props =  ProviderProperties.getProperties();
+			  Enumeration<?> e = props.keys();
+			  while (e.hasMoreElements()) {
+				String key = (String) e.nextElement();
+				String value = props.getProperty(key);
+			%>
+				<option value="<%=key%>"><%=value%></option>
+			<%}%>
+			</select>
+			<script type="text/javascript">
+			    document.getElementById("providerClass").value="${transport.providerClass}";
+			</script>
+		</td>
+	</tr>
+
 	<tr>
 		<td width="20%" align="left">主机</td>
 		<td align="left">

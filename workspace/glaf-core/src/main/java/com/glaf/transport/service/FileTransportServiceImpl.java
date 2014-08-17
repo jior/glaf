@@ -147,6 +147,7 @@ public class FileTransportServiceImpl implements FileTransportService {
 			model.setTitle(fileTransport.getTitle());
 			model.setCode(fileTransport.getCode());
 			model.setType(fileTransport.getType());
+			model.setProviderClass(fileTransport.getProviderClass());
 			model.setHost(fileTransport.getHost());
 			model.setPort(fileTransport.getPort());
 			model.setPath(fileTransport.getPath());

@@ -23,11 +23,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.glaf.core.context.ContextFactory;
+import com.glaf.core.util.ReflectUtils;
 import com.glaf.transport.domain.FileTransport;
 import com.glaf.transport.service.FileTransportService;
 
 public class TransportProviderFactory {
-	
+
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	private static class TransportProviderFactoryHolder {
@@ -52,12 +53,17 @@ public class TransportProviderFactory {
 	public byte[] getBytes(FileTransport fileTransport, String filename) {
 		TransportProvider provider = null;
 		String type = fileTransport.getType();
-		if (StringUtils.equals(type, "ftp")) {
-			provider = new FtpTransportProvider();
-		} else if (StringUtils.equals(type, "smb")) {
-			provider = new SmbTransportProvider();
+		if (StringUtils.isNotEmpty(fileTransport.getProviderClass())) {
+			provider = (TransportProvider) ReflectUtils
+					.instantiate(fileTransport.getProviderClass());
 		} else {
-			provider = new VFSTransportProvider();
+			if (StringUtils.equals(type, "ftp")) {
+				provider = new FtpTransportProvider();
+			} else if (StringUtils.equals(type, "smb")) {
+				provider = new SmbTransportProvider();
+			} else {
+				provider = new VFSTransportProvider();
+			}
 		}
 		return provider.getBytes(fileTransport, filename);
 	}
@@ -73,15 +79,20 @@ public class TransportProviderFactory {
 			byte[] bytes) {
 		TransportProvider provider = null;
 		String type = fileTransport.getType();
-		if (StringUtils.equals(type, "ftp")) {
-			provider = new FtpTransportProvider();
-		} else if (StringUtils.equals(type, "smb")) {
-			provider = new SmbTransportProvider();
+		if (StringUtils.isNotEmpty(fileTransport.getProviderClass())) {
+			provider = (TransportProvider) ReflectUtils
+					.instantiate(fileTransport.getProviderClass());
 		} else {
-			provider = new VFSTransportProvider();
+			if (StringUtils.equals(type, "ftp")) {
+				provider = new FtpTransportProvider();
+			} else if (StringUtils.equals(type, "smb")) {
+				provider = new SmbTransportProvider();
+			} else {
+				provider = new VFSTransportProvider();
+			}
 		}
 		provider.saveFile(fileTransport, filename, bytes);
-		logger.debug(provider.getClass().getName()+" save ok");
+		logger.debug(provider.getClass().getName() + " save ok");
 	}
 
 	public static void main(String[] args) {

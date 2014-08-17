@@ -17,6 +17,8 @@
 		<result property="path" column="PATH_" jdbcType="VARCHAR" />
 		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
 		<result property="active" column="ACTIVE_" jdbcType="VARCHAR" />
+		<result property="providerClass" column="PROVIDERCLASS_"
+			jdbcType="VARCHAR" />
 	</resultMap>
 
 
@@ -53,6 +55,9 @@
 			</if>
 			<if test="type != null">
 				,TYPE_
+			</if>
+			<if test="providerClass != null">
+				,PROVIDERCLASS_
 			</if>
 			<if test="active != null">
 				,ACTIVE_
@@ -92,6 +97,9 @@
 			<if test="type != null">
 				,#{type, jdbcType=VARCHAR}
 			</if>
+			<if test="providerClass != null">
+				,#{providerClass, jdbcType=VARCHAR}
+			</if>
 			<if test="active != null">
 				,#{active, jdbcType=VARCHAR}
 			</if>
@@ -126,6 +134,9 @@
 			</if>
 			<if test="path != null">
 				PATH_ = #{path, jdbcType=VARCHAR},
+			</if>
+			<if test="providerClass != null">
+				PROVIDERCLASS_ = #{providerClass, jdbcType=VARCHAR},
 			</if>
 			<if test="active != null">
 				ACTIVE_ = #{active, jdbcType=VARCHAR},

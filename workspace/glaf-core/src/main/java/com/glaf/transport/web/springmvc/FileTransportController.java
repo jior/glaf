@@ -265,6 +265,7 @@ public class FileTransportController {
 		fileTransport.setPort(RequestUtils.getInt(request, "port"));
 		fileTransport.setPath(request.getParameter("path"));
 		fileTransport.setType(request.getParameter("type"));
+		fileTransport.setProviderClass(request.getParameter("providerClass"));
 		fileTransport.setActive(request.getParameter("active"));
 
 		try {
@@ -316,6 +317,7 @@ public class FileTransportController {
 			fileTransport.setPort(RequestUtils.getInt(request, "port"));
 			fileTransport.setPath(request.getParameter("path"));
 			fileTransport.setType(request.getParameter("type"));
+			fileTransport.setProviderClass(request.getParameter("providerClass"));
 			fileTransport.setActive(request.getParameter("active"));
 			TransportProviderFactory providerFactory = TransportProviderFactory
 					.getInstance();

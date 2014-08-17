@@ -114,6 +114,13 @@ public class FileTransportDomainFactory {
 		type.setLength(50);
 		tableDefinition.addColumn(type);
 
+		ColumnDefinition providerClass = new ColumnDefinition();
+		providerClass.setName("providerClass");
+		providerClass.setColumnName("PROVIDERCLASS_");
+		providerClass.setJavaType("String");
+		providerClass.setLength(100);
+		tableDefinition.addColumn(providerClass);
+
 		ColumnDefinition active = new ColumnDefinition();
 		active.setName("active");
 		active.setColumnName("ACTIVE_");

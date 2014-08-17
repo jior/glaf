@@ -60,6 +60,9 @@ public class FileTransportJsonFactory {
 		if (jsonObject.containsKey("type")) {
 			model.setType(jsonObject.getString("type"));
 		}
+		if (jsonObject.containsKey("providerClass")) {
+			model.setProviderClass(jsonObject.getString("providerClass"));
+		}
 		if (jsonObject.containsKey("active")) {
 			model.setActive(jsonObject.getString("active"));
 		}
@@ -92,6 +95,9 @@ public class FileTransportJsonFactory {
 		if (model.getType() != null) {
 			jsonObject.put("type", model.getType());
 		}
+		if (model.getProviderClass() != null) {
+			jsonObject.put("providerClass", model.getProviderClass());
+		}
 		if (model.getActive() != null) {
 			jsonObject.put("active", model.getActive());
 		}
@@ -122,6 +128,9 @@ public class FileTransportJsonFactory {
 		}
 		if (model.getType() != null) {
 			jsonObject.put("type", model.getType());
+		}
+		if (model.getProviderClass() != null) {
+			jsonObject.put("providerClass", model.getProviderClass());
 		}
 		if (model.getActive() != null) {
 			jsonObject.put("active", model.getActive());
