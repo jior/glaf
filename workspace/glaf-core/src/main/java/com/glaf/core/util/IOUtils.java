@@ -190,7 +190,6 @@ public class IOUtils {
 	 * @param buffSize
 	 *            the size of the buffer
 	 */
-	@SuppressWarnings("resource")
 	public static void copyBytes(InputStream in, OutputStream out, int buffSize)
 			throws IOException {
 		PrintStream ps = out instanceof PrintStream ? (PrintStream) out : null;

@@ -87,7 +87,6 @@ public class GzipCodec extends DefaultCodec {
 		}
 	}
 
-
 	@SuppressWarnings("resource")
 	public CompressionOutputStream createOutputStream(OutputStream out)
 			throws IOException {
@@ -96,7 +95,6 @@ public class GzipCodec extends DefaultCodec {
 						4 * 1024)) : new GzipOutputStream(out);
 	}
 
-	@SuppressWarnings("resource")
 	public CompressionOutputStream createOutputStream(OutputStream out,
 			Compressor compressor) throws IOException {
 		return (compressor != null) ? new CompressorStream(out, compressor,

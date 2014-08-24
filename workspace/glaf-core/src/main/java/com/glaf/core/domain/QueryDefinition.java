@@ -45,6 +45,16 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * 主键
+	 */
+	@Id
+	@Column(name = "ID_", length = 50, nullable = false)
+	protected String id;
+
+	@Column(name = "IDFIELD_", length = 50)
+	protected String idField;
+
 	@Transient
 	protected QueryDefinition child = null;
 
@@ -97,16 +107,6 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 	 */
 	@Column(name = "DSNAME_")
 	protected String dsName;
-
-	/**
-	 * 主键
-	 */
-	@Id
-	@Column(name = "ID_", length = 50, nullable = false)
-	protected String id;
-
-	@Column(name = "IDFIELD_", length = 50)
-	protected String idField;
 
 	/**
 	 * ListUrl
