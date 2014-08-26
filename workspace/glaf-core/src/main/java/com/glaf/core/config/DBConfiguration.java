@@ -232,6 +232,9 @@ public class DBConfiguration {
 	}
 
 	public static ConnectionDefinition getConnectionDefinition(String systemName) {
+		if (systemName == null) {
+			return null;
+		}
 		ConnectionDefinition model = dataSourceProperties.get(systemName);
 		if (model != null) {
 			JSONObject jsonObject = model.toJsonObject();
