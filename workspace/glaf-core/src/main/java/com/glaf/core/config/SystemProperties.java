@@ -149,6 +149,11 @@ public class SystemProperties {
 		return Constants.DEFAULT_MASTER_JDBC_CONFIG;
 	}
 
+	public static String getDefaultSecurityKey() {
+		String path = getConfigRootPath() + "/key";
+		return getSecurityKey(path);
+	}
+
 	public static String getSecurityKey(String path) {
 		if (concurrentMap.containsKey(path)) {
 			return concurrentMap.get(path);
