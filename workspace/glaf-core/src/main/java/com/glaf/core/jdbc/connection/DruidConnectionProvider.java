@@ -139,9 +139,11 @@ public class DruidConnectionProvider implements ConnectionProvider {
 			if (initialPoolSize == null) {
 				initialPoolSize = 5;
 			}
+			
 			if (minPoolSize == null) {
 				minPoolSize = 5;
 			}
+			
 			if (maxPoolSize == null) {
 				maxPoolSize = 50;
 			}
@@ -149,12 +151,15 @@ public class DruidConnectionProvider implements ConnectionProvider {
 			if (maxStatements == null) {
 				maxStatements = 200;
 			}
+			
 			if (acquireIncrement == null) {
 				acquireIncrement = 1;
 			}
+			
 			if (idleTestPeriod == null) {
 				idleTestPeriod = 60;
 			}
+			
 			if (maxWait == null) {
 				maxWait = 60;
 			}
