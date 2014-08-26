@@ -28,31 +28,34 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.mchange.v2.c3p0.DataSources;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.util.ClassUtils;
 import com.glaf.core.util.JdbcUtils;
 import com.glaf.core.util.PropertiesHelper;
 
-public class C3P0ConnectionProvider implements ConnectionProvider {
+public class HikariCPConnectionProvider implements ConnectionProvider {
 
 	private static final Logger log = LoggerFactory
-			.getLogger(C3P0ConnectionProvider.class);
+			.getLogger(HikariCPConnectionProvider.class);
 
-	private volatile DataSource ds;
+	private final static String MAX_POOL_SIZE = "maxPoolSize";
+
+	private volatile HikariDataSource ds;
+
 	private volatile Integer isolation;
+
 	private volatile boolean autocommit;
 
-	public C3P0ConnectionProvider() {
-		log.info("----------------------------C3P0ConnectionProvider-----------------");
+	public HikariCPConnectionProvider() {
+		log.info("----------------------------HikariCPConnectionProvider-----------------");
 	}
 
 	public void close() {
-		try {
-			DataSources.destroy(ds);
-		} catch (SQLException sqle) {
-			log.warn("could not destroy C3P0 connection pool", sqle);
+		if (ds != null) {
+			ds.close();
 		}
 	}
 
@@ -66,7 +69,7 @@ public class C3P0ConnectionProvider implements ConnectionProvider {
 		Properties connectionProps = ConnectionProviderFactory
 				.getConnectionProperties(props);
 
-		log.info("C3P0 using driver: " + jdbcDriverClass + " at URL: "
+		log.info("HikariCP using driver: " + jdbcDriverClass + " at URL: "
 				+ jdbcUrl);
 		log.info("Connection properties: "
 				+ PropertiesHelper.maskOut(connectionProps, "password"));
@@ -95,19 +98,19 @@ public class C3P0ConnectionProvider implements ConnectionProvider {
 
 		try {
 
-			Properties c3props = new Properties();
+			Properties hikariProps = new Properties();
 
 			for (Iterator<?> ii = props.keySet().iterator(); ii.hasNext();) {
 				String key = (String) ii.next();
-				if (key.startsWith("hibernate.c3p0.")) {
-					String newKey = key.substring(10);
-					c3props.put(newKey, props.get(key));
-				} else if (key.startsWith("connection.c3p0.")) {
-					String newKey = key.substring(11);
-					c3props.put(newKey, props.get(key));
-				} else if (key.startsWith("c3p0.")) {
-					String newKey = key;
-					c3props.put(newKey, props.get(key));
+				if (key.startsWith("hibernate.hikari.")) {
+					String newKey = key.substring(17);
+					hikariProps.put(newKey, props.get(key));
+				} else if (key.startsWith("connection.hikari.")) {
+					String newKey = key.substring(18);
+					hikariProps.put(newKey, props.get(key));
+				} else if (key.startsWith("hikari.")) {
+					String newKey = key.substring(7);
+					hikariProps.put(newKey, props.get(key));
 				}
 			}
 
@@ -115,22 +118,46 @@ public class C3P0ConnectionProvider implements ConnectionProvider {
 					DBConfiguration.POOL_INIT_SIZE, props);
 			Integer minPoolSize = PropertiesHelper.getInteger(
 					DBConfiguration.POOL_MIN_SIZE, props);
+			Integer maxPoolSize = PropertiesHelper.getInteger(MAX_POOL_SIZE,
+					props);
 			if (initialPoolSize == null && minPoolSize != null) {
-				c3props.put(DBConfiguration.POOL_INIT_SIZE,
+				hikariProps.put(DBConfiguration.POOL_INIT_SIZE,
 						String.valueOf(minPoolSize).trim());
 			}
 
-			DataSource unpooled = DataSources.unpooledDataSource(jdbcUrl,
-					connectionProps);
+			if (maxPoolSize == null) {
+				maxPoolSize = 50;
+			}
+
+			String dbUser = props.getProperty(DBConfiguration.JDBC_USER);
+			String dbPassword = props
+					.getProperty(DBConfiguration.JDBC_PASSWORD);
+
+			if (dbUser == null) {
+				dbUser = "";
+			}
+
+			if (dbPassword == null) {
+				dbPassword = "";
+			}
 
 			Properties allProps = (Properties) props.clone();
-			allProps.putAll(c3props);
+			allProps.putAll(hikariProps);
 
-			ds = DataSources.pooledDataSource(unpooled, allProps);
+			HikariConfig config = new HikariConfig();
+			config.setDriverClassName(jdbcDriverClass);
+			config.setJdbcUrl(jdbcUrl);
+			config.setUsername(dbUser);
+			config.setPassword(dbPassword);
+			config.setMaximumPoolSize(maxPoolSize);
+			config.setDataSourceProperties(allProps);
+
+			ds = new HikariDataSource(config);
+
 		} catch (Exception e) {
-			log.error("could not instantiate C3P0 connection pool", e);
+			log.error("could not instantiate HikariCP connection pool", e);
 			throw new RuntimeException(
-					"Could not instantiate C3P0 connection pool", e);
+					"Could not instantiate HikariCP connection pool", e);
 		}
 
 		Connection conn = null;
@@ -138,7 +165,7 @@ public class C3P0ConnectionProvider implements ConnectionProvider {
 			conn = ds.getConnection();
 			if (conn == null) {
 				throw new RuntimeException(
-						"C3P0 connection pool can't get jdbc connection");
+						"HikariCP connection pool can't get jdbc connection");
 			}
 		} catch (SQLException ex) {
 			throw new RuntimeException(ex);

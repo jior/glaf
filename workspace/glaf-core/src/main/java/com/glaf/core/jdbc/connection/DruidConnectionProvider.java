@@ -192,13 +192,11 @@ public class DruidConnectionProvider implements ConnectionProvider {
 					.getProperty(DBConfiguration.JDBC_PASSWORD);
 
 			if (dbUser == null) {
-				dbUser = ""; // Some RDBMS (e.g Postgresql) don't like null
-								// usernames
+				dbUser = ""; 
 			}
 
 			if (dbPassword == null) {
-				dbPassword = ""; // Some RDBMS (e.g Postgresql) don't like null
-									// passwords
+				dbPassword = ""; 
 			}
 
 			ds.setUsername(dbUser);

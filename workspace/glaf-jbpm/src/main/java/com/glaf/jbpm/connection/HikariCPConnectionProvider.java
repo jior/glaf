@@ -22,6 +22,8 @@ import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Properties;
 
+import javax.sql.DataSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.hibernate.HibernateException;
@@ -31,31 +33,40 @@ import org.hibernate.connection.ConnectionProviderFactory;
 import org.hibernate.util.PropertiesHelper;
 import org.hibernate.util.ReflectHelper;
 
-import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.druid.pool.DruidDataSourceFactory;
+import com.glaf.core.util.JdbcUtils;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
-public class DruidConnectionProvider implements ConnectionProvider {
+public class HikariCPConnectionProvider implements ConnectionProvider {
 
 	private static final Logger log = LoggerFactory
-			.getLogger(DruidConnectionProvider.class);
+			.getLogger(HikariCPConnectionProvider.class);
 
 	private final static String MIN_POOL_SIZE = "minPoolSize";
+
 	private final static String MAX_POOL_SIZE = "maxPoolSize";
-	private final static String INITIAL_POOL_SIZE = "initialPoolSize";
+
 	private final static String MAX_IDLE_TIME = "maxIdleTime";
+
 	private final static String MAX_STATEMENTS = "maxStatements";
+
 	private final static String ACQUIRE_INCREMENT = "acquireIncrement";
+
 	private final static String IDLE_CONNECTION_TEST_PERIOD = "idleConnectionTestPeriod";
 
-	private DruidDataSource ds;
-	private Integer isolation;
-	private boolean autocommit;
+	private volatile HikariDataSource ds;
+
+	private volatile Integer isolation;
+
+	private volatile boolean autocommit;
+
+	public HikariCPConnectionProvider() {
+		log.info("----------------------------HikariCPConnectionProvider-----------------");
+	}
 
 	public void close() {
-		try {
+		if (ds != null) {
 			ds.close();
-		} catch (Exception sqle) {
-			log.warn("could not destroy Druid connection pool", sqle);
 		}
 	}
 
@@ -63,13 +74,13 @@ public class DruidConnectionProvider implements ConnectionProvider {
 		conn.close();
 	}
 
-	public void configure(Properties props) throws HibernateException {
+	public void configure(Properties props) throws RuntimeException {
 		String jdbcDriverClass = props.getProperty(Environment.DRIVER);
 		String jdbcUrl = props.getProperty(Environment.URL);
 		Properties connectionProps = ConnectionProviderFactory
 				.getConnectionProperties(props);
 
-		log.info("Druid using driver: " + jdbcDriverClass + " at URL: "
+		log.info("HikariCP using driver: " + jdbcDriverClass + " at URL: "
 				+ jdbcUrl);
 		log.info("Connection properties: "
 				+ PropertiesHelper.maskOut(connectionProps, "password"));
@@ -113,25 +124,14 @@ public class DruidConnectionProvider implements ConnectionProvider {
 
 			for (Iterator<Object> ii = props.keySet().iterator(); ii.hasNext();) {
 				String key = (String) ii.next();
-				if (key.startsWith("hibernate.c3p0.")) {
-					String newKey = key.substring(15);
+				if (key.startsWith("hibernate.hikari.")) {
+					String newKey = key.substring(17);
 					properties.put(newKey, props.get(key));
 				}
-			}
-
-			for (Iterator<Object> ii = props.keySet().iterator(); ii.hasNext();) {
-				String key = (String) ii.next();
-				if (key.startsWith("hibernate.druid.")) {
-					String newKey = key.substring(16);
+				if (key.startsWith("hikari.")) {
+					String newKey = key.substring(7);
 					properties.put(newKey, props.get(key));
 				}
-			}
-
-			Integer initialPoolSize = PropertiesHelper.getInteger(
-					INITIAL_POOL_SIZE, props);
-			if (initialPoolSize == null && minPoolSize != null) {
-				properties.put(INITIAL_POOL_SIZE, String.valueOf(minPoolSize)
-						.trim());
 			}
 
 			String dbUser = props.getProperty(Environment.USER);
@@ -145,24 +145,26 @@ public class DruidConnectionProvider implements ConnectionProvider {
 				dbPassword = "";
 			}
 
-			if (initialPoolSize == null) {
-				initialPoolSize = 10;
-			}
 			if (minPoolSize == null) {
-				minPoolSize = 5;
+				minPoolSize = 10;
 			}
+
 			if (maxPoolSize == null) {
-				maxPoolSize = 50;
+				maxPoolSize = 100;
 			}
+
 			if (maxIdleTime == null) {
 				maxIdleTime = 60;
 			}
+
 			if (maxStatements == null) {
 				maxStatements = 200;
 			}
+
 			if (acquireIncrement == null) {
 				acquireIncrement = 1;
 			}
+
 			if (idleTestPeriod == null) {
 				idleTestPeriod = 120;
 			}
@@ -170,35 +172,33 @@ public class DruidConnectionProvider implements ConnectionProvider {
 			Properties allProps = (Properties) props.clone();
 			allProps.putAll(properties);
 
-			ds = new DruidDataSource();
+			HikariConfig config = new HikariConfig();
+			config.setDriverClassName(jdbcDriverClass);
+			config.setJdbcUrl(jdbcUrl);
+			config.setUsername(dbUser);
+			config.setPassword(dbPassword);
+			config.setMaximumPoolSize(maxPoolSize);
+			config.setDataSourceProperties(allProps);
 
-			DruidDataSourceFactory.config(ds, allProps);
+			ds = new HikariDataSource(config);
 
-			ds.setInitialSize(initialPoolSize);
-			ds.setMinIdle(minPoolSize);
-			ds.setMaxActive(maxPoolSize);
-			ds.setMaxWait(60 * 1000L);// 60秒
+		} catch (Exception e) {
+			log.error("could not instantiate HikariCP connection pool", e);
+			throw new RuntimeException(
+					"Could not instantiate HikariCP connection pool", e);
+		}
 
-			ds.setDefaultAutoCommit(true);
-			ds.setTestOnReturn(false);
-			ds.setTestOnBorrow(false);
-			ds.setLogAbandoned(true);// 将当前关闭动作记录到日志
-			ds.setRemoveAbandoned(true);// 对于长时间不使用的连接强制关闭
-			ds.setRemoveAbandonedTimeout(1800);// 超过30分钟开始关闭空闲连接
-
-			ds.setTimeBetweenEvictionRunsMillis(((long) idleTestPeriod) * 1000L);
-			ds.setMaxOpenPreparedStatements(maxStatements);
-			ds.setMinEvictableIdleTimeMillis(((long) maxIdleTime) * 1000L);
-
-			ds.setConnectProperties(allProps);
-			ds.setUrl(jdbcUrl);
-			ds.setDriverClassName(jdbcDriverClass);
-			ds.setUsername(dbUser);
-			ds.setPassword(dbPassword);
-		} catch (Exception ex) {
-			log.error("could not instantiate Druid connection pool", ex);
-			throw new HibernateException(
-					"Could not instantiate Druid connection pool", ex);
+		Connection conn = null;
+		try {
+			conn = ds.getConnection();
+			if (conn == null) {
+				throw new RuntimeException(
+						"HikariCP connection pool can't get jdbc connection");
+			}
+		} catch (SQLException ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			JdbcUtils.close(conn);
 		}
 
 		String i = props.getProperty(Environment.ISOLATION);
@@ -213,14 +213,18 @@ public class DruidConnectionProvider implements ConnectionProvider {
 	}
 
 	public Connection getConnection() throws SQLException {
-		final Connection connection = ds.getConnection();
+		final Connection c = ds.getConnection();
 		if (isolation != null) {
-			connection.setTransactionIsolation(isolation.intValue());
+			c.setTransactionIsolation(isolation.intValue());
 		}
-		if (connection.getAutoCommit() != autocommit) {
-			connection.setAutoCommit(autocommit);
+		if (c.getAutoCommit() != autocommit) {
+			c.setAutoCommit(autocommit);
 		}
-		return connection;
+		return c;
+	}
+
+	public DataSource getDataSource() {
+		return ds;
 	}
 
 	public boolean supportsAggressiveRelease() {

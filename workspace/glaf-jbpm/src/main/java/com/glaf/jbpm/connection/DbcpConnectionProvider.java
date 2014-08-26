@@ -100,13 +100,11 @@ public class DbcpConnectionProvider implements ConnectionProvider {
 		String dbPassword = props.getProperty(Environment.PASS);
 
 		if (dbUser == null) {
-			dbUser = ""; // Some RDBMS (e.g Postgresql) don't like null
-							// usernames
+			dbUser = "";
 		}
 
 		if (dbPassword == null) {
-			dbPassword = ""; // Some RDBMS (e.g Postgresql) don't like null
-								// passwords
+			dbPassword = "";
 		}
 
 		Properties properties = new Properties();
@@ -114,7 +112,7 @@ public class DbcpConnectionProvider implements ConnectionProvider {
 		for (Iterator<Object> ii = props.keySet().iterator(); ii.hasNext();) {
 			String key = (String) ii.next();
 			if (key.startsWith("hibernate.dbcp.")) {
-				String newKey = key.substring(16);
+				String newKey = key.substring(15);
 				properties.put(newKey, props.get(key));
 			}
 		}

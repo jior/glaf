@@ -178,5 +178,6 @@
 	<classpathentry kind="lib" path="lib/sqlite-jdbc.jar"/>
 	<classpathentry kind="lib" path="lib/jcifs.jar"/>
 	<classpathentry kind="lib" path="lib/jsch.jar"/>
+	<classpathentry kind="lib" path="lib/HikariCP.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
