@@ -12,7 +12,7 @@
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">root</property>
 	<property name="hibernate.hbm2ddl.auto">update</property>
-    <property name="hibernate.connection.provider_class">com.glaf.jbpm.connection.DbcpConnectionProvider</property>
+    <property name="hibernate.connection.provider_class">com.glaf.jbpm.connection.DruidConnectionProvider</property>
     <mapping resource="org/jbpm/db/hibernate.queries.hbm.xml"/>
     <mapping resource="org/jbpm/graph/action/MailAction.hbm.xml"/>
     <mapping resource="org/jbpm/graph/def/ProcessDefinition.hbm.xml"/>
