@@ -213,8 +213,7 @@ public class DBConfiguration {
 			jsonObject.put(key, value);
 		}
 		String content = jsonObject.toJSONString();
-		String path = SystemProperties.getConfigRootPath() + "/key";
-		String key = SystemProperties.getSecurityKey(path);
+		String key = SystemProperties.getDefaultSecurityKey();
 		content = SecurityUtils.encode(key, content);
 		return content;
 	}
