@@ -146,11 +146,11 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 			}
 
 			if (minPoolSize == null) {
-				minPoolSize = 10;
+				minPoolSize = 5;
 			}
 
 			if (maxPoolSize == null) {
-				maxPoolSize = 100;
+				maxPoolSize = 50;
 			}
 
 			if (maxIdleTime == null) {
@@ -177,6 +177,9 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 			config.setJdbcUrl(jdbcUrl);
 			config.setUsername(dbUser);
 			config.setPassword(dbPassword);
+			config.setAutoCommit(false);
+			config.setConnectionTimeout(10 * 1000L);
+			config.setIdleTimeout(maxIdleTime * 1000L);
 			config.setMaximumPoolSize(maxPoolSize);
 			config.setDataSourceProperties(allProps);
 
