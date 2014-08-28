@@ -71,6 +71,7 @@ public class DataServiceResource {
 			systemName = com.glaf.core.config.Environment.DEFAULT_SYSTEM_NAME;
 		}
 		Map<String, Object> contextMap = RequestUtils.getParameterMap(request);
+		contextMap.put("systemName", systemName);
 		String ipAddress = RequestUtils.getIPAddress(request);
 		DataServiceBean bean = new DataServiceBean();
 		bean.setSysDataService(sysDataService);
