@@ -256,7 +256,9 @@ public class DBConfiguration {
 			for (ConnectionDefinition conn : list) {
 				String name = conn.getName();
 				ConnectionDefinition model = getConnectionDefinition(name);
-				rows.add(model);
+				if (model != null && model.getName() != null) {
+					rows.add(model);
+				}
 			}
 		}
 		return rows;
