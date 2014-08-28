@@ -34,7 +34,6 @@ import com.glaf.core.config.SystemProperties;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.domain.SysData;
 import com.glaf.core.domain.SysDataLog;
-import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.SysDataService;
