@@ -323,7 +323,7 @@ public class DefaultTaskPromise implements TaskPromise {
 	@Override
 	public TaskPromise setFailure(Throwable cause) {
 		if (!tryFailure(cause)) {
-			throw new IllegalStateException("Already complted future: " + this);
+			throw new IllegalStateException("Already completed future: " + this);
 		}
 		return this;
 	}
@@ -331,7 +331,7 @@ public class DefaultTaskPromise implements TaskPromise {
 	@Override
 	public TaskPromise setSuccess(Object value) {
 		if (!trySuccess(value)) {
-			throw new IllegalStateException("Already complted future: " + this);
+			throw new IllegalStateException("Already completed future: " + this);
 		}
 		return this;
 	}
