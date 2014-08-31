@@ -124,8 +124,9 @@ public class StartupListener extends ContextLoaderListener implements
 						sb.toString().getBytes());
 			}
 		} catch (Exception ex) {
-
+			ex.printStackTrace();
 		}
+
 		try {
 			ExecutionManager.getInstance().execute();
 		} catch (Exception ex) {
