@@ -70,12 +70,7 @@ Hashtable.prototype.remove = function (key){
 Hashtable.prototype.size = function (){
     return this.keys.length;
 }
-
-/**
- * populateItems
- * Deprecated
- */
-Hashtable.prototype.populateItems = function (){}
+ 
 
 /**
  * next
