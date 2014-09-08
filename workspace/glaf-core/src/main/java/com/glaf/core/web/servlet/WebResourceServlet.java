@@ -99,6 +99,10 @@ public class WebResourceServlet extends HttpServlet {
 			contentType = mimeMapping.get(ext.trim().toLowerCase());
 		}
 
+		if (StringUtils.startsWith(resPath, "/static")) {
+			resPath = resPath.substring(7, resPath.length());
+		}
+
 		InputStream inputStream = null;
 		ServletOutputStream outraw = null;
 		try {

@@ -182,6 +182,11 @@
 		<url-pattern>/diagram-viewer/*</url-pattern>
     </servlet-mapping>
 
+	<servlet-mapping>
+		<servlet-name>WebResourceServlet</servlet-name>
+		<url-pattern>/static/*</url-pattern>
+    </servlet-mapping>
+
 	<welcome-file-list>
 	    <welcome-file>index.html</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
