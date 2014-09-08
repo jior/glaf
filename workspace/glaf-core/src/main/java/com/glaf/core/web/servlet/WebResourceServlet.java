@@ -17,6 +17,7 @@
  */
 package com.glaf.core.web.servlet;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
@@ -36,6 +37,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.IOUtils;
 import com.glaf.core.xml.MimeMappingReader;
@@ -97,15 +99,22 @@ public class WebResourceServlet extends HttpServlet {
 			contentType = mimeMapping.get(ext.trim().toLowerCase());
 		}
 
+		InputStream inputStream = null;
 		ServletOutputStream outraw = null;
 		try {
 			outraw = response.getOutputStream();
 			byte[] raw = concurrentMap.get(resPath);
 			if (raw == null) {
-				InputStream is = WebResourceServlet.class
-						.getResourceAsStream(resPath);
-				raw = FileUtils.getBytes(is);
-				IOUtils.closeStream(is);
+				String filename = SystemProperties.getAppPath() + resPath;
+				File filex = new File(filename);
+				if (filex.exists() && filex.isFile()) {
+					inputStream = FileUtils.getInputStream(filename);
+				}
+				if (inputStream == null) {
+					inputStream = WebResourceServlet.class
+							.getResourceAsStream(resPath);
+				}
+				raw = FileUtils.getBytes(inputStream);
 				concurrentMap.put(resPath, raw);
 				logger.debug("load resource:" + resPath);
 			}
@@ -116,6 +125,7 @@ public class WebResourceServlet extends HttpServlet {
 		} catch (IOException ex) {
 			// ex.printStackTrace();
 		} finally {
+			IOUtils.closeStream(inputStream);
 			IOUtils.closeStream(outraw);
 		}
 
@@ -130,6 +140,7 @@ public class WebResourceServlet extends HttpServlet {
 
 	@Override
 	public void init(ServletConfig config) {
+		logger.info("--------------WebResourceServlet init----------------");
 		try {
 			MimeMappingReader reader = new MimeMappingReader();
 			Map<String, String> mapping = reader.read();
