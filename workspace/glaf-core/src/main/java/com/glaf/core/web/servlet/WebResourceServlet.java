@@ -19,9 +19,13 @@ package com.glaf.core.web.servlet;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
@@ -34,6 +38,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.IOUtils;
+import com.glaf.core.xml.MimeMappingReader;
 
 public class WebResourceServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -42,6 +47,8 @@ public class WebResourceServlet extends HttpServlet {
 			.getLog(WebResourceServlet.class);
 
 	protected static ConcurrentMap<String, byte[]> concurrentMap = new ConcurrentHashMap<String, byte[]>();
+
+	protected static ConcurrentMap<String, String> mimeMapping = new ConcurrentHashMap<String, String>();
 
 	@Override
 	protected void doGet(HttpServletRequest request,
@@ -86,6 +93,8 @@ public class WebResourceServlet extends HttpServlet {
 			contentType = "application/x-font-woff";
 		} else if (StringUtils.equalsIgnoreCase(ext, "swf")) {
 			contentType = "application/x-shockwave-flash";
+		} else {
+			contentType = mimeMapping.get(ext.trim().toLowerCase());
 		}
 
 		ServletOutputStream outraw = null;
@@ -117,6 +126,22 @@ public class WebResourceServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
+	}
+
+	@Override
+	public void init(ServletConfig config) {
+		try {
+			MimeMappingReader reader = new MimeMappingReader();
+			Map<String, String> mapping = reader.read();
+			Set<Entry<String, String>> entrySet = mapping.entrySet();
+			for (Entry<String, String> entry : entrySet) {
+				String key = entry.getKey();
+				String value = entry.getValue();
+				mimeMapping.put(key, value);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 }

@@ -151,6 +151,36 @@
 		<url-pattern>/fileUploadService</url-pattern>
     </servlet-mapping>
 
+	<servlet>
+		<servlet-name>WebResourceServlet</servlet-name>
+		<servlet-class>com.glaf.core.web.servlet.WebResourceServlet</servlet-class>
+		<load-on-startup>5</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+		<servlet-name>WebResourceServlet</servlet-name>
+		<url-pattern>/css/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+		<servlet-name>WebResourceServlet</servlet-name>
+		<url-pattern>/scripts/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+		<servlet-name>WebResourceServlet</servlet-name>
+		<url-pattern>/images/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+		<servlet-name>WebResourceServlet</servlet-name>
+		<url-pattern>/themes/*</url-pattern>
+    </servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>WebResourceServlet</servlet-name>
+		<url-pattern>/diagram-viewer/*</url-pattern>
+    </servlet-mapping>
 
 	<welcome-file-list>
 	    <welcome-file>index.html</welcome-file>
