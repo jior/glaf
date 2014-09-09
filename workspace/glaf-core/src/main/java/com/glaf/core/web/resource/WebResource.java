@@ -23,11 +23,16 @@ import java.util.concurrent.ConcurrentMap;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
+
 public class WebResource {
 
 	protected static ConcurrentMap<String, byte[]> concurrentMap = new ConcurrentHashMap<String, byte[]>();
 
 	protected static ConcurrentMap<String, Integer> countConcurrentMap = new ConcurrentHashMap<String, Integer>();
+
+	protected static Configuration conf = BaseConfiguration.create();
 
 	public static byte[] getBytes(String path) {
 		return concurrentMap.get(path);
@@ -72,7 +77,10 @@ public class WebResource {
 	}
 
 	public static void setBytes(String path, byte[] bytes) {
-		if (path != null && bytes != null && bytes.length < 2048000) {
+		if (path != null
+				&& bytes != null
+				&& bytes.length < conf.getInt("web.resource.cache.size",
+						5000000)) {
 			concurrentMap.put(path, bytes);
 			countConcurrentMap.put(path, bytes.length);
 		}
