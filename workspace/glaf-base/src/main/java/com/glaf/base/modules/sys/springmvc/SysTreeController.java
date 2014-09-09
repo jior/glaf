@@ -256,7 +256,7 @@ public class SysTreeController {
 		}
 		request.setAttribute("bean", bean);
 		List<SysTree> list = new java.util.ArrayList<SysTree>();
-		sysTreeService.loadSysTrees(list, 0, 0);
+		sysTreeService.loadSysTrees(list, 1, 0);
 		request.setAttribute("parent", list);
 
 		String x_view = ViewProperties.getString("tree.prepareModify");
