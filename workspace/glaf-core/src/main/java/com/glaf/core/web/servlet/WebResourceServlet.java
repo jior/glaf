@@ -106,7 +106,7 @@ public class WebResourceServlet extends HttpServlet {
 		ServletOutputStream outraw = null;
 		try {
 			outraw = response.getOutputStream();
-			byte[] raw = WebResource.getBytes(resPath);
+			byte[] raw = WebResource.getData(resPath);
 			if (raw == null) {
 				String filename = SystemProperties.getAppPath() + resPath;
 				File filex = new File(filename);

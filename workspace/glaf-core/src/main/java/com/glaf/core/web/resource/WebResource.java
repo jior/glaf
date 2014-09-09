@@ -25,16 +25,24 @@ import org.apache.commons.lang.StringUtils;
 
 import com.glaf.core.config.BaseConfiguration;
 import com.glaf.core.config.Configuration;
+import com.glaf.core.resource.ResourceFactory;
 
 public class WebResource {
 
-	protected static ConcurrentMap<String, byte[]> concurrentMap = new ConcurrentHashMap<String, byte[]>();
+	protected static final ConcurrentMap<String, byte[]> concurrentMap = new ConcurrentHashMap<String, byte[]>();
 
-	protected static ConcurrentMap<String, Integer> countConcurrentMap = new ConcurrentHashMap<String, Integer>();
+	protected static final ConcurrentMap<String, Integer> countConcurrentMap = new ConcurrentHashMap<String, Integer>();
 
-	protected static Configuration conf = BaseConfiguration.create();
+	protected static final String DISTRIBUTED_ENABLED = "distributed.resource.enabled";
 
-	public static byte[] getBytes(String path) {
+	protected static final Configuration conf = BaseConfiguration.create();
+
+	protected static final String WEB_RESOURCE_REGION = "web_resource_region";
+
+	public static byte[] getData(String path) {
+		if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
+			return ResourceFactory.getData(WEB_RESOURCE_REGION, path);
+		}
 		return concurrentMap.get(path);
 	}
 
@@ -54,14 +62,22 @@ public class WebResource {
 		while (iterator.hasNext()) {
 			String key = iterator.next();
 			if (StringUtils.startsWith(key, path)) {
-				concurrentMap.remove(key);
+				if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
+					ResourceFactory.remove(WEB_RESOURCE_REGION, key);
+				} else {
+					concurrentMap.remove(key);
+				}
 				countConcurrentMap.remove(key);
 			}
 		}
 	}
 
 	protected static void removeAll() {
-		concurrentMap.clear();
+		if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
+			ResourceFactory.clear(WEB_RESOURCE_REGION);
+		} else {
+			concurrentMap.clear();
+		}
 		countConcurrentMap.clear();
 	}
 
@@ -70,7 +86,11 @@ public class WebResource {
 		while (iterator.hasNext()) {
 			String key = iterator.next();
 			if (StringUtils.equals(key, file)) {
-				concurrentMap.remove(key);
+				if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
+					ResourceFactory.remove(WEB_RESOURCE_REGION, key);
+				} else {
+					concurrentMap.remove(key);
+				}
 				countConcurrentMap.remove(key);
 			}
 		}
@@ -81,7 +101,11 @@ public class WebResource {
 				&& bytes != null
 				&& bytes.length < conf.getInt("web.resource.cache.size",
 						5000000)) {
-			concurrentMap.put(path, bytes);
+			if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
+				ResourceFactory.put(WEB_RESOURCE_REGION, path, bytes);
+			} else {
+				concurrentMap.put(path, bytes);
+			}
 			countConcurrentMap.put(path, bytes.length);
 		}
 	}
