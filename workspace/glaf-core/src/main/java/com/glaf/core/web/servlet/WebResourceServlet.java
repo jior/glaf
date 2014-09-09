@@ -40,6 +40,7 @@ import org.apache.commons.logging.LogFactory;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.IOUtils;
+import com.glaf.core.web.resource.WebResource;
 import com.glaf.core.xml.MimeMappingReader;
 
 public class WebResourceServlet extends HttpServlet {
@@ -47,8 +48,6 @@ public class WebResourceServlet extends HttpServlet {
 
 	protected static final Log logger = LogFactory
 			.getLog(WebResourceServlet.class);
-
-	protected static ConcurrentMap<String, byte[]> concurrentMap = new ConcurrentHashMap<String, byte[]>();
 
 	protected static ConcurrentMap<String, String> mimeMapping = new ConcurrentHashMap<String, String>();
 
@@ -107,7 +106,7 @@ public class WebResourceServlet extends HttpServlet {
 		ServletOutputStream outraw = null;
 		try {
 			outraw = response.getOutputStream();
-			byte[] raw = concurrentMap.get(resPath);
+			byte[] raw = WebResource.getBytes(resPath);
 			if (raw == null) {
 				String filename = SystemProperties.getAppPath() + resPath;
 				File filex = new File(filename);
@@ -119,7 +118,7 @@ public class WebResourceServlet extends HttpServlet {
 							.getResourceAsStream(resPath);
 				}
 				raw = FileUtils.getBytes(inputStream);
-				concurrentMap.put(resPath, raw);
+				WebResource.setBytes(resPath, raw);
 				logger.debug("load resource:" + resPath);
 			}
 			response.setStatus(HttpServletResponse.SC_OK);
