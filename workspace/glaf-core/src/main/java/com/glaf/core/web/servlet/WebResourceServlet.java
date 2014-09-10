@@ -71,6 +71,18 @@ public class WebResourceServlet extends HttpServlet {
 		if (StringUtils.endsWithIgnoreCase(file, ".jsp")) {
 			return;
 		}
+		if (StringUtils.endsWithIgnoreCase(file, ".conf")) {
+			return;
+		}
+		if (StringUtils.endsWithIgnoreCase(file, "-config.properties")) {
+			return;
+		}
+		if (StringUtils.endsWithIgnoreCase(file, "-spring-context.xml")) {
+			return;
+		}
+		if (StringUtils.endsWithIgnoreCase(file, "Mapper.xml")) {
+			return;
+		}
 
 		int dot = file.lastIndexOf(".");
 		String ext = file.substring(dot + 1);
