@@ -25,9 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import redis.clients.jedis.Jedis;
-
 import com.glaf.core.resource.Resource;
-import com.glaf.core.util.SerializationUtils;
 
 /**
  * Redis 分布式配置实现
@@ -163,26 +161,6 @@ public class RedisResource implements Resource {
 		}
 	}
 
-	public void put(Object key, Object value) {
-		if (value == null) {
-			evict(key);
-		} else {
-			boolean broken = false;
-			Jedis jedis = null;
-			try {
-				jedis = RedisUtils.getResource();
-				jedis.set(getKeyName(key).getBytes(),
-						SerializationUtils.serialize(value));
-			} catch (Exception ex) {
-				broken = true;
-				ex.printStackTrace();
-				throw new RuntimeException(ex);
-			} finally {
-				RedisUtils.returnResource(jedis, broken);
-			}
-		}
-	}
-
 	public void put(String key, byte[] value) {
 		if (value == null) {
 			evict(key);
@@ -206,7 +184,4 @@ public class RedisResource implements Resource {
 		this.evict(key);
 	}
 
-	public void update(Object key, Object value) {
-		put(key, value);
-	}
 }
