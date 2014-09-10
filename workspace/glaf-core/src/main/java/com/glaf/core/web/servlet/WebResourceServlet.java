@@ -65,6 +65,12 @@ public class WebResourceServlet extends HttpServlet {
 
 		int slash = request.getRequestURI().lastIndexOf("/");
 		String file = request.getRequestURI().substring(slash + 1);
+		if (StringUtils.endsWithIgnoreCase(file, ".class")) {
+			return;
+		}
+		if (StringUtils.endsWithIgnoreCase(file, ".jsp")) {
+			return;
+		}
 
 		int dot = file.lastIndexOf(".");
 		String ext = file.substring(dot + 1);
