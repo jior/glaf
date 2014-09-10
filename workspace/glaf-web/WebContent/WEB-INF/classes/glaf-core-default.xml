@@ -15,6 +15,12 @@
 
 
 	<property>
+		<name>distributed.resource.enabled</name>
+		<value>true</value>
+	</property>
+
+
+	<property>
 		<name>useMyBatisResultHandler</name>
 		<value>true</value>
 	</property>
