@@ -386,6 +386,46 @@
 	</select>
 
 
+	<select id="getDeptRoleUsers" resultMap="userResultMap" parameterType="map">
+
+           SELECT u.*
+		   FROM SYS_USER u
+		   WHERE u.blocked = 0 AND u.id IN
+				 ( SELECT r.userId  FROM SYS_USER_ROLE r
+			       WHERE r.authorized = 0 AND r.roleId IN
+						 ( SELECT a.id
+					       FROM SYS_DEPT_ROLE a, SYS_ROLE b
+					       WHERE 1=1
+						   AND  a.sysRoleId = b.id
+ 
+						<if test="roleId != null">
+							AND b.code= #{roleId} 
+						</if>
+
+						<if test="roleIds != null and roleIds.size !=0">
+							AND b.code IN
+							<foreach item="x_roleId" index="index" collection="roleIds"
+									open="(" separator="," close=")">
+								#{x_roleId}
+							</foreach>
+						</if>
+				 
+						<if test="nodeId != null">
+							AND ( a.deptId = #{nodeId} ) 
+						</if>
+
+						<if test="nodeIds != null and nodeIds.size !=0">
+							AND a.deptId IN
+							<foreach item="x_deptId" index="index" collection="nodeIds"
+								open="(" separator="," close=")">
+								#{x_deptId}
+							</foreach>
+						</if>
+                       )
+				)
+	</select>
+
+
 	<select id="getXYDeptRoleUsers" resultMap="userResultMap"
 		    parameterType="com.glaf.core.query.MembershipQuery">
 
