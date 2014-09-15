@@ -1,4 +1,4 @@
-<project name="glaf-base" basedir="." default="jar">
+<project name="glaf-web" basedir="." default="jar">
 	<!-- Project settings -->
 	<property name="project.title" value="GLAF Web System" />
 	<property name="project.distname" value="glaf-web" />
