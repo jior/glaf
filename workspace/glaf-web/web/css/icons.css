@@ -1,0 +1,294 @@
+@charset "utf-8";
+
+.icon-blank{
+	background:url('../images/blank.gif') no-repeat ;
+}
+.icon-add{
+	background:url('../images/add.png') no-repeat ;
+}
+.icon-edit{
+	background:url('../images/edit.gif') no-repeat ;
+}
+.icon-remove{
+	background:url('../images/remove.png') no-repeat ;
+}
+.icon-upload{
+	background:url('../images/upload.gif') no-repeat ;
+}
+.icon-clear{
+	background:url('../images/clear.png') no-repeat ;
+}
+.icon-props{
+	background:url('../images/props.png') no-repeat ;
+}
+.icon-list{
+	background:url('../images/list.gif') no-repeat ;
+}
+.icon-review{
+	background:url('../images/review.png') no-repeat ;
+}
+.icon-imp{
+	background:url('../images/imp.gif') no-repeat ;
+}
+
+.icon-exp{
+	background:url('../images/exp.gif') no-repeat ;
+}
+
+.icon-submit{
+	background:url('../images/submit.gif') no-repeat ;
+}
+
+.icon-process{
+	background:url('../images/process.gif') no-repeat ;
+}
+
+.icon-pwd{
+	background:url('../images/pwd.gif') no-repeat ;
+}
+
+.icon-mail{
+	background:url('../images/mail.gif') no-repeat ;
+}
+
+.icon-move{
+	background:url('../images/move.gif') no-repeat ;
+}
+.icon-save{
+	background:url('../images/filesave.png') no-repeat ;
+}
+.icon-view{
+	background:url('../images/view.gif') no-repeat ;
+}
+.icon-cut{
+	background:url('../images/cut.png') no-repeat ;
+}
+.icon-ok{
+	background:url('../images/ok.png') no-repeat ;
+}
+.icon-no{
+	background:url('../images/no.png') no-repeat ;
+}
+.icon-cancel{
+	background:url('../images/cancel.png') no-repeat ;
+}
+.icon-reload{
+	background:url('../images/reload.png') no-repeat ;
+}
+.icon-search{
+	background:url('../images/search.png') no-repeat ;
+}
+.icon-print{
+	background:url('../images/print.png') no-repeat ;
+}
+.icon-help{
+	background:url('../images/help.png') no-repeat ;
+}
+.icon-undo{
+	background:url('../images/undo.png') no-repeat ;
+}
+.icon-redo{
+	background:url('../images/redo.png') no-repeat ;
+}
+.icon-back{
+	background:url('../images/back.png') no-repeat ;
+}
+.icon-sum{
+	background:url('../images/sum.png') no-repeat ;
+}
+.icon-role{
+	background:url('../images/role.gif') no-repeat ;
+}
+
+.icon-sys{ 
+    background:url('../images/gears.png') no-repeat;
+}
+
+.icon-actor{
+	background:url('../images/actor.gif') no-repeat ;
+}
+
+.icon-user{
+	background:url('../images/user.gif') no-repeat ;
+}
+
+.user{
+	background:url('../images/user.gif') no-repeat ;
+}
+.preview{
+	background:url('../images/preview.gif') no-repeat ;
+}
+
+.icon-accounts{
+	background:url('../images/accounts.gif') no-repeat ;
+}
+
+.icon-tip{
+	background:url('../images/tip.png') no-repeat ;
+}
+.icon-mini-add{
+	background:url('../images/mini_add.png') no-repeat  2px 2px;
+}
+.icon-mini-edit{
+	background:url('../images/mini_edit.png') no-repeat  2px 2px;
+}
+.icon-mini-refresh{
+	background:url('../images/mini_refresh.png') no-repeat  3px 2px;
+}
+
+.icon-expand{
+	background:url('../images/expand.gif') no-repeat  ;
+}
+
+.icon-collapse{
+	background:url('../images/collapse.gif') no-repeat  ;
+}
+
+.proc_level_1{
+   background:url('../images/proc_level_1.gif') no-repeat  ;
+}
+
+.proc_level_2{
+   background:url('../images/proc_level_2.gif') no-repeat  ;
+}
+
+.icon-root {
+	background: url('../images/orm_root.gif') no-repeat;
+}
+
+.icon-base {
+	background: url('../images/basic.gif') no-repeat;
+}
+
+.icon-gears {
+	background: url('../images/gears.png') no-repeat;
+}
+
+.icon-key{
+	background:url('../images/key.gif') no-repeat ;
+}
+
+.icon_user_group{
+	background:url('../images/user_group.gif') no-repeat ;
+} 
+
+.icon-flag{
+	background:url('../images/flag.gif') no-repeat ;
+} 
+
+
+.icon_img{
+	background:url('../images/img.gif') no-repeat ;
+} 
+
+.icon_pause{
+	background:url('../images/pause.gif') no-repeat ;
+} 
+
+
+.icon_stop{
+	background:url('../images/stop.gif') no-repeat ;
+} 
+
+
+.icon_print{
+	background:url('../images/print.gif') no-repeat ;
+} 
+
+
+.icon_save{
+	background:url('../images/save.gif') no-repeat ;
+} 
+
+
+.icon-up{
+	background:url('../images/up.gif') no-repeat ;
+} 
+
+.icon-down{
+	background:url('../images/down.gif') no-repeat ;
+} 
+
+.icon_lock{
+	background:url('../images/lock.gif') no-repeat ;
+} 
+
+
+.icon-1 {
+    background: url('../images/icons/1.png') no-repeat;
+}
+.icon-2 {
+    background: url('../images/icons/2.png') no-repeat;
+}
+.icon-3 {
+    background: url('../images/icons/3.png') no-repeat;
+}
+.icon-4 {
+    background: url('../images/icons/4.png') no-repeat;
+}
+.icon-5 {
+    background: url('../images/icons/5.png') no-repeat;
+}
+.icon-6 {
+    background: url('../images/icons/6.png') no-repeat;
+}
+.icon-7 {
+    background: url('../images/icons/7.png') no-repeat;
+}
+.icon-8 {
+    background: url('../images/icons/8.png') no-repeat;
+}
+.icon-9 {
+    background: url('../images/icons/9.png') no-repeat;
+}
+.icon-10 {
+    background: url('../images/icons/10.png') no-repeat;
+}
+
+.icon-11 {
+    background: url('../images/icons/11.png') no-repeat;
+}
+
+.icon-12 {
+    background: url('../images/icons/12.png') no-repeat;
+}
+
+.icon-13 {
+    background: url('../images/icons/13.png') no-repeat;
+}
+.icon-14 {
+    background: url('../images/icons/14.png') no-repeat;
+}
+.icon-15 {
+    background: url('../images/icons/15.png') no-repeat;
+}
+.icon-16 {
+    background: url('../images/icons/16.png') no-repeat;
+}
+.icon-17 {
+    background: url('../images/icons/17.png') no-repeat;
+}
+.icon-18 {
+    background: url('../images/icons/18.png') no-repeat;
+}
+.icon-19 {
+    background: url('../images/icons/19.png') no-repeat;
+}
+.icon-20 {
+    background: url('../images/icons/20.png') no-repeat;
+}
+.icon-21 {
+    background: url('../images/icons/21.png') no-repeat;
+}
+.icon-22 {
+    background: url('../images/icons/22.png') no-repeat;
+}
+.icon-23 {
+    background: url('../images/icons/23.png') no-repeat;
+}
+.icon-24 {
+    background: url('../images/icons/24.png') no-repeat;
+}
+.icon-25 {
+    background: url('../images/icons/25.png') no-repeat;
+}
