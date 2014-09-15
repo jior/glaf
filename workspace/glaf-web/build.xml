@@ -65,6 +65,10 @@
 			<fileset dir="jar-conf" includes="**/*.xml,**/*.properties"/>
 		</jar>
 
+		<jar jarfile="glaf-web-resource.jar">
+			<fileset dir="web" includes="**/*.*" excludes="**/*.jar,**/*.class,**/archives/*.*,**/*.ttc,**/*.lib,**/*.dll,**/*.so, **/data/index/**/*.*,**/examples/**/*.*, **/locks" casesensitive="yes" />
+		</jar>
+
 		<jar jarfile="glaf-min-web.zip">
 			<fileset dir="WebContent" includes="**/*.*" excludes="**/*.jar,**/*.class,**/archives/*.*,**/*.ttc,**/*.lib,**/*.dll,**/*.so, **/data/index/**/*.*,**/examples/**/*.*, **/locks" casesensitive="yes" />
 		</jar>
