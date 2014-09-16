@@ -13,4 +13,21 @@
         <property name="jobRepository" ref="jobRepository" />
     </bean>
 
+ 	<bean id="batchJobOperator" class="org.springframework.batch.core.launch.support.SimpleJobOperator">
+ 		<property name="jobExplorer" ref="jobExplorer"/>
+ 		<property name="jobLauncher" ref="jobLauncher"/>
+ 		<property name="jobRepository" ref="jobRepository"/>
+ 		<property name="jobRegistry" ref="jobRegistry"/>
+ 	</bean>
+
+	<bean id="jobExplorer" class="org.springframework.batch.core.explore.support.JobExplorerFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
+	<bean id="jobParametersConverter" class="org.springframework.batch.core.jsr.JsrJobParametersConverter">
+		<constructor-arg ref="dataSource"/>
+	</bean>
+
+	<bean id="jobRegistry" class="org.springframework.batch.core.configuration.support.MapJobRegistry"/>
+
 </beans>
