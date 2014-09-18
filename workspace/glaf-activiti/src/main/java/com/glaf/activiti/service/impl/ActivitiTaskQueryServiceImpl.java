@@ -256,30 +256,30 @@ public class ActivitiTaskQueryServiceImpl implements ActivitiTaskQueryService {
 			if (paramMap.get("dueDate") != null) {
 				Object dueDate = (Object) paramMap.get("dueDate");
 				if (dueDate instanceof Date) {
-					query.dueDate((Date) dueDate);
+					query.taskDueDate((Date) dueDate);
 				} else {
 					Date date = DateUtils.toDate(dueDate.toString());
-					query.dueDate(date);
+					query.taskDueDate(date);
 				}
 			}
 
 			if (paramMap.get("dueDateBefore") != null) {
 				Object dueDateBefore = (Object) paramMap.get("dueDateBefore");
 				if (dueDateBefore instanceof Date) {
-					query.dueBefore((Date) dueDateBefore);
+					query.taskDueBefore((Date) dueDateBefore);
 				} else {
 					Date date = DateUtils.toDate(dueDateBefore.toString());
-					query.dueBefore(date);
+					query.taskDueBefore(date);
 				}
 			}
 
 			if (paramMap.get("dueDateAfter") != null) {
 				Object dueDateAfter = (Object) paramMap.get("dueDateAfter");
 				if (dueDateAfter instanceof Date) {
-					query.dueAfter((Date) dueDateAfter);
+					query.taskDueAfter((Date) dueDateAfter);
 				} else {
 					Date date = DateUtils.toDate(dueDateAfter.toString());
-					query.dueAfter(date);
+					query.taskDueAfter(date);
 				}
 			}
 		}
@@ -495,30 +495,30 @@ public class ActivitiTaskQueryServiceImpl implements ActivitiTaskQueryService {
 			if (paramMap.get("dueDate") != null) {
 				Object dueDate = (Object) paramMap.get("dueDate");
 				if (dueDate instanceof Date) {
-					query.dueDate((Date) dueDate);
+					query.taskDueDate((Date) dueDate);
 				} else {
 					Date date = DateUtils.toDate(dueDate.toString());
-					query.dueDate(date);
+					query.taskDueDate(date);
 				}
 			}
 
 			if (paramMap.get("dueDateBefore") != null) {
 				Object dueDateBefore = (Object) paramMap.get("dueDateBefore");
 				if (dueDateBefore instanceof Date) {
-					query.dueBefore((Date) dueDateBefore);
+					query.taskDueBefore((Date) dueDateBefore);
 				} else {
 					Date date = DateUtils.toDate(dueDateBefore.toString());
-					query.dueBefore(date);
+					query.taskDueBefore(date);
 				}
 			}
 
 			if (paramMap.get("dueDateAfter") != null) {
 				Object dueDateAfter = (Object) paramMap.get("dueDateAfter");
 				if (dueDateAfter instanceof Date) {
-					query.dueAfter((Date) dueDateAfter);
+					query.taskDueAfter((Date) dueDateAfter);
 				} else {
 					Date date = DateUtils.toDate(dueDateAfter.toString());
-					query.dueAfter(date);
+					query.taskDueAfter(date);
 				}
 			}
 
