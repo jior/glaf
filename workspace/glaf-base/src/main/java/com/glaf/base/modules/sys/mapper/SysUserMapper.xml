@@ -344,21 +344,15 @@
 		resultMap="sysUserResultMap">
 		select * from SYS_USER where ACCOUNT = #{account}
 	</select>
-	
-	
+
+
 	<select id="getSysUserPasswordByAccount" parameterType="String"
 		resultType="String">
 		select PASSWORD from SYS_USER where ACCOUNT = #{account}
 	</select>
 
 
-	<select id="getSysUserByAccount_oracle" parameterType="String"
-		resultMap="sysUserResultMap">
-		select * from SYS_USER where lower(ACCOUNT) = #{account}
-	</select>
-
-
-	<select id="getSysUserByAccount_postgresql" parameterType="String"
+	<select id="getSysUserByLowerCaseAccount" parameterType="String"
 		resultMap="sysUserResultMap">
 		select * from SYS_USER where lower(ACCOUNT) = #{account}
 	</select>

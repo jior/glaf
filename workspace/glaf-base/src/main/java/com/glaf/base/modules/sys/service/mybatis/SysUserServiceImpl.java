@@ -182,13 +182,20 @@ public class SysUserServiceImpl implements SysUserService {
 		if (StringUtils.equals(DBUtils.ORACLE,
 				DBConnectionFactory.getDatabaseType())) {
 			account = account.toLowerCase();
-			user = sysUserMapper.getSysUserByAccount_oracle(account);
+			user = sysUserMapper.getSysUserByLowerCaseAccount(account);
 		} else if (StringUtils.equals(DBUtils.POSTGRESQL,
 				DBConnectionFactory.getDatabaseType())) {
 			account = account.toLowerCase();
-			user = sysUserMapper.getSysUserByAccount_postgresql(account);
+			user = sysUserMapper.getSysUserByLowerCaseAccount(account);
 		} else {
 			user = sysUserMapper.getSysUserByAccount(account);
+		}
+		if (user == null) {
+			try {
+				account = account.toLowerCase();
+				user = sysUserMapper.getSysUserByLowerCaseAccount(account);
+			} catch (Exception ex) {
+			}
 		}
 		if (user != null && user.getDeptId() > 0) {
 			user.setDepartment(sysDepartmentService.findById(user.getDeptId()));
@@ -205,13 +212,20 @@ public class SysUserServiceImpl implements SysUserService {
 		if (StringUtils.equals(DBUtils.ORACLE,
 				DBConnectionFactory.getDatabaseType())) {
 			account = account.toLowerCase();
-			user = sysUserMapper.getSysUserByAccount_oracle(account);
+			user = sysUserMapper.getSysUserByLowerCaseAccount(account);
 		} else if (StringUtils.equals(DBUtils.POSTGRESQL,
 				DBConnectionFactory.getDatabaseType())) {
 			account = account.toLowerCase();
-			user = sysUserMapper.getSysUserByAccount_postgresql(account);
+			user = sysUserMapper.getSysUserByLowerCaseAccount(account);
 		} else {
 			user = sysUserMapper.getSysUserByAccount(account);
+		}
+		if (user == null) {
+			try {
+				account = account.toLowerCase();
+				user = sysUserMapper.getSysUserByLowerCaseAccount(account);
+			} catch (Exception ex) {
+			}
 		}
 		if (user != null) {
 			user.setDepartment(sysDepartmentService.findById(user.getDeptId()));
