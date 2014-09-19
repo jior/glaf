@@ -61,8 +61,8 @@ public class ClearOnlineUserJob implements Job {
 		if (timeoutSeconds < 60) {
 			timeoutSeconds = 60;
 		}
-		if (timeoutSeconds > 600) {
-			timeoutSeconds = 600;
+		if (timeoutSeconds > 1800) {
+			timeoutSeconds = 1800;
 		}
 		userOnlineService.deleteTimeoutUsers(timeoutSeconds);
 	}
