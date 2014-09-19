@@ -47,7 +47,7 @@ public class ClearOnlineUserJob implements Job {
 		String jobName = context.getJobDetail().getKey().getName();
 		logger.info("Executing job: " + jobName + " executing at "
 				+ DateUtils.getDateTime(new Date()));
-		int timeoutSeconds = 120;
+		int timeoutSeconds = 300;
 		UserOnlineService userOnlineService = ContextFactory
 				.getBean("userOnlineService");
 		ISystemPropertyService systemPropertyService = ContextFactory
