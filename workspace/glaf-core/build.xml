@@ -13,7 +13,7 @@
   <target name="build"> 
     <echo message="build app......"/>  
     <mkdir dir="bin"/>  
-    <javac srcdir="${build.home}/src" destdir="${build.dest}" source="1.6" target="1.6" nowarn="false" debug="true" debuglevel="lines,vars,source" encoding="UTF-8"> 
+    <javac srcdir="${build.home}/src" destdir="${build.dest}" nowarn="false" debug="true" debuglevel="lines,vars,source" encoding="UTF-8"> 
       <include name="main/java/com/**/*.java"/>  
       <classpath refid="classpath"/> 
     </javac>  

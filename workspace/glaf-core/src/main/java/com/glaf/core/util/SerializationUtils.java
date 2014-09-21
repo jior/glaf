@@ -24,8 +24,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import de.ruedigermoeller.serialization.FSTObjectInput;
-import de.ruedigermoeller.serialization.FSTObjectOutput;
+import org.nustaq.serialization.FSTObjectInput;
+import org.nustaq.serialization.FSTObjectOutput;
 
 public class SerializationUtils {
 
@@ -37,7 +37,12 @@ public class SerializationUtils {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		} finally {
-			IOUtils.closeStream(in);
+			if(in != null){
+				try {
+					in.close();
+				} catch (IOException e) {
+				}
+			}
 		}
 	}
 
@@ -54,7 +59,12 @@ public class SerializationUtils {
 			throw new RuntimeException(e);
 		} finally {
 			IOUtils.closeStream(out);
-			IOUtils.closeStream(fout);
+			if(fout != null){
+				try {
+					fout.close();
+				} catch (IOException e) {
+				}
+			}
 		}
 	}
 

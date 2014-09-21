@@ -19,6 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.glaf.core.jdbc.DBConnectionFactory;
+import com.glaf.core.util.JdbcUtils;
 
 public class LongIdStartup {
 
@@ -31,6 +32,8 @@ public class LongIdStartup {
 			con = DBConnectionFactory.getConnection();
 			psmt = con.prepareStatement(sql);
 			rs = psmt.executeQuery();
+			JdbcUtils.close(psmt);
+			JdbcUtils.close(rs);
 			boolean insert = true;
 			if (rs.next()) {
 				insert = false;
@@ -39,6 +42,7 @@ public class LongIdStartup {
 				sql = "insert into SYS_DBID(NAME_, TITLE_, VALUE_, VERSION_) values ('next.dbid', '系统内置主键', '1001', 1)";
 				psmt = con.prepareStatement(sql);
 				psmt.executeUpdate();
+				JdbcUtils.close(psmt);
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();

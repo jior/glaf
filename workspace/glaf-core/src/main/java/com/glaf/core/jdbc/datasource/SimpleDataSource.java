@@ -21,6 +21,8 @@ package com.glaf.core.jdbc.datasource;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
+import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
@@ -68,6 +70,11 @@ public class SimpleDataSource implements DataSource {
 	public Connection getConnection(String arg0, String arg1)
 			throws SQLException {
 		return conn;
+	}
+
+ 
+	public Logger getParentLogger() throws SQLFeatureNotSupportedException {
+		return null;
 	}
 
 }
