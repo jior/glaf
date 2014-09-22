@@ -20,7 +20,7 @@
 
 
 	<insert id="insertJobExecution" parameterType="com.glaf.batch.domain.JobExecution">
-		insert into SYS_JOB_EXECUTION
+		insert into JOB_EXECUTION
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			job_execution_id
 			<if test="version != null">
@@ -88,7 +88,7 @@
 
 	<update id="updateJobExecution" parameterType="com.glaf.batch.domain.JobExecution">
 		update
-		SYS_JOB_EXECUTION
+		JOB_EXECUTION
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="startTime != null">
@@ -118,25 +118,25 @@
 
 	<delete id="deleteJobExecutionById" parameterType="long">
 		delete from
-		SYS_JOB_EXECUTION
+		JOB_EXECUTION
 		where job_execution_id = #{id}
 	</delete>
 
 
 	<delete id="deleteJobExecutionByJobInstanceId" parameterType="long">
-		delete from SYS_JOB_EXECUTION where job_instance_id = #{jobInstanceId}
+		delete from JOB_EXECUTION where job_instance_id = #{jobInstanceId}
 	</delete>
 
 
 	<select id="getJobExecutionById" parameterType="long"
 		resultMap="jobExecutionResultMap">
-		select * from SYS_JOB_EXECUTION where job_execution_id =
+		select * from JOB_EXECUTION where job_execution_id =
 		#{id}
 	</select>
 
 	<select id="getJobExecutionByJobInstanceId" parameterType="long"
 		resultMap="jobExecutionResultMap">
-		select * from SYS_JOB_EXECUTION where job_instance_id =
+		select * from JOB_EXECUTION where job_instance_id =
 		#{jobInstanceId}
 	</select>
 
@@ -176,7 +176,7 @@
 
 	<sql id="selectJobExecutionsSql">
 
-		from SYS_JOB_EXECUTION E
+		from JOB_EXECUTION E
 
 		<where>
 

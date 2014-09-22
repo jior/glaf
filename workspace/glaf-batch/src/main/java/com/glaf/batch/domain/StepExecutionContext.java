@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 @Entity
-@Table(name = "SYS_STEP_EXECUTION_CONTEXT")
+@Table(name = "JOB_STEP_EXECUTION_CONTEXT")
 public class StepExecutionContext implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 

@@ -14,7 +14,7 @@
 
 
 	<insert id="insertJobDefinition" parameterType="com.glaf.batch.domain.JobDefinition">
-		insert into SYS_JOB_DEF
+		insert into JOB_DEF
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			JOB_DEFINITION_ID
 			<if test="jobKey != null">
@@ -51,7 +51,7 @@
 
 
 	<update id="updateJobDefinition" parameterType="com.glaf.batch.domain.JobDefinition">
-		update SYS_JOB_DEF
+		update JOB_DEF
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="jobKey != null">
@@ -75,14 +75,14 @@
 
 	<delete id="deleteJobDefinitionById" parameterType="long">
 		delete from
-		SYS_JOB_DEF
+		JOB_DEF
 		where JOB_DEFINITION_ID = #{id}
 	</delete>
 
 
 	<select id="getJobDefinitionById" parameterType="long"
 		resultMap="jobDefinitionResultMap">
-		select * from SYS_JOB_DEF where JOB_DEFINITION_ID = #{id}
+		select * from JOB_DEF where JOB_DEFINITION_ID = #{id}
 	</select>
 
 
@@ -110,7 +110,7 @@
 
 	<sql id="selectJobDefinitionsSql">
 
-		from SYS_JOB_DEF E
+		from JOB_DEF E
 
 		<where>
 			1 = 1

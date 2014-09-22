@@ -18,7 +18,7 @@
 
 
 	<insert id="insertStepDefinition" parameterType="com.glaf.batch.domain.StepDefinition">
-		insert into SYS_JOB_STEP_DEF
+		insert into JOB_STEP_DEF
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			STEP_DEFINITION_ID
 			<if test="jobDefinitionId != null">
@@ -67,7 +67,7 @@
 
 
 	<update id="updateStepDefinition" parameterType="com.glaf.batch.domain.StepDefinition">
-		update SYS_JOB_STEP_DEF
+		update JOB_STEP_DEF
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="jobDefinitionId != null">
@@ -97,21 +97,21 @@
 
 	<delete id="deleteStepDefinitionById" parameterType="long">
 		delete
-		from SYS_JOB_STEP_DEF
+		from JOB_STEP_DEF
 		where STEP_DEFINITION_ID = #{id}
 	</delete>
 
 
 	<select id="getStepDefinitionById" parameterType="long"
 		resultMap="jobStepDefinitionResultMap">
-		select * from SYS_JOB_STEP_DEF where STEP_DEFINITION_ID =
+		select * from JOB_STEP_DEF where STEP_DEFINITION_ID =
 		#{id}
 	</select>
 
 
 	<select id="getStepDefinitionsByJobDefinitionId"
 		parameterType="long" resultMap="jobStepDefinitionResultMap">
-		select * from SYS_JOB_STEP_DEF where
+		select * from JOB_STEP_DEF where
 		JOB_DEFINITION_ID =
 		#{jobDefinitionId}
 	</select>
@@ -141,7 +141,7 @@
 
 	<sql id="selectStepDefinitionsSql">
 
-		from SYS_JOB_STEP_DEF E
+		from JOB_STEP_DEF E
 
 		<where>
 			1 = 1

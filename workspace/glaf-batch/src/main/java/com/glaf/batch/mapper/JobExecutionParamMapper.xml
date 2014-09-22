@@ -22,7 +22,7 @@
 
 
 	<insert id="insertJobExecutionParam" parameterType="com.glaf.batch.domain.JobExecutionParam">
-		insert into SYS_JOB_EXECUTION_PARAMS
+		insert into JOB_EXECUTION_PARAMS
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			ID
 			<if test="jobExecutionId != null">
@@ -96,7 +96,7 @@
 
 	<delete id="deleteJobExecutionParamsByJobInstanceId"
 		parameterType="long">
-		delete from SYS_JOB_EXECUTION_PARAMS
+		delete from JOB_EXECUTION_PARAMS
 		where
 		JOB_INSTANCE_ID = #{jobInstanceId}
 	</delete>
@@ -104,7 +104,7 @@
 
 	<delete id="deleteJobExecutionParamsByJobExecutionId"
 		parameterType="long">
-		delete from SYS_JOB_EXECUTION_PARAMS
+		delete from JOB_EXECUTION_PARAMS
 		where
 		JOB_EXECUTION_ID = #{jobExecutionId}
 	</delete>
@@ -112,14 +112,14 @@
 
 	<select id="getJobExecutionParamsByJobInstanceId" parameterType="long"
 		resultMap="jobExecutionParamResultMap">
-		select * from SYS_JOB_EXECUTION_PARAMS where JOB_INSTANCE_ID
+		select * from JOB_EXECUTION_PARAMS where JOB_INSTANCE_ID
 		= #{jobInstanceId}
 	</select>
 
 
 	<select id="getJobExecutionParamsByJobExecutionId"
 		parameterType="long" resultMap="jobExecutionParamResultMap">
-		select * from SYS_JOB_EXECUTION_PARAMS
+		select * from JOB_EXECUTION_PARAMS
 		JOB_EXECUTION_ID = #{jobExecutionId}
 	</select>
 

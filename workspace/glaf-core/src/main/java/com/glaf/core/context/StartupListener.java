@@ -88,6 +88,7 @@ public class StartupListener extends ContextLoaderListener implements
 			System.setProperty("webapp" + i + ".root",
 					SystemProperties.getAppPath());
 		}
+		System.setProperty("app.path", SystemProperties.getAppPath());
 		System.setProperty("config.path", SystemProperties.getAppPath()
 				+ "/WEB-INF");
 		if (DBConnectionFactory.checkConnection()) {

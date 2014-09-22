@@ -29,7 +29,7 @@ import com.glaf.core.base.*;
 import com.glaf.batch.util.*;
 
 @Entity
-@Table(name = "SYS_JOB_STEP_DEF_PARAMS")
+@Table(name = "JOB_STEP_DEF_PARAMS")
 public class StepDefinitionParam implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 

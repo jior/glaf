@@ -33,7 +33,7 @@ import com.glaf.core.base.*;
 import com.glaf.batch.util.*;
 
 @Entity
-@Table(name = "SYS_JOB_STEP_DEF")
+@Table(name = "JOB_STEP_DEF")
 public class StepDefinition implements Serializable, JSONable,
 		java.lang.Comparable<StepDefinition> {
 	private static final long serialVersionUID = 1L;

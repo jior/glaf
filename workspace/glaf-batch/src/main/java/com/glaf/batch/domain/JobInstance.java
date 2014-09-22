@@ -35,7 +35,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 @Entity
-@Table(name = "SYS_JOB_INSTANCE")
+@Table(name = "JOB_INSTANCE")
 public class JobInstance implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 

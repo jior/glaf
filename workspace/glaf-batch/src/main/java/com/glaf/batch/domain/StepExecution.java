@@ -33,7 +33,7 @@ import com.glaf.batch.util.StepExecutionJsonFactory;
 import com.glaf.core.base.JSONable;
 
 @Entity
-@Table(name = "SYS_STEP_EXECUTION")
+@Table(name = "JOB_STEP_EXECUTION")
 public class StepExecution implements Serializable,
 		java.lang.Comparable<StepExecution>, JSONable {
 	private static final long serialVersionUID = 1L;

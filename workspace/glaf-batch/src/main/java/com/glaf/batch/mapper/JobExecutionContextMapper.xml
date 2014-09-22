@@ -14,7 +14,7 @@
 
 
 	<insert id="insertJobExecutionContext" parameterType="com.glaf.batch.domain.JobExecutionContext">
-		insert into SYS_JOB_EXECUTION_CONTEXT
+		insert into JOB_EXECUTION_CONTEXT
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			job_execution_id
 			<if test="shortContext != null">
@@ -40,7 +40,7 @@
 
 	<update id="updateJobExecutionContext" parameterType="com.glaf.batch.domain.JobExecutionContext">
 		update
-		SYS_JOB_EXECUTION_CONTEXT
+		JOB_EXECUTION_CONTEXT
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="shortContext != null">
@@ -58,14 +58,14 @@
 
 
 	<delete id="deleteJobExecutionContextById" parameterType="long">
-		delete from SYS_JOB_EXECUTION_CONTEXT
+		delete from JOB_EXECUTION_CONTEXT
 		where job_execution_id = #{id}
 	</delete>
 
 
 	<select id="getJobExecutionContextById" parameterType="long"
 		resultMap="jobExecutionContextResultMap">
-		select * from SYS_JOB_EXECUTION_CONTEXT where
+		select * from JOB_EXECUTION_CONTEXT where
 		job_execution_id = #{id}
 	</select>
 

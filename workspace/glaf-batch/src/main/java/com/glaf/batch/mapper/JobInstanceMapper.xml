@@ -13,7 +13,7 @@
 
 
 	<insert id="insertJobInstance" parameterType="com.glaf.batch.domain.JobInstance">
-		insert into SYS_JOB_INSTANCE
+		insert into JOB_INSTANCE
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			job_instance_id
 			<if test="version != null">
@@ -45,7 +45,7 @@
 
 	<update id="updateJobInstance" parameterType="com.glaf.batch.domain.JobInstance">
 		update
-		SYS_JOB_INSTANCE
+		JOB_INSTANCE
 		set
 		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="version != null">
@@ -66,22 +66,22 @@
 
 	<delete id="deleteJobInstanceById" parameterType="long">
 		delete from
-		SYS_JOB_INSTANCE
+		JOB_INSTANCE
 		where job_instance_id = #{id}
 	</delete>
 
 
 	<select id="getJobInstanceById" parameterType="long"
 		resultMap="jobInstanceResultMap">
-		select * from SYS_JOB_INSTANCE where job_instance_id = #{id}
+		select * from JOB_INSTANCE where job_instance_id = #{id}
 	</select>
 
 
 	<select id="getJobInstanceByJobKey" parameterType="string"
 		resultMap="jobInstanceResultMap">
-		select * from SYS_JOB_INSTANCE where
+		select * from JOB_INSTANCE where
 		job_instance_id = (
-		select max(job_instance_id) from SYS_JOB_INSTANCE where job_key = #{jobKey}
+		select max(job_instance_id) from JOB_INSTANCE where job_key = #{jobKey}
 		)
 	</select>
 
@@ -121,7 +121,7 @@
 
 	<sql id="selectJobInstancesSql">
 
-		from SYS_JOB_INSTANCE E
+		from JOB_INSTANCE E
 
 		<where>
 

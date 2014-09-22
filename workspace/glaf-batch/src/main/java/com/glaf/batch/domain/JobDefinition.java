@@ -29,7 +29,7 @@ import com.glaf.core.base.*;
 import com.glaf.batch.util.*;
 
 @Entity
-@Table(name = "SYS_JOB_DEF")
+@Table(name = "JOB_DEF")
 public class JobDefinition implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 

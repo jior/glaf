@@ -32,7 +32,7 @@ import com.glaf.batch.util.JobExecutionParamJsonFactory;
 import com.glaf.core.base.JSONable;
 
 @Entity
-@Table(name = "SYS_JOB_EXECUTION_PARAMS")
+@Table(name = "JOB_EXECUTION_PARAMS")
 public class JobExecutionParam implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
