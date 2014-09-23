@@ -50,20 +50,20 @@ public class FormLink implements java.lang.Comparable<FormLink>, Serializable,
 	 * 应用名称
 	 */
 	@Basic
-	@Column(name = "APPId_")
+	@Column(name = "APPId_", length = 50)
 	protected String appId;
 
 	/**
 	 * 子应用名称
 	 */
 	@Basic
-	@Column(name = "CHILDAPPID_")
+	@Column(name = "CHILDAPPID_", length = 50)
 	protected String childAppId;
 
-	@Column(name = "OBJECTID_")
+	@Column(name = "OBJECTID_", length = 50)
 	protected String objectId;
 
-	@Column(name = "OBJECTVALUE_")
+	@Column(name = "OBJECTVALUE_", length = 250)
 	protected String objectValue;
 
 	/**
@@ -77,7 +77,7 @@ public class FormLink implements java.lang.Comparable<FormLink>, Serializable,
 	 * 关联表单的排序字段（表单定义节点名称）
 	 */
 	@Basic
-	@Column(name = "ORDERBY_")
+	@Column(name = "ORDERBY_", length = 50)
 	protected String orderBy;
 
 	/**

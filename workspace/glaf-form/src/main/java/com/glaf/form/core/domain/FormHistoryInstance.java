@@ -44,7 +44,7 @@ public class FormHistoryInstance implements Serializable, JSONable {
 	@Column(name = "ID_", length = 100, nullable = false)
 	protected String id;
 
-	@Column(name = "ACTORID_")
+	@Column(name = "ACTORID_", length = 50)
 	protected String actorId;
 
 	@Lob
@@ -55,28 +55,28 @@ public class FormHistoryInstance implements Serializable, JSONable {
 	@Column(name = "CREATEDATE_")
 	protected Date createDate;
 
-	@Column(name = "NAME_")
+	@Column(name = "NAME_", length = 50)
 	protected String name;
 
 	@Column(name = "NODEID_")
 	protected String nodeId;
 
-	@Column(name = "OBJECTID_")
+	@Column(name = "OBJECTID_", length = 50)
 	protected String objectId;
 
 	@Column(name = "OBJECTTYPE_")
 	protected int objectType = 0;
 
-	@Column(name = "OBJECTVALUE_")
+	@Column(name = "OBJECTVALUE_", length = 250)
 	protected String objectValue;
 
-	@Column(name = "PROCESSINSTANCEID_")
+	@Column(name = "PROCESSINSTANCEID_", length = 100)
 	protected String processInstanceId;
 
 	@Column(name = "REFID_")
 	protected Long refId;
 
-	@Column(name = "TASKINSTANCEID_")
+	@Column(name = "TASKINSTANCEID_", length = 100)
 	protected String taskInstanceId;
 
 	@Column(name = "VERSIONNO_")

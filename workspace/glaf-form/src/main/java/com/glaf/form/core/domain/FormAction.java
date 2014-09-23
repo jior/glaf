@@ -48,31 +48,31 @@ public class FormAction implements Serializable, JSONable {
 	/**
 	 * 名称
 	 */
-	@Column(name = "NAME_")
+	@Column(name = "NAME_", length = 50)
 	protected String name;
 
 	/**
 	 * 主题
 	 */
-	@Column(name = "TITLE_")
+	@Column(name = "TITLE_", length = 250)
 	protected String title;
 
 	/**
 	 * 动作地址
 	 */
-	@Column(name = "URL_")
+	@Column(name = "URL_", length = 500)
 	protected String url;
 
 	/**
 	 * 动作处理器
 	 */
-	@Column(name = "PROVIDER_")
+	@Column(name = "PROVIDER_", length = 100)
 	protected String provider;
 
 	/**
 	 * 创建人
 	 */
-	@Column(name = "CREATEBY_")
+	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
 
 	/**
@@ -85,25 +85,25 @@ public class FormAction implements Serializable, JSONable {
 	/**
 	 * 描述
 	 */
-	@Column(name = "DESCRIPTION_")
+	@Column(name = "DESCRIPTION_", length = 500)
 	protected String description;
 
 	/**
 	 * 活动环节
 	 */
-	@Column(name = "ACTIVITY_")
+	@Column(name = "ACTIVITY_", length = 50)
 	protected String activity;
 
 	/**
 	 * 表单名称
 	 */
-	@Column(name = "FORMNAME_")
+	@Column(name = "FORMNAME_", length = 50)
 	protected String formName;
 
 	/**
 	 * 应用编号
 	 */
-	@Column(name = "APPID_")
+	@Column(name = "APPID_", length = 50)
 	protected String appId;
 
 	public FormAction() {

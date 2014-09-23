@@ -46,19 +46,19 @@ public class FormApplication implements Serializable, JSONable {
 	protected String id;
 
 	@Basic
-	@Column(name = "ARCHIVESNODE_")
+	@Column(name = "ARCHIVESNODE_", length = 50)
 	protected String archivesNode;
 
 	@Basic
-	@Column(name = "AUDITUPLOADFLAG_")
+	@Column(name = "AUDITUPLOADFLAG_", length = 10)
 	protected String auditUploadFlag;
 
 	@Basic
-	@Column(name = "AUTOARCHIVESFLAG_")
+	@Column(name = "AUTOARCHIVESFLAG_", length = 10)
 	protected String autoArchivesFlag;
 
 	@Basic
-	@Column(name = "CREATEBY_", updatable = false)
+	@Column(name = "CREATEBY_", length = 50, updatable = false)
 	protected String createBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -66,39 +66,39 @@ public class FormApplication implements Serializable, JSONable {
 	protected Date createDate;
 
 	@Basic
-	@Column(name = "DESCRIPTION_")
+	@Column(name = "DESCRIPTION_", length = 500)
 	protected String description;
 
 	@Basic
-	@Column(name = "DOCREQUIREDFLAG_")
+	@Column(name = "DOCREQUIREDFLAG_", length = 10)
 	protected String docRequiredFlag;
 
 	@Basic
-	@Column(name = "FORMNAME_")
+	@Column(name = "FORMNAME_", length = 50)
 	protected String formName;
 
 	@Basic
-	@Column(name = "FORMRENDERERTYPE_")
+	@Column(name = "FORMRENDERERTYPE_", length = 50)
 	protected String formRendererType;
 
 	@Basic
-	@Column(name = "LINKCONTROLLERNAME_")
+	@Column(name = "LINKCONTROLLERNAME_", length = 50)
 	protected String linkControllerName;
 
 	@Basic
-	@Column(name = "LINKTEMPLATEID_")
+	@Column(name = "LINKTEMPLATEID_", length = 50)
 	protected String linkTemplateId;
 
 	@Basic
-	@Column(name = "LISTCONTROLLERNAME_")
+	@Column(name = "LISTCONTROLLERNAME_", length = 50)
 	protected String listControllerName;
 
 	@Basic
-	@Column(name = "LISTTEMPLATEID_")
+	@Column(name = "LISTTEMPLATEID_", length = 50)
 	protected String listTemplateId;
 
 	@Basic
-	@Column(name = "MANUALROUTEFLAG_")
+	@Column(name = "MANUALROUTEFLAG_", length = 10)
 	protected String manualRouteFlag;
 
 	@Basic
@@ -106,23 +106,23 @@ public class FormApplication implements Serializable, JSONable {
 	protected Long nodeId;
 
 	@Basic
-	@Column(name = "OBJECTID_")
+	@Column(name = "OBJECTID_", length = 50)
 	protected String objectId;
 
 	@Basic
-	@Column(name = "OBJECTVALUE_")
+	@Column(name = "OBJECTVALUE_", length = 250)
 	protected String objectValue;
 
 	@Basic
-	@Column(name = "PROCESSNAME_")
+	@Column(name = "PROCESSNAME_", length = 50)
 	protected String processName;
 
 	@Basic
-	@Column(name = "PROVIDER_")
+	@Column(name = "PROVIDER_", length = 50)
 	protected String provider;
 
 	@Basic
-	@Column(name = "URL_")
+	@Column(name = "URL_", length = 500)
 	protected String url;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -130,23 +130,23 @@ public class FormApplication implements Serializable, JSONable {
 	protected Date releaseDate;
 
 	@Basic
-	@Column(name = "RELEASEFLAG_")
+	@Column(name = "RELEASEFLAG_", length = 10)
 	protected String releaseFlag;
 
 	@Basic
-	@Column(name = "TABLENAME_")
+	@Column(name = "TABLENAME_", length = 30)
 	protected String tableName;
 
 	@Basic
-	@Column(name = "TITLE_")
+	@Column(name = "TITLE_", length = 50)
 	protected String title;
 
 	@Basic
-	@Column(name = "UPLOADFLAG_")
+	@Column(name = "UPLOADFLAG_", length = 10)
 	protected String uploadFlag;
 
 	@Basic
-	@Column(name = "DATAFIELD_")
+	@Column(name = "DATAFIELD_", length = 250)
 	protected String dataField;
 
 	@Column(name = "UPDATEBY_", length = 50)

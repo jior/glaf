@@ -55,30 +55,30 @@ public class FormDefinition extends GraphElement implements JSONable {
 	@Column(name = "ID_", length = 50, nullable = false)
 	protected String id;
 
+	@Column(name = "NAME_", updatable = false, length = 50)
+	protected String name;
+
 	@Column(name = "COLUMNS_")
 	protected Integer columns = -1;
 
-	@Column(name = "CREATEBY_", updatable = false)
+	@Column(name = "CREATEBY_", length = 50, updatable = false)
 	protected String createBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_", updatable = false)
 	protected Date createDate;
 
-	@Column(name = "DESCRIPTION_")
+	@Column(name = "DESCRIPTION_", length = 500)
 	protected String description;
 
 	@Transient
 	protected transient FormContext formContext = null;
 
-	@Column(name = "FORMDEFINITIONID_", updatable = false)
+	@Column(name = "FORMDEFINITIONID_", length = 150, updatable = false)
 	protected String formDefinitionId;
 
 	@Column(name = "LOCKED_")
 	protected Integer locked = 0;
-
-	@Column(name = "NAME_", updatable = false, length = 100)
-	protected String name;
 
 	@Column(name = "NODEID_")
 	protected Long nodeId;
@@ -89,10 +89,10 @@ public class FormDefinition extends GraphElement implements JSONable {
 	@Transient
 	protected Map<String, FormNode> nodesMap = null;
 
-	@Column(name = "OBJECTID_")
+	@Column(name = "OBJECTID_", length = 50)
 	protected String objectId;
 
-	@Column(name = "OBJECTVALUE_")
+	@Column(name = "OBJECTVALUE_", length = 250)
 	protected String objectValue;
 
 	@Column(name = "ROWS_")
@@ -104,13 +104,13 @@ public class FormDefinition extends GraphElement implements JSONable {
 	@Transient
 	protected byte[] templateData;
 
-	@Column(name = "TEMPLATENAME_")
+	@Column(name = "TEMPLATENAME_", length = 50)
 	protected String templateName;
 
-	@Column(name = "TEMPLATETYPE_")
+	@Column(name = "TEMPLATETYPE_", length = 50)
 	protected String templateType;
 
-	@Column(name = "TITLE_")
+	@Column(name = "TITLE_", length = 200)
 	protected String title;
 
 	@Column(name = "VERSION_")
