@@ -37,7 +37,7 @@ import com.glaf.form.core.service.FormActionService;
 
 @Service("formActionService")
 @Transactional(readOnly = true)
-public class FormActionServiceImpl implements FormActionService {
+public class MxFormActionServiceImpl implements FormActionService {
 	protected EntityDAO entityDAO;
 
 	protected FormActionMapper formActionMapper;
@@ -48,7 +48,7 @@ public class FormActionServiceImpl implements FormActionService {
 
 	protected SqlSessionTemplate sqlSessionTemplate;
 
-	public FormActionServiceImpl() {
+	public MxFormActionServiceImpl() {
 
 	}
 

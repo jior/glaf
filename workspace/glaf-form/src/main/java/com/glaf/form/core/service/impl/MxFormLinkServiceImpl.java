@@ -121,7 +121,6 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 	}
 
 	public FormLink getFormLink(String applicationName, String childName) {
-
 		FormLinkQuery query = new FormLinkQuery();
 		query.appId(applicationName);
 		query.childAppId(childName);
@@ -135,7 +134,6 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 	}
 
 	public List<FormLink> getFormLinks(String appId) {
-
 		FormLinkQuery query = new FormLinkQuery();
 		query.appId(appId);
 		List<FormLink> list = this.list(query);
