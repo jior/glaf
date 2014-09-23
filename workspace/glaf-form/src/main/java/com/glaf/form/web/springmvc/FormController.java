@@ -30,11 +30,6 @@ import com.glaf.core.util.*;
 import com.glaf.form.core.context.FormContext;
 import com.glaf.form.core.domain.*;
 import com.glaf.form.core.service.*;
-import com.glaf.jbpm.container.ProcessContainer;
-import com.glaf.jbpm.context.ProcessContext;
-import com.glaf.jbpm.datafield.DataField;
-import com.glaf.jbpm.model.ActivityInstance;
-import com.glaf.jbpm.model.TaskItem;
 
 @Controller("/form")
 @RequestMapping("/form")
@@ -52,68 +47,6 @@ public class FormController {
 
 	public FormController() {
 
-	}
-
-	@RequestMapping("/completeTask")
-	@ResponseBody
-	public byte[] completeTask(HttpServletRequest request, ModelMap modelMap) {
-		User user = RequestUtils.getUser(request);
-		String actorId = user.getActorId();
-		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		logger.debug(params);
-		String appId = request.getParameter("appId");
-		String businessKey = request.getParameter("businessKey");
-		FormApplication formApplication = formDataService
-				.getFormApplication(appId);
-		DataModel dataModel = formDataService.getDataModelByBusinessKey(appId,
-				businessKey);
-		if (formApplication != null && dataModel != null) {
-			if (dataModel.getProcessInstanceId() != null
-					&& dataModel.getWfStatus() != 9999) {
-				TaskItem taskItem = ProcessContainer
-						.getContainer()
-						.getMinTaskItem(
-								actorId,
-								Long.parseLong(dataModel.getProcessInstanceId()));
-				if (taskItem != null) {
-					String route = request.getParameter("route");
-					String isAgree = request.getParameter("isAgree");
-					String opinion = request.getParameter("opinion");
-					ProcessContext ctx = new ProcessContext();
-					Collection<DataField> datafields = new java.util.ArrayList<DataField>();
-					if (StringUtils.isNotEmpty(isAgree)) {
-						DataField datafield = new DataField();
-						datafield.setName("isAgree");
-						datafield.setValue(isAgree);
-						datafields.add(datafield);
-					}
-					if (StringUtils.isNotEmpty(route)) {
-						DataField datafield = new DataField();
-						datafield.setName("route");
-						datafield.setValue(route);
-						datafields.add(datafield);
-					}
-					ctx.setActorId(actorId);
-					ctx.setOpinion(opinion);
-					ctx.setDataFields(datafields);
-					ctx.setTaskInstanceId(taskItem.getTaskInstanceId());
-					ctx.setProcessInstanceId(Long.parseLong(dataModel
-							.getProcessInstanceId()));
-					try {
-						boolean isOK = ProcessContainer.getContainer()
-								.completeTask(ctx);
-						if (isOK) {
-							return ResponseUtils.responseJsonResult(true);
-						}
-					} catch (Exception ex) {
-						ex.printStackTrace();
-						logger.error(ex);
-					}
-				}
-			}
-		}
-
-		return ResponseUtils.responseJsonResult(false);
 	}
 
 	@ResponseBody
@@ -148,58 +81,14 @@ public class FormController {
 						.getDataModelByBusinessKey(appId, businessKey);
 				request.setAttribute("dataModel", dataModel);
 
-				if (dataModel != null) {
-					boolean canUpdate = false;
-					boolean canSubmit = false;
-					String x_method = request.getParameter("x_method");
-					if (StringUtils.equals(x_method, "submit")) {
-						if (dataModel.getProcessInstanceId() != null) {
-							ProcessContainer container = ProcessContainer
-									.getContainer();
-							Collection<Long> processInstanceIds = container
-									.getRunningProcessInstanceIds(actorId);
-							if (processInstanceIds
-									.contains(Long.parseLong(dataModel
-											.getProcessInstanceId()))) {
-								canSubmit = true;
-							}
-							if (dataModel.getStatus() == 0
-									|| dataModel.getStatus() == -1) {
-								canUpdate = true;
-							}
-							TaskItem taskItem = container.getMinTaskItem(
-									actorId, Long.parseLong(dataModel
-											.getProcessInstanceId()));
-							if (taskItem != null) {
-								request.setAttribute("taskItem", taskItem);
-							}
-							List<ActivityInstance> stepInstances = container
-									.getActivityInstances(Long
-											.parseLong(dataModel
-													.getProcessInstanceId()));
-							request.setAttribute("stepInstances", stepInstances);
-							request.setAttribute("stateInstances",
-									stepInstances);
-						} else {
-							canSubmit = true;
-							canUpdate = true;
-						}
+				List<DataFile> dataFiles = blobService.getBlobList(businessKey);
+				request.setAttribute("dataFiles", dataFiles);
 
-						if (StringUtils.containsIgnoreCase(x_method, "update")) {
-							if (dataModel.getStatus() == 0
-									|| dataModel.getStatus() == -1) {
-								canUpdate = true;
-							}
-						}
-
-						List<DataFile> dataFiles = blobService
-								.getBlobList(businessKey);
-						request.setAttribute("dataFiles", dataFiles);
-
-						request.setAttribute("canSubmit", canSubmit);
-						request.setAttribute("canUpdate", canUpdate);
-					}
+				if (StringUtils.equals(dataModel.getCreateBy(), actorId)
+						&& dataModel.getWfStatus() != 9999) {
+					request.setAttribute("editable", true);
 				}
+
 			}
 		}
 
@@ -347,6 +236,18 @@ public class FormController {
 	@RequestMapping("query")
 	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		String appId = ParamUtils.getString(params, "appId");
+		FormApplication formApplication = null;
+		if (StringUtils.isNotEmpty(appId)) {
+			formApplication = formDataService.getFormApplication(appId);
+			request.setAttribute("formApplication", formApplication);
+			String targetId = formApplication.getTableName() + "_FormApp";
+			List<ColumnDefinition> columns = tableDefinitionService
+					.getColumnDefinitionsByTargetId(targetId);
+			request.setAttribute("columns", columns);
+		}
+
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -362,13 +263,27 @@ public class FormController {
 	public ModelAndView save(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		String actorId = loginContext.getActorId();
 		String appId = ParamUtils.getString(params, "appId");
 		FormContext formContext = new FormContext();
 		formContext.setContextPath(request.getContextPath());
 		formContext.setDataMap(params);
 		formContext.setLoginContext(loginContext);
 		try {
-			this.formDataService.saveDataModel(appId, formContext);
+			String businessKey = request.getParameter("businessKey");
+			FormApplication formApplication = null;
+			if (StringUtils.isNotEmpty(appId)) {
+				formApplication = formDataService.getFormApplication(appId);
+				request.setAttribute("formApplication", formApplication);
+				if (StringUtils.isNotEmpty(businessKey)) {
+					DataModel dataModel = formDataService
+							.getDataModelByBusinessKey(appId, businessKey);
+					if (StringUtils.equals(dataModel.getCreateBy(), actorId)
+							&& dataModel.getWfStatus() != 9999) {
+						this.formDataService.saveDataModel(appId, formContext);
+					}
+				}
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			logger.error(ex);
@@ -382,14 +297,28 @@ public class FormController {
 	public byte[] saveData(HttpServletRequest request) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		String actorId = loginContext.getActorId();
 		String appId = ParamUtils.getString(params, "appId");
 		FormContext formContext = new FormContext();
 		formContext.setContextPath(request.getContextPath());
 		formContext.setDataMap(params);
 		formContext.setLoginContext(loginContext);
 		try {
-			this.formDataService.saveDataModel(appId, formContext);
-			return ResponseUtils.responseJsonResult(true);
+			String businessKey = request.getParameter("businessKey");
+			FormApplication formApplication = null;
+			if (StringUtils.isNotEmpty(appId)) {
+				formApplication = formDataService.getFormApplication(appId);
+				request.setAttribute("formApplication", formApplication);
+				if (StringUtils.isNotEmpty(businessKey)) {
+					DataModel dataModel = formDataService
+							.getDataModelByBusinessKey(appId, businessKey);
+					if (StringUtils.equals(dataModel.getCreateBy(), actorId)
+							&& dataModel.getWfStatus() != 9999) {
+						this.formDataService.saveDataModel(appId, formContext);
+						return ResponseUtils.responseJsonResult(true);
+					}
+				}
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			logger.error(ex);
@@ -424,12 +353,27 @@ public class FormController {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		String appId = ParamUtils.getString(params, "appId");
+		String actorId = loginContext.getActorId();
 		FormContext formContext = new FormContext();
 		formContext.setContextPath(request.getContextPath());
 		formContext.setDataMap(params);
 		formContext.setLoginContext(loginContext);
 		try {
-			this.formDataService.updateDataModel(appId, formContext);
+			String businessKey = request.getParameter("businessKey");
+			FormApplication formApplication = null;
+			if (StringUtils.isNotEmpty(appId)) {
+				formApplication = formDataService.getFormApplication(appId);
+				request.setAttribute("formApplication", formApplication);
+				if (StringUtils.isNotEmpty(businessKey)) {
+					DataModel dataModel = formDataService
+							.getDataModelByBusinessKey(appId, businessKey);
+					if (StringUtils.equals(dataModel.getCreateBy(), actorId)
+							&& dataModel.getWfStatus() != 9999) {
+						this.formDataService
+								.updateDataModel(appId, formContext);
+					}
+				}
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			logger.error(ex);
@@ -443,14 +387,29 @@ public class FormController {
 	public byte[] updateData(HttpServletRequest request) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		String actorId = loginContext.getActorId();
 		String appId = ParamUtils.getString(params, "appId");
 		FormContext formContext = new FormContext();
 		formContext.setContextPath(request.getContextPath());
 		formContext.setDataMap(params);
 		formContext.setLoginContext(loginContext);
 		try {
-			this.formDataService.updateDataModel(appId, formContext);
-			return ResponseUtils.responseJsonResult(true);
+			String businessKey = request.getParameter("businessKey");
+			FormApplication formApplication = null;
+			if (StringUtils.isNotEmpty(appId)) {
+				formApplication = formDataService.getFormApplication(appId);
+				request.setAttribute("formApplication", formApplication);
+				if (StringUtils.isNotEmpty(businessKey)) {
+					DataModel dataModel = formDataService
+							.getDataModelByBusinessKey(appId, businessKey);
+					if (StringUtils.equals(dataModel.getCreateBy(), actorId)
+							&& dataModel.getWfStatus() != 9999) {
+						this.formDataService
+								.updateDataModel(appId, formContext);
+						return ResponseUtils.responseJsonResult(true);
+					}
+				}
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			logger.error(ex);

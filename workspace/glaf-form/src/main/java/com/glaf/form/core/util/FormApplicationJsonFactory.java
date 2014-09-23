@@ -66,9 +66,8 @@ public class FormApplicationJsonFactory {
 		if (jsonObject.containsKey("objectValue")) {
 			model.setObjectValue(jsonObject.getString("objectValue"));
 		}
-		if (jsonObject.containsKey("processDefinitionId")) {
-			model.setProcessDefinitionId(jsonObject
-					.getString("processDefinitionId"));
+		if (jsonObject.containsKey("dataField")) {
+			model.setDataField(jsonObject.getString("dataField"));
 		}
 		if (jsonObject.containsKey("processName")) {
 			model.setProcessName(jsonObject.getString("processName"));
@@ -159,9 +158,8 @@ public class FormApplicationJsonFactory {
 		if (model.getObjectValue() != null) {
 			jsonObject.put("objectValue", model.getObjectValue());
 		}
-		if (model.getProcessDefinitionId() != null) {
-			jsonObject.put("processDefinitionId",
-					model.getProcessDefinitionId());
+		if (model.getDataField() != null) {
+			jsonObject.put("dataField", model.getDataField());
 		}
 		if (model.getProcessName() != null) {
 			jsonObject.put("processName", model.getProcessName());
@@ -250,9 +248,8 @@ public class FormApplicationJsonFactory {
 		if (model.getObjectValue() != null) {
 			jsonObject.put("objectValue", model.getObjectValue());
 		}
-		if (model.getProcessDefinitionId() != null) {
-			jsonObject.put("processDefinitionId",
-					model.getProcessDefinitionId());
+		if (model.getDataField() != null) {
+			jsonObject.put("dataField", model.getDataField());
 		}
 		if (model.getProcessName() != null) {
 			jsonObject.put("processName", model.getProcessName());

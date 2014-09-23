@@ -41,69 +41,69 @@ import com.glaf.form.core.util.FormApplicationJsonFactory;
 public class FormApplication implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@Column(name = "ID_", length = 50, nullable = false)
+	protected String id;
+
 	@Basic
 	@Column(name = "ARCHIVESNODE_")
-	protected String archivesNode = null;
+	protected String archivesNode;
 
 	@Basic
 	@Column(name = "AUDITUPLOADFLAG_")
-	protected String auditUploadFlag = null;
+	protected String auditUploadFlag;
 
 	@Basic
 	@Column(name = "AUTOARCHIVESFLAG_")
-	protected String autoArchivesFlag = null;
+	protected String autoArchivesFlag;
 
 	@Basic
 	@Column(name = "CREATEBY_", updatable = false)
-	protected String createBy = null;
+	protected String createBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_", updatable = false)
-	protected Date createDate = null;
+	protected Date createDate;
 
 	@Basic
 	@Column(name = "DESCRIPTION_")
-	protected String description = null;
+	protected String description;
 
 	@Basic
 	@Column(name = "DOCREQUIREDFLAG_")
-	protected String docRequiredFlag = null;
+	protected String docRequiredFlag;
 
 	@Basic
 	@Column(name = "FORMNAME_")
-	protected String formName = null;
+	protected String formName;
 
 	@Basic
 	@Column(name = "FORMRENDERERTYPE_")
-	protected String formRendererType = null;
-
-	@Id
-	@Column(name = "ID_", length = 50, nullable = false)
-	protected String id = null;
+	protected String formRendererType;
 
 	@Basic
 	@Column(name = "LINKCONTROLLERNAME_")
-	protected String linkControllerName = null;
+	protected String linkControllerName;
 
 	@Basic
 	@Column(name = "LINKTEMPLATEID_")
-	protected String linkTemplateId = null;
+	protected String linkTemplateId;
 
 	@Basic
 	@Column(name = "LISTCONTROLLERNAME_")
-	protected String listControllerName = null;
+	protected String listControllerName;
 
 	@Basic
 	@Column(name = "LISTTEMPLATEID_")
-	protected String listTemplateId = null;
+	protected String listTemplateId;
 
 	@Basic
 	@Column(name = "MANUALROUTEFLAG_")
-	protected String manualRouteFlag = null;
+	protected String manualRouteFlag;
 
 	@Basic
 	@Column(name = "NAME_", updatable = false)
-	protected String name = null;
+	protected String name;
 
 	@Basic
 	@Column(name = "NODEID_")
@@ -111,39 +111,54 @@ public class FormApplication implements Serializable, JSONable {
 
 	@Basic
 	@Column(name = "OBJECTID_")
-	protected String objectId = null;
+	protected String objectId;
 
 	@Basic
 	@Column(name = "OBJECTVALUE_")
-	protected String objectValue = null;
-
-	@Basic
-	@Column(name = "PROCESSDEFINITIONID_")
-	protected String processDefinitionId = null;
+	protected String objectValue;
 
 	@Basic
 	@Column(name = "PROCESSNAME_")
-	protected String processName = null;
+	protected String processName;
+
+	@Basic
+	@Column(name = "PROVIDER_")
+	protected String provider;
+
+	@Basic
+	@Column(name = "URL_")
+	protected String url;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "RELEASEDATE_")
-	protected Date releaseDate = null;
+	protected Date releaseDate;
 
 	@Basic
 	@Column(name = "RELEASEFLAG_")
-	protected String releaseFlag = null;
+	protected String releaseFlag;
 
 	@Basic
 	@Column(name = "TABLENAME_")
-	protected String tableName = null;
+	protected String tableName;
 
 	@Basic
 	@Column(name = "TITLE_")
-	protected String title = null;
+	protected String title;
 
 	@Basic
 	@Column(name = "UPLOADFLAG_")
-	protected String uploadFlag = null;
+	protected String uploadFlag;
+
+	@Basic
+	@Column(name = "DATAFIELD_")
+	protected String dataField;
+
+	@Column(name = "UPDATEBY_", length = 50)
+	protected String updateBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "UPDATEDATE_")
+	protected Date updateDate;
 
 	public FormApplication() {
 
@@ -184,6 +199,10 @@ public class FormApplication implements Serializable, JSONable {
 
 	public Date getCreateDate() {
 		return createDate;
+	}
+
+	public String getDataField() {
+		return dataField;
 	}
 
 	public String getDescription() {
@@ -242,12 +261,12 @@ public class FormApplication implements Serializable, JSONable {
 		return objectValue;
 	}
 
-	public String getProcessDefinitionId() {
-		return processDefinitionId;
-	}
-
 	public String getProcessName() {
 		return processName;
+	}
+
+	public String getProvider() {
+		return provider;
 	}
 
 	public Date getReleaseDate() {
@@ -266,8 +285,20 @@ public class FormApplication implements Serializable, JSONable {
 		return title;
 	}
 
+	public String getUpdateBy() {
+		return updateBy;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
 	public String getUploadFlag() {
 		return uploadFlag;
+	}
+
+	public String getUrl() {
+		return url;
 	}
 
 	@Override
@@ -276,6 +307,10 @@ public class FormApplication implements Serializable, JSONable {
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
+	}
+
+	public FormApplication jsonToObject(JSONObject jsonObject) {
+		return FormApplicationJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public void setArchivesNode(String archivesNode) {
@@ -296,6 +331,10 @@ public class FormApplication implements Serializable, JSONable {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	public void setDataField(String dataField) {
+		this.dataField = dataField;
 	}
 
 	public void setDescription(String description) {
@@ -354,12 +393,12 @@ public class FormApplication implements Serializable, JSONable {
 		this.objectValue = objectValue;
 	}
 
-	public void setProcessDefinitionId(String processDefinitionId) {
-		this.processDefinitionId = processDefinitionId;
-	}
-
 	public void setProcessName(String processName) {
 		this.processName = processName;
+	}
+
+	public void setProvider(String provider) {
+		this.provider = provider;
 	}
 
 	public void setReleaseDate(Date releaseDate) {
@@ -378,12 +417,20 @@ public class FormApplication implements Serializable, JSONable {
 		this.title = title;
 	}
 
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+
 	public void setUploadFlag(String uploadFlag) {
 		this.uploadFlag = uploadFlag;
 	}
 
-	public FormApplication jsonToObject(JSONObject jsonObject) {
-		return FormApplicationJsonFactory.jsonToObject(jsonObject);
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	public JSONObject toJsonObject() {

@@ -68,8 +68,7 @@ public class FormDefinitionResource {
 	@Path("/json")
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	@ResponseBody
-	public byte[] json(@javax.ws.rs.core.Context HttpServletRequest request)
-			throws IOException {
+	public byte[] json(@Context HttpServletRequest request) throws IOException {
 		JSONArray array = new JSONArray();
 		FormDefinitionQuery query = new FormDefinitionQuery();
 
