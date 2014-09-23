@@ -57,7 +57,7 @@ public class MxFormXmlServiceImpl implements FormXmlService {
 			Map<String, Object> paramMap) {
 		FormContext formContext = new FormContext();
 		FormApplication formApplication = formDataService
-				.getFormApplicationByName(appId);
+				.getFormApplication(appId);
 		FormDefinition formDefinition = formDataService
 				.getLatestFormDefinition(formApplication.getFormName());
 		formContext.setLoginContext(loginContext);

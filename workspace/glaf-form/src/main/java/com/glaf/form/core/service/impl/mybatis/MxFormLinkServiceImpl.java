@@ -70,15 +70,14 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 		if (list != null && !list.isEmpty()) {
 			for (FormLink model : list) {
 				FormApplication childApplication = formDataService
-						.getFormApplicationByName(model.getChildAppId());
+						.getFormApplication(model.getChildAppId());
 				rows.add(childApplication);
 			}
 		}
 		return rows;
 	}
 
-	public List<FormDefinition> getChildrenFormDefinitionReference(
-			String appId) {
+	public List<FormDefinition> getChildrenFormDefinitionReference(String appId) {
 		FormLinkQuery query = new FormLinkQuery();
 		query.appId(appId);
 		List<FormLink> list = this.list(query);
@@ -86,7 +85,7 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 		if (list != null && !list.isEmpty()) {
 			for (FormLink model : list) {
 				FormApplication childApplication = formDataService
-						.getFormApplicationByName(model.getChildAppId());
+						.getFormApplication(model.getChildAppId());
 				FormDefinition formDefinition = formDataService
 						.getLatestFormDefinition(childApplication.getFormName());
 				if (formDefinition != null && formDefinition.getLocked() != 1) {
@@ -105,7 +104,7 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 		if (list != null && !list.isEmpty()) {
 			for (FormLink model : list) {
 				FormApplication childApplication = formDataService
-						.getFormApplicationByName(model.getChildAppId());
+						.getFormApplication(model.getChildAppId());
 				FormDefinition formDefinition = formDataService
 						.getLatestFormDefinition(childApplication.getFormName());
 				if (formDefinition != null && formDefinition.getLocked() != 1) {
@@ -146,9 +145,9 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 	public Paging getPageDataModel(FormLink formLink, DataModelQuery query) {
 		FormContext formContext = new FormContext();
 		FormApplication formApplication = formDataService
-				.getFormApplicationByName(formLink.getAppId());
+				.getFormApplication(formLink.getAppId());
 		FormApplication childApplication = formDataService
-				.getFormApplicationByName(formLink.getChildAppId());
+				.getFormApplication(formLink.getChildAppId());
 		FormDefinition formDefinition = formDataService
 				.getLatestFormDefinition(childApplication.getFormName());
 

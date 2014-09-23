@@ -110,15 +110,6 @@ public interface FormDataService {
 	FormApplication getFormApplication(String appId);
 
 	/**
-	 * 根据名称获取应用定义信息
-	 * 
-	 * @param name
-	 *            应用名称
-	 * @return
-	 */
-	FormApplication getFormApplicationByName(String name);
-
-	/**
 	 * 根据表单名称获取表单定义信息
 	 * 
 	 * @param formDefinitionId

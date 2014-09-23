@@ -155,8 +155,7 @@ public class MxFormDataServiceImpl implements FormDataService {
 	}
 
 	public DataModel getDataModelByAppName(String appId, Long id) {
-		FormApplication formApplication = this
-				.getFormApplicationByName(appId);
+		FormApplication formApplication = this.getFormApplication(appId);
 		DataModel dataModel = null;
 		if (formApplication != null && formApplication.getTableName() != null) {
 			dataModel = this.getDataModel(formApplication.getTableName(), id);
@@ -190,24 +189,6 @@ public class MxFormDataServiceImpl implements FormDataService {
 					.toJSONString());
 		}
 
-		return formApplication;
-	}
-
-	public FormApplication getFormApplicationByName(String name) {
-		String cacheKey = "form_app_" + name;
-		if (SystemConfig.getBoolean("use_query_cache")
-				&& CacheFactory.getString(cacheKey) != null) {
-			String text = CacheFactory.getString(cacheKey);
-			JSONObject jsonObject = JSON.parseObject(text);
-			return FormApplicationJsonFactory.jsonToObject(jsonObject);
-		}
-		FormApplication formApplication = formApplicationMapper
-				.getFormApplicationByName(name);
-		if (SystemConfig.getBoolean("use_query_cache")
-				&& formApplication != null) {
-			CacheFactory.put(cacheKey, formApplication.toJsonObject()
-					.toJSONString());
-		}
 		return formApplication;
 	}
 
@@ -486,8 +467,8 @@ public class MxFormDataServiceImpl implements FormDataService {
 
 		dataModelService.insert(dataModelEntity);
 
-		blobService.makeMark(formContext.getActorId(),
-				formApplication.getId(), dataModelEntity.getBusinessKey());
+		blobService.makeMark(formContext.getActorId(), formApplication.getId(),
+				dataModelEntity.getBusinessKey());
 
 		FormHistoryInstance historyInstance = new FormHistoryInstance();
 		historyInstance.setActorId(formContext.getActorId());
@@ -518,7 +499,6 @@ public class MxFormDataServiceImpl implements FormDataService {
 			formApplicationMapper.insertFormApplication(formApplication);
 		} else {
 			formApplicationMapper.updateFormApplication(formApplication);
-			CacheFactory.remove("form_app_" + formApplication.getId());
 			CacheFactory.remove("form_app_" + formApplication.getId());
 		}
 	}
@@ -692,8 +672,8 @@ public class MxFormDataServiceImpl implements FormDataService {
 		dataModelEntity.setUpdateBy(formContext.getActorId());
 		dataModelEntity.setUpdateDate(new Date());
 
-		blobService.makeMark(formContext.getActorId(),
-				formApplication.getId(), dataModelEntity.getBusinessKey());
+		blobService.makeMark(formContext.getActorId(), formApplication.getId(),
+				dataModelEntity.getBusinessKey());
 
 		Set<Entry<String, Object>> entrySet = dataMap.entrySet();
 		for (Entry<String, Object> entry : entrySet) {

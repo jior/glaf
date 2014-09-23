@@ -96,7 +96,7 @@ public class MxFormArchiveExporter {
 
 		FormContext formContext = new FormContext();
 		FormApplication formApplication = formDataService
-				.getFormApplicationByName(appId);
+				.getFormApplication(appId);
 		if (formApplication != null) {
 			String encoding = "GBK";
 			Map<String, InputStream> zipMap = new java.util.HashMap<String, InputStream>();

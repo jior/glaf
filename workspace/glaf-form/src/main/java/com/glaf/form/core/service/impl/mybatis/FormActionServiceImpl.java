@@ -53,7 +53,6 @@ public class FormActionServiceImpl implements FormActionService {
 	}
 
 	public int count(FormActionQuery query) {
-		query.ensureInitialized();
 		return formActionMapper.getFormActionCount(query);
 	}
 
@@ -94,7 +93,6 @@ public class FormActionServiceImpl implements FormActionService {
 	}
 
 	public List<FormAction> list(FormActionQuery query) {
-		query.ensureInitialized();
 		List<FormAction> list = formActionMapper.getFormActions(query);
 		return list;
 	}

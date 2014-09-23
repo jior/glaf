@@ -71,7 +71,7 @@ public class MxFormContainer {
 	 */
 	public DataModel getDataModelByAppName(String appId, Long id) {
 		FormApplication formApplication = formDataService
-				.getFormApplicationByName(appId);
+				.getFormApplication(appId);
 		return formDataService.getDataModel(formApplication.getId(), id);
 	}
 

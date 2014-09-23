@@ -238,7 +238,7 @@ public class MxFormArchiveImporter {
 			formApplication.setNodeId(Long.parseLong(nodeId));
 		}
 		FormApplication model = formDataService
-				.getFormApplicationByName(formApplication.getId());
+				.getFormApplication(formApplication.getId());
 		if (model != null) {
 			formApplication.setId(model.getId());
 			formApplication.setCreateBy(model.getCreateBy());

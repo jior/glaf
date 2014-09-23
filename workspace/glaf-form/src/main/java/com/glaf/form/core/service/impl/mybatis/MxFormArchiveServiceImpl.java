@@ -190,7 +190,7 @@ public class MxFormArchiveServiceImpl implements FormArchiveService {
 	public void archives(String appId, String businessKey,
 			Map<String, Object> dataMap) {
 		FormApplication formApplication = formDataService
-				.getFormApplicationByName(appId);
+				.getFormApplication(appId);
 		this.archives(formApplication, businessKey, dataMap);
 	}
 
