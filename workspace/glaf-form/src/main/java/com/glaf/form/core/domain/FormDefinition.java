@@ -55,7 +55,7 @@ public class FormDefinition extends GraphElement implements JSONable {
 	@Column(name = "ID_", length = 50, nullable = false)
 	protected String id;
 
-	@Column(name = "NAME_", updatable = false, length = 50)
+	@Column(name = "NAME_", length = 50, updatable = false)
 	protected String name;
 
 	@Column(name = "COLUMNS_")
@@ -74,7 +74,7 @@ public class FormDefinition extends GraphElement implements JSONable {
 	@Transient
 	protected transient FormContext formContext = null;
 
-	@Column(name = "FORMDEFINITIONID_", length = 150, updatable = false)
+	@Column(name = "FORMDEFINITIONID_", length = 100, updatable = false)
 	protected String formDefinitionId;
 
 	@Column(name = "LOCKED_")
