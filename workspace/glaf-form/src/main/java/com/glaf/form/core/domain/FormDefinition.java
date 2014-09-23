@@ -51,6 +51,9 @@ public class FormDefinition extends GraphElement implements JSONable {
 	public static final String[] supportedEventTypes = new String[] {
 			FormEvent.EVENTTYPE_RENDER, FormEvent.EVENTTYPE_BEFORE_RENDER,
 			FormEvent.EVENTTYPE_AFTER_RENDER };
+	@Id
+	@Column(name = "ID_", length = 50, nullable = false)
+	protected String id;
 
 	@Column(name = "COLUMNS_")
 	protected Integer columns = -1;
@@ -70,10 +73,6 @@ public class FormDefinition extends GraphElement implements JSONable {
 
 	@Column(name = "FORMDEFINITIONID_", updatable = false)
 	protected String formDefinitionId;
-
-	@Id
-	@Column(name = "ID_", length = 50, nullable = false)
-	protected String id;
 
 	@Column(name = "LOCKED_")
 	protected Integer locked = 0;

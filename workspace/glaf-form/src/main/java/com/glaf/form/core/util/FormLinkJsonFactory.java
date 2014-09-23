@@ -12,11 +12,11 @@ public class FormLinkJsonFactory {
 		if (jsonObject.containsKey("id")) {
 			model.setId(jsonObject.getString("id"));
 		}
-		if (jsonObject.containsKey("applicationName")) {
-			model.setApplicationName(jsonObject.getString("applicationName"));
+		if (jsonObject.containsKey("appId")) {
+			model.setAppId(jsonObject.getString("appId"));
 		}
-		if (jsonObject.containsKey("childName")) {
-			model.setChildName(jsonObject.getString("childName"));
+		if (jsonObject.containsKey("childAppId")) {
+			model.setChildAppId(jsonObject.getString("childAppId"));
 		}
 		if (jsonObject.containsKey("objectId")) {
 			model.setObjectId(jsonObject.getString("objectId"));
@@ -42,11 +42,11 @@ public class FormLinkJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
-		if (model.getApplicationName() != null) {
-			jsonObject.put("applicationName", model.getApplicationName());
+		if (model.getAppId() != null) {
+			jsonObject.put("appId", model.getAppId());
 		}
-		if (model.getChildName() != null) {
-			jsonObject.put("childName", model.getChildName());
+		if (model.getChildAppId() != null) {
+			jsonObject.put("childAppId", model.getChildAppId());
 		}
 		if (model.getObjectId() != null) {
 			jsonObject.put("objectId", model.getObjectId());
@@ -67,11 +67,11 @@ public class FormLinkJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
-		if (model.getApplicationName() != null) {
-			jsonObject.put("applicationName", model.getApplicationName());
+		if (model.getAppId() != null) {
+			jsonObject.put("appId", model.getAppId());
 		}
-		if (model.getChildName() != null) {
-			jsonObject.put("childName", model.getChildName());
+		if (model.getChildAppId() != null) {
+			jsonObject.put("childAppId", model.getChildAppId());
 		}
 		if (model.getObjectId() != null) {
 			jsonObject.put("objectId", model.getObjectId());

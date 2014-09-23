@@ -30,7 +30,6 @@
 			jdbcType="VARCHAR" />
 		<result property="manualRouteFlag" column="MANUALROUTEFLAG_"
 			jdbcType="VARCHAR" />
-		<result property="name" column="NAME_" jdbcType="VARCHAR" />
 		<result property="objectId" column="OBJECTID_" jdbcType="VARCHAR" />
 		<result property="objectValue" column="OBJECTVALUE_" jdbcType="VARCHAR" />
 		<result property="processName" column="PROCESSNAME_" jdbcType="VARCHAR" />
@@ -89,9 +88,6 @@
 			</if>
 			<if test="manualRouteFlag != null">
 				,MANUALROUTEFLAG_
-			</if>
-			<if test="name != null">
-				,NAME_
 			</if>
 			<if test="objectId != null">
 				,OBJECTID_
@@ -170,9 +166,6 @@
 			<if test="manualRouteFlag != null">
 				,#{manualRouteFlag, jdbcType=VARCHAR}
 			</if>
-			<if test="name != null">
-				,#{name, jdbcType=VARCHAR}
-			</if>
 			<if test="objectId != null">
 				,#{objectId, jdbcType=VARCHAR}
 			</if>
@@ -250,9 +243,6 @@
 			</if>
 			<if test="manualRouteFlag != null">
 				MANUALROUTEFLAG_ = #{manualRouteFlag, jdbcType=VARCHAR},
-			</if>
-			<if test="name != null">
-				NAME_ = #{name, jdbcType=VARCHAR},
 			</if>
 			<if test="objectId != null">
 				OBJECTID_ = #{objectId, jdbcType=VARCHAR},
@@ -345,6 +335,14 @@
 		<where>
 			1 = 1
 
+			<if test="appIds != null and appIds &gt; 0">
+				and E.ID_ IN
+				<foreach item="x_appId" index="index" collection="appIds"
+					open="(" separator="," close=")">
+					#{x_appId}
+				</foreach>
+			</if>
+
 			<if test="auditUploadFlag != null and auditUploadFlag != '' ">
 				and E.AUDITUPLOADFLAG_ = #{auditUploadFlag}
 			</if>
@@ -391,18 +389,6 @@
 
 			<if test="manualRouteFlag != null and manualRouteFlag != '' ">
 				and E.MANUALROUTEFLAG_ = #{manualRouteFlag}
-			</if>
-
-			<if test="name != null and name != '' ">
-				and E.NAME_ = #{name}
-			</if>
-
-			<if test="names != null and names.size() &gt; 0">
-				and E.NAME_ IN
-				<foreach item="x_name" index="index" collection="names"
-					open="(" separator="," close=")">
-					#{x_name}
-				</foreach>
 			</if>
 
 			<if test="objectIds != null and objectIds.size() &gt; 0">

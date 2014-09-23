@@ -29,7 +29,7 @@ public interface FormLinkMapper {
 
 	void deleteFormLinkById(String id);
 
-	void deleteFormLinks(String app_name);
+	void deleteFormLinks(String appId);
 
 	FormLink getFormLinkById(String id);
 

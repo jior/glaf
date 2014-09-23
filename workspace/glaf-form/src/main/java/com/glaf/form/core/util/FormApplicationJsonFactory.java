@@ -57,9 +57,7 @@ public class FormApplicationJsonFactory {
 		if (jsonObject.containsKey("manualRouteFlag")) {
 			model.setManualRouteFlag(jsonObject.getString("manualRouteFlag"));
 		}
-		if (jsonObject.containsKey("name")) {
-			model.setName(jsonObject.getString("name"));
-		}
+
 		if (jsonObject.containsKey("objectId")) {
 			model.setObjectId(jsonObject.getString("objectId"));
 		}
@@ -146,9 +144,7 @@ public class FormApplicationJsonFactory {
 		if (model.getManualRouteFlag() != null) {
 			jsonObject.put("manualRouteFlag", model.getManualRouteFlag());
 		}
-		if (model.getName() != null) {
-			jsonObject.put("name", model.getName());
-		}
+
 		if (model.getNodeId() != null) {
 			jsonObject.put("nodeId", model.getNodeId());
 		}
@@ -239,9 +235,7 @@ public class FormApplicationJsonFactory {
 		if (model.getManualRouteFlag() != null) {
 			jsonObject.put("manualRouteFlag", model.getManualRouteFlag());
 		}
-		if (model.getName() != null) {
-			jsonObject.put("name", model.getName());
-		}
+
 		if (model.getObjectId() != null) {
 			jsonObject.put("objectId", model.getObjectId());
 		}

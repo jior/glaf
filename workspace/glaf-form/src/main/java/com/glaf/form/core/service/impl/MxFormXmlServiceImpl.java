@@ -53,11 +53,11 @@ public class MxFormXmlServiceImpl implements FormXmlService {
 	protected FormDataService formDataService;
 
 	public Document getPage(int pageNo, int pageSize,
-			LoginContext loginContext, String app_name,
+			LoginContext loginContext, String appId,
 			Map<String, Object> paramMap) {
 		FormContext formContext = new FormContext();
 		FormApplication formApplication = formDataService
-				.getFormApplicationByName(app_name);
+				.getFormApplicationByName(appId);
 		FormDefinition formDefinition = formDataService
 				.getLatestFormDefinition(formApplication.getFormName());
 		formContext.setLoginContext(loginContext);
@@ -77,7 +77,7 @@ public class MxFormXmlServiceImpl implements FormXmlService {
 		Map<String, Object> rowMap = new java.util.HashMap<String, Object>();
 		Document doc = DocumentHelper.createDocument();
 		Element root = doc.addElement("List");
-		root.addAttribute("app_name", formApplication.getName());
+		root.addAttribute("appId", formApplication.getId());
 		root.addAttribute("title", formApplication.getTitle());
 		root.addAttribute("pageNo", String.valueOf(page.getCurrentPage()));
 		root.addAttribute("pageSize", String.valueOf(page.getPageSize()));

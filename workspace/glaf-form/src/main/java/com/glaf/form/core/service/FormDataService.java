@@ -83,12 +83,12 @@ public interface FormDataService {
 	/**
 	 * 根据表单实例编号获取表单实例数据
 	 * 
-	 * @param app_name
+	 * @param appId
 	 *            应用名称
 	 * @param id
 	 * @return
 	 */
-	DataModel getDataModelByAppName(String app_name, Long id);
+	DataModel getDataModelByAppName(String appId, Long id);
 
 	/**
 	 * 根据表单业务编号获取表单实例数据

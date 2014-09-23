@@ -51,7 +51,7 @@ public class MxFormDataExporter {
 			while (iterator.hasNext()) {
 				FormApplication app = (FormApplication) iterator.next();
 				Element elem = element.addElement("application");
-				elem.addAttribute("name", app.getName());
+				elem.addAttribute("id", app.getId());
 				elem.addAttribute("title", app.getTitle());
 				elem.addAttribute("nodeId", String.valueOf(app.getNodeId()));
 				elem.addAttribute("formName", app.getFormName());

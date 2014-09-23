@@ -52,11 +52,11 @@ public class MxFormJsonServiceImpl implements FormJsonService {
 
 	@Transactional(readOnly = true)
 	public JSONObject getPage(int pageNo, int pageSize,
-			LoginContext loginContext, String app_name,
+			LoginContext loginContext, String appId,
 			Map<String, Object> paramMap) {
 		FormContext formContext = new FormContext();
 		FormApplication formApplication = formDataService
-				.getFormApplicationByName(app_name);
+				.getFormApplicationByName(appId);
 		FormDefinition formDefinition = formDataService
 				.getLatestFormDefinition(formApplication.getFormName());
 		formContext.setLoginContext(loginContext);

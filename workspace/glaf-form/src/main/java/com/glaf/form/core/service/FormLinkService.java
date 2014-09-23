@@ -34,29 +34,29 @@ public interface FormLinkService {
 	/**
 	 * 获取应用关联的子应用集合
 	 * 
-	 * @param app_name
+	 * @param appId
 	 *            应用名称
 	 * @param rows
 	 */
-	List<FormApplication> getChildrenApplications(String app_name);
+	List<FormApplication> getChildrenApplications(String appId);
 
 	/**
 	 * 获取应用关联表单定义
 	 * 
-	 * @param app_name
+	 * @param appId
 	 *            应用名称
 	 * @param rows
 	 */
-	List<FormDefinition> getChildrenFormDefinitionReference(String app_name);
+	List<FormDefinition> getChildrenFormDefinitionReference(String appId);
 
 	/**
 	 * 获取应用关联表单定义
 	 * 
-	 * @param app_name
+	 * @param appId
 	 *            应用名称
 	 * @param rows
 	 */
-	List<FormDefinition> getFormDefinitions(String app_name);
+	List<FormDefinition> getFormDefinitions(String appId);
 
 	/**
 	 * 获取应用关联表单
@@ -72,11 +72,11 @@ public interface FormLinkService {
 	/**
 	 * 获取应用关联表单
 	 * 
-	 * @param app_name
+	 * @param appId
 	 *            应用名称
 	 * @param rows
 	 */
-	List<FormLink> getFormLinks(String app_name);
+	List<FormLink> getFormLinks(String appId);
 
 	/**
 	 * 根据参数获取实例数据列表
@@ -93,11 +93,11 @@ public interface FormLinkService {
 	/**
 	 * 保存应用关联表单
 	 * 
-	 * @param app_name
+	 * @param appId
 	 *            应用名称
 	 * @param rows
 	 */
 	@Transactional
-	void saveAll(String app_name, List<FormLink> rows);
+	void saveAll(String appId, List<FormLink> rows);
 
 }

@@ -65,13 +65,13 @@ public class MxFormContainer {
 	/**
 	 * 根据表单实例编号获取表单实例数据
 	 * 
-	 * @param app_name
+	 * @param appId
 	 * @param id
 	 * @return
 	 */
-	public DataModel getDataModelByAppName(String app_name, Long id) {
+	public DataModel getDataModelByAppName(String appId, Long id) {
 		FormApplication formApplication = formDataService
-				.getFormApplicationByName(app_name);
+				.getFormApplicationByName(appId);
 		return formDataService.getDataModel(formApplication.getId(), id);
 	}
 

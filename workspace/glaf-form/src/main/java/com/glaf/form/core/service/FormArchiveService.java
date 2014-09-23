@@ -29,7 +29,7 @@ public interface FormArchiveService {
 	void archives(FormApplication formApplication, String businessKey,
 			Map<String, Object> dataMap);
 
-	void archives(String app_name, String businessKey,
+	void archives(String appId, String businessKey,
 			Map<String, Object> dataMap);
 
 }

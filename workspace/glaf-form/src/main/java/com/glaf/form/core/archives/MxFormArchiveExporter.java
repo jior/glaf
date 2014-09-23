@@ -78,16 +78,16 @@ public class MxFormArchiveExporter {
 		Map<String, InputStream> zipMap = new java.util.HashMap<String, InputStream>();
 		for (Object object : rows) {
 			FormApplication app = (FormApplication) object;
-			byte[] bytes = this.zip(app.getName(), false);
+			byte[] bytes = this.zip(app.getId(), false);
 			InputStream inputStream = new BufferedInputStream(
 					new ByteArrayInputStream(bytes));
-			zipMap.put(app.getName() + ".zip", inputStream);
+			zipMap.put(app.getId() + ".zip", inputStream);
 		}
 		return AntUtils.getZipStream(zipMap);
 	}
 
 	@SuppressWarnings("unchecked")
-	public byte[] zip(String app_name, boolean dataFlag) throws Exception {
+	public byte[] zip(String appId, boolean dataFlag) throws Exception {
 		byte[] bytes = null;
 		Document doc = null;
 
@@ -96,7 +96,7 @@ public class MxFormArchiveExporter {
 
 		FormContext formContext = new FormContext();
 		FormApplication formApplication = formDataService
-				.getFormApplicationByName(app_name);
+				.getFormApplicationByName(appId);
 		if (formApplication != null) {
 			String encoding = "GBK";
 			Map<String, InputStream> zipMap = new java.util.HashMap<String, InputStream>();
@@ -230,14 +230,14 @@ public class MxFormArchiveExporter {
 							todo.setProcessName(formApplication
 									.getProcessName());
 							todo.setProvider("jbpm");
-							todo.setLink("/mx/form?businessKey=${businessKey}&x_method=view&app_name="
-									+ formApplication.getName());
-							todo.setListLink("/mx/form/formList?taskType=running&app_name="
-									+ formApplication.getName()
+							todo.setLink("/mx/form?businessKey=${businessKey}&x_method=view&appId="
+									+ formApplication.getId());
+							todo.setListLink("/mx/form/formList?taskType=running&appId="
+									+ formApplication.getId()
 									+ "&taskName="
 									+ task.getName());
-							todo.setAllListLink("/mx/form/formList?taskType=all&app_name="
-									+ formApplication.getName());
+							todo.setAllListLink("/mx/form/formList?taskType=all&appId="
+									+ formApplication.getId());
 							todo.setCode(formApplication.getProcessName() + "_"
 									+ task.getName());
 							todo.setLinkType(formApplication.getProcessName()

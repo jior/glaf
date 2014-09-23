@@ -238,7 +238,7 @@ public class MxFormArchiveImporter {
 			formApplication.setNodeId(Long.parseLong(nodeId));
 		}
 		FormApplication model = formDataService
-				.getFormApplicationByName(formApplication.getName());
+				.getFormApplicationByName(formApplication.getId());
 		if (model != null) {
 			formApplication.setId(model.getId());
 			formApplication.setCreateBy(model.getCreateBy());
@@ -425,14 +425,14 @@ public class MxFormArchiveImporter {
 					todo.setXb(6);
 					todo.setProcessName(formApplication.getProcessName());
 					todo.setProvider("jbpm");
-					todo.setLink("/mx/form?businessKey=${businessKey}&x_method=view&app_name="
-							+ formApplication.getName());
-					todo.setListLink("/mx/form/formList?taskType=running&app_name="
-							+ formApplication.getName()
+					todo.setLink("/mx/form?businessKey=${businessKey}&x_method=view&appId="
+							+ formApplication.getId());
+					todo.setListLink("/mx/form/formList?taskType=running&appId="
+							+ formApplication.getId()
 							+ "&taskName="
 							+ task.getName());
-					todo.setAllListLink("/mx/form/formList?taskType=all&app_name="
-							+ formApplication.getName());
+					todo.setAllListLink("/mx/form/formList?taskType=all&appId="
+							+ formApplication.getId());
 					todo.setCode(formApplication.getProcessName() + "_"
 							+ task.getName());
 					todo.setLinkType(formApplication.getProcessName() + "_"

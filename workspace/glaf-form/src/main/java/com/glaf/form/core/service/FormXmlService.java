@@ -28,6 +28,6 @@ import com.glaf.core.security.LoginContext;
 public interface FormXmlService {
 
 	Document getPage(int pageNo, int pageSize, LoginContext loginContext,
-			String app_name, Map<String, Object> paramMap);
+			String appId, Map<String, Object> paramMap);
 
 }

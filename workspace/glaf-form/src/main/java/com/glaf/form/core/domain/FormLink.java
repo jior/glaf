@@ -40,25 +40,25 @@ public class FormLink implements java.lang.Comparable<FormLink>, Serializable,
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 应用名称
-	 */
-	@Basic
-	@Column(name = "APPLICATIONNAME_")
-	protected String applicationName;
-
-	/**
-	 * 子应用名称
-	 */
-	@Basic
-	@Column(name = "CHILDNAME_")
-	protected String childName;
-
-	/**
 	 * 主键
 	 */
 	@Id
 	@Column(name = "ID_", length = 50, nullable = false)
 	protected String id;
+
+	/**
+	 * 应用名称
+	 */
+	@Basic
+	@Column(name = "APPId_")
+	protected String appId;
+
+	/**
+	 * 子应用名称
+	 */
+	@Basic
+	@Column(name = "CHILDAPPID_")
+	protected String childAppId;
 
 	@Column(name = "OBJECTID_")
 	protected String objectId;
@@ -127,12 +127,12 @@ public class FormLink implements java.lang.Comparable<FormLink>, Serializable,
 		return true;
 	}
 
-	public String getApplicationName() {
-		return applicationName;
+	public String getAppId() {
+		return appId;
 	}
 
-	public String getChildName() {
-		return childName;
+	public String getChildAppId() {
+		return childAppId;
 	}
 
 	public String getId() {
@@ -167,12 +167,16 @@ public class FormLink implements java.lang.Comparable<FormLink>, Serializable,
 		return result;
 	}
 
-	public void setApplicationName(String applicationName) {
-		this.applicationName = applicationName;
+	public FormLink jsonToObject(JSONObject jsonObject) {
+		return FormLinkJsonFactory.jsonToObject(jsonObject);
 	}
 
-	public void setChildName(String childName) {
-		this.childName = childName;
+	public void setAppId(String appId) {
+		this.appId = appId;
+	}
+
+	public void setChildAppId(String childAppId) {
+		this.childAppId = childAppId;
 	}
 
 	public void setId(String id) {
@@ -197,10 +201,6 @@ public class FormLink implements java.lang.Comparable<FormLink>, Serializable,
 
 	public void setSortNo(int sortNo) {
 		this.sortNo = sortNo;
-	}
-
-	public FormLink jsonToObject(JSONObject jsonObject) {
-		return FormLinkJsonFactory.jsonToObject(jsonObject);
 	}
 
 	public JSONObject toJsonObject() {

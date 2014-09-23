@@ -154,9 +154,9 @@ public class MxFormDataServiceImpl implements FormDataService {
 		return null;
 	}
 
-	public DataModel getDataModelByAppName(String app_name, Long id) {
+	public DataModel getDataModelByAppName(String appId, Long id) {
 		FormApplication formApplication = this
-				.getFormApplicationByName(app_name);
+				.getFormApplicationByName(appId);
 		DataModel dataModel = null;
 		if (formApplication != null && formApplication.getTableName() != null) {
 			dataModel = this.getDataModel(formApplication.getTableName(), id);
@@ -217,7 +217,7 @@ public class MxFormDataServiceImpl implements FormDataService {
 		List<FormApplication> list = this.formApplicationList(query);
 		if (list != null && !list.isEmpty()) {
 			for (FormApplication app : list) {
-				appMap.put(app.getName(), app);
+				appMap.put(app.getId(), app);
 			}
 		}
 		return appMap;
@@ -466,7 +466,7 @@ public class MxFormDataServiceImpl implements FormDataService {
 		dataModelEntity.setBusinessKey(UUID32.getUUID());
 		dataModelEntity.setCreateBy(formContext.getActorId());
 		dataModelEntity.setDeleteFlag(0);
-		dataModelEntity.setServiceKey(formApplication.getName());
+		dataModelEntity.setServiceKey(formApplication.getId());
 		dataModelEntity.setFormName(formDefinition.getName());
 		dataModelEntity.setStatus(0);
 
@@ -487,14 +487,14 @@ public class MxFormDataServiceImpl implements FormDataService {
 		dataModelService.insert(dataModelEntity);
 
 		blobService.makeMark(formContext.getActorId(),
-				formApplication.getName(), dataModelEntity.getBusinessKey());
+				formApplication.getId(), dataModelEntity.getBusinessKey());
 
 		FormHistoryInstance historyInstance = new FormHistoryInstance();
 		historyInstance.setActorId(formContext.getActorId());
 		historyInstance.setContent(dataModelEntity.toJsonObject()
 				.toJSONString());
 		historyInstance.setCreateDate(new Date());
-		historyInstance.setId(formApplication.getName() + "_"
+		historyInstance.setId(formApplication.getId() + "_"
 				+ idGenerator.nextId());
 		historyInstance.setVersionNo(System.currentTimeMillis());
 		historyInstance.setRefId(dataModelEntity.getId());
@@ -519,7 +519,7 @@ public class MxFormDataServiceImpl implements FormDataService {
 		} else {
 			formApplicationMapper.updateFormApplication(formApplication);
 			CacheFactory.remove("form_app_" + formApplication.getId());
-			CacheFactory.remove("form_app_" + formApplication.getName());
+			CacheFactory.remove("form_app_" + formApplication.getId());
 		}
 	}
 
@@ -687,13 +687,13 @@ public class MxFormDataServiceImpl implements FormDataService {
 		dataModelEntity.setId(Long.parseLong(id));
 		dataModelEntity.setSubject(subject);
 		dataModelEntity.setBusinessKey(businessKey);
-		dataModelEntity.setServiceKey(formApplication.getName());
+		dataModelEntity.setServiceKey(formApplication.getId());
 		dataModelEntity.setFormName(formDefinition.getName());
 		dataModelEntity.setUpdateBy(formContext.getActorId());
 		dataModelEntity.setUpdateDate(new Date());
 
 		blobService.makeMark(formContext.getActorId(),
-				formApplication.getName(), dataModelEntity.getBusinessKey());
+				formApplication.getId(), dataModelEntity.getBusinessKey());
 
 		Set<Entry<String, Object>> entrySet = dataMap.entrySet();
 		for (Entry<String, Object> entry : entrySet) {
@@ -716,7 +716,7 @@ public class MxFormDataServiceImpl implements FormDataService {
 		historyInstance.setContent(dataModelEntity.toJsonObject()
 				.toJSONString());
 		historyInstance.setCreateDate(new Date());
-		historyInstance.setId(formApplication.getName() + "_"
+		historyInstance.setId(formApplication.getId() + "_"
 				+ idGenerator.nextId());
 		historyInstance.setVersionNo(System.currentTimeMillis());
 		historyInstance.setRefId(dataModelEntity.getId());

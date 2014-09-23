@@ -40,6 +40,9 @@ import com.glaf.form.core.util.FormHistoryInstanceJsonFactory;
 @Table(name = "FORM_HISTORY_INSTANCE")
 public class FormHistoryInstance implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
+	@Id
+	@Column(name = "ID_", length = 100, nullable = false)
+	protected String id;
 
 	@Column(name = "ACTORID_")
 	protected String actorId;
@@ -51,10 +54,6 @@ public class FormHistoryInstance implements Serializable, JSONable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATEDATE_")
 	protected Date createDate;
-
-	@Id
-	@Column(name = "ID_", length = 100, nullable = false)
-	protected String id;
 
 	@Column(name = "NAME_")
 	protected String name;

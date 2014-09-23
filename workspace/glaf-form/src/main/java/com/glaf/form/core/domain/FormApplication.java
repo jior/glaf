@@ -102,10 +102,6 @@ public class FormApplication implements Serializable, JSONable {
 	protected String manualRouteFlag;
 
 	@Basic
-	@Column(name = "NAME_", updatable = false)
-	protected String name;
-
-	@Basic
 	@Column(name = "NODEID_")
 	protected Long nodeId;
 
@@ -245,10 +241,6 @@ public class FormApplication implements Serializable, JSONable {
 		return manualRouteFlag;
 	}
 
-	public String getName() {
-		return name;
-	}
-
 	public Long getNodeId() {
 		return nodeId;
 	}
@@ -375,10 +367,6 @@ public class FormApplication implements Serializable, JSONable {
 
 	public void setManualRouteFlag(String manualRouteFlag) {
 		this.manualRouteFlag = manualRouteFlag;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public void setNodeId(Long nodeId) {

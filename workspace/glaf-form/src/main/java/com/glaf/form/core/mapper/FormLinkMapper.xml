@@ -6,9 +6,9 @@
 
 	<resultMap id="formLinkResultMap" type="com.glaf.form.core.domain.FormLink">
 		<id property="id" column="ID_" jdbcType="VARCHAR" />
-		<result property="applicationName" column="APPLICATIONNAME_"
+		<result property="appId" column="APPID_"
 			jdbcType="VARCHAR" />
-		<result property="childName" column="CHILDNAME_" jdbcType="VARCHAR" />
+		<result property="childAppId" column="CHILDAPPID_" jdbcType="VARCHAR" />
 		<result property="oneToMany" column="ONETOMANY_" jdbcType="INTEGER" />
 		<result property="orderBy" column="ORDERBY_" jdbcType="VARCHAR" />
 		<result property="sortNo" column="SORTNO_" jdbcType="INTEGER" />
@@ -21,8 +21,8 @@
 		insert into
 		FORM_LINK (
 		ID_
-		,APPLICATIONNAME_
-		,CHILDNAME_
+		,APPID_
+		,CHILDAPPID_
 		,ONETOMANY_
 		,ORDERBY_
 		,SORTNO_
@@ -31,9 +31,9 @@
 		)
 		values (
 		#{id, jdbcType=VARCHAR}
-		,#{applicationName,
+		,#{appId,
 		jdbcType=VARCHAR}
-		,#{childName, jdbcType=VARCHAR}
+		,#{childAppId, jdbcType=VARCHAR}
 		,#{oneToMany,
 		jdbcType=INTEGER}
 		,#{orderBy, jdbcType=VARCHAR}
@@ -53,7 +53,7 @@
 
 	<delete id="deleteFormLinks" parameterType="string">
 		delete from FORM_LINK
-		where APPLICATIONNAME_ = #{applicationName}
+		where APPID_ = #{appId}
 	</delete>
 
 
@@ -84,27 +84,27 @@
 		<where>
 			1 = 1
 
-			<if test="applicationName != null and applicationName != '' ">
-				and E.APPLICATIONNAME_ = #{applicationName}
+			<if test="appId != null and appId != '' ">
+				and E.APPID_ = #{appId}
 			</if>
 
-			<if test="applicationNames != null and applicationNames.size != 0">
-				and E.APPLICATIONNAME_ IN
-				<foreach item="x_applicationName" index="index" collection="applicationNames"
+			<if test="appIds != null and appIds.size != 0">
+				and E.APPID_ IN
+				<foreach item="x_appId" index="index" collection="appIds"
 					open="(" separator="," close=")">
-					#{x_applicationName}
+					#{x_appId}
 				</foreach>
 			</if>
 
-			<if test="childName != null and childName != '' ">
-				and E.CHILDNAME_ = #{childName}
+			<if test="childAppId != null and childAppId != '' ">
+				and E.CHILDAPPID_ = #{childAppId}
 			</if>
 
-			<if test="childNames != null and childNames.size != 0">
-				and E.CHILDNAME_ IN
-				<foreach item="x_childName" index="index" collection="childNames"
+			<if test="childAppIds != null and childAppIds.size != 0">
+				and E.CHILDAPPID_ IN
+				<foreach item="x_childAppId" index="index" collection="childAppIds"
 					open="(" separator="," close=")">
-					#{x_childName}
+					#{x_childAppId}
 				</foreach>
 			</if>
 

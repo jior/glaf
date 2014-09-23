@@ -64,13 +64,13 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 		formLinkMapper.deleteFormLinkById(id);
 	}
 
-	public List<FormApplication> getChildrenApplications(String app_name) {
-		List<FormLink> list = this.getFormLinks(app_name);
+	public List<FormApplication> getChildrenApplications(String appId) {
+		List<FormLink> list = this.getFormLinks(appId);
 		List<FormApplication> rows = new java.util.ArrayList<FormApplication>();
 		if (list != null && !list.isEmpty()) {
 			for (FormLink model : list) {
 				FormApplication childApplication = formDataService
-						.getFormApplicationByName(model.getChildName());
+						.getFormApplicationByName(model.getChildAppId());
 				rows.add(childApplication);
 			}
 		}
@@ -78,18 +78,17 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 	}
 
 	public List<FormDefinition> getChildrenFormDefinitionReference(
-			String app_name) {
+			String appId) {
 		FormLinkQuery query = new FormLinkQuery();
-		query.applicationName(app_name);
+		query.appId(appId);
 		List<FormLink> list = this.list(query);
 		List<FormDefinition> rows = new java.util.ArrayList<FormDefinition>();
 		if (list != null && !list.isEmpty()) {
 			for (FormLink model : list) {
 				FormApplication childApplication = formDataService
-						.getFormApplicationByName(model.getChildName());
+						.getFormApplicationByName(model.getChildAppId());
 				FormDefinition formDefinition = formDataService
-						.getLatestFormDefinition(childApplication
-								.getFormName());
+						.getLatestFormDefinition(childApplication.getFormName());
 				if (formDefinition != null && formDefinition.getLocked() != 1) {
 					rows.add(formDefinition);
 				}
@@ -98,15 +97,15 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 		return rows;
 	}
 
-	public List<FormDefinition> getFormDefinitions(String app_name) {
+	public List<FormDefinition> getFormDefinitions(String appId) {
 		FormLinkQuery query = new FormLinkQuery();
-		query.applicationName(app_name);
+		query.appId(appId);
 		List<FormLink> list = this.list(query);
 		List<FormDefinition> rows = new java.util.ArrayList<FormDefinition>();
 		if (list != null && !list.isEmpty()) {
 			for (FormLink model : list) {
 				FormApplication childApplication = formDataService
-						.getFormApplicationByName(model.getChildName());
+						.getFormApplicationByName(model.getChildAppId());
 				FormDefinition formDefinition = formDataService
 						.getLatestFormDefinition(childApplication.getFormName());
 				if (formDefinition != null && formDefinition.getLocked() != 1) {
@@ -125,8 +124,8 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 	public FormLink getFormLink(String applicationName, String childName) {
 
 		FormLinkQuery query = new FormLinkQuery();
-		query.applicationName(applicationName);
-		query.childName(childName);
+		query.appId(applicationName);
+		query.childAppId(childName);
 		List<FormLink> list = this.list(query);
 
 		FormLink formLink = null;
@@ -136,10 +135,10 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 		return formLink;
 	}
 
-	public List<FormLink> getFormLinks(String app_name) {
+	public List<FormLink> getFormLinks(String appId) {
 
 		FormLinkQuery query = new FormLinkQuery();
-		query.applicationName(app_name);
+		query.appId(appId);
 		List<FormLink> list = this.list(query);
 		return list;
 	}
@@ -147,9 +146,9 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 	public Paging getPageDataModel(FormLink formLink, DataModelQuery query) {
 		FormContext formContext = new FormContext();
 		FormApplication formApplication = formDataService
-				.getFormApplicationByName(formLink.getApplicationName());
+				.getFormApplicationByName(formLink.getAppId());
 		FormApplication childApplication = formDataService
-				.getFormApplicationByName(formLink.getChildName());
+				.getFormApplicationByName(formLink.getChildAppId());
 		FormDefinition formDefinition = formDataService
 				.getLatestFormDefinition(childApplication.getFormName());
 
@@ -176,16 +175,15 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 	}
 
 	@Transactional
-	public void saveAll(String app_name, List<FormLink> rows) {
-		formLinkMapper.deleteFormLinks(app_name);
+	public void saveAll(String appId, List<FormLink> rows) {
+		formLinkMapper.deleteFormLinks(appId);
 		for (FormLink model : rows) {
-			model.setApplicationName(app_name);
+			model.setAppId(appId);
 			this.save(model);
 		}
 	}
 
 	@javax.annotation.Resource
-	
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
@@ -201,7 +199,6 @@ public class MxFormLinkServiceImpl implements FormLinkService {
 	}
 
 	@javax.annotation.Resource
-	
 	public void setIdGenerator(IdGenerator idGenerator) {
 		this.idGenerator = idGenerator;
 	}

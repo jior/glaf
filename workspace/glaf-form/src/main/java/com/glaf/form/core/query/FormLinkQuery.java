@@ -22,10 +22,10 @@ import com.glaf.core.query.*;
 
 public class FormLinkQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
-	protected String applicationName;
-	protected List<String> applicationNames;
-	protected String childName;
-	protected List<String> childNames;
+	protected String appId;
+	protected List<String> appIds;
+	protected String childAppId;
+	protected List<String> childAppIds;
 	protected List<String> objectIds;
 	protected List<String> objectValues;
 
@@ -33,52 +33,52 @@ public class FormLinkQuery extends DataQuery {
 
 	}
 
-	public FormLinkQuery applicationName(String applicationName) {
-		if (applicationName == null) {
-			throw new RuntimeException("applicationName is null");
+	public FormLinkQuery appId(String appId) {
+		if (appId == null) {
+			throw new RuntimeException("appId is null");
 		}
-		this.applicationName = applicationName;
+		this.appId = appId;
 		return this;
 	}
 
-	public FormLinkQuery applicationNames(List<String> applicationNames) {
-		if (applicationNames == null) {
-			throw new RuntimeException("applicationNames is empty ");
+	public FormLinkQuery appIds(List<String> appIds) {
+		if (appIds == null) {
+			throw new RuntimeException("appIds is empty ");
 		}
-		this.applicationNames = applicationNames;
+		this.appIds = appIds;
 		return this;
 	}
 
-	public FormLinkQuery childName(String childName) {
-		if (childName == null) {
-			throw new RuntimeException("childName is null");
+	public FormLinkQuery childAppId(String childAppId) {
+		if (childAppId == null) {
+			throw new RuntimeException("childAppId is null");
 		}
-		this.childName = childName;
+		this.childAppId = childAppId;
 		return this;
 	}
 
-	public FormLinkQuery childNames(List<String> childNames) {
-		if (childNames == null) {
-			throw new RuntimeException("childNames is empty ");
+	public FormLinkQuery childAppIds(List<String> childAppIds) {
+		if (childAppIds == null) {
+			throw new RuntimeException("childAppIds is empty ");
 		}
-		this.childNames = childNames;
+		this.childAppIds = childAppIds;
 		return this;
 	}
 
-	public String getApplicationName() {
-		return applicationName;
+	public String getAppId() {
+		return appId;
 	}
 
-	public List<String> getApplicationNames() {
-		return applicationNames;
+	public List<String> getAppIds() {
+		return appIds;
 	}
 
-	public String getChildName() {
-		return childName;
+	public String getChildAppId() {
+		return childAppId;
 	}
 
-	public List<String> getChildNames() {
-		return childNames;
+	public List<String> getChildAppIds() {
+		return childAppIds;
 	}
 
 	public List<String> getObjectIds() {
@@ -105,20 +105,20 @@ public class FormLinkQuery extends DataQuery {
 		return this;
 	}
 
-	public void setApplicationName(String applicationName) {
-		this.applicationName = applicationName;
+	public void setAppId(String appId) {
+		this.appId = appId;
 	}
 
-	public void setApplicationNames(List<String> applicationNames) {
-		this.applicationNames = applicationNames;
+	public void setAppIds(List<String> appIds) {
+		this.appIds = appIds;
 	}
 
-	public void setChildName(String childName) {
-		this.childName = childName;
+	public void setChildAppId(String childAppId) {
+		this.childAppId = childAppId;
 	}
 
-	public void setChildNames(List<String> childNames) {
-		this.childNames = childNames;
+	public void setChildAppIds(List<String> childAppIds) {
+		this.childAppIds = childAppIds;
 	}
 
 	public void setObjectIds(List<String> objectIds) {

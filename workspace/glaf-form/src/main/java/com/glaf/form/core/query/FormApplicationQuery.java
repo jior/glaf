@@ -24,8 +24,7 @@ public class FormApplicationQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
 	protected Long nodeId;
 	protected List<Long> nodeIds;
-	protected String name;
-	protected List<String> names;
+	protected List<String> appIds;
 	protected String titleLike;
 	protected String descriptionLike;
 	protected List<String> formNames;
@@ -44,6 +43,14 @@ public class FormApplicationQuery extends DataQuery {
 
 	public FormApplicationQuery() {
 
+	}
+
+	public FormApplicationQuery appIds(List<String> appIds) {
+		if (appIds == null) {
+			throw new RuntimeException("appIds is empty ");
+		}
+		this.appIds = appIds;
+		return this;
 	}
 
 	public FormApplicationQuery auditUploadFlag(String auditUploadFlag) {
@@ -86,6 +93,10 @@ public class FormApplicationQuery extends DataQuery {
 		return this;
 	}
 
+	public List<String> getAppIds() {
+		return appIds;
+	}
+
 	public String getAuditUploadFlag() {
 		return auditUploadFlag;
 	}
@@ -108,14 +119,6 @@ public class FormApplicationQuery extends DataQuery {
 
 	public String getManualRouteFlag() {
 		return manualRouteFlag;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public List<String> getNames() {
-		return names;
 	}
 
 	public Long getNodeId() {
@@ -167,22 +170,6 @@ public class FormApplicationQuery extends DataQuery {
 			throw new RuntimeException("manualRouteFlag is null");
 		}
 		this.manualRouteFlag = manualRouteFlag;
-		return this;
-	}
-
-	public FormApplicationQuery name(String name) {
-		if (name == null) {
-			throw new RuntimeException("name is null");
-		}
-		this.name = name;
-		return this;
-	}
-
-	public FormApplicationQuery names(List<String> names) {
-		if (names == null) {
-			throw new RuntimeException("names is empty ");
-		}
-		this.names = names;
 		return this;
 	}
 
@@ -261,6 +248,10 @@ public class FormApplicationQuery extends DataQuery {
 		return this;
 	}
 
+	public void setAppIds(List<String> appIds) {
+		this.appIds = appIds;
+	}
+
 	public void setAuditUploadFlag(String auditUploadFlag) {
 		this.auditUploadFlag = auditUploadFlag;
 	}
@@ -283,14 +274,6 @@ public class FormApplicationQuery extends DataQuery {
 
 	public void setManualRouteFlag(String manualRouteFlag) {
 		this.manualRouteFlag = manualRouteFlag;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setNames(List<String> names) {
-		this.names = names;
 	}
 
 	public void setNodeId(Long nodeId) {
