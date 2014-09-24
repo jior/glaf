@@ -98,6 +98,7 @@ public class UserOnlineLogServiceImpl implements UserOnlineLogService {
 	public void logout(String actorId, String sessionId) {
 		UserOnlineLogQuery query = new UserOnlineLogQuery();
 		query.actorId(actorId);
+		query.sessionId(sessionId);
 		List<UserOnlineLog> list = this.list(query);
 		if (list != null && !list.isEmpty()) {
 			UserOnlineLog model = list.get(0);
