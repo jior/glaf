@@ -2,7 +2,7 @@
 <mapping>
     <entity name="MonthReport" package="com.glaf.rms" table="rms_monthreport" 
 	        title="MonthReport" primaryKey="id">
-        <property  name="id" column="id" type="String" title="id" valueExpression="#{id}"/>
+        <id  name="id" column="id" type="String" title="id" valueExpression="#{id}"/>
         <property  name="modelcode" column="smodelcode" type="String" title="smodelcode" length="30" nullable="false"/>
         <property  name="won" column="iwon" type="Integer" title="iwon" />
         <property  name="woff" column="iwoff" type="Integer" title="iwoff" />

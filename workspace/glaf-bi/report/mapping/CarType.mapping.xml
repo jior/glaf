@@ -3,7 +3,7 @@
     <entity name="CarType" package="com.glaf.rms" table="rms_cartype" title="CarType"  primaryKey="id"
 	        filePrefix="SDCMS-PBRT-SPCR" parseType="csv" 
 			aggregationKeys="sproduct_code,smc">
-        <property name="id" column="id" type="String" title="id" valueExpression="#{id}"/>
+        <id name="id" column="id" type="String" title="id" valueExpression="#{id}"/>
         <property name="seriesCode" column="sseries_code" type="String" title="sseriesCode" length="30" 
 		          position="1"/>
 		<property name="modelCode" column="smodel_code" type="String" title="smodelCode" length="30" 

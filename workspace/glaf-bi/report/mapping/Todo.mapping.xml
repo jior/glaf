@@ -2,7 +2,7 @@
 <mapping>
   <entity name="Todo" package="com.glaf.core.todo" table="sys_todo" title="待办事项" englishTitle="Todo"
 	      parseType="xls" aggregationKeys="id"  primaryKey="id"  startRow="3" >
-    <property name="id" column="id" type="Long" title="id" position="1" required="true"/>
+    <id name="id" column="id" type="Long" title="id" position="1" required="true"/>
     <property name="title" column="TITLE" type="String" englishTitle="title" position="2" length="255" title="标题" />
     <property name="content" column="CONTENT" type="String" englishTitle="content" position="3" length="255" title="内容" />
     <property name="moduleId" column="MODULEID" type="Integer" englishTitle="moduleId" position="4"  title="模块编号" />

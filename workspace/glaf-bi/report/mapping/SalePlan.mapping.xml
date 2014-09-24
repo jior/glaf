@@ -3,7 +3,7 @@
     <entity name="SalePlan" package="com.glaf.rms" table="rms_saleplan" parseType="csv"
 	        title="SalePlan" primaryKey="id" filePrefix="SDCMS-PBRT-MSPL" 
 			aggregationKeys="istatistics_date,stype,smc,scolor">
-        <property  name="id" column="id" type="String" title="id" valueExpression="#{id}"/>
+        <id  name="id" column="id" type="String" title="id" valueExpression="#{id}"/>
         <property  name="statisticsDate" column="istatistics_date" type="Integer" title="istatisticsDate" 
 		           position="1"/>
         <property  name="modelCode" column="smodel_code" type="String" title="smodelCode" length="30" position="2"/>

@@ -2,7 +2,7 @@
 <mapping>
     <entity name="ProductFactTotal" package="com.glaf.rms" table="rms_productfacttotal" 
 	        title="ProductFactTotal" primaryKey="id" aggregationKeys="smodel_code, irpdate">
-        <property  name="id" column="id" type="String" title="id" valueExpression="#{id}" />
+        <id  name="id" column="id" type="String" title="id" valueExpression="#{id}" />
         <property  name="modelCode" column="smodel_code" type="String" title="smodelCode" length="30" nullable="false"/>
         <property  name="rpdate" column="irpdate" type="Integer" title="irpdate" />
         <property  name="won" column="iwon" type="Integer" title="iwon" />

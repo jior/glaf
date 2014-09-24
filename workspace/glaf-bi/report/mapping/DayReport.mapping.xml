@@ -2,7 +2,7 @@
 <mapping>
     <entity name="DayReport" package="com.glaf.rms" table="rms_dayreport" 
 	        title="DayReport" primaryKey="id">
-        <property  name="id" column="id" type="String" title="id" valueExpression="#{id}"/>
+        <id  name="id" column="id" type="String" title="id" valueExpression="#{id}"/>
         <property  name="type" column="stype" type="String" title="stype" length="3"/>
         <property  name="modelcode" column="smodelcode" type="String" title="smodelcode" length="30" nullable="false"/>
         <property  name="won" column="iwon" type="Integer" title="iwon" />

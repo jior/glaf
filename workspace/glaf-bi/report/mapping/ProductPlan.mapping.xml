@@ -3,7 +3,7 @@
     <entity name="ProductPlan" package="com.glaf.rms" table="rms_productplan" parseType="text"
 	        title="ProductPlan" primaryKey="id" filePrefix="PALC-PBRT-WPPL" stopWord="TPALC-PBRT-WPPL"
 			aggregationKeys="stype,smc,svin" startRow="1">
-        <property name="id" column="id" type="String" title="id" valueExpression="#{id}"/>
+        <id name="id" column="id" type="String" title="id" valueExpression="#{id}"/>
 		<property name="recordID" column="srecordID" type="String" title="recordID" length="1"
 		          position="1" temporary="true"/>
         <property name="modeltype" column="smodeltype" type="String" title="smodeltype" length="3"
