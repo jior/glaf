@@ -24,26 +24,17 @@ import com.glaf.base.online.domain.*;
 import com.glaf.base.online.query.*;
 
 @Component
-public interface UserOnlineMapper {
+public interface UserOnlineLogMapper {
 
-	void deleteUserOnlines(UserOnlineQuery query);
 
-	void deleteUserOnlineById(Long id);
-	
-	void deleteUserOnlineLogByActorId(String actorId);
+	int getUserOnlineLogCount(UserOnlineLogQuery query);
 
-	UserOnline getUserOnlineById(Long id);
+	List<UserOnlineLog> getUserOnlineLogs(UserOnlineLogQuery query);
 
-	int getUserOnlineCount(UserOnlineQuery query);
+	void insertUserOnlineLog(UserOnlineLog model);
 
-	List<UserOnline> getUserOnlines(UserOnlineQuery query);
-	
-	List<UserOnline> getUserOnlinesByActorId(String actorId);
+	void updateUserOnlineLog(UserOnlineLog model);
 
-	void insertUserOnline(UserOnline model);
-
-	void updateUserOnline(UserOnline model);
-
-	void updateUserOnlineCheckDate(UserOnline model);
+	void updateUserOnlineLogLogoutDate(UserOnlineLog model);
 
 }

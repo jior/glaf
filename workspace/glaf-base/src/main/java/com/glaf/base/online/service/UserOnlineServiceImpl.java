@@ -46,6 +46,8 @@ public class UserOnlineServiceImpl implements UserOnlineService {
 
 	protected UserOnlineMapper userOnlineMapper;
 
+	protected UserOnlineLogService userOnlineLogService;
+
 	public UserOnlineServiceImpl() {
 
 	}
@@ -85,6 +87,8 @@ public class UserOnlineServiceImpl implements UserOnlineService {
 				long ts = System.currentTimeMillis() - bean.getCheckDateMs();
 				if (ts / 1000 > timeoutSeconds) {// 如果超时，从在线用户列表中删除
 					userOnlineMapper.deleteUserOnlineById(bean.getId());
+					userOnlineLogService.logout(bean.getActorId(),
+							bean.getSessionId());
 				}
 			}
 		}
@@ -143,6 +147,12 @@ public class UserOnlineServiceImpl implements UserOnlineService {
 			}
 			model.setId(idGenerator.nextId());
 			userOnlineMapper.insertUserOnline(model);
+			UserOnlineLog log = new UserOnlineLog();
+			log.setActorId(model.getActorId());
+			log.setLoginIP(model.getLoginIP());
+			log.setName(model.getName());
+			log.setSessionId(model.getSessionId());
+			userOnlineLogService.login(log);
 		}
 	}
 
@@ -171,6 +181,7 @@ public class UserOnlineServiceImpl implements UserOnlineService {
 		UserOnline userOnline = this.getUserOnline(actorId);
 		if (userOnline != null) {
 			this.deleteById(userOnline.getId());
+			userOnlineLogService.logout(actorId, userOnline.getSessionId());
 		}
 	}
 
@@ -202,6 +213,12 @@ public class UserOnlineServiceImpl implements UserOnlineService {
 	@javax.annotation.Resource
 	public void setUserOnlineMapper(UserOnlineMapper userOnlineMapper) {
 		this.userOnlineMapper = userOnlineMapper;
+	}
+
+	@javax.annotation.Resource
+	public void setUserOnlineLogService(
+			UserOnlineLogService userOnlineLogService) {
+		this.userOnlineLogService = userOnlineLogService;
 	}
 
 }

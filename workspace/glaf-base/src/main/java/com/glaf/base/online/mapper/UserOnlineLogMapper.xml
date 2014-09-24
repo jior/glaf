@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.base.online.mapper.UserOnlineLogMapper">
+
+	<resultMap id="userOnlineLogResultMap" type="com.glaf.base.online.domain.UserOnlineLog">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="actorId" column="ACTORID_" jdbcType="VARCHAR" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="loginDate" column="LOGINDATE_" jdbcType="TIMESTAMP" />
+		<result property="loginIP" column="LOGINIP_" jdbcType="VARCHAR" />
+		<result property="logoutDate" column="LOGOUTDATE_" jdbcType="TIMESTAMP" />
+		<result property="sessionId" column="SESSIONID_" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="insertUserOnlineLog" parameterType="com.glaf.base.online.domain.UserOnlineLog">
+		insert into SYS_USER_ONLINE_LOG
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="actorId != null">
+				,ACTORID_
+			</if>
+			<if test="name != null">
+				,NAME_
+			</if>
+			<if test="loginDate != null">
+				,LOGINDATE_
+			</if>
+			<if test="loginIP != null">
+				,LOGINIP_
+			</if>
+			<if test="sessionId != null">
+				,SESSIONID_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="actorId != null">
+				,#{actorId, jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="loginDate != null">
+				,#{loginDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="loginIP != null">
+				,#{loginIP, jdbcType=VARCHAR}
+			</if>
+			<if test="sessionId != null">
+				,#{sessionId, jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateUserOnlineLogLogoutDate" parameterType="com.glaf.base.online.domain.UserOnlineLog">
+
+		update
+		SYS_USER_ONLINE_LOG
+		set LOGOUTDATE_ = #{logoutDate, jdbcType=TIMESTAMP}
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteUserOnlineLogById" parameterType="long">
+		delete from
+		SYS_USER_ONLINE_LOG
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteUserOnlineLogByActorId" parameterType="string">
+		delete
+		from
+		SYS_USER_ONLINE_LOG
+		where ACTORID_ = #{actorId}
+	</delete>
+
+
+	<delete id="deleteUserOnlineLogs" parameterType="com.glaf.base.online.query.UserOnlineLogQuery">
+		delete from SYS_USER_ONLINE_LOG
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getUserOnlineLogById" parameterType="long"
+		resultMap="userOnlineLogResultMap">
+		select * from SYS_USER_ONLINE_LOG where ID_ = #{id}
+	</select>
+
+
+	<select id="getUserOnlinesByActorId" parameterType="string"
+		resultMap="userOnlineLogResultMap">
+		select * from SYS_USER_ONLINE_LOG where ACTORID_ =
+		#{actorId}
+	</select>
+
+
+	<select id="getUserOnlineLogs" parameterType="com.glaf.base.online.query.UserOnlineLogQuery"
+		resultMap="userOnlineLogResultMap">
+		select distinct E.*
+		<include refid="selectUserOnlineLogsSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.LOGINDATE_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getUserOnlineLogCount" parameterType="com.glaf.base.online.query.UserOnlineLogQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectUserOnlineLogsSql" />
+	</select>
+
+
+	<sql id="selectUserOnlineLogsSql">
+
+		from SYS_USER_ONLINE_LOG E
+
+		<where>
+			1 = 1
+
+			<if test="actorId != null and actorId != '' ">
+				and E.ACTORID_ = #{actorId}
+			</if>
+
+			<if test="actorIds != null and actorIds.size !=0">
+				and E.ACTORID_ IN
+				<foreach item="x_actorId" index="index" collection="actorIds"
+					open="(" separator="," close=")">
+					#{x_actorId}
+				</foreach>
+			</if>
+
+			<if test="name != null and name != '' ">
+				and E.NAME_ = #{name}
+			</if>
+
+			<if test="searchWord != null and searchWord != '' ">
+				and ( E.NAME_ like #{searchWord} or E.ACTORID_ like
+				#{searchWord} )
+			</if>
+
+			<if test="loginDateGreaterThanOrEqual != null">
+				and E.LOGINDATE_ &gt;= #{loginDateGreaterThanOrEqual}
+			</if>
+
+			<if test="loginDateLessThanOrEqual != null">
+				and E.LOGINDATE_ &lt;= #{loginDateLessThanOrEqual}
+			</if>
+
+			<if test="loginIP != null and loginIP != '' ">
+				and E.LOGINIP_ = #{loginIP}
+			</if>
+
+			<if test="sessionId != null and sessionId != '' ">
+				and E.SESSIONID_ = #{sessionId}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>
