@@ -1,0 +1,23 @@
+
+<mapping>
+    <entity name="ProductPlan" package="com.glaf.rms" table="rms_productplan" parseType="text"
+	        title="ProductPlan" primaryKey="id" filePrefix="PALC-PBRT-WPPL" stopWord="TPALC-PBRT-WPPL"
+			aggregationKeys="stype,smc,svin" startRow="1">
+        <id name="id" column="id" type="String" title="id" valueExpression="#{id}"/>
+		<property name="recordID" column="srecordID" type="String" title="recordID" length="1"
+		          position="1" temporary="true"/>
+        <property name="modeltype" column="smodeltype" type="String" title="smodeltype" length="3"
+		          position="2"/>
+        <property name="type" column="stype" type="String" title="stype" length="17"
+		          position="3"/>
+        <property name="mc" column="smc" type="String" title="smc" length="2"
+		          position="4"/>
+        <property name="rpdate" column="irpdate" type="Integer" title="irpdate" length="8"
+		          position="5"/>
+        <property name="vin" column="svin" type="String" title="svin" length="17"
+		          position="6"/>
+        <property name="lineFeed" column="slf" type="String" title="slf" length="1"
+		          position="7"/>
+        <property name="crdate" column="dcrdate" type="Date" title="dcrdate" valueExpression="#{now}"/>
+    </entity>
+</mapping>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapping>
+  <entity name="Todo" package="com.glaf.core.todo" table="sys_todo" title="待办事项" englishTitle="Todo"
+	      parseType="xls" aggregationKeys="id"  primaryKey="id"  startRow="3" >
+    <id name="id" column="id" type="Long" title="id" position="1" required="true"/>
+    <property name="title" column="TITLE" type="String" englishTitle="title" position="2" length="255" title="标题" />
+    <property name="content" column="CONTENT" type="String" englishTitle="content" position="3" length="255" title="内容" />
+    <property name="moduleId" column="MODULEID" type="Integer" englishTitle="moduleId" position="4"  title="模块编号" />
+    <property name="moduleName" column="MODULENAME" type="String" englishTitle="moduleName" position="5" length="255" 
+	          title="模块名称" />
+    <property name="processName" column="PROCESSNAME" type="String" englishTitle="processName" position="6" length="255" 
+	          title="流程名称" />
+    <property name="taskName" column="TASKNAME" type="String" englishTitle="taskName" position="7" length="255" 
+	          title="任务名称" />
+    <property name="code" column="CODE" type="String" englishTitle="code" position="8" length="255" title="编码" />
+    <property name="provider" column="PROVIDER" type="String" englishTitle="provider" position="9" length="50" title="提供者" />
+    <property name="type" column="TYPE" type="String" englishTitle="type" position="10" length="20" title="类型" />
+    <property name="queryId" column="queryId" type="String" englishTitle="queryId" position="11" length="255" title="查询编号" />
+    <property name="limitDay" column="LIMITDAY" type="Integer" englishTitle="limitDay" position="12" title="期限" />
+    <property name="link" column="LINK" type="String" englishTitle="link" position="13" length="255" title="详细链接" />
+    <property name="listLink" column="LISTLINK" type="String" englishTitle="listLink" position="14" length="255" 
+	          title="列表链接" />
+  </entity>
+</mapping>

@@ -100,6 +100,13 @@ public class XmlMappingReader {
 						}
 					}
 				}
+
+				Element idElem = element.element("id");
+				if (idElem != null) {
+					ColumnModel idField = new ColumnModel();
+					this.readField(idElem, idField);
+					tableModel.setIdColumn(idField);
+				}
 			}
 
 		} catch (Exception ex) {

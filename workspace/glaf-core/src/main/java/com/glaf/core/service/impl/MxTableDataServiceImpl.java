@@ -487,7 +487,7 @@ public class MxTableDataServiceImpl implements ITableDataService {
 		if (StringUtils.isNotEmpty(keyCloumns)) {
 			List<String> cols = StringTools.split(keyCloumns);
 			if (cols != null && !cols.isEmpty()) {
-				StringBuffer buffer = new StringBuffer(1000);
+				StringBuffer buffer = new StringBuffer(500);
 				Iterator<TableModel> iterator = rows.iterator();
 				while (iterator.hasNext()) {
 					TableModel tableData = iterator.next();
@@ -497,12 +497,13 @@ public class MxTableDataServiceImpl implements ITableDataService {
 					colMap.clear();
 					buffer.delete(0, buffer.length());
 					for (ColumnModel cell : tableData.getColumns()) {
-						colMap.put(cell.getColumnName(), cell.getValue());
+						colMap.put(cell.getColumnName().toLowerCase(),
+								cell.getValue());
 					}
 
 					Iterator<String> it = cols.iterator();
 					while (it.hasNext()) {
-						Object val = colMap.get(it.next());
+						Object val = colMap.get(it.next().toLowerCase());
 						if (val != null) {
 							buffer.append(val.toString());
 						} else {

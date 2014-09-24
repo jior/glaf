@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapping>
+	<entity name="PomsParts" package="pomssrc.orm.PomsParts" table="poms_parts"
+		parseType="xls" aggregationKeys="ipartsid" primaryKey="ipartsid" insertOnly="true"
+		startRow="3">
+		<id name="ipartsid" column="ipartsid" type="Long"
+			title="ipartsid" valueExpression="#{id}" />
+		<property name="sseqno" column="sseqno" type="String"
+			title="sseqno" valueExpression="#{seqNo}" />
+		<property name="sproductno" column="sproductno" type="String"
+			title="品番(12码)" position="1" required="true" />
+		<property name="scolorcode" column="scolorcode" type="String"
+			title="颜色代码" position="2" length="255" />
+		<property name="ssupplierno" column="ssupplierno" type="String"
+			title="供应商编码" position="3" length="255" />
+		<property name="slogisticsarea" column="slogisticsarea" type="String"
+			title="工区" position="4" length="255" />
+		<property name="sproductename" column="sproductename" type="String"
+			title="品名(英文)" position="5" length="255" />
+		<property name="sproductcname" column="sproductcname" type="String"
+			title="品名(中文)" position="6" length="255" />
+		<property name="isubscribeqty" column="isubscribeqty" type="Integer"
+			title="申购数量" position="7" length="255" />
+		<property name="dhopeincorporatedate" column="dhopeincorporatedate"
+			type="Date" title="期望纳入日" position="8" />
+		<property name="suserremark" column="suserremark" type="String"
+			title="使用部门备注" position="9" length="255" />
+		<property name="sheadproject" column="sheadproject" type="String"
+			title="前工程" position="10" length="255" />
+		<property name="sfootproject" column="sfootproject" type="String"
+			title="后工程" position="11" length="255" />
+	</entity>
+</mapping>

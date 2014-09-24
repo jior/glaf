@@ -1,0 +1,18 @@
+
+<mapping>
+    <entity name="SaleFact" package="com.glaf.rms" table="rms_salefact" parseType="csv"
+	        title="SaleFact" primaryKey="id" filePrefix="SDCMS-PBRT-SSSD" 
+			aggregationKeys="istatistics_date,smodel_code">
+        <id  name="id" column="id" type="String" title="id" valueExpression="#{id}"/>
+        <property  name="statisticsDate" column="istatistics_date" type="Integer" title="istatisticsDate" position="1" />
+		<property  name="modelCode" column="smodel_code" type="String" title="smodelCode" length="30" nullable="false" 
+		           position="2"/>
+        <property  name="oemInStock" column="ioem_in_stock" type="Integer" title="ioemInStock" position="3" />
+        <property  name="bulkSales" column="ibulk_sales" type="Integer" title="ibulkSales" position="4" />
+        <property  name="retailSales" column="iretail_sales" type="Integer" title="iretailSales" position="5"/>
+        <property  name="oemStock" column="ioem_stock" type="Integer" title="ioemStock" position="6"/>
+        <property  name="onroad" column="ionroad" type="Integer" title="ionroad" position="7"/>
+        <property  name="dlrStock" column="idlr_stock" type="Integer" title="idlrStock" position="8"/>
+        <property  name="crdate" column="dcrdate" type="Date" title="dcrdate" valueExpression="#{now}"/>
+    </entity>
+</mapping>

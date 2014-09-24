@@ -1,0 +1,11 @@
+
+<mapping>
+    <entity name="ProductPlanTotal" package="com.glaf.rms" table="rms_productplantotal"  
+	        title="ProductPlanTotal" primaryKey="id">
+        <id name="id" column="id" type="String" title="id" valueExpression="#{id}"/>
+        <property name="modelCode" column="smodel_code" type="String" title="smodelCode" length="30" nullable="false"/>
+        <property name="rpdate" column="irpdate" type="Integer" title="irpdate" />
+        <property name="plannumber" column="iplannumber" type="Integer" title="iplannumber" />
+        <property name="crdate" column="dcrdate" type="Date" title="dcrdate" valueExpression="#{now}"/>
+    </entity>
+</mapping>

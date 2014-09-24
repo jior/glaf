@@ -1,0 +1,18 @@
+
+<mapping>
+    <entity name="CarType" package="com.glaf.rms" table="rms_cartype" title="CarType"  primaryKey="id"
+	        filePrefix="SDCMS-PBRT-SPCR" parseType="csv" 
+			aggregationKeys="sproduct_code,smc">
+        <id name="id" column="id" type="String" title="id" valueExpression="#{id}"/>
+        <property name="seriesCode" column="sseries_code" type="String" title="sseriesCode" length="30" 
+		          position="1"/>
+		<property name="modelCode" column="smodel_code" type="String" title="smodelCode" length="30" 
+		          position="2"/>
+        <property name="productCode" column="sproduct_code" type="String" title="sproductCode" length="30"
+		          position="3"/>
+        <property name="mc" column="smc" type="String" title="smc" length="2" 
+		          position="4"/>
+        <property name="crdate" column="dcrdate" type="Date" title="dcrdate" valueExpression="#{now}"/>
+		<property name="aggregationkey" column="aggregationkey" type="String" title="aggregationkey" length="500" />
+    </entity>
+</mapping>

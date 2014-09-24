@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -47,6 +46,7 @@ import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.core.util.ClassUtils;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.FileUtils;
+import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.UUID32;
 import com.glaf.core.xml.XmlMappingReader;
 import com.glaf.core.xml.XmlReader;
@@ -161,7 +161,7 @@ public class ParserFacede {
 						ex.printStackTrace();
 						throw new RuntimeException(ex);
 					} finally {
-						IOUtils.closeQuietly(inputStream);
+						IOUtils.closeStream(inputStream);
 					}
 				}
 			}
@@ -329,7 +329,6 @@ public class ParserFacede {
 	public List<TableModel> parse(String mappingFile, String dataFile,
 			String seqNo, boolean saveToDB) {
 		XmlReader reader = new XmlReader();
-		XmlMappingReader xmlReader = new XmlMappingReader();
 		TableDefinition tableDefinition = null;
 		TableModel tableModel = null;
 		try {
@@ -346,17 +345,19 @@ public class ParserFacede {
 			column4.setLength(500);
 			tableDefinition.addColumn(column4);
 			if (DBUtils.tableExists(tableDefinition.getTableName())) {
-				com.glaf.core.util.DBUtils.alterTable(tableDefinition);
+				DBUtils.alterTable(tableDefinition);
 			} else {
-				com.glaf.core.util.DBUtils.createTable(tableDefinition);
+				DBUtils.createTable(tableDefinition);
 			}
 		}
 
+		XmlMappingReader xmlReader = new XmlMappingReader();
 		InputStream inputStream = null;
 		Parser parser = null;
 		try {
-			tableModel = xmlReader
-					.read(new java.io.FileInputStream(mappingFile));
+			inputStream = new FileInputStream(mappingFile);
+			tableModel = xmlReader.read(inputStream);
+			IOUtils.closeStream(inputStream);
 			String parseClass = tableModel.getParseClass();
 			if (StringUtils.isNotEmpty(parseClass)) {
 				// 加载自定义的解析器
@@ -373,12 +374,16 @@ public class ParserFacede {
 			}
 			if (parser != null) {
 				logger.info("parser=" + parser.getClass().getName());
-				inputStream = new java.io.FileInputStream(dataFile);
+				inputStream = new FileInputStream(dataFile);
 				List<TableModel> rows = parser.parse(tableModel, inputStream);
+				IOUtils.closeStream(inputStream);
 				logger.info("saveToDB=" + saveToDB);
 				if (rows != null && !rows.isEmpty()) {
 					if (saveToDB) {
-						logger.info("save data to " + tableModel.getTableName());
+						logger.debug("aggregationKeys "
+								+ tableDefinition.getAggregationKeys());
+						logger.debug("save data to "
+								+ tableModel.getTableName());
 						getTableDataService().saveAll(tableDefinition, seqNo,
 								rows);
 					}
@@ -388,6 +393,8 @@ public class ParserFacede {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
+		} finally {
+			IOUtils.closeStream(inputStream);
 		}
 		return null;
 	}

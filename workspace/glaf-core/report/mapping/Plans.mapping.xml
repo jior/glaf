@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapping>
+	<entity name="PomsParts" package="pomssrc.orm.PomsParts" table="poms_parts201304"
+		parseType="xls" aggregationKeys="ipartsid" primaryKey="ipartsid" insertOnly="true"
+		startRow="2">
+		<id name="ipartsid" column="ipartsid" type="Long"
+			title="ipartsid" valueExpression="#{id}" />
+		<property name="sseqno" column="sseqno" type="String"
+			title="sseqno" valueExpression="#{seqNo}" />
+		<property name="ssupplierno" column="ssupplierno" type="String"
+			title="供应商编码" position="1" length="255" />
+		<property name="slogisticsarea" column="slogisticsarea" type="String"
+			title="工区" position="2" length="255" />
+		<property name="sdock" column="sdock" type="String"
+			title="受入口" position="3" length="255" />
+		<property name="sproductno" column="sproductno" type="String"
+			title="品番(12码)" position="4" />
+		<property name="isubscribeqty" column="isubscribeqty" type="Integer"
+			title="数量" position="5" length="255"/>
+		<property name="dhopeincorporatedate" column="dhopeincorporatedate" 
+			type="Date" title="期望纳入日" position="6" />
+		<property name="dplanpickupdate" column="dplanpickupdate" 
+			type="Date" title="期望计划出货日" position="7" />
+		<property name="dplanpickupenddate" column="dplanpickupenddate" 
+			type="Date" title="截止计划出货日" position="8" />
+		<property name="danswershipmentdate" column="danswershipmentdate" 
+			type="Date" title="供应商答复出货日" position="9" />
+		<property name="sexceptioncontext" column="sexceptioncontext" 
+			type="String" title="交期异常(出货方式)" position="10" length="255" />
+		<property name="sbranchLine" column="sbranchLine" 
+			type="String" title="分路线" position="11" length="255" />	
+		<property name="dsupplierdeliverydate" column="dsupplierdeliverydate" 
+			type="Date" title="供应商出货时间" position="12" />
+		<property name="smainline" column="smainline" 
+			type="String" title="主路线" position="13" length="255" />	
+		<property name="dgoodscollectiondate" column="dgoodscollectiondate" 
+			type="Date" title="中继地集货时间" position="14" />
+		<property name="dincorporatedate" column="dincorporatedate" 
+			type="Date" title="纳入日" position="15" />
+	</entity>
+</mapping>

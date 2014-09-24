@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapping>
+  <entity name="StsPcbaseframe" package="pomssrc.planchanges.orm.StsPcbaseframe" table="STS_PCBASEFRAME2" 
+          title="基础数据" englishTitle="importBaseData"
+	      parseType="xls" aggregationKeys="ssfx,sextcd"  primaryKey="iid"  startRow="2" >
+    <id name="iid" column="iid" type="Integer" title="id" valueExpression="#{id}"/>
+    <property name="vehicleno" column="vehicleno" type="String" englishTitle="No" position="1" length="255" title="标题" />
+    <property name="ssfx" column="ssfx" type="String" englishTitle="SFX" position="2" length="255" title="内容" />
+    <property name="sextcd" column="sextcd" type="String" englishTitle="sextcd" position="3"  title="模块编号" />
+    <property name="operdate" column="operdate" type="Date" title="operdate" valueExpression="#{curr_yyyymmdd}"/>
+  </entity>
+</mapping>
