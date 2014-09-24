@@ -27,7 +27,6 @@ import org.junit.Test;
 
 import com.glaf.core.base.ColumnModel;
 import com.glaf.core.base.TableModel;
-import com.glaf.core.context.ContextFactory;
 import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.parse.CsvTextParser;
 import com.glaf.core.parse.ParserFacede;
@@ -40,6 +39,17 @@ import com.glaf.core.xml.XmlReader;
 import com.glaf.test.AbstractTest;
 
 public class DataImportTest extends AbstractTest {
+
+	protected ITableDefinitionService tableDefinitionService;
+
+	protected ITableDataService tableDataService;
+
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+		tableDefinitionService = super.getBean("tableDefinitionService");
+		tableDataService = super.getBean("tableDataService");
+	}
 
 	@Test
 	public void testImportCsv() throws IOException {
@@ -64,12 +74,9 @@ public class DataImportTest extends AbstractTest {
 		for (TableModel row : rows) {
 			System.out.println(row.toString());
 		}
-		ITableDefinitionService tableDefinitionService = ContextFactory
-				.getBean("tableDefinitionService");
+
 		tableDefinitionService.save(tableDefinition);
 
-		ITableDataService tableDataService = ContextFactory
-				.getBean("tableDataService");
 		tableDataService.saveAll(tableModel.getTableName(), null, rows);
 	}
 
@@ -96,12 +103,8 @@ public class DataImportTest extends AbstractTest {
 		List<TableModel> rows = textReader.parse(tableModel,
 				new java.io.FileInputStream(dataFile));
 
-		ITableDefinitionService tableDefinitionService = ContextFactory
-				.getBean("tableDefinitionService");
 		tableDefinitionService.save(tableDefinition);
 
-		ITableDataService tableDataService = ContextFactory
-				.getBean("tableDataService");
 		tableDataService.saveAll(tableModel.getTableName(), null, rows);
 	}
 
@@ -109,7 +112,6 @@ public class DataImportTest extends AbstractTest {
 	public void testImportXls() {
 		String mappingFile = "./report/mapping/BaseData.mapping.xml";
 		String dataFile = "./report/data/BaseData.xls";
-		ContextFactory.hasBean("dataSource");
 		ParserFacede parser = new ParserFacede();
 		List<TableModel> rows = parser.parse(mappingFile, dataFile, null, true);
 		if (rows != null && !rows.isEmpty()) {
