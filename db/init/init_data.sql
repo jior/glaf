@@ -25,10 +25,10 @@ insert into SYS_DBID(name_, title_, value_, version_) values ('next.dbid', '系统
 
 /*初始化角色信息*/
 
-insert into SYS_ROLE (id, name, roleDesc, sort, code) values (1, '系统管理员', '', 1000, 'SystemAdministrator');
-insert into SYS_ROLE (id, name, roleDesc, sort, code) values (16, '分级管理员', '', 2, 'BranchAdmin');
-insert into SYS_ROLE (id, name, roleDesc, sort, code) values (17, '流程管理员', '', 1, 'ProcessManager');
-insert into SYS_ROLE (id, name, roleDesc, sort, code) values (6,  '部门管理员', '', 3, 'R006');
+insert into SYS_ROLE (id, name, roleDesc, sort, code, type) values (1, '系统管理员', '', 1000, 'SystemAdministrator', 'SYS');
+insert into SYS_ROLE (id, name, roleDesc, sort, code, type) values (16, '分级管理员', '', 2, 'BranchAdmin', 'SYS');
+insert into SYS_ROLE (id, name, roleDesc, sort, code, type) values (17, '流程管理员', '', 1, 'ProcessManager', 'SYS');
+insert into SYS_ROLE (id, name, roleDesc, sort, code, type) values (6,  '部门管理员', '', 3, 'R006', 'SYS');
 
 
 

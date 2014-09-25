@@ -83,6 +83,8 @@ CREATE TABLE SYS_ROLE(
         name nvarchar(255),
         roledesc nvarchar(500),
         code nvarchar(255),
+	type nvarchar(50),
+	isusebranch nvarchar(10),
         sort int,
         PRIMARY KEY (id)
 );

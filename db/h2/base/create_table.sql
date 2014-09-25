@@ -79,6 +79,8 @@ CREATE TABLE SYS_ROLE(
         name varchar(255),
         roledesc varchar(255),
         code varchar(255),
+	type varchar(50),
+	isusebranch varchar(10),
         sort int,
         PRIMARY KEY (id)
 );
