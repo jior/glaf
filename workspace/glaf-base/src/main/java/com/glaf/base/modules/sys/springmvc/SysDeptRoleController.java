@@ -188,9 +188,9 @@ public class SysDeptRoleController {
 				// 创建新角色
 				for (int i = 0; i < id.length; i++) {
 					SysRole role = sysRoleService.findById(id[i]);
-					if (role == null)
+					if (role == null){
 						continue;
-
+					}
 					SysDeptRole deptRole = new SysDeptRole();
 					deptRole.setDept(dept);
 					deptRole.setRole(role);

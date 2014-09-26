@@ -44,11 +44,16 @@ import com.glaf.base.modules.Constants;
 import com.glaf.base.modules.sys.SysConstants;
 import com.glaf.base.modules.sys.model.Dictory;
 import com.glaf.base.modules.sys.model.SysDepartment;
+import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.modules.sys.model.SysTree;
+import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.query.SysDepartmentQuery;
+import com.glaf.base.modules.sys.query.SysUserQuery;
 import com.glaf.base.modules.sys.service.ComplexUserService;
 import com.glaf.base.modules.sys.service.DictoryService;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
+import com.glaf.base.modules.sys.service.SysDeptRoleService;
+import com.glaf.base.modules.sys.service.SysRoleService;
 import com.glaf.base.modules.sys.service.SysTreeService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.utils.ParamUtil;
@@ -64,6 +69,7 @@ import com.glaf.core.util.PageResult;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.Tools;
 
 @Controller("/branch/department")
@@ -78,9 +84,13 @@ public class BranchDepartmentController {
 
 	protected SysDepartmentService sysDepartmentService;
 
+	protected SysDeptRoleService sysDeptRoleService;
+
 	protected SysTreeService sysTreeService;
 
 	protected SysUserService sysUserService;
+
+	protected SysRoleService sysRoleService;
 
 	@RequestMapping(params = "method=branchAdmin")
 	public ModelAndView branchAdmin(HttpServletRequest request,
@@ -111,6 +121,34 @@ public class BranchDepartmentController {
 		return new ModelAndView("/modules/branch/dept/branchAdmin", modelMap);
 	}
 
+	@RequestMapping(params = "method=frame")
+	public ModelAndView frame(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		String x_query = request.getParameter("x_query");
+		if (StringUtils.equals(x_query, "true")) {
+			Map<String, Object> paramMap = RequestUtils
+					.getParameterMap(request);
+			String x_complex_query = JsonUtils.encode(paramMap);
+			x_complex_query = RequestUtils.encodeString(x_complex_query);
+			request.setAttribute("x_complex_query", x_complex_query);
+		} else {
+			request.setAttribute("x_complex_query", "");
+		}
+
+		String x_view = ViewProperties.getString("branch.department.frame");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		return new ModelAndView("/modules/branch/dept/frame", modelMap);
+	}
+
 	@RequestMapping(params = "method=json", method = RequestMethod.POST)
 	@ResponseBody
 	public byte[] json(HttpServletRequest request) throws IOException {
@@ -131,10 +169,9 @@ public class BranchDepartmentController {
 		if (StringUtils.isNotEmpty(request.getParameter("parentId"))) {
 			query.setParentId(RequestUtils.getLong(request, "parentId"));
 		} else {
-			// com.glaf.base.modules.sys.model.SysUser user =
-			// com.glaf.base.utils.RequestUtil
-			// .getLoginUser(request);
-			// query.setParentId(user.getDeptId());
+			SysUser user = com.glaf.base.utils.RequestUtil
+					.getLoginUser(request);
+			query.setParentId(user.getDeptId());
 		}
 
 		String gridType = ParamUtils.getString(params, "gridType");
@@ -234,9 +271,61 @@ public class BranchDepartmentController {
 		return new ModelAndView("/modules/branch/dept/list", modelMap);
 	}
 
-	@RequestMapping(params = "method=frame")
-	public ModelAndView frame(HttpServletRequest request, ModelMap modelMap) {
+	@RequestMapping(params = "method=permission")
+	public ModelAndView permission(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
+
+		List<SysRole> roleList = new ArrayList<SysRole>();
+		List<SysRole> roles = sysRoleService.getSysRoleList();
+		for (SysRole role : roles) {
+			if (StringUtils.isNotEmpty(role.getCode())
+					&& (StringUtils.startsWithIgnoreCase(role.getCode(),
+							SysConstants.BRANCH_PREFIX) || StringUtils.equals(
+							role.getIsUseBranch(), "Y"))) {
+				roleList.add(role);
+			}
+		}
+
+		request.setAttribute("roleList", roleList);
+
+		long parentId = 0;
+		if (StringUtils.isNotEmpty(request.getParameter("parentId"))) {
+			parentId = RequestUtils.getLong(request, "parentId");
+		} else {
+			SysUser user = com.glaf.base.utils.RequestUtil
+					.getLoginUser(request);
+			parentId = user.getDeptId();
+		}
+
+		List<Long> deptIds = new ArrayList<Long>();
+		List<SysTree> treeList = new ArrayList<SysTree>();
+		sysTreeService.loadSysTrees(treeList, parentId, 1);
+		if (treeList != null && !treeList.isEmpty()) {
+			for (SysTree tree : treeList) {
+				if (tree.getDepartment() != null) {
+					deptIds.add(tree.getDepartment().getId());
+				}
+			}
+		}
+
+		SysUserQuery query = new SysUserQuery();
+		query.deptIds(deptIds);
+		List<SysUser> users = sysUserService.getSysUsersByQueryCriteria(0,
+				1000, query);
+		if (users != null && !users.isEmpty()) {
+			List<String> actorIds = new ArrayList<String>();
+			for (SysUser user : users) {
+				actorIds.clear();
+				actorIds.add(user.getActorId());
+				List<SysRole> roles2 = sysUserService.getUserRoles(actorIds);
+				if (roles2 != null && !roles2.isEmpty()) {
+					for (SysRole r : roles2) {
+						user.getRoleCodes().add(r.getCode());
+					}
+				}
+			}
+			request.setAttribute("users", users);
+		}
 
 		String x_query = request.getParameter("x_query");
 		if (StringUtils.equals(x_query, "true")) {
@@ -249,7 +338,8 @@ public class BranchDepartmentController {
 			request.setAttribute("x_complex_query", "");
 		}
 
-		String x_view = ViewProperties.getString("branch.department.frame");
+		String x_view = ViewProperties
+				.getString("branch.department.permission");
 		if (StringUtils.isNotEmpty(x_view)) {
 			return new ModelAndView(x_view, modelMap);
 		}
@@ -259,35 +349,7 @@ public class BranchDepartmentController {
 			return new ModelAndView(view, modelMap);
 		}
 
-		return new ModelAndView("/modules/branch/dept/frame", modelMap);
-	}
-
-	@RequestMapping(params = "method=tree")
-	public ModelAndView tree(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-
-		String x_query = request.getParameter("x_query");
-		if (StringUtils.equals(x_query, "true")) {
-			Map<String, Object> paramMap = RequestUtils
-					.getParameterMap(request);
-			String x_complex_query = JsonUtils.encode(paramMap);
-			x_complex_query = RequestUtils.encodeString(x_complex_query);
-			request.setAttribute("x_complex_query", x_complex_query);
-		} else {
-			request.setAttribute("x_complex_query", "");
-		}
-
-		String x_view = ViewProperties.getString("branch.department.tree");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-
-		String view = request.getParameter("view");
-		if (StringUtils.isNotEmpty(view)) {
-			return new ModelAndView(view, modelMap);
-		}
-
-		return new ModelAndView("/modules/branch/dept/tree", modelMap);
+		return new ModelAndView("/modules/branch/dept/permission", modelMap);
 	}
 
 	/**
@@ -473,6 +535,48 @@ public class BranchDepartmentController {
 		return new ModelAndView("show_msg", modelMap);
 	}
 
+	/**
+	 * 提交修改信息
+	 * 
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(params = "method=setUserRole")
+	public byte[] setUserRole(HttpServletRequest request) {
+		long roleId = ParamUtil.getLongParameter(request, "roleId", 0);
+		String actorId = request.getParameter("actorId");
+		String operation = request.getParameter("operation");
+		SysRole bean = sysRoleService.findById(roleId);
+		SysUser user = sysUserService.findByAccountWithAll(actorId);
+		if (bean != null && user != null) {
+			LoginContext loginContext = RequestUtils.getLoginContext(request);
+
+			List<Long> nodeIds = new ArrayList<Long>();
+
+			if (!loginContext.isSystemAdministrator()) {
+				nodeIds = complexUserService
+						.getUserManageBranchNodeIds(loginContext.getActorId());
+			}
+
+			/**
+			 * 保证添加的部门是分级管理员管辖的部门
+			 */
+			if (loginContext.isSystemAdministrator()
+					|| nodeIds.contains(user.getDepartment().getNodeId())) {
+				if (StringUtils.equals(operation, "revoke")) {
+					sysUserService.deleteRoleUser(roleId, actorId);
+				} else {
+					sysUserService.createRoleUser(roleId, actorId);
+				}
+				return ResponseUtils.responseResult(true);
+			}
+		}
+
+		return ResponseUtils.responseResult(false);
+	}
+
 	@javax.annotation.Resource
 	public void setComplexUserService(ComplexUserService complexUserService) {
 		this.complexUserService = complexUserService;
@@ -487,6 +591,16 @@ public class BranchDepartmentController {
 	public void setSysDepartmentService(
 			SysDepartmentService sysDepartmentService) {
 		this.sysDepartmentService = sysDepartmentService;
+	}
+
+	@javax.annotation.Resource
+	public void setSysDeptRoleService(SysDeptRoleService sysDeptRoleService) {
+		this.sysDeptRoleService = sysDeptRoleService;
+	}
+
+	@javax.annotation.Resource
+	public void setSysRoleService(SysRoleService sysRoleService) {
+		this.sysRoleService = sysRoleService;
 	}
 
 	@javax.annotation.Resource
@@ -539,6 +653,34 @@ public class BranchDepartmentController {
 		logger.debug("parent:" + parent + "; id:" + id + "; operate:" + operate);
 		SysDepartment bean = sysDepartmentService.findById(id);
 		sysDepartmentService.sort(parent, bean, operate);
+	}
+
+	@RequestMapping(params = "method=tree")
+	public ModelAndView tree(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		String x_query = request.getParameter("x_query");
+		if (StringUtils.equals(x_query, "true")) {
+			Map<String, Object> paramMap = RequestUtils
+					.getParameterMap(request);
+			String x_complex_query = JsonUtils.encode(paramMap);
+			x_complex_query = RequestUtils.encodeString(x_complex_query);
+			request.setAttribute("x_complex_query", x_complex_query);
+		} else {
+			request.setAttribute("x_complex_query", "");
+		}
+
+		String x_view = ViewProperties.getString("branch.department.tree");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		return new ModelAndView("/modules/branch/dept/tree", modelMap);
 	}
 
 	@ResponseBody

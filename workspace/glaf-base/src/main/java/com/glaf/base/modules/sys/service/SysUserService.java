@@ -43,6 +43,9 @@ public interface SysUserService {
 	@Transactional
 	boolean create(SysUser bean);
 
+	@Transactional
+	void createRoleUser(long roleId, String actorId);
+
 	/**
 	 * 删除
 	 * 
@@ -71,7 +74,10 @@ public interface SysUserService {
 	 */
 	@Transactional
 	boolean deleteAll(long[] id);
-
+	
+	@Transactional
+	void deleteRoleUser(long roleId, String actorId);
+	
 	/**
 	 * 删除部门角色用户
 	 * 
@@ -215,6 +221,8 @@ public interface SysUserService {
 	PageResult getSysUserList(long deptId, String userName, String account,
 			int pageNo, int pageSize);
 
+	String getSysUserPasswordByAccount(String account);
+
 	/**
 	 * 获取某个应用的权限用户
 	 * 
@@ -242,7 +250,7 @@ public interface SysUserService {
 	 * @return
 	 */
 	List<SysUser> getSysUsersByRoleCode(String roleCode);
-
+	
 	/**
 	 * 获取列表
 	 * 
@@ -252,14 +260,12 @@ public interface SysUserService {
 	 */
 	List<SysUser> getSysUserWithDeptList();
 	
+	
 	/**
 	 * 获取用户信息
 	 * @return
 	 */
 	Map<String, String> getUserMap();
-	
-	
-	String getSysUserPasswordByAccount(String account);
 
 	/**
 	 * 其用户权限

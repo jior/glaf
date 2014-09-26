@@ -118,6 +118,45 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	@Transactional
+	public void createRoleUser(long roleId, String actorId) {
+		SysUser user = this.findByAccount(actorId);
+		SysDeptRoleQuery query = new SysDeptRoleQuery();
+		query.deptId(user.getDeptId());
+		query.sysRoleId(roleId);
+		SysDeptRole deptRole = null;
+		List<SysDeptRole> list = sysDeptRoleMapper.getSysDeptRoles(query);
+		if (list != null && !list.isEmpty()) {
+			deptRole = list.get(0);
+		} else {
+			deptRole = new SysDeptRole();
+			deptRole.setId(idGenerator.nextId());
+			deptRole.setDeptId(user.getDeptId());
+			deptRole.setSysRoleId(roleId);
+			deptRole.setCreateDate(new Date());
+			deptRole.setGrade(0);
+			sysDeptRoleMapper.insertSysDeptRole(deptRole);
+		}
+
+		TableModel table = new TableModel();
+		table.setTableName("SYS_USER_ROLE");
+		table.addLongColumn("ID", idGenerator.nextId());
+		table.addIntegerColumn("AUTHORIZED", 0);
+		table.addLongColumn("ROLEID", deptRole.getId());
+		table.addLongColumn("USERID", user.getId());
+		tableDataService.insertTableData(table);
+
+		TableModel table2 = new TableModel();
+		table2.setTableName("SYS_MEMBERSHIP");
+		table2.addLongColumn("ID_", idGenerator.nextId());
+		table2.addStringColumn("ACTORID_", user.getAccount());
+		table2.addLongColumn("ROLEID_", deptRole.getId());
+		table2.addLongColumn("NODEID_", user.getDeptId());
+		table2.addStringColumn("TYPE_", "UserRole");
+		tableDataService.insertTableData(table2);
+
+	}
+
+	@Transactional
 	public boolean delete(long id) {
 		return false;
 	}
@@ -146,6 +185,33 @@ public class SysUserServiceImpl implements SysUserService {
 			query.rowIds(rowIds);
 			sysUserMapper.deleteSysUsers(query);
 		}
+	}
+
+	@Transactional
+	public void deleteRoleUser(long roleId, String actorId) {
+		SysUser user = this.findByAccount(actorId);
+		SysDeptRoleQuery query = new SysDeptRoleQuery();
+		query.deptId(user.getDeptId());
+		query.sysRoleId(roleId);
+		List<SysDeptRole> list = sysDeptRoleMapper.getSysDeptRoles(query);
+		if (list != null && !list.isEmpty()) {
+			SysDeptRole deptRole = list.get(0);
+
+			TableModel table = new TableModel();
+			table.setTableName("SYS_USER_ROLE");
+			table.addIntegerColumn("AUTHORIZED", 0);
+			table.addLongColumn("ROLEID", deptRole.getId());
+			table.addLongColumn("USERID", user.getId());
+			tableDataService.deleteTableData(table);
+
+			TableModel table2 = new TableModel();
+			table2.setTableName("SYS_MEMBERSHIP");
+			table2.addStringColumn("ACTORID_", user.getAccount());
+			table2.addLongColumn("ROLEID_", deptRole.getId());
+			table2.addLongColumn("NODEID_", user.getDeptId());
+			tableDataService.deleteTableData(table2);
+		}
+
 	}
 
 	/**
@@ -201,10 +267,6 @@ public class SysUserServiceImpl implements SysUserService {
 			user.setDepartment(sysDepartmentService.findById(user.getDeptId()));
 		}
 		return user;
-	}
-
-	public String getSysUserPasswordByAccount(String account) {
-		return sysUserMapper.getSysUserPasswordByAccount(account);
 	}
 
 	public SysUser findByAccountWithAll(String account) {
@@ -467,6 +529,10 @@ public class SysUserServiceImpl implements SysUserService {
 		pager.setTotalRecordCount(count);
 
 		return pager;
+	}
+
+	public String getSysUserPasswordByAccount(String account) {
+		return sysUserMapper.getSysUserPasswordByAccount(account);
 	}
 
 	/**

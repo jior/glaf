@@ -40,6 +40,7 @@ public interface SysTreeService {
 	 */
 	@Transactional
 	boolean create(SysTree bean);
+	
 	/**
 	 * 删除
 	 * 
@@ -58,7 +59,6 @@ public interface SysTreeService {
 	 */
 	@Transactional
 	boolean delete(SysTree bean);
-
 	/**
 	 * 批量删除
 	 * 
@@ -213,6 +213,8 @@ public interface SysTreeService {
 	 */
 	List<SysTree> getSysTreesByQueryCriteria(int start, int pageSize,
 			SysTreeQuery query);
+
+	void loadChildren(List<SysTree> treeList, long parentId);
 
 	/**
 	 * 获取树型列表

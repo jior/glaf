@@ -213,6 +213,9 @@ public class SysUser implements Serializable, User, JSONable {
 	@javax.persistence.Transient
 	private Set<SysUserRole> userRoles = new HashSet<SysUserRole>();
 
+	@javax.persistence.Transient
+	private Set<String> roleCodes = new HashSet<String>();
+
 	/**
 	 * 用户类别
 	 */
@@ -389,6 +392,13 @@ public class SysUser implements Serializable, User, JSONable {
 		return null;
 	}
 
+	public Set<String> getRoleCodes() {
+		if (roleCodes == null) {
+			roleCodes = new HashSet<String>();
+		}
+		return roleCodes;
+	}
+
 	public Set<SysDeptRole> getRoles() {
 		if (roles == null) {
 			roles = new HashSet<SysDeptRole>();
@@ -427,6 +437,19 @@ public class SysUser implements Serializable, User, JSONable {
 		return userType;
 	}
 
+	public boolean hasApplicationAccess(long appId) {
+		boolean hasAccess = false;
+		if (apps != null && !apps.isEmpty()) {
+			for (SysApplication app : apps) {
+				if (appId == app.getId()) {
+					hasAccess = true;
+					break;
+				}
+			}
+		}
+		return hasAccess;
+	}
+
 	public boolean isDepartmentAdmin() {
 		boolean isDeptAdmin = false;
 
@@ -453,19 +476,6 @@ public class SysUser implements Serializable, User, JSONable {
 			}
 		}
 		return isDeptAdmin;
-	}
-
-    public boolean hasApplicationAccess(long appId) {
-		boolean hasAccess = false;
-		if (apps != null && !apps.isEmpty()) {
-			for (SysApplication app : apps) {
-				if (appId == app.getId()) {
-					hasAccess = true;
-					break;
-				}
-			}
-		}
-		return hasAccess;
 	}
 
 	public boolean isSystemAdmin() {
@@ -657,6 +667,10 @@ public class SysUser implements Serializable, User, JSONable {
 
 	public void setRemark(String remark) {
 
+	}
+
+	public void setRoleCodes(Set<String> roleCodes) {
+		this.roleCodes = roleCodes;
 	}
 
 	public void setRoles(Set<SysDeptRole> roles) {

@@ -518,11 +518,11 @@
 		WHERE 1=1
 
 		<if test="deptRoleId != null">
-			AND a.id = #{deptRoleId}
+			AND a.ID = #{deptRoleId}
 		</if>
 
 		<if test="deptRoleIds != null and deptRoleIds.size !=0">
-			AND a.id IN
+			AND a.ID IN
 			<foreach item="x_deptRoleId" index="index" collection="deptRoleIds"
 				open="(" separator="," close=")">
 				#{x_deptRoleId}
@@ -530,11 +530,11 @@
 		</if>
 
 		<if test="sysRoleId != null">
-			AND a.sysRoleId= #{sysRoleId}
+			AND a.SYSROLEID= #{sysRoleId}
 		</if>
 
 		<if test="sysRoleIds != null and sysRoleIds.size !=0">
-			AND a.sysRoleId IN
+			AND a.SYSROLEID IN
 			<foreach item="x_sysRoleId" index="index" collection="sysRoleIds"
 				open="(" separator="," close=")">
 				#{x_sysRoleId}
@@ -542,11 +542,11 @@
 		</if>
 
 		<if test="roleCode != null">
-			AND b.code= #{roleCode}
+			AND b.CODE= #{roleCode}
 		</if>
 
 		<if test="roleCodes != null and roleCodes.size !=0">
-			AND b.code IN
+			AND b.CODE IN
 			<foreach item="x_roleCode" index="index" collection="roleCodes"
 				open="(" separator="," close=")">
 				#{x_roleCode}
@@ -554,11 +554,11 @@
 		</if>
 
 		<if test="deptId != null">
-			AND ( a.deptId = #{deptId} )
+			AND ( a.DEPTID = #{deptId} )
 		</if>
 
 		<if test="deptIds != null and deptIds.size !=0">
-			AND a.deptId IN
+			AND a.DEPTID IN
 			<foreach item="x_deptId" index="index" collection="deptIds"
 				open="(" separator="," close=")">
 				#{x_deptId}
