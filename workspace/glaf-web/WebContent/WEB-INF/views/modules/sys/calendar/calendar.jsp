@@ -2,35 +2,30 @@
 <%@ page import="java.util.*" %> 
 <%@ page import="com.glaf.base.utils.*"%>
 <% 
-Calendar cal=Calendar.getInstance();
-int year = ParamUtil.getIntAttribute(request, "year", cal.get(Calendar.YEAR));//年份
-int month = ParamUtil.getIntAttribute(request, "month", cal.get(Calendar.MONTH));//月份
-int weeks = ParamUtil.getIntAttribute(request, "weeks", 0);//当月的周数
-List list = (List) request.getAttribute("list");
-String days[] = (String[])request.getAttribute("days");
+	Calendar cal=Calendar.getInstance();
+	int year = ParamUtil.getIntAttribute(request, "year", cal.get(Calendar.YEAR));//年份
+	int month = ParamUtil.getIntAttribute(request, "month", cal.get(Calendar.MONTH));//月份
+	int weeks = ParamUtil.getIntAttribute(request, "weeks", 0);//当月的周数
+	List list = (List) request.getAttribute("list");
+	String days[] = (String[])request.getAttribute("days");
 %> 
-</head> 
-<body>
-<table width="280" height="80" class="mainTable" border=0 cellspacing=1 cellpadding=2>
+<table width="280" height="80" border="0" cellspacing="1" cellpadding="2" class="mainTable">
   <tr>
-    <td colspan=7 class="list-title"><table width=100% cellspacing=0 cellpadding=0>
-      <tr>
-        <td align="center"><font color="#0066ff"><b><%=month+1%>月</b></font> </td>
-        </tr>
-    </table></td>
+    <td colspan="7" class="list-title">
+	  <table width="100%" cellspacing="0" cellpadding="0">
+       <tr>
+        <td align="center"><font color="#0066ff"><b><%=month+1%>月</b></font></td>
+       </tr>
+      </table>
+	</td>
   </tr>
   <tr>
     <td align="center" class="weekDay">日</td>
-    <td align="center" class="weekDay">一
-        </th>
-    <td align="center" class="weekDay">二
-        </th>
-    <td align="center" class="weekDay">三
-        </th>
-    <td align="center" class="weekDay">四
-        </th>
-    <td align="center" class="weekDay">五
-        </th>
+    <td align="center" class="weekDay">一</td>
+    <td align="center" class="weekDay">二</td>
+    <td align="center" class="weekDay">三</td>
+    <td align="center" class="weekDay">四</td>
+    <td align="center" class="weekDay">五</td>
     <td align="center" class="weekDay">六</td>
   </tr>
   <%
@@ -44,7 +39,7 @@ String days[] = (String[])request.getAttribute("days");
 	  <%
 	  if(!"".equals(days[i])){
 	  %>
-      <input type="checkbox" name="id" value="" onClick="selDay(this, <%=month+1%>, <%=days[i]%>);" <%=list.contains(new Integer(days[i]))?"checked":""%>><%=days[i]%>
+      <input type="checkbox" name="id" value="" onClick="javascript:selDay(this, <%=month+1%>, <%=days[i]%>);" <%=list.contains(new Integer(days[i]))?"checked":""%>><%=days[i]%>
       <%
 	  }else{
 	    out.print("&nbsp;");
@@ -55,6 +50,3 @@ String days[] = (String[])request.getAttribute("days");
   </tr>
   <%}%>
 </table>
-</body> 
-</html>  
-
