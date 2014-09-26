@@ -45,6 +45,12 @@ public class SysRoleJsonFactory {
 		if (jsonObject.containsKey("name")) {
 			model.setName(jsonObject.getString("name"));
 		}
+		if (jsonObject.containsKey("type")) {
+			model.setType(jsonObject.getString("type"));
+		}
+		if (jsonObject.containsKey("isUseBranch")) {
+			model.setIsUseBranch(jsonObject.getString("isUseBranch"));
+		}
 		if (jsonObject.containsKey("desc")) {
 			model.setDesc(jsonObject.getString("desc"));
 		}
@@ -92,6 +98,12 @@ public class SysRoleJsonFactory {
 		if (model.getName() != null) {
 			jsonObject.put("name", model.getName());
 		}
+		if (model.getType() != null) {
+			jsonObject.put("type", model.getType());
+		}
+		if (model.getIsUseBranch() != null) {
+			jsonObject.put("isUseBranch", model.getIsUseBranch());
+		}
 		if (model.getDesc() != null) {
 			jsonObject.put("desc", model.getDesc());
 		}
@@ -136,6 +148,12 @@ public class SysRoleJsonFactory {
 
 		if (model.getName() != null) {
 			jsonObject.put("name", model.getName());
+		}
+		if (model.getType() != null) {
+			jsonObject.put("type", model.getType());
+		}
+		if (model.getIsUseBranch() != null) {
+			jsonObject.put("isUseBranch", model.getIsUseBranch());
 		}
 		if (model.getDesc() != null) {
 			jsonObject.put("desc", model.getDesc());

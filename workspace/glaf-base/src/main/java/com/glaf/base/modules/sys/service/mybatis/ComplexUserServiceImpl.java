@@ -142,6 +142,7 @@ public class ComplexUserServiceImpl implements ComplexUserService {
 		List<SysTree> subTrees = sysTreeService.getRoleUserTrees(qx);
 		if (subTrees != null && !subTrees.isEmpty()) {
 			for (SysTree tree : subTrees) {
+				treeModels.add(tree);
 				List<TreeModel> children = treeModelService
 						.getChildrenTreeModels(tree.getId());
 				if (children != null && !children.isEmpty()) {

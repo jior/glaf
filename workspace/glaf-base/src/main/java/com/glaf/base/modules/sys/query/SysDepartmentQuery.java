@@ -47,8 +47,6 @@ public class SysDepartmentQuery extends DataQuery {
 	protected List<String> names;
 	protected String no;
 	protected Long nodeId;
-	protected Long nodeIdGreaterThanOrEqual;
-	protected Long nodeIdLessThanOrEqual;
 	protected List<Long> nodeIds;
 	protected String noLeftLike;
 	protected String noLike;
@@ -303,14 +301,6 @@ public class SysDepartmentQuery extends DataQuery {
 		return nodeId;
 	}
 
-	public Long getNodeIdGreaterThanOrEqual() {
-		return nodeIdGreaterThanOrEqual;
-	}
-
-	public Long getNodeIdLessThanOrEqual() {
-		return nodeIdLessThanOrEqual;
-	}
-
 	public List<Long> getNodeIds() {
 		return nodeIds;
 	}
@@ -497,23 +487,6 @@ public class SysDepartmentQuery extends DataQuery {
 		return this;
 	}
 
-	public SysDepartmentQuery nodeIdGreaterThanOrEqual(
-			Long nodeIdGreaterThanOrEqual) {
-		if (nodeIdGreaterThanOrEqual == null) {
-			throw new RuntimeException("nodeId is null");
-		}
-		this.nodeIdGreaterThanOrEqual = nodeIdGreaterThanOrEqual;
-		return this;
-	}
-
-	public SysDepartmentQuery nodeIdLessThanOrEqual(Long nodeIdLessThanOrEqual) {
-		if (nodeIdLessThanOrEqual == null) {
-			throw new RuntimeException("nodeId is null");
-		}
-		this.nodeIdLessThanOrEqual = nodeIdLessThanOrEqual;
-		return this;
-	}
-
 	public SysDepartmentQuery nodeIds(List<Long> nodeIds) {
 		if (nodeIds == null) {
 			throw new RuntimeException("nodeIds is empty ");
@@ -625,14 +598,6 @@ public class SysDepartmentQuery extends DataQuery {
 
 	public void setNodeId(Long nodeId) {
 		this.nodeId = nodeId;
-	}
-
-	public void setNodeIdGreaterThanOrEqual(Long nodeIdGreaterThanOrEqual) {
-		this.nodeIdGreaterThanOrEqual = nodeIdGreaterThanOrEqual;
-	}
-
-	public void setNodeIdLessThanOrEqual(Long nodeIdLessThanOrEqual) {
-		this.nodeIdLessThanOrEqual = nodeIdLessThanOrEqual;
 	}
 
 	public void setNodeIds(List<Long> nodeIds) {

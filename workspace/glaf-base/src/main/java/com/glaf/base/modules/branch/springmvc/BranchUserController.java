@@ -108,7 +108,8 @@ public class BranchUserController {
 		List<Long> nodeIds = complexUserService
 				.getUserManageBranchNodeIds(actorId);
 
-		SysDepartment department = sysDepartmentService.getSysDepartment(deptId);
+		SysDepartment department = sysDepartmentService
+				.getSysDepartment(deptId);
 		if (department != null) {
 			SysTree tree = sysTreeService.findById(department.getNodeId());
 			if (tree != null && nodeIds.contains(tree.getId())) {
@@ -149,6 +150,60 @@ public class BranchUserController {
 		MessageUtils.addMessages(request, messages);
 
 		return new ModelAndView("show_msg", modelMap);
+	}
+
+	/**
+	 * 删除角色用户
+	 * 
+	 * @param request
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(params = "method=delRoleUser")
+	public ModelAndView delRoleUser(HttpServletRequest request,
+			ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		int deptId = ParamUtil.getIntParameter(request, "deptId", 0);
+		int roleId = ParamUtil.getIntParameter(request, "roleId", 0);
+		boolean sucess = false;
+		String actorId = RequestUtils.getActorId(request);
+		try {
+			List<Long> nodeIds = complexUserService
+					.getUserManageBranchNodeIds(actorId);
+			SysDepartment department = sysDepartmentService
+					.getSysDepartment(deptId);
+			if (department != null) {
+				SysTree tree = sysTreeService.findById(department.getNodeId());
+				if (tree != null && nodeIds.contains(tree.getId())) {
+					SysDeptRole deptRole = sysDeptRoleService.find(deptId,
+							roleId);
+					long[] userIds = ParamUtil.getLongParameterValues(request,
+							"id");
+					if (deptRole != null
+							&& deptRole.getRole() != null
+							&& !StringUtils.equals(
+									deptRole.getRole().getCode(),
+									SysConstants.BRANCH_ADMIN)) {
+						sysUserService.deleteRoleUsers(deptRole, userIds);
+						sucess = true;
+					}
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			sucess = false;
+		}
+		ViewMessages messages = new ViewMessages();
+		if (sucess) {
+			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+					"user.delete_success"));
+		} else {// 保存失败
+			messages.add(ViewMessages.GLOBAL_MESSAGE, new ViewMessage(
+					"user.delete_failure"));
+		}
+		MessageUtils.addMessages(request, messages);
+
+		return new ModelAndView("show_msg2", modelMap);
 	}
 
 	@RequestMapping(params = "method=deptUsers")
@@ -199,7 +254,7 @@ public class BranchUserController {
 	@RequestMapping(params = "method=json")
 	@ResponseBody
 	public byte[] json(HttpServletRequest request) throws IOException {
-		Long deptId = ParamUtil.getLongParameter(request, "parent", 0);
+		Long deptId = ParamUtil.getLongParameter(request, "deptId", 0);
 		Long nodeId = RequestUtils.getLong(request, "nodeId");
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		SysUserQuery query = new SysUserQuery();
@@ -336,6 +391,7 @@ public class BranchUserController {
 	 */
 	@RequestMapping(params = "method=prepareAdd")
 	public ModelAndView prepareAdd(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
 		List<Dictory> dictories = dictoryService
 				.getDictoryList(SysConstants.USER_HEADSHIP);
 		modelMap.put("dictories", dictories);
@@ -498,7 +554,7 @@ public class BranchUserController {
 			bean.setDepartment(department);
 		} else {
 			department = sysDepartmentService.findById(ParamUtil
-					.getIntParameter(request, "parent", 0));
+					.getIntParameter(request, "deptId", 0));
 			bean.setDepartment(department);
 		}
 		/**
@@ -576,7 +632,7 @@ public class BranchUserController {
 		boolean ret = false;
 		if (bean != null) {
 			SysDepartment department = sysDepartmentService.findById(ParamUtil
-					.getIntParameter(request, "parent", 0));
+					.getIntParameter(request, "deptId", 0));
 			String actorId = RequestUtils.getActorId(request);
 			List<Long> nodeIds = complexUserService
 					.getUserManageBranchNodeIds(actorId);
@@ -874,8 +930,9 @@ public class BranchUserController {
 		if (roles != null && !roles.isEmpty()) {
 			for (SysRole role : roles) {
 				if (StringUtils.isNotEmpty(role.getCode())
-						&& StringUtils.startsWithIgnoreCase(role.getCode(),
-								"branch_")) {
+						&& (StringUtils.startsWithIgnoreCase(role.getCode(),
+								SysConstants.BRANCH_PREFIX) || StringUtils
+								.equals(role.getIsUseBranch(), "Y"))) {
 					if (sysDeptRoleService.find(user.getDepartment().getId(),
 							role.getId()) == null) {
 						SysDeptRole dr = new SysDeptRole();

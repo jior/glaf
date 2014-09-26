@@ -45,6 +45,24 @@ int parent=ParamUtil.getIntParameter(request, "parent", 0);
         <td class="input-box2" valign="top">代码*</td>
         <td><input name="code" type="text" size="35" class="input" datatype="string" nullable="no" maxsize="20" chname="代码"></td>
       </tr>
+	  <tr>
+        <td class="input-box2" valign="top">是否开放分级管理</td>
+        <td>
+		    <select id="isUseBranch" name="isUseBranch">
+			    <option value="Y" selected>开放</option>
+				<option value="N">不开放</option>
+		    </select>
+        </td>
+      </tr>
+	  <!-- <tr>
+        <td class="input-box2" valign="top">类型</td>
+        <td>
+		    <select name="type">
+			    <option value="SYS" selected>系统角色</option>
+				<option value="APP">应用角色</option>
+		    </select>
+		</td>
+      </tr> -->
       <tr>
         <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
             <input name="btn_save" type="submit" value="保存" class="button"></td>

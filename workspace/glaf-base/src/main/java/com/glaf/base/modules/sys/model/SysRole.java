@@ -73,6 +73,18 @@ public class SysRole implements Serializable, JSONable {
 	@Column(name = "NAME", length = 100)
 	protected String name;
 
+	/**
+	 * 类型
+	 */
+	@Column(name = "TYPE", length = 50)
+	protected String type;
+
+	/**
+	 * 是否开放分级管理
+	 */
+	@Column(name = "ISUSEBRANCH", length = 10)
+	protected String isUseBranch = "Y";
+
 	@javax.persistence.Transient
 	protected long nodeId;
 
@@ -133,6 +145,10 @@ public class SysRole implements Serializable, JSONable {
 		return this.id;
 	}
 
+	public String getIsUseBranch() {
+		return isUseBranch;
+	}
+
 	public String getName() {
 		return this.name;
 	}
@@ -143,6 +159,10 @@ public class SysRole implements Serializable, JSONable {
 
 	public int getSort() {
 		return this.sort;
+	}
+
+	public String getType() {
+		return type;
 	}
 
 	public String getUpdateBy() {
@@ -185,6 +205,10 @@ public class SysRole implements Serializable, JSONable {
 		this.id = id;
 	}
 
+	public void setIsUseBranch(String isUseBranch) {
+		this.isUseBranch = isUseBranch;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -195,6 +219,10 @@ public class SysRole implements Serializable, JSONable {
 
 	public void setSort(int sort) {
 		this.sort = sort;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public void setUpdateBy(String updateBy) {

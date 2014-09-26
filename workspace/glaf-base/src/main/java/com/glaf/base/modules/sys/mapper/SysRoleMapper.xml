@@ -7,6 +7,7 @@
 	<resultMap id="sysRoleResultMap" type="com.glaf.base.modules.sys.model.SysRole">
 		<id property="id" column="ID" jdbcType="BIGINT" />
 		<result property="name" column="NAME" jdbcType="VARCHAR" />
+		<result property="type" column="TYPE" jdbcType="VARCHAR" />
 		<result property="desc" column="ROLEDESC" jdbcType="VARCHAR" />
 		<result property="code" column="CODE" jdbcType="VARCHAR" />
 		<result property="sort" column="SORT" jdbcType="INTEGER" />
@@ -14,6 +15,7 @@
 		<result property="createBy" column="CREATEBY" jdbcType="VARCHAR" />
 		<result property="updateBy" column="UPDATEBY" jdbcType="VARCHAR" />
 		<result property="updateDate" column="UPDATEDATE" jdbcType="TIMESTAMP" />
+		<result property="isUseBranch" column="ISUSEBRANCH" jdbcType="VARCHAR" />
 	</resultMap>
 
 
@@ -23,6 +25,9 @@
 			ID
 			<if test="name != null">
 				,NAME
+			</if>
+			<if test="type != null">
+				,TYPE
 			</if>
 			<if test="desc != null">
 				,ROLEDESC
@@ -45,6 +50,9 @@
 			<if test="updateDate != null">
 				,UPDATEDATE
 			</if>
+			<if test="isUseBranch != null">
+				,ISUSEBRANCH
+			</if>
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
@@ -52,6 +60,9 @@
 
 			<if test="name != null">
 				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="type != null">
+				,#{type, jdbcType=VARCHAR}
 			</if>
 			<if test="desc != null">
 				,#{desc, jdbcType=VARCHAR}
@@ -74,6 +85,9 @@
 			<if test="updateDate != null">
 				,#{updateDate, jdbcType=TIMESTAMP}
 			</if>
+			<if test="isUseBranch != null">
+				,#{isUseBranch, jdbcType=VARCHAR}
+			</if>
 		</trim>
 	</insert>
 
@@ -84,6 +98,9 @@
 		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="name != null">
 				NAME = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				TYPE = #{type, jdbcType=VARCHAR},
 			</if>
 			<if test="desc != null">
 				ROLEDESC = #{desc, jdbcType=VARCHAR},
@@ -99,6 +116,9 @@
 			</if>
 			<if test="updateDate != null">
 				UPDATEDATE = #{updateDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="isUseBranch != null">
+				ISUSEBRANCH = #{isUseBranch, jdbcType=VARCHAR},
 			</if>
 		</trim>
 		where
@@ -227,6 +247,14 @@
 					open="(" separator="," close=")">
 					#{x_name}
 				</foreach>
+			</if>
+			
+			<if test="type != null and type != '' ">
+				and E.TYPE = #{type}
+			</if>
+			
+			<if test="isUseBranch != null and isUseBranch != '' ">
+			    and E.ISUSEBRANCH = #{isUseBranch}
 			</if>
 
 			<if test="descLike != null and descLike != '' ">

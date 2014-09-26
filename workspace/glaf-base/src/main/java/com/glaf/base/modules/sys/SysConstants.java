@@ -24,6 +24,8 @@ public class SysConstants {
 
 	public static int BLOCKED_1 = 1; // 是
 
+	public static String BRANCH_PREFIX = "branch_";
+
 	public static String BRANCH_ADMIN = "BranchAdmin";// 分级管理员角色代码
 
 	public static String DEPT_LEVEL = "DeptLevel";// 部门层级代码，取值为SYS_DICTORY表的ext11

@@ -19,6 +19,7 @@
 package com.glaf.base.modules.sys.query;
 
 import java.util.*;
+
 import com.glaf.core.query.DataQuery;
 
 public class SysRoleQuery extends DataQuery {
@@ -26,10 +27,12 @@ public class SysRoleQuery extends DataQuery {
 	protected String name;
 	protected String nameLike;
 	protected List<String> names;
+	protected String type;
 	protected String descLike;
 	protected String code;
 	protected String codeLike;
 	protected List<String> codes;
+	protected String isUseBranch;
 	protected Integer sortGreaterThanOrEqual;
 	protected Integer sortGreaterThan;
 	protected Integer sortLessThanOrEqual;
@@ -37,150 +40,6 @@ public class SysRoleQuery extends DataQuery {
 
 	public SysRoleQuery() {
 
-	}
-
-	public Integer getSortGreaterThan() {
-		return sortGreaterThan;
-	}
-
-	public void setSortGreaterThan(Integer sortGreaterThan) {
-		this.sortGreaterThan = sortGreaterThan;
-	}
-
-	public Integer getSortLessThan() {
-		return sortLessThan;
-	}
-
-	public void setSortLessThan(Integer sortLessThan) {
-		this.sortLessThan = sortLessThan;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getNameLike() {
-		if (nameLike != null && nameLike.trim().length() > 0) {
-			if (!nameLike.startsWith("%")) {
-				nameLike = "%" + nameLike;
-			}
-			if (!nameLike.endsWith("%")) {
-				nameLike = nameLike + "%";
-			}
-		}
-		return nameLike;
-	}
-
-	public List<String> getNames() {
-		return names;
-	}
-
-	public String getDescLike() {
-		if (descLike != null && descLike.trim().length() > 0) {
-			if (!descLike.startsWith("%")) {
-				descLike = "%" + descLike;
-			}
-			if (!descLike.endsWith("%")) {
-				descLike = descLike + "%";
-			}
-		}
-		return descLike;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public String getCodeLike() {
-		if (codeLike != null && codeLike.trim().length() > 0) {
-			if (!codeLike.startsWith("%")) {
-				codeLike = "%" + codeLike;
-			}
-			if (!codeLike.endsWith("%")) {
-				codeLike = codeLike + "%";
-			}
-		}
-		return codeLike;
-	}
-
-	public List<String> getCodes() {
-		return codes;
-	}
-
-	public Integer getSortGreaterThanOrEqual() {
-		return sortGreaterThanOrEqual;
-	}
-
-	public Integer getSortLessThanOrEqual() {
-		return sortLessThanOrEqual;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setNameLike(String nameLike) {
-		this.nameLike = nameLike;
-	}
-
-	public void setNames(List<String> names) {
-		this.names = names;
-	}
-
-	public void setDescLike(String descLike) {
-		this.descLike = descLike;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public void setCodeLike(String codeLike) {
-		this.codeLike = codeLike;
-	}
-
-	public void setCodes(List<String> codes) {
-		this.codes = codes;
-	}
-
-	public void setSortGreaterThanOrEqual(Integer sortGreaterThanOrEqual) {
-		this.sortGreaterThanOrEqual = sortGreaterThanOrEqual;
-	}
-
-	public void setSortLessThanOrEqual(Integer sortLessThanOrEqual) {
-		this.sortLessThanOrEqual = sortLessThanOrEqual;
-	}
-
-	public SysRoleQuery name(String name) {
-		if (name == null) {
-			throw new RuntimeException("name is null");
-		}
-		this.name = name;
-		return this;
-	}
-
-	public SysRoleQuery nameLike(String nameLike) {
-		if (nameLike == null) {
-			throw new RuntimeException("name is null");
-		}
-		this.nameLike = nameLike;
-		return this;
-	}
-
-	public SysRoleQuery names(List<String> names) {
-		if (names == null) {
-			throw new RuntimeException("names is empty ");
-		}
-		this.names = names;
-		return this;
-	}
-
-	public SysRoleQuery descLike(String descLike) {
-		if (descLike == null) {
-			throw new RuntimeException("desc is null");
-		}
-		this.descLike = descLike;
-		return this;
 	}
 
 	public SysRoleQuery code(String code) {
@@ -207,20 +66,68 @@ public class SysRoleQuery extends DataQuery {
 		return this;
 	}
 
-	public SysRoleQuery sortGreaterThanOrEqual(Integer sortGreaterThanOrEqual) {
-		if (sortGreaterThanOrEqual == null) {
-			throw new RuntimeException("sort is null");
+	public SysRoleQuery descLike(String descLike) {
+		if (descLike == null) {
+			throw new RuntimeException("desc is null");
 		}
-		this.sortGreaterThanOrEqual = sortGreaterThanOrEqual;
+		this.descLike = descLike;
 		return this;
 	}
 
-	public SysRoleQuery sortLessThanOrEqual(Integer sortLessThanOrEqual) {
-		if (sortLessThanOrEqual == null) {
-			throw new RuntimeException("sort is null");
+	public String getCode() {
+		return code;
+	}
+
+	public String getCodeLike() {
+		if (codeLike != null && codeLike.trim().length() > 0) {
+			if (!codeLike.startsWith("%")) {
+				codeLike = "%" + codeLike;
+			}
+			if (!codeLike.endsWith("%")) {
+				codeLike = codeLike + "%";
+			}
 		}
-		this.sortLessThanOrEqual = sortLessThanOrEqual;
-		return this;
+		return codeLike;
+	}
+
+	public List<String> getCodes() {
+		return codes;
+	}
+
+	public String getDescLike() {
+		if (descLike != null && descLike.trim().length() > 0) {
+			if (!descLike.startsWith("%")) {
+				descLike = "%" + descLike;
+			}
+			if (!descLike.endsWith("%")) {
+				descLike = descLike + "%";
+			}
+		}
+		return descLike;
+	}
+
+	public String getIsUseBranch() {
+		return isUseBranch;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getNameLike() {
+		if (nameLike != null && nameLike.trim().length() > 0) {
+			if (!nameLike.startsWith("%")) {
+				nameLike = "%" + nameLike;
+			}
+			if (!nameLike.endsWith("%")) {
+				nameLike = nameLike + "%";
+			}
+		}
+		return nameLike;
+	}
+
+	public List<String> getNames() {
+		return names;
 	}
 
 	public String getOrderBy() {
@@ -250,6 +157,26 @@ public class SysRoleQuery extends DataQuery {
 		return orderBy;
 	}
 
+	public Integer getSortGreaterThan() {
+		return sortGreaterThan;
+	}
+
+	public Integer getSortGreaterThanOrEqual() {
+		return sortGreaterThanOrEqual;
+	}
+
+	public Integer getSortLessThan() {
+		return sortLessThan;
+	}
+
+	public Integer getSortLessThanOrEqual() {
+		return sortLessThanOrEqual;
+	}
+
+	public String getType() {
+		return type;
+	}
+
 	@Override
 	public void initQueryColumns() {
 		super.initQueryColumns();
@@ -258,6 +185,114 @@ public class SysRoleQuery extends DataQuery {
 		addColumn("desc", "ROLEDESC");
 		addColumn("code", "CODE");
 		addColumn("sort", "SORT");
+	}
+
+	public SysRoleQuery isUseBranch(String isUseBranch) {
+		if (isUseBranch == null) {
+			throw new RuntimeException("isUseBranch is null");
+		}
+		this.isUseBranch = isUseBranch;
+		return this;
+	}
+
+	public SysRoleQuery name(String name) {
+		if (name == null) {
+			throw new RuntimeException("name is null");
+		}
+		this.name = name;
+		return this;
+	}
+
+	public SysRoleQuery nameLike(String nameLike) {
+		if (nameLike == null) {
+			throw new RuntimeException("name is null");
+		}
+		this.nameLike = nameLike;
+		return this;
+	}
+
+	public SysRoleQuery names(List<String> names) {
+		if (names == null) {
+			throw new RuntimeException("names is empty ");
+		}
+		this.names = names;
+		return this;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public void setCodeLike(String codeLike) {
+		this.codeLike = codeLike;
+	}
+
+	public void setCodes(List<String> codes) {
+		this.codes = codes;
+	}
+
+	public void setDescLike(String descLike) {
+		this.descLike = descLike;
+	}
+
+	public void setIsUseBranch(String isUseBranch) {
+		this.isUseBranch = isUseBranch;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setNameLike(String nameLike) {
+		this.nameLike = nameLike;
+	}
+
+	public void setNames(List<String> names) {
+		this.names = names;
+	}
+
+	public void setSortGreaterThan(Integer sortGreaterThan) {
+		this.sortGreaterThan = sortGreaterThan;
+	}
+
+	public void setSortGreaterThanOrEqual(Integer sortGreaterThanOrEqual) {
+		this.sortGreaterThanOrEqual = sortGreaterThanOrEqual;
+	}
+
+	public void setSortLessThan(Integer sortLessThan) {
+		this.sortLessThan = sortLessThan;
+	}
+
+	public void setSortLessThanOrEqual(Integer sortLessThanOrEqual) {
+		this.sortLessThanOrEqual = sortLessThanOrEqual;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public SysRoleQuery sortGreaterThanOrEqual(Integer sortGreaterThanOrEqual) {
+		if (sortGreaterThanOrEqual == null) {
+			throw new RuntimeException("sort is null");
+		}
+		this.sortGreaterThanOrEqual = sortGreaterThanOrEqual;
+		return this;
+	}
+
+	public SysRoleQuery sortLessThanOrEqual(Integer sortLessThanOrEqual) {
+		if (sortLessThanOrEqual == null) {
+			throw new RuntimeException("sort is null");
+		}
+		this.sortLessThanOrEqual = sortLessThanOrEqual;
+		return this;
+	}
+
+	public SysRoleQuery type(String type) {
+		if (type == null) {
+			throw new RuntimeException("type is null");
+		}
+		this.type = type;
+		return this;
 	}
 
 }

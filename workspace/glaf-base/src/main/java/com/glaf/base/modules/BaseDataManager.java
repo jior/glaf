@@ -1077,6 +1077,8 @@ public class BaseDataManager {
 				loading.set(true);
 				ClearCacheJob job = new ClearCacheJob();
 				job.clearAll();
+				baseDataMap.clear();
+				jsonDataMap.clear();
 				initBaseData();
 				HttpServletRequest request = ThreadContextHolder
 						.getHttpRequest();

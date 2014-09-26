@@ -6,10 +6,11 @@
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.utils.*"%>
 <%
-String context = request.getContextPath();
-SysUser bean=(SysUser)request.getAttribute("bean");
-List  list = (List)request.getAttribute("parent");
-int nodeId=ParamUtil.getIntParameter(request, "nodeId", 0);
+	String context = request.getContextPath();
+	SysUser bean=(SysUser)request.getAttribute("bean");
+	List  list = (List)request.getAttribute("parent");
+	int deptId=ParamUtil.getIntParameter(request, "deptId", 0);
+	int nodeId=ParamUtil.getIntParameter(request, "nodeId", 0);
 %>
 <html>
 <head>
@@ -45,6 +46,7 @@ function setValue(obj){
 <html:form id="iForm" name="iForm" action="${contextPath}/branch/user.do?method=saveModify" 
       method="post"  onsubmit="return checkForm(this);"> 
 <input type="hidden" name="id" value="<%=bean.getId()%>">
+<input type="hidden" name="deptId" value="<%=deptId%>">
 <input type="hidden" name="nodeId" value="<%=nodeId%>">
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
   <tr>

@@ -221,7 +221,7 @@
 
 		from SYS_DEPARTMENT E
 
-		<if test=" parentId != null  ">
+		<if test=" parentId != null and parentId != 0 ">
 			inner join SYS_TREE T
 			on E.NODEID = T.ID
 		</if>
@@ -229,7 +229,7 @@
 		<where>
 			1 = 1
 
-			<if test=" parentId != null  ">
+			<if test=" parentId != null and parentId != 0 ">
 				and T.PARENT = #{parentId}
 			</if>
 
@@ -355,14 +355,6 @@
 
 			<if test="nodeId != null">
 				and E.NODEID = #{nodeId}
-			</if>
-
-			<if test="nodeIdGreaterThanOrEqual != null">
-				and E.NODEID &gt;= #{nodeIdGreaterThanOrEqual}
-			</if>
-
-			<if test="nodeIdLessThanOrEqual != null">
-				and E.NODEID &lt;= #{nodeIdLessThanOrEqual}
 			</if>
 
 			<if test="nodeIds != null and nodeIds.size != 0">

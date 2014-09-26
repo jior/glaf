@@ -85,17 +85,18 @@ public class BranchDeptRoleController {
 	}
 
 	/**
-	 * 显示所有列表
+	 * 显示部门角色列表
 	 * 
 	 * @param request
 	 * @param modelMap
 	 * @return
 	 */
-	@RequestMapping(params = "method=showList")
+	@RequestMapping
 	public ModelAndView showList(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		long deptId = (long) ParamUtil.getIntParameter(request, "parent", 0);
-		SysDepartment department = sysDepartmentService.getSysDepartment(deptId);
+		long deptId = ParamUtil.getIntParameter(request, "deptId", 0);
+		SysDepartment department = sysDepartmentService
+				.getSysDepartment(deptId);
 		request.setAttribute("department", department);
 
 		String actorId = RequestUtils.getActorId(request);
@@ -105,7 +106,8 @@ public class BranchDeptRoleController {
 
 		SysDepartmentQuery query = new SysDepartmentQuery();
 		query.nodeIds(nodeIds);
-		sysRoleService.getSysRolesOfDepts(query);
+
+		request.setAttribute("list", sysRoleService.getSysRolesOfDepts(query));
 
 		String x_view = ViewProperties.getString("deptRole.showList");
 		if (StringUtils.isNotEmpty(x_view)) {

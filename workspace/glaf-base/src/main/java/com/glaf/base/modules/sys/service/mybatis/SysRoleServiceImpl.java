@@ -28,6 +28,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.base.modules.sys.SysConstants;
@@ -101,6 +102,10 @@ public class SysRoleServiceImpl implements SysRoleService {
 	@Transactional
 	public void deleteById(Long id) {
 		if (id != null) {
+			SysRole sysRole = sysRoleMapper.getSysRoleById(id);
+			if (sysRole != null && StringUtils.equals(sysRole.getType(), "SYS")) {
+				throw new RuntimeException("Can't delete system role");
+			}
 			List<SysRole> roles = sysRoleMapper.getSysRolesOfDeptRole(id);
 			if (roles != null && !roles.isEmpty()) {
 				throw new RuntimeException("Can't delete role");

@@ -31,7 +31,7 @@
 				nowrap: false,
 				striped: true,
 				collapsible:true,
-				url:'<%=request.getContextPath()%>/branch/user.do?method=json&parent=${parent}&deptId=${deptId}',
+				url:'<%=request.getContextPath()%>/branch/user.do?method=json&deptId=${deptId}',
 				remoteSort: false,
 				singleSelect:true,
 				idField:'id',
@@ -69,13 +69,13 @@
 
 	function addNew(){
 	    //location.href="<%=request.getContextPath()%>/branch/user.do?method=edit";
-	    var link="<%=request.getContextPath()%>/branch/user.do?method=prepareAdd&parent=${parent}&deptId=${deptId}";
+	    var link="<%=request.getContextPath()%>/branch/user.do?method=prepareAdd&deptId=${deptId}";
 	    art.dialog.open(link, { height: 430, width: 620, title: "添加用户", lock: true, scrollbars:"no" }, false);
 	}
 
 	function onRowClick(rowIndex, row){
             //window.open('<%=request.getContextPath()%>/branch/user.do?method=edit&id='+row.id);
-	    var link = '<%=request.getContextPath()%>/branch/user.do?method=prepareModify&parent=${parent}&deptId=${deptId}&id='+row.id;
+	    var link = '<%=request.getContextPath()%>/branch/user.do?method=prepareModify&deptId=${deptId}&id='+row.id;
 	    art.dialog.open(link, { height: 430, width: 620, title: "修改用户", lock: true, scrollbars:"no" }, false);
 	}
 
@@ -100,7 +100,7 @@
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
 		  //location.href="<%=request.getContextPath()%>/branch/user.do?method=edit&id="+selected.id;
-		  var link = "<%=request.getContextPath()%>/branch/user.do?method=prepareModify&parent=${parent}&deptId=${deptId}&id="+selected.id;
+		  var link = "<%=request.getContextPath()%>/branch/user.do?method=prepareModify&deptId=${deptId}&id="+selected.id;
 		  art.dialog.open(link, { height: 430, width: 620, title: "修改用户", lock: true, scrollbars:"no" }, false);
 	    }
 	}
@@ -115,7 +115,7 @@
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
 		  //location.href="<%=request.getContextPath()%>/branch/user.do?method=edit&id="+selected.id;
-		  var link = "<%=request.getContextPath()%>/branch/user.do?method=prepareResetPwd&parent=${parent}&deptId=${deptId}&id="+selected.id;
+		  var link = "<%=request.getContextPath()%>/branch/user.do?method=prepareResetPwd&deptId=${deptId}&id="+selected.id;
 		  art.dialog.open(link, { height: 300, width: 465, title: "重置用户密码", lock: true, scrollbars:"no" }, false);
 	    }
 	}
@@ -129,7 +129,7 @@
 	    var selected = jQuery('#mydatagrid').datagrid('getSelected');
 	    if (selected ){
 		  //location.href="<%=request.getContextPath()%>/branch/user.do?method=edit&id="+selected.id;
-		  var link = "<%=request.getContextPath()%>/branch/user.do?method=showRole&parent=${parent}&deptId=${deptId}&user_id="+selected.id;
+		  var link = "<%=request.getContextPath()%>/branch/user.do?method=showRole&deptId=${deptId}&user_id="+selected.id;
 		  art.dialog.open(link, { height: 420, width: 620, title: "用户角色设置", lock: true, scrollbars:"no" }, false);
 	    }
 	}
@@ -142,7 +142,7 @@
 		}
 		var selected = jQuery('#mydatagrid').datagrid('getSelected');
 		if (selected ){
-		    location.href="<%=request.getContextPath()%>/branch/user.do?method=prepareModify&parent=${parent}&deptId=${deptId}&id="+selected.id;
+		    location.href="<%=request.getContextPath()%>/branch/user.do?method=prepareModify&deptId=${deptId}&id="+selected.id;
 		}
 	}
 

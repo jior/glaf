@@ -12,7 +12,7 @@ Set roleId=new HashSet();
 Iterator roles = department.getRoles().iterator();
 while(roles.hasNext()){
   SysDeptRole deptRole=(SysDeptRole)roles.next();    
-  roleId.add(new Long(deptRole.getRole().getId()));  
+  roleId.add(deptRole.getRole().getId());  
 }
 %>
 <!DOCTYPE html>

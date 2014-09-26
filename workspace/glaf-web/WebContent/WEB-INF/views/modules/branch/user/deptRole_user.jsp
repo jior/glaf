@@ -99,10 +99,10 @@ for(; i<10; i++){
 %>
 </table>
 </div>
-<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+<table width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr> 
     <td align="left" height="30" valign="bottom"> &nbsp;&nbsp;&nbsp;&nbsp;
-	  <input name="btn_add" type="button" value="增加用户" class="button" onClick="addUser()">&nbsp;
+	  <!-- <input name="btn_add" type="button" value="增加用户" class="button" onClick="addUser()">&nbsp; -->
 	  <input name="btn_del" type="button" value="删除用户" class="button" onClick="delUser(this.form)" disabled>
 	</td>
   </tr>

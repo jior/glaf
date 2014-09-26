@@ -9,7 +9,7 @@
     String context = request.getContextPath();
     pageContext.setAttribute("contextPath", context);
     List  list = (List)request.getAttribute("parent");
-    int parent=ParamUtil.getIntParameter(request, "parent", 0);
+    int deptId=ParamUtil.getIntParameter(request, "deptId", 0);
 	int nodeId=ParamUtil.getIntParameter(request, "nodeId", 0);
     String theme = com.glaf.core.util.RequestUtils.getTheme(request);
     request.setAttribute("theme", theme);
@@ -44,7 +44,7 @@
 <div class="nav-title"><span class="Title">用户管理</span>&gt;&gt;增加用户</div>
 <html:form id="iForm" name="iForm" action="${contextPath}/branch/user.do?method=saveAdd"
            method="post" onsubmit="return checkForm(this);" > 
-<input type="hidden" name="parent" value="<%=parent%>">
+<input type="hidden" name="deptId" value="<%=deptId%>">
 <input type="hidden" name="nodeId" value="<%=nodeId%>">
 <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="box">
   <tr>
