@@ -36,6 +36,10 @@
 <body leftmargin="0" topmargin="0">  
 <center>
 <br>
+<div class="x_content_title"><img
+	src="<%=request.getContextPath()%>/images/window.png"
+	alt="用户权限设置">&nbsp;用户权限设置</div>
+
 <% 
     List<SysRole> roleList = (List<SysRole>)request.getAttribute("roleList");
 	List<SysUser> userList = (List<SysUser>)request.getAttribute("users");
@@ -47,7 +51,7 @@
 			<td colspan="10" class="list-title">
 			  <table width="100%" cellspacing="0" cellpadding="0">
 			   <tr>
-				<td align="center"><font color="#0066ff"><b><%=role.getName()%></b></font></td>
+				<td align="left"><font color="#0066ff"><b>角色：<%=role.getName()%></b></font></td>
 			   </tr>
 			  </table>
 			</td>
