@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.IOUtils;
-import com.glaf.core.util.SerializationUtils;
+import com.glaf.j2cache.util.SerializationUtils;
 
 /**
  * 缓存多播通道
@@ -335,7 +335,13 @@ public class CacheChannel extends ReceiverAdapter implements
 		}
 
 		public byte[] toBuffers() {
-			byte[] keyBuffers = SerializationUtils.serialize(key);
+			byte[] keyBuffers = null;
+			try {
+				keyBuffers = SerializationUtils.serialize(key);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				throw new RuntimeException(ex);
+			}
 			int r_len = region.getBytes().length;
 			int k_len = keyBuffers.length;
 
@@ -367,7 +373,7 @@ public class CacheChannel extends ReceiverAdapter implements
 					if (k_len > 0) {
 						byte[] keyBuffers = new byte[k_len];
 						System.arraycopy(buffers, idx, keyBuffers, 0, k_len);
-						Object key = SerializationUtils.unserialize(keyBuffers);
+						Object key = SerializationUtils.deserialize(keyBuffers);
 						cmd = new Command(opt, region, key);
 					}
 				}

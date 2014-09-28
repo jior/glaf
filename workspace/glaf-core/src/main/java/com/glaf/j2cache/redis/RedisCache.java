@@ -28,7 +28,7 @@ import redis.clients.jedis.Jedis;
 
 import com.glaf.j2cache.Cache;
 import com.glaf.j2cache.CacheException;
-import com.glaf.core.util.SerializationUtils;
+import com.glaf.j2cache.util.SerializationUtils;
 
 /**
  * Redis 缓存实现
@@ -128,7 +128,7 @@ public class RedisCache implements Cache {
 			jedis = RedisUtils.getResource();
 			byte[] b = jedis.get(getKeyName(key).getBytes());
 			if (b != null) {
-				object = SerializationUtils.unserialize(b);
+				object = SerializationUtils.deserialize(b);
 			}
 		} catch (Exception e) {
 			log.error("Error occured when get data from L2 cache", e);

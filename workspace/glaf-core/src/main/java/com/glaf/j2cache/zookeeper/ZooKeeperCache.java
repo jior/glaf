@@ -27,9 +27,10 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.data.Stat;
 
-import com.glaf.core.util.SerializationUtils;
+
 import com.glaf.j2cache.Cache;
 import com.glaf.j2cache.CacheException;
+import com.glaf.j2cache.util.SerializationUtils;
 
 public class ZooKeeperCache implements Cache {
 
@@ -106,7 +107,7 @@ public class ZooKeeperCache implements Cache {
 			Stat stat = getClient().checkExists().forPath(path);
 			if (stat != null) {
 				byte[] data = getClient().getData().forPath(path);
-				return SerializationUtils.unserialize(data);
+				return SerializationUtils.deserialize(data);
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();

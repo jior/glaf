@@ -178,5 +178,8 @@
 	<classpathentry kind="lib" path="lib/jsch.jar"/>
 	<classpathentry kind="lib" path="lib/HikariCP.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/kryo.jar"/>
+	<classpathentry kind="lib" path="lib/minlog.jar"/>
+	<classpathentry kind="lib" path="lib/objenesis.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -35,18 +35,22 @@ import org.slf4j.LoggerFactory;
  * 
  * @author oschina.net
  */
-class CacheManager {
+public class CacheManager {
 
 	private final static Logger log = LoggerFactory
 			.getLogger(CacheManager.class);
+
 	private final static String CONFIG_FILE = "/conf/j2cache/j2cache.properties";
 
 	private static CacheProvider l1_provider;
+
 	private static CacheProvider l2_provider;
 
 	private static CacheExpiredListener listener;
 
-	private final static Cache _GetCache(int level, String cache_name,
+	private static String serializer;
+
+	private final static Cache buildCache(int level, String cache_name,
 			boolean autoCreate) {
 		return ((level == 1) ? l1_provider : l2_provider).buildCache(
 				cache_name, autoCreate, listener);
@@ -62,7 +66,7 @@ class CacheManager {
 	@SuppressWarnings("rawtypes")
 	public final static void batchEvict(int level, String name, List keys) {
 		if (name != null && keys != null && keys.size() > 0) {
-			Cache cache = _GetCache(level, name, false);
+			Cache cache = buildCache(level, name, false);
 			if (cache != null) {
 				cache.evict(keys);
 			}
@@ -74,7 +78,7 @@ class CacheManager {
 	 */
 	public final static void clear(int level, String name)
 			throws CacheException {
-		Cache cache = _GetCache(level, name, false);
+		Cache cache = buildCache(level, name, false);
 		if (cache != null) {
 			cache.clear();
 		}
@@ -90,7 +94,7 @@ class CacheManager {
 	public final static void evict(int level, String name, Object key) {
 		// batchEvict(level, name, java.util.Arrays.asList(key));
 		if (name != null && key != null) {
-			Cache cache = _GetCache(level, name, false);
+			Cache cache = buildCache(level, name, false);
 			if (cache != null) {
 				cache.evict(key);
 			}
@@ -112,7 +116,7 @@ class CacheManager {
 			Object key) {
 		// System.out.println("GET2 => " + name+":"+key);
 		if (name != null && key != null) {
-			Cache cache = _GetCache(level, name, false);
+			Cache cache = buildCache(level, name, false);
 			if (cache != null) {
 				return (T) cache.get(key);
 			}
@@ -131,7 +135,7 @@ class CacheManager {
 	public final static Object get(int level, String name, Object key) {
 		// System.out.println("GET1 => " + name+":"+key);
 		if (name != null && key != null) {
-			Cache cache = _GetCache(level, name, false);
+			Cache cache = buildCache(level, name, false);
 			if (cache != null) {
 				return cache.get(key);
 			}
@@ -215,6 +219,8 @@ class CacheManager {
 			log.info("Using L2 CacheProvider : "
 					+ l2_provider.getClass().getName());
 
+			CacheManager.serializer = props.getProperty("cache.serialization");
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new CacheException("Unabled to initialize cache providers",
@@ -224,9 +230,13 @@ class CacheManager {
 		}
 	}
 
+	public final static String getSerializer() {
+		return serializer;
+	}
+
 	@SuppressWarnings("rawtypes")
 	public final static List keys(int level, String name) throws CacheException {
-		Cache cache = _GetCache(level, name, false);
+		Cache cache = buildCache(level, name, false);
 		return (cache != null) ? cache.keys() : null;
 	}
 
@@ -242,7 +252,7 @@ class CacheManager {
 			Object value) {
 		// System.out.println("SET => " + name+":"+key+"="+value);
 		if (name != null && key != null && value != null) {
-			Cache cache = _GetCache(level, name, true);
+			Cache cache = buildCache(level, name, true);
 			if (cache != null) {
 				cache.put(key, value);
 			}
