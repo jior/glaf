@@ -43,6 +43,8 @@ public interface SysUserMapper {
 	List<SysUser> getSysDeptRoleUsers(SysDeptRoleQuery query);
 
 	List<SysUser> getSysRoleUsers(Long roleId);
+	
+	List<UserRole> getRoleUserViews(UserRoleQuery query);
 
 	SysUser getSysUserByAccount(String account);
 

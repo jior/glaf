@@ -47,8 +47,10 @@ import com.glaf.base.modules.sys.model.SysDepartment;
 import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.modules.sys.model.SysTree;
 import com.glaf.base.modules.sys.model.SysUser;
+import com.glaf.base.modules.sys.model.UserRole;
 import com.glaf.base.modules.sys.query.SysDepartmentQuery;
 import com.glaf.base.modules.sys.query.SysUserQuery;
+import com.glaf.base.modules.sys.query.UserRoleQuery;
 import com.glaf.base.modules.sys.service.ComplexUserService;
 import com.glaf.base.modules.sys.service.DictoryService;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
@@ -288,6 +290,13 @@ public class BranchDepartmentController {
 
 		request.setAttribute("roleList", roleList);
 
+		String op_view = request.getParameter("op_view");
+		if (StringUtils.isEmpty(op_view)) {
+			op_view = "role";
+		}
+
+		request.setAttribute("op_view", op_view);
+
 		long parentId = 0;
 		if (StringUtils.isNotEmpty(request.getParameter("parentId"))) {
 			parentId = RequestUtils.getLong(request, "parentId");
@@ -308,6 +317,14 @@ public class BranchDepartmentController {
 			}
 		}
 
+		SysDepartment dept = sysDepartmentService
+				.getSysDepartmentByNodeId(parentId);
+		if (dept != null) {
+			deptIds.add(dept.getId());
+		}
+
+		logger.debug("----deptIds:" + deptIds);
+
 		SysUserQuery query = new SysUserQuery();
 		query.deptIds(deptIds);
 		List<SysUser> users = sysUserService.getSysUsersByQueryCriteria(0,
@@ -315,12 +332,19 @@ public class BranchDepartmentController {
 		if (users != null && !users.isEmpty()) {
 			List<String> actorIds = new ArrayList<String>();
 			for (SysUser user : users) {
-				actorIds.clear();
-				actorIds.add(user.getActorId());
-				List<SysRole> roles2 = sysUserService.getUserRoles(actorIds);
-				if (roles2 != null && !roles2.isEmpty()) {
-					for (SysRole r : roles2) {
-						user.getRoleCodes().add(r.getCode());
+				actorIds.add(user.getAccount());
+			}
+			UserRoleQuery userRoleQuery = new UserRoleQuery();
+			userRoleQuery.setActorIds(actorIds);
+			List<UserRole> userRoles = sysUserService
+					.getRoleUserViews(userRoleQuery);
+			if (userRoles != null && !userRoles.isEmpty()) {
+				for (SysUser user : users) {
+					for (UserRole userRole : userRoles) {
+						if (StringUtils.equals(user.getAccount(),
+								userRole.getActorId())) {
+							user.getRoleCodes().add(userRole.getRoleCode());
+						}
 					}
 				}
 			}

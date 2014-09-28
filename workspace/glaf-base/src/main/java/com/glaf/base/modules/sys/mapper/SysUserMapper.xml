@@ -569,6 +569,73 @@
 	</select>
 
 
+	<select id="getRoleUserViews" parameterType="com.glaf.base.modules.sys.query.UserRoleQuery"
+		resultType="com.glaf.base.modules.sys.model.UserRole">
+
+		select u.ACCOUNT as actorId, u.NAME as actorName, r.ID as roleId,
+		r.CODE as roleCode, r.NAME as roleName
+		from SYS_USER u
+		inner join
+		SYS_USER_ROLE ur
+		on u.ID = ur.USERID
+		inner join SYS_DEPT_ROLE dr
+		on
+		ur.ROLEID = dr.ID
+		inner join SYS_ROLE r
+		on dr.SYSROLEID = r.ID
+		where 1=1
+
+		<if test="actorId != null and actorId != '' ">
+			and u.ACCOUNT = #{actorId}
+		</if>
+
+		<if test="actorIds != null and actorIds.size != 0">
+			and u.ACCOUNT IN
+			<foreach item="x_account" index="index" collection="actorIds"
+				open="(" separator="," close=")">
+				#{x_account}
+			</foreach>
+		</if>
+
+		<if test="deptId != null">
+			and u.DEPTID = #{deptId}
+		</if>
+
+		<if test="deptIds != null and deptIds.size != 0">
+			and u.DEPTID IN
+			<foreach item="x_deptId" index="index" collection="deptIds"
+				open="(" separator="," close=")">
+				#{x_deptId}
+			</foreach>
+		</if>
+
+		<if test="roleId != null">
+			and r.ID = #{roleId}
+		</if>
+
+		<if test="roleIds != null and roleIds.size != 0">
+			and r.ID IN
+			<foreach item="x_roleId" index="index" collection="roleIds"
+				open="(" separator="," close=")">
+				#{x_roleId}
+			</foreach>
+		</if>
+
+		<if test="roleCode != null">
+			and r.CODE = #{roleCode}
+		</if>
+
+		<if test="roleCodes != null and roleCodes.size != 0">
+			and r.CODE IN
+			<foreach item="x_roleCode" index="index" collection="roleCodes"
+				open="(" separator="," close=")">
+				#{x_roleCode}
+			</foreach>
+		</if>
+
+	</select>
+
+
 	<select id="getSysUsers" parameterType="com.glaf.base.modules.sys.query.SysUserQuery"
 		resultMap="sysUserResultMap">
 		select E.*

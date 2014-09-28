@@ -51,9 +51,11 @@ import com.glaf.base.modules.sys.model.SysFunction;
 import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.model.SysUserRole;
+import com.glaf.base.modules.sys.model.UserRole;
 import com.glaf.base.modules.sys.query.SysDeptRoleQuery;
 import com.glaf.base.modules.sys.query.SysUserQuery;
 import com.glaf.base.modules.sys.query.SysUserRoleQuery;
+import com.glaf.base.modules.sys.query.UserRoleQuery;
 import com.glaf.base.modules.sys.service.SysDepartmentService;
 import com.glaf.base.modules.sys.service.SysUserService;
 import com.glaf.base.modules.sys.util.SysUserJsonFactory;
@@ -391,6 +393,10 @@ public class SysUserServiceImpl implements SysUserService {
 				query, rowBounds);
 		this.initUserDepartments(list);
 		return list;
+	}
+	
+	public List<UserRole> getRoleUserViews(UserRoleQuery query){
+		return sysUserMapper.getRoleUserViews(query);
 	}
 
 	public List<SysUser> getSuperiors(String account) {

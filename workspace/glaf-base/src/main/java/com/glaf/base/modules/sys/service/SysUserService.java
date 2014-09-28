@@ -27,7 +27,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.glaf.base.modules.sys.model.SysDeptRole;
 import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.modules.sys.model.SysUser;
+import com.glaf.base.modules.sys.model.UserRole;
 import com.glaf.base.modules.sys.query.SysUserQuery;
+import com.glaf.base.modules.sys.query.UserRoleQuery;
 import com.glaf.core.util.PageResult;
 
 @Transactional(readOnly = true)
@@ -147,6 +149,9 @@ public interface SysUserService {
 	PageResult getDeptUserList(String searchWord, int pageNo, int pageSize);
 
 	List<SysUser> getDeptUsers(String searchWord, int pageNo, int pageSize);
+	
+	
+	List<UserRole> getRoleUserViews(UserRoleQuery query);
 
 	/**
 	 * 获取某个用户的上级
