@@ -70,7 +70,7 @@
 		</jar>
 
 		<jar jarfile="glaf-min-web.zip">
-			<fileset dir="WebContent" includes="**/*.*" excludes="**/*.jar,**/*.class,**/archives/*.*,**/*.ttc,**/*.lib,**/*.dll,**/*.so, **/data/index/**/*.*,**/examples/**/*.*, **/locks" casesensitive="yes" />
+			<fileset dir="WebContent" includes="**/*.*" excludes="**/*.jar,**/*.class,**/archives/*.*,**/*.ttc,**/*.lib,**/*.dll,**/*.so, **/data/index/**/*.*,**/examples/**/*.*,**/logs/**/*.*, **/locks" casesensitive="yes" />
 		</jar>
 	</target>
 
