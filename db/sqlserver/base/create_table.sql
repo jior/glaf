@@ -72,6 +72,29 @@ CREATE TABLE SYS_LOG(
         PRIMARY KEY (id)
 );
 
+ CREATE TABLE SYS_USER_ONLINE (
+        ID_ bigint NOT NULL,
+        ACTORID_ nvarchar(50),
+        CHECKDATE_ datetime,
+        CHECKDATEMS_ bigint,
+        LOGINDATE_ datetime,
+        LOGINIP_ nvarchar(100),
+        NAME_ nvarchar(50),
+        SESSIONID_ nvarchar(200),
+        PRIMARY KEY (ID_)
+ );
+
+CREATE TABLE SYS_USER_ONLINE_LOG (
+        ID_ bigint NOT NULL,
+        ACTORID_ nvarchar(50),
+        LOGINDATE_ datetime,
+        LOGINIP_ nvarchar(100),
+        LOGOUTDATE_ bigint,
+        NAME_ nvarchar(50),
+        SESSIONID_ nvarchar(200),
+        PRIMARY KEY (ID_)
+ );
+
 CREATE TABLE SYS_PERMISSION (
         roleid bigint NOT NULL,
         funcid bigint NOT NULL,
