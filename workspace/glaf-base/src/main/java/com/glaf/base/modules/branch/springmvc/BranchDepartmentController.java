@@ -292,7 +292,7 @@ public class BranchDepartmentController {
 
 		String op_view = request.getParameter("op_view");
 		if (StringUtils.isEmpty(op_view)) {
-			op_view = "role";
+			op_view = "user";
 		}
 
 		request.setAttribute("op_view", op_view);

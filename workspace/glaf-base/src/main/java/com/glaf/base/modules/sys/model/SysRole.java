@@ -83,7 +83,7 @@ public class SysRole implements Serializable, JSONable {
 	 * 是否开放分级管理
 	 */
 	@Column(name = "ISUSEBRANCH", length = 10)
-	protected String isUseBranch = "Y";
+	protected String isUseBranch;
 
 	@javax.persistence.Transient
 	protected long nodeId;
