@@ -1,25 +1,27 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="html"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.glaf.base.modules.*"%>
 <%@ page import="com.glaf.base.modules.sys.*"%>
 <%@ page import="com.glaf.base.modules.sys.model.*"%>
 <%@ page import="com.glaf.base.utils.*"%>
+<%@ page import="org.apache.commons.lang3.StringUtils"%>
 <%
-String context = request.getContextPath();
-List list = (List)request.getAttribute("list");
-SysUser user = (SysUser)request.getAttribute("user");
-Set roleId=new HashSet();
-Iterator roles = user.getRoles().iterator();
-while(roles.hasNext()){  
-  SysDeptRole role=(SysDeptRole)roles.next();
-  roleId.add(role.getId());
-}
+	String context = request.getContextPath();
+	List list = (List)request.getAttribute("list");
+	SysUser user = (SysUser)request.getAttribute("user");
+	Set roleId=new HashSet();
+	Iterator roles = user.getRoles().iterator();
+	while(roles.hasNext()){  
+	  SysDeptRole role=(SysDeptRole)roles.next();
+	  roleId.add(role.getId());
+	}
 %>
 
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title></title>
+<title>用户权限设置</title>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/themes/<%=com.glaf.core.util.RequestUtils.getTheme(request)%>/site.css">
 <script language="javascript" src='<%=context%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=context%>/scripts/main.js'></script>
@@ -60,6 +62,9 @@ if(list!=null){
   Iterator iter=list.iterator();   
   while(iter.hasNext()){
     SysDeptRole bean=(SysDeptRole)iter.next();	
+	SysRole role = bean.getRole();
+	if (StringUtils.isNotEmpty(role.getCode())
+		&& ( StringUtils.startsWithIgnoreCase(role.getCode(), SysConstants.BRANCH_PREFIX) || StringUtils.equals(role.getIsUseBranch(), "Y"))) {			
 %>
   <tr <%=i%2==0?"":"class='list-back'"%>>
     <td class="td-cb"><input type="checkbox" name="id" value="<%=bean.getId()%>" <%=roleId.contains(new Long(bean.getId()))?"checked":""%>>
@@ -70,6 +75,7 @@ if(list!=null){
   </tr>
   <%
     i++;
+	}
   }
 }
 for(; i<10; i++){
