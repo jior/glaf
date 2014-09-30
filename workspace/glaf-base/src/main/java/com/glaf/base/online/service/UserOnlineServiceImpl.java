@@ -84,11 +84,13 @@ public class UserOnlineServiceImpl implements UserOnlineService {
 		List<UserOnline> list = this.list(query);
 		if (list != null && !list.isEmpty()) {
 			for (UserOnline bean : list) {
-				long ts = System.currentTimeMillis() - bean.getCheckDateMs();
-				if (ts / 1000 > timeoutSeconds) {// 如果超时，从在线用户列表中删除
-					userOnlineMapper.deleteUserOnlineById(bean.getId());
-					userOnlineLogService.logout(bean.getActorId(),
-							bean.getSessionId());
+				if (bean.getCheckDateMs() != null) {
+					long ts = System.currentTimeMillis() - bean.getCheckDateMs();
+					if (ts / 1000 > timeoutSeconds) {// 如果超时，从在线用户列表中删除
+						userOnlineMapper.deleteUserOnlineById(bean.getId());
+						userOnlineLogService.logout(bean.getActorId(),
+								bean.getSessionId());
+					}
 				}
 			}
 		}
