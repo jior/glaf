@@ -19,9 +19,11 @@
 package com.glaf.jbpm.action;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.apache.commons.lang3.StringUtils;
@@ -212,14 +214,18 @@ public class GeneralTaskInstanceAction implements ActionHandler {
 				taskInstance.setSignalling(task.isSignalling());
 			} else if (actorIds.size() > 1) {
 				if (!isPooled) {
+					Set<String> userIds = new HashSet<String>();
 					Iterator<String> iterator = actorIds.iterator();
 					while (iterator.hasNext()) {
 						String actorId = iterator.next();
-						TaskInstance taskInstance = tmi.createTaskInstance(
-								task, token);
-						taskInstance.setActorId(actorId);
-						taskInstance.setCreate(new Date());
-						taskInstance.setSignalling(task.isSignalling());
+						if (!userIds.contains(actorId)) {
+							TaskInstance taskInstance = tmi.createTaskInstance(
+									task, token);
+							taskInstance.setActorId(actorId);
+							taskInstance.setCreate(new Date());
+							taskInstance.setSignalling(task.isSignalling());
+							userIds.add(actorId);
+						}
 					}
 				} else {
 					int i = 0;
