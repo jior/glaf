@@ -20,6 +20,7 @@ package com.glaf.jbpm.action;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -393,15 +394,19 @@ public class SqlMapTaskInstanceAction implements ActionHandler {
 					taskInstance.setPooledActors(pooledIds);
 				}
 			} else {
+				Set<String> userIds = new HashSet<String>();
 				Iterator<String> iterator = actorIds.iterator();
 				while (iterator.hasNext()) {
 					String actorId = iterator.next();
-					TaskInstance taskInstance = tmi.createTaskInstance(task,
-							token);
-					taskInstance.setActorId(actorId);
-					taskInstance.setCreate(new Date());
-					if (task != null) {
-						taskInstance.setSignalling(task.isSignalling());
+					if (!userIds.contains(actorId)) {
+						TaskInstance taskInstance = tmi.createTaskInstance(
+								task, token);
+						taskInstance.setActorId(actorId);
+						taskInstance.setCreate(new Date());
+						if (task != null) {
+							taskInstance.setSignalling(task.isSignalling());
+						}
+						userIds.add(actorId);
 					}
 				}
 			}
