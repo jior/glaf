@@ -127,7 +127,8 @@ public class DynamicTaskInstances implements ActionHandler {
 				StringTokenizer st2 = new StringTokenizer(actorIdxy, ",");
 				while (st2.hasMoreTokens()) {
 					String actorId = st2.nextToken();
-					if (StringUtils.isNotEmpty(actorId)) {
+					if (StringUtils.isNotEmpty(actorId)
+							&& !actorIds.contains(actorId)) {
 						TaskInstance taskInstance = tmi.createTaskInstance(
 								task, token);
 						actorIds.add(actorId);
