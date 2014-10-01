@@ -153,7 +153,7 @@ public class KryoPoolSerializer implements Serializer {
 
 	@Override
 	public String name() {
-		return "kryo_pool_ser";
+		return "kryo_pool";
 	}
 
 	@Override
