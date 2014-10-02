@@ -123,13 +123,26 @@ public interface EntityDAO {
 	 * @return
 	 */
 	IdBlock nextDbidBlock();
-	
+
 	/**
 	 * 获取下一条记录编号
-	 * @param name 名称
+	 * 
+	 * @param name
+	 *            名称
 	 * @return
 	 */
 	IdBlock nextDbidBlock(String name);
+
+	/**
+	 * 获取下一条记录编号
+	 * 
+	 * @param tablename
+	 *            表名称
+	 * @param idColumn
+	 *            主键列名
+	 * @return
+	 */
+	long getMaxId(String tablename, String idColumn);
 
 	/**
 	 * 插入一条记录

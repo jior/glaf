@@ -14,6 +14,7 @@
 package com.glaf.core.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
@@ -23,6 +24,8 @@ import com.glaf.core.id.Dbid;
 public interface IdMapper {
 
 	Dbid getNextDbId(String name);
+	
+	long getMaxId(Map<String, Object> params);
 
 	void inertNextDbId(Dbid dbid);
 

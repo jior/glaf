@@ -21,6 +21,7 @@ package com.glaf.core.entity.mybatis;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -319,6 +320,19 @@ public class MyBatisEntityDAOImpl extends SqlSessionDaoSupport implements
 		dbid.setVersion(dbid.getVersion() + 1);
 		getSqlSession().update("updateNextDbId", dbid);
 		return new IdBlock(oldValue, newValue - 1);
+	}
+
+	/**
+	 * 获取下一条记录编号
+	 * 
+	 * @return
+	 */
+	public synchronized long getMaxId(String tablename, String idColumn) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("tablename", tablename);
+		params.put("idColumn", idColumn);
+		long oldValue = getSqlSession().selectOne("getMaxId", params);
+		return oldValue;
 	}
 
 	public void setConnection(Connection con) {

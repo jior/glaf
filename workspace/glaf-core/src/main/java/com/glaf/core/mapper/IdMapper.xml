@@ -12,7 +12,8 @@
 
 	<insert id="inertNextDbId" parameterType="com.glaf.core.id.Dbid">
 
-		insert into SYS_DBID(NAME_, TITLE_, VALUE_, VERSION_) values (
+		insert into
+		SYS_DBID(NAME_, TITLE_, VALUE_, VERSION_) values (
 		#{name,jdbcType=VARCHAR},
 		#{title, jdbcType=VARCHAR},
 		#{value,jdbcType=VARCHAR},
@@ -31,6 +32,14 @@
 		#{name, jdbcType=VARCHAR}
 
 	</update>
+
+
+	<select id="getMaxId" parameterType="map" resultType="long">
+
+		select max(${idColumn}) from ${tablename}
+
+	</select>
+
 
 	<select id="getNextDbId" parameterType="string" resultMap="dbidResultMap">
 		select * from SYS_DBID

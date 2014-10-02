@@ -72,6 +72,12 @@ public class MyBatisDbIdGenerator implements IdGenerator {
 		return idBlock.getNextId();
 	}
 
+	@Transactional
+	public synchronized Long nextId(String tablename, String idColumn) {
+		long maxId = entityDAO.getMaxId(tablename, idColumn);
+		return maxId + 1;
+	}
+
 	public synchronized void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}

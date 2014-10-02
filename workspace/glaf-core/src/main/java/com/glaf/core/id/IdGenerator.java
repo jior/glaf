@@ -35,4 +35,7 @@ public interface IdGenerator {
 	@Transactional
 	Long nextId(String name);
 
+	@Transactional
+	Long nextId(String tablename, String idColumn);
+
 }

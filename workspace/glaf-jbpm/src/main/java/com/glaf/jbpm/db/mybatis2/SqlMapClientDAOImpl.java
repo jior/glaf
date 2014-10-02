@@ -125,6 +125,10 @@ public class SqlMapClientDAOImpl implements EntityDAO {
 				parameterObject);
 	}
 
+	public long getMaxId(String tablename, String idColumn) {
+		return -1;
+	}
+
 	public Paging getPage(int pageNo, int pageSize, SqlExecutor countExecutor,
 			SqlExecutor queryExecutor) {
 
@@ -252,6 +256,14 @@ public class SqlMapClientDAOImpl implements EntityDAO {
 		}
 	}
 
+	public IdBlock nextDbidBlock() {
+		return null;
+	}
+
+	public IdBlock nextDbidBlock(String name) {
+		return null;
+	}
+
 	public void setConnection(Connection connection) {
 		if (connection != null) {
 			try {
@@ -306,14 +318,6 @@ public class SqlMapClientDAOImpl implements EntityDAO {
 				getSqlMapClientTemplate().update(statementId, object);
 			}
 		}
-	}
-
-	public IdBlock nextDbidBlock() {
-		return null;
-	}
-
-	public IdBlock nextDbidBlock(String name) {
-		return null;
 	}
 
 }
