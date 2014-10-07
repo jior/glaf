@@ -28,8 +28,9 @@
 		</property>
 	</bean>
 
-	<!-- <bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager"> 
-		<property name="cacheManager" ref="ehCacheManager" /> </bean> -->
+	<bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManager" ref="ehCacheManager" />
+	</bean>
 
 	<!--<bean id="shiroCacheManager" class="com.glaf.shiro.cache.guava.GuavaCacheManager"> 
 		<property name="cacheSize" value="100000" /> <property name="expireMinutes" 
@@ -38,10 +39,9 @@
 	<!-- <bean id="shiroCacheManager" class="com.glaf.shiro.cache.zookeeper.ZooKeeperCacheManager"> 
 		<property name="servers" value="127.0.0.1:2181" /> </bean> -->
 
-	<bean id="shiroCacheManager" class="com.glaf.shiro.cache.redis.RedisCacheManager">
-		<property name="host" value="127.0.0.1" />
-		<property name="port" value="6379" />
-	</bean>
+	<!-- <bean id="shiroCacheManager" class="com.glaf.shiro.cache.redis.RedisCacheManager"> 
+		<property name="host" value="127.0.0.1" /> <property name="port" value="6379" 
+		/> </bean> -->
 
 	<bean id="myShiroRealm" class="com.glaf.shiro.SystemRealm">
 		<property name="cacheManager" ref="shiroCacheManager" />
