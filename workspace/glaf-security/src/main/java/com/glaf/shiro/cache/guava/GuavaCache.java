@@ -19,8 +19,12 @@
 package com.glaf.shiro.cache.guava;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.shiro.cache.CacheException;
@@ -29,6 +33,8 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
 public class GuavaCache<K, V> implements org.apache.shiro.cache.Cache<K, V> {
+
+	protected static final ConcurrentMap<Object, Integer> cacheMap = new ConcurrentHashMap<Object, Integer>();
 
 	protected Cache<Object, Object> cache;
 
@@ -46,11 +52,13 @@ public class GuavaCache<K, V> implements org.apache.shiro.cache.Cache<K, V> {
 	public void clear() throws CacheException {
 		getCache().invalidateAll();
 		getCache().cleanUp();
+		cacheMap.clear();
 	}
 
 	public void destroy() throws CacheException {
 		getCache().invalidateAll();
 		getCache().cleanUp();
+		cacheMap.clear();
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -58,12 +66,14 @@ public class GuavaCache<K, V> implements org.apache.shiro.cache.Cache<K, V> {
 		if (keys != null && !keys.isEmpty()) {
 			for (Object key : keys) {
 				getCache().invalidate(key);
+				cacheMap.remove(key);
 			}
 		}
 	}
 
 	public void evict(Object key) throws CacheException {
 		getCache().invalidate(key);
+		cacheMap.remove(key);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -88,17 +98,27 @@ public class GuavaCache<K, V> implements org.apache.shiro.cache.Cache<K, V> {
 		return expireMinutes;
 	}
 
+	@SuppressWarnings("unchecked")
 	public Set<K> keys() {
-		return null;
+		Set<K> keys = new HashSet<K>();
+		Set<Object> set = cacheMap.keySet();
+		Iterator<Object> iterator = set.iterator();
+		while (iterator.hasNext()) {
+			K key = (K) iterator.next();
+			keys.add(key);
+		}
+		return keys;
 	}
 
 	public V put(K key, V value) throws CacheException {
 		getCache().put(key, value);
+		cacheMap.put(key, 1);
 		return null;
 	}
 
 	public V remove(K key) throws CacheException {
 		getCache().invalidate(key);
+		cacheMap.remove(key);
 		return null;
 	}
 
@@ -116,10 +136,20 @@ public class GuavaCache<K, V> implements org.apache.shiro.cache.Cache<K, V> {
 
 	public void update(Object key, Object value) throws CacheException {
 		getCache().put(key, value);
+		cacheMap.remove(key);
 	}
 
+	@SuppressWarnings("unchecked")
 	public Collection<V> values() {
-		return null;
+		Collection<V> values = new HashSet<V>();
+		Set<Object> set = cacheMap.keySet();
+		Iterator<Object> iterator = set.iterator();
+		while (iterator.hasNext()) {
+			K key = (K) iterator.next();
+			V value = (V) getCache().getIfPresent(key);
+			values.add(value);
+		}
+		return values;
 	}
 
 }
