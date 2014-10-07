@@ -25,7 +25,7 @@ import java.io.IOException;
 import org.nustaq.serialization.FSTObjectInput;
 import org.nustaq.serialization.FSTObjectOutput;
 
-import net.sf.ehcache.CacheException;
+ 
 
 public class FSTSerializer implements Serializer {
 
@@ -62,8 +62,8 @@ public class FSTSerializer implements Serializer {
 		try {
 			in = new FSTObjectInput(new ByteArrayInputStream(bytes));
 			return in.readObject();
-		} catch (ClassNotFoundException e) {
-			throw new CacheException(e);
+		} catch (ClassNotFoundException ex) {
+			throw new RuntimeException(ex);
 		} finally {
 			if (in != null) {
 				try {

@@ -25,7 +25,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
-import com.glaf.j2cache.CacheException;
+ 
 
 public class KryoPoolSerializer implements Serializer {
 
@@ -138,13 +138,13 @@ public class KryoPoolSerializer implements Serializer {
 	public Object deserialize(byte[] bytes) throws IOException {
 		KryoHolder kryoHolder = null;
 		if (bytes == null)
-			throw new CacheException("bytes can not be null");
+			throw new RuntimeException("bytes can not be null");
 		try {
 			kryoHolder = KryoPoolImpl.getInstance().get();
 			kryoHolder.input.setBuffer(bytes, 0, bytes.length);
 			return kryoHolder.kryo.readClassAndObject(kryoHolder.input);
-		} catch (CacheException e) {
-			throw new CacheException("Deserialize bytes exception");
+		} catch (Exception ex) {
+			throw new RuntimeException("Deserialize bytes exception");
 		} finally {
 			KryoPoolImpl.getInstance().offer(kryoHolder);
 			bytes = null;
@@ -160,14 +160,14 @@ public class KryoPoolSerializer implements Serializer {
 	public byte[] serialize(Object obj) throws IOException {
 		KryoHolder kryoHolder = null;
 		if (obj == null)
-			throw new CacheException("obj can not be null");
+			throw new RuntimeException("object can not be null");
 		try {
 			kryoHolder = KryoPoolImpl.getInstance().get();
 			kryoHolder.output.clear();
 			kryoHolder.kryo.writeClassAndObject(kryoHolder.output, obj);
 			return kryoHolder.output.toBytes();
-		} catch (CacheException e) {
-			throw new CacheException("Serialize obj exception");
+		} catch (Exception ex) {
+			throw new RuntimeException("Serialize object exception");
 		} finally {
 			KryoPoolImpl.getInstance().offer(kryoHolder);
 			obj = null;

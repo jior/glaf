@@ -23,8 +23,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-import com.glaf.j2cache.CacheException;
+ 
 
 public class JavaSerializer implements Serializer {
 
@@ -62,7 +61,7 @@ public class JavaSerializer implements Serializer {
 			ois = new ObjectInputStream(bais);
 			return ois.readObject();
 		} catch (ClassNotFoundException ex) {
-			throw new CacheException(ex);
+			throw new RuntimeException(ex);
 		} finally {
 			if (ois != null) {
 				try {

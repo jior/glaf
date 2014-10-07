@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.glaf.shiro.zookeeper;
+package com.glaf.shiro.cache.zookeeper;
 
 import java.util.Collection;
 import java.util.List;
