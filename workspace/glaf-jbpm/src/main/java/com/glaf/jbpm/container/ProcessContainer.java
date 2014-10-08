@@ -93,6 +93,7 @@ public class ProcessContainer {
 		jbpmTaskManager = new JbpmTaskManager();
 		jbpmProcessManager = new JbpmProcessManager();
 		jbpmExtensionManager = new JbpmExtensionManager();
+		jbpmConfiguration = getJbpmConfiguration();
 	}
 
 	/**
