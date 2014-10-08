@@ -20,7 +20,7 @@
 		 //alert(operation);
 		 jQuery.ajax({
 				   type: "POST",
-				   url: '<%=request.getContextPath()%>/branch/department.do?method=setUserRole&actorId='+actorId+'&roleId='+roleId+'&operation='+operation,
+				   url: '<%=request.getContextPath()%>/branch/user.do?method=saveUserRole&actorId='+actorId+'&roleId='+roleId+'&operation='+operation,
 				   dataType:  'json',
 				   error: function(data){
 					   alert('服务器处理错误！');
@@ -34,10 +34,10 @@
 	function switchView(){
 		<c:choose>
 		   <c:when test="${op_view eq 'role'}">
-		       location.href="<%=request.getContextPath()%>/branch/department.do?method=permission&op_view=user&parentId=${parentId}";
+		       location.href="<%=request.getContextPath()%>/branch/user.do?method=permission&op_view=user&parentId=${parentId}";
 		   </c:when>
 		   <c:otherwise>
-			   location.href="<%=request.getContextPath()%>/branch/department.do?method=permission&op_view=role&parentId=${parentId}";
+			   location.href="<%=request.getContextPath()%>/branch/user.do?method=permission&op_view=role&parentId=${parentId}";
 		   </c:otherwise>
 		</c:choose>
 	}

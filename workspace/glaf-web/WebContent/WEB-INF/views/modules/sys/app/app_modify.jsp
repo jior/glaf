@@ -25,24 +25,30 @@
 <script type="text/javascript" src='<%=context%>/scripts/main.js'></script>
 <script type="text/javascript" src='<%=context%>/scripts/verify.js'></script> 
 <script language="javascript">
-function checkForm(form){
-  if(verifyAll(form)){
-     if(form.parent.value=='<%=bean.getId()%>'){
-	   alert("当前模块不能选择为所属模块");
-	 }else{
-	   return true;
-	 }
-  }
-   return false;
-}
-function setValue(obj){
-  obj.value=obj[obj.selectedIndex].value;
-}
+	function checkForm(form){
+	  if(verifyAll(form)){
+		 if(form.parent.value=='<%=bean.getId()%>'){
+		   alert("当前模块不能选择为所属模块");
+		 }else{
+		   return true;
+		 }
+	  }
+	   return false;
+	}
+
+	function setValue(obj){
+	  obj.value=obj[obj.selectedIndex].value;
+	}
+
+	function showPerm(){
+		location.href="${contextPath}/sys/application.do?method=permission&id=<%=bean.getId()%>"
+	}
 </script>
 </head>
 
 <body style="margin:10px;">
-<html:form action="${contextPath}/sys/application.do?method=saveModify" method="post"  onsubmit="return checkForm(this);"> 
+<html:form action="${contextPath}/sys/application.do?method=saveModify" method="post"  
+           onsubmit="return checkForm(this);"> 
 <div class="easyui-panel" title="修改模块" style="width:550px;padding:10px">
 <input type="hidden" name="id" value="<%=bean.getId()%>">
 <table width="95%" align="center" border="0" cellspacing="0" cellpadding="5">
@@ -114,7 +120,10 @@ function setValue(obj){
       </tr>
       <tr>
         <td colspan="2" align="center" valign="bottom" height="30">&nbsp;
-              <input name="btn_save" type="submit" value="保存" class="button"></td>
+              <input name="btn_save" type="submit" value="保存" class="button">
+			  <input name="btn_perm" type="button" value="权限" class="button" 
+			         onclick="javascript:showPerm();">
+		</td>
       </tr>
     </table>
 </div>

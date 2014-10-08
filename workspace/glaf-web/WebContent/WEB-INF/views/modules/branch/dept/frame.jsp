@@ -22,7 +22,7 @@ int parent=ParamUtil.getIntAttribute(request, "parent", 0);
         
         <frame style="border-top: #003366 1px solid; border-left: #99ccff 2px groove;" border="0"
             frameborder="no" scrolling="auto" id="mainFrame" name="mainFrame" bordercolor="#DEE3E7"
-            src="<%=request.getContextPath()%>/branch/department.do?method=permission">
+            src="<%=request.getContextPath()%>/branch/user.do?method=permission">
     </frameset>
 <noframes>
 </noframes>

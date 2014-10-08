@@ -45,7 +45,7 @@ function checkForm(form){
 
 <body>
 <div class="nav-title"><span class="Title">用户管理</span>&gt;&gt;设置用户 <b><%=user.getName()%></b> 的权限</div>
-<html:form action="${contextPath}/branch/user.do?method=setRole" method="post" target="_self" onsubmit="return checkForm(this);"> 
+<html:form action="${contextPath}/branch/user.do?method=saveRole" method="post" target="_self" onsubmit="return checkForm(this);"> 
 <input type="hidden" name="user_id" value="<%=user.getId()%>">
 <table width="95%" border="0" align="center" cellspacing="1" cellpadding="0" class="list-box">
   <tr class="list-title"> 

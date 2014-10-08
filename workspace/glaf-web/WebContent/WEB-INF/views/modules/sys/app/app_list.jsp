@@ -34,16 +34,20 @@ function checkOperation(form){
 	if(num==1){
 	  document.all.btn_modify.disabled=false;
 	  document.all.btn_function.disabled=false;
+	  document.all.btn_perm.disabled=false;
 	}else{
 	  document.all.btn_modify.disabled=true;
 	  document.all.btn_function.disabled=true;
+	  document.all.btn_perm.disabled=true;
 	}
-  }else{
+  } else {
     document.all.btn_del.disabled=true;
 	document.all.btn_modify.disabled=true;
 	document.all.btn_function.disabled=true;
+	document.all.btn_perm.disabled=true;
   }
 }
+
 function add(){
   var url="application.do?method=prepareAdd&parent="+<%=parent%>;
   var link = "<%=request.getContextPath()%>/sys/"+url;
@@ -53,6 +57,7 @@ function add(){
   //openWindow(url, width, height, scroll);
   art.dialog.open(link, { height: height, width: width, title: "添加模块", lock: false, scrollbars:"no" }, false);
 }
+
 function modify(form){
   var id =0;
   for (var i=0;i<form.id.length;i++) {
@@ -69,6 +74,7 @@ function modify(form){
   //openWindow(url, width, height, scroll);
   art.dialog.open(link, { height: height, width: width, title: "修改模块", lock: false, scrollbars:"no" }, false);
 }
+
 function func(form){
   var id =0;
   for (var i=0;i<form.id.length;i++) {
@@ -85,6 +91,23 @@ function func(form){
   //openWindow(url, width, height, scroll);
   art.dialog.open(link, { height: height, width: width, title: "模块功能", lock: false, scrollbars:"no" }, false);
 }
+
+function perm(form){
+  var id =0;
+  for (var i=0;i<form.id.length;i++) {
+    var e = form.id[i];
+    if (e.checked){
+	  id=e.value;
+	}     
+  }
+  var link = "${contextPath}/sys/application.do?method=permission&id="+id;
+  var width=680;
+  var height=430;
+  var scroll="yes";
+  //openWindow(url, width, height, scroll);
+  art.dialog.open(link, { height: height, width: width, title: "模块权限", lock: false, scrollbars:"no" }, false);
+}
+
 function del(){
   var form = document.all.GenericForm;
   if(confirmDelete(form)){
@@ -93,6 +116,7 @@ function del(){
 	form.submit();
   }
 }
+
 function sort(id, operate){  
   //SysApplicationAjaxService.sort(<%=parent%>, id, operate, {callback:function (){reloadPage();}});
       	jQuery.ajax({
@@ -175,7 +199,9 @@ for(; i<pageSize; i++){
     <td width="50%"> <input name="btn_add" type="button" value="增加" class="button" onClick="javascript:add();"> 
       <input name="btn_del" type="button" value="删除" class="button" onClick="javascript:del();" disabled>
       <input name="btn_modify" type="button" value="修改" class="button" onClick="javascript:modify(this.form);" disabled>
-      <input name="btn_function" type="button" value="功能设置" class="button" onClick="javascript:func(this.form);" disabled></td>
+      <input name="btn_function" type="button" value="功能设置" class="button" onClick="javascript:func(this.form);" disabled>
+	  <input name="btn_perm" type="button" value="权限" class="button" onClick="javascript:perm(this.form);" disabled>
+	  </td>
     <td width="50%"> 
       <%
 String params = WebUtil.getQueryString(request);
