@@ -118,6 +118,16 @@ public class SysUserServiceImpl implements SysUserService {
 		this.save(bean);
 		return true;
 	}
+	
+	
+	/**
+	 * 根据角色编号获取角色用户
+	 * @param roleId
+	 * @return
+	 */
+	public List<SysUser> getSysUsersByRoleId(long roleId){
+		return sysUserMapper.getSysUsersByRoleId(roleId);
+	}
 
 	@Transactional
 	public void createRoleUser(long roleId, String actorId) {

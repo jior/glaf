@@ -173,6 +173,15 @@ public class SysRoleServiceImpl implements SysRoleService {
 		}
 		return sysRole;
 	}
+	
+	/**
+	 * 获取某个模块的角色
+	 * @param appId
+	 * @return
+	 */
+	public List<SysRole> getSysRolesByAppId(long appId){
+		return sysRoleMapper.getSysRolesByAppId(appId);
+	}
 
 	public int getSysRoleCountByQueryCriteria(SysRoleQuery query) {
 		return sysRoleMapper.getSysRoleCount(query);

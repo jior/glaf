@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.glaf.base.modules.sys.model.RealmInfo;
 import com.glaf.base.modules.sys.model.SysApplication;
+import com.glaf.base.modules.sys.model.SysRole;
 import com.glaf.base.modules.sys.model.SysUser;
 import com.glaf.base.modules.sys.query.SysApplicationQuery;
 import com.glaf.core.base.TreeModel;
@@ -180,6 +181,13 @@ public interface SysApplicationService {
 	JSONArray getUserMenu(long parentId, String userId);
 
 	TreeModel getTreeModelByAppId(long appId);
+	
+	/**
+	 * 获取某个模块的角色及用户
+	 * @param appId
+	 * @return
+	 */
+	List<SysRole> getApplicationRoleWithUsers(long appId);
 
 	/**
 	 * 获取某个分类下的全部分类节点

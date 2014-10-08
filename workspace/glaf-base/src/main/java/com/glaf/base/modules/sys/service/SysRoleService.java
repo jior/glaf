@@ -109,9 +109,6 @@ public interface SysRoleService {
 	 */
 	List<SysRole> getSysRoleList();
 	
-	
-	List<SysRole> getSysRolesOfDepts(SysDepartmentQuery query);
-
 	/**
 	 * 获取分页列表
 	 * 
@@ -122,6 +119,14 @@ public interface SysRoleService {
 	 * @return
 	 */
 	PageResult getSysRoleList(int pageNo, int pageSize);
+	
+	
+	/**
+	 * 获取某个模块的角色
+	 * @param appId
+	 * @return
+	 */
+	List<SysRole> getSysRolesByAppId(long appId);
 
 	/**
 	 * 根据查询参数获取一页的数据
@@ -130,6 +135,8 @@ public interface SysRoleService {
 	 */
 	List<SysRole> getSysRolesByQueryCriteria(int start, int pageSize,
 			SysRoleQuery query);
+
+	List<SysRole> getSysRolesOfDepts(SysDepartmentQuery query);
 
 	/**
 	 * 排序

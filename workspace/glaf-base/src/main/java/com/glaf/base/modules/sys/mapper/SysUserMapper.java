@@ -41,8 +41,8 @@ public interface SysUserMapper {
 	List<SysUser> getDeptUsers(SysUserQuery query);
 
 	List<SysUser> getSysDeptRoleUsers(SysDeptRoleQuery query);
-
-	List<SysUser> getSysRoleUsers(Long roleId);
+	
+	List<SysUser> getSysUsersByRoleId(Long roleId);
 	
 	List<UserRole> getRoleUserViews(UserRoleQuery query);
 

@@ -19,6 +19,8 @@
 package com.glaf.base.modules.sys.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -107,6 +109,9 @@ public class SysRole implements Serializable, JSONable {
 	@Column(name = "UPDATEDATE")
 	protected Date updateDate;
 
+	@javax.persistence.Transient
+	protected Collection<SysUser> users = new ArrayList<SysUser>();
+
 	public SysRole() {
 
 	}
@@ -173,6 +178,13 @@ public class SysRole implements Serializable, JSONable {
 		return this.updateDate;
 	}
 
+	public Collection<SysUser> getUsers() {
+		if (users == null) {
+			users = new ArrayList<SysUser>();
+		}
+		return users;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -231,6 +243,10 @@ public class SysRole implements Serializable, JSONable {
 
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
+	}
+
+	public void setUsers(Collection<SysUser> users) {
+		this.users = users;
 	}
 
 	public JSONObject toJsonObject() {

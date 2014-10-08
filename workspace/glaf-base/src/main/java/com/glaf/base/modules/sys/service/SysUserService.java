@@ -193,6 +193,14 @@ public interface SysUserService {
 	 * @return List
 	 */
 	List<SysUser> getSysUserList(long deptId);
+	
+	
+	/**
+	 * 根据角色编号获取角色用户
+	 * @param roleId
+	 * @return
+	 */
+	List<SysUser> getSysUsersByRoleId(long roleId);
 
 	/**
 	 * 获取特定部门的员工数据集 分页列表

@@ -34,6 +34,8 @@ public interface SysRoleMapper {
 
 	int getSysRoleCount(SysRoleQuery query);
 	
+	List<SysRole> getSysRolesByAppId(long appId);
+	
 	List<SysRole> getSysRolesOfUser(String actorId);
 
 	List<SysRole> getSysRoles(SysRoleQuery query);

@@ -338,6 +338,21 @@
 		#{appId}
 
 	</select>
+	
+	
+	<select id="getSysUsersByRoleId" parameterType="long" resultMap="sysUserResultMap">
+
+		select distinct a.*
+		from SYS_USER a
+		inner join SYS_USER_ROLE b
+		on a.id = b.userId
+		inner join SYS_DEPT_ROLE dr
+		on b.roleId = dr.id
+		inner join SYS_ROLE r
+		on dr.sysroleid = r.id
+		where r.id = #{roleId}
+
+	</select>
 
 
 	<select id="getSysUserByAccount" parameterType="String"
@@ -488,17 +503,6 @@
 			)
 		</if>
 		order by E.DEPTID asc
-	</select>
-
-
-	<select id="getSysRoleUsers" parameterType="long" resultMap="sysUserResultMap">
-
-		select distinct E.* from SYS_USER E
-		inner join SYS_USER_ROLE R
-		on E.ID =
-		R.USERID
-		where R.ROLEID = #{roleId}
-
 	</select>
 
 

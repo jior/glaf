@@ -149,6 +149,18 @@
 	<select id="getSysRoleById" parameterType="long" resultMap="sysRoleResultMap">
 		select * from SYS_ROLE where ID = #{id}
 	</select>
+	
+	
+	<select id="getSysRolesByAppId" parameterType="long" resultMap="sysRoleResultMap">
+			
+		select r.* from sys_role r
+		inner join sys_dept_role dr
+		on r.id = dr.sysroleid
+		inner join sys_access a
+		on dr.id = a.roleid
+		where a.appid = #{appId}
+
+	</select>
 
 
 	<select id="getSysRolesOfDepts" parameterType="com.glaf.base.modules.sys.query.SysDepartmentQuery"
