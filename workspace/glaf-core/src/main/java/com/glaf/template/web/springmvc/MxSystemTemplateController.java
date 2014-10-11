@@ -40,10 +40,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.glaf.core.base.ColumnModel;
+import com.glaf.core.base.TableModel;
 import com.glaf.core.base.TreeModel;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.security.LoginContext;
+import com.glaf.core.service.ITableDataService;
 import com.glaf.template.Template;
 import com.glaf.template.query.TemplateQuery;
 import com.glaf.template.service.ITemplateService;
@@ -62,6 +65,8 @@ public class MxSystemTemplateController {
 			.getLog(MxSystemTemplateController.class);
 
 	protected ITemplateService templateService;
+
+	protected ITableDataService tableDataService;
 
 	@RequestMapping("/delete")
 	public ModelAndView deleteTemplate(HttpServletRequest request,
@@ -318,6 +323,11 @@ public class MxSystemTemplateController {
 	}
 
 	@javax.annotation.Resource
+	public void setTableDataService(ITableDataService tableDataService) {
+		this.tableDataService = tableDataService;
+	}
+
+	@javax.annotation.Resource
 	public void setTemplateService(ITemplateService templateService) {
 		this.templateService = templateService;
 	}
@@ -332,10 +342,59 @@ public class MxSystemTemplateController {
 	@RequestMapping("/showFrame")
 	public ModelAndView showFrame(HttpServletRequest request, ModelMap modelMap) {
 		// RequestUtils.setRequestParameterToAttribute(request);
-		TreeModel treeModel = IdentityFactory.getTreeModelByCode("template");
-		if (treeModel != null) {
-			modelMap.put("treeModel", treeModel);
-			request.setAttribute("parent", treeModel.getId() + "");
+		logger.debug(RequestUtils.getParameterMap(request));
+		Long parentId = RequestUtils.getLong(request, "parentId");
+		if (parentId != null && parentId > 0) {
+			TreeModel treeModel = IdentityFactory.getTreeModelById(parentId);
+			if (treeModel != null) {
+				modelMap.put("treeModel", treeModel);
+				request.setAttribute("parent", treeModel.getId() + "");
+			}
+		} else {
+			TreeModel treeModel = IdentityFactory
+					.getTreeModelByCode("template");
+			if (treeModel != null) {
+				modelMap.put("treeModel", treeModel);
+				request.setAttribute("parent", treeModel.getId() + "");
+			} else {
+				TableModel tableModel = new TableModel();
+				tableModel.setTableName("SYS_TREE");
+				ColumnModel idColumn = new ColumnModel();
+				idColumn.setColumnName("ID");
+				idColumn.setJavaType("Long");
+				idColumn.setValue(19L);
+				tableModel.setIdColumn(idColumn);
+
+				ColumnModel column = new ColumnModel();
+				column.setColumnName("PARENT");
+				column.setJavaType("Long");
+				column.setValue(8L);
+				tableModel.addColumn(column);
+
+				ColumnModel column1 = new ColumnModel();
+				column1.setColumnName("CODE");
+				column1.setJavaType("String");
+				column1.setValue("template");
+				tableModel.addColumn(column1);
+
+				ColumnModel column2 = new ColumnModel();
+				column2.setColumnName("NAME");
+				column2.setJavaType("String");
+				column2.setValue("模板管理");
+				tableModel.addColumn(column2);
+
+				ColumnModel column3 = new ColumnModel();
+				column3.setColumnName("SORT");
+				column3.setJavaType("Integer");
+				column3.setValue(19);
+				tableModel.addColumn(column3);
+
+				tableDataService.insertTableData(tableModel);
+
+				treeModel = IdentityFactory.getTreeModelByCode("template");
+				modelMap.put("treeModel", treeModel);
+				request.setAttribute("parent", treeModel.getId() + "");
+			}
 		}
 		return new ModelAndView("/modules/sys/template/template_frame",
 				modelMap);
