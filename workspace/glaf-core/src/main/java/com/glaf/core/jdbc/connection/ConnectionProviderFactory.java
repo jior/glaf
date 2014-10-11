@@ -71,6 +71,18 @@ public final class ConnectionProviderFactory {
 		return false;
 	}
 
+	protected static void closeAndCreate(Properties properties) {
+		String jdbcUrl = properties.getProperty(DBConfiguration.JDBC_URL);
+		String cacheKey = DigestUtils.md5Hex(jdbcUrl);
+		ConnectionProvider provider = null;
+		if (providerCache.get(cacheKey) != null) {
+			provider = providerCache.get(cacheKey);
+			provider.close();
+		}
+		provider = createProvider(properties, null);
+		providerCache.put(cacheKey, provider);
+	}
+
 	private static boolean c3p0ProviderPresent() {
 		try {
 			ClassUtils

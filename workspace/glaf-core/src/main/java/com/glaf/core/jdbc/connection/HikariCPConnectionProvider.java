@@ -30,7 +30,8 @@ import org.slf4j.LoggerFactory;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-
+import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
 import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.util.ClassUtils;
 import com.glaf.core.util.JdbcUtils;
@@ -40,6 +41,8 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 
 	private static final Logger log = LoggerFactory
 			.getLogger(HikariCPConnectionProvider.class);
+
+	protected static Configuration conf = BaseConfiguration.create();
 
 	private final static String MAX_POOL_SIZE = "maxPoolSize";
 
@@ -186,14 +189,44 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 	}
 
 	public Connection getConnection() throws SQLException {
-		final Connection c = ds.getConnection();
-		if (isolation != null) {
-			c.setTransactionIsolation(isolation.intValue());
+		Connection connection = null;
+		int count = 0;
+		while (count < conf.getInt("jdbc.connection.retryCount", 10)) {
+			try {
+				connection = ds.getConnection();
+				if (connection != null) {
+					if (isolation != null) {
+						connection
+								.setTransactionIsolation(isolation.intValue());
+					}
+					if (connection.getAutoCommit() != autocommit) {
+						connection.setAutoCommit(autocommit);
+					}
+					return connection;
+				} else {
+					count++;
+					try {
+						Thread.sleep(conf.getInt("jdbc.connection.retryTimeMs",
+								500));
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			} catch (SQLException ex) {
+				count++;
+				try {
+					Thread.sleep(conf
+							.getInt("jdbc.connection.retryTimeMs", 500));
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				if (count >= conf.getInt("jdbc.connection.retryCount", 10)) {
+					ex.printStackTrace();
+					throw ex;
+				}
+			}
 		}
-		if (c.getAutoCommit() != autocommit) {
-			c.setAutoCommit(autocommit);
-		}
-		return c;
+		return connection;
 	}
 
 	public DataSource getDataSource() {

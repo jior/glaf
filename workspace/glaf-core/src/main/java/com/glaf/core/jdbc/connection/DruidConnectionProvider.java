@@ -30,6 +30,8 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
+import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
 import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.util.PropertiesHelper;
 import com.glaf.core.util.ReflectUtils;
@@ -38,6 +40,8 @@ public class DruidConnectionProvider implements ConnectionProvider {
 
 	private static final Logger log = LoggerFactory
 			.getLogger(DruidConnectionProvider.class);
+
+	protected static Configuration conf = BaseConfiguration.create();
 
 	private final static String MIN_POOL_SIZE = "minPoolSize";
 	private final static String MAX_POOL_SIZE = "maxPoolSize";
@@ -50,6 +54,7 @@ public class DruidConnectionProvider implements ConnectionProvider {
 	private volatile DruidDataSource ds;
 	private volatile Integer isolation;
 	private volatile boolean autocommit;
+	private Properties properties;
 
 	public void close() {
 		try {
@@ -63,7 +68,12 @@ public class DruidConnectionProvider implements ConnectionProvider {
 		conn.close();
 	}
 
+	public Properties getProperties() {
+		return properties;
+	}
+
 	public void configure(Properties props) {
+		properties = props;
 		String jdbcDriverClass = props.getProperty(DBConfiguration.JDBC_DRIVER);
 		String jdbcUrl = props.getProperty(DBConfiguration.JDBC_URL);
 		Properties connectionProps = ConnectionProviderFactory
@@ -139,11 +149,11 @@ public class DruidConnectionProvider implements ConnectionProvider {
 			if (initialPoolSize == null) {
 				initialPoolSize = 5;
 			}
-			
+
 			if (minPoolSize == null) {
 				minPoolSize = 5;
 			}
-			
+
 			if (maxPoolSize == null) {
 				maxPoolSize = 50;
 			}
@@ -151,15 +161,15 @@ public class DruidConnectionProvider implements ConnectionProvider {
 			if (maxStatements == null) {
 				maxStatements = 200;
 			}
-			
+
 			if (acquireIncrement == null) {
 				acquireIncrement = 1;
 			}
-			
+
 			if (idleTestPeriod == null) {
 				idleTestPeriod = 60;
 			}
-			
+
 			if (maxWait == null) {
 				maxWait = 60;
 			}
@@ -197,11 +207,11 @@ public class DruidConnectionProvider implements ConnectionProvider {
 					.getProperty(DBConfiguration.JDBC_PASSWORD);
 
 			if (dbUser == null) {
-				dbUser = ""; 
+				dbUser = "";
 			}
 
 			if (dbPassword == null) {
-				dbPassword = ""; 
+				dbPassword = "";
 			}
 
 			ds.setUsername(dbUser);
@@ -222,12 +232,42 @@ public class DruidConnectionProvider implements ConnectionProvider {
 	}
 
 	public Connection getConnection() throws SQLException {
-		final Connection connection = ds.getConnection();
-		if (isolation != null) {
-			connection.setTransactionIsolation(isolation.intValue());
-		}
-		if (connection.getAutoCommit() != autocommit) {
-			connection.setAutoCommit(autocommit);
+		Connection connection = null;
+		int count = 0;
+		while (count < conf.getInt("jdbc.connection.retryCount", 10)) {
+			try {
+				connection = ds.getConnection();
+				if (connection != null) {
+					if (isolation != null) {
+						connection
+								.setTransactionIsolation(isolation.intValue());
+					}
+					if (connection.getAutoCommit() != autocommit) {
+						connection.setAutoCommit(autocommit);
+					}
+					return connection;
+				} else {
+					count++;
+					try {
+						Thread.sleep(conf.getInt("jdbc.connection.retryTimeMs",
+								500));
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			} catch (SQLException ex) {
+				count++;
+				try {
+					Thread.sleep(conf
+							.getInt("jdbc.connection.retryTimeMs", 500));
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				if (count >= conf.getInt("jdbc.connection.retryCount", 10)) {
+					ex.printStackTrace();
+					throw ex;
+				}
+			}
 		}
 		return connection;
 	}

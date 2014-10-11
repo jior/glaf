@@ -33,11 +33,15 @@ import org.hibernate.util.ReflectHelper;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
+import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
 
 public class DruidConnectionProvider implements ConnectionProvider {
 
 	private static final Logger log = LoggerFactory
 			.getLogger(DruidConnectionProvider.class);
+
+	protected static Configuration conf = BaseConfiguration.create();
 
 	private final static String MIN_POOL_SIZE = "minPoolSize";
 	private final static String MAX_POOL_SIZE = "maxPoolSize";
@@ -213,12 +217,42 @@ public class DruidConnectionProvider implements ConnectionProvider {
 	}
 
 	public Connection getConnection() throws SQLException {
-		final Connection connection = ds.getConnection();
-		if (isolation != null) {
-			connection.setTransactionIsolation(isolation.intValue());
-		}
-		if (connection.getAutoCommit() != autocommit) {
-			connection.setAutoCommit(autocommit);
+		Connection connection = null;
+		int count = 0;
+		while (count < conf.getInt("jdbc.connection.retryCount", 10)) {
+			try {
+				connection = ds.getConnection();
+				if (connection != null) {
+					if (isolation != null) {
+						connection
+								.setTransactionIsolation(isolation.intValue());
+					}
+					if (connection.getAutoCommit() != autocommit) {
+						connection.setAutoCommit(autocommit);
+					}
+					return connection;
+				} else {
+					count++;
+					try {
+						Thread.sleep(conf.getInt("jdbc.connection.retryTimeMs",
+								500));
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			} catch (SQLException ex) {
+				count++;
+				try {
+					Thread.sleep(conf
+							.getInt("jdbc.connection.retryTimeMs", 500));
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				if (count >= conf.getInt("jdbc.connection.retryCount", 10)) {
+					ex.printStackTrace();
+					throw ex;
+				}
+			}
 		}
 		return connection;
 	}
