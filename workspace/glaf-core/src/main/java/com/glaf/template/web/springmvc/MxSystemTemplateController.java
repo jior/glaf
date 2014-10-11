@@ -364,6 +364,7 @@ public class MxSystemTemplateController {
 				idColumn.setJavaType("Long");
 				idColumn.setValue(19L);
 				tableModel.setIdColumn(idColumn);
+				tableModel.addColumn(idColumn);
 
 				ColumnModel column = new ColumnModel();
 				column.setColumnName("PARENT");
