@@ -175,8 +175,6 @@ else
   fi
 fi
 
-#JAVA_OPTS=$JAVA_OPTS -Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m
-
 # Add on extra jar files to CLASSPATH
 if [ ! -z "$CLASSPATH" ] ; then
   CLASSPATH="$CLASSPATH":
@@ -269,20 +267,6 @@ if [ "$1" = "jpda" ] ; then
   CATALINA_OPTS="$CATALINA_OPTS $JPDA_OPTS"
   shift
 fi
-
-JAVA_OPTS="$JAVA_OPTS -Xms1024m -Xmx1024m -XX:NewSize=64m -XX:MaxNewSize=64m -XX:PermSize=256m -XX:MaxPermSize=512m"
-#JAVA_OPTS="$JAVA_OPTS -Xms512m"
-#JAVA_OPTS="$JAVA_OPTS -Xmx512m"
-#JAVA_OPTS="$JAVA_OPTS -Xmn256m"
-#JAVA_OPTS="$JAVA_OPTS -XX:PermSize128m"
-#JAVA_OPTS="$JAVA_OPTS -XX:MaxPermSize256m"
-#JAVA_OPTS="$JAVA_OPTS -Xss512k"
-JAVA_OPTS="$JAVA_OPTS -XX:+UseParNewGC"
-JAVA_OPTS="$JAVA_OPTS -XX:+UseConcMarkSweepGC"
-JAVA_OPTS="$JAVA_OPTS -XX:CMSInitiatingOccupancyFraction=75"
-JAVA_OPTS="$JAVA_OPTS -XX:+UseCMSInitiatingOccupancyOnly"
-JAVA_OPTS="$JAVA_OPTS -Djava.net.preferIPv4Stack=true"
-
 
 if [ "$1" = "debug" ] ; then
   if $os400; then

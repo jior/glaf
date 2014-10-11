@@ -32,111 +32,59 @@
     <Valve className="org.apache.catalina.valves.CometConnectionManagerValve" />
     -->
 
-	<!-- <Resource name="jdbc/glafdb"
-          auth="Container"
-          type="javax.sql.DataSource"
-          factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
-          testWhileIdle="true"
-          testOnBorrow="true"
-          testOnReturn="false"
-          validationQuery="SELECT 1"
-          validationInterval="30000"
-          timeBetweenEvictionRunsMillis="30000"
-          maxActive="100"
-          minIdle="10"
-          maxWait="10000"
-          initialSize="10"
-          removeAbandonedTimeout="60"
-          removeAbandoned="true"
-          logAbandoned="true"
-          minEvictableIdleTimeMillis="30000"
-          jmxEnabled="false"
-          jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;
-            org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
-          username="root"
-          password="root"
-          driverClassName="org.postgresql.Driver"
-          url="jdbc:postgresql://127.0.0.1:5432/glaf"/> --> 
+	<!-- <Manager className="de.javakaffee.web.msm.MemcachedBackupSessionManager"
+	    sticky="false"
+	    memcachedNodes="n1:localhost:11211 n2:localhost:11212"
+	    failoverNodes=""
+	    requestUriIgnorePattern=".*\.(png|gif|jpg|css|js|ico)$"
+	    sessionBackupAsync="false"
+	    sessionBackupTimeout="100"
+        transcoderFactoryClass="de.javakaffee.web.msm.serializer.javolution.JavolutionTranscoderFactory"
+    />   -->
 
-		  <!-- <Resource name="jdbc/glafdb"
-          auth="Container"
-          type="javax.sql.DataSource"
-          factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
-          testWhileIdle="true"
-          testOnBorrow="true"
-          testOnReturn="false"
-          validationQuery="SELECT 1"
-          validationInterval="30000"
-          timeBetweenEvictionRunsMillis="30000"
-          maxActive="100"
-          minIdle="10"
-          maxWait="10000"
-          initialSize="10"
-          removeAbandonedTimeout="60"
-          removeAbandoned="true"
-          logAbandoned="true"
-          minEvictableIdleTimeMillis="30000"
-          jmxEnabled="false"
-          jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;
-            org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
-          username="sa"
-          password=""
-          driverClassName="org.h2.Driver"
-          url="jdbc:h2:tcp://localhost/glafdb"/> --> 
+	<!-- <Manager className="de.javakaffee.web.msm.MemcachedBackupSessionManager"
+	    sticky="false"
+	    memcachedNodes="n1:localhost:11211 n2:localhost:11212"
+	    failoverNodes=""
+	    requestUriIgnorePattern=".*\.(png|gif|jpg|css|js|ico)$"
+	    sessionBackupAsync="false"
+	    sessionBackupTimeout="100"
+        transcoderFactoryClass="de.javakaffee.web.msm.serializer.kryo.KryoTranscoderFactory"
+    /> --> 
 
-		  <!-- <Resource name="jdbc/glafdb"
-          auth="Container"
-          type="javax.sql.DataSource"
-          factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
-          testWhileIdle="true"
-          testOnBorrow="true"
-          testOnReturn="false"
-          validationQuery="SELECT 1"
-          validationInterval="30000"
-          timeBetweenEvictionRunsMillis="30000"
-          maxActive="100"
-          minIdle="10"
-          maxWait="10000"
-          initialSize="10"
-          removeAbandonedTimeout="60"
-          removeAbandoned="true"
-          logAbandoned="true"
-          minEvictableIdleTimeMillis="30000"
-          jmxEnabled="false"
-          jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;
-            org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
-          username="root"
-          password="root"
-          driverClassName="com.mysql.jdbc.Driver"
-          url="jdbc:mysql://localhost/glaf"/>  -->
+	<!-- <Valve className="com.radiadesign.catalina.session.RedisSessionHandlerValve" />
 
+	<Manager className="com.radiadesign.catalina.session.RedisSessionManager"
+	          host="localhost"
+	          port="6379"
+	          database="0"
+	          maxInactiveInterval="7200"
+	 /> --> 
 
-	<!-- <Resource name="jdbc/glafdb"
-          auth="Container"
-          type="javax.sql.DataSource"
-          factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
-          testWhileIdle="true"
-          testOnBorrow="true"
-          testOnReturn="false"
-          validationQuery="SELECT 1"
-          validationInterval="30000"
-          timeBetweenEvictionRunsMillis="30000"
-          maxActive="100"
-          minIdle="10"
-          maxWait="10000"
-          initialSize="10"
-          removeAbandonedTimeout="60"
-          removeAbandoned="true"
-          logAbandoned="true"
-          minEvictableIdleTimeMillis="30000"
-          jmxEnabled="false"
-          jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;
-            org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
-          username="sa"
-          password="654321"
-          driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-          url="jdbc:sqlserver://127.0.0.1:1433;databaseName=glafdb"/> --> 
+	<!-- <Valve className="com.glaf.cluster.catalina.session.MxZooKeeperSessionHandlerValve" />
 
+	<Manager className="com.glaf.cluster.catalina.session.MxZooKeeperSessionManager"
+	         servers="127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183"
+	         maxInactiveInterval="7200"/>  -->
 
+	<!-- <Valve className="com.glaf.cluster.catalina.session.ZooKeeperSessionHandlerValve" />
+
+	<Manager className="com.glaf.cluster.catalina.session.ZooKeeperSessionManager"
+	         servers="127.0.0.1:2181"
+	         maxInactiveInterval="7200"/> -->
+
+    <!-- <Valve className="com.glaf.cluster.catalina.session.ZKClientSessionHandlerValve" />
+
+	<Manager className="com.glaf.cluster.catalina.session.ZKClientSessionManager"
+	         servers="127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183"
+			 serializationStrategyClass="com.glaf.cluster.catalina.session.JavaSerializer"
+	         maxInactiveInterval="7200"/> -->
+
+    <!-- <Valve className="com.glaf.cluster.catalina.session.CuratorSessionHandlerValve" />
+
+	<Manager className="com.glaf.cluster.catalina.session.CuratorSessionManager"
+	         servers="127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183"
+			 serializationStrategyClass="com.glaf.cluster.catalina.session.JavaSerializer"
+	         maxInactiveInterval="7200"/> --> 
 
 </Context>
