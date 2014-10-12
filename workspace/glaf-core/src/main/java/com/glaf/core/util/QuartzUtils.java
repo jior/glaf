@@ -35,7 +35,6 @@ import org.quartz.TriggerKey;
 import com.glaf.core.base.Scheduler;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.service.ISysSchedulerService;
- 
 
 public class QuartzUtils {
 	protected final static Log logger = LogFactory.getLog(QuartzUtils.class);
@@ -104,6 +103,8 @@ public class QuartzUtils {
 					Trigger trigger = null;
 					boolean startup = false;
 
+					logger.debug("------------jobKey----------- " + jobKey);
+
 					if (StringUtils.isNotEmpty(model.getExpression())) {
 						trigger = getQuartzScheduler().getTrigger(triggerKey);
 						if (trigger == null) {
@@ -150,6 +151,8 @@ public class QuartzUtils {
 									logger.info(model.getTaskName()
 											+ " has startup.");
 								}
+							} else {
+								getQuartzScheduler().deleteJob(jobKey);
 							}
 						}
 					} else {
@@ -219,6 +222,8 @@ public class QuartzUtils {
 									logger.info(model.getTaskName()
 											+ " has startup.");
 								}
+							} else {
+								getQuartzScheduler().deleteJob(jobKey);
 							}
 						}
 
@@ -226,9 +231,11 @@ public class QuartzUtils {
 				}
 			} catch (org.quartz.SchedulerException ex) {
 				logger.error(ex);
+				ex.printStackTrace();
 				throw new RuntimeException(ex);
 			} catch (Exception ex) {
 				logger.error(ex);
+				ex.printStackTrace();
 				throw new RuntimeException(ex);
 			}
 		}
@@ -238,7 +245,8 @@ public class QuartzUtils {
 		QuartzUtils.scheduler = scheduler;
 	}
 
-	public static void setSysSchedulerService(ISysSchedulerService sysSchedulerService) {
+	public static void setSysSchedulerService(
+			ISysSchedulerService sysSchedulerService) {
 		QuartzUtils.sysSchedulerService = sysSchedulerService;
 	}
 
@@ -278,7 +286,7 @@ public class QuartzUtils {
 			Iterator<Scheduler> iterator = list.iterator();
 			while (iterator.hasNext()) {
 				Scheduler model = iterator.next();
-				if (model.isValid() && model.isSchedulerAutoStartup() ) {
+				if (model.isValid() && model.isSchedulerAutoStartup()) {
 					try {
 						restart(model.getId());
 					} catch (Exception ex) {
@@ -306,16 +314,21 @@ public class QuartzUtils {
 					String triggerGroup = "MX_TRIGGER_GROUP";
 
 					JobKey jobKey = JobKey.jobKey(jobName, jobGroup);
-					TriggerKey triggerKey = TriggerKey.triggerKey(triggerName,
-							triggerGroup);
-					getQuartzScheduler().unscheduleJob(triggerKey);
-					getQuartzScheduler().pauseJob(jobKey);
+					if (getQuartzScheduler().checkExists(jobKey)) {
+						TriggerKey triggerKey = TriggerKey.triggerKey(
+								triggerName, triggerGroup);
+						getQuartzScheduler().unscheduleJob(triggerKey);
+						getQuartzScheduler().pauseJob(jobKey);
+						getQuartzScheduler().deleteJob(jobKey);
+						logger.info(model.getTaskName() + " has delete!!!");
+					}
 					model.setStartup(0);
 					sysSchedulerService.save(model);
 					logger.info(model.getTaskName() + " has stop.");
 				}
 			} catch (org.quartz.SchedulerException ex) {
 				ex.printStackTrace();
+				logger.error(ex);
 				throw new RuntimeException(ex);
 			}
 		}

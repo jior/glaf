@@ -154,12 +154,17 @@ public class SysSchedulerController {
 	public ModelAndView startup(HttpServletRequest request, ModelMap modelMap) {
 		String taskId = request.getParameter("taskId");
 		String startup = request.getParameter("startup");
+		logger.debug("#startup:" + startup);
 		Scheduler scheduler = null;
 		if (StringUtils.isNotEmpty(taskId)) {
 			scheduler = sysSchedulerService.getSchedulerByTaskId(taskId);
 			if (scheduler != null) {
 				if (StringUtils.equals(startup, "1")) {
-					QuartzUtils.stop(taskId);
+					try {
+						QuartzUtils.stop(taskId);
+					} catch (Exception ex) {
+					}
+					logger.debug("**********start job scheduler*********");
 					QuartzUtils.restart(taskId);
 				} else {
 					QuartzUtils.stop(taskId);
