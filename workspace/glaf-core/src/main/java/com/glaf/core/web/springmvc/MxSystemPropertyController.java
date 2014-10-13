@@ -67,19 +67,27 @@ public class MxSystemPropertyController {
 								&& StringUtils
 										.startsWith(p.getInitValue(), "[")
 								&& StringUtils.endsWith(p.getInitValue(), "]")) {
-							JSONArray array = JSON.parseArray(p.getInitValue());
-							p.setArray(array);
-							StringBuffer buffer = new StringBuffer();
-							for (int i = 0, len = array.size(); i < len; i++) {
-								JSONObject json = array.getJSONObject(i);
-								buffer.append("<option value=\"")
-										.append(json.getString("value"))
-										.append("\">")
-										.append(json.getString("name"))
-										.append("</option>")
-										.append(FileUtils.newline);
+							try {
+								JSONArray array = JSON.parseArray(p
+										.getInitValue());
+								p.setArray(array);
+								StringBuffer buffer = new StringBuffer();
+								for (int i = 0, len = array.size(); i < len; i++) {
+									JSONObject json = array.getJSONObject(i);
+									buffer.append("<option value=\"")
+											.append(json.getString("value"))
+											.append("\">")
+											.append(json.getString("name"))
+											.append("</option>")
+											.append(FileUtils.newline);
+								}
+								p.setSelectedScript(buffer.toString());
+							} catch (Exception ex) {
+								ex.printStackTrace();
+								logger.error(
+										"parse json error :" + p.getInitValue(),
+										ex);
 							}
-							p.setSelectedScript(buffer.toString());
 						}
 					}
 				}
