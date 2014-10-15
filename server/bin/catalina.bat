@@ -187,6 +187,7 @@ set "JAVA_OPTS=%JAVA_OPTS% %LOGGING_MANAGER%"
 set JAVA_OPTS=%JAVA_OPTS% -Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m
 
 
+
 rem ----- Execute The Requested Command ---------------------------------------
 
 echo Using CATALINA_BASE:   "%CATALINA_BASE%"
