@@ -100,14 +100,6 @@ public class DBConnectionFactory {
 	}
 
 	public static Connection getConnection() {
-		if (conf.getBoolean("spring.datasource.connection", false)) {
-			org.springframework.jdbc.core.JdbcTemplate jdbcTemplate = ContextFactory
-					.getBean("jdbcTemplate");
-			if (jdbcTemplate != null) {
-				return org.springframework.jdbc.datasource.DataSourceUtils
-						.getConnection(jdbcTemplate.getDataSource());
-			}
-		}
 		return getConnection(Environment.DEFAULT_SYSTEM_NAME);
 	}
 

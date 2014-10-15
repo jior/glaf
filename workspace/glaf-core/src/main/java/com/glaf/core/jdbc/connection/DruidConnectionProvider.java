@@ -171,7 +171,7 @@ public class DruidConnectionProvider implements ConnectionProvider {
 			}
 
 			if (maxWait == null) {
-				maxWait = 60;
+				maxWait = 600;
 			}
 
 			Properties allProps = (Properties) props.clone();
@@ -184,19 +184,18 @@ public class DruidConnectionProvider implements ConnectionProvider {
 			ds.setInitialSize(initialPoolSize);
 			ds.setMinIdle(minPoolSize);
 			ds.setMaxActive(maxPoolSize);
-			ds.setMaxWait(3600 * 1000L);// 3600秒
+			ds.setMaxWait(maxWait * 1000L);
 
 			ds.setTestOnReturn(false);
 			ds.setTestOnBorrow(false);
 			ds.setTestWhileIdle(false);
 			ds.setLogAbandoned(true);// 将当前关闭动作记录到日志
 			ds.setRemoveAbandoned(true);// 对于长时间不使用的连接强制关闭
-			ds.setRemoveAbandonedTimeout(1800);// 超过30分钟开始关闭空闲连接
+			ds.setRemoveAbandonedTimeout(600);// 超过10分钟开始关闭空闲连接
 
 			ds.setTimeBetweenEvictionRunsMillis(idleTestPeriod * 1000L);// 间隔多久才进行一次检测，检测需要关闭的空闲连接
 			ds.setMaxOpenPreparedStatements(maxStatements);
 			ds.setMinEvictableIdleTimeMillis(60 * 1000L);
-			ds.setMaxWait(maxWait * 1000L);
 
 			ds.setConnectProperties(allProps);
 			ds.setUrl(jdbcUrl);
