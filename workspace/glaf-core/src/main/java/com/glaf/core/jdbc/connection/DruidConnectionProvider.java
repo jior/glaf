@@ -36,6 +36,17 @@ import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.util.PropertiesHelper;
 import com.glaf.core.util.ReflectUtils;
 
+/**
+ * Druid连接池基本属性配置
+druid.minPoolSize=5
+druid.maxPoolSize=50
+druid.initialPoolSize=5
+druid.acquireIncrement=1
+#超时，单位是秒
+druid.maxWait=600
+#间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是秒
+druid.idleConnectionTestPeriod=120
+ */
 public class DruidConnectionProvider implements ConnectionProvider {
 
 	private static final Logger log = LoggerFactory
