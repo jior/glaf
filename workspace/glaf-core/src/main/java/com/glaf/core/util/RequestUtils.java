@@ -106,6 +106,22 @@ public class RequestUtils {
 			return str;
 		}
 	}
+	
+	public static String decodeString(String str, String token) {
+		try {
+			// Base64 base64 = new Base64();
+			// byte[] bytes = base64.decode(StringTools.decodeHex(str));
+			// String tmp = new String(bytes);
+			String tmp = str;
+			Encryptor cryptor = EncryptorFactory.getEncryptor();
+			tmp = cryptor.decrypt(tmp);
+			String salt = DigestUtils.md5Hex(token);
+			tmp = StringUtils.replace(tmp, salt, "");
+			return tmp;
+		} catch (Exception ex) {
+			return str;
+		}
+	}
 
 	public static String decodeURL(String str) {
 		try {
@@ -145,6 +161,21 @@ public class RequestUtils {
 	public static String encodeString(String str) {
 		try {
 			String salt = DigestUtils.md5Hex(SystemConfig.getToken());
+			str = str + salt;
+			Encryptor cryptor = EncryptorFactory.getEncryptor();
+			str = cryptor.encrypt(str);
+			// Base64 base64 = new Base64();
+			// byte[] bytes = base64.encode(str.getBytes());
+			// return StringTools.encodeHex(bytes);
+			return str;
+		} catch (Exception ex) {
+			return str;
+		}
+	}
+	
+	public static String encodeString(String str, String token) {
+		try {
+			String salt = DigestUtils.md5Hex(token);
 			str = str + salt;
 			Encryptor cryptor = EncryptorFactory.getEncryptor();
 			str = cryptor.encrypt(str);
