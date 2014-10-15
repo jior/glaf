@@ -30,6 +30,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
 import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.config.Environment;
 import com.glaf.core.context.ContextFactory;
@@ -41,6 +43,8 @@ public class DBConnectionFactory {
 
 	protected final static Log logger = LogFactory
 			.getLog(DBConnectionFactory.class);
+
+	protected static Configuration conf = BaseConfiguration.create();
 
 	protected static Properties databaseTypeMappings = getDatabaseTypeMappings();
 
@@ -96,6 +100,14 @@ public class DBConnectionFactory {
 	}
 
 	public static Connection getConnection() {
+		if (conf.getBoolean("spring.datasource.connection", false)) {
+			org.springframework.jdbc.core.JdbcTemplate jdbcTemplate = ContextFactory
+					.getBean("jdbcTemplate");
+			if (jdbcTemplate != null) {
+				return org.springframework.jdbc.datasource.DataSourceUtils
+						.getConnection(jdbcTemplate.getDataSource());
+			}
+		}
 		return getConnection(Environment.DEFAULT_SYSTEM_NAME);
 	}
 
