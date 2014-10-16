@@ -22,6 +22,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.Date;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceUtils;
@@ -38,6 +40,8 @@ import com.glaf.core.util.JdbcUtils;
 @Service("mixFeatureTestService")
 @Transactional
 public class MxMixFeatureTestService implements IMixFeatureTestService {
+	protected static final Log log = LogFactory
+			.getLog(MxMixFeatureTestService.class);
 
 	protected EntityDAO entityDAO;
 
@@ -51,7 +55,8 @@ public class MxMixFeatureTestService implements IMixFeatureTestService {
 
 	@Transactional
 	public void run() {
-		for (int i = 0; i < 100; i++) {
+		log.debug("-------------------start run-------------------");
+		for (int i = 0; i < 2; i++) {
 			SysLog bean = new SysLog();
 			bean.setAccount("test");
 			bean.setIp("127.0.0.1");
@@ -65,8 +70,9 @@ public class MxMixFeatureTestService implements IMixFeatureTestService {
 		try {
 			connection = DataSourceUtils.getConnection(jdbcTemplate
 					.getDataSource());
+			System.out.println("connection:" + connection.toString());
 			psmt = connection.prepareStatement(sql);
-			for (int i = 0; i < 100; i++) {
+			for (int i = 0; i < 2; i++) {
 				psmt.setLong(1, idGenerator.nextId());
 				psmt.setString(2, "test2");
 				psmt.setString(3, "192.168.0.100");
@@ -81,10 +87,12 @@ public class MxMixFeatureTestService implements IMixFeatureTestService {
 			psmt.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			log.error(ex);
 			throw new RuntimeException(ex);
 		} finally {
 			JdbcUtils.close(psmt);
 		}
+		log.debug("-------------------end run-------------------");
 	}
 
 	@javax.annotation.Resource

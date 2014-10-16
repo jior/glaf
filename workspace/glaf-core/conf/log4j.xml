@@ -105,22 +105,25 @@
 	  <appender-ref ref="ERROR"/>
    </category>
 
-   <!-- <category name="org.hibernate.SQL">  
+   <category name="org.hibernate.SQL">  
         <priority value="DEBUG" />           
         <appender-ref ref="CONSOLE" /> 
    </category> 
 
    <logger name="java.sql.Connection">
         <level value="DEBUG"/>
+		<appender-ref ref="CONSOLE" />
     </logger>
 
 	<logger name="java.sql.Statement">
         <level value="DEBUG"/>
+		<appender-ref ref="CONSOLE" />
     </logger>
 
 	<logger name="java.sql.PreparedStatement">
         <level value="DEBUG"/>
-    </logger> -->
+		<appender-ref ref="CONSOLE" />
+    </logger> 
 
     <logger name="org.apache">
         <level value="WARN"/>
@@ -142,12 +145,17 @@
         <level value="DEBUG"/>
     </logger> 
 
+	<logger name="com.alibaba.druid">
+        <level value="DEBUG"/>
+		<appender-ref ref="CONSOLE" />
+    </logger> 
+
 	<logger name="org.springframework.transaction">
         <level value="DEBUG"/>
     </logger> 
 	
   <root>
-    <level value="INFO"/>
+    <level value="DEBUG"/>
     <appender-ref ref="CONSOLE"/>
 	<appender-ref ref="ROLLING_FILE"/>
   </root>

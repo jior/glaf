@@ -149,7 +149,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/xml-apis-ext.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/xml-apis.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/glaf-security"/>
-	<classpathentry kind="lib" path="conf"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/glaf-mail"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/glaf-jbpm"/>
 	<classpathentry kind="output" path="bin"/>

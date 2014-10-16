@@ -29,7 +29,7 @@ public class TestMixFeature extends AbstractTest {
 	@Test
 	public void testRun() {
 		mixFeatureTestService = super.getBean("mixFeatureTestService");
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 1; i++) {
 			mixFeatureTestService.run();
 			try {
 				Thread.sleep(50);

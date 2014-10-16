@@ -25,8 +25,8 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
@@ -37,20 +37,14 @@ import com.glaf.core.util.PropertiesHelper;
 import com.glaf.core.util.ReflectUtils;
 
 /**
- * Druid连接池基本属性配置
-druid.minPoolSize=5
-druid.maxPoolSize=50
-druid.initialPoolSize=5
-druid.acquireIncrement=1
-#超时，单位是秒
-druid.maxWait=600
-#间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是秒
-druid.idleConnectionTestPeriod=120
+ * Druid连接池基本属性配置 druid.minPoolSize=5 druid.maxPoolSize=50
+ * druid.initialPoolSize=5 druid.acquireIncrement=1 #超时，单位是秒 druid.maxWait=600
+ * #间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是秒 druid.idleConnectionTestPeriod=120
  */
 public class DruidConnectionProvider implements ConnectionProvider {
 
-	private static final Logger log = LoggerFactory
-			.getLogger(DruidConnectionProvider.class);
+	private static final Log log = LogFactory
+			.getLog(DruidConnectionProvider.class);
 
 	protected static Configuration conf = BaseConfiguration.create();
 
@@ -255,6 +249,7 @@ public class DruidConnectionProvider implements ConnectionProvider {
 					if (connection.getAutoCommit() != autocommit) {
 						connection.setAutoCommit(autocommit);
 					}
+					log.debug("druid connection: " + connection.toString());
 					return connection;
 				} else {
 					count++;
