@@ -286,13 +286,19 @@ public class LoginController {
 		java.util.Random random = new java.util.Random();
 		String rand = Math.abs(random.nextInt(9999))
 				+ com.glaf.core.util.UUID32.getUUID()
-				+ Math.abs(random.nextInt(9999)) 
-				+ SystemConfig.getToken();
+				+ Math.abs(random.nextInt(9999)) + SystemConfig.getToken();
 		if (session != null) {
 			session.setAttribute("x_y", rand);
 		}
+
+		String view = "/modules/login";
+
+		if (StringUtils.isNotEmpty(SystemConfig.getString("login_view"))) {
+			view = SystemConfig.getString("login_view");
+		}
+
 		// 显示登陆页面
-		return new ModelAndView("/modules/login", modelMap);
+		return new ModelAndView(view, modelMap);
 	}
 
 	@javax.annotation.Resource
