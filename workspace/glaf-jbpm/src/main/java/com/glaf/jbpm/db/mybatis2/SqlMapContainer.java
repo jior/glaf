@@ -54,13 +54,15 @@ public class SqlMapContainer {
 			logger.debug("execute sqlmap:" + statementId);
 			logger.debug("params:" + params);
 		}
-		getEntityDAO().setConnection(connection);
-		if (StringUtils.equalsIgnoreCase("insert", operation)) {
-			getEntityDAO().insert(statementId, params);
-		} else if (StringUtils.equalsIgnoreCase("update", operation)) {
-			getEntityDAO().update(statementId, params);
-		} else if (StringUtils.equalsIgnoreCase("delete", operation)) {
-			getEntityDAO().delete(statementId, params);
+		if (connection != null) {
+			getEntityDAO().setConnection(connection);
+			if (StringUtils.equalsIgnoreCase("insert", operation)) {
+				getEntityDAO().insert(statementId, params);
+			} else if (StringUtils.equalsIgnoreCase("update", operation)) {
+				getEntityDAO().update(statementId, params);
+			} else if (StringUtils.equalsIgnoreCase("delete", operation)) {
+				getEntityDAO().delete(statementId, params);
+			}
 		}
 	}
 
@@ -73,13 +75,15 @@ public class SqlMapContainer {
 		Connection conn = null;
 		try {
 			conn = com.glaf.core.jdbc.DBConnectionFactory.getConnection();
-			getEntityDAO().setConnection(conn);
-			if (StringUtils.equalsIgnoreCase("insert", operation)) {
-				getEntityDAO().insert(statementId, params);
-			} else if (StringUtils.equalsIgnoreCase("update", operation)) {
-				getEntityDAO().update(statementId, params);
-			} else if (StringUtils.equalsIgnoreCase("delete", operation)) {
-				getEntityDAO().delete(statementId, params);
+			if (conn != null) {
+				getEntityDAO().setConnection(conn);
+				if (StringUtils.equalsIgnoreCase("insert", operation)) {
+					getEntityDAO().insert(statementId, params);
+				} else if (StringUtils.equalsIgnoreCase("update", operation)) {
+					getEntityDAO().update(statementId, params);
+				} else if (StringUtils.equalsIgnoreCase("delete", operation)) {
+					getEntityDAO().delete(statementId, params);
+				}
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -108,8 +112,11 @@ public class SqlMapContainer {
 		Connection conn = null;
 		try {
 			conn = com.glaf.core.jdbc.DBConnectionFactory.getConnection();
-			getEntityDAO().setConnection(conn);
-			return getEntityDAO().getList(statementId, parameterObject);
+			if (conn != null) {
+				getEntityDAO().setConnection(conn);
+				return getEntityDAO().getList(statementId, parameterObject);
+			}
+			return null;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			logger.error(ex);
@@ -144,8 +151,12 @@ public class SqlMapContainer {
 		Connection conn = null;
 		try {
 			conn = com.glaf.core.jdbc.DBConnectionFactory.getConnection();
-			getEntityDAO().setConnection(conn);
-			return getEntityDAO().getSingleObject(statementId, parameterObject);
+			if (conn != null) {
+				getEntityDAO().setConnection(conn);
+				return getEntityDAO().getSingleObject(statementId,
+						parameterObject);
+			}
+			return null;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			logger.error(ex);
