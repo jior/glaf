@@ -71,7 +71,7 @@ public class MxTablePageServiceImpl implements ITablePageService {
 				.getMyBatisAndConditionSql(conditions);
 		StringBuilder buffer = new StringBuilder();
 		buffer.append(querySql);
-		if (querySql.toUpperCase().indexOf(" where ") == -1) {
+		if (querySql.toUpperCase().indexOf(" WHERE ") == -1) {
 			buffer.append(" where 1=1 ");
 		}
 		String sql = buffer.toString() + sqlExecutor.getSql();
