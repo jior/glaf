@@ -17,14 +17,16 @@
  */
 package com.glaf.core.web.servlet;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.zip.GZIPOutputStream;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -37,6 +39,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.IOUtils;
@@ -49,7 +53,22 @@ public class WebResourceServlet extends HttpServlet {
 	protected static final Log logger = LogFactory
 			.getLog(WebResourceServlet.class);
 
+	protected static Configuration conf = BaseConfiguration.create();
+
 	protected static ConcurrentMap<String, String> mimeMapping = new ConcurrentHashMap<String, String>();
+
+	protected boolean isGZIPSupported(HttpServletRequest req) {
+		String browserEncodings = req.getHeader("accept-encoding");
+		boolean supported = ((browserEncodings != null) && (browserEncodings
+				.indexOf("gzip") != -1));
+		String userAgent = req.getHeader("user-agent");
+		if ((userAgent != null) && userAgent.startsWith("httpunit")) {
+			logger.debug("httpunit detected, disabling filter...");
+			return false;
+		} else {
+			return supported;
+		}
+	}
 
 	@Override
 	protected void doGet(HttpServletRequest request,
@@ -87,6 +106,7 @@ public class WebResourceServlet extends HttpServlet {
 		int dot = file.lastIndexOf(".");
 		String ext = file.substring(dot + 1);
 		String contentType = "";
+		boolean requiredZip = false;
 		if (StringUtils.equalsIgnoreCase(ext, "jpg")
 				|| StringUtils.equalsIgnoreCase(ext, "jpeg")
 				|| StringUtils.equalsIgnoreCase(ext, "gif")
@@ -95,17 +115,23 @@ public class WebResourceServlet extends HttpServlet {
 			contentType = "image/" + ext;
 		} else if (StringUtils.equalsIgnoreCase(ext, "svg")) {
 			contentType = "image/svg+xml";
+			requiredZip = true;
 		} else if (StringUtils.equalsIgnoreCase(ext, "css")) {
 			contentType = "text/css";
+			requiredZip = true;
 		} else if (StringUtils.equalsIgnoreCase(ext, "txt")) {
 			contentType = "text/plain";
+			requiredZip = true;
 		} else if (StringUtils.equalsIgnoreCase(ext, "htm")
 				|| StringUtils.equalsIgnoreCase(ext, "html")) {
 			contentType = "text/html";
+			requiredZip = true;
 		} else if (StringUtils.equalsIgnoreCase(ext, "js")) {
 			contentType = "application/javascript";
+			requiredZip = true;
 		} else if (StringUtils.equalsIgnoreCase(ext, "ttf")) {
 			contentType = "application/x-font-ttf";
+			requiredZip = true;
 		} else if (StringUtils.equalsIgnoreCase(ext, "eot")) {
 			contentType = "application/vnd.ms-fontobject";
 		} else if (StringUtils.equalsIgnoreCase(ext, "woff")) {
@@ -120,12 +146,28 @@ public class WebResourceServlet extends HttpServlet {
 			resPath = resPath.substring(7, resPath.length());
 		}
 
+		if (requiredZip && isGZIPSupported(request)
+				&& conf.getBoolean("gzipEnabled", true)) {
+			requiredZip = true;
+		} else {
+			requiredZip = false;
+		}
+
 		InputStream inputStream = null;
-		ServletOutputStream outraw = null;
+		ServletOutputStream output = null;
+		boolean zipFlag = false;
+		byte[] raw = null;
 		try {
-			outraw = response.getOutputStream();
-			byte[] raw = WebResource.getData(resPath);
+			output = response.getOutputStream();
+			raw = WebResource.getData(resPath);
+			if (requiredZip) {
+				raw = WebResource.getData(resPath + ".gz");
+				if (raw != null) {
+					zipFlag = true;
+				}
+			}
 			if (raw == null) {
+				zipFlag = false;
 				String filename = SystemProperties.getAppPath() + resPath;
 				File filex = new File(filename);
 				if (filex.exists() && filex.isFile()) {
@@ -135,19 +177,52 @@ public class WebResourceServlet extends HttpServlet {
 					inputStream = WebResourceServlet.class
 							.getResourceAsStream(resPath);
 				}
+				logger.debug("load resource:" + resPath);
 				raw = FileUtils.getBytes(inputStream);
 				WebResource.setBytes(resPath, raw);
-				logger.debug("load resource:" + resPath);
+
+				GZIPOutputStream gzipStream = null;
+				ByteArrayOutputStream compressedContent = null;
+				try {
+					// prepare a gzip stream
+					compressedContent = new ByteArrayOutputStream();
+					gzipStream = new GZIPOutputStream(compressedContent);
+					gzipStream.write(raw);
+					gzipStream.finish();
+					// get the compressed content
+					byte[] compressedBytes = compressedContent.toByteArray();
+					WebResource.setBytes(resPath + ".gz", compressedBytes);
+					logger.debug(resPath + " raw size:" + raw.length
+							+ " gzip compressed size:" + compressedBytes.length);
+					if (requiredZip) {
+						raw = compressedBytes;
+						zipFlag = true;
+					}
+				} catch (Exception ex) {
+					zipFlag = false;
+				} finally {
+					IOUtils.closeStream(compressedContent);
+					IOUtils.closeStream(gzipStream);
+				}
 			}
+
+			if (zipFlag) {
+				response.addHeader("Content-Encoding", "gzip");
+			}
+
 			response.setStatus(HttpServletResponse.SC_OK);
 			response.setContentType(contentType);
 			response.setContentLength(raw.length);
-			outraw.write(raw);
+			output.write(raw);
+			output.flush();
+			IOUtils.closeStream(output);
+
 		} catch (IOException ex) {
 			// ex.printStackTrace();
 		} finally {
+			raw = null;
 			IOUtils.closeStream(inputStream);
-			IOUtils.closeStream(outraw);
+			IOUtils.closeStream(output);
 		}
 
 		response.flushBuffer();
