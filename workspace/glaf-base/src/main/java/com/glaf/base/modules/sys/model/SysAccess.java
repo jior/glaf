@@ -22,7 +22,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.alibaba.fastjson.JSONObject;
@@ -38,14 +37,12 @@ public class SysAccess implements Serializable, JSONable {
 	/**
 	 * 应用编号
 	 */
-	@Id
 	@Column(name = "APPID", nullable = false)
 	protected long appId;
 
 	/**
 	 * 部门角色编号(对应SYS_DEPT_ROLE的ID字段)
 	 */
-	@Id
 	@Column(name = "ROLEID", nullable = false)
 	protected long roleId;
 

@@ -22,14 +22,16 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
+import javax.sql.DataSource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.glaf.core.context.ContextFactory;
 import com.glaf.core.dao.EntityDAO;
 import com.glaf.core.util.JdbcUtils;
 import com.glaf.core.util.LogUtils;
-
 import com.glaf.jbpm.context.JbpmBeanFactory;
 
 public class SqlMapContainer {
@@ -74,7 +76,8 @@ public class SqlMapContainer {
 		}
 		Connection conn = null;
 		try {
-			conn = com.glaf.core.jdbc.DBConnectionFactory.getConnection();
+			DataSource dataSource = ContextFactory.getBean("dataSource");
+			conn = dataSource.getConnection();
 			if (conn != null) {
 				getEntityDAO().setConnection(conn);
 				if (StringUtils.equalsIgnoreCase("insert", operation)) {
@@ -111,7 +114,8 @@ public class SqlMapContainer {
 		}
 		Connection conn = null;
 		try {
-			conn = com.glaf.core.jdbc.DBConnectionFactory.getConnection();
+			DataSource dataSource = ContextFactory.getBean("dataSource");
+			conn = dataSource.getConnection();
 			if (conn != null) {
 				getEntityDAO().setConnection(conn);
 				return getEntityDAO().getList(statementId, parameterObject);
@@ -150,7 +154,8 @@ public class SqlMapContainer {
 		}
 		Connection conn = null;
 		try {
-			conn = com.glaf.core.jdbc.DBConnectionFactory.getConnection();
+			DataSource dataSource = ContextFactory.getBean("dataSource");
+			conn = dataSource.getConnection();
 			if (conn != null) {
 				getEntityDAO().setConnection(conn);
 				return getEntityDAO().getSingleObject(statementId,
