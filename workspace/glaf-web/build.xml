@@ -69,6 +69,18 @@
 			<fileset dir="web" includes="**/*.*" excludes="**/*.jar,**/*.class,**/archives/*.*,**/*.ttc,**/*.lib,**/*.dll,**/*.so, **/data/index/**/*.*,**/examples/**/*.*, **/locks" casesensitive="yes" />
 		</jar>
 
+		<jar jarfile="glaf-dojo-resource.jar">
+			<fileset dir="static/dojo" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
+		</jar>
+
+		<jar jarfile="glaf-extjs3-resource.jar">
+			<fileset dir="static/extjs3" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
+		</jar>
+
+		<jar jarfile="glaf-extjs5-resource.jar">
+			<fileset dir="static/extjs5" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
+		</jar>
+
 		<jar jarfile="glaf-min-web.zip">
 			<fileset dir="WebContent" includes="**/*.*" excludes="**/*.jar,**/*.class,**/archives/*.*,**/*.ttc,**/*.lib,**/*.dll,**/*.so, **/data/index/**/*.*,**/examples/**/*.*,**/logs/**/*.*, **/locks" casesensitive="yes" />
 		</jar>

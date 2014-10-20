@@ -142,10 +142,6 @@ public class WebResourceServlet extends HttpServlet {
 			contentType = mimeMapping.get(ext.trim().toLowerCase());
 		}
 
-		if (StringUtils.startsWith(resPath, "/static")) {
-			resPath = resPath.substring(7, resPath.length());
-		}
-
 		if (requiredZip && isGZIPSupported(request)
 				&& conf.getBoolean("gzipEnabled", true)) {
 			requiredZip = true;
