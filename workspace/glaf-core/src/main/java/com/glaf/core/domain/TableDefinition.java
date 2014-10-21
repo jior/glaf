@@ -188,6 +188,9 @@ public class TableDefinition implements java.io.Serializable,
 	@Column(name = "TABLENAME_", length = 50)
 	protected String tableName;
 
+	@javax.persistence.Transient
+	protected String name;
+
 	/**
 	 * 是否临时表
 	 */
@@ -387,6 +390,10 @@ public class TableDefinition implements java.io.Serializable,
 		return moduleName;
 	}
 
+	public String getName() {
+		return name;
+	}
+
 	public Long getNodeId() {
 		return nodeId;
 	}
@@ -564,6 +571,10 @@ public class TableDefinition implements java.io.Serializable,
 
 	public void setModuleName(String moduleName) {
 		this.moduleName = moduleName;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public void setNodeId(Long nodeId) {
