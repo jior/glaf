@@ -381,6 +381,9 @@ public class DBConfiguration {
 	}
 
 	public static Properties getDataSourcePropertiesByName(String name) {
+		if (name == null) {
+			return null;
+		}
 		logger.debug("->name:" + name);
 		ConnectionDefinition conn = getConnectionDefinition(name);
 		Properties props = toProperties(conn);
@@ -463,6 +466,9 @@ public class DBConfiguration {
 	}
 
 	public static Properties getProperties(String name) {
+		if (name == null) {
+			return null;
+		}
 		if (dataSourceProperties.isEmpty()) {
 			reloadDS();
 		}
@@ -472,6 +478,9 @@ public class DBConfiguration {
 	}
 
 	public static Properties getTemplateProperties(String name) {
+		if (name == null) {
+			return null;
+		}
 		if (jdbcTemplateProperties.isEmpty()) {
 			init();
 		}
