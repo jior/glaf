@@ -39,9 +39,13 @@ public class WebResource {
 
 	protected static final String WEB_RESOURCE_REGION = "web_resource_region";
 
+	private WebResource() {
+
+	}
+
 	public static byte[] getData(String path) {
 		if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
-			return ResourceFactory.getData(WEB_RESOURCE_REGION, path);
+			return ResourceFactory.getData(getWebResourceRegin(), path);
 		}
 		return concurrentMap.get(path);
 	}
@@ -57,13 +61,28 @@ public class WebResource {
 		return total;
 	}
 
+	public static String getWebResourceRegin() {
+		String contextPath = com.glaf.core.context.ApplicationContext
+				.getContextPath();
+		if (contextPath == null) {
+			contextPath = "glaf";
+		}
+		if (contextPath.startsWith("/")) {
+			contextPath = contextPath.substring(1);
+		}
+		if (StringUtils.isNotEmpty(conf.get("web.resource.region"))) {
+			return contextPath + "_" + conf.get("web.resource.region");
+		}
+		return contextPath + "_" + WEB_RESOURCE_REGION;
+	}
+
 	protected static void remove(String path) {
 		Iterator<String> iterator = concurrentMap.keySet().iterator();
 		while (iterator.hasNext()) {
 			String key = iterator.next();
 			if (StringUtils.startsWith(key, path)) {
 				if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
-					ResourceFactory.remove(WEB_RESOURCE_REGION, key);
+					ResourceFactory.remove(getWebResourceRegin(), key);
 				} else {
 					concurrentMap.remove(key);
 				}
@@ -74,7 +93,7 @@ public class WebResource {
 
 	protected static void removeAll() {
 		if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
-			ResourceFactory.clear(WEB_RESOURCE_REGION);
+			ResourceFactory.clear(getWebResourceRegin());
 		} else {
 			concurrentMap.clear();
 		}
@@ -87,7 +106,7 @@ public class WebResource {
 			String key = iterator.next();
 			if (StringUtils.equals(key, file)) {
 				if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
-					ResourceFactory.remove(WEB_RESOURCE_REGION, key);
+					ResourceFactory.remove(getWebResourceRegin(), key);
 				} else {
 					concurrentMap.remove(key);
 				}
@@ -102,7 +121,7 @@ public class WebResource {
 				&& bytes.length < conf.getInt("web.resource.cache.size",
 						5000000)) {
 			if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
-				ResourceFactory.put(WEB_RESOURCE_REGION, path, bytes);
+				ResourceFactory.put(getWebResourceRegin(), path, bytes);
 			} else {
 				concurrentMap.put(path, bytes);
 			}
@@ -110,7 +129,4 @@ public class WebResource {
 		}
 	}
 
-	private WebResource() {
-
-	}
 }

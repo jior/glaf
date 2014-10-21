@@ -188,8 +188,9 @@ public class WebResourceServlet extends HttpServlet {
 					// get the compressed content
 					byte[] compressedBytes = compressedContent.toByteArray();
 					WebResource.setBytes(resPath + ".gz", compressedBytes);
-					logger.debug(resPath + " raw size:" + raw.length
-							+ " gzip compressed size:" + compressedBytes.length);
+					logger.debug(resPath + " raw size:[" + raw.length
+							+ "] gzip compressed size:["
+							+ compressedBytes.length + "]");
 					if (requiredZip) {
 						raw = compressedBytes;
 						zipFlag = true;
