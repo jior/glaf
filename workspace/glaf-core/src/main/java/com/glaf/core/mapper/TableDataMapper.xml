@@ -110,6 +110,10 @@
 			<foreach collection="extendedColumns" item="column">
 				<if test="column.value != null">
 					<choose>
+					    <when test="column.javaType == 'Boolean'">
+							${column.columnName} = #{column.value,
+							jdbcType=BOOLEAN},
+						</when>
 						<when test="column.javaType == 'Integer'">
 							${column.columnName} = #{column.value,
 							jdbcType=INTEGER},

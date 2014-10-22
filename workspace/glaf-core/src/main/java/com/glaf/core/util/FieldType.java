@@ -43,6 +43,7 @@ public class FieldType {
 	public static final int CHAR_TYPE = Types.CHAR;
 
 	public static final int SHORT_TYPE = Types.SMALLINT;
+	
 
 	public static final int LONG_TYPE = Types.BIGINT;
 

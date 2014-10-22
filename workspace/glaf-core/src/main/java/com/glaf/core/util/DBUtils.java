@@ -157,6 +157,8 @@ public class DBUtils {
 							sql += " clob(10240000) ";
 						} else if ("Blob".equals(javaType)) {
 							sql += " blob ";
+						} else if ("Boolean".equals(javaType)) {
+							sql += " smallint ";
 						}
 					} else if ("oracle".equalsIgnoreCase(dbType)) {
 						if ("String".equals(javaType)) {
@@ -177,6 +179,8 @@ public class DBUtils {
 							sql += " CLOB ";
 						} else if ("Blob".equals(javaType)) {
 							sql += " BLOB ";
+						} else if ("Boolean".equals(javaType)) {
+							sql += " NUMBER(1,0) ";
 						}
 					} else if ("mysql".equalsIgnoreCase(dbType)) {
 						if ("String".equals(javaType)) {
@@ -197,6 +201,8 @@ public class DBUtils {
 							sql += " longtext ";
 						} else if ("Blob".equals(javaType)) {
 							sql += " longblob ";
+						} else if ("Boolean".equals(javaType)) {
+							sql += " tinyint ";
 						}
 					} else if ("postgresql".equalsIgnoreCase(dbType)) {
 						if ("String".equals(javaType)) {
@@ -217,6 +223,8 @@ public class DBUtils {
 							sql += " text ";
 						} else if ("Blob".equals(javaType)) {
 							sql += " bytea ";
+						} else if ("Boolean".equals(javaType)) {
+							sql += " boolean ";
 						}
 					} else if ("sqlserver".equalsIgnoreCase(dbType)) {
 						if ("String".equals(javaType)) {
@@ -237,6 +245,8 @@ public class DBUtils {
 							sql += " text ";
 						} else if ("Blob".equals(javaType)) {
 							sql += " image ";
+						} else if ("Boolean".equals(javaType)) {
+							sql += " tinyint ";
 						}
 					} else if ("h2".equalsIgnoreCase(dbType)) {
 						if ("String".equals(javaType)) {
@@ -258,7 +268,7 @@ public class DBUtils {
 						} else if ("Blob".equals(javaType)) {
 							sql += " longvarbinary ";
 						} else if ("Boolean".equals(javaType)) {
-							sql += " BOOLEAN ";
+							sql += " boolean ";
 						}
 					} else if ("sqlite".equalsIgnoreCase(dbType)) {
 						if ("String".equals(javaType)) {
@@ -299,6 +309,8 @@ public class DBUtils {
 							sql += " clob ";
 						} else if ("Blob".equals(javaType)) {
 							sql += " blob ";
+						} else if ("Boolean".equals(javaType)) {
+							sql += " boolean ";
 						}
 					}
 					logger.info("execute alter:" + sql);
@@ -693,6 +705,8 @@ public class DBUtils {
 				buffer.append(" clob ");
 			} else if ("Blob".equals(field.getJavaType())) {
 				buffer.append(" longvarbinary ");
+			} else if ("Boolean".equals(field.getJavaType())) {
+				buffer.append(" boolean ");
 			} else if ("String".equals(field.getJavaType())) {
 				buffer.append(" varchar ");
 				if (field.getLength() > 0) {
@@ -714,6 +728,8 @@ public class DBUtils {
 				buffer.append(" clob (10240000) ");
 			} else if ("Blob".equals(field.getJavaType())) {
 				buffer.append(" blob ");
+			} else if ("Boolean".equals(field.getJavaType())) {
+				buffer.append(" smallint ");
 			} else if ("String".equals(field.getJavaType())) {
 				buffer.append(" varchar ");
 				if (field.getLength() > 0) {
@@ -735,6 +751,8 @@ public class DBUtils {
 				buffer.append(" CLOB ");
 			} else if ("Blob".equals(field.getJavaType())) {
 				buffer.append(" BLOB ");
+			} else if ("Boolean".equals(field.getJavaType())) {
+				buffer.append(" NUMBER(1,0) ");
 			} else if ("String".equals(field.getJavaType())) {
 				buffer.append(" NVARCHAR2 ");
 				if (field.getLength() > 0) {
@@ -756,6 +774,8 @@ public class DBUtils {
 				buffer.append(" longtext ");
 			} else if ("Blob".equals(field.getJavaType())) {
 				buffer.append(" longblob ");
+			} else if ("Boolean".equals(field.getJavaType())) {
+				buffer.append(" tinyint ");
 			} else if ("String".equals(field.getJavaType())) {
 				buffer.append(" varchar");
 				if (field.getLength() > 0) {
@@ -777,6 +797,8 @@ public class DBUtils {
 				buffer.append(" text ");
 			} else if ("Blob".equals(field.getJavaType())) {
 				buffer.append(" image ");
+			} else if ("Boolean".equals(field.getJavaType())) {
+				buffer.append(" tinyint ");
 			} else if ("String".equals(field.getJavaType())) {
 				buffer.append(" nvarchar ");
 				if (field.getLength() > 0) {
@@ -798,6 +820,8 @@ public class DBUtils {
 				buffer.append(" text ");
 			} else if ("Blob".equals(field.getJavaType())) {
 				buffer.append(" bytea ");
+			} else if ("Boolean".equals(field.getJavaType())) {
+				buffer.append(" boolean ");
 			} else if ("String".equals(field.getJavaType())) {
 				buffer.append(" varchar ");
 				if (field.getLength() > 0) {
@@ -904,6 +928,7 @@ public class DBUtils {
 			rs = metaData.getColumns(null, null, tableName, null);
 			while (rs.next()) {
 				String columnName = rs.getString("COLUMN_NAME");
+				String typeName = rs.getString("TYPE_NAME");
 				int dataType = rs.getInt("DATA_TYPE");
 				int nullable = rs.getInt("NULLABLE");
 				int length = rs.getInt("COLUMN_SIZE");
@@ -933,6 +958,14 @@ public class DBUtils {
 					if (column.getLength() == 19) {
 						column.setJavaType("Long");
 					}
+				}
+
+				if (StringUtils.equalsIgnoreCase(typeName, "bool")
+						|| StringUtils.equalsIgnoreCase(typeName, "boolean")
+						|| StringUtils.equalsIgnoreCase(typeName, "bit")
+						|| StringUtils.equalsIgnoreCase(typeName, "tinyint")
+						|| StringUtils.equalsIgnoreCase(typeName, "smallint")) {
+					column.setJavaType("Boolean");
 				}
 
 				if (primaryKeys.contains(columnName.toLowerCase())) {
@@ -980,10 +1013,12 @@ public class DBUtils {
 			rs = metaData.getColumns(null, null, tableName, null);
 			while (rs.next()) {
 				String name = rs.getString("COLUMN_NAME");
+				String typeName = rs.getString("TYPE_NAME");
 				int dataType = rs.getInt("DATA_TYPE");
 				int nullable = rs.getInt("NULLABLE");
 				int length = rs.getInt("COLUMN_SIZE");
 				int ordinal = rs.getInt("ORDINAL_POSITION");
+
 				ColumnDefinition column = new ColumnDefinition();
 				column.setColumnName(name);
 				column.setJavaType(FieldType.getJavaType(dataType));
@@ -995,6 +1030,9 @@ public class DBUtils {
 				column.setLength(length);
 				column.setOrdinal(ordinal);
 
+				logger.debug(name + " typeName:" + typeName + "[" + dataType
+						+ "] " + FieldType.getJavaType(dataType));
+
 				if ("String".equals(column.getJavaType())) {
 					if (column.getLength() > 8000) {
 						column.setJavaType("Clob");
@@ -1005,6 +1043,14 @@ public class DBUtils {
 					if (column.getLength() == 19) {
 						column.setJavaType("Long");
 					}
+				}
+
+				if (StringUtils.equalsIgnoreCase(typeName, "bool")
+						|| StringUtils.equalsIgnoreCase(typeName, "boolean")
+						|| StringUtils.equalsIgnoreCase(typeName, "bit")
+						|| StringUtils.equalsIgnoreCase(typeName, "tinyint")
+						|| StringUtils.equalsIgnoreCase(typeName, "smallint")) {
+					column.setJavaType("Boolean");
 				}
 
 				if (primaryKeys.contains(name)
@@ -1323,6 +1369,8 @@ public class DBUtils {
 					buffer.append(" clob (10240000) ");
 				} else if ("Blob".equals(column.getJavaType())) {
 					buffer.append(" blob ");
+				} else if ("Boolean".equals(column.getJavaType())) {
+					buffer.append(" smallint ");
 				} else if ("String".equals(column.getJavaType())) {
 					buffer.append(" varchar ");
 					if (column.getLength() > 0 && column.getLength() <= 4000) {
@@ -1345,6 +1393,8 @@ public class DBUtils {
 					buffer.append(" CLOB ");
 				} else if ("Blob".equals(column.getJavaType())) {
 					buffer.append(" BLOB ");
+				} else if ("Boolean".equals(column.getJavaType())) {
+					buffer.append(" NUMBER(1,0) ");
 				} else if ("String".equals(column.getJavaType())) {
 					buffer.append(" NVARCHAR2 ");
 					if (column.getLength() > 0 && column.getLength() <= 4000) {
@@ -1367,6 +1417,8 @@ public class DBUtils {
 					buffer.append(" longtext ");
 				} else if ("Blob".equals(column.getJavaType())) {
 					buffer.append(" longblob ");
+				} else if ("Boolean".equals(column.getJavaType())) {
+					buffer.append(" tinyint ");
 				} else if ("String".equals(column.getJavaType())) {
 					buffer.append(" varchar ");
 					if (column.getLength() > 0 && column.getLength() <= 4000) {
@@ -1389,6 +1441,10 @@ public class DBUtils {
 					buffer.append(" text ");
 				} else if ("Blob".equals(column.getJavaType())) {
 					buffer.append(" image ");
+				} else if ("Boolean".equals(column.getJavaType())) {
+					buffer.append(" tinyint ");
+				} else if ("Boolean".equals(column.getJavaType())) {
+					buffer.append(" tinyint ");
 				} else if ("String".equals(column.getJavaType())) {
 					buffer.append(" nvarchar ");
 					if (column.getLength() > 0 && column.getLength() <= 4000) {
@@ -1411,6 +1467,8 @@ public class DBUtils {
 					buffer.append(" text ");
 				} else if ("Blob".equals(column.getJavaType())) {
 					buffer.append(" bytea ");
+				} else if ("Boolean".equals(column.getJavaType())) {
+					buffer.append(" boolean ");
 				} else if ("String".equals(column.getJavaType())) {
 					buffer.append(" varchar ");
 					if (column.getLength() > 0 && column.getLength() <= 4000) {
@@ -1429,12 +1487,12 @@ public class DBUtils {
 					buffer.append(" double ");
 				} else if ("Date".equals(column.getJavaType())) {
 					buffer.append(" timestamp ");
-				} else if ("Boolean".equals(column.getJavaType())) {
-					buffer.append(" boolean   ");
 				} else if ("Clob".equals(column.getJavaType())) {
 					buffer.append(" clob ");
 				} else if ("Blob".equals(column.getJavaType())) {
 					buffer.append(" longvarbinary ");
+				} else if ("Boolean".equals(column.getJavaType())) {
+					buffer.append(" boolean ");
 				} else if ("String".equals(column.getJavaType())) {
 					buffer.append(" varchar ");
 					if (column.getLength() > 0 && column.getLength() <= 4000) {
@@ -1648,6 +1706,8 @@ public class DBUtils {
 					buffer.append(" clob (10240000) ");
 				} else if ("Blob".equals(field.getJavaType())) {
 					buffer.append(" blob ");
+				} else if ("Boolean".equals(field.getJavaType())) {
+					buffer.append(" smallint ");
 				} else if ("String".equals(field.getJavaType())) {
 					buffer.append(" varchar ");
 					if (field.getLength() > 0) {
@@ -1670,6 +1730,8 @@ public class DBUtils {
 					buffer.append(" CLOB ");
 				} else if ("Blob".equals(field.getJavaType())) {
 					buffer.append(" BLOB ");
+				} else if ("Boolean".equals(field.getJavaType())) {
+					buffer.append(" NUMBER(1,0) ");
 				} else if ("String".equals(field.getJavaType())) {
 					buffer.append(" NVARCHAR2 ");
 					if (field.getLength() > 0) {
@@ -1692,6 +1754,8 @@ public class DBUtils {
 					buffer.append(" longtext ");
 				} else if ("Blob".equals(field.getJavaType())) {
 					buffer.append(" longblob ");
+				} else if ("Boolean".equals(field.getJavaType())) {
+					buffer.append(" tinyint ");
 				} else if ("String".equals(field.getJavaType())) {
 					buffer.append(" varchar ");
 					if (field.getLength() > 0) {
@@ -1714,6 +1778,8 @@ public class DBUtils {
 					buffer.append(" text ");
 				} else if ("Blob".equals(field.getJavaType())) {
 					buffer.append(" image ");
+				} else if ("Boolean".equals(field.getJavaType())) {
+					buffer.append(" tinyint ");
 				} else if ("String".equals(field.getJavaType())) {
 					buffer.append(" nvarchar ");
 					if (field.getLength() > 0) {
@@ -1736,6 +1802,8 @@ public class DBUtils {
 					buffer.append(" text ");
 				} else if ("Blob".equals(field.getJavaType())) {
 					buffer.append(" bytea ");
+				} else if ("Boolean".equals(field.getJavaType())) {
+					buffer.append(" boolean ");
 				} else if ("String".equals(field.getJavaType())) {
 					buffer.append(" varchar ");
 					if (field.getLength() > 0) {
@@ -1896,6 +1964,8 @@ public class DBUtils {
 				buffer.append(" clob (10240000) ");
 			} else if ("Blob".equals(field.getJavaType())) {
 				buffer.append(" blob ");
+			} else if ("Boolean".equals(field.getJavaType())) {
+				buffer.append(" smallint ");
 			} else if ("String".equals(field.getJavaType())) {
 				buffer.append(" varchar ");
 				if (field.getLength() > 0) {
@@ -1917,6 +1987,8 @@ public class DBUtils {
 				buffer.append(" CLOB ");
 			} else if ("Blob".equals(field.getJavaType())) {
 				buffer.append(" BLOB ");
+			} else if ("Boolean".equals(field.getJavaType())) {
+				buffer.append(" NUMBER(1,0) ");
 			} else if ("String".equals(field.getJavaType())) {
 				buffer.append(" NVARCHAR2 ");
 				if (field.getLength() > 0) {
@@ -1938,6 +2010,8 @@ public class DBUtils {
 				buffer.append(" longtext ");
 			} else if ("Blob".equals(field.getJavaType())) {
 				buffer.append(" longblob ");
+			} else if ("Boolean".equals(field.getJavaType())) {
+				buffer.append(" tinyint ");
 			} else if ("String".equals(field.getJavaType())) {
 				buffer.append(" varchar");
 				if (field.getLength() > 0) {
@@ -1959,6 +2033,8 @@ public class DBUtils {
 				buffer.append(" text ");
 			} else if ("Blob".equals(field.getJavaType())) {
 				buffer.append(" image ");
+			} else if ("Boolean".equals(field.getJavaType())) {
+				buffer.append(" tinyint ");
 			} else if ("String".equals(field.getJavaType())) {
 				buffer.append(" nvarchar ");
 				if (field.getLength() > 0) {
@@ -1980,6 +2056,8 @@ public class DBUtils {
 				buffer.append(" text ");
 			} else if ("Blob".equals(field.getJavaType())) {
 				buffer.append(" bytea ");
+			} else if ("Boolean".equals(field.getJavaType())) {
+				buffer.append(" boolean ");
 			} else if ("String".equals(field.getJavaType())) {
 				buffer.append(" varchar ");
 				if (field.getLength() > 0) {

@@ -440,15 +440,16 @@ public class MxSystemDbTableController {
 	public void genCreateScripts(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		StringBuffer sb = new StringBuffer();
-		String tables = request.getParameter("tables");
+		String tableNames = request.getParameter("tables");
 		String dbType = request.getParameter("dbType");
-		if (StringUtils.isNotEmpty(dbType) && StringUtils.isNotEmpty(tables)) {
-			List<String> list = StringTools.split(tables);
-			for (String table : list) {
+		if (StringUtils.isNotEmpty(dbType)
+				&& StringUtils.isNotEmpty(tableNames)) {
+			List<String> list = StringTools.split(tableNames);
+			for (String tableName : list) {
 				List<ColumnDefinition> columns = DBUtils
-						.getColumnDefinitions(table);
+						.getColumnDefinitions(tableName);
 				TableDefinition tableDefinition = new TableDefinition();
-				tableDefinition.setTableName(table);
+				tableDefinition.setTableName(tableName);
 				tableDefinition.setColumns(columns);
 				for (ColumnDefinition column : columns) {
 					if (column.isPrimaryKey()) {
@@ -466,7 +467,8 @@ public class MxSystemDbTableController {
 
 		try {
 			ResponseUtils.download(request, response, sb.toString().getBytes(),
-					"createTable_" + DateUtils.getDate(new Date()) + ".sql");
+					"createTable_" + DateUtils.getDate(new Date()) + "."
+							+ dbType + ".sql");
 		} catch (ServletException ex) {
 			ex.printStackTrace();
 		}
