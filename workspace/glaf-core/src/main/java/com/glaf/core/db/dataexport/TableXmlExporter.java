@@ -64,6 +64,9 @@ public class TableXmlExporter {
 				if ("filedot".equalsIgnoreCase(tableName)) {
 					continue;
 				}
+				if (StringUtils.endsWithIgnoreCase(tableName, "log")) {
+					continue;
+				}
 				this.exportXml(systemName, rootDir, tableName,
 						tableName.toLowerCase(), pageSize);
 			}

@@ -76,7 +76,7 @@ public class MxSystemDbTableController {
 	protected ITablePageService tablePageService;
 
 	protected ISystemParamService systemParamService;
-	
+
 	@RequestMapping("/edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
@@ -162,6 +162,9 @@ public class MxSystemDbTableController {
 			List<String> list = StringTools.split(tables);
 			for (String tablename : list) {
 				if (StringUtils.isNotEmpty(tablename)) {
+					if (StringUtils.endsWithIgnoreCase(tablename, "log")) {
+						continue;
+					}
 					logger.debug("process table:" + tablename);
 					List<ColumnDefinition> columns = DBUtils
 							.getColumnDefinitions(tablename);

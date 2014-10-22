@@ -27,6 +27,7 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -263,6 +264,9 @@ public class DbTableToSqliteExporter {
 			while (rs.next()) {
 				String tableName = rs.getString("TABLE_NAME");
 				if (DBUtils.isTemoraryTable(tableName)) {
+					continue;
+				}
+				if (StringUtils.endsWithIgnoreCase(tableName, "log")) {
 					continue;
 				}
 				tables.add(tableName);

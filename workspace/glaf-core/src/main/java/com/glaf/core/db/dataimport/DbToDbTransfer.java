@@ -83,7 +83,10 @@ public class DbToDbTransfer {
 				if ("filedot".equalsIgnoreCase(tableName)) {
 					continue;
 				}
-				if ("mx_lob".equalsIgnoreCase(tableName)) {
+				if ("sys_lob".equalsIgnoreCase(tableName)) {
+					continue;
+				}
+				if (StringUtils.endsWithIgnoreCase(tableName, "log")) {
 					continue;
 				}
 				tables.add(tableName);
