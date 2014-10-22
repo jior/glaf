@@ -86,7 +86,7 @@ function dict(form){
 		   id = e.value;
 		}     
 	  }
-	  var url="dictoryDefinition.do?method=edit&target=sys_dictory&nodeId="+id;
+	  var url="dictoryDefinition.do?method=edit&target=SYS_DICTORY&nodeId="+id;
 	  var link = "<%=request.getContextPath()%>/sys/"+url;
 	  var width=605;
 	  var height=380;
