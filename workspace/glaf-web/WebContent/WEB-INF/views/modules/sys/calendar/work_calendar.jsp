@@ -21,7 +21,7 @@ var year = <%=year%>;
 
 function goYear(i){  
   year=year+i;
-  window.location="workCalendar/showList?year="+year;
+  window.location="<%=request.getContextPath()%>/mx/sys/workCalendar/showList?year="+year;
 }
 function selDay(obj, month, day){
   if(obj.checked){
