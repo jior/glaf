@@ -1,0 +1,12 @@
+body {
+	margin: 0px; padding: 20px; font-family: helvetica,tahoma,verdana,sans-serif;
+}
+h2 {
+	margin: 0px 0px 15px; font-size: 18px; font-weight: bold;
+}
+.demo-info {
+	background: rgb(255, 254, 230); padding: 12px; color: rgb(143, 87, 0);
+}
+.demo-tip {
+	width: 16px; height: 16px; margin-right: 8px; float: left;
+}

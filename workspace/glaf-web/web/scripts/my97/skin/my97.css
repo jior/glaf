@@ -1,0 +1,12 @@
+.my97-wrap {
+	margin: 0px; padding: 0px; border: 1px solid rgb(149, 184, 231); border-image: none; overflow: hidden; vertical-align: middle; display: inline-block; white-space: nowrap; background-color: rgb(255, 255, 255);
+}
+.my97-text {
+	margin: 0px; padding: 0px 2px; border: 0px currentColor; border-image: none; width: 109px; height: 20px; line-height: 20px; font-size: 12px; vertical-align: baseline; _height: 18px; _line-height: 18px;
+}
+.my97-arrow {
+	background: url("images/datebox_arrow.png") no-repeat center rgb(224, 236, 255); width: 18px; height: 20px; overflow: hidden; vertical-align: top; display: inline-block; cursor: pointer; opacity: 0.6;
+}
+.my97-arrow-hover {
+	opacity: 1;
+}

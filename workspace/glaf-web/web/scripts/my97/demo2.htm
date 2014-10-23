@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>整合my97到easyui - jQuery EasyUI Demo</title>
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/default/global.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="./skin/my97.css">
+	<link rel="stylesheet" type="text/css" href="./skin/demo.css">
+	<script type="text/javascript" src="../jquery.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="./WdatePicker.js"></script>
+	<script type="text/javascript" src="./jquery.my97.js"></script>
+	<script trpe="text/javascript" src="../easyui/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<body>
+	<div id="count"></div>
+	<div class="easyui-panel" data-options="style:{position:'absolute',left:'50%',top:'50%',margin:'-86px 0 0 -200px'}" title="Register" style="width:400px;padding:10px;">
+		<form action="" id="form1">
+		<table>
+			<tr>
+				<td>my97:</td>
+				<td>
+					<input type="text" class="easyui-my97" data-options="required:true,disabled:false,value:'2012-12-13',minDate:'2012-12-12',maxDate:'2012-12-25'">
+				</td>
+			</tr>
+			<tr>
+				<td>User Name:</td>
+				<td><input type="text" class="normal-text" data-options="required:true,tipPositionX:'left',missingMessage:'右上角显示，黄色的哦。',validType:'length[3,10]'"></td>
+			</tr>
+			<tr>
+				<td>Email:</td>
+				<td><input type="text" class="easyui-validatebox normal-text" data-options="required:true,validType:'email',missingMessage:'右下角显示，绿色的呀'"></td>
+			</tr>
+			<tr>
+				<td>Birthday:</td>
+				<td><input type="text" class="easyui-datebox normal-text" data-options="required:true,tipPositionX:'right',missingMessage:'这个提示并没有覆盖日期按钮的哦，而原生的会覆盖的啦！',value:'2012-12-12'"></td>
+			</tr>
+			<tr>
+				<td>URL:</td>
+				<td><input type="text" class="easyui-validatebox normal-text" data-options="required:true,validType:'url',tipPositionY:'center',missingMessage:'右中显示，黑色的呀'"></td>
+			</tr>
+			<tr>
+				<td>Phone:</td>
+				<td><input type="text" class="easyui-validatebox normal-text" data-options="required:true,tipPositionX:'left',missingMessage:'左中显示,灰色的呀'"></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="button" onclick="$('#form1').form('validate')" value="校验表单"></td>
+			</tr>
+		</table>
+		</form>
+	</div>
+</body>
+</html>
