@@ -45,13 +45,14 @@ public class ThreadFactory {
 
 	private static synchronized MxThreadPoolExecutor getExecutor() {
 		if (executor == null) {
+			int numberOfProcessors = Runtime.getRuntime().availableProcessors();
 			TaskQueue taskqueue = new TaskQueue();
 			TaskThreadFactory tf = new TaskThreadFactory("thread-exec-", true,
 					Thread.NORM_PRIORITY);
 			executor = new MxThreadPoolExecutor(conf.getInt(
-					"ThreadPool.minThreads", 5), conf.getInt(
-					"ThreadPool.maxThreads", 50), 60, TimeUnit.SECONDS,
-					taskqueue, tf);
+					"ThreadPool.minThreads", 1), conf.getInt(
+					"ThreadPool.maxThreads", numberOfProcessors), 60,
+					TimeUnit.SECONDS, taskqueue, tf);
 			taskqueue.setParent((MxThreadPoolExecutor) executor);
 		}
 		return executor;

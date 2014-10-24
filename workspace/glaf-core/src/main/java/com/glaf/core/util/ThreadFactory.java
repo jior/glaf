@@ -30,9 +30,10 @@ public final class ThreadFactory {
 	protected final static Configuration conf = BaseConfiguration.create();
 
 	static {
+		int numberOfProcessors = Runtime.getRuntime().availableProcessors();
 		pool.setName("ThreadPool");
-		pool.setMinThreads(conf.getInt("ThreadPool.minThreads", 5));
-		pool.setMaxThreads(conf.getInt("ThreadPool.maxThreads", 50));
+		pool.setMinThreads(conf.getInt("ThreadPool.minThreads", 1));
+		pool.setMaxThreads(conf.getInt("ThreadPool.maxThreads", numberOfProcessors));
 		pool.setThreadsPriority(Thread.NORM_PRIORITY - 1);
 
 		try {
