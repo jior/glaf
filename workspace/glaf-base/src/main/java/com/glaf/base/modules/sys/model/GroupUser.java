@@ -21,6 +21,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -31,11 +32,11 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class GroupUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-
+	@Id
 	@Column(name = "GROUPID", length = 50, nullable = false)
 	protected String groupId;
 
-
+	@Id
 	@Column(name = "USERID", length = 50, nullable = false)
 	protected String userId;
 

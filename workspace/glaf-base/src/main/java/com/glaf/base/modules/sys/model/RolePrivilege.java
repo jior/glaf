@@ -22,6 +22,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.alibaba.fastjson.JSONObject;
@@ -37,12 +38,14 @@ public class RolePrivilege implements Serializable, JSONable {
 	/**
 	 * 应用编号
 	 */
+	@Id
 	@Column(name = "APPID", nullable = false)
 	protected long appId;
 
 	/**
 	 * 角色编号(对应SYS_ROLE的ID字段)
 	 */
+	@Id
 	@Column(name = "ROLEID", nullable = false)
 	protected long roleId;
 
