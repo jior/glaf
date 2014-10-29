@@ -815,7 +815,8 @@ public class BranchUserController {
 			 * 保证添加的部门是分级管理员管辖的部门
 			 */
 			if (loginContext.isSystemAdministrator()
-					|| nodeIds.contains(user.getDepartment().getNodeId())) {
+					|| (user.getDepartment() != null && nodeIds.contains(user
+							.getDepartment().getNodeId()))) {
 				if (StringUtils.equals(operation, "revoke")) {
 					sysUserService.deleteRoleUser(roleId, actorId);
 				} else {

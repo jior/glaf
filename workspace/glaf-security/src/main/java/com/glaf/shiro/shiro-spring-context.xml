@@ -14,20 +14,6 @@
 
 	<bean id="anyPermissionAuthorizationFilter" class="com.glaf.shiro.filter.AnyPermissionAuthorizationFilter" />
 
-	<bean id="shiroFilter" class="com.glaf.shiro.MyShiroFilterFactoryBean">
-		<property name="securityManager" ref="securityManager" />
-		<property name="loginUrl" value="/login.jsp" />
-		<property name="successUrl" value="/main.jsp" />
-		<property name="unauthorizedUrl" value="/unauthorized.jsp" />
-		<property name="filters">
-			<util:map>
-				<entry key="authc" value-ref="formAuthenticationFilter" />
-				<entry key="anyroles" value-ref="anyRoleAuthorizationFilter" />
-				<entry key="anyperms" value-ref="anyPermissionAuthorizationFilter" />
-			</util:map>
-		</property>
-	</bean>
-
 	<bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
 		<property name="cacheManager" ref="ehCacheManager" />
 	</bean>
@@ -43,13 +29,21 @@
 		<property name="host" value="127.0.0.1" /> <property name="port" value="6379" 
 		/> </bean> -->
 
-	<bean id="myShiroRealm" class="com.glaf.shiro.SystemRealm">
+	<bean id="userRealm" class="com.glaf.shiro.SystemRealm">
+		<property name="name" value="userRealm" />
 		<property name="cacheManager" ref="shiroCacheManager" />
 	</bean>
 
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-		<property name="realm" ref="myShiroRealm" />
+		<property name="realm" ref="userRealm" />
 		<property name="cacheManager" ref="shiroCacheManager" />
+	</bean>
+
+	<bean
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="staticMethod"
+			value="org.apache.shiro.SecurityUtils.setSecurityManager" />
+		<property name="arguments" ref="securityManager" />
 	</bean>
 
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
@@ -61,6 +55,20 @@
 	<bean
 		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
 		<property name="securityManager" ref="securityManager" />
+	</bean>
+
+	<bean id="shiroFilter" class="com.glaf.shiro.MyShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/login.jsp" />
+		<property name="successUrl" value="/main.jsp" />
+		<property name="unauthorizedUrl" value="/unauthorized.jsp" />
+		<property name="filters">
+			<util:map>
+				<entry key="authc" value-ref="formAuthenticationFilter" />
+				<entry key="anyroles" value-ref="anyRoleAuthorizationFilter" />
+				<entry key="anyperms" value-ref="anyPermissionAuthorizationFilter" />
+			</util:map>
+		</property>
 	</bean>
 
 </beans>

@@ -29,7 +29,6 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authc.credential.AllowAllCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -43,15 +42,38 @@ import com.glaf.core.security.LoginContext;
 public class SystemRealm extends AuthorizingRealm {
 	protected final static Log logger = LogFactory.getLog(SystemRealm.class);
 
-	public SystemRealm() {
-		super();
-		setName("SystemRealm");
-		setCredentialsMatcher(new AllowAllCredentialsMatcher());
+	public void clearAllCache() {
+		clearAllCachedAuthenticationInfo();
+		clearAllCachedAuthorizationInfo();
+	}
+
+	public void clearAllCachedAuthenticationInfo() {
+		getAuthenticationCache().clear();
+	}
+
+	public void clearAllCachedAuthorizationInfo() {
+		getAuthorizationCache().clear();
+	}
+
+	@Override
+	public void clearCache(PrincipalCollection principals) {
+		super.clearCache(principals);
+	}
+
+	@Override
+	public void clearCachedAuthenticationInfo(PrincipalCollection principals) {
+		super.clearCachedAuthenticationInfo(principals);
+	}
+
+	@Override
+	public void clearCachedAuthorizationInfo(PrincipalCollection principals) {
+		super.clearCachedAuthorizationInfo(principals);
 	}
 
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(
 			AuthenticationToken token) throws AuthenticationException {
+		logger.debug("----------------doGetAuthenticationInfo-----------------");
 		UsernamePasswordToken upToken = (UsernamePasswordToken) token;
 		String actorId = upToken.getUsername();
 		User user = IdentityFactory.getUser(actorId);
@@ -67,6 +89,7 @@ public class SystemRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(
 			PrincipalCollection principals) {
+		logger.debug("----------------doGetAuthorizationInfo-----------------");
 		if (principals == null) {
 			throw new AuthorizationException(
 					"PrincipalCollection method argument cannot be null.");
