@@ -94,7 +94,7 @@
 			document.getElementById("y").focus();
             return;
 		}
-        location.href="${contextPath}/mx/login/doLogin?x="+x+"&y=${sessionScope.x_y}"+y;
+        location.href="${contextPath}/mx/login/doLogin?x="+x+"&y=${sessionScope.x_y}"+y+"${sessionScope.x_z}";
 	}
 
 

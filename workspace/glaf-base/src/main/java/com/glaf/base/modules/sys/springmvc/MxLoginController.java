@@ -107,6 +107,10 @@ public class MxLoginController {
 		if (rand != null) {
 			password = StringTools.replace(password, rand, "");
 		}
+		String rand2 = (String) session.getAttribute("x_z");
+		if (rand2 != null) {
+			password = StringTools.replace(password, rand2, "");
+		}
 		String pwd = password;
 		try {
 			pwd = DigestUtil.digestString(password, "MD5");
@@ -269,12 +273,16 @@ public class MxLoginController {
 			String rand = Math.abs(random.nextInt(999999))
 					+ com.glaf.core.util.UUID32.getUUID()
 					+ Math.abs(random.nextInt(999999));
+			String rand2 = Math.abs(random.nextInt(9999))
+					+ com.glaf.core.util.UUID32.getUUID()
+					+ Math.abs(random.nextInt(9999)) + SystemConfig.getToken();
 			session = request.getSession(true);
 			if (session != null) {
 				session.setAttribute("x_y", rand);
+				session.setAttribute("x_z", rand2);
 			}
 			String url = request.getContextPath() + "/mx/login/doLogin?x="
-					+ actorId + "&y=" + rand + password;
+					+ actorId + "&y=" + rand + password+rand2;
 			try {
 				response.sendRedirect(url);
 				return null;
@@ -309,10 +317,11 @@ public class MxLoginController {
 			cacheKey = Constants.USER_CACHE + actorId;
 			CacheFactory.remove(cacheKey);
 			ShiroSecurity.logout();
+			request.getSession().invalidate();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		return new ModelAndView("/modules/login", modelMap);
+		return this.prepareLogin(request, modelMap);
 	}
 
 	/**
@@ -331,8 +340,12 @@ public class MxLoginController {
 		String rand = Math.abs(random.nextInt(9999))
 				+ com.glaf.core.util.UUID32.getUUID()
 				+ Math.abs(random.nextInt(9999)) + SystemConfig.getToken();
+		String rand2 = Math.abs(random.nextInt(9999))
+				+ com.glaf.core.util.UUID32.getUUID()
+				+ Math.abs(random.nextInt(9999)) + SystemConfig.getToken();
 		if (session != null) {
 			session.setAttribute("x_y", rand);
+			session.setAttribute("x_z", rand2);
 		}
 		// 显示登陆页面
 		return new ModelAndView("/modules/login", modelMap);
