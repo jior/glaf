@@ -26,7 +26,7 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.cfg.Environment;
 import org.hibernate.connection.ConnectionProvider;
 import org.hibernate.connection.ConnectionProviderFactory;
@@ -147,6 +147,11 @@ public class DruidConnectionProvider implements ConnectionProvider {
 						.trim());
 			}
 
+			String validationQuery = props.getProperty("druid.validationQuery");
+			if (StringUtils.isEmpty(validationQuery)) {
+				validationQuery = " SELECT 'x' ";
+			}
+
 			if (initialPoolSize == null) {
 				initialPoolSize = 5;
 			}
@@ -189,18 +194,18 @@ public class DruidConnectionProvider implements ConnectionProvider {
 
 			ds.setTestOnReturn(false);
 			ds.setTestOnBorrow(false);
-			ds.setTestWhileIdle(false);
+			ds.setTestWhileIdle(true);// 保证连接池内部定时检测连接的可用性，不可用的连接会被抛弃或者重建
 			ds.setLogAbandoned(true);// 将当前关闭动作记录到日志
 			ds.setRemoveAbandoned(true);// 对于长时间不使用的连接强制关闭
 			ds.setRemoveAbandonedTimeout(600);// 超过10分钟开始关闭空闲连接
+			ds.setValidationQuery(validationQuery);
 
 			ds.setTimeBetweenEvictionRunsMillis(idleTestPeriod * 1000L);// 间隔多久才进行一次检测，检测需要关闭的空闲连接
 			ds.setMaxOpenPreparedStatements(maxStatements);
-			ds.setMinEvictableIdleTimeMillis(60 * 1000L);
+			ds.setMinEvictableIdleTimeMillis(300 * 1000L);// 配置一个连接在池中最小生存的时间，单位是毫秒
 
-			ds.setConnectProperties(allProps);
-			ds.setUrl(jdbcUrl);
-			ds.setDriverClassName(jdbcDriverClass);
+			ds.setPoolPreparedStatements(true);
+			ds.setMaxPoolPreparedStatementPerConnectionSize(50);
 
 			String dbUser = props.getProperty(Environment.USER);
 			String dbPassword = props.getProperty(Environment.PASS);
@@ -215,6 +220,7 @@ public class DruidConnectionProvider implements ConnectionProvider {
 
 			ds.setUsername(dbUser);
 			ds.setPassword(dbPassword);
+			ds.init();
 		} catch (Exception e) {
 			log.error("could not instantiate Druid connection pool", e);
 			throw new RuntimeException(
