@@ -25,7 +25,7 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -182,7 +182,12 @@ public class DruidConnectionProvider implements ConnectionProvider {
 
 			String validationQuery = props.getProperty("validationQuery");
 			if (StringUtils.isEmpty(validationQuery)) {
-				validationQuery = " SELECT 'x' ";
+				if (StringUtils.equalsIgnoreCase(
+						DBConfiguration.getDatabaseType(jdbcUrl), "oracle")) {
+					validationQuery = " SELECT 'x' FROM DUAL ";
+				} else {
+					validationQuery = " SELECT 'x' ";
+				}
 			}
 
 			Properties allProps = (Properties) props.clone();
