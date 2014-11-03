@@ -200,8 +200,11 @@ public class IdentityFactory {
 		if (SystemConfig.getBoolean("use_query_cache")
 				&& CacheFactory.getString(cacheKey) != null) {
 			String text = CacheFactory.getString(cacheKey);
-			JSONObject jsonObject = JSON.parseObject(text);
-			return LoginContextUtils.jsonToObject(jsonObject);
+			try {
+				JSONObject jsonObject = JSON.parseObject(text);
+				return LoginContextUtils.jsonToObject(jsonObject);
+			} catch (Exception ex) {
+			}
 		}
 		User user = (User) getEntityService().getById("getUserById", actorId);
 		if (user != null) {
@@ -314,8 +317,11 @@ public class IdentityFactory {
 		if (SystemConfig.getBoolean("use_query_cache")
 				&& CacheFactory.getString(cacheKey) != null) {
 			String txt = CacheFactory.getString(cacheKey);
-			JSONObject json = JSON.parseObject(txt);
-			return UserJsonFactory.jsonToObject(json);
+			try {
+				JSONObject json = JSON.parseObject(txt);
+				return UserJsonFactory.jsonToObject(json);
+			} catch (Exception ex) {
+			}
 		}
 		User user = (User) getEntityService().getById("getUserById", actorId);
 		if (user != null) {
@@ -338,8 +344,11 @@ public class IdentityFactory {
 		if (SystemConfig.getBoolean("use_query_cache")
 				&& CacheFactory.getString(cacheKey) != null) {
 			String txt = CacheFactory.getString(cacheKey);
-			JSONObject json = JSON.parseObject(txt);
-			return UserJsonFactory.jsonToObject(json);
+			try {
+				JSONObject json = JSON.parseObject(txt);
+				return UserJsonFactory.jsonToObject(json);
+			} catch (Exception ex) {
+			}
 		}
 		User user = (User) getEntityService()
 				.getById("getUserByUserId", userId);
