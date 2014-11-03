@@ -45,86 +45,86 @@ import com.glaf.core.domain.util.SchedulerJsonFactory;
 public class SchedulerEntity implements Serializable, Scheduler, JSONable {
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "attribute_", length = 500)
+	@Id
+	@Column(name = "ID", length = 50, nullable = false)
+	protected String id;
+
+	@Column(name = "ATTRIBUTE_", length = 500)
 	protected String attribute;
 
-	@Column(name = "autoStartup")
+	@Column(name = "AUTOSTARTUP")
 	protected int autoStartup;
 
-	@Column(name = "content")
+	@Column(name = "CONTENT")
 	protected String content;
 
-	@Column(name = "createBy")
+	@Column(name = "CREATEBY")
 	protected String createBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "createDate")
+	@Column(name = "CREATEDATE")
 	protected Date createDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "endDate")
+	@Column(name = "ENDDATE")
 	protected Date endDate;
 
-	@Column(name = "expression_")
+	@Column(name = "EXPRESSION_")
 	protected String expression;
 
-	@Id
-	@Column(name = "id", length = 50, nullable = false)
-	protected String id;
-
-	@Column(name = "intervalTime")
+	@Column(name = "INTERVALTIME")
 	protected String intervalTime;
 
 	/**
 	 * second,minute,hour,day,week,month
 	 */
-	@Column(name = "intervalType")
+	@Column(name = "INTERVALTYPE")
 	protected String intervalType;
 
-	@Column(name = "intervalValue")
+	@Column(name = "INTERVALVALUE")
 	protected String intervalValue;
 
-	@Column(name = "jobClass")
+	@Column(name = "JOBCLASS")
 	protected String jobClass;
 
 	@javax.persistence.Transient
 	protected Map<String, Parameter> jobDataMap = new java.util.HashMap<String, Parameter>();
 
-	@Column(name = "locked_")
+	@Column(name = "LOCKED_")
 	protected int locked;
 
 	@javax.persistence.Transient
 	protected List<SchedulerParam> params = new java.util.ArrayList<SchedulerParam>();
 
-	@Column(name = "priority_")
+	@Column(name = "PRIORITY_")
 	protected int priority;
 
-	@Column(name = "repeatCount")
+	@Column(name = "REPEATCOUNT")
 	protected int repeatCount;
 
-	@Column(name = "repeatInterval")
+	@Column(name = "REPEATINTERVAL")
 	protected int repeatInterval;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "startDate")
+	@Column(name = "STARTDATE")
 	protected Date startDate;
 
-	@Column(name = "startDelay")
+	@Column(name = "STARTDELAY")
 	protected int startDelay;
 
-	@Column(name = "startup_")
+	@Column(name = "STARTUP_")
 	protected int startup;
 
-	@Column(name = "taskName")
+	@Column(name = "TASKNAME")
 	protected String taskName;
 
-	@Column(name = "taskType")
+	@Column(name = "TASKTYPE")
 	protected String taskType;
 
-	@Column(name = "threadSize")
+	@Column(name = "THREADSIZE")
 	protected int threadSize;
 
-	@Column(name = "title")
+	@Column(name = "TITLE")
 	protected String title;
 
 	public SchedulerEntity() {

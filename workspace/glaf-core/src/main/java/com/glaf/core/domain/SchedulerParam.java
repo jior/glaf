@@ -45,63 +45,63 @@ public class SchedulerParam implements Serializable, Parameter, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "id", length = 50, nullable = false)
+	@Column(name = "ID", length = 50, nullable = false)
 	protected String id;
 
 	/**
 	 * taskId
 	 */
-	@Column(name = "taskId", length = 50)
+	@Column(name = "TASKID", length = 50)
 	protected String taskId;
 
 	/**
 	 * type_cd
 	 */
-	@Column(name = "type_cd", length = 20)
+	@Column(name = "TYPE_CD", length = 20)
 	protected String typeCd;
 
 	/**
 	 * key_name
 	 */
-	@Column(name = "key_name", length = 50)
+	@Column(name = "KEY_NAME", length = 50)
 	protected String keyName;
 
-	@Column(name = "title", length = 200)
+	@Column(name = "TITLE", length = 200)
 	protected String title;
 
 	/**
 	 * string_val
 	 */
-	@Column(name = "string_val", length = 2000)
+	@Column(name = "STRING_VAL", length = 2000)
 	protected String stringVal;
 
 	@Lob
-	@Column(name = "text_val")
+	@Column(name = "TEXT_VAL")
 	protected String textVal;
 
 	/**
 	 * date_val
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "date_val")
+	@Column(name = "DATE_VAL")
 	protected Date dateVal;
 
 	/**
 	 * long_val
 	 */
-	@Column(name = "int_val")
+	@Column(name = "INT_VAL")
 	protected Integer intVal;
 
 	/**
 	 * long_val
 	 */
-	@Column(name = "long_val")
+	@Column(name = "LONG_VAL")
 	protected Long longVal;
 
 	/**
 	 * double_val
 	 */
-	@Column(name = "double_val")
+	@Column(name = "DOUBLE_VAL")
 	protected Double doubleVal;
 
 	public SchedulerParam() {

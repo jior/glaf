@@ -73,8 +73,16 @@
 			<fileset dir="static/alloyui" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
 		</jar>
 
+		<jar jarfile="glaf-angularjs-resource.jar">
+			<fileset dir="static/angularjs" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
+		</jar>
+
 		<jar jarfile="glaf-dojo-resource.jar">
 			<fileset dir="static/dojo" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
+		</jar>
+
+		<jar jarfile="glaf-echarts-resource.jar">
+			<fileset dir="static/echarts" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
 		</jar>
 
 		<jar jarfile="glaf-extjs3-resource.jar">
@@ -87,6 +95,10 @@
 
 		<jar jarfile="glaf-yui3-resource.jar">
 			<fileset dir="static/yui3" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
+		</jar>
+
+		<jar jarfile="glaf-kendoui-resource.jar">
+			<fileset dir="static/kendoui" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
 		</jar>
 
 		<jar jarfile="glaf-min-web.zip">
