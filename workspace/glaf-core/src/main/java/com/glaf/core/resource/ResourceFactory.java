@@ -58,7 +58,7 @@ public class ResourceFactory {
 			try {
 				channel.clear(regionName);
 				logger.debug("###################################");
-				logger.debug(region + " clear.");
+				logger.debug(regionName + " clear.");
 				logger.debug("###################################");
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -80,7 +80,7 @@ public class ResourceFactory {
 					}
 					channel.clear(regionName);
 					logger.debug("###################################");
-					logger.debug(region + " clear.");
+					logger.debug(regionName + " clear.");
 					logger.debug("###################################");
 				} catch (Exception ex) {
 					ex.printStackTrace();

@@ -58,6 +58,16 @@ public class RedisResource implements Resource {
 		try {
 			jedis = RedisUtils.getResource();
 			jedis.del(region + ":*");
+			log.debug("delete region:" + region);
+			List<String> keys = new ArrayList<String>();
+			keys.addAll(jedis.keys(region + ":*"));
+			for (int i = 0; i < keys.size(); i++) {
+				keys.set(i, keys.get(i).substring(region.length() + 3));
+			}
+			for (int i = 0; i < keys.size(); i++) {
+				// log.debug("delete key:"+getKeyName(keys.get(i)));
+				jedis.del(getKeyName(keys.get(i)));
+			}
 		} catch (Exception e) {
 			broken = true;
 			throw new RuntimeException(e);
@@ -130,6 +140,7 @@ public class RedisResource implements Resource {
 		Jedis jedis = null;
 		try {
 			jedis = RedisUtils.getResource();
+			// log.debug("key:"+getKeyName(key));
 			byte[] raw = jedis.get(getKeyName(key).getBytes());
 			return raw;
 		} catch (Exception e) {
