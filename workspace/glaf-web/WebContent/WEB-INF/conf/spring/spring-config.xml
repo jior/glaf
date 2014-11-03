@@ -6,14 +6,14 @@
 			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<bean id="placeholder" class="com.glaf.core.config.MutilPropertyPlaceholderConfigurer">
+	<!-- <bean id="placeholder" class="com.glaf.core.config.MutilPropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
 				<value>/WEB-INF/conf/jdbc.properties</value>
 				<value>classpath*:*-config.properties</value>
 			</list>
 		</property>
-	</bean>
+	</bean> -->
 
 	<import resource="spring-aop.xml" />
 	<import resource="spring-database.xml" />
