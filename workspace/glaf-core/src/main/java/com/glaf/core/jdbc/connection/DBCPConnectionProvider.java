@@ -50,6 +50,36 @@ public class DBCPConnectionProvider implements ConnectionProvider {
 
 	protected static Configuration conf = BaseConfiguration.create();
 
+	protected static final String PROP_DEFAULTAUTOCOMMIT = "defaultAutoCommit";
+	protected static final String PROP_DEFAULTREADONLY = "defaultReadOnly";
+	protected static final String PROP_DEFAULTTRANSACTIONISOLATION = "defaultTransactionIsolation";
+	protected static final String PROP_DEFAULTCATALOG = "defaultCatalog";
+
+	protected static final String PROP_MAXACTIVE = "maxActive";
+	protected static final String PROP_MAXIDLE = "maxIdle";
+	protected static final String PROP_MINIDLE = "minIdle";
+	protected static final String PROP_INITIALSIZE = "initialSize";
+	protected static final String PROP_MAXWAIT = "maxWait";
+	protected static final String PROP_MAXAGE = "maxAge";
+
+	protected static final String PROP_TESTONBORROW = "testOnBorrow";
+	protected static final String PROP_TESTONRETURN = "testOnReturn";
+	protected static final String PROP_TESTWHILEIDLE = "testWhileIdle";
+	protected static final String PROP_TESTONCONNECT = "testOnConnect";
+	protected static final String PROP_VALIDATIONQUERY = "validationQuery";
+	protected static final String PROP_VALIDATOR_CLASS_NAME = "validatorClassName";
+
+	protected static final String PROP_NUMTESTSPEREVICTIONRUN = "numTestsPerEvictionRun";
+	protected static final String PROP_TIMEBETWEENEVICTIONRUNSMILLIS = "timeBetweenEvictionRunsMillis";
+	protected static final String PROP_MINEVICTABLEIDLETIMEMILLIS = "minEvictableIdleTimeMillis";
+
+	protected static final String PROP_ACCESSTOUNDERLYINGCONNECTIONALLOWED = "accessToUnderlyingConnectionAllowed";
+
+	protected static final String PROP_REMOVEABANDONED = "removeAbandoned";
+	protected static final String PROP_REMOVEABANDONEDTIMEOUT = "removeAbandonedTimeout";
+	protected static final String PROP_LOGABANDONED = "logAbandoned";
+	protected static final String PROP_ABANDONWHENPERCENTAGEFULL = "abandonWhenPercentageFull";
+
 	private volatile DataSource ds;
 	private volatile Integer isolation;
 	private volatile boolean autocommit;
@@ -117,38 +147,34 @@ public class DBCPConnectionProvider implements ConnectionProvider {
 		ObjectPool connectionPool = new GenericObjectPool(null);
 
 		// Apply any properties
-		if (props.getProperty(DBConfiguration.POOL_TIMEOUT) != null) {
-			int value = PropertiesHelper.getInt(DBConfiguration.POOL_TIMEOUT,
-					props, 0);
+		if (props.getProperty(PROP_MAXIDLE) != null) {
+			int value = PropertiesHelper.getInt(PROP_MAXIDLE, props, 0);
 			if (value > 0) {
 				((GenericObjectPool) connectionPool).setMaxIdle(value);
 			}
 		}
-		if (props.getProperty("connectionPool.minIdle") != null) {
-			int value = PropertiesHelper.getInt("connectionPool.minIdle",
-					props, 0);
+		if (props.getProperty(PROP_MINIDLE) != null) {
+			int value = PropertiesHelper.getInt(PROP_MINIDLE, props, 0);
 			if (value > 0) {
 				((GenericObjectPool) connectionPool).setMinIdle(value);
 			}
 		}
-		if (props.getProperty("connectionPool.maxActive") != null) {
-			int value = PropertiesHelper.getInt("connectionPool.maxActive",
-					props, 0);
+		if (props.getProperty(PROP_MAXACTIVE) != null) {
+			int value = PropertiesHelper.getInt(PROP_MAXACTIVE, props, 0);
 			if (value > 0) {
 				((GenericObjectPool) connectionPool).setMaxActive(value);
 			}
 		}
-		if (props.getProperty("connectionPool.maxWait") != null) {
-			int value = PropertiesHelper.getInt("connectionPool.maxWait",
-					props, 0);
+		if (props.getProperty(PROP_MAXWAIT) != null) {
+			int value = PropertiesHelper.getInt(PROP_MAXWAIT, props, 0);
 			if (value > 0) {
 				((GenericObjectPool) connectionPool).setMaxWait(value);
 			}
 		}
 		// how often should the evictor run (if ever, default is -1 = off)
-		if (props.getProperty("connectionPool.timeBetweenEvictionRunsMillis") != null) {
+		if (props.getProperty(PROP_TIMEBETWEENEVICTIONRUNSMILLIS) != null) {
 			int value = PropertiesHelper.getInt(
-					"connectionPool.timeBetweenEvictionRunsMillis", props, 0);
+					PROP_TIMEBETWEENEVICTIONRUNSMILLIS, props, 0);
 			if (value > 0) {
 				((GenericObjectPool) connectionPool)
 						.setTimeBetweenEvictionRunsMillis(value);
@@ -164,9 +190,9 @@ public class DBCPConnectionProvider implements ConnectionProvider {
 		}
 		// how long may a connection sit idle in the pool before it may be
 		// evicted
-		if (props.getProperty("connectionPool.minEvictableIdleTimeMillis") != null) {
+		if (props.getProperty(PROP_MINEVICTABLEIDLETIMEMILLIS) != null) {
 			int value = PropertiesHelper.getInt(
-					"connectionPool.minEvictableIdleTimeMillis", props, 0);
+					PROP_MINEVICTABLEIDLETIMEMILLIS, props, 0);
 			if (value > 0) {
 				((GenericObjectPool) connectionPool)
 						.setMinEvictableIdleTimeMillis(value);
@@ -190,9 +216,9 @@ public class DBCPConnectionProvider implements ConnectionProvider {
 		// Wrap the connections and statements with pooled variants
 		try {
 			String testSQL = null;
-			if (props.getProperty("connectionPool.testSQL") != null) {
-				testSQL = PropertiesHelper.getString("connectionPool.testSQL",
-						props, null);
+			if (props.getProperty("validationQuery") != null) {
+				testSQL = PropertiesHelper.getString("validationQuery", props,
+						null);
 			}
 			new PoolableConnectionFactory(connectionFactory, connectionPool,
 					kpf, testSQL, false, false);

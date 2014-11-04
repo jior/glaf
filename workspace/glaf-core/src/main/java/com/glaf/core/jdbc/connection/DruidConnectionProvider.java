@@ -131,14 +131,6 @@ public class DruidConnectionProvider implements ConnectionProvider {
 
 			for (Iterator<Object> ii = props.keySet().iterator(); ii.hasNext();) {
 				String key = (String) ii.next();
-				if (key.startsWith("c3p0.")) {
-					String newKey = key;
-					properties.put(newKey, props.get(key));
-				}
-			}
-
-			for (Iterator<Object> ii = props.keySet().iterator(); ii.hasNext();) {
-				String key = (String) ii.next();
 				if (key.startsWith("druid.")) {
 					String newKey = key.substring(6);
 					properties.put(newKey, props.get(key));
@@ -185,6 +177,9 @@ public class DruidConnectionProvider implements ConnectionProvider {
 				if (StringUtils.equalsIgnoreCase(
 						DBConfiguration.getDatabaseType(jdbcUrl), "oracle")) {
 					validationQuery = " SELECT 'x' FROM DUAL ";
+				} else if (StringUtils.equalsIgnoreCase(
+						DBConfiguration.getDatabaseType(jdbcUrl), "db2")) {
+					validationQuery = " SELECT * FROM SYS_PROPERTY WHERE ID_ = 'x' ";
 				} else {
 					validationQuery = " SELECT 'x' ";
 				}

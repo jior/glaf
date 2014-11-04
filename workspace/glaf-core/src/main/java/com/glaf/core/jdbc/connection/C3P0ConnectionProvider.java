@@ -102,13 +102,7 @@ public class C3P0ConnectionProvider implements ConnectionProvider {
 
 			for (Iterator<?> ii = props.keySet().iterator(); ii.hasNext();) {
 				String key = (String) ii.next();
-				if (key.startsWith("hibernate.c3p0.")) {
-					String newKey = key.substring(10);
-					c3props.put(newKey, props.get(key));
-				} else if (key.startsWith("connection.c3p0.")) {
-					String newKey = key.substring(11);
-					c3props.put(newKey, props.get(key));
-				} else if (key.startsWith("c3p0.")) {
+				if (key.startsWith("c3p0.")) {
 					String newKey = key;
 					c3props.put(newKey, props.get(key));
 				}

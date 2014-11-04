@@ -138,6 +138,19 @@ public class TomcatJdbcConnectionProvider implements ConnectionProvider {
 			}
 		}
 
+		String validationQuery = props.getProperty(PROP_VALIDATIONQUERY);
+		if (StringUtils.isEmpty(validationQuery)) {
+			if (StringUtils.equalsIgnoreCase(
+					DBConfiguration.getDatabaseType(jdbcUrl), "oracle")) {
+				validationQuery = " SELECT 'x' FROM DUAL ";
+			} else if (StringUtils.equalsIgnoreCase(
+					DBConfiguration.getDatabaseType(jdbcUrl), "db2")) {
+				validationQuery = " SELECT * FROM SYS_PROPERTY WHERE ID_ = 'x' ";
+			} else {
+				validationQuery = " SELECT 'x' ";
+			}
+		}
+
 		String dbUser = props.getProperty(DBConfiguration.JDBC_USER);
 		String dbPassword = props.getProperty(DBConfiguration.JDBC_PASSWORD);
 
@@ -155,21 +168,22 @@ public class TomcatJdbcConnectionProvider implements ConnectionProvider {
 		p.setUsername(dbUser);
 		p.setPassword(dbPassword);
 		p.setJmxEnabled(false);
-		p.setTestWhileIdle(false);
-		p.setTestOnBorrow(true);
-		p.setValidationQuery("SELECT 1");
+		p.setTestWhileIdle(true);
+		p.setTestOnBorrow(false);
 		p.setTestOnReturn(false);
+		p.setValidationQuery(validationQuery);
 		p.setValidationInterval(30000);
-		p.setTimeBetweenEvictionRunsMillis(30000);
+		p.setMinEvictableIdleTimeMillis(300000);// 配置一个连接在池中最小生存的时间，单位是毫秒
+		p.setTimeBetweenEvictionRunsMillis(60000);// 间隔多久才进行一次检测，检测需要关闭的空闲连接
 		p.setMaxActive(50);
 		p.setMaxIdle(20);
-		p.setInitialSize(5);
-		p.setMaxWait(10000);
-		p.setRemoveAbandonedTimeout(60);
-		p.setMinEvictableIdleTimeMillis(30000);
 		p.setMinIdle(10);
-		p.setLogAbandoned(true);
+		p.setInitialSize(5);
+		p.setMaxWait(60000);
+		p.setRemoveAbandonedTimeout(600);// 超过10分钟开始关闭空闲连接
 		p.setRemoveAbandoned(true);
+		p.setLogAbandoned(true);
+
 		p.setJdbcInterceptors("org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;"
 				+ "org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer");
 
@@ -354,11 +368,6 @@ public class TomcatJdbcConnectionProvider implements ConnectionProvider {
 		if (value != null) {
 			poolProperties.setTestWhileIdle(Boolean.valueOf(value)
 					.booleanValue());
-		}
-
-		value = properties.getProperty(PROP_VALIDATIONQUERY);
-		if (value != null) {
-			poolProperties.setValidationQuery(value);
 		}
 
 		value = properties.getProperty(PROP_VALIDATOR_CLASS_NAME);

@@ -105,13 +105,7 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 
 			for (Iterator<?> ii = props.keySet().iterator(); ii.hasNext();) {
 				String key = (String) ii.next();
-				if (key.startsWith("hibernate.hikari.")) {
-					String newKey = key.substring(17);
-					hikariProps.put(newKey, props.get(key));
-				} else if (key.startsWith("connection.hikari.")) {
-					String newKey = key.substring(18);
-					hikariProps.put(newKey, props.get(key));
-				} else if (key.startsWith("hikari.")) {
+				if (key.startsWith("hikari.")) {
 					String newKey = key.substring(7);
 					hikariProps.put(newKey, props.get(key));
 				}
