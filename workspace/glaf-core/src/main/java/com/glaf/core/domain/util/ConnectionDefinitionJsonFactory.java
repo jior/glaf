@@ -18,8 +18,11 @@
 
 package com.glaf.core.domain.util;
 
+import java.util.Properties;
+
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.base.*;
 
@@ -72,6 +75,21 @@ public class ConnectionDefinitionJsonFactory {
 			model.setAttribute(jsonObject.getString("attribute"));
 		}
 
+		if (jsonObject.containsKey("properties")) {
+			JSONArray array = jsonObject.getJSONArray("properties");
+			if (array != null && !array.isEmpty()) {
+				Properties properties = new Properties();
+				for (int i = 0; i < array.size(); i++) {
+					JSONObject json = array.getJSONObject(i);
+					if (json != null && json.getString("key") != null) {
+						properties.put(json.getString("key"),
+								json.getString("value"));
+					}
+				}
+				model.setProperties(properties);
+			}
+		}
+
 		return model;
 	}
 
@@ -114,6 +132,18 @@ public class ConnectionDefinitionJsonFactory {
 		}
 		if (model.getAttribute() != null) {
 			jsonObject.put("attribute", model.getAttribute());
+		}
+		if (model.getProperties() != null && !model.getProperties().isEmpty()) {
+			JSONArray array = new JSONArray();
+			java.util.Enumeration<?> e = model.getProperties().keys();
+			while (e.hasMoreElements()) {
+				String name = (String) e.nextElement();
+				JSONObject json = new JSONObject();
+				json.put("key", name);
+				json.put("value", model.getProperties().getProperty(name));
+				array.add(json);
+			}
+			jsonObject.put("properties", array);
 		}
 		return jsonObject;
 	}
@@ -158,6 +188,20 @@ public class ConnectionDefinitionJsonFactory {
 		if (model.getAttribute() != null) {
 			jsonObject.put("attribute", model.getAttribute());
 		}
+
+		if (model.getProperties() != null && !model.getProperties().isEmpty()) {
+			ArrayNode array = new ObjectMapper().createArrayNode();
+			java.util.Enumeration<?> e = model.getProperties().keys();
+			while (e.hasMoreElements()) {
+				String name = (String) e.nextElement();
+				ObjectNode json = new ObjectMapper().createObjectNode();
+				json.put("key", name);
+				json.put("value", model.getProperties().getProperty(name));
+				array.add(json);
+			}
+			jsonObject.set("properties", array);
+		}
+
 		return jsonObject;
 	}
 

@@ -674,6 +674,9 @@ public class DBConfiguration {
 	public static Properties toProperties(ConnectionDefinition conn) {
 		if (conn != null) {
 			Properties props = new Properties();
+			if (conn.getProperties() != null) {
+				props.putAll(conn.getProperties());
+			}
 			if (conn.getSubject() != null) {
 				props.setProperty(SUBJECT, conn.getSubject());
 			}
