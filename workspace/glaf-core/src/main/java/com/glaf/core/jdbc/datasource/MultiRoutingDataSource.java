@@ -49,10 +49,6 @@ public class MultiRoutingDataSource extends AbstractRoutingDataSource implements
 
 	private static volatile Object defaultTargetDataSource;
 
-	public MultiRoutingDataSource() {
-
-	}
-
 	private static void reloadDS() {
 		if (!loading.get()) {
 			try {
@@ -102,12 +98,17 @@ public class MultiRoutingDataSource extends AbstractRoutingDataSource implements
 				logger.info("##datasources:" + targetDataSources.keySet());
 
 			} catch (Exception ex) {
+				logger.error(ex);
 				ex.printStackTrace();
 				throw new RuntimeException(ex);
 			} finally {
 				loading.set(false);
 			}
 		}
+	}
+
+	public MultiRoutingDataSource() {
+
 	}
 
 	@Override
