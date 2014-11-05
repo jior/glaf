@@ -71,6 +71,17 @@ public final class ConnectionProviderFactory {
 		return false;
 	}
 
+	private static boolean druidConfigDefined(Properties properties) {
+		Iterator<?> iter = properties.keySet().iterator();
+		while (iter.hasNext()) {
+			String property = (String) iter.next();
+			if (property.startsWith("druid")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	protected static void closeAndCreate(Properties properties) {
 		String jdbcUrl = properties.getProperty(DBConfiguration.JDBC_URL);
 		String cacheKey = DigestUtils.md5Hex(jdbcUrl);
@@ -89,6 +100,18 @@ public final class ConnectionProviderFactory {
 					.classForName("com.glaf.core.jdbc.connection.C3P0ConnectionProvider");
 		} catch (Exception e) {
 			log.warn("c3p0 properties is specificed, but could not find com.glaf.core.jdbc.connection.C3P0ConnectionProvider from the classpath, "
+					+ "these properties are going to be ignored.");
+			return false;
+		}
+		return true;
+	}
+
+	private static boolean druidProviderPresent() {
+		try {
+			ClassUtils
+					.classForName("com.glaf.core.jdbc.connection.DruidConnectionProvider");
+		} catch (Exception e) {
+			log.warn("druid properties is specificed, but could not find com.glaf.core.jdbc.connection.DruidConnectionProvider from the classpath, "
 					+ "these properties are going to be ignored.");
 			return false;
 		}
@@ -117,6 +140,8 @@ public final class ConnectionProviderFactory {
 			provider = initializeConnectionProviderFromConfig(providerClass);
 		} else if (c3p0ConfigDefined(properties) && c3p0ProviderPresent()) {
 			provider = initializeConnectionProviderFromConfig("com.glaf.core.jdbc.connection.C3P0ConnectionProvider");
+		} else if (druidConfigDefined(properties) && druidProviderPresent()) {
+			provider = initializeConnectionProviderFromConfig("com.glaf.core.jdbc.connection.DruidConnectionProvider");
 		}
 
 		if (provider == null) {
@@ -205,8 +230,8 @@ public final class ConnectionProviderFactory {
 			log.info("Initializing connection provider: " + providerClass);
 			connections = (ConnectionProvider) ClassUtils.classForName(
 					providerClass).newInstance();
-		} catch (Exception e) {
-			log.error("Could not instantiate connection provider", e);
+		} catch (Exception ex) {
+			log.error("Could not instantiate connection provider", ex);
 			throw new RuntimeException(
 					"Could not instantiate connection provider: "
 							+ providerClass);
