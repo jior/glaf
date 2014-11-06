@@ -225,9 +225,11 @@ public class DBCPConnectionProvider implements ConnectionProvider {
 			if (testSQL != null) {
 				((GenericObjectPool) connectionPool).setTestOnBorrow(true);
 			}
-		} catch (Exception e) {
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			log.error("could not instantiate DBCP connection pool", ex);
 			throw new ConnectionPoolException("DBCP", jdbcDriverClass, jdbcUrl,
-					e);
+					ex);
 		}
 
 		ds = new PoolingDataSource(connectionPool);
@@ -240,6 +242,7 @@ public class DBCPConnectionProvider implements ConnectionProvider {
 						"DBCP connection pool can't get jdbc connection");
 			}
 		} catch (SQLException ex) {
+			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
 			JdbcUtils.close(conn);

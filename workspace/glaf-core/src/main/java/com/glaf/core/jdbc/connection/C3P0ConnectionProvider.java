@@ -74,10 +74,6 @@ public class C3P0ConnectionProvider implements ConnectionProvider {
 		log.info("Connection properties: "
 				+ PropertiesHelper.maskOut(connectionProps, "password"));
 
-		autocommit = PropertiesHelper.getBoolean(
-				DBConfiguration.JDBC_AUTOCOMMIT, props);
-		log.info("autocommit mode: " + autocommit);
-
 		if (jdbcDriverClass == null) {
 			log.warn("No JDBC Driver class was specified by property "
 					+ DBConfiguration.JDBC_DRIVER);
@@ -103,15 +99,18 @@ public class C3P0ConnectionProvider implements ConnectionProvider {
 			for (Iterator<?> ii = props.keySet().iterator(); ii.hasNext();) {
 				String key = (String) ii.next();
 				if (key.startsWith("c3p0.")) {
-					String newKey = key;
+					String newKey = key.substring(5);
 					c3props.put(newKey, props.get(key));
 				}
 			}
 
+			Properties allProps = (Properties) props.clone();
+			allProps.putAll(c3props);
+
 			Integer initialPoolSize = PropertiesHelper.getInteger(
-					DBConfiguration.POOL_INIT_SIZE, props);
+					DBConfiguration.POOL_INIT_SIZE, allProps);
 			Integer minPoolSize = PropertiesHelper.getInteger(
-					DBConfiguration.POOL_MIN_SIZE, props);
+					DBConfiguration.POOL_MIN_SIZE, allProps);
 			if (initialPoolSize == null && minPoolSize != null) {
 				c3props.put(DBConfiguration.POOL_INIT_SIZE,
 						String.valueOf(minPoolSize).trim());
@@ -120,14 +119,12 @@ public class C3P0ConnectionProvider implements ConnectionProvider {
 			DataSource unpooled = DataSources.unpooledDataSource(jdbcUrl,
 					connectionProps);
 
-			Properties allProps = (Properties) props.clone();
-			allProps.putAll(c3props);
-
 			ds = DataSources.pooledDataSource(unpooled, allProps);
-		} catch (Exception e) {
-			log.error("could not instantiate C3P0 connection pool", e);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			log.error("could not instantiate C3P0 connection pool", ex);
 			throw new RuntimeException(
-					"Could not instantiate C3P0 connection pool", e);
+					"Could not instantiate C3P0 connection pool", ex);
 		}
 
 		Connection conn = null;
@@ -138,6 +135,7 @@ public class C3P0ConnectionProvider implements ConnectionProvider {
 						"C3P0 connection pool can't get jdbc connection");
 			}
 		} catch (SQLException ex) {
+			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
 			JdbcUtils.close(conn);

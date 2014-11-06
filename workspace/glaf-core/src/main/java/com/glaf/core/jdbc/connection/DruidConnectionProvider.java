@@ -31,7 +31,6 @@ import org.apache.commons.logging.LogFactory;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
-
 import com.glaf.core.config.BaseConfiguration;
 import com.glaf.core.config.Configuration;
 import com.glaf.core.util.PropertiesHelper;
@@ -50,15 +49,23 @@ public class DruidConnectionProvider implements ConnectionProvider {
 	protected static Configuration conf = BaseConfiguration.create();
 
 	private final static String MIN_POOL_SIZE = "minPoolSize";
+
 	private final static String MAX_POOL_SIZE = "maxPoolSize";
+
 	private final static String INITIAL_POOL_SIZE = "initialPoolSize";
+
 	private final static String MAX_WAIT = "maxWait";
+
 	private final static String MAX_STATEMENTS = "maxStatements";
+
 	private final static String ACQUIRE_INCREMENT = "acquireIncrement";
+
 	private final static String TIMEBETWEENEVICTIONRUNS = "idleConnectionTestPeriod";
 
 	private volatile DruidDataSource ds;
+
 	private volatile Integer isolation;
+
 	private volatile boolean autocommit;
 
 	public void close() {
@@ -84,8 +91,11 @@ public class DruidConnectionProvider implements ConnectionProvider {
 				properties.put(newKey, props.get(key));
 			}
 		}
-		
-		log.debug("jdbc properties:"+properties);
+
+		Properties connectionProps = ConnectionProviderFactory
+				.getConnectionProperties(properties);
+		log.info("Connection properties: "
+				+ PropertiesHelper.maskOut(connectionProps, "password"));
 
 		String jdbcDriverClass = properties.getProperty("jdbc.driver");
 		String jdbcUrl = properties.getProperty("jdbc.url");
@@ -172,11 +182,6 @@ public class DruidConnectionProvider implements ConnectionProvider {
 
 			ds.setTestOnReturn(false);
 			ds.setTestOnBorrow(false);
-
-			ds.setRemoveAbandoned(true);// 对于长时间不使用的连接强制关闭
-			ds.setRemoveAbandonedTimeout(600);// 超过10分钟开始关闭空闲连接
-			ds.setLogAbandoned(true);// 将当前关闭动作记录到日志
-
 			if (StringUtils.isNotEmpty(validationQuery)) {
 				log.debug("validationQuery:" + validationQuery);
 				ds.setValidationQuery(validationQuery);
@@ -195,6 +200,10 @@ public class DruidConnectionProvider implements ConnectionProvider {
 				ds.setMaxPoolPreparedStatementPerConnectionSize(200);
 			}
 
+			// ds.setRemoveAbandoned(true);// 对于长时间不使用的连接强制关闭
+			// ds.setRemoveAbandonedTimeout(600);// 超过10分钟开始关闭空闲连接
+			// ds.setLogAbandoned(true);// 将当前关闭动作记录到日志
+
 			ds.setUrl(jdbcUrl);
 			ds.setDriverClassName(jdbcDriverClass);
 
@@ -212,13 +221,14 @@ public class DruidConnectionProvider implements ConnectionProvider {
 			ds.setUsername(dbUser);
 			ds.setPassword(dbPassword);
 			ds.init();
-		} catch (Exception e) {
-			log.error("could not instantiate Druid connection pool", e);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			log.error("could not instantiate Druid connection pool", ex);
 			throw new RuntimeException(
-					"Could not instantiate Druid connection pool", e);
+					"Could not instantiate Druid connection pool", ex);
 		}
 
-		String i = props.getProperty("jdbc.isolation");
+		String i = properties.getProperty("jdbc.isolation");
 		if (i == null) {
 			isolation = null;
 		} else {

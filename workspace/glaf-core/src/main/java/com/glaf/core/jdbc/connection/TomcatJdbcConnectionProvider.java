@@ -138,17 +138,35 @@ public class TomcatJdbcConnectionProvider implements ConnectionProvider {
 			}
 		}
 
-		String validationQuery = props.getProperty(PROP_VALIDATIONQUERY);
-		if (StringUtils.isEmpty(validationQuery)) {
-			if (StringUtils.equalsIgnoreCase(
-					DBConfiguration.getDatabaseType(jdbcUrl), "oracle")) {
-				validationQuery = " SELECT 'x' FROM DUAL ";
-			} else if (StringUtils.equalsIgnoreCase(
-					DBConfiguration.getDatabaseType(jdbcUrl), "db2")) {
-				validationQuery = " SELECT * FROM SYS_PROPERTY WHERE ID_ = 'x' ";
-			} else {
-				validationQuery = " SELECT 'x' ";
-			}
+		Integer maxIdle = PropertiesHelper.getInteger(PROP_MAXIDLE, props);
+		Integer minIdle = PropertiesHelper.getInteger(PROP_MINIDLE, props);
+		Integer maxActive = PropertiesHelper.getInteger(PROP_MAXACTIVE, props);
+
+		Integer timeBetweenEvictionRuns = PropertiesHelper.getInteger(
+				PROP_TIMEBETWEENEVICTIONRUNSMILLIS, props);
+
+		Integer maxWait = PropertiesHelper.getInteger(PROP_MAXWAIT, props);
+
+		String validationQuery = props.getProperty("validationQuery");
+
+		if (maxIdle == null) {
+			maxIdle = 20;
+		}
+
+		if (minIdle == null) {
+			minIdle = 20;
+		}
+
+		if (maxActive == null) {
+			maxActive = 50;
+		}
+
+		if (timeBetweenEvictionRuns == null) {
+			timeBetweenEvictionRuns = 600;
+		}
+
+		if (maxWait == null) {
+			maxWait = 60;
 		}
 
 		String dbUser = props.getProperty(DBConfiguration.JDBC_USER);
@@ -168,21 +186,27 @@ public class TomcatJdbcConnectionProvider implements ConnectionProvider {
 		p.setUsername(dbUser);
 		p.setPassword(dbPassword);
 		p.setJmxEnabled(false);
-		p.setTestWhileIdle(true);
+
 		p.setTestOnBorrow(false);
 		p.setTestOnReturn(false);
-		p.setValidationQuery(validationQuery);
+
 		p.setValidationInterval(30000);
 		p.setMinEvictableIdleTimeMillis(300000);// 配置一个连接在池中最小生存的时间，单位是毫秒
-		p.setTimeBetweenEvictionRunsMillis(60000);// 间隔多久才进行一次检测，检测需要关闭的空闲连接
-		p.setMaxActive(50);
-		p.setMaxIdle(20);
-		p.setMinIdle(10);
-		p.setInitialSize(5);
-		p.setMaxWait(60000);
-		p.setRemoveAbandonedTimeout(600);// 超过10分钟开始关闭空闲连接
-		p.setRemoveAbandoned(true);
-		p.setLogAbandoned(true);
+		p.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRuns * 1000);// 间隔多久才进行一次检测，检测需要关闭的空闲连接
+		p.setMaxActive(maxActive);
+		p.setMaxIdle(maxIdle);
+		p.setMinIdle(minIdle);
+		p.setInitialSize(1);
+		p.setMaxWait(maxWait);
+
+		// p.setRemoveAbandonedTimeout(600);// 超过10分钟开始关闭空闲连接
+		// p.setRemoveAbandoned(true);
+		// p.setLogAbandoned(true);
+
+		if (validationQuery != null) {
+			p.setTestWhileIdle(true);
+			p.setValidationQuery(validationQuery);
+		}
 
 		p.setJdbcInterceptors("org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;"
 				+ "org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer");
@@ -202,6 +226,7 @@ public class TomcatJdbcConnectionProvider implements ConnectionProvider {
 						"TomcatJdbc connection pool can't get jdbc connection");
 			}
 		} catch (SQLException ex) {
+			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
 			JdbcUtils.close(conn);

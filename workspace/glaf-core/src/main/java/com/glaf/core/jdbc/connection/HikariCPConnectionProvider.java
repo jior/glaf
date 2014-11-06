@@ -42,9 +42,9 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 	private static final Logger log = LoggerFactory
 			.getLogger(HikariCPConnectionProvider.class);
 
-	protected static Configuration conf = BaseConfiguration.create();
+	protected final static Configuration conf = BaseConfiguration.create();
 
-	private final static String MAX_POOL_SIZE = "maxPoolSize";
+	protected final static String MAX_POOL_SIZE = "maxPoolSize";
 
 	private volatile HikariDataSource ds;
 
@@ -111,14 +111,17 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 				}
 			}
 
+			Properties allProps = (Properties) props.clone();
+			allProps.putAll(hikariProps);
+
 			Integer initialPoolSize = PropertiesHelper.getInteger(
-					DBConfiguration.POOL_INIT_SIZE, props);
+					DBConfiguration.POOL_INIT_SIZE, allProps);
 			Integer minPoolSize = PropertiesHelper.getInteger(
-					DBConfiguration.POOL_MIN_SIZE, props);
+					DBConfiguration.POOL_MIN_SIZE, allProps);
 			Integer maxPoolSize = PropertiesHelper.getInteger(MAX_POOL_SIZE,
-					props);
+					allProps);
 			if (initialPoolSize == null && minPoolSize != null) {
-				hikariProps.put(DBConfiguration.POOL_INIT_SIZE,
+				allProps.put(DBConfiguration.POOL_INIT_SIZE,
 						String.valueOf(minPoolSize).trim());
 			}
 
@@ -126,8 +129,8 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 				maxPoolSize = 50;
 			}
 
-			String dbUser = props.getProperty(DBConfiguration.JDBC_USER);
-			String dbPassword = props
+			String dbUser = allProps.getProperty(DBConfiguration.JDBC_USER);
+			String dbPassword = allProps
 					.getProperty(DBConfiguration.JDBC_PASSWORD);
 
 			if (dbUser == null) {
@@ -137,9 +140,6 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 			if (dbPassword == null) {
 				dbPassword = "";
 			}
-
-			Properties allProps = (Properties) props.clone();
-			allProps.putAll(hikariProps);
 
 			HikariConfig config = new HikariConfig();
 			config.setDriverClassName(jdbcDriverClass);
@@ -151,10 +151,11 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 
 			ds = new HikariDataSource(config);
 
-		} catch (Exception e) {
-			log.error("could not instantiate HikariCP connection pool", e);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			log.error("could not instantiate HikariCP connection pool", ex);
 			throw new RuntimeException(
-					"Could not instantiate HikariCP connection pool", e);
+					"Could not instantiate HikariCP connection pool", ex);
 		}
 
 		Connection conn = null;
@@ -165,6 +166,7 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 						"HikariCP connection pool can't get jdbc connection");
 			}
 		} catch (SQLException ex) {
+			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
 			JdbcUtils.close(conn);
