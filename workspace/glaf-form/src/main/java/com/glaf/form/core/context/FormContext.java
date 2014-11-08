@@ -26,7 +26,6 @@ import com.glaf.core.base.DataModel;
 import com.glaf.core.security.LoginContext;
 import com.glaf.form.core.domain.FormApplication;
 import com.glaf.form.core.domain.FormDefinition;
-import com.glaf.jbpm.context.ProcessContext;
 
 public class FormContext {
 	protected byte[] content = null;
@@ -39,7 +38,6 @@ public class FormContext {
 	protected FormDefinition formDefinition = null;
 	protected LoginContext loginContext;
 	protected DataModel dataModel = null;
-	protected ProcessContext processContext = null;
 	protected String resourceId = null;
 
 	public FormContext() {
@@ -128,10 +126,6 @@ public class FormContext {
 		return loginContext;
 	}
 
-	public ProcessContext getProcessContext() {
-		return processContext;
-	}
-
 	public String getResourceId() {
 		return resourceId;
 	}
@@ -190,10 +184,6 @@ public class FormContext {
 
 	public void setLoginContext(LoginContext loginContext) {
 		this.loginContext = loginContext;
-	}
-
-	public void setProcessContext(ProcessContext processContext) {
-		this.processContext = processContext;
 	}
 
 	public void setResourceId(String resourceId) {
