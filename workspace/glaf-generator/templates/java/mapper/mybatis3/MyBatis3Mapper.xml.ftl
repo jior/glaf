@@ -195,7 +195,7 @@
 		from ${tableName} E
 		
 		<#if classDefinition.jbpmSupport >
-		<if test=" workedProcessFlag == 'WD' and appActorIds != null and appActorIds.size() &gt; 0  ">
+		<if test=" workedProcessFlag == 'WD' and appActorIds != null and appActorIds.size != 0  ">
            inner join JBPM_TASKINSTANCE T
 		   on E.PROCESSINSTANCEID_ = T.PROCINST_
 		</if>
@@ -204,7 +204,7 @@
 		<where>
 		       1 = 1  
 			  <#if classDefinition.jbpmSupport >
-			   <if test="workedProcessFlag == 'WD' and appActorIds != null and appActorIds.size() &gt; 0 ">
+			   <if test="workedProcessFlag == 'WD' and appActorIds != null and appActorIds.size != 0 ">
 			     and ( T.END_ IS NOT NULL)
                  and ( T.ACTORID_ in
                  <foreach item="x_actorId" index="index" collection="appActorIds" 
@@ -214,7 +214,7 @@
 				 )
 			   </if>
 
-			   <if test="workedProcessFlag == 'PD' and appActorIds != null and appActorIds.size() &gt; 0 ">
+			   <if test="workedProcessFlag == 'PD' and appActorIds != null and appActorIds.size != 0 ">
 			      and E.PROCESSINSTANCEID_ in (
 				          SELECT a.PROCINST_
 						  FROM JBPM_TASKINSTANCE a 
@@ -246,7 +246,7 @@
                  )
 			   </if>
 
-			   <if test="workedProcessFlag == 'ALL' and appActorIds != null and appActorIds.size() &gt; 0 ">
+			   <if test="workedProcessFlag == 'ALL' and appActorIds != null and appActorIds.size != 0 ">
 			      and E.PROCESSINSTANCEID_ in (
 				          SELECT a.PROCINST_
 						  FROM JBPM_TASKINSTANCE a 
@@ -277,7 +277,7 @@
 			   </if>
 
 
-			<if test="processInstanceIds != null and processInstanceIds.size() &gt; 0">
+			<if test="processInstanceIds != null and processInstanceIds.size != 0">
 				and E.PROCESSINSTANCEID_ IN
 				<foreach item="x_processInstanceId" index="index"
 					collection="processInstanceIds" open="(" separator="," close=")">
@@ -290,7 +290,7 @@
   <#list  pojo_fields as field>
   <#if field.name?exists && field.columnName?exists && field.type?exists>
    <#if field.name != 'processInstanceId'>
-	<#if field.type?exists && ( field.type== 'Integer' || field.type== 'Long' )>
+	<#if field.type?exists && ( field.type== 'Integer' || field.type== 'Long' || field.type== 'Double' || field.type== 'Date')>
 
 			<if test="${field.name} != null">
 				and E.${field.columnName} = #GG{${field.name}}
@@ -304,25 +304,15 @@
 				and E.${field.columnName} &lt;= #GG{${field.name}LessThanOrEqual}
             </if>
 
-			<if test="${field.name}s != null and ${field.name}s.size() &gt; 0">
+			<if test="${field.name}s != null and ${field.name}s.size != 0">
 			    and E.${field.columnName} IN
                 <foreach item="x_${field.name}" index="index" collection="${field.name}s" 
                      open="(" separator="," close=")">
                   #GG{x_${field.name}}
                 </foreach>
 			</if>
-      
-	<#elseif field.type?exists && (field.type== 'Double' || field.type== 'Date')>
 
-			<if test="${field.name}GreaterThanOrEqual != null">
-				and E.${field.columnName} &gt;= #GG{${field.name}GreaterThanOrEqual}
-            </if>
-
-			<if test="${field.name}LessThanOrEqual != null">
-				and E.${field.columnName} &lt;= #GG{${field.name}LessThanOrEqual}
-            </if>
-
-	<#elseif field.type?exists && ( field.type== 'String')>
+	  <#elseif field.type?exists && ( field.type== 'String')>
 	        
 			<if test="${field.name} != null and ${field.name} != '' ">
 				and E.${field.columnName} = #GG{${field.name}}
@@ -332,7 +322,7 @@
 				and E.${field.columnName} like #GG{${field.name}Like}
             </if>
 
-			<if test="${field.name}s != null and ${field.name}s.size() &gt; 0">
+			<if test="${field.name}s != null and ${field.name}s.size != 0">
 			    and E.${field.columnName} IN
                 <foreach item="x_${field.name}" index="index" collection="${field.name}s" 
                      open="(" separator="," close=")">
