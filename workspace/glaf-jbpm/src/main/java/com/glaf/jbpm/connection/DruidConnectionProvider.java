@@ -36,7 +36,8 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.glaf.core.config.BaseConfiguration;
 import com.glaf.core.config.Configuration;
-import com.glaf.core.util.ClassUtils;
+import com.glaf.core.jdbc.connection.ConnectionConstants;
+import com.glaf.core.util.ReflectUtils;
 
 public class DruidConnectionProvider implements ConnectionProvider {
 
@@ -45,18 +46,11 @@ public class DruidConnectionProvider implements ConnectionProvider {
 
 	protected static Configuration conf = BaseConfiguration.create();
 
-	private final static String MIN_POOL_SIZE = "minPoolSize";
-	private final static String MAX_POOL_SIZE = "maxPoolSize";
-	private final static String INITIAL_POOL_SIZE = "initialPoolSize";
-	private final static String MAX_WAIT = "maxWait";
-	private final static String MAX_STATEMENTS = "maxStatements";
-	private final static String ACQUIRE_INCREMENT = "acquireIncrement";
-	private final static String IDLE_CONNECTION_TEST_PERIOD = "idleConnectionTestPeriod";
-
 	private volatile DruidDataSource ds;
+
 	private volatile Integer isolation;
+
 	private volatile boolean autocommit;
-	private Properties properties;
 
 	public void close() {
 		try {
@@ -70,23 +64,31 @@ public class DruidConnectionProvider implements ConnectionProvider {
 		conn.close();
 	}
 
-	public Properties getProperties() {
-		return properties;
-	}
-
 	public void configure(Properties props) {
-		properties = props;
-		String jdbcDriverClass = props.getProperty(Environment.DRIVER);
-		String jdbcUrl = props.getProperty(Environment.URL);
+		Properties properties = new Properties();
+		properties.putAll(props);
+
+		for (Iterator<Object> ii = props.keySet().iterator(); ii.hasNext();) {
+			String key = (String) ii.next();
+			if (key.startsWith("druid.")) {
+				String newKey = key.substring(6);
+				properties.put(newKey, props.get(key));
+			}
+		}
+
 		Properties connectionProps = ConnectionProviderFactory
-				.getConnectionProperties(props);
+				.getConnectionProperties(properties);
+		log.info("Connection properties: "
+				+ PropertiesHelper.maskOut(connectionProps, Environment.PASS));
+
+		String jdbcDriverClass = properties.getProperty(Environment.DRIVER);
+		String jdbcUrl = properties.getProperty(Environment.URL);
 
 		log.info("Druid using driver: " + jdbcDriverClass + " at URL: "
 				+ jdbcUrl);
-		log.info("Connection properties: "
-				+ PropertiesHelper.maskOut(connectionProps, "password"));
 
-		autocommit = PropertiesHelper.getBoolean(Environment.AUTOCOMMIT, props);
+		autocommit = PropertiesHelper.getBoolean(Environment.AUTOCOMMIT,
+				properties);
 		log.info("autocommit mode: " + autocommit);
 
 		if (jdbcDriverClass == null) {
@@ -97,7 +99,7 @@ public class DruidConnectionProvider implements ConnectionProvider {
 				Class.forName(jdbcDriverClass);
 			} catch (ClassNotFoundException cnfe) {
 				try {
-					ClassUtils.classForName(jdbcDriverClass);
+					ReflectUtils.instantiate(jdbcDriverClass);
 				} catch (Exception e) {
 					String msg = "JDBC Driver class not found: "
 							+ jdbcDriverClass;
@@ -108,107 +110,73 @@ public class DruidConnectionProvider implements ConnectionProvider {
 		}
 
 		try {
-			Integer minPoolSize = PropertiesHelper.getInteger(MIN_POOL_SIZE,
-					props);
-			Integer maxPoolSize = PropertiesHelper.getInteger(MAX_POOL_SIZE,
-					props);
 
-			Integer maxStatements = PropertiesHelper.getInteger(MAX_STATEMENTS,
-					props);
-			Integer acquireIncrement = PropertiesHelper.getInteger(
-					ACQUIRE_INCREMENT, props);
-			Integer idleTestPeriod = PropertiesHelper.getInteger(
-					IDLE_CONNECTION_TEST_PERIOD, props);
+			Integer maxPoolSize = PropertiesHelper.getInteger(
+					ConnectionConstants.PROP_MAXACTIVE, properties);
+			Integer maxStatements = PropertiesHelper.getInteger(
+					ConnectionConstants.PROP_MAXSTATEMENTS, properties);
 
-			Integer maxWait = PropertiesHelper.getInteger(MAX_WAIT, props);
+			Integer timeBetweenEvictionRuns = PropertiesHelper.getInteger(
+					ConnectionConstants.PROP_TIMEBETWEENEVICTIONRUNS,
+					properties);
 
-			Properties properties = new Properties();
+			Integer maxWait = PropertiesHelper.getInteger(
+					ConnectionConstants.PROP_MAXWAIT, properties);
 
-			for (Iterator<Object> ii = props.keySet().iterator(); ii.hasNext();) {
-				String key = (String) ii.next();
-				if (key.startsWith("c3p0.")) {
-					String newKey = key;
-					properties.put(newKey, props.get(key));
-				}
-			}
-
-			for (Iterator<Object> ii = props.keySet().iterator(); ii.hasNext();) {
-				String key = (String) ii.next();
-				if (key.startsWith("druid.")) {
-					String newKey = key.substring(6);
-					properties.put(newKey, props.get(key));
-				}
-			}
-
-			Integer initialPoolSize = PropertiesHelper.getInteger(
-					INITIAL_POOL_SIZE, props);
-			if (initialPoolSize == null && minPoolSize != null) {
-				properties.put(INITIAL_POOL_SIZE, String.valueOf(minPoolSize)
-						.trim());
-			}
-
-			String validationQuery = props.getProperty("druid.validationQuery");
-			if (StringUtils.isEmpty(validationQuery)) {
-				validationQuery = " SELECT 'x' ";
-			}
-
-			if (initialPoolSize == null) {
-				initialPoolSize = 5;
-			}
-
-			if (minPoolSize == null) {
-				minPoolSize = 5;
-			}
+			String validationQuery = properties
+					.getProperty(ConnectionConstants.PROP_VALIDATIONQUERY);
 
 			if (maxPoolSize == null) {
 				maxPoolSize = 50;
 			}
 
-			if (maxStatements == null) {
-				maxStatements = 200;
-			}
-
-			if (acquireIncrement == null) {
-				acquireIncrement = 1;
-			}
-
-			if (idleTestPeriod == null) {
-				idleTestPeriod = 60;
+			if (timeBetweenEvictionRuns == null) {
+				timeBetweenEvictionRuns = 60;
 			}
 
 			if (maxWait == null) {
-				maxWait = 600;
+				maxWait = 60;
 			}
-
-			Properties allProps = (Properties) props.clone();
-			allProps.putAll(properties);
 
 			ds = new DruidDataSource();
 
-			DruidDataSourceFactory.config(ds, allProps);
+			DruidDataSourceFactory.config(ds, properties);
+			ds.setConnectProperties(properties);
 
-			ds.setInitialSize(initialPoolSize);
-			ds.setMinIdle(minPoolSize);
+			ds.setInitialSize(1);
+			ds.setMinIdle(1);
 			ds.setMaxActive(maxPoolSize);
 			ds.setMaxWait(maxWait * 1000L);
 
 			ds.setTestOnReturn(false);
 			ds.setTestOnBorrow(false);
-			ds.setTestWhileIdle(true);// 保证连接池内部定时检测连接的可用性，不可用的连接会被抛弃或者重建
-			ds.setLogAbandoned(true);// 将当前关闭动作记录到日志
-			ds.setRemoveAbandoned(true);// 对于长时间不使用的连接强制关闭
-			ds.setRemoveAbandonedTimeout(600);// 超过10分钟开始关闭空闲连接
-			ds.setValidationQuery(validationQuery);
+			if (StringUtils.isNotEmpty(validationQuery)) {
+				log.debug("validationQuery:" + validationQuery);
+				ds.setValidationQuery(validationQuery);
+				ds.setTestWhileIdle(true);// 保证连接池内部定时检测连接的可用性，不可用的连接会被抛弃或者重建
+			} else {
+				ds.setTestWhileIdle(false);
+			}
 
-			ds.setTimeBetweenEvictionRunsMillis(idleTestPeriod * 1000L);// 间隔多久才进行一次检测，检测需要关闭的空闲连接
-			ds.setMaxOpenPreparedStatements(maxStatements);
+			ds.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRuns * 1000L);// 间隔多久才进行一次检测，检测需要关闭的空闲连接
+
 			ds.setMinEvictableIdleTimeMillis(300 * 1000L);// 配置一个连接在池中最小生存的时间，单位是毫秒
 
-			ds.setPoolPreparedStatements(true);
-			ds.setMaxPoolPreparedStatementPerConnectionSize(50);
+			if (maxStatements != null) {
+				ds.setPoolPreparedStatements(true);
+				ds.setMaxOpenPreparedStatements(maxStatements);
+				ds.setMaxPoolPreparedStatementPerConnectionSize(200);
+			}
 
-			String dbUser = props.getProperty(Environment.USER);
-			String dbPassword = props.getProperty(Environment.PASS);
+			// ds.setRemoveAbandoned(true);// 对于长时间不使用的连接强制关闭
+			// ds.setRemoveAbandonedTimeout(600);// 超过10分钟开始关闭空闲连接
+			// ds.setLogAbandoned(true);// 将当前关闭动作记录到日志
+
+			ds.setUrl(jdbcUrl);
+			ds.setDriverClassName(jdbcDriverClass);
+
+			String dbUser = properties.getProperty(Environment.USER);
+			String dbPassword = properties.getProperty(Environment.PASS);
 
 			if (dbUser == null) {
 				dbUser = "";
@@ -227,7 +195,7 @@ public class DruidConnectionProvider implements ConnectionProvider {
 					"Could not instantiate Druid connection pool", e);
 		}
 
-		String i = props.getProperty(Environment.ISOLATION);
+		String i = properties.getProperty(Environment.ISOLATION);
 		if (i == null) {
 			isolation = null;
 		} else {

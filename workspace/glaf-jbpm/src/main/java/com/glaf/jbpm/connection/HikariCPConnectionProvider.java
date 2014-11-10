@@ -26,18 +26,19 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.hibernate.HibernateException;
+
 import org.hibernate.cfg.Environment;
 import org.hibernate.connection.ConnectionProvider;
 import org.hibernate.connection.ConnectionProviderFactory;
 import org.hibernate.util.PropertiesHelper;
-import org.hibernate.util.ReflectHelper;
+
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 import com.glaf.core.config.BaseConfiguration;
 import com.glaf.core.config.Configuration;
-import com.glaf.core.util.JdbcUtils;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
+import com.glaf.core.jdbc.connection.ConnectionConstants;
+import com.glaf.core.util.ClassUtils;
 
 public class HikariCPConnectionProvider implements ConnectionProvider {
 
@@ -45,18 +46,6 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 			.getLogger(HikariCPConnectionProvider.class);
 
 	protected static Configuration conf = BaseConfiguration.create();
-
-	private final static String MIN_POOL_SIZE = "minPoolSize";
-
-	private final static String MAX_POOL_SIZE = "maxPoolSize";
-
-	private final static String MAX_IDLE_TIME = "maxIdleTime";
-
-	private final static String MAX_STATEMENTS = "maxStatements";
-
-	private final static String ACQUIRE_INCREMENT = "acquireIncrement";
-
-	private final static String IDLE_CONNECTION_TEST_PERIOD = "idleConnectionTestPeriod";
 
 	private volatile HikariDataSource ds;
 
@@ -79,15 +68,27 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 	}
 
 	public void configure(Properties props) throws RuntimeException {
-		String jdbcDriverClass = props.getProperty(Environment.DRIVER);
-		String jdbcUrl = props.getProperty(Environment.URL);
+		Properties properties = new Properties();
+		properties.putAll(props);
+
+		for (Iterator<?> ii = props.keySet().iterator(); ii.hasNext();) {
+			String key = (String) ii.next();
+			if (key.startsWith("hikari.")) {
+				String newKey = key.substring(7);
+				properties.put(newKey, props.get(key));
+			}
+		}
+
+		String jdbcDriverClass = properties.getProperty(Environment.DRIVER);
+		String jdbcUrl = properties.getProperty(Environment.URL);
+
 		Properties connectionProps = ConnectionProviderFactory
-				.getConnectionProperties(props);
+				.getConnectionProperties(properties);
 
 		log.info("HikariCP using driver: " + jdbcDriverClass + " at URL: "
 				+ jdbcUrl);
 		log.info("Connection properties: "
-				+ PropertiesHelper.maskOut(connectionProps, "password"));
+				+ PropertiesHelper.maskOut(connectionProps, Environment.PASS));
 
 		autocommit = PropertiesHelper.getBoolean(Environment.AUTOCOMMIT, props);
 		log.info("autocommit mode: " + autocommit);
@@ -100,46 +101,35 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 				Class.forName(jdbcDriverClass);
 			} catch (ClassNotFoundException cnfe) {
 				try {
-					ReflectHelper.classForName(jdbcDriverClass);
-				} catch (ClassNotFoundException e) {
+					ClassUtils.classForName(jdbcDriverClass);
+				} catch (Exception e) {
 					String msg = "JDBC Driver class not found: "
 							+ jdbcDriverClass;
 					log.error(msg, e);
-					throw new HibernateException(msg, e);
+					throw new RuntimeException(msg, e);
 				}
 			}
 		}
 
 		try {
-			Integer minPoolSize = PropertiesHelper.getInteger(MIN_POOL_SIZE,
-					props);
-			Integer maxPoolSize = PropertiesHelper.getInteger(MAX_POOL_SIZE,
-					props);
-			Integer maxIdleTime = PropertiesHelper.getInteger(MAX_IDLE_TIME,
-					props);
-			Integer maxStatements = PropertiesHelper.getInteger(MAX_STATEMENTS,
-					props);
-			Integer acquireIncrement = PropertiesHelper.getInteger(
-					ACQUIRE_INCREMENT, props);
-			Integer idleTestPeriod = PropertiesHelper.getInteger(
-					IDLE_CONNECTION_TEST_PERIOD, props);
 
-			Properties properties = new Properties();
-
-			for (Iterator<Object> ii = props.keySet().iterator(); ii.hasNext();) {
-				String key = (String) ii.next();
-				if (key.startsWith("hibernate.hikari.")) {
-					String newKey = key.substring(17);
-					properties.put(newKey, props.get(key));
-				}
-				if (key.startsWith("hikari.")) {
-					String newKey = key.substring(7);
-					properties.put(newKey, props.get(key));
-				}
+			Integer initialPoolSize = PropertiesHelper.getInteger(
+					ConnectionConstants.PROP_INITIALSIZE, properties);
+			Integer minPoolSize = PropertiesHelper.getInteger(
+					ConnectionConstants.PROP_MINACTIVE, properties);
+			Integer maxPoolSize = PropertiesHelper.getInteger(
+					ConnectionConstants.PROP_MAXACTIVE, properties);
+			if (initialPoolSize == null && minPoolSize != null) {
+				properties.put(ConnectionConstants.PROP_INITIALSIZE, String
+						.valueOf(minPoolSize).trim());
 			}
 
-			String dbUser = props.getProperty(Environment.USER);
-			String dbPassword = props.getProperty(Environment.PASS);
+			if (maxPoolSize == null) {
+				maxPoolSize = 50;
+			}
+
+			String dbUser = properties.getProperty(Environment.USER);
+			String dbPassword = properties.getProperty(Environment.PASS);
 
 			if (dbUser == null) {
 				dbUser = "";
@@ -149,65 +139,22 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 				dbPassword = "";
 			}
 
-			if (minPoolSize == null) {
-				minPoolSize = 5;
-			}
-
-			if (maxPoolSize == null) {
-				maxPoolSize = 50;
-			}
-
-			if (maxIdleTime == null) {
-				maxIdleTime = 60;
-			}
-
-			if (maxStatements == null) {
-				maxStatements = 200;
-			}
-
-			if (acquireIncrement == null) {
-				acquireIncrement = 1;
-			}
-
-			if (idleTestPeriod == null) {
-				idleTestPeriod = 120;
-			}
-
-			Properties allProps = (Properties) props.clone();
-			allProps.putAll(properties);
-
 			HikariConfig config = new HikariConfig();
 			config.setDriverClassName(jdbcDriverClass);
 			config.setJdbcUrl(jdbcUrl);
 			config.setUsername(dbUser);
 			config.setPassword(dbPassword);
-			config.setAutoCommit(false);
-			config.setIdleTimeout(maxIdleTime * 1000L);
 			config.setMaximumPoolSize(maxPoolSize);
-			config.setDataSourceProperties(allProps);
+			config.setDataSourceProperties(properties);
 
 			ds = new HikariDataSource(config);
-
-		} catch (Exception e) {
-			log.error("could not instantiate HikariCP connection pool", e);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			log.error("could not instantiate HikariCP connection pool", ex);
 			throw new RuntimeException(
-					"Could not instantiate HikariCP connection pool", e);
+					"Could not instantiate HikariCP connection pool", ex);
 		}
-
-		Connection conn = null;
-		try {
-			conn = ds.getConnection();
-			if (conn == null) {
-				throw new RuntimeException(
-						"HikariCP connection pool can't get jdbc connection");
-			}
-		} catch (SQLException ex) {
-			throw new RuntimeException(ex);
-		} finally {
-			JdbcUtils.close(conn);
-		}
-
-		String i = props.getProperty(Environment.ISOLATION);
+		String i = properties.getProperty(Environment.ISOLATION);
 		if (i == null) {
 			isolation = null;
 		} else {
