@@ -44,8 +44,6 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 
 	protected final static Configuration conf = BaseConfiguration.create();
 
-	protected final static String MAX_POOL_SIZE = "maxPoolSize";
-
 	private volatile HikariDataSource ds;
 
 	private volatile Integer isolation;
@@ -115,14 +113,14 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 			allProps.putAll(hikariProps);
 
 			Integer initialPoolSize = PropertiesHelper.getInteger(
-					DBConfiguration.POOL_INIT_SIZE, allProps);
+					ConnectionConstants.PROP_INITIALSIZE, allProps);
 			Integer minPoolSize = PropertiesHelper.getInteger(
-					DBConfiguration.POOL_MIN_SIZE, allProps);
-			Integer maxPoolSize = PropertiesHelper.getInteger(MAX_POOL_SIZE,
-					allProps);
+					ConnectionConstants.PROP_MINACTIVE, allProps);
+			Integer maxPoolSize = PropertiesHelper.getInteger(
+					ConnectionConstants.PROP_MAXACTIVE, allProps);
 			if (initialPoolSize == null && minPoolSize != null) {
-				allProps.put(DBConfiguration.POOL_INIT_SIZE,
-						String.valueOf(minPoolSize).trim());
+				allProps.put(ConnectionConstants.PROP_INITIALSIZE, String
+						.valueOf(minPoolSize).trim());
 			}
 
 			if (maxPoolSize == null) {

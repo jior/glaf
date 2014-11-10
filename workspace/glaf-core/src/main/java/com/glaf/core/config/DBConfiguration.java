@@ -76,22 +76,6 @@ public class DBConfiguration {
 
 	public static final String JDBC_ISOLATION = "jdbc.isolation";
 
-	public static final String POOL_ACQUIRE_INCREMENT = "jdbc.acquire_increment";
-
-	public static final String POOL_IDLE_TEST_PERIOD = "jdbc.idle_test_period";
-
-	public static final String POOL_INIT_SIZE = "jdbc.init_size";
-
-	public static final String POOL_MAX_SIZE = "jdbc.max_size";
-
-	public static final String POOL_MAX_STATEMENTS = "jdbc.max_statements";
-
-	public static final String POOL_MIN_SIZE = "jdbc.min_size";
-
-	public static final String POOL_SIZE = "jdbc.pool_size";
-
-	public static final String POOL_TIMEOUT = "jdbc.timeout";
-
 	/**
 	 * 连接池类型，支持druid,C3P0,DBCP,TomcatJdbc,默认是druid
 	 */

@@ -48,20 +48,6 @@ public class DruidConnectionProvider implements ConnectionProvider {
 
 	protected static Configuration conf = BaseConfiguration.create();
 
-	private final static String MIN_POOL_SIZE = "minPoolSize";
-
-	private final static String MAX_POOL_SIZE = "maxPoolSize";
-
-	private final static String INITIAL_POOL_SIZE = "initialPoolSize";
-
-	private final static String MAX_WAIT = "maxWait";
-
-	private final static String MAX_STATEMENTS = "maxStatements";
-
-	private final static String ACQUIRE_INCREMENT = "acquireIncrement";
-
-	private final static String TIMEBETWEENEVICTIONRUNS = "idleConnectionTestPeriod";
-
 	private volatile DruidDataSource ds;
 
 	private volatile Integer isolation;
@@ -124,42 +110,24 @@ public class DruidConnectionProvider implements ConnectionProvider {
 		}
 
 		try {
-			Integer minPoolSize = PropertiesHelper.getInteger(MIN_POOL_SIZE,
-					properties);
-			Integer maxPoolSize = PropertiesHelper.getInteger(MAX_POOL_SIZE,
-					properties);
-			Integer maxStatements = PropertiesHelper.getInteger(MAX_STATEMENTS,
-					properties);
-			Integer acquireIncrement = PropertiesHelper.getInteger(
-					ACQUIRE_INCREMENT, properties);
+
+			Integer maxPoolSize = PropertiesHelper.getInteger(
+					ConnectionConstants.PROP_MAXACTIVE, properties);
+			Integer maxStatements = PropertiesHelper.getInteger(
+					ConnectionConstants.PROP_MAXSTATEMENTS, properties);
+
 			Integer timeBetweenEvictionRuns = PropertiesHelper.getInteger(
-					TIMEBETWEENEVICTIONRUNS, properties);
+					ConnectionConstants.PROP_TIMEBETWEENEVICTIONRUNS,
+					properties);
 
-			Integer maxWait = PropertiesHelper.getInteger(MAX_WAIT, properties);
+			Integer maxWait = PropertiesHelper.getInteger(
+					ConnectionConstants.PROP_MAXWAIT, properties);
 
-			String validationQuery = properties.getProperty("validationQuery");
-
-			Integer initialPoolSize = PropertiesHelper.getInteger(
-					INITIAL_POOL_SIZE, properties);
-			if (initialPoolSize == null && minPoolSize != null) {
-				properties.put(INITIAL_POOL_SIZE, String.valueOf(minPoolSize)
-						.trim());
-			}
-
-			if (initialPoolSize == null) {
-				initialPoolSize = 1;
-			}
-
-			if (minPoolSize == null) {
-				minPoolSize = 1;
-			}
+			String validationQuery = properties
+					.getProperty(ConnectionConstants.PROP_VALIDATIONQUERY);
 
 			if (maxPoolSize == null) {
 				maxPoolSize = 50;
-			}
-
-			if (acquireIncrement == null) {
-				acquireIncrement = 1;
 			}
 
 			if (timeBetweenEvictionRuns == null) {
@@ -175,8 +143,8 @@ public class DruidConnectionProvider implements ConnectionProvider {
 			DruidDataSourceFactory.config(ds, properties);
 			ds.setConnectProperties(properties);
 
-			ds.setInitialSize(initialPoolSize);
-			ds.setMinIdle(minPoolSize);
+			ds.setInitialSize(1);
+			ds.setMinIdle(1);
 			ds.setMaxActive(maxPoolSize);
 			ds.setMaxWait(maxWait * 1000L);
 

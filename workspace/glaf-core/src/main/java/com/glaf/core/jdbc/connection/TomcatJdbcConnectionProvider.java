@@ -44,51 +44,6 @@ public class TomcatJdbcConnectionProvider implements ConnectionProvider {
 
 	protected static Configuration conf = BaseConfiguration.create();
 
-	protected static final String PROP_DEFAULTAUTOCOMMIT = "defaultAutoCommit";
-	protected static final String PROP_DEFAULTREADONLY = "defaultReadOnly";
-	protected static final String PROP_DEFAULTTRANSACTIONISOLATION = "defaultTransactionIsolation";
-	protected static final String PROP_DEFAULTCATALOG = "defaultCatalog";
-
-	protected static final String PROP_MAXACTIVE = "maxActive";
-	protected static final String PROP_MAXIDLE = "maxIdle";
-	protected static final String PROP_MINIDLE = "minIdle";
-	protected static final String PROP_INITIALSIZE = "initialSize";
-	protected static final String PROP_MAXWAIT = "maxWait";
-	protected static final String PROP_MAXAGE = "maxAge";
-
-	protected static final String PROP_TESTONBORROW = "testOnBorrow";
-	protected static final String PROP_TESTONRETURN = "testOnReturn";
-	protected static final String PROP_TESTWHILEIDLE = "testWhileIdle";
-	protected static final String PROP_TESTONCONNECT = "testOnConnect";
-	protected static final String PROP_VALIDATIONQUERY = "validationQuery";
-	protected static final String PROP_VALIDATOR_CLASS_NAME = "validatorClassName";
-
-	protected static final String PROP_NUMTESTSPEREVICTIONRUN = "numTestsPerEvictionRun";
-	protected static final String PROP_TIMEBETWEENEVICTIONRUNSMILLIS = "timeBetweenEvictionRunsMillis";
-	protected static final String PROP_MINEVICTABLEIDLETIMEMILLIS = "minEvictableIdleTimeMillis";
-
-	protected static final String PROP_ACCESSTOUNDERLYINGCONNECTIONALLOWED = "accessToUnderlyingConnectionAllowed";
-
-	protected static final String PROP_REMOVEABANDONED = "removeAbandoned";
-	protected static final String PROP_REMOVEABANDONEDTIMEOUT = "removeAbandonedTimeout";
-	protected static final String PROP_LOGABANDONED = "logAbandoned";
-	protected static final String PROP_ABANDONWHENPERCENTAGEFULL = "abandonWhenPercentageFull";
-
-	protected static final String PROP_INITSQL = "initSQL";
-	protected static final String PROP_INTERCEPTORS = "jdbcInterceptors";
-	protected static final String PROP_VALIDATIONINTERVAL = "validationInterval";
-	protected static final String PROP_JMX_ENABLED = "jmxEnabled";
-	protected static final String PROP_FAIR_QUEUE = "fairQueue";
-
-	protected static final String PROP_USE_EQUALS = "useEquals";
-	protected static final String PROP_USE_CON_LOCK = "useLock";
-
-	protected static final String PROP_SUSPECT_TIMEOUT = "suspectTimeout";
-
-	protected static final String PROP_ALTERNATE_USERNAME_ALLOWED = "alternateUsernameAllowed";
-
-	public static final int UNKNOWN_TRANSACTIONISOLATION = -1;
-
 	private volatile DataSource ds;
 	private volatile Integer isolation;
 	private volatile boolean autocommit;
@@ -138,16 +93,21 @@ public class TomcatJdbcConnectionProvider implements ConnectionProvider {
 			}
 		}
 
-		Integer maxIdle = PropertiesHelper.getInteger(PROP_MAXIDLE, props);
-		Integer minIdle = PropertiesHelper.getInteger(PROP_MINIDLE, props);
-		Integer maxActive = PropertiesHelper.getInteger(PROP_MAXACTIVE, props);
+		Integer maxIdle = PropertiesHelper.getInteger(
+				ConnectionConstants.PROP_MAXIDLE, props);
+		Integer minIdle = PropertiesHelper.getInteger(
+				ConnectionConstants.PROP_MINIDLE, props);
+		Integer maxActive = PropertiesHelper.getInteger(
+				ConnectionConstants.PROP_MAXACTIVE, props);
 
 		Integer timeBetweenEvictionRuns = PropertiesHelper.getInteger(
-				PROP_TIMEBETWEENEVICTIONRUNSMILLIS, props);
+				ConnectionConstants.PROP_TIMEBETWEENEVICTIONRUNSMILLIS, props);
 
-		Integer maxWait = PropertiesHelper.getInteger(PROP_MAXWAIT, props);
+		Integer maxWait = PropertiesHelper.getInteger(
+				ConnectionConstants.PROP_MAXWAIT, props);
 
-		String validationQuery = props.getProperty("validationQuery");
+		String validationQuery = props
+				.getProperty(ConnectionConstants.PROP_VALIDATIONQUERY);
 
 		if (maxIdle == null) {
 			maxIdle = 20;
@@ -284,19 +244,22 @@ public class TomcatJdbcConnectionProvider implements ConnectionProvider {
 
 		String value = null;
 
-		value = properties.getProperty(PROP_DEFAULTAUTOCOMMIT);
+		value = properties
+				.getProperty(ConnectionConstants.PROP_DEFAULTAUTOCOMMIT);
 		if (value != null) {
 			poolProperties.setDefaultAutoCommit(Boolean.valueOf(value));
 		}
 
-		value = properties.getProperty(PROP_DEFAULTREADONLY);
+		value = properties
+				.getProperty(ConnectionConstants.PROP_DEFAULTREADONLY);
 		if (value != null) {
 			poolProperties.setDefaultReadOnly(Boolean.valueOf(value));
 		}
 
-		value = properties.getProperty(PROP_DEFAULTTRANSACTIONISOLATION);
+		value = properties
+				.getProperty(ConnectionConstants.PROP_DEFAULTTRANSACTIONISOLATION);
 		if (value != null) {
-			int level = UNKNOWN_TRANSACTIONISOLATION;
+			int level = ConnectionConstants.UNKNOWN_TRANSACTIONISOLATION;
 			if ("NONE".equalsIgnoreCase(value)) {
 				level = Connection.TRANSACTION_NONE;
 			} else if ("READ_COMMITTED".equalsIgnoreCase(value)) {
@@ -318,112 +281,119 @@ public class TomcatJdbcConnectionProvider implements ConnectionProvider {
 							.println("WARNING: defaultTransactionIsolation not set");
 					System.err
 							.println("using default value of database driver");
-					level = UNKNOWN_TRANSACTIONISOLATION;
+					level = ConnectionConstants.UNKNOWN_TRANSACTIONISOLATION;
 				}
 			}
 			poolProperties.setDefaultTransactionIsolation(level);
 		}
 
-		value = properties.getProperty(PROP_DEFAULTCATALOG);
+		value = properties.getProperty(ConnectionConstants.PROP_DEFAULTCATALOG);
 		if (value != null) {
 			poolProperties.setDefaultCatalog(value);
 		}
 
-		value = properties.getProperty(PROP_MAXACTIVE);
+		value = properties.getProperty(ConnectionConstants.PROP_MAXACTIVE);
 		if (value != null && StringUtils.isNumeric(value)) {
 			poolProperties.setMaxActive(Integer.parseInt(value));
 		}
 
-		value = properties.getProperty(PROP_MAXIDLE);
+		value = properties.getProperty(ConnectionConstants.PROP_MAXIDLE);
 		if (value != null && StringUtils.isNumeric(value)) {
 			poolProperties.setMaxIdle(Integer.parseInt(value));
 		}
 
-		value = properties.getProperty(PROP_MINIDLE);
+		value = properties.getProperty(ConnectionConstants.PROP_MINIDLE);
 		if (value != null && StringUtils.isNumeric(value)) {
 			poolProperties.setMinIdle(Integer.parseInt(value));
 		}
 
-		value = properties.getProperty(PROP_INITIALSIZE);
+		value = properties.getProperty(ConnectionConstants.PROP_INITIALSIZE);
 		if (value != null && StringUtils.isNumeric(value)) {
 			poolProperties.setInitialSize(Integer.parseInt(value));
 		}
 
-		value = properties.getProperty(PROP_MAXWAIT);
+		value = properties.getProperty(ConnectionConstants.PROP_MAXWAIT);
 		if (value != null && StringUtils.isNumeric(value)) {
 			poolProperties.setMaxWait(Integer.parseInt(value));
 		}
 
-		value = properties.getProperty(PROP_TESTONBORROW);
+		value = properties.getProperty(ConnectionConstants.PROP_TESTONBORROW);
 		if (value != null) {
 			poolProperties.setTestOnBorrow(Boolean.valueOf(value)
 					.booleanValue());
 		}
 
-		value = properties.getProperty(PROP_TESTONRETURN);
+		value = properties.getProperty(ConnectionConstants.PROP_TESTONRETURN);
 		if (value != null) {
 			poolProperties.setTestOnReturn(Boolean.valueOf(value)
 					.booleanValue());
 		}
 
-		value = properties.getProperty(PROP_TESTONCONNECT);
+		value = properties.getProperty(ConnectionConstants.PROP_TESTONCONNECT);
 		if (value != null) {
 			poolProperties.setTestOnConnect(Boolean.valueOf(value)
 					.booleanValue());
 		}
 
-		value = properties.getProperty(PROP_TIMEBETWEENEVICTIONRUNSMILLIS);
+		value = properties
+				.getProperty(ConnectionConstants.PROP_TIMEBETWEENEVICTIONRUNSMILLIS);
 		if (value != null && StringUtils.isNumeric(value)) {
 			poolProperties.setTimeBetweenEvictionRunsMillis(Integer
 					.parseInt(value));
 		}
 
-		value = properties.getProperty(PROP_NUMTESTSPEREVICTIONRUN);
+		value = properties
+				.getProperty(ConnectionConstants.PROP_NUMTESTSPEREVICTIONRUN);
 		if (value != null && StringUtils.isNumeric(value)) {
 			poolProperties.setNumTestsPerEvictionRun(Integer.parseInt(value));
 		}
 
-		value = properties.getProperty(PROP_MINEVICTABLEIDLETIMEMILLIS);
+		value = properties
+				.getProperty(ConnectionConstants.PROP_MINEVICTABLEIDLETIMEMILLIS);
 		if (value != null && StringUtils.isNumeric(value)) {
 			poolProperties.setMinEvictableIdleTimeMillis(Integer
 					.parseInt(value));
 		}
 
-		value = properties.getProperty(PROP_TESTWHILEIDLE);
+		value = properties.getProperty(ConnectionConstants.PROP_TESTWHILEIDLE);
 		if (value != null) {
 			poolProperties.setTestWhileIdle(Boolean.valueOf(value)
 					.booleanValue());
 		}
 
-		value = properties.getProperty(PROP_VALIDATOR_CLASS_NAME);
+		value = properties
+				.getProperty(ConnectionConstants.PROP_VALIDATOR_CLASS_NAME);
 		if (value != null) {
 			poolProperties.setValidatorClassName(value);
 		}
 
-		value = properties.getProperty(PROP_VALIDATIONINTERVAL);
+		value = properties
+				.getProperty(ConnectionConstants.PROP_VALIDATIONINTERVAL);
 		if (value != null && StringUtils.isNumeric(value)) {
 			poolProperties.setValidationInterval(Long.parseLong(value));
 		}
 
 		value = properties
-				.getProperty(PROP_ACCESSTOUNDERLYINGCONNECTIONALLOWED);
+				.getProperty(ConnectionConstants.PROP_ACCESSTOUNDERLYINGCONNECTIONALLOWED);
 		if (value != null) {
 			poolProperties.setAccessToUnderlyingConnectionAllowed(Boolean
 					.valueOf(value).booleanValue());
 		}
 
-		value = properties.getProperty(PROP_REMOVEABANDONED);
+		value = properties
+				.getProperty(ConnectionConstants.PROP_REMOVEABANDONED);
 		if (value != null) {
 			poolProperties.setRemoveAbandoned(Boolean.valueOf(value)
 					.booleanValue());
 		}
 
-		value = properties.getProperty(PROP_REMOVEABANDONEDTIMEOUT);
+		value = properties
+				.getProperty(ConnectionConstants.PROP_REMOVEABANDONEDTIMEOUT);
 		if (value != null && StringUtils.isNumeric(value)) {
 			poolProperties.setRemoveAbandonedTimeout(Integer.parseInt(value));
 		}
 
-		value = properties.getProperty(PROP_LOGABANDONED);
+		value = properties.getProperty(ConnectionConstants.PROP_LOGABANDONED);
 		if (value != null) {
 			poolProperties.setLogAbandoned(Boolean.valueOf(value)
 					.booleanValue());
@@ -438,53 +408,56 @@ public class TomcatJdbcConnectionProvider implements ConnectionProvider {
 					poolProperties.getPassword());
 		}
 
-		value = properties.getProperty(PROP_INITSQL);
+		value = properties.getProperty(ConnectionConstants.PROP_INITSQL);
 		if (value != null) {
 			poolProperties.setInitSQL(value);
 		}
 
-		value = properties.getProperty(PROP_INTERCEPTORS);
+		value = properties.getProperty(ConnectionConstants.PROP_INTERCEPTORS);
 		if (value != null) {
 			poolProperties.setJdbcInterceptors(value);
 		}
 
-		value = properties.getProperty(PROP_JMX_ENABLED);
+		value = properties.getProperty(ConnectionConstants.PROP_JMX_ENABLED);
 		if (value != null) {
 			poolProperties.setJmxEnabled(Boolean.parseBoolean(value));
 		}
 
-		value = properties.getProperty(PROP_FAIR_QUEUE);
+		value = properties.getProperty(ConnectionConstants.PROP_FAIR_QUEUE);
 		if (value != null) {
 			poolProperties.setFairQueue(Boolean.parseBoolean(value));
 		}
 
-		value = properties.getProperty(PROP_USE_EQUALS);
+		value = properties.getProperty(ConnectionConstants.PROP_USE_EQUALS);
 		if (value != null) {
 			poolProperties.setUseEquals(Boolean.parseBoolean(value));
 		}
 
-		value = properties.getProperty(PROP_ABANDONWHENPERCENTAGEFULL);
+		value = properties
+				.getProperty(ConnectionConstants.PROP_ABANDONWHENPERCENTAGEFULL);
 		if (value != null && StringUtils.isNumeric(value)) {
 			poolProperties
 					.setAbandonWhenPercentageFull(Integer.parseInt(value));
 		}
 
-		value = properties.getProperty(PROP_MAXAGE);
+		value = properties.getProperty(ConnectionConstants.PROP_MAXAGE);
 		if (value != null && StringUtils.isNumeric(value)) {
 			poolProperties.setMaxAge(Long.parseLong(value));
 		}
 
-		value = properties.getProperty(PROP_USE_CON_LOCK);
+		value = properties.getProperty(ConnectionConstants.PROP_USE_CON_LOCK);
 		if (value != null) {
 			poolProperties.setUseLock(Boolean.parseBoolean(value));
 		}
 
-		value = properties.getProperty(PROP_SUSPECT_TIMEOUT);
+		value = properties
+				.getProperty(ConnectionConstants.PROP_SUSPECT_TIMEOUT);
 		if (value != null && StringUtils.isNumeric(value)) {
 			poolProperties.setSuspectTimeout(Integer.parseInt(value));
 		}
 
-		value = properties.getProperty(PROP_ALTERNATE_USERNAME_ALLOWED);
+		value = properties
+				.getProperty(ConnectionConstants.PROP_ALTERNATE_USERNAME_ALLOWED);
 		if (value != null) {
 			poolProperties.setAlternateUsernameAllowed(Boolean
 					.parseBoolean(value));

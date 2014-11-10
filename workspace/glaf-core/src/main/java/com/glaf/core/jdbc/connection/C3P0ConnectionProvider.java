@@ -108,12 +108,12 @@ public class C3P0ConnectionProvider implements ConnectionProvider {
 			allProps.putAll(c3props);
 
 			Integer initialPoolSize = PropertiesHelper.getInteger(
-					DBConfiguration.POOL_INIT_SIZE, allProps);
+					ConnectionConstants.PROP_INITIALSIZE, allProps);
 			Integer minPoolSize = PropertiesHelper.getInteger(
-					DBConfiguration.POOL_MIN_SIZE, allProps);
+					ConnectionConstants.PROP_MINACTIVE, allProps);
 			if (initialPoolSize == null && minPoolSize != null) {
-				c3props.put(DBConfiguration.POOL_INIT_SIZE,
-						String.valueOf(minPoolSize).trim());
+				c3props.put(ConnectionConstants.PROP_INITIALSIZE, String
+						.valueOf(minPoolSize).trim());
 			}
 
 			DataSource unpooled = DataSources.unpooledDataSource(jdbcUrl,

@@ -54,7 +54,6 @@ public final class ConnectionProviderFactory {
 		SPECIAL_PROPERTIES.add(DBConfiguration.JDBC_DATASOURCE);
 		SPECIAL_PROPERTIES.add(DBConfiguration.JDBC_URL);
 		SPECIAL_PROPERTIES.add(DBConfiguration.JDBC_DRIVER);
-		SPECIAL_PROPERTIES.add(DBConfiguration.POOL_SIZE);
 		SPECIAL_PROPERTIES.add(DBConfiguration.JDBC_ISOLATION);
 		SPECIAL_PROPERTIES.add(DBConfiguration.JDBC_DRIVER);
 		SPECIAL_PROPERTIES.add(DBConfiguration.JDBC_USER);
