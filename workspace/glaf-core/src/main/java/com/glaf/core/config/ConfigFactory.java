@@ -68,23 +68,28 @@ public class ConfigFactory {
 	}
 
 	public static void clearAll() {
-		if (regions != null && !regions.isEmpty()) {
-			for (String region : regions) {
-				try {
-					String regionName = Environment.getCurrentSystemName()
-							+ "_" + region;
-					if (SystemProperties.getDeploymentSystemName() != null) {
-						regionName = SystemProperties.getDeploymentSystemName()
-								+ "_" + Environment.getCurrentSystemName()
+		if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {
+			if (regions != null && !regions.isEmpty()) {
+				for (String region : regions) {
+					try {
+						String regionName = Environment.getCurrentSystemName()
 								+ "_" + region;
+						if (SystemProperties.getDeploymentSystemName() != null) {
+							regionName = SystemProperties
+									.getDeploymentSystemName()
+									+ "_"
+									+ Environment.getCurrentSystemName()
+									+ "_"
+									+ region;
+						}
+						channel.clear(regionName);
+						logger.debug("###################################");
+						logger.debug(region + " clear.");
+						logger.debug("###################################");
+					} catch (Exception ex) {
+						ex.printStackTrace();
+						logger.error(ex);
 					}
-					channel.clear(regionName);
-					logger.debug("###################################");
-					logger.debug(region + " clear.");
-					logger.debug("###################################");
-				} catch (Exception ex) {
-					ex.printStackTrace();
-					logger.error(ex);
 				}
 			}
 		}
