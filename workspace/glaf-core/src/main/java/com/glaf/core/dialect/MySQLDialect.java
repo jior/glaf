@@ -20,11 +20,6 @@ package com.glaf.core.dialect;
 
 public class MySQLDialect implements Dialect {
 
-	public String getLimitString(String sql, boolean hasOffset) {
-		return new StringBuffer(sql.length() + 20).append(sql)
-				.append(hasOffset ? " limit ?, ?" : " limit ?").toString();
-	}
-
 	public String getLimitString(String sql, int offset, int limit) {
 		sql = sql.trim();
 		StringBuffer sb = new StringBuffer(sql.length() + 50);

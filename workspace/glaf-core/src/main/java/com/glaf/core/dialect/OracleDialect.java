@@ -22,24 +22,6 @@ public class OracleDialect implements Dialect {
 
 	protected static final String SQL_END_DELIMITER = ";";
 
-	public String getLimitString(String sql, boolean hasOffset) {
-		sql = sql.trim();
-		StringBuffer pagingSelect = new StringBuffer(sql.length() + 100);
-		if (hasOffset) {
-			pagingSelect
-					.append("select * from ( select row_.*, rownum rownum_ from ( ");
-		} else {
-			pagingSelect.append("select * from ( ");
-		}
-		pagingSelect.append(sql);
-		if (hasOffset) {
-			pagingSelect.append(" ) row_ where rownum <= ?) where rownum_ > ?");
-		} else {
-			pagingSelect.append(" ) where rownum <= ?");
-		}
-		return pagingSelect.toString();
-	}
-
 	public String getLimitString(String sql, int offset, int limit) {
 		sql = sql.trim();
 		StringBuffer pagingSelect = new StringBuffer(sql.length() + 100);

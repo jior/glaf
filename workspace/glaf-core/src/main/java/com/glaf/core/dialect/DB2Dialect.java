@@ -20,60 +20,17 @@ package com.glaf.core.dialect;
 
 public class DB2Dialect implements Dialect {
 
-	private static boolean hasDistinct(String sql) {
-		return sql.toLowerCase().indexOf("select distinct") >= 0;
-	}
-
-	public String getLimitString(String sql, boolean hasOffset) {
-		int startOfSelect = sql.toLowerCase().indexOf("select");
-		StringBuffer pagingSelect = new StringBuffer(sql.length() + 100)
-				.append(sql.substring(0, startOfSelect))
-				.append("select * from ( select ").append(getRowNumber(sql));
-		if (hasDistinct(sql)) {
-			pagingSelect.append(" row_.* from ( ")
-					.append(sql.substring(startOfSelect)).append(" ) as row_");
-		} else {
-			pagingSelect.append(sql.substring(startOfSelect + 6));
-		}
-		pagingSelect.append(" ) as temp_ where rownumber_ ");
-		if (hasOffset) {
-			pagingSelect.append("between ?+1 and ?");
-		} else {
-			pagingSelect.append("<= ?");
-		}
-		return pagingSelect.toString();
-	}
-
 	public String getLimitString(String sql, int offset, int limit) {
-		int startOfSelect = sql.toLowerCase().indexOf("select");
-		StringBuffer pagingSelect = new StringBuffer(sql.length() + 100)
-				.append(sql.substring(0, startOfSelect))
-				.append("select * from ( select ").append(getRowNumber(sql));
-		if (hasDistinct(sql)) {
-			pagingSelect.append(" row_.* from ( ")
-					.append(sql.substring(startOfSelect)).append(" ) as row_");
-		} else {
-			pagingSelect.append(sql.substring(startOfSelect + 6));
+		if (offset == 0) {
+			return sql + " fetch first " + limit + " rows only";
 		}
-		pagingSelect.append(" ) as temp_ where rownumber_ ");
-		if (offset > 0) {
-			pagingSelect.append("between ").append((offset + 1))
-					.append(" and ").append(offset + limit);
-		} else {
-			pagingSelect.append("<= ").append(limit);
-		}
-		return pagingSelect.toString();
-	}
-
-	private String getRowNumber(String sql) {
-		StringBuffer rownumber = new StringBuffer(50)
-				.append("rownumber() over(");
-		int orderByIndex = sql.toLowerCase().indexOf("order by");
-		if (orderByIndex > 0 && !hasDistinct(sql)) {
-			rownumber.append(sql.substring(orderByIndex));
-		}
-		rownumber.append(") as rownumber_,");
-		return rownumber.toString();
+		// nest the main query in an outer select
+		return "select * from ( select inner2_.*, rownumber() over(order by order of inner2_) as rownumber_ from ( "
+				+ sql
+				+ " fetch first "
+				+ limit
+				+ " rows only ) as inner2_ ) as inner1_ where rownumber_ > "
+				+ offset + " order by rownumber_";
 	}
 
 	public boolean supportsLimit() {

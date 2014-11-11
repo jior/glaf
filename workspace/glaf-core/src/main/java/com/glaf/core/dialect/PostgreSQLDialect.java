@@ -22,12 +22,6 @@ public class PostgreSQLDialect implements Dialect {
 
 	protected static final String SQL_END_DELIMITER = ";";
 
-	public String getLimitString(String sql, boolean hasOffset) {
-		return new StringBuffer(sql.length() + 20).append(sql)
-				.append(hasOffset ? " limit ? offset ?" : " limit ?")
-				.toString();
-	}
-
 	public String getLimitString(String sql, int offset, int limit) {
 		StringBuffer sb = new StringBuffer(sql.length() + 50);
 		sb.append(sql);

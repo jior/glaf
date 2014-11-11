@@ -30,10 +30,6 @@ public class SQLServer2008Dialect implements Dialect {
 		}
 	}
 
-	public String getLimitString(String querySelect, boolean hasOffset) {
-		return querySelect;
-	}
-
 	/**
 	 * Add a LIMIT clause to the given SQL SELECT
 	 * 

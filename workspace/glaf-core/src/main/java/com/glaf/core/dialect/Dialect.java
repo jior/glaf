@@ -20,8 +20,6 @@ package com.glaf.core.dialect;
 
 public interface Dialect {
 
-	String getLimitString(String sql, boolean hasOffset);
-
 	String getLimitString(String sql, int offset, int limit);
 
 	boolean supportsLimit();

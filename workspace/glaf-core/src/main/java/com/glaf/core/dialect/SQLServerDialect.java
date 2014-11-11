@@ -27,10 +27,6 @@ public class SQLServerDialect implements Dialect {
 		return selectIndex + (selectDistinctIndex == selectIndex ? 15 : 6);
 	}
 
-	public String getLimitString(String querySelect, boolean hasOffset) {
-		return querySelect;
-	}
-
 	public String getLimitString(String querySelect, int offset, int limit) {
 		int start = offset + limit;
 		return new StringBuffer(querySelect.length() + 8)
