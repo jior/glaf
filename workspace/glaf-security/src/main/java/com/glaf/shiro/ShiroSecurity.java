@@ -31,12 +31,13 @@ public class ShiroSecurity {
 	protected final static Log logger = LogFactory.getLog(ShiroSecurity.class);
 
 	public static void login(String actorId, String password) {
+		logger.info("login user:"+actorId);
 		Subject currentUser = SecurityUtils.getSubject();
-		UsernamePasswordToken token = new UsernamePasswordToken();
-		token.setUsername(actorId);
-		token.setPassword(actorId.toCharArray());
-		token.setRememberMe(true);
 		try {
+			UsernamePasswordToken token = new UsernamePasswordToken();
+			token.setUsername(actorId);
+			token.setPassword(actorId.toCharArray());
+			token.setRememberMe(false);
 			Session session = currentUser.getSession();
 			session.setAttribute(Constants.LOGIN_ACTORID, actorId);
 			currentUser.login(token);
@@ -44,6 +45,7 @@ public class ShiroSecurity {
 					+ "] logged in successfully.");
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			logger.error(ex);
 		}
 	}
 

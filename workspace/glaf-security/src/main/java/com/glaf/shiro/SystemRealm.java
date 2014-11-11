@@ -34,6 +34,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.authc.credential.AllowAllCredentialsMatcher;
 
 import com.glaf.core.identity.User;
 import com.glaf.core.security.IdentityFactory;
@@ -41,6 +42,13 @@ import com.glaf.core.security.LoginContext;
 
 public class SystemRealm extends AuthorizingRealm {
 	protected final static Log logger = LogFactory.getLog(SystemRealm.class);
+
+
+	public SystemRealm() {
+		super();
+		setName("SystemRealm");
+		setCredentialsMatcher(new AllowAllCredentialsMatcher());
+	}
 
 	public void clearAllCache() {
 		clearAllCachedAuthenticationInfo();

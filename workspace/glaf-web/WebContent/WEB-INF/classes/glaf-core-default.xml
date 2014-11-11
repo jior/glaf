@@ -10,13 +10,13 @@
 
 	<property>
 		<name>distributed.config.enabled</name>
-		<value>true</value>
+		<value>false</value>
 	</property>
 
 
 	<property>
 		<name>distributed.resource.enabled</name>
-		<value>true</value>
+		<value>flase</value>
 	</property>
 
 
