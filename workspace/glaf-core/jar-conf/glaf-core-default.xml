@@ -1,10 +1,20 @@
-<?xml version="1.0" encoding="GBK"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <configuration>
 
 	<property>
 		<name>i18n.messages_key</name>
 		<value>ApplicationStrings</value>
+	</property>
+
+	<property>
+		<name>distributed.config.enabled</name>
+		<value>false</value>
+	</property>
+
+	<property>
+		<name>distributed.resource.enabled</name>
+		<value>false</value>
 	</property>
  
 
