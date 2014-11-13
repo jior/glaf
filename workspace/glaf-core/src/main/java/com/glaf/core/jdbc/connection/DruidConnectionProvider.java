@@ -144,23 +144,25 @@ public class DruidConnectionProvider implements ConnectionProvider {
 			ds.setConnectProperties(properties);
 
 			ds.setInitialSize(1);
-			ds.setMinIdle(1);
+			ds.setMinIdle(3);
 			ds.setMaxActive(maxPoolSize);
 			ds.setMaxWait(maxWait * 1000L);
 
+			ds.setConnectionErrorRetryAttempts(30);
+			ds.setDefaultAutoCommit(true);
+
 			ds.setTestOnReturn(false);
 			ds.setTestOnBorrow(false);
+			ds.setTestWhileIdle(false);
+			
 			if (StringUtils.isNotEmpty(validationQuery)) {
 				log.debug("validationQuery:" + validationQuery);
 				ds.setValidationQuery(validationQuery);
 				ds.setTestWhileIdle(true);// 保证连接池内部定时检测连接的可用性，不可用的连接会被抛弃或者重建
-			} else {
-				ds.setTestWhileIdle(false);
-			}
+			} 
 
 			ds.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRuns * 1000L);// 间隔多久才进行一次检测，检测需要关闭的空闲连接
-
-			ds.setMinEvictableIdleTimeMillis(300 * 1000L);// 配置一个连接在池中最小生存的时间，单位是毫秒
+			ds.setMinEvictableIdleTimeMillis(1000L * 60L * 120L);// 配置一个连接在池中最小生存的时间，单位是毫秒
 
 			if (maxStatements != null) {
 				ds.setPoolPreparedStatements(true);
@@ -168,9 +170,9 @@ public class DruidConnectionProvider implements ConnectionProvider {
 				ds.setMaxPoolPreparedStatementPerConnectionSize(200);
 			}
 
-			// ds.setRemoveAbandoned(true);// 对于长时间不使用的连接强制关闭
-			// ds.setRemoveAbandonedTimeout(600);// 超过10分钟开始关闭空闲连接
-			// ds.setLogAbandoned(true);// 将当前关闭动作记录到日志
+			ds.setRemoveAbandoned(false);// 对于长时间不使用的连接强制关闭 true/false
+			ds.setRemoveAbandonedTimeout(7200);// 超过120分钟开始关闭空闲连接
+			ds.setLogAbandoned(true);// 将当前关闭动作记录到日志
 
 			ds.setUrl(jdbcUrl);
 			ds.setDriverClassName(jdbcDriverClass);
