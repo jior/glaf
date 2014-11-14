@@ -18,6 +18,7 @@
 
 package com.glaf.activiti.tasklistener;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -79,8 +80,8 @@ public class PrepareTaskAssigneeListener implements TaskListener {
 						commandContext.getDbSqlSession().getSqlSession());
 				List<?> list = entityDAO.getList(statement, paramMap);
 				if (list != null && !list.isEmpty()) {
-					List<String> users = new java.util.ArrayList<String>();
-					List<String> groups = new java.util.ArrayList<String>();
+					Collection<String> users = new java.util.HashSet<String>();
+					Collection<String> groups = new java.util.HashSet<String>();
 					for (Object object : list) {
 						if (object instanceof org.activiti.engine.identity.User) {
 							String actorId = ((org.activiti.engine.identity.User) object)
@@ -119,7 +120,7 @@ public class PrepareTaskAssigneeListener implements TaskListener {
 									.getValue(delegateTask.getExecution());
 							if (name != null) {
 								execution.setVariable(name.toString(),
-										users.get(0));
+										users.iterator().next());
 							}
 						}
 

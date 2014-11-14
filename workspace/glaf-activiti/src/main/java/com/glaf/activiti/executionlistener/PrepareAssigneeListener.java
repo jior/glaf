@@ -18,6 +18,7 @@
 
 package com.glaf.activiti.executionlistener;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -81,8 +82,8 @@ public class PrepareAssigneeListener implements ExecutionListener {
 						commandContext.getDbSqlSession().getSqlSession());
 				List<?> list = entityDAO.getList(statement, paramMap);
 				if (list != null && !list.isEmpty()) {
-					List<String> users = new java.util.ArrayList<String>();
-					List<String> groups = new java.util.ArrayList<String>();
+					Collection<String> users = new java.util.HashSet<String>();
+					Collection<String> groups = new java.util.HashSet<String>();
 					for (Object object : list) {
 						if (object instanceof org.activiti.engine.identity.User) {
 							String actorId = ((org.activiti.engine.identity.User) object)
@@ -128,7 +129,7 @@ public class PrepareAssigneeListener implements ExecutionListener {
 							Object name = outputAssigneeVar.getValue(execution);
 							if (name != null) {
 								execution.setVariable(name.toString(),
-										users.get(0));
+										users.iterator().next());
 							}
 						}
 

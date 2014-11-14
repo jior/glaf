@@ -18,6 +18,7 @@
 
 package com.glaf.activiti.executionlistener;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +37,7 @@ import com.glaf.core.util.StringTools;
 public class UserTaskExecutionListener implements ExecutionListener {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	protected final static Log logger = LogFactory
 			.getLog(UserTaskExecutionListener.class);
 
@@ -83,7 +84,7 @@ public class UserTaskExecutionListener implements ExecutionListener {
 						commandContext.getDbSqlSession().getSqlSession());
 				List<?> list = entityDAO.getList(statement, paramMap);
 				if (list != null && !list.isEmpty()) {
-					List<String> users = new java.util.ArrayList<String>();
+					Collection<String> users = new java.util.HashSet<String>();
 
 					for (Object object : list) {
 						if (object instanceof org.activiti.engine.identity.User) {

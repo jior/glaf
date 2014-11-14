@@ -103,7 +103,7 @@ public class RoleUsersMultiInstanceTaskListener implements TaskListener {
 				statement = "getMembershipUsers";
 			}
 
-			Collection<String> assigneeList = new java.util.ArrayList<String>();
+			Collection<String> assigneeList = new java.util.HashSet<String>();
 
 			if (!paramMap.isEmpty()) {
 				paramMap.putAll(execution.getVariables());

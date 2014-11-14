@@ -38,7 +38,7 @@ import com.glaf.core.util.UUID32;
 
 public class TaskCompleteListener implements TaskListener {
 	private static final long serialVersionUID = 1L;
-	
+
 	protected final static Log logger = LogFactory
 			.getLog(TaskCompleteListener.class);
 
@@ -75,7 +75,7 @@ public class TaskCompleteListener implements TaskListener {
 			activityInstance.setType("userTask");
 
 			CommandContext commandContext = Context.getCommandContext();
-	 
+
 			MyBatisEntityDAO entityDAO = new MyBatisEntityDAO(commandContext
 					.getDbSqlSession().getSqlSession());
 			entityDAO.insert("insertActivityInstance", activityInstance);

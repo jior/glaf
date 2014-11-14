@@ -18,6 +18,7 @@
 
 package com.glaf.activiti.tasklistener;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -109,8 +110,8 @@ public class RoleUsersTaskCreateListener implements TaskListener {
 						commandContext.getDbSqlSession().getSqlSession());
 				List<?> list = entityDAO.getList(statement, paramMap);
 				if (list != null && !list.isEmpty()) {
-					List<String> candidateUsers = new java.util.ArrayList<String>();
-					List<String> candidateGroups = new java.util.ArrayList<String>();
+					Collection<String> candidateUsers = new java.util.HashSet<String>();
+					Collection<String> candidateGroups = new java.util.HashSet<String>();
 					for (Object object : list) {
 						if (object instanceof org.activiti.engine.identity.User) {
 							String actorId = ((org.activiti.engine.identity.User) object)
@@ -146,7 +147,7 @@ public class RoleUsersTaskCreateListener implements TaskListener {
 							delegateTask.setAssignee(null);
 							delegateTask.addCandidateUsers(candidateUsers);
 						} else {
-							delegateTask.setAssignee(candidateUsers.get(0));
+							delegateTask.setAssignee(candidateUsers.iterator().next());
 						}
 						if (sendMail != null
 								&& StringUtils.equals(

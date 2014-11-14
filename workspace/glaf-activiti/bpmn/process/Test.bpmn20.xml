@@ -10,7 +10,7 @@
           <activiti:string><![CDATA[assigneeList]]></activiti:string>
         </activiti:field>
         <activiti:field name="userIds">
-          <activiti:string><![CDATA[joy,dane]]></activiti:string>
+          <activiti:string><![CDATA[joy]]></activiti:string>
         </activiti:field>
       </activiti:executionListener>
       <activiti:executionListener event="start" class="com.glaf.activiti.executionlistener.RoleUsersMultiInstanceListener">
@@ -21,7 +21,7 @@
           <activiti:string><![CDATA[assigneeList2]]></activiti:string>
         </activiti:field>
         <activiti:field name="userIds">
-          <activiti:string><![CDATA[joy,rick]]></activiti:string>
+          <activiti:string><![CDATA[dane]]></activiti:string>
         </activiti:field>
       </activiti:executionListener>
       <activiti:executionListener event="start" class="com.glaf.activiti.executionlistener.SqlUpdateListener">
@@ -97,7 +97,7 @@
       <extensionElements>
 	    <activiti:taskListener event="assignment" class="com.glaf.activiti.tasklistener.MailTaskListener">
           <activiti:field name="mailTo">
-            <activiti:string><![CDATA[assigneeList]]></activiti:string>
+            <activiti:string><![CDATA[assigneeList2]]></activiti:string>
           </activiti:field>
 		  <activiti:field name="assigneeVar">
             <activiti:string><![CDATA[assigneeList2]]></activiti:string>
@@ -133,7 +133,9 @@
     </userTask>
     <endEvent id="endevent1" name="结束"></endEvent>
     <exclusiveGateway id="exclusivegateway2" name="判断"></exclusiveGateway>
-    <sequenceFlow id="flow3" name="不通过" sourceRef="exclusivegateway1" targetRef="usertask2"></sequenceFlow>
+    <sequenceFlow id="flow3" name="不通过" sourceRef="exclusivegateway1" targetRef="usertask2">
+	  <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!approve}]]></conditionExpression>
+	</sequenceFlow>
     <sequenceFlow id="flow38" name="通过" sourceRef="exclusivegateway2" targetRef="endevent1">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approve}]]></conditionExpression>
     </sequenceFlow>
@@ -144,7 +146,9 @@
     <sequenceFlow id="flow46" name="通过" sourceRef="exclusivegateway1" targetRef="usertask3">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approve}]]></conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="flow47" name="判断" sourceRef="usertask3" targetRef="exclusivegateway2"></sequenceFlow>
+    <sequenceFlow id="flow47" name="判断" sourceRef="usertask3" targetRef="exclusivegateway2">
+	  <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!approve}]]></conditionExpression>
+	</sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_Test">
     <bpmndi:BPMNPlane bpmnElement="Test" id="BPMNPlane_Test">
