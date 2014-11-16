@@ -25,8 +25,6 @@ import java.io.IOException;
 import org.nustaq.serialization.FSTObjectInput;
 import org.nustaq.serialization.FSTObjectOutput;
 
- 
-
 public class FSTSerializer implements Serializer {
 
 	@Override
