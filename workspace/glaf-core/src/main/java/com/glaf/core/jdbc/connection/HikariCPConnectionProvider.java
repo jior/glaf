@@ -25,6 +25,7 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,10 +66,22 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 	}
 
 	public void configure(Properties props) throws RuntimeException {
-		String jdbcDriverClass = props.getProperty(DBConfiguration.JDBC_DRIVER);
-		String jdbcUrl = props.getProperty(DBConfiguration.JDBC_URL);
+		Properties properties = new Properties();
+
+		for (Iterator<?> ii = props.keySet().iterator(); ii.hasNext();) {
+			String key = (String) ii.next();
+			properties.put(key, props.get(key));
+			if (key.startsWith("hikari.")) {
+				String newKey = key.substring(7);
+				properties.put(newKey, props.get(key));
+			}
+		}
+
+		String jdbcDriverClass = properties
+				.getProperty(DBConfiguration.JDBC_DRIVER);
+		String jdbcUrl = properties.getProperty(DBConfiguration.JDBC_URL);
 		Properties connectionProps = ConnectionProviderFactory
-				.getConnectionProperties(props);
+				.getConnectionProperties(properties);
 
 		log.info("HikariCP using driver: " + jdbcDriverClass + " at URL: "
 				+ jdbcUrl);
@@ -76,7 +89,7 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 				+ PropertiesHelper.maskOut(connectionProps, "password"));
 
 		autocommit = PropertiesHelper.getBoolean(
-				DBConfiguration.JDBC_AUTOCOMMIT, props);
+				DBConfiguration.JDBC_AUTOCOMMIT, properties);
 		log.info("autocommit mode: " + autocommit);
 
 		if (jdbcDriverClass == null) {
@@ -99,36 +112,29 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 
 		try {
 
-			Properties hikariProps = new Properties();
-
-			for (Iterator<?> ii = props.keySet().iterator(); ii.hasNext();) {
-				String key = (String) ii.next();
-				if (key.startsWith("hikari.")) {
-					String newKey = key.substring(7);
-					hikariProps.put(newKey, props.get(key));
-				}
-			}
-
-			Properties allProps = (Properties) props.clone();
-			allProps.putAll(hikariProps);
+			String validationQuery = properties
+					.getProperty(ConnectionConstants.PROP_VALIDATIONQUERY);
 
 			Integer initialPoolSize = PropertiesHelper.getInteger(
-					ConnectionConstants.PROP_INITIALSIZE, allProps);
+					ConnectionConstants.PROP_INITIALSIZE, properties);
 			Integer minPoolSize = PropertiesHelper.getInteger(
-					ConnectionConstants.PROP_MINACTIVE, allProps);
+					ConnectionConstants.PROP_MINACTIVE, properties);
 			Integer maxPoolSize = PropertiesHelper.getInteger(
-					ConnectionConstants.PROP_MAXACTIVE, allProps);
+					ConnectionConstants.PROP_MAXACTIVE, properties);
 			if (initialPoolSize == null && minPoolSize != null) {
-				allProps.put(ConnectionConstants.PROP_INITIALSIZE, String
+				properties.put(ConnectionConstants.PROP_INITIALSIZE, String
 						.valueOf(minPoolSize).trim());
 			}
+
+			Integer maxWait = PropertiesHelper.getInteger(
+					ConnectionConstants.PROP_MAXWAIT, properties);
 
 			if (maxPoolSize == null) {
 				maxPoolSize = 50;
 			}
 
-			String dbUser = allProps.getProperty(DBConfiguration.JDBC_USER);
-			String dbPassword = allProps
+			String dbUser = properties.getProperty(DBConfiguration.JDBC_USER);
+			String dbPassword = properties
 					.getProperty(DBConfiguration.JDBC_PASSWORD);
 
 			if (dbUser == null) {
@@ -145,7 +151,30 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 			config.setUsername(dbUser);
 			config.setPassword(dbPassword);
 			config.setMaximumPoolSize(maxPoolSize);
-			config.setDataSourceProperties(allProps);
+			config.setDataSourceProperties(properties);
+			if (StringUtils.isNotEmpty(validationQuery)) {
+				config.setConnectionTestQuery(validationQuery);
+			}
+			if (maxWait != null) {
+				config.setConnectionTimeout(maxWait * 1000L);
+			}
+
+			config.setMaxLifetime(1000L * 3600 * 8);
+
+			String isolationLevel = properties
+					.getProperty(DBConfiguration.JDBC_ISOLATION);
+			if (isolationLevel == null) {
+				isolation = null;
+			} else {
+				isolation = new Integer(isolationLevel);
+				log.info("JDBC isolation level: "
+						+ DBConfiguration.isolationLevelToString(isolation
+								.intValue()));
+			}
+
+			if (StringUtils.isNotEmpty(isolationLevel)) {
+				config.setTransactionIsolation(isolationLevel);
+			}
 
 			ds = new HikariDataSource(config);
 
@@ -168,16 +197,6 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 			throw new RuntimeException(ex);
 		} finally {
 			JdbcUtils.close(conn);
-		}
-
-		String i = props.getProperty(DBConfiguration.JDBC_ISOLATION);
-		if (i == null) {
-			isolation = null;
-		} else {
-			isolation = new Integer(i);
-			log.info("JDBC isolation level: "
-					+ DBConfiguration.isolationLevelToString(isolation
-							.intValue()));
 		}
 
 	}

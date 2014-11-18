@@ -26,7 +26,7 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.cfg.Environment;
 import org.hibernate.connection.ConnectionProvider;
 import org.hibernate.connection.ConnectionProviderFactory;
@@ -34,7 +34,6 @@ import org.hibernate.util.PropertiesHelper;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-
 import com.glaf.core.config.BaseConfiguration;
 import com.glaf.core.config.Configuration;
 import com.glaf.core.jdbc.connection.ConnectionConstants;
@@ -113,6 +112,9 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 
 		try {
 
+			String validationQuery = properties
+					.getProperty(ConnectionConstants.PROP_VALIDATIONQUERY);
+
 			Integer initialPoolSize = PropertiesHelper.getInteger(
 					ConnectionConstants.PROP_INITIALSIZE, properties);
 			Integer minPoolSize = PropertiesHelper.getInteger(
@@ -123,6 +125,9 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 				properties.put(ConnectionConstants.PROP_INITIALSIZE, String
 						.valueOf(minPoolSize).trim());
 			}
+
+			Integer maxWait = PropertiesHelper.getInteger(
+					ConnectionConstants.PROP_MAXWAIT, properties);
 
 			if (maxPoolSize == null) {
 				maxPoolSize = 50;
@@ -147,20 +152,36 @@ public class HikariCPConnectionProvider implements ConnectionProvider {
 			config.setMaximumPoolSize(maxPoolSize);
 			config.setDataSourceProperties(properties);
 
+			if (StringUtils.isNotEmpty(validationQuery)) {
+				config.setConnectionTestQuery(validationQuery);
+			}
+			if (maxWait != null) {
+				config.setConnectionTimeout(maxWait * 1000L);
+			}
+
+			config.setMaxLifetime(1000L * 3600 * 8);
+
+			String isolationLevel = properties
+					.getProperty(Environment.ISOLATION);
+			if (isolationLevel == null) {
+				isolation = null;
+			} else {
+				isolation = new Integer(isolationLevel);
+				log.info("JDBC isolation level: "
+						+ Environment.isolationLevelToString(isolation
+								.intValue()));
+			}
+
+			if (StringUtils.isNotEmpty(isolationLevel)) {
+				config.setTransactionIsolation(isolationLevel);
+			}
+
 			ds = new HikariDataSource(config);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			log.error("could not instantiate HikariCP connection pool", ex);
 			throw new RuntimeException(
 					"Could not instantiate HikariCP connection pool", ex);
-		}
-		String i = properties.getProperty(Environment.ISOLATION);
-		if (i == null) {
-			isolation = null;
-		} else {
-			isolation = new Integer(i);
-			log.info("JDBC isolation level: "
-					+ Environment.isolationLevelToString(isolation.intValue()));
 		}
 
 	}
