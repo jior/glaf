@@ -23,17 +23,20 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.glaf.core.base.DataRequest;
 import com.glaf.core.util.SearchFilter;
 
 public abstract class AbstractQuery<T> implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	protected Map<String, String> columns = new java.util.concurrent.ConcurrentHashMap<String, String>();
+	protected DataRequest dataRequest;
 
-	protected List<QueryCondition> conditions = new java.util.concurrent.CopyOnWriteArrayList<QueryCondition>();
+	protected Map<String, String> columns = new java.util.HashMap<String, String>();
 
-	protected Map<String, Object> parameters = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+	protected List<QueryCondition> conditions = new java.util.ArrayList<QueryCondition>();
+
+	protected Map<String, Object> parameters = new java.util.HashMap<String, Object>();
 
 	public AbstractQuery() {
 
@@ -41,7 +44,7 @@ public abstract class AbstractQuery<T> implements java.io.Serializable {
 
 	public void addColumn(String property, String columnName) {
 		if (columns == null) {
-			columns = new java.util.concurrent.ConcurrentHashMap<String, String>();
+			columns = new java.util.HashMap<String, String>();
 		}
 	}
 
@@ -85,21 +88,25 @@ public abstract class AbstractQuery<T> implements java.io.Serializable {
 
 	public Map<String, String> getColumns() {
 		if (columns == null) {
-			columns = new java.util.concurrent.ConcurrentHashMap<String, String>();
+			columns = new java.util.HashMap<String, String>();
 		}
 		return columns;
 	}
 
 	public List<QueryCondition> getConditions() {
 		if (conditions == null) {
-			conditions = new java.util.concurrent.CopyOnWriteArrayList<QueryCondition>();
+			conditions = new java.util.ArrayList<QueryCondition>();
 		}
 		return conditions;
 	}
 
+	public DataRequest getDataRequest() {
+		return dataRequest;
+	}
+
 	public Map<String, Object> getParameters() {
 		if (parameters == null) {
-			parameters = new java.util.concurrent.ConcurrentHashMap<String, Object>();
+			parameters = new java.util.HashMap<String, Object>();
 		}
 		return parameters;
 	}
@@ -191,6 +198,10 @@ public abstract class AbstractQuery<T> implements java.io.Serializable {
 	public T notLike(String name, String alias, String value) {
 		addCondition(name, alias, SearchFilter.NOT_LIKE, value);
 		return (T) this;
+	}
+
+	public void setDataRequest(DataRequest dataRequest) {
+		this.dataRequest = dataRequest;
 	}
 
 }
