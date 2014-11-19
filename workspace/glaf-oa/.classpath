@@ -108,8 +108,6 @@
 	<classpathentry kind="lib" path="/glaf-core/lib/postgresql.jdbc4.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/quartz-all.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/resteasy-cache-core.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/resteasy-crypto.jar"/>
-	<classpathentry kind="lib" path="/glaf-core/lib/resteasy-jackson-provider.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/resteasy-jaxb-provider.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/resteasy-jaxrs.jar"/>
 	<classpathentry kind="lib" path="/glaf-core/lib/resteasy-multipart-provider.jar"/>
