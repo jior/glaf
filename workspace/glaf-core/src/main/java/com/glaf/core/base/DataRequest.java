@@ -35,15 +35,15 @@ public class DataRequest implements java.io.Serializable {
 
 	private int skip;
 
+	private FilterDescriptor filter;
+
+	private HashMap<String, Object> data;
+
 	private List<SortDescriptor> sort;
 
 	private List<GroupDescriptor> group;
 
 	private List<AggregateDescriptor> aggregate;
-
-	private HashMap<String, Object> data;
-
-	private FilterDescriptor filter;
 
 	public DataRequest() {
 		this.filter = new FilterDescriptor();

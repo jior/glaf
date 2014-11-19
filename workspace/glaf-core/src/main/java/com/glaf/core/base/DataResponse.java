@@ -36,28 +36,28 @@ public class DataResponse implements java.io.Serializable {
 
 	}
 
-	public long getTotal() {
-		return this.total;
-	}
-
-	public void setTotal(long total) {
-		this.total = total;
+	public Map<String, Object> getAggregates() {
+		return this.aggregates;
 	}
 
 	public List<?> getData() {
 		return this.data;
 	}
 
-	public void setData(List<?> data) {
-		this.data = data;
-	}
-
-	public Map<String, Object> getAggregates() {
-		return this.aggregates;
+	public long getTotal() {
+		return this.total;
 	}
 
 	public void setAggregates(Map<String, Object> aggregates) {
 		this.aggregates = aggregates;
+	}
+
+	public void setData(List<?> data) {
+		this.data = data;
+	}
+
+	public void setTotal(long total) {
+		this.total = total;
 	}
 
 	public String toString() {
