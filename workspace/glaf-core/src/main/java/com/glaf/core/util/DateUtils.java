@@ -51,6 +51,8 @@ public class DateUtils {
 
 	public static final String SECOND_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
+	public static final String MILSECOND_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+
 	public static final long WEEK = 7L * DAY;
 
 	public static final String YEAR_FORMAT = "yyyy";
@@ -485,8 +487,13 @@ public class DateUtils {
 				parsePatterns[0] = SECOND_FORMAT;
 				return org.apache.commons.lang3.time.DateUtils.parseDate(
 						dateString, parsePatterns);
+			} else if (dateString.length() == 24) {
+				parsePatterns[0] = MILSECOND_FORMAT;
+				return org.apache.commons.lang3.time.DateUtils.parseDate(
+						dateString, parsePatterns);
 			}
 		} catch (ParseException ex) {
+			ex.printStackTrace();
 			throw new RuntimeException(" parse date string error: " + ex);
 		}
 		throw new RuntimeException("Input is not valid date string: "
