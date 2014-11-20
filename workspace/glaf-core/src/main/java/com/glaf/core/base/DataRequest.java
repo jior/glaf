@@ -18,10 +18,14 @@
 package com.glaf.core.base;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import com.glaf.core.util.DateUtils;
 
 public class DataRequest implements java.io.Serializable {
 
@@ -77,14 +81,121 @@ public class DataRequest implements java.io.Serializable {
 
 	public static class FilterDescriptor {
 		private String logic;
+		private String logicValue;
 		private List<FilterDescriptor> filters;
 		private String field;
 		private Object value;
 		private String operator;
+		private String stringValue;
+		private Date dateValue;
+		private Integer intValue;
+		private Long longValue;
+		private Double doubleValue;
 		private boolean ignoreCase = true;
 
 		public FilterDescriptor() {
 			this.filters = new ArrayList<FilterDescriptor>();
+		}
+
+		public String getLogicValue() {
+			logicValue = "and";
+			if (StringUtils.equalsIgnoreCase(logic, "or")) {
+				logicValue = "or";
+			}
+			return logicValue;
+		}
+
+		public String getStringValue() {
+			if (value != null) {
+				if (value instanceof String) {
+					stringValue = (String) value;
+				} else {
+					stringValue = value.toString();
+				}
+			} else {
+				stringValue = null;
+			}
+			if (stringValue != null && stringValue.trim().length() > 0) {
+				if (StringUtils.equalsIgnoreCase(operator, "startswith")) {
+					stringValue = stringValue + "%";
+				} else if (StringUtils.equalsIgnoreCase(operator, "endswith")) {
+					stringValue = "%" + stringValue;
+				} else if (StringUtils.equalsIgnoreCase(operator,
+						"doesnotcontain")) {
+					stringValue = "%" + stringValue + "%";
+				} else if (StringUtils.equalsIgnoreCase(operator, "contains")) {
+					stringValue = "%" + stringValue + "%";
+				}
+			}
+			return stringValue;
+		}
+
+		public Date getDateValue() {
+			if (value != null) {
+				if (value instanceof Date) {
+					dateValue = (Date) value;
+				} else if (value instanceof String) {
+					String dateString = (String) value;
+					dateValue = DateUtils.toDate(dateString);
+				} else {
+					String dateString = value.toString();
+					dateValue = DateUtils.toDate(dateString);
+				}
+			} else {
+				dateValue = null;
+			}
+			return dateValue;
+		}
+
+		public Integer getIntValue() {
+			if (value != null) {
+				if (value instanceof Integer) {
+					intValue = (Integer) value;
+				} else if (value instanceof String) {
+					String str = (String) value;
+					intValue = Integer.parseInt(str);
+				} else {
+					String str = value.toString();
+					intValue = Integer.parseInt(str);
+				}
+			} else {
+				intValue = null;
+			}
+			return intValue;
+		}
+
+		public Long getLongValue() {
+			if (value != null) {
+				if (value instanceof Long) {
+					longValue = (Long) value;
+				} else if (value instanceof String) {
+					String str = (String) value;
+					longValue = Long.parseLong(str);
+				} else {
+					String str = value.toString();
+					longValue = Long.parseLong(str);
+				}
+			} else {
+				longValue = null;
+			}
+			return longValue;
+		}
+
+		public Double getDoubleValue() {
+			if (value != null) {
+				if (value instanceof Double) {
+					doubleValue = (Double) value;
+				} else if (value instanceof String) {
+					String str = (String) value;
+					doubleValue = Double.parseDouble(str);
+				} else {
+					String str = value.toString();
+					doubleValue = Double.parseDouble(str);
+				}
+			} else {
+				doubleValue = null;
+			}
+			return doubleValue;
 		}
 
 		public String getField() {
