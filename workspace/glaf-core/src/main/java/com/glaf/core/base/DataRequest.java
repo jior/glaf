@@ -24,7 +24,10 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONArray;
 import com.glaf.core.util.DateUtils;
 
 public class DataRequest implements java.io.Serializable {
@@ -75,14 +78,14 @@ public class DataRequest implements java.io.Serializable {
 		}
 
 		public String toString() {
-			return ToStringBuilder.reflectionToString(this);
+			return ToStringBuilder.reflectionToString(this,
+					ToStringStyle.MULTI_LINE_STYLE);
 		}
 	}
 
 	public static class FilterDescriptor {
 		private String logic;
 		private String logicValue;
-		private List<FilterDescriptor> filters;
 		private String field;
 		private Object value;
 		private String operator;
@@ -91,10 +94,61 @@ public class DataRequest implements java.io.Serializable {
 		private Integer intValue;
 		private Long longValue;
 		private Double doubleValue;
+		private int level = 1;
 		private boolean ignoreCase = true;
+		private FilterDescriptor parent;
+		private List<FilterDescriptor> filters;
 
 		public FilterDescriptor() {
 			this.filters = new ArrayList<FilterDescriptor>();
+		}
+
+		public JSONObject toJSONObject() {
+			JSONObject json = new JSONObject();
+			if (logic != null) {
+				json.put("logic", logic);
+			}
+			if (field != null) {
+				json.put("field", field);
+			}
+			if (value != null) {
+				json.put("value", value);
+			}
+			if (operator != null) {
+				json.put("operator", operator);
+			}
+
+			json.put("ignoreCase", ignoreCase);
+
+			JSONArray array = new JSONArray();
+
+			if (filters != null && !filters.isEmpty()) {
+				for (FilterDescriptor f : filters) {
+					array.add(f.toJSONObject());
+				}
+				json.put("filters", array);
+			}
+
+			return json;
+		}
+
+		public int getLevel() {
+			if (parent != null) {
+				level = parent.getLevel() + 1;
+			}
+			return level;
+		}
+
+		public void setLevel(int level) {
+			this.level = level;
+		}
+
+		public FilterDescriptor getParent() {
+			return parent;
+		}
+
+		public void setParent(FilterDescriptor parent) {
+			this.parent = parent;
 		}
 
 		public String getLogicValue() {
@@ -203,6 +257,11 @@ public class DataRequest implements java.io.Serializable {
 		}
 
 		public List<FilterDescriptor> getFilters() {
+			if (filters != null && !filters.isEmpty()) {
+				for (FilterDescriptor f : filters) {
+					f.setParent(this);
+				}
+			}
 			return this.filters;
 		}
 
@@ -243,7 +302,8 @@ public class DataRequest implements java.io.Serializable {
 		}
 
 		public String toString() {
-			return ToStringBuilder.reflectionToString(this);
+			return ToStringBuilder.reflectionToString(this,
+					ToStringStyle.MULTI_LINE_STYLE);
 		}
 	}
 
@@ -259,7 +319,8 @@ public class DataRequest implements java.io.Serializable {
 		}
 
 		public String toString() {
-			return ToStringBuilder.reflectionToString(this);
+			return ToStringBuilder.reflectionToString(this,
+					ToStringStyle.MULTI_LINE_STYLE);
 		}
 	}
 
@@ -284,7 +345,8 @@ public class DataRequest implements java.io.Serializable {
 		}
 
 		public String toString() {
-			return ToStringBuilder.reflectionToString(this);
+			return ToStringBuilder.reflectionToString(this,
+					ToStringStyle.MULTI_LINE_STYLE);
 		}
 	}
 
@@ -371,7 +433,8 @@ public class DataRequest implements java.io.Serializable {
 	}
 
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.MULTI_LINE_STYLE);
 	}
 
 }
