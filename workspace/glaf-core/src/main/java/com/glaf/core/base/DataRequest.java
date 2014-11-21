@@ -57,7 +57,10 @@ public class DataRequest implements java.io.Serializable {
 		this.data = new HashMap<String, Object>();
 	}
 
-	public static class AggregateDescriptor {
+	public static class AggregateDescriptor implements java.io.Serializable {
+
+		private static final long serialVersionUID = 1L;
+
 		private String field;
 		private String aggregate;
 
@@ -83,7 +86,10 @@ public class DataRequest implements java.io.Serializable {
 		}
 	}
 
-	public static class FilterDescriptor {
+	public static class FilterDescriptor implements java.io.Serializable {
+
+		private static final long serialVersionUID = 1L;
+
 		private String logic;
 		private String logicValue;
 		private String field;
@@ -338,6 +344,9 @@ public class DataRequest implements java.io.Serializable {
 	}
 
 	public static class GroupDescriptor extends DataRequest.SortDescriptor {
+
+		private static final long serialVersionUID = 1L;
+		
 		private List<DataRequest.AggregateDescriptor> aggregates;
 
 		public GroupDescriptor() {
@@ -354,7 +363,10 @@ public class DataRequest implements java.io.Serializable {
 		}
 	}
 
-	public static class SortDescriptor {
+	public static class SortDescriptor implements java.io.Serializable {
+
+		private static final long serialVersionUID = 1L;
+
 		private String field;
 		private String dir;
 
