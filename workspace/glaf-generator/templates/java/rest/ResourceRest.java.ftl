@@ -29,6 +29,7 @@ import com.glaf.core.util.*;
 import ${packageName}.domain.${entityName};
 import ${packageName}.query.${entityName}Query;
 import ${packageName}.service.${entityName}Service;
+import ${packageName}.util.*;
 
 /**
  * 
@@ -97,6 +98,7 @@ public class ${entityName}ResourceRest {
 		${entityName}Query query = new ${entityName}Query();
 		Tools.populate(query, params);
                 query.setDataRequest(dataRequest);
+		${entityName}DomainFactory.processDataRequest(dataRequest);
 
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {

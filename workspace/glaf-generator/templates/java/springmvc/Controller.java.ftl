@@ -40,7 +40,7 @@ public class ${entityName}Controller {
 
 	}
 
-    @javax.annotation.Resource
+        @javax.annotation.Resource(name = "${packageName}.service.${modelName}Service")
 	public void set${entityName}Service(${entityName}Service ${modelName}Service) {
 		this.${modelName}Service = ${modelName}Service;
 	}
@@ -299,7 +299,7 @@ public class ${entityName}Controller {
 		  query.createBy(actorId);
 		}
 
-        String gridType = ParamUtils.getString(params, "gridType");
+                String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
 			gridType = "easyui";
 		}
@@ -334,7 +334,7 @@ public class ${entityName}Controller {
 			result.put("limit", limit);
 			result.put("pageSize", limit);
 
-            if (StringUtils.isNotEmpty(orderName)) {
+                        if (StringUtils.isNotEmpty(orderName)) {
 				query.setSortOrder(orderName);
 				if (StringUtils.equals(order, "desc")) {
 					query.setSortOrder(" desc ");
@@ -369,7 +369,7 @@ public class ${entityName}Controller {
 	}
 
 
-    @RequestMapping 
+        @RequestMapping 
 	public ModelAndView list(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String x_query = request.getParameter("x_query");
@@ -382,7 +382,7 @@ public class ${entityName}Controller {
 			request.setAttribute("x_complex_query", "");
 		}
 
-        String requestURI = request.getRequestURI();
+                String requestURI = request.getRequestURI();
 		if (request.getQueryString() != null) {
 			request.setAttribute(
 					"fromUrl",

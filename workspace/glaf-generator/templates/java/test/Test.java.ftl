@@ -19,7 +19,7 @@ public class ${entityName}Test extends AbstractTest {
 	protected ${entityName}Service ${modelName}Service;
 
 	public ${entityName}Test() {
-		${modelName}Service = getBean("${modelName}Service");
+		${modelName}Service = getBean("${packageName}.service.${modelName}Service");
 	}
 
 	@Test

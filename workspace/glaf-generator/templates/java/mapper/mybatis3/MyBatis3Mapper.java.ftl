@@ -13,7 +13,7 @@ import ${packageName}.query.*;
  *
  */
 
-@Component
+@Component("${packageName}.mapper.${entityName}Mapper")
 public interface ${entityName}Mapper {
 
 	void delete${entityName}s(${entityName}Query query);

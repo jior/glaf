@@ -16,12 +16,12 @@ import ${packageName}.mapper.*;
 import ${packageName}.domain.*;
 import ${packageName}.query.*;
 
-@Service("${modelName}Service")
+@Service("${packageName}.service.${modelName}Service")
 @Transactional(readOnly = true) 
 public class ${entityName}ServiceImpl implements ${entityName}Service {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
  
-    protected EntityDAO entityDAO;
+        protected EntityDAO entityDAO;
 
 	protected IdGenerator idGenerator;
 
@@ -123,12 +123,12 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
 	}
  
 
-	@javax.annotation.Resource
+	@javax.annotation.Resource(name = "${packageName}.mapper.${entityName}Mapper")
 	public void set${entityName}Mapper(${entityName}Mapper ${modelName}Mapper) {
 		this.${modelName}Mapper = ${modelName}Mapper;
 	}
 
-    @javax.annotation.Resource
+        @javax.annotation.Resource
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}

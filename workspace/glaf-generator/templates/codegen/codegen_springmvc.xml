@@ -54,6 +54,7 @@
 		<template>/templates/java/util/DomainFactory.java.ftl</template>
 		<encoding>UTF-8</encoding>
 	</definition>
+	
 	<!-- <definition name="spring-service-context">
 		<savePath>/java/service</savePath>
 		<saveName>${entityName}-spring-context.xml</saveName>
