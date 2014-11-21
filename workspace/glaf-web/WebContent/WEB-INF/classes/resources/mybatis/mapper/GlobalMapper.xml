@@ -4,6 +4,96 @@
 
 <mapper namespace="com.glaf.global.GlobalMapper">
 
+    <sql id="dataRequestFilterCondition">
+	   <if test="dataRequest != null and dataRequest.filter != null ">
+				    
+                <if test="dataRequest.filter.filters != null and dataRequest.filter.filters.size != 0 "> 
+				    <trim prefix="and (" prefixOverrides="and|or" suffix=")"> 
+				      <foreach item="filter" index="index" collection="dataRequest.filter.filters"
+							open="" separator="" close="">
+						<if test="filter.column != null and filter.value != null">
+							<choose>
+								<when test="filter.javaType == 'String' ">
+									${dataRequest.filter.logicValue}
+									${filter.columnAlias}.${filter.column} 
+									<include refid="com.glaf.global.GlobalMapper.stringCondition2" />
+									#{filter.stringValue}
+								</when>
+								<when test="filter.javaType == 'Integer' ">
+									${dataRequest.filter.logicValue}
+									${filter.columnAlias}.${filter.column}  
+									<include refid="com.glaf.global.GlobalMapper.stringCondition2" />
+									#{filter.intValue}
+								</when>
+								<when test="filter.javaType == 'Long' ">
+									${dataRequest.filter.logicValue}
+									${filter.columnAlias}.${filter.column}  
+									<include refid="com.glaf.global.GlobalMapper.numbericCondition2" />
+									#{filter.longValue}
+								</when>
+								<when test="filter.javaType == 'Double' ">
+									${dataRequest.filter.logicValue}
+									${filter.columnAlias}.${filter.column}  
+									<include refid="com.glaf.global.GlobalMapper.datetimeCondition2" />
+									#{filter.doubleValue}
+								</when>
+								<when test="filter.javaType == 'Date' ">
+									${dataRequest.filter.logicValue}
+									${filter.columnAlias}.${filter.column}  
+									<include refid="com.glaf.global.GlobalMapper.datetimeCondition2" />
+									#{filter.dateValue}
+								</when>
+							</choose>	
+						</if>
+					</foreach>
+			        
+					<if test="filter.filters != null and filter.filters.size != 0 ">
+
+						<trim prefix="and (" prefixOverrides="and|or" suffix=")">      
+						  <foreach item="f" index="index" collection="filter.filters"
+								open="" separator="" close="">
+							<if test="f.column != null and f.value != null">
+								<choose>
+									<when test="f.javaType == 'String' ">
+										${filter.logicValue}
+										${f.columnAlias}.${f.column}  
+										<include refid="com.glaf.global.GlobalMapper.stringCondition3" />
+										#{f.stringValue}
+									</when>
+									<when test="f.javaType == 'Integer' ">
+										${filter.logicValue}
+										${f.columnAlias}.${f.column}  
+										<include refid="com.glaf.global.GlobalMapper.stringCondition3" />
+										#{f.intValue}
+									</when>
+									<when test="f.javaType == 'Long' ">
+										${filter.logicValue}
+										${f.columnAlias}.${f.column}  
+										<include refid="com.glaf.global.GlobalMapper.numbericCondition3" />
+										#{filter.longValue}
+									</when>
+									<when test="f.javaType == 'Double' ">
+										${filter.logicValue}
+										${f.columnAlias}.${f.column}  
+										<include refid="com.glaf.global.GlobalMapper.datetimeCondition3" />
+										#{f.doubleValue}
+									</when>
+									<when test="f.javaType == 'Date' ">
+										${filter.logicValue}
+										${f.columnAlias}.${f.column}  
+										<include refid="com.glaf.global.GlobalMapper.datetimeCondition3" />
+										#{f.dateValue}
+									</when>
+								</choose>	
+							</if>
+						  </foreach>
+					  </trim> 
+					</if>
+				  </trim>
+			   </if>	 
+			</if>
+	</sql>
+
     <sql id="stringCondition">
 	     <choose>
 			<when test="dataRequest.filter.operator != null and dataRequest.filter.operator == 'eq' ">

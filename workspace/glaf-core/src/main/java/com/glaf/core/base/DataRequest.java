@@ -87,8 +87,11 @@ public class DataRequest implements java.io.Serializable {
 		private String logic;
 		private String logicValue;
 		private String field;
+		private String column;
+		private String columnAlias = "E";
 		private Object value;
 		private String operator;
+		private String javaType;
 		private String stringValue;
 		private Date dateValue;
 		private Integer intValue;
@@ -130,6 +133,33 @@ public class DataRequest implements java.io.Serializable {
 			}
 
 			return json;
+		}
+
+		public String getColumn() {
+			return column;
+		}
+
+		public void setColumn(String column) {
+			this.column = column;
+		}
+
+		public String getColumnAlias() {
+			if (columnAlias == null) {
+				columnAlias = "E";
+			}
+			return columnAlias;
+		}
+
+		public void setColumnAlias(String columnAlias) {
+			this.columnAlias = columnAlias;
+		}
+
+		public String getJavaType() {
+			return javaType;
+		}
+
+		public void setJavaType(String javaType) {
+			this.javaType = javaType;
 		}
 
 		public int getLevel() {
