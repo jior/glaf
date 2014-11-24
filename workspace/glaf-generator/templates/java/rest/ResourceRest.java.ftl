@@ -39,8 +39,8 @@ import ${packageName}.util.*;
 
 @Controller
 @Path("/rs/${classDefinition.moduleName}/${modelName}")
-public class ${entityName}ResourceRest {
-	protected static final Log logger = LogFactory.getLog(${entityName}ResourceRest.class);
+public class ${entityName}Resource {
+	protected static final Log logger = LogFactory.getLog(${entityName}Resource.class);
 
 	protected ${entityName}Service ${modelName}Service;
 
@@ -92,7 +92,7 @@ public class ${entityName}ResourceRest {
 	@POST
 	@Path("/data")
 	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	@Produces({ MediaType.APPLICATION_JSON })
 	public byte[] data(@Context HttpServletRequest request, @RequestBody DataRequest dataRequest) throws IOException {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		${entityName}Query query = new ${entityName}Query();

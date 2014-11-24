@@ -62,7 +62,7 @@
 	</definition> -->
 	<definition name="ResourceRest">
 		<savePath>/java/web/rest</savePath>
-		<saveName>${entityName}ResourceRest.java</saveName>
+		<saveName>${entityName}Resource.java</saveName>
 		<template>/templates/java/rest/ResourceRest.java.ftl</template>
 		<encoding>UTF-8</encoding>
 	</definition> 
@@ -127,6 +127,18 @@
 		<savePath>/jsp</savePath>
 		<saveName>edit.jsp</saveName>
 		<template>/templates/easyui/edit.jsp.ftl</template>
+		<encoding>UTF-8</encoding>
+	</definition>
+	<definition name="kendoui_list">
+		<savePath>/kendoui</savePath>
+		<saveName>list.jsp</saveName>
+		<template>/templates/kendoui/list.jsp.ftl</template>
+		<encoding>UTF-8</encoding>
+	</definition>
+	<definition name="kendoui_edit">
+		<savePath>/kendoui</savePath>
+		<saveName>edit.jsp</saveName>
+		<template>/templates/kendoui/edit.jsp.ftl</template>
 		<encoding>UTF-8</encoding>
 	</definition>
 

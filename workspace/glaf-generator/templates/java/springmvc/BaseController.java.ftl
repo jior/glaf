@@ -73,6 +73,36 @@ public class ${entityName}BaseController {
 		return this.list(request, modelMap);
 	}
 
+	@RequestMapping(value = "/saveOrUpdate", method = RequestMethod.POST)
+	public @ResponseBody ${entityName} saveOrUpdate(HttpServletRequest request, @RequestBody Map<String, Object> model) {
+                User user = RequestUtils.getUser(request);
+		String actorId =  user.getActorId();
+		${entityName} ${modelName} = new ${entityName}();
+		try {
+		<#if pojo_fields?exists>
+		    <#list  pojo_fields as field>	
+		    <#if field.type?exists && ( field.type== 'Integer')>
+                    ${modelName}.set${field.firstUpperName}(RequestUtils.getInt(model, "${field.name}"));
+		    <#elseif field.type?exists && ( field.type== 'Long')>
+                    ${modelName}.set${field.firstUpperName}(RequestUtils.getLong(model, "${field.name}"));
+                    <#elseif field.type?exists && ( field.type== 'Double')>
+                    ${modelName}.set${field.firstUpperName}(RequestUtils.getDouble(model, "${field.name}"));
+                    <#elseif field.type?exists && ( field.type== 'Date')>
+                    ${modelName}.set${field.firstUpperName}(RequestUtils.getDate(model, "${field.name}"));
+                    <#elseif field.type?exists && ( field.type== 'String')>
+                    ${modelName}.set${field.firstUpperName}(ParamUtils.getString(model, "${field.name}"));
+		    </#if>
+		    </#list>
+		</#if>
+		    ${modelName}.setCreateBy(actorId);
+		    this.${modelName}Service.save(${modelName});
+		} catch (Exception ex) {
+		    ex.printStackTrace();
+		    logger.error(ex);
+		}
+		return ${modelName};
+	}
+
         @ResponseBody
 	@RequestMapping("/save${entityName}")
 	public byte[] save${entityName}(HttpServletRequest request) { 

@@ -81,6 +81,16 @@ public class ${entityName} implements Serializable, JSONable {
 	public String get${field.firstUpperName}(){
 	    return this.${field.name};
 	}
+	<#elseif ( field.type== 'Date')>
+	public Date get${field.firstUpperName}(){
+	    return this.${field.name};
+	}
+	public String get${field.firstUpperName}String(){
+	    if(this.${field.name} != null){
+	        return DateUtils.getDateTime(this.${field.name});
+	    }
+	    return "";
+	}
 	<#else>
         public ${field.type} get${field.firstUpperName}(){
 	    return this.${field.name};
