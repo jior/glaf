@@ -473,8 +473,14 @@ public class DateUtils {
 						dateString, parsePatterns);
 			} else if (dateString.length() == 10) {
 				parsePatterns[0] = DAY_FORMAT;
-				return org.apache.commons.lang3.time.DateUtils.parseDate(
-						dateString, parsePatterns);
+				try {
+					return org.apache.commons.lang3.time.DateUtils.parseDate(
+							dateString, parsePatterns);
+				} catch (Exception ex) {
+					parsePatterns[0] = "MM/dd/yyyy";
+					return org.apache.commons.lang3.time.DateUtils.parseDate(
+							dateString, parsePatterns);
+				}
 			} else if (dateString.length() == 13) {
 				parsePatterns[0] = HOUR_FORMAT;
 				return org.apache.commons.lang3.time.DateUtils.parseDate(
