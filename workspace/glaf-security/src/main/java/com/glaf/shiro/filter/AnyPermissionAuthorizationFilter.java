@@ -19,9 +19,12 @@
 package com.glaf.shiro.filter;
 
 import java.io.IOException;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authz.*;
 
@@ -31,6 +34,9 @@ import org.apache.shiro.web.filter.authz.*;
  */
 public class AnyPermissionAuthorizationFilter extends AuthorizationFilter {
 
+	private static final Log logger = LogFactory
+			.getLog(AnyPermissionAuthorizationFilter.class);
+
 	public boolean isAccessAllowed(ServletRequest request,
 			ServletResponse response, Object mappedValue) throws IOException {
 
@@ -39,6 +45,9 @@ public class AnyPermissionAuthorizationFilter extends AuthorizationFilter {
 
 		boolean isAccessAllowed = false;
 		if (perms != null && perms.length > 0) {
+			for (String p : perms) {
+				logger.debug("perm item:" + p);
+			}
 			if (perms.length == 1) {
 				if (subject.isPermitted(perms[0])) {
 					isAccessAllowed = true;
