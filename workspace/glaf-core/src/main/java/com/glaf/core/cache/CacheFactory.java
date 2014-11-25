@@ -22,6 +22,7 @@ import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -43,7 +44,7 @@ public class CacheFactory {
 	protected static final Log logger = LogFactory.getLog(CacheFactory.class);
 	protected static final String DEFAULT_CONFIG = "com/glaf/core/cache/guava/guavacache-context.xml";
 	protected static final ConcurrentMap<String, Cache> cacheMap = new ConcurrentHashMap<String, Cache>();
-	protected static final List<String> items = new ArrayList<String>();
+	protected static final List<CacheItem> items = new CopyOnWriteArrayList<CacheItem>();
 	protected static Configuration conf = BaseConfiguration.create();
 	protected static ExecutorService pool = Executors.newCachedThreadPool();
 	private static volatile ApplicationContext ctx;
@@ -53,10 +54,9 @@ public class CacheFactory {
 		try {
 			Cache cache = getCache();
 			if (cache != null) {
-				for (String cacheKey : items) {
-					cache.remove(cacheKey);
+				for (CacheItem item : items) {
+					cache.remove(item.getKey());
 				}
-				items.clear();
 				cache.clear();
 			}
 			logger.info("cache clear ok.");
@@ -65,7 +65,13 @@ public class CacheFactory {
 				ex.printStackTrace();
 				logger.debug(ex);
 			}
+		} finally {
+			items.clear();
 		}
+	}
+
+	public static List<CacheItem> getCacheItems() {
+		return items;
 	}
 
 	public static ApplicationContext getApplicationContext() {
@@ -165,7 +171,11 @@ public class CacheFactory {
 				int limitSize = conf.getInt("cache.limitSize", 1024000);// 1024KB
 				if (value.length() < limitSize) {
 					cache.put(cacheKey, value);
-					items.add(cacheKey);
+					CacheItem item = new CacheItem();
+					item.setKey(cacheKey);
+					item.setLastModified(System.currentTimeMillis());
+					item.setSize(value.length());
+					items.add(item);
 				}
 			}
 		} catch (Exception ex) {
@@ -220,7 +230,7 @@ public class CacheFactory {
 				}
 				cacheKey = DigestUtils.md5Hex(cacheKey.getBytes());
 				cache.remove(cacheKey);
-				items.remove(cacheKey);
+				items.remove(new CacheItem(cacheKey));
 			}
 		} catch (Exception ex) {
 			if (logger.isDebugEnabled()) {

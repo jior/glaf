@@ -10,6 +10,10 @@ public class CacheItem implements java.io.Serializable {
 
 	}
 
+	public CacheItem(String key) {
+		this.key = key;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
