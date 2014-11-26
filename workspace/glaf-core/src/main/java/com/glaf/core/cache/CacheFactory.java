@@ -156,7 +156,7 @@ public class CacheFactory {
 		return null;
 	}
 
-	public static void put(String key, String value) {
+	public static void put(final String key, final String value) {
 		try {
 			Cache cache = getCache();
 			if (cache != null && key != null && value != null) {
@@ -172,6 +172,7 @@ public class CacheFactory {
 				if (value.length() < limitSize) {
 					cache.put(cacheKey, value);
 					CacheItem item = new CacheItem();
+					item.setName(key);
 					item.setKey(cacheKey);
 					item.setLastModified(System.currentTimeMillis());
 					item.setSize(value.length());

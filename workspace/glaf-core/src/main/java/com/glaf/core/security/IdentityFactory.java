@@ -37,7 +37,6 @@ import com.glaf.core.context.ContextFactory;
 import com.glaf.core.identity.Agent;
 import com.glaf.core.identity.Role;
 import com.glaf.core.identity.User;
-import com.glaf.core.identity.util.UserJsonFactory;
 import com.glaf.core.query.MembershipQuery;
 import com.glaf.core.service.EntityService;
 import com.glaf.core.util.Constants;
@@ -313,23 +312,7 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static User getUser(String actorId) {
-		String cacheKey = "mx_user_" + actorId;
-		if (SystemConfig.getBoolean("use_query_cache")
-				&& CacheFactory.getString(cacheKey) != null) {
-			String txt = CacheFactory.getString(cacheKey);
-			try {
-				JSONObject json = JSON.parseObject(txt);
-				return UserJsonFactory.jsonToObject(json);
-			} catch (Exception ex) {
-			}
-		}
 		User user = (User) getEntityService().getById("getUserById", actorId);
-		if (user != null) {
-			if (SystemConfig.getBoolean("use_query_cache")) {
-				JSONObject json = UserJsonFactory.toJsonObject(user);
-				CacheFactory.put(cacheKey, json.toJSONString());
-			}
-		}
 		return user;
 	}
 
@@ -340,24 +323,8 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static User getUserByUserId(Long userId) {
-		String cacheKey = "mx_user2_" + userId;
-		if (SystemConfig.getBoolean("use_query_cache")
-				&& CacheFactory.getString(cacheKey) != null) {
-			String txt = CacheFactory.getString(cacheKey);
-			try {
-				JSONObject json = JSON.parseObject(txt);
-				return UserJsonFactory.jsonToObject(json);
-			} catch (Exception ex) {
-			}
-		}
 		User user = (User) getEntityService()
 				.getById("getUserByUserId", userId);
-		if (user != null) {
-			if (SystemConfig.getBoolean("use_query_cache")) {
-				JSONObject json = UserJsonFactory.toJsonObject(user);
-				CacheFactory.put(cacheKey, json.toJSONString());
-			}
-		}
 		return user;
 	}
 

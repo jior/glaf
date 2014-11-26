@@ -2,6 +2,7 @@ package com.glaf.core.cache;
 
 public class CacheItem implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
+	protected String name;
 	protected String key;
 	protected long lastModified;
 	protected int size;
@@ -39,6 +40,10 @@ public class CacheItem implements java.io.Serializable {
 		return lastModified;
 	}
 
+	public String getName() {
+		return name;
+	}
+
 	public int getSize() {
 		return size;
 	}
@@ -57,6 +62,10 @@ public class CacheItem implements java.io.Serializable {
 
 	public void setLastModified(long lastModified) {
 		this.lastModified = lastModified;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public void setSize(int size) {

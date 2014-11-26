@@ -24,7 +24,7 @@ public final class Constants {
 
 	public static final String LOGIN_USER_CACHE = "cache_login_user_";
 
-	public static final String USER_CACHE = "cache_user_";
+	public static final String USER_CACHE = "cache_login_context_";
 
 	public final static String COOKIE_NAME = "GLAF_COOKIE";
 
