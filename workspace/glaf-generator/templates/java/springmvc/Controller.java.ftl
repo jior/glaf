@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import com.alibaba.fastjson.*;
  
+import com.glaf.core.base.DataRequest;
+import com.glaf.core.base.DataRequest.SortDescriptor;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.identity.*;
 import com.glaf.core.security.*;
@@ -22,6 +24,7 @@ import com.glaf.core.util.*;
 import ${packageName}.domain.*;
 import ${packageName}.query.*;
 import ${packageName}.service.*;
+import ${packageName}.util.*;
 
 /**
  * 
@@ -116,13 +119,45 @@ public class ${entityName}Controller {
 	}
 
 
+	@RequestMapping(value = "/saveOrUpdate", method = RequestMethod.POST)
+	public @ResponseBody ${entityName} saveOrUpdate(HttpServletRequest request, @RequestBody Map<String, Object> model) {
+                User user = RequestUtils.getUser(request);
+		String actorId =  user.getActorId();
+		${entityName} ${modelName} = new ${entityName}();
+		try {
+		    Tools.populate(${modelName}, model);
+		<#if pojo_fields?exists>
+		    <#list  pojo_fields as field>	
+		    <#if field.type?exists && ( field.type== 'Integer')>
+                    ${modelName}.set${field.firstUpperName}(ParamUtils.getInt(model, "${field.name}"));
+		    <#elseif field.type?exists && ( field.type== 'Long')>
+                    ${modelName}.set${field.firstUpperName}(ParamUtils.getLong(model, "${field.name}"));
+                    <#elseif field.type?exists && ( field.type== 'Double')>
+                    ${modelName}.set${field.firstUpperName}(ParamUtils.getDouble(model, "${field.name}"));
+                    <#elseif field.type?exists && ( field.type== 'Date')>
+                    ${modelName}.set${field.firstUpperName}(ParamUtils.getDate(model, "${field.name}"));
+                    <#elseif field.type?exists && ( field.type== 'String')>
+                    ${modelName}.set${field.firstUpperName}(ParamUtils.getString(model, "${field.name}"));
+		    </#if>
+		    </#list>
+		</#if>
+		    ${modelName}.setCreateBy(actorId);
+		    this.${modelName}Service.save(${modelName});
+		} catch (Exception ex) {
+		    ex.printStackTrace();
+		    logger.error(ex);
+		}
+		return ${modelName};
+	}
+
+
     @RequestMapping("/update")
 	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-        params.remove("status");
+                params.remove("status");
 		params.remove("wfStatus");
-
+                
 		<#if idField.type=='Integer' >
                 ${entityName} ${modelName} = ${modelName}Service.get${entityName}(RequestUtils.getInt(request, "${idField.name}"));
 		<#elseif idField.type== 'Long' >
@@ -130,6 +165,8 @@ public class ${entityName}Controller {
 		<#else>
                 ${entityName} ${modelName} = ${modelName}Service.get${entityName}(request.getParameter("${idField.name}"));
 		</#if>
+
+		Tools.populate(${modelName}, params);
 
  <#if pojo_fields?exists>
     <#list  pojo_fields as field>	
@@ -190,7 +227,7 @@ public class ${entityName}Controller {
 	}
 
     
-    @RequestMapping("/edit")
+        @RequestMapping("/edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		User user = RequestUtils.getUser(request);
 		String actorId =  user.getActorId();
@@ -209,7 +246,7 @@ public class ${entityName}Controller {
 		}
 	
 
-        boolean canUpdate = false;
+                boolean canUpdate = false;
 		String x_method = request.getParameter("x_method");
 		if (StringUtils.equals(x_method, "submit")) {
 			 
@@ -241,7 +278,7 @@ public class ${entityName}Controller {
 	}
 
 
-    @RequestMapping("/view")
+        @RequestMapping("/view")
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
@@ -267,7 +304,7 @@ public class ${entityName}Controller {
 		return new ModelAndView("/${classDefinition.moduleName}/${modelName}/view");
 	}
 
-    @RequestMapping("/query")
+        @RequestMapping("/query")
 	public ModelAndView query(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		String view = request.getParameter("view");
@@ -356,6 +393,100 @@ public class ${entityName}Controller {
 					rowJSON.put("rowId", ${modelName}.getId());
 					rowJSON.put("${modelName}Id", ${modelName}.getId());
                     rowJSON.put("startIndex", ++start);
+ 					rowsJSON.add(rowJSON);
+				}
+
+			}
+		} else {
+			JSONArray rowsJSON = new JSONArray();
+			result.put("rows", rowsJSON);
+			result.put("total", total);
+		}
+		return result.toJSONString().getBytes("UTF-8");
+	}
+
+
+	@RequestMapping("/read")
+	@ResponseBody
+	public byte[] read(HttpServletRequest request, @RequestBody DataRequest dataRequest) throws IOException {
+	        LoginContext loginContext = RequestUtils.getLoginContext(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		${entityName}Query query = new ${entityName}Query();
+		Tools.populate(query, params);
+		query.deleteFlag(0);
+		query.setActorId(loginContext.getActorId());
+		query.setLoginContext(loginContext);
+		query.setDataRequest(dataRequest);
+		${entityName}DomainFactory.processDataRequest(dataRequest);
+
+		/**
+		 * 此处业务逻辑需自行调整
+		*/
+		if(!loginContext.isSystemAdministrator()){
+		  String actorId = loginContext.getActorId();
+		  query.createBy(actorId);
+		}
+
+                int start = 0;
+		int limit = PageResult.DEFAULT_PAGE_SIZE;
+
+		int pageNo = dataRequest.getPage();
+		limit = dataRequest.getPageSize();
+
+		start = (pageNo - 1) * limit;
+
+		if (start < 0) {
+			start = 0;
+		}
+
+		if (limit <= 0) {
+			limit = PageResult.DEFAULT_PAGE_SIZE;
+		}
+
+		JSONObject result = new JSONObject();
+		int total = ${modelName}Service.get${entityName}CountByQueryCriteria(query);
+		if (total > 0) {
+			result.put("total", total);
+			result.put("totalCount", total);
+			result.put("totalRecords", total);
+			result.put("start", start);
+			result.put("startIndex", start);
+			result.put("limit", limit);
+			result.put("pageSize", limit);
+
+                        String orderName = null;
+			String order = null;
+
+			if (dataRequest.getSort() != null
+					&& !dataRequest.getSort().isEmpty()) {
+				SortDescriptor sort = dataRequest.getSort().get(0);
+				orderName = sort.getField();
+				order = sort.getDir();
+				logger.debug("orderName:" + orderName);
+				logger.debug("order:" + order);
+			}
+
+			if (StringUtils.isNotEmpty(orderName)) {
+				query.setSortColumn(orderName);
+				if (StringUtils.equals(order, "desc")) {
+					query.setSortOrder(" desc ");
+				}
+			}
+
+			Map<String, User> userMap = IdentityFactory.getUserMap();
+			List<${entityName}> list = ${modelName}Service.get${entityName}sByQueryCriteria(start, limit,
+					query);
+
+			if (list != null && !list.isEmpty()) {
+				JSONArray rowsJSON = new JSONArray();
+				 
+				result.put("rows", rowsJSON);
+				 
+				for (${entityName} ${modelName} : list) {
+					JSONObject rowJSON = ${modelName}.toJsonObject();
+					rowJSON.put("id", ${modelName}.getId());
+					rowJSON.put("${modelName}Id", ${modelName}.getId());
+                                        rowJSON.put("startIndex", ++start);
  					rowsJSON.add(rowJSON);
 				}
 
