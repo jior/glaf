@@ -1,6 +1,4 @@
 /**
- * Copyright 2007 The Apache Software Foundation
- *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -22,7 +20,6 @@ package com.glaf.core.util.hash;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Produces 32-bit hash for hash table lookup.
@@ -40,6 +37,7 @@ import java.io.InputStream;
  * @see <a href="http://burtleburtle.net/bob/hash/doobs.html">Has update on the
  *      Dr. Dobbs Article</a>
  */
+
 public class JenkinsHash extends Hash {
 	private static long INT_MASK = 0x00000000ffffffffL;
 	private static long BYTE_MASK = 0x00000000000000ffL;
@@ -87,6 +85,7 @@ public class JenkinsHash extends Hash {
 	 *         Use for hash table lookup, or anything where one collision in
 	 *         2^^32 is acceptable. Do NOT use for cryptographic purposes.
 	 */
+	@Override
 	@SuppressWarnings("fallthrough")
 	public int hash(byte[] key, int nbytes, int initval) {
 		int length = nbytes;
@@ -276,16 +275,14 @@ public class JenkinsHash extends Hash {
 			System.err.println("Usage: JenkinsHash filename");
 			System.exit(-1);
 		}
-		InputStream in = new FileInputStream(args[0]);
+		FileInputStream fin = new FileInputStream(args[0]);
 		byte[] bytes = new byte[512];
 		int value = 0;
 		JenkinsHash hash = new JenkinsHash();
-		for (int length = in.read(bytes); length > 0; length = in.read(bytes)) {
+		for (int length = fin.read(bytes); length > 0; length = fin.read(bytes)) {
 			value = hash.hash(bytes, length, value);
-			System.out.println(Math.abs(value));
 		}
-		in.close();
-		in = null;
 		System.out.println(Math.abs(value));
+		fin.close();
 	}
 }

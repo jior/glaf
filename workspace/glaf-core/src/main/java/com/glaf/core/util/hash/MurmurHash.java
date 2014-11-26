@@ -18,10 +18,6 @@
 
 package com.glaf.core.util.hash;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
 /**
  * This is a very fast, non-cryptographic hash suitable for general hash-based
  * lookup. See http://murmurhash.googlepages.com/ for more details.
@@ -31,6 +27,7 @@ import java.io.InputStream;
  * Andrzej Bialecki (ab at getopt org).
  * </p>
  */
+
 public class MurmurHash extends Hash {
 	private static MurmurHash _instance = new MurmurHash();
 
@@ -38,6 +35,7 @@ public class MurmurHash extends Hash {
 		return _instance;
 	}
 
+	@Override
 	public int hash(byte[] data, int length, int seed) {
 		int m = 0x5bd1e995;
 		int r = 24;
@@ -85,30 +83,5 @@ public class MurmurHash extends Hash {
 		h ^= h >>> 15;
 
 		return h;
-	}
-
-	/**
-	 * Compute the hash of the specified file
-	 * 
-	 * @param args
-	 *            name of file to compute hash of.
-	 * @throws IOException
-	 */
-	public static void main(String[] args) throws IOException {
-		if (args.length != 1) {
-			System.err.println("Usage: MurmurHash filename");
-			System.exit(-1);
-		}
-		InputStream in = new FileInputStream(args[0]);
-		byte[] bytes = new byte[512];
-		int value = 0;
-		MurmurHash hash = new MurmurHash();
-		for (int length = in.read(bytes); length > 0; length = in.read(bytes)) {
-			value = hash.hash(bytes, length, value);
-			System.out.println(Math.abs(value));
-		}
-		in.close();
-		in = null;
-		System.out.println(Math.abs(value));
 	}
 }
