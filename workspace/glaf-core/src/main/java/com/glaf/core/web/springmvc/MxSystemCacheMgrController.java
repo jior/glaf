@@ -42,6 +42,7 @@ import com.glaf.core.cache.ClearCacheJob;
 import com.glaf.core.config.ConfigFactory;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.security.LoginContext;
+import com.glaf.core.util.Constants;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
@@ -112,8 +113,8 @@ public class MxSystemCacheMgrController {
 			result.put("size", CacheFactory.getString(key).length());
 			result.put("value", CacheFactory.getString(key));
 		}
-		logger.debug("key:"+key);
-		logger.debug(result.toJSONString());
+		logger.debug("key:" + key);
+		//logger.debug(result.toJSONString());
 		return result.toJSONString().getBytes("UTF-8");
 	}
 
@@ -129,8 +130,11 @@ public class MxSystemCacheMgrController {
 			JSONArray rowsJSON = new JSONArray();
 			Date date = null;
 			int index = 0;
-			String cacheKey = "cache_user_" + actorId;
+			String cacheKey = Constants.LOGIN_USER_CACHE + actorId;
 			for (CacheItem item : rows) {
+				if (StringUtils.equals(cacheKey, item.getName())) {
+					continue;
+				}
 				if (StringUtils.equals(cacheKey, item.getKey())) {
 					continue;
 				}
