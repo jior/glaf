@@ -22,8 +22,9 @@ import java.util.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import com.glaf.core.config.Configuration;
 
+import com.glaf.core.config.Configuration;
+import com.glaf.core.util.ClassUtils;
 import com.glaf.core.util.ReflectUtils;
 
 /**
@@ -89,14 +90,14 @@ public class CompressionCodecFactory {
 				String codecSubstring = codecSplit.nextToken();
 				if (codecSubstring.length() != 0) {
 					try {
-						Class<?> cls = conf.getClassByName(codecSubstring);
+						Class<?> cls = ClassUtils.classForName(codecSubstring);
 						if (!CompressionCodec.class.isAssignableFrom(cls)) {
 							throw new IllegalArgumentException("Class "
 									+ codecSubstring
 									+ " is not a CompressionCodec");
 						}
 						result.add(cls.asSubclass(CompressionCodec.class));
-					} catch (ClassNotFoundException ex) {
+					} catch (Exception ex) {
 						throw new IllegalArgumentException("Compression codec "
 								+ codecSubstring + " not found.", ex);
 					}
