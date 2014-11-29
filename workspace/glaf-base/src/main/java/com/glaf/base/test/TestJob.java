@@ -36,13 +36,15 @@ public class TestJob extends BaseJob {
 		String jobName = context.getJobDetail().getKey().getName();
 		logger.info("Executing job: " + jobName + " executing at "
 				+ DateUtils.getDateTime(new Date()));
+		java.util.Random r = new java.util.Random();
 		try {
-			java.util.Random r = new java.util.Random();
 			Thread.sleep(r.nextInt(300000));
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		throw new RuntimeException("Not Support!");
+		if (r.nextInt(3) % 3 == 0) {
+			throw new RuntimeException("Not Support!");
+		}
 	}
 
 }
