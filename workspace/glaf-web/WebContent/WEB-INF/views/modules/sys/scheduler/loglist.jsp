@@ -217,13 +217,13 @@
 			</td>
 		    <td>开始日期&nbsp;</td>
 			 <td>
-			  <input id="startDate" name="startDate" size="18"
-			         type="text"  class="x-searchtext easyui-datebox" >
+			  <input id="startDate" name="startDate" size="20"
+			         type="text"  class="x-searchtext easyui-datetimebox" >
 			</td>
 			<td>结束日期&nbsp;</td>
 			 <td>
-			  <input id="endDate" name="endDate" size="18"
-			         type="text"  class="x-searchtext easyui-datebox" />
+			  <input id="endDate" name="endDate" size="20"
+			         type="text"  class="x-searchtext easyui-datetimebox" />
 			</td>
 			<td>
 			  <input type="button" value="查找" class="  btnGray" onclick="javascript:search();">

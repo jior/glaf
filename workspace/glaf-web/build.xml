@@ -93,6 +93,10 @@
 			<fileset dir="static/extjs3" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
 		</jar>
 
+		<jar jarfile="glaf-extjs2-resource.jar">
+			<fileset dir="static/extjs2" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
+		</jar>
+
 		<jar jarfile="glaf-extjs5-resource.jar">
 			<fileset dir="static/extjs5" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
 		</jar>

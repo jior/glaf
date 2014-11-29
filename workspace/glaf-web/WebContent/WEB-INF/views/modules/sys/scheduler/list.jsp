@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv="refresh" content="300"/>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>调度管理</title>
 <link href="<%=request.getContextPath()%>/scripts/artDialog/skins/default.css" rel="stylesheet" />
