@@ -89,12 +89,16 @@
 			<fileset dir="static/highcharts" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
 		</jar>
 
+		<jar jarfile="glaf-extjs2-resource.jar">
+			<fileset dir="static/extjs2" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
+		</jar>
+
 		<jar jarfile="glaf-extjs3-resource.jar">
 			<fileset dir="static/extjs3" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
 		</jar>
 
-		<jar jarfile="glaf-extjs2-resource.jar">
-			<fileset dir="static/extjs2" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
+		<jar jarfile="glaf-extjs4-resource.jar">
+			<fileset dir="static/extjs4" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
 		</jar>
 
 		<jar jarfile="glaf-extjs5-resource.jar">
