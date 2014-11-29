@@ -23,13 +23,12 @@ import java.util.Date;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import com.glaf.core.util.DateUtils;
 
-public class SimpleJob implements Job {
+public class SimpleJob extends BaseJob {
 
 	protected final static Log logger = LogFactory.getLog(SimpleJob.class);
 
@@ -37,7 +36,7 @@ public class SimpleJob implements Job {
 
 	}
 
-	public void execute(JobExecutionContext context)
+	public void runJob(JobExecutionContext context)
 			throws JobExecutionException {
 		String jobName = context.getJobDetail().getKey().getName();
 		logger.info("Executing job: " + jobName + " executing at "

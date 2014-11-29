@@ -22,11 +22,14 @@ import java.util.concurrent.Semaphore;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.quartz.Job;
+
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-public class ClearCacheJob implements Job {
+import com.glaf.core.job.BaseJob;
+import com.glaf.core.util.DateUtils;
+
+public class ClearCacheJob extends BaseJob {
 	protected final static Log logger = LogFactory.getLog(ClearCacheJob.class);
 
 	private static final int MAX_AVAILABLE = 1;
@@ -50,13 +53,19 @@ public class ClearCacheJob implements Job {
 		}
 	}
 
-	public void execute(JobExecutionContext context)
+	public void runJob(JobExecutionContext context)
 			throws JobExecutionException {
 		try {
 			semaphore.acquire();
 			logger.debug("start clear cache...");
+			logger.debug("taskId:"
+					+ context.getJobDetail().getJobDataMap()
+							.getString("taskId"));
 			CacheFactory.clearAll();
 			logger.debug("end clear cache.");
+			logger.debug("jobRunTime:" + context.getJobRunTime());
+			logger.debug("nextFireTime:"
+					+ DateUtils.getDateTime(context.getNextFireTime()));
 		} catch (Exception ex) {
 			logger.debug(ex);
 		} finally {

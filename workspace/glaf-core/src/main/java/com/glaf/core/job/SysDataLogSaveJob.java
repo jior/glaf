@@ -21,7 +21,7 @@ import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.quartz.Job;
+
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
@@ -29,15 +29,17 @@ import com.glaf.core.context.ContextFactory;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.service.SysDataLogService;
 
-public class SysDataLogSaveJob implements Job {
-	protected final static Log logger = LogFactory.getLog(SysDataLogSaveJob.class);
+public class SysDataLogSaveJob extends BaseJob {
+	protected final static Log logger = LogFactory
+			.getLog(SysDataLogSaveJob.class);
 
-	public void execute(JobExecutionContext context)
+	public void runJob(JobExecutionContext context)
 			throws JobExecutionException {
 		String jobName = context.getJobDetail().getKey().getName();
 		logger.info("Executing job: " + jobName + " executing at "
 				+ DateUtils.getDateTime(new Date()));
-		SysDataLogService sysDataLogService = ContextFactory.getBean("sysDataLogService");
+		SysDataLogService sysDataLogService = ContextFactory
+				.getBean("sysDataLogService");
 		sysDataLogService.saveAll();
 	}
 

@@ -22,19 +22,21 @@ import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.quartz.Job;
+
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
+import com.glaf.core.job.BaseJob;
 import com.glaf.core.util.DateUtils;
 import com.glaf.activiti.mail.SendSimpleMailTaskBean;
 
-public class SendSimpleMailJob implements Job {
+public class SendSimpleMailJob extends BaseJob {
 
 	protected final static Log logger = LogFactory
 			.getLog(SendSimpleMailJob.class);
 
-	public void execute(JobExecutionContext context)
+	@Override
+	public void runJob(JobExecutionContext context)
 			throws JobExecutionException {
 		String jobName = context.getJobDetail().getKey().getName();
 		logger.info("Executing job: " + jobName + " executing at "

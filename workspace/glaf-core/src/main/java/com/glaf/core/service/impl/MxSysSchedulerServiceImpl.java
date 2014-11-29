@@ -25,7 +25,9 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,6 +53,8 @@ public class MxSysSchedulerServiceImpl implements ISysSchedulerService {
 	protected IdGenerator idGenerator;
 
 	protected SqlSession sqlSession;
+
+	protected SqlSessionTemplate sqlSessionTemplate;
 
 	protected SchedulerMapper schedulerMapper;
 
@@ -120,10 +124,32 @@ public class MxSysSchedulerServiceImpl implements ISysSchedulerService {
 		return scheduler;
 	}
 
+	/**
+	 * 根据查询参数获取记录总数
+	 * 
+	 * @return
+	 */
+	public int getSchedulerCountByQueryCriteria(SchedulerQuery query) {
+		return schedulerMapper.getSchedulerCount(query);
+	}
+
 	public List<Scheduler> getSchedulers(String taskType) {
 		SchedulerQuery query = new SchedulerQuery();
 		query.taskType(taskType);
 		return this.list(query);
+	}
+
+	/**
+	 * 根据查询参数获取一页的数据
+	 * 
+	 * @return
+	 */
+	public List<Scheduler> getSchedulersByQueryCriteria(int start,
+			int pageSize, SchedulerQuery query) {
+		RowBounds rowBounds = new RowBounds(start, pageSize);
+		List<Scheduler> rows = sqlSessionTemplate.selectList("getSchedulers",
+				query, rowBounds);
+		return rows;
 	}
 
 	public List<Scheduler> getUserSchedulers(String createBy) {
@@ -133,7 +159,6 @@ public class MxSysSchedulerServiceImpl implements ISysSchedulerService {
 	}
 
 	public List<Scheduler> list(SchedulerQuery query) {
-		query.ensureInitialized();
 		List<Scheduler> list = schedulerMapper.getSchedulers(query);
 		return list;
 	}
@@ -205,6 +230,11 @@ public class MxSysSchedulerServiceImpl implements ISysSchedulerService {
 	@javax.annotation.Resource
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
+	}
+
+	@javax.annotation.Resource
+	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
+		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
 	@Transactional

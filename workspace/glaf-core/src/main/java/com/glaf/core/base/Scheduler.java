@@ -51,13 +51,23 @@ public interface Scheduler {
 
 	Map<String, Parameter> getJobDataMap();
 
+	long getJobRunTime();
+
 	int getLocked();
+
+	Date getNextFireTime();
+
+	Date getPreviousFireTime();
 
 	int getPriority();
 
 	int getRepeatCount();
 
 	int getRepeatInterval();
+
+	int getRunStatus();
+
+	int getRunType();
 
 	Date getStartDate();
 
@@ -109,13 +119,23 @@ public interface Scheduler {
 
 	void setJobDataMap(Map<String, Parameter> jobDataMap);
 
+	void setJobRunTime(long jobRunTime);
+
 	void setLocked(int locked);
+
+	void setNextFireTime(Date nextFireTime);
+
+	void setPreviousFireTime(Date previousFireTime);
 
 	void setPriority(int priority);
 
 	void setRepeatCount(int repeatCount);
 
 	void setRepeatInterval(int repeatInterval);
+
+	void setRunStatus(int runStatus);
+
+	void setRunType(int runType);
 
 	void setStartDate(Date startDate);
 

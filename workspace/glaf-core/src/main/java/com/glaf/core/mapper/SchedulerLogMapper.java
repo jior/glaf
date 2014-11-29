@@ -16,33 +16,37 @@
  * limitations under the License.
  */
 
-package com.glaf.jbpm.job;
+package com.glaf.core.mapper;
 
-import java.util.Date;
+import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Component;
+import com.glaf.core.domain.*;
+import com.glaf.core.query.*;
 
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
+/**
+ * 
+ * Mapper接口
+ *
+ */
 
-import com.glaf.core.job.BaseJob;
-import com.glaf.core.util.DateUtils;
-import com.glaf.jbpm.business.*;
+@Component
+public interface SchedulerLogMapper {
 
-public class SendSimpleMailJob extends BaseJob {
+	void deleteSchedulerLogs(SchedulerLogQuery query);
 
-	protected final static Log logger = LogFactory
-			.getLog(SendSimpleMailJob.class);
+	void deleteSchedulerLogById(String id);
+	
+	void deleteSchedulerLogByTaskId(String taskId);
 
-	@Override
-	public void runJob(JobExecutionContext context)
-			throws JobExecutionException {
-		String jobName = context.getJobDetail().getKey().getName();
-		logger.info("Executing job: " + jobName + " executing at "
-				+ DateUtils.getDateTime(new Date()));
-		SendSimpleMailTaskBean bean = new SendSimpleMailTaskBean();
-		bean.sendAllRunningTasks();
-	}
+	SchedulerLog getSchedulerLogById(String id);
+
+	int getSchedulerLogCount(SchedulerLogQuery query);
+
+	List<SchedulerLog> getSchedulerLogs(SchedulerLogQuery query);
+
+	void insertSchedulerLog(SchedulerLog model);
+
+	void updateSchedulerLog(SchedulerLog model);
 
 }

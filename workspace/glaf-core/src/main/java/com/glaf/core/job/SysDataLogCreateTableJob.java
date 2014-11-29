@@ -23,18 +23,18 @@ import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.quartz.Job;
+
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.SysDataLogTableUtils;
 
-public class SysDataLogCreateTableJob implements Job {
+public class SysDataLogCreateTableJob extends BaseJob {
 	protected final static Log logger = LogFactory
 			.getLog(SysDataLogCreateTableJob.class);
 
-	public void execute(JobExecutionContext context)
+	public void runJob(JobExecutionContext context)
 			throws JobExecutionException {
 		String jobName = context.getJobDetail().getKey().getName();
 		logger.info("Executing job: " + jobName + " executing at "

@@ -34,6 +34,8 @@ public class SchedulerQuery extends DataQuery {
 	protected String taskNameLike;
 	protected String taskType;
 	protected String titleLike;
+	protected Integer runType;
+	protected Integer runStatus;
 
 	public SchedulerQuery() {
 
@@ -65,6 +67,14 @@ public class SchedulerQuery extends DataQuery {
 	}
 
 	public String getContentLike() {
+		if (contentLike != null && contentLike.trim().length() > 0) {
+			if (!contentLike.startsWith("%")) {
+				contentLike = "%" + contentLike;
+			}
+			if (!contentLike.endsWith("%")) {
+				contentLike = contentLike + "%";
+			}
+		}
 		return contentLike;
 	}
 
@@ -78,6 +88,133 @@ public class SchedulerQuery extends DataQuery {
 
 	public String getJobClassLike() {
 		return jobClassLike;
+	}
+
+	public String getOrderBy() {
+		if (sortColumn != null) {
+			String a_x = " asc ";
+			if (sortOrder != null) {
+				a_x = sortOrder;
+			}
+
+			if ("attribute".equals(sortColumn)) {
+				orderBy = "E.ATTRIBUTE_" + a_x;
+			}
+
+			if ("autoStartup".equals(sortColumn)) {
+				orderBy = "E.AUTOSTARTUP" + a_x;
+			}
+
+			if ("content".equals(sortColumn)) {
+				orderBy = "E.CONTENT" + a_x;
+			}
+
+			if ("createBy".equals(sortColumn)) {
+				orderBy = "E.CREATEBY" + a_x;
+			}
+
+			if ("createDate".equals(sortColumn)) {
+				orderBy = "E.CREATEDATE" + a_x;
+			}
+
+			if ("endDate".equals(sortColumn)) {
+				orderBy = "E.ENDDATE" + a_x;
+			}
+
+			if ("expression".equals(sortColumn)) {
+				orderBy = "E.EXPRESSION_" + a_x;
+			}
+
+			if ("intervalTime".equals(sortColumn)) {
+				orderBy = "E.INTERVALTIME" + a_x;
+			}
+
+			if ("intervalType".equals(sortColumn)) {
+				orderBy = "E.INTERVALTYPE" + a_x;
+			}
+
+			if ("intervalValue".equals(sortColumn)) {
+				orderBy = "E.INTERVALVALUE" + a_x;
+			}
+
+			if ("jobClass".equals(sortColumn)) {
+				orderBy = "E.JOBCLASS" + a_x;
+			}
+
+			if ("locked".equals(sortColumn)) {
+				orderBy = "E.LOCKED_" + a_x;
+			}
+
+			if ("priority".equals(sortColumn)) {
+				orderBy = "E.PRIORITY_" + a_x;
+			}
+
+			if ("repeatCount".equals(sortColumn)) {
+				orderBy = "E.REPEATCOUNT" + a_x;
+			}
+
+			if ("repeatInterval".equals(sortColumn)) {
+				orderBy = "E.REPEATINTERVAL" + a_x;
+			}
+
+			if ("startDate".equals(sortColumn)) {
+				orderBy = "E.STARTDATE" + a_x;
+			}
+
+			if ("startDelay".equals(sortColumn)) {
+				orderBy = "E.STARTDELAY" + a_x;
+			}
+
+			if ("startup".equals(sortColumn)) {
+				orderBy = "E.STARTUP_" + a_x;
+			}
+
+			if ("taskName".equals(sortColumn)) {
+				orderBy = "E.TASKNAME" + a_x;
+			}
+
+			if ("taskType".equals(sortColumn)) {
+				orderBy = "E.TASKTYPE" + a_x;
+			}
+
+			if ("threadSize".equals(sortColumn)) {
+				orderBy = "E.THREADSIZE" + a_x;
+			}
+
+			if ("title".equals(sortColumn)) {
+				orderBy = "E.TITLE" + a_x;
+			}
+
+			if ("runType".equals(sortColumn)) {
+				orderBy = "E.RUNTYPE" + a_x;
+			}
+
+			if ("runStatus".equals(sortColumn)) {
+				orderBy = "E.RUNSTATUS" + a_x;
+			}
+
+			if ("jobRunTime".equals(sortColumn)) {
+				orderBy = "E.JOBRUNTIME" + a_x;
+			}
+
+			if ("nextFireTime".equals(sortColumn)) {
+				orderBy = "E.NEXTFIRETIME" + a_x;
+			}
+
+			if ("previousFireTime".equals(sortColumn)) {
+				orderBy = "E.PREVIOUSFIRETIME" + a_x;
+			}
+
+		}
+		return orderBy;
+	}
+
+	public Integer getRunStatus() {
+		return runStatus;
+	}
+
+	public Integer getRunType() {
+		return runType;
 	}
 
 	public Date getStartDateGreaterThanOrEqual() {
@@ -97,6 +234,14 @@ public class SchedulerQuery extends DataQuery {
 	}
 
 	public String getTaskNameLike() {
+		if (taskNameLike != null && taskNameLike.trim().length() > 0) {
+			if (!taskNameLike.startsWith("%")) {
+				taskNameLike = "%" + taskNameLike;
+			}
+			if (!taskNameLike.endsWith("%")) {
+				taskNameLike = taskNameLike + "%";
+			}
+		}
 		return taskNameLike;
 	}
 
@@ -105,7 +250,48 @@ public class SchedulerQuery extends DataQuery {
 	}
 
 	public String getTitleLike() {
+		if (titleLike != null && titleLike.trim().length() > 0) {
+			if (!titleLike.startsWith("%")) {
+				titleLike = "%" + titleLike;
+			}
+			if (!titleLike.endsWith("%")) {
+				titleLike = titleLike + "%";
+			}
+		}
 		return titleLike;
+	}
+
+	@Override
+	public void initQueryColumns() {
+		super.initQueryColumns();
+		addColumn("id", "ID");
+		addColumn("attribute", "ATTRIBUTE_");
+		addColumn("autoStartup", "AUTOSTARTUP");
+		addColumn("content", "CONTENT");
+		addColumn("createBy", "CREATEBY");
+		addColumn("createDate", "CREATEDATE");
+		addColumn("endDate", "ENDDATE");
+		addColumn("expression", "EXPRESSION_");
+		addColumn("intervalTime", "INTERVALTIME");
+		addColumn("intervalType", "INTERVALTYPE");
+		addColumn("intervalValue", "INTERVALVALUE");
+		addColumn("jobClass", "JOBCLASS");
+		addColumn("locked", "LOCKED_");
+		addColumn("priority", "PRIORITY_");
+		addColumn("repeatCount", "REPEATCOUNT");
+		addColumn("repeatInterval", "REPEATINTERVAL");
+		addColumn("startDate", "STARTDATE");
+		addColumn("startDelay", "STARTDELAY");
+		addColumn("startup", "STARTUP_");
+		addColumn("taskName", "TASKNAME");
+		addColumn("taskType", "TASKTYPE");
+		addColumn("threadSize", "THREADSIZE");
+		addColumn("title", "TITLE");
+		addColumn("runType", "RUNTYPE");
+		addColumn("runStatus", "RUNSTATUS");
+		addColumn("jobRunTime", "JOBRUNTIME");
+		addColumn("nextFireTime", "NEXTFIRETIME");
+		addColumn("previousFireTime", "PREVIOUSFIRETIME");
 	}
 
 	public SchedulerQuery jobClassLike(String jobClassLike) {
@@ -113,6 +299,22 @@ public class SchedulerQuery extends DataQuery {
 			throw new RuntimeException("jobClass is null");
 		}
 		this.jobClassLike = jobClassLike;
+		return this;
+	}
+
+	public SchedulerQuery runStatus(Integer runStatus) {
+		if (runStatus == null) {
+			throw new RuntimeException("runStatus is null");
+		}
+		this.runStatus = runStatus;
+		return this;
+	}
+
+	public SchedulerQuery runType(Integer runType) {
+		if (runType == null) {
+			throw new RuntimeException("runType is null");
+		}
+		this.runType = runType;
 		return this;
 	}
 
@@ -130,6 +332,14 @@ public class SchedulerQuery extends DataQuery {
 
 	public void setJobClassLike(String jobClassLike) {
 		this.jobClassLike = jobClassLike;
+	}
+
+	public void setRunStatus(Integer runStatus) {
+		this.runStatus = runStatus;
+	}
+
+	public void setRunType(Integer runType) {
+		this.runType = runType;
 	}
 
 	public void setStartDateGreaterThanOrEqual(Date startDateGreaterThanOrEqual) {

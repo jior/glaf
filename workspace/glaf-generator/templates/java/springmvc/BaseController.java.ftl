@@ -182,7 +182,7 @@ public class ${entityName}BaseController {
 
         @ResponseBody
         @RequestMapping("/delete")
-	public void delete(HttpServletRequest request, ModelMap modelMap) {
+	public byte[] delete(HttpServletRequest request, ModelMap modelMap) {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		${idField.type} ${idField.name} = RequestUtils.get${idField.type}(request, "${idField.name}");
@@ -203,6 +203,7 @@ public class ${entityName}BaseController {
 					}
 				}
 			}
+		    return ResponseUtils.responseResult(true);
 		} else if (${idField.name} != null) {
 			${entityName} ${modelName} = ${modelName}Service
 					.get${entityName}(${idField.type}.valueOf(${idField.name}));
@@ -213,8 +214,10 @@ public class ${entityName}BaseController {
 			if (${modelName} != null && ( StringUtils.equals(${modelName}.getCreateBy(), loginContext.getActorId()) || loginContext.isSystemAdministrator())) {
 				${modelName}.setDeleteFlag(1);
 				${modelName}Service.save(${modelName});
+				return ResponseUtils.responseResult(true);
 			}
 		}
+	     return ResponseUtils.responseResult(false);
 	}
 
 

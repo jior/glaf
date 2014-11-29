@@ -66,6 +66,13 @@ public class SchedulerEntity implements Serializable, Scheduler, JSONable {
 	protected Date createDate;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "STARTDATE")
+	protected Date startDate;
+
+	@Column(name = "STARTDELAY")
+	protected int startDelay;
+
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "ENDDATE")
 	protected Date endDate;
 
@@ -105,13 +112,6 @@ public class SchedulerEntity implements Serializable, Scheduler, JSONable {
 	@Column(name = "REPEATINTERVAL")
 	protected int repeatInterval;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "STARTDATE")
-	protected Date startDate;
-
-	@Column(name = "STARTDELAY")
-	protected int startDelay;
-
 	@Column(name = "STARTUP_")
 	protected int startup;
 
@@ -126,6 +126,23 @@ public class SchedulerEntity implements Serializable, Scheduler, JSONable {
 
 	@Column(name = "TITLE")
 	protected String title;
+
+	@Column(name = "RUNTYPE")
+	protected int runType = 99;
+
+	@Column(name = "RUNSTATUS")
+	protected int runStatus;
+
+	@Column(name = "JOBRUNTIME")
+	protected long jobRunTime;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "NEXTFIRETIME")
+	protected Date nextFireTime;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "PREVIOUSFIRETIME")
+	protected Date previousFireTime;
 
 	public SchedulerEntity() {
 
@@ -207,12 +224,24 @@ public class SchedulerEntity implements Serializable, Scheduler, JSONable {
 		return jobDataMap;
 	}
 
+	public long getJobRunTime() {
+		return jobRunTime;
+	}
+
 	public int getLocked() {
 		return locked;
 	}
 
+	public Date getNextFireTime() {
+		return nextFireTime;
+	}
+
 	public List<SchedulerParam> getParams() {
 		return params;
+	}
+
+	public Date getPreviousFireTime() {
+		return previousFireTime;
 	}
 
 	public int getPriority() {
@@ -225,6 +254,14 @@ public class SchedulerEntity implements Serializable, Scheduler, JSONable {
 
 	public int getRepeatInterval() {
 		return repeatInterval;
+	}
+
+	public int getRunStatus() {
+		return runStatus;
+	}
+
+	public int getRunType() {
+		return runType;
 	}
 
 	public Date getStartDate() {
@@ -366,12 +403,24 @@ public class SchedulerEntity implements Serializable, Scheduler, JSONable {
 		this.jobDataMap = jobDataMap;
 	}
 
+	public void setJobRunTime(long jobRunTime) {
+		this.jobRunTime = jobRunTime;
+	}
+
 	public void setLocked(int locked) {
 		this.locked = locked;
 	}
 
+	public void setNextFireTime(Date nextFireTime) {
+		this.nextFireTime = nextFireTime;
+	}
+
 	public void setParams(List<SchedulerParam> params) {
 		this.params = params;
+	}
+
+	public void setPreviousFireTime(Date previousFireTime) {
+		this.previousFireTime = previousFireTime;
 	}
 
 	public void setPriority(int priority) {
@@ -384,6 +433,14 @@ public class SchedulerEntity implements Serializable, Scheduler, JSONable {
 
 	public void setRepeatInterval(int repeatInterval) {
 		this.repeatInterval = repeatInterval;
+	}
+
+	public void setRunStatus(int runStatus) {
+		this.runStatus = runStatus;
+	}
+
+	public void setRunType(int runType) {
+		this.runType = runType;
 	}
 
 	public void setStartDate(Date startDate) {

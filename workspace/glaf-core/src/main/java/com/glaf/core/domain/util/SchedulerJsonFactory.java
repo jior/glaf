@@ -110,6 +110,22 @@ public class SchedulerJsonFactory {
 			model.setIntervalTime(jsonObject.getString("intervalTime"));
 		}
 
+		if (jsonObject.containsKey("runType")) {
+			model.setRunType(jsonObject.getInteger("runType"));
+		}
+		if (jsonObject.containsKey("runStatus")) {
+			model.setRunStatus(jsonObject.getInteger("runStatus"));
+		}
+		if (jsonObject.containsKey("jobRunTime")) {
+			model.setJobRunTime(jsonObject.getLong("jobRunTime"));
+		}
+		if (jsonObject.containsKey("nextFireTime")) {
+			model.setNextFireTime(jsonObject.getDate("nextFireTime"));
+		}
+		if (jsonObject.containsKey("previousFireTime")) {
+			model.setPreviousFireTime(jsonObject.getDate("previousFireTime"));
+		}
+
 		return model;
 	}
 
@@ -129,6 +145,8 @@ public class SchedulerJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
+		jsonObject.put("taskId", model.getId());
+		
 		if (model.getTaskName() != null) {
 			jsonObject.put("taskName", model.getTaskName());
 		}
@@ -193,6 +211,26 @@ public class SchedulerJsonFactory {
 		}
 		if (model.getIntervalTime() != null) {
 			jsonObject.put("intervalTime", model.getIntervalTime());
+		}
+
+		jsonObject.put("runType", model.getRunType());
+		jsonObject.put("runStatus", model.getRunStatus());
+		jsonObject.put("jobRunTime", model.getJobRunTime());
+		if (model.getNextFireTime() != null) {
+			jsonObject.put("nextFireTime",
+					DateUtils.getDate(model.getNextFireTime()));
+			jsonObject.put("nextFireTime_date",
+					DateUtils.getDate(model.getNextFireTime()));
+			jsonObject.put("nextFireTime_datetime",
+					DateUtils.getDateTime(model.getNextFireTime()));
+		}
+		if (model.getPreviousFireTime() != null) {
+			jsonObject.put("previousFireTime",
+					DateUtils.getDate(model.getPreviousFireTime()));
+			jsonObject.put("previousFireTime_date",
+					DateUtils.getDate(model.getPreviousFireTime()));
+			jsonObject.put("previousFireTime_datetime",
+					DateUtils.getDateTime(model.getPreviousFireTime()));
 		}
 
 		return jsonObject;
@@ -203,6 +241,8 @@ public class SchedulerJsonFactory {
 		jsonObject.put("id", model.getId());
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
+		jsonObject.put("taskId", model.getId());
+		
 		if (model.getTaskName() != null) {
 			jsonObject.put("taskName", model.getTaskName());
 		}
@@ -267,6 +307,25 @@ public class SchedulerJsonFactory {
 		}
 		if (model.getIntervalTime() != null) {
 			jsonObject.put("intervalTime", model.getIntervalTime());
+		}
+		jsonObject.put("runType", model.getRunType());
+		jsonObject.put("runStatus", model.getRunStatus());
+		jsonObject.put("jobRunTime", model.getJobRunTime());
+		if (model.getNextFireTime() != null) {
+			jsonObject.put("nextFireTime",
+					DateUtils.getDate(model.getNextFireTime()));
+			jsonObject.put("nextFireTime_date",
+					DateUtils.getDate(model.getNextFireTime()));
+			jsonObject.put("nextFireTime_datetime",
+					DateUtils.getDateTime(model.getNextFireTime()));
+		}
+		if (model.getPreviousFireTime() != null) {
+			jsonObject.put("previousFireTime",
+					DateUtils.getDate(model.getPreviousFireTime()));
+			jsonObject.put("previousFireTime_date",
+					DateUtils.getDate(model.getPreviousFireTime()));
+			jsonObject.put("previousFireTime_datetime",
+					DateUtils.getDateTime(model.getPreviousFireTime()));
 		}
 		return jsonObject;
 	}

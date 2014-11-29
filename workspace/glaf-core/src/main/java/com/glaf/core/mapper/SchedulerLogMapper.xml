@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.mapper.SchedulerLogMapper">
+
+	<resultMap id="schedulerLogResultMap" type="com.glaf.core.domain.SchedulerLog">
+		<id property="id" column="ID_" jdbcType="VARCHAR" />
+		<id property="taskId" column="TASKID_" jdbcType="VARCHAR" />
+		<result property="startDate" column="STARTDATE_" jdbcType="TIMESTAMP" />
+		<result property="endDate" column="ENDDATE_" jdbcType="TIMESTAMP" />
+		<result property="jobRunTime" column="JOBRUNTIME" jdbcType="BIGINT" />
+		<result property="status" column="STATUS_" jdbcType="INTEGER" />
+		<result property="taskName" column="TASKNAME_" jdbcType="VARCHAR" />
+		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="content" column="CONTENT_" jdbcType="VARCHAR" />
+		<result property="exitCode" column="EXITCODE_" jdbcType="VARCHAR" />
+		<result property="exitMessage" column="EXITMESSAGE_" jdbcType="VARCHAR" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+
+	<insert id="insertSchedulerLog" parameterType="com.glaf.core.domain.SchedulerLog">
+		insert into SYS_SCHEDULER_LOG
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_,TASKID_
+			<if test="startDate != null">
+				,STARTDATE_
+			</if>
+			<if test="endDate != null">
+				,ENDDATE_
+			</if>
+			<if test="jobRunTime != null">
+				,JOBRUNTIME
+			</if>
+			<if test="status != null">
+				,STATUS_
+			</if>
+			<if test="taskName != null">
+				,TASKNAME_
+			</if>
+			<if test="title != null">
+				,TITLE_
+			</if>
+			<if test="content != null">
+				,CONTENT_
+			</if>
+			<if test="exitCode != null">
+				,EXITCODE_
+			</if>
+			<if test="exitMessage != null">
+				,EXITMESSAGE_
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_
+			</if>
+			<if test="createDate != null">
+				,CREATEDATE_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=VARCHAR}
+			,#{taskId, jdbcType=VARCHAR}
+
+			<if test="startDate != null">
+				,#{startDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="endDate != null">
+				,#{endDate, jdbcType=TIMESTAMP}
+			</if>
+			<if test="jobRunTime != null">
+				,#{jobRunTime, jdbcType=BIGINT}
+			</if>
+			<if test="status != null">
+				,#{status, jdbcType=INTEGER}
+			</if>
+			<if test="taskName != null">
+				,#{taskName, jdbcType=VARCHAR}
+			</if>
+			<if test="title != null">
+				,#{title, jdbcType=VARCHAR}
+			</if>
+			<if test="content != null">
+				,#{content, jdbcType=VARCHAR}
+			</if>
+			<if test="exitCode != null">
+				,#{exitCode, jdbcType=VARCHAR}
+			</if>
+			<if test="exitMessage != null">
+				,#{exitMessage, jdbcType=VARCHAR}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createDate != null">
+				,#{createDate, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateSchedulerLog" parameterType="com.glaf.core.domain.SchedulerLog">
+		update SYS_SCHEDULER_LOG
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="endDate != null">
+				ENDDATE_ = #{endDate, jdbcType=TIMESTAMP},
+			</if>
+			<if test="jobRunTime != null">
+				JOBRUNTIME = #{jobRunTime, jdbcType=BIGINT},
+			</if>
+			<if test="status != null">
+				STATUS_ = #{status, jdbcType=INTEGER},
+			</if>
+			<if test="exitCode != null">
+				EXITCODE_ = #{exitCode, jdbcType=VARCHAR},
+			</if>
+			<if test="exitMessage != null">
+				EXITMESSAGE_ = #{exitMessage, jdbcType=VARCHAR},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=VARCHAR}
+
+	</update>
+
+
+	<delete id="deleteSchedulerLogById" parameterType="string">
+		delete from
+		SYS_SCHEDULER_LOG
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteSchedulerLogByTaskId" parameterType="string">
+		delete
+		from
+		SYS_SCHEDULER_LOG
+		where TASKID_ = #{taskId}
+	</delete>
+
+
+	<delete id="deleteSchedulerLogs" parameterType="com.glaf.core.query.SchedulerLogQuery">
+		delete from SYS_SCHEDULER_LOG
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getSchedulerLogById" parameterType="string"
+		resultMap="schedulerLogResultMap">
+		select * from SYS_SCHEDULER_LOG where ID_ = #{id}
+	</select>
+
+
+	<select id="getSchedulerLogs" parameterType="com.glaf.core.query.SchedulerLogQuery"
+		resultMap="schedulerLogResultMap">
+		select distinct E.*
+		<include refid="selectSchedulerLogsSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.CREATEDATE_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getSchedulerLogCount" parameterType="com.glaf.core.query.SchedulerLogQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectSchedulerLogsSql" />
+	</select>
+
+
+	<sql id="selectSchedulerLogsSql">
+
+		from SYS_SCHEDULER_LOG E
+
+		<where>
+			1 = 1
+
+			<if test="startDateGreaterThanOrEqual != null">
+				and E.STARTDATE_ &gt;= #{startDateGreaterThanOrEqual}
+			</if>
+
+			<if test="startDateLessThanOrEqual != null">
+				and E.STARTDATE_ &lt;= #{startDateLessThanOrEqual}
+			</if>
+
+			<if test="endDateGreaterThanOrEqual != null">
+				and E.ENDDATE_ &gt;= #{endDateGreaterThanOrEqual}
+			</if>
+
+			<if test="endDateLessThanOrEqual != null">
+				and E.ENDDATE_ &lt;= #{endDateLessThanOrEqual}
+			</if>
+
+			<if test="status != null">
+				and E.STATUS_ = #{status}
+			</if>
+
+			<if test="taskId != null and taskId != '' ">
+				and E.TASKID_ = #{taskId}
+			</if>
+
+			<if test="taskName != null and taskName != '' ">
+				and E.TASKNAME_ = #{taskName}
+			</if>
+
+			<if test="taskNameLike != null and taskNameLike != '' ">
+				and E.TASKNAME_ like #{taskNameLike}
+			</if>
+
+			<if test="title != null and title != '' ">
+				and E.TITLE_ = #{title}
+			</if>
+
+			<if test="titleLike != null and titleLike != '' ">
+				and E.TITLE_ like #{titleLike}
+			</if>
+
+			<if test="contentLike != null and contentLike != '' ">
+				and E.CONTENT_ like #{contentLike}
+			</if>
+
+			<if test="exitCode != null and exitCode != '' ">
+				and E.EXITCODE_ = #{exitCode}
+			</if>
+
+			<if test="exitMessageLike != null and exitMessageLike != '' ">
+				and E.EXITMESSAGE_ like #{exitMessageLike}
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="createDateGreaterThanOrEqual != null">
+				and E.CREATEDATE_ &gt;= #{createDateGreaterThanOrEqual}
+			</if>
+
+			<if test="createDateLessThanOrEqual != null">
+				and E.CREATEDATE_ &lt;= #{createDateLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

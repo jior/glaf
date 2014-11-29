@@ -24,8 +24,15 @@
 		<result property="autoStartup" column="AUTOSTARTUP" jdbcType="INTEGER" />
 		<result property="expression" column="EXPRESSION_" jdbcType="VARCHAR" />
 		<result property="intervalType" column="INTERVALTYPE" jdbcType="VARCHAR" />
-		<result property="intervalValue" column="INTERVALVALUE" jdbcType="VARCHAR" />
+		<result property="intervalValue" column="INTERVALVALUE"
+			jdbcType="VARCHAR" />
 		<result property="intervalTime" column="INTERVALTIME" jdbcType="VARCHAR" />
+		<result property="runType" column="RUNTYPE" jdbcType="INTEGER" />
+		<result property="runStatus" column="RUNSTATUS" jdbcType="INTEGER" />
+		<result property="jobRunTime" column="JOBRUNTIME" jdbcType="BIGINT" />
+		<result property="nextFireTime" column="NEXTFIRETIME" jdbcType="TIMESTAMP" />
+		<result property="previousFireTime" column="PREVIOUSFIRETIME"
+			jdbcType="TIMESTAMP" />
 		<result property="createBy" column="CREATEBY" jdbcType="VARCHAR" />
 		<result property="createDate" column="CREATEDATE" jdbcType="TIMESTAMP" />
 		<result property="attribute" column="ATTRIBUTE_" jdbcType="VARCHAR" />
@@ -92,6 +99,21 @@
 			</if>
 			<if test="intervalTime != null">
 				,INTERVALTIME
+			</if>
+			<if test="runType != null">
+				,RUNTYPE
+			</if>
+			<if test="runStatus != null">
+				,RUNSTATUS
+			</if>
+			<if test="jobRunTime != null">
+				,JOBRUNTIME
+			</if>
+			<if test="nextFireTime != null">
+				,NEXTFIRETIME
+			</if>
+			<if test="previousFireTime != null">
+				,PREVIOUSFIRETIME
 			</if>
 			<if test="createBy != null">
 				,CREATEBY
@@ -163,6 +185,21 @@
 			</if>
 			<if test="intervalTime != null">
 				,#{intervalTime, jdbcType=VARCHAR}
+			</if>
+			<if test="runType != null">
+				,#{runType, jdbcType=INTEGER}
+			</if>
+			<if test="runStatus != null">
+				,#{runStatus, jdbcType=INTEGER}
+			</if>
+			<if test="jobRunTime != null">
+				,#{jobRunTime, jdbcType=BIGINT}
+			</if>
+			<if test="nextFireTime != null">
+				,#{nextFireTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="previousFireTime != null">
+				,#{previousFireTime, jdbcType=TIMESTAMP}
 			</if>
 			<if test="createBy != null">
 				,#{createBy, jdbcType=VARCHAR}
@@ -237,6 +274,22 @@
 			</if>
 			<if test="intervalTime != null">
 				INTERVALTIME = #{intervalTime, jdbcType=VARCHAR},
+			</if>
+			<if test="runType != null">
+				RUNTYPE = #{runType, jdbcType=INTEGER},
+			</if>
+			<if test="runStatus != null">
+				RUNSTATUS = #{runStatus, jdbcType=INTEGER},
+			</if>
+			<if test="jobRunTime != null">
+				JOBRUNTIME = #{jobRunTime, jdbcType=BIGINT},
+			</if>
+			<if test="nextFireTime != null">
+				NEXTFIRETIME = #{nextFireTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="previousFireTime != null">
+				PREVIOUSFIRETIME = #{previousFireTime,
+				jdbcType=TIMESTAMP},
 			</if>
 			<if test="createBy != null">
 				CREATEBY = #{createBy, jdbcType=VARCHAR},
@@ -368,6 +421,14 @@
 
 			<if test="locked != null">
 				and E.locked_ = #{locked}
+			</if>
+
+			<if test="runType != null">
+				and E.RUNTYPE = #{runType}
+			</if>
+
+			<if test="runStatus != null">
+				and E.RUNSTATUS = #{runStatus}
 			</if>
 
 			<if test="createBy != null">

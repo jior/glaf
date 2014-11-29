@@ -16,7 +16,7 @@
 
 	<property>
 		<name>distributed.resource.enabled</name>
-		<value>flase</value>
+		<value>true</value>
 	</property>
 
 

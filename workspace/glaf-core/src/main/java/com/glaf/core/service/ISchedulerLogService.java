@@ -18,99 +18,69 @@
 
 package com.glaf.core.service;
 
-import java.util.List;
+import java.util.*;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.glaf.core.base.Scheduler;
-import com.glaf.core.query.SchedulerQuery;
+import com.glaf.core.domain.*;
+import com.glaf.core.query.*;
 
 @Transactional(readOnly = true)
-public interface ISysSchedulerService {
+public interface ISchedulerLogService {
 
 	/**
-	 * 删除调度任务
+	 * 根据主键删除记录
 	 * 
-	 * @param scheduler
+	 * @return
 	 */
 	@Transactional
-	void deleteScheduler(String taskId);
+	void deleteById(String id);
 
 	/**
-	 * 获取全部调度任务
+	 * 根据主键删除多条记录
 	 * 
 	 * @return
 	 */
-	List<Scheduler> getAllSchedulers();
-
-	/**
-	 * 根据任务编号获取调度任务
-	 * 
-	 * @param taskId
-	 * @return
-	 */
-	Scheduler getSchedulerByTaskId(String taskId);
-
-	/**
-	 * 根据查询参数获取记录总数
-	 * 
-	 * @return
-	 */
-	int getSchedulerCountByQueryCriteria(SchedulerQuery query);
-
-	/**
-	 * 根据任务类型获取调度任务
-	 * 
-	 * @param taskType
-	 * @return
-	 */
-	List<Scheduler> getSchedulers(String taskType);
-
-	/**
-	 * 根据查询参数获取一页的数据
-	 * 
-	 * @return
-	 */
-	List<Scheduler> getSchedulersByQueryCriteria(int start, int pageSize,
-			SchedulerQuery query);
-
-	/**
-	 * 获取用户自行定义的调度任务
-	 * 
-	 * @param createBy
-	 * @return
-	 */
-	List<Scheduler> getUserSchedulers(String createBy);
+	@Transactional
+	void deleteByIds(List<String> ids);
+	
+	void deleteSchedulerLogByTaskId(String taskId);
 
 	/**
 	 * 根据查询参数获取记录列表
 	 * 
 	 * @return
 	 */
-	List<Scheduler> list(SchedulerQuery query);
+	List<SchedulerLog> list(SchedulerLogQuery query);
 
 	/**
-	 * 锁定调度任务
+	 * 根据查询参数获取记录总数
 	 * 
-	 * @param taskId
-	 * @param locked
+	 * @return
 	 */
-	@Transactional
-	void locked(String taskId, int locked);
+	int getSchedulerLogCountByQueryCriteria(SchedulerLogQuery query);
 
 	/**
-	 * 保存调度任务
+	 * 根据查询参数获取一页的数据
 	 * 
-	 * @param model
+	 * @return
 	 */
-	@Transactional
-	void save(Scheduler model);
+	List<SchedulerLog> getSchedulerLogsByQueryCriteria(int start, int pageSize,
+			SchedulerLogQuery query);
 
 	/**
-	 * 修改调度任务
+	 * 根据主键获取一条记录
 	 * 
-	 * @param model
+	 * @return
+	 */
+	SchedulerLog getSchedulerLog(String id);
+
+	/**
+	 * 保存一条记录
+	 * 
+	 * @return
 	 */
 	@Transactional
-	void update(Scheduler model);
+	void save(SchedulerLog schedulerLog);
+
 }

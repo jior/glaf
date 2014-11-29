@@ -25,6 +25,7 @@ import org.quartz.Job;
 import org.quartz.JobBuilder;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
 import org.quartz.JobKey;
 import org.quartz.SimpleScheduleBuilder;
 import org.quartz.SimpleTrigger;
@@ -58,6 +59,60 @@ public class QuartzUtils {
 			// }
 		}
 		return scheduler;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static void printSchedulerStatus() throws Exception {
+		scheduler = getQuartzScheduler();
+		List<JobExecutionContext> jobs = scheduler.getCurrentlyExecutingJobs();
+		if (jobs != null && !jobs.isEmpty()) {
+			for (JobExecutionContext job : jobs) {
+				logger.info("------------" + job.getClass().getName()
+						+ "------------");
+				logger.info("fireInstanceId:" + job.getFireInstanceId());
+				logger.info("jobRunTime:" + job.getJobRunTime());
+				logger.info("fireTime:"
+						+ DateUtils.getDateTime(job.getFireTime()));
+				logger.info("nextFireTime:"
+						+ DateUtils.getDateTime(job.getNextFireTime()));
+				logger.info("previousFireTime:"
+						+ DateUtils.getDateTime(job.getPreviousFireTime()));
+				logger.info("result:" + job.getResult());
+			}
+		}
+
+		List<String> jobGroupNames = scheduler.getJobGroupNames();
+		if (jobGroupNames != null && !jobGroupNames.isEmpty()) {
+			for (String jobGroupName : jobGroupNames) {
+				logger.info("jobGroupName:" + jobGroupName);
+				List<Scheduler> list = getSysSchedulerService()
+						.getAllSchedulers();
+				Iterator<Scheduler> iterator = list.iterator();
+				while (iterator.hasNext()) {
+					Scheduler model = iterator.next();
+					String jobName = "JOB_" + model.getId();
+					JobKey jobKey = JobKey.jobKey(jobName, jobGroupName);
+					JobDetail jobDetail = scheduler.getJobDetail(jobKey);
+					logger.info("taskId:"
+							+ jobDetail.getJobDataMap().getString("taskId"));
+					List<Trigger> triggers = (List<Trigger>) scheduler
+							.getTriggersOfJob(jobKey);
+					if (triggers != null && !triggers.isEmpty()) {
+						for (Trigger trigger : triggers) {
+							logger.info(model.getTaskName() + "->"
+									+ trigger.getKey().getName());
+							logger.info("previousFireTime:"
+									+ DateUtils.getDateTime(trigger
+											.getPreviousFireTime()));
+							logger.info("nextFireTime:"
+									+ DateUtils.getDateTime(trigger
+											.getNextFireTime()));
+						}
+					}
+				}
+			}
+		}
+
 	}
 
 	public static ISysSchedulerService getSysSchedulerService() {
@@ -123,6 +178,10 @@ public class QuartzUtils {
 									.scheduleJob(jobDetail, trigger);
 							startup = true;
 							logger.info(model.getTaskName() + " has scheduled.");
+							logger.info(model.getTaskName()
+									+ " next fire time:"
+									+ DateUtils.getDateTime(trigger
+											.getNextFireTime()));
 							if (startup) {
 								model.setStartup(1);
 								sysSchedulerService.save(model);
@@ -145,6 +204,10 @@ public class QuartzUtils {
 								startup = true;
 								logger.info(model.getTaskName()
 										+ " has rescheduled.");
+								logger.info(model.getTaskName()
+										+ " next fire time:"
+										+ DateUtils.getDateTime(trigger
+												.getNextFireTime()));
 								if (startup) {
 									model.setStartup(1);
 									sysSchedulerService.save(model);
@@ -184,6 +247,10 @@ public class QuartzUtils {
 									+ model.getRepeatInterval());
 							logger.debug(model.getTaskName()
 									+ " has scheduled.");
+							logger.info(model.getTaskName()
+									+ " next fire time:"
+									+ DateUtils.getDateTime(trigger
+											.getNextFireTime()));
 							if (startup) {
 								model.setStartup(1);
 								getSysSchedulerService().save(model);
@@ -216,6 +283,10 @@ public class QuartzUtils {
 								startup = true;
 								logger.info(model.getTaskName()
 										+ " has rescheduled.");
+								logger.info(model.getTaskName()
+										+ " next fire time:"
+										+ DateUtils.getDateTime(trigger
+												.getNextFireTime()));
 								if (startup) {
 									model.setStartup(1);
 									getSysSchedulerService().save(model);
