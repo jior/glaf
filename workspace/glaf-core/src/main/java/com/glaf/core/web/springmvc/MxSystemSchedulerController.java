@@ -365,6 +365,10 @@ public class MxSystemSchedulerController {
 									.isSystemAdministrator())) {
 						QuartzUtils.restart(scheduler.getId());
 						logger.info("正在运行任务“" + scheduler.getTaskName() + "”");
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+						}
 					}
 				}
 			}

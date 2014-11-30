@@ -97,7 +97,7 @@ public abstract class BaseJob implements Job {
 				log.setStatus(1);
 				schedulerLogService.save(log);
 
-				logger.info(scheduler.getTitle() + " 下次运行时间："
+				logger.info(scheduler.getTitle() + " 下次运行时间: "
 						+ DateUtils.getDateTime(context.getNextFireTime()));
 
 				this.runJob(context);

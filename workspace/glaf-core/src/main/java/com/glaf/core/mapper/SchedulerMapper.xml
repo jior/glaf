@@ -291,12 +291,6 @@
 				PREVIOUSFIRETIME = #{previousFireTime,
 				jdbcType=TIMESTAMP},
 			</if>
-			<if test="createBy != null">
-				CREATEBY = #{createBy, jdbcType=VARCHAR},
-			</if>
-			<if test="createDate != null">
-				CREATEDATE = #{createDate, jdbcType=TIMESTAMP},
-			</if>
 			<if test="attribute != null">
 				ATTRIBUTE_ = #{attribute, jdbcType=VARCHAR},
 			</if>

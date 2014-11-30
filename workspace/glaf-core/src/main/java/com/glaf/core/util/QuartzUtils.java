@@ -131,7 +131,7 @@ public class QuartzUtils {
 	public static void restart(String taskId) {
 		Scheduler model = getSysSchedulerService().getSchedulerByTaskId(taskId);
 		if (model != null && model.isValid()) {
-			logger.debug("scheduler:" + model);
+			logger.debug("scheduler:" + model.toJsonObject().toJSONString());
 			try {
 				if (getQuartzScheduler() != null
 						&& StringUtils.isNotEmpty(model.getJobClass())) {
@@ -360,6 +360,7 @@ public class QuartzUtils {
 				if (model.isValid() && model.isSchedulerAutoStartup()) {
 					try {
 						restart(model.getId());
+						Thread.sleep(1000);
 					} catch (Exception ex) {
 						ex.printStackTrace();
 						logger.error(ex);
