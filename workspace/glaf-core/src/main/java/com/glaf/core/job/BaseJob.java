@@ -31,6 +31,7 @@ import com.glaf.core.domain.SchedulerLog;
 import com.glaf.core.security.Authentication;
 import com.glaf.core.service.ISchedulerLogService;
 import com.glaf.core.service.ISysSchedulerService;
+import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.UUID32;
 
 /**
@@ -95,6 +96,9 @@ public abstract class BaseJob implements Job {
 				sysSchedulerService.update(scheduler);
 				log.setStatus(1);
 				schedulerLogService.save(log);
+
+				logger.info(scheduler.getTitle() + " 下次运行时间："
+						+ DateUtils.getDateTime(context.getNextFireTime()));
 
 				this.runJob(context);
 				success = true;
