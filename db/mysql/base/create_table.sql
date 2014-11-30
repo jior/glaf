@@ -310,6 +310,11 @@ CREATE TABLE SYS_TODO_INSTANCE(
         taskType varchar(50),
         threadSize int,
 	attribute_ varchar(500),
+	jobRunTime bigint,
+        nextFireTime timestamp,
+        previousFireTime timestamp,
+        runStatus int,
+        runType int,
         PRIMARY KEY (id)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;
 

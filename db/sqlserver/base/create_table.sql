@@ -310,6 +310,11 @@ CREATE TABLE SYS_TODO_INSTANCE(
         taskType nvarchar(50),
         threadSize int,
 	attribute_ nvarchar(500),
+	jobRunTime bigint,
+        nextFireTime datetime,
+        previousFireTime datetime,
+        runStatus int,
+        runType int,
         PRIMARY KEY (id)
     );
 
