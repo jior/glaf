@@ -93,9 +93,6 @@ insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (495, 8, 'µ
 insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (498, 4, 'ªı±“¿‡–Õ', 'ªı±“¿‡–Õ', 498, 'money');
 insert into SYS_TREE (id, parent, name, nodeDesc, sort, code) values (499, 4, '’Àªß¿‡–Õ', '’Àªß¿‡–Õ', 499, 'AccountType');
 
-insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (512, 10, ' ⁄»®π‹¿Ì', ' ⁄»®π‹¿Ì', 512, '512');
-
-
 insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (701, 3, 'ƒ⁄»›π‹¿Ì', 'ƒ⁄»›π‹¿Ì', 0, '701');
 insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (702, 701, '–¬Œ≈π‹¿Ì', '–¬Œ≈π‹¿Ì', 0, '702');
 insert into SYS_TREE (id, parent, name, nodedesc, sort, code) values (703, 701, 'π´∏Êπ‹¿Ì', 'π´∏Êπ‹¿Ì', 0, '703');
@@ -146,16 +143,15 @@ insert into SYS_APPLICATION (id, name, appdesc, url, sort, showmenu, nodeid) val
 insert into SYS_APPLICATION (id, name, appdesc, url, sort, showmenu, nodeid) values (449, 'π§◊˜»’¿˙', 'π§◊˜»’¿˙', '/sys/workCalendar/showList', 449, 1, 449);
 insert into SYS_APPLICATION (id, name, appdesc, url, sort, showmenu, nodeid) values (450, 'œµÕ≥≤Œ ˝', 'œµÕ≥≤Œ ˝', '/mx/sys/property/edit?category=SYS', 450, 1, 450);
 insert into SYS_APPLICATION (id, name, appdesc, url, sort, showmenu, nodeid) values (452, '” º˛∑˛ŒÒ…Ë÷√', '” º˛∑˛ŒÒ…Ë÷√', '/mx/sys/mailConfig', 452, 1, 452);
-insert into SYS_APPLICATION (id, name, appdesc, url, sort, showmenu, nodeid) values (512, ' ⁄»®π‹¿Ì', '', '/sys/sysUserRole.do?method=showUsers', 512, 2, 512);
 insert into SYS_APPLICATION (id, name, appdesc, url, sort, showmenu, nodeid) values (494, 'TODO≈‰÷√', '', '/sys/todo.do?method=showList', 494, 1, 494);
-insert into SYS_APPLICATION (id, name, appdesc, url, sort, showmenu, nodeid) values (495, 'µ˜∂»π‹¿Ì', '', '/sys/scheduler.do?method=showList', 495, 1, 495);
+insert into SYS_APPLICATION (id, name, appdesc, url, sort, showmenu, nodeid) values (495, 'µ˜∂»π‹¿Ì', '', '/mx/system/scheduler', 495, 1, 495);
 insert into SYS_APPLICATION (id, name, appDesc, url, sort, showMenu, nodeId) values (42, 'Õ≥º∆±®±Ì', 'Õ≥º∆±®±Ì', '', 42, 1, 42);
 insert into SYS_APPLICATION (id, name, appDesc, url, sort, showMenu, nodeId) values (43, '≤È—Øπ‹¿Ì', '', '/mx/dts/query', 43, 1, 43);
 insert into SYS_APPLICATION (id, name, appDesc, url, sort, showMenu, nodeId) values (44, '±Ìπ‹¿Ì', '±Ìπ‹¿Ì', '/mx/dts/table', 44, 1, 44);
 insert into SYS_APPLICATION (id, name, appDesc, url, sort, showMenu, nodeId) values (45, 'Õº±Ìπ‹¿Ì', 'Õº±Ìπ‹¿Ì', '/mx/bi/chart', 45, 1, 45);
 insert into SYS_APPLICATION (id, name, appDesc, url, sort, showMenu, nodeId) values (46, '±®±Ìπ‹¿Ì', '±®±Ìπ‹¿Ì', '/mx/bi/report', 46, 1, 46);
 insert into SYS_APPLICATION (id, name, appDesc, url, sort, showMenu, nodeId) values (47, '±®±Ì∑¢ÀÕπ‹¿Ì', '±®±Ì∑¢ÀÕπ‹¿Ì', '/mx/bi/reportTask', 47, 1, 47);
-insert into SYS_APPLICATION (id, name, appDesc, url, sort, showMenu, nodeId) values (48, 'µ˜∂»π‹¿Ì', 'µ˜∂»π‹¿Ì', '/mx/dts/scheduler', 48, 1, 48);
+insert into SYS_APPLICATION (id, name, appDesc, url, sort, showMenu, nodeId) values (48, 'µ˜∂»π‹¿Ì', 'µ˜∂»π‹¿Ì', '/mx/system/scheduler?taskType=DTS', 48, 1, 48);
 insert into SYS_APPLICATION (id, name, appDesc, url, sort, showMenu, nodeId) values (49, '»ŒŒÒπ‹¿Ì', '»ŒŒÒπ‹¿Ì', '/mx/dts/task', 49, 1, 49);
 insert into SYS_APPLICATION (id, name, appDesc, url, sort, showMenu, nodeId) values (50, '≤Œ ˝…Ë÷√', '≤Œ ˝…Ë÷√', '/mx/sys/property/edit?category=RPT', 50, 1, 50);
 insert into SYS_APPLICATION (id, name, appDesc, url, sort, showMenu, nodeId) values (51, 'ƒ£∞Âπ‹¿Ì', 'ƒ£∞Âπ‹¿Ì', '/mx/sys/template', 51, 1, 51);
