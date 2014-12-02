@@ -526,12 +526,12 @@
 					<input type="text" id="cron" name="cron" style="width: 100%;" value="${expression}" />
 				</td>
 				<td>
-				    <input type="button" value="反解析到UI " id="btnFan" onclick="javascript:btnFan()"/>
+				    &nbsp;<input type="button" value="反解析到UI " id="btnFan" onclick="javascript:btnFan()" class="button"/>
 				</td>
 			  </tr>
 			  <tr>
 			  <td colspan="8" align="center">
-			        <input type="button" value="确定" id="btnOK" class="btn btn-primary" onclick="javascript:btnConfirm()"/>
+			        <input type="button" value="确定" id="btnOK" class="btn button" onclick="javascript:btnConfirm()"/>
 			  </td>
 			  <tr>
             </tbody>

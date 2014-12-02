@@ -160,7 +160,8 @@
 		<input type="text" id="expression" name="expression" size="50"
 			   class="input span3 x-text" maxlength="255"
 			   value="${scheduler.expression}">&nbsp;
-			<img src="<%=request.getContextPath()%>/images/expr.png" onclick="javascript:openExpr2();">
+			<img src="<%=request.getContextPath()%>/images/expr.png" onclick="javascript:openExpr2();" style="cursor:pointer">
+            &nbsp;<span style="cursor:pointer" onclick="javascript:openExpr2();">表达式</span>
 			<br />&nbsp;(可不填,可以参考<a href="#" onclick="javascript:openQtz();">quartz</a>文件)
 			<br>示例：每周一到周五凌晨5点执行一次（ 0 0 5 ? * MON-FRI  ）
 			<br>  每天早上6点、中午1点和下午5点各执行一次（ 0 0 6,13,17 * * ?  ）
