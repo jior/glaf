@@ -61,6 +61,23 @@ public class MxSystemSchedulerController {
 
 	}
 
+	@RequestMapping("/choose")
+	public ModelAndView choose(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		String x_view = ViewProperties.getString("scheduler.choose");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/modules/sys/scheduler/choose", modelMap);
+	}
+
 	@ResponseBody
 	@RequestMapping("/delete")
 	public byte[] delete(HttpServletRequest request, ModelMap modelMap) {
@@ -210,7 +227,7 @@ public class MxSystemSchedulerController {
 			throws IOException {
 		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		logger.debug("search params:"+params);
+		logger.debug("search params:" + params);
 		SchedulerQuery query = new SchedulerQuery();
 		Tools.populate(query, params);
 		query.deleteFlag(0);
@@ -542,13 +559,13 @@ public class MxSystemSchedulerController {
 	}
 
 	@javax.annotation.Resource
-	public void setSysSchedulerService(ISysSchedulerService sysSchedulerService) {
-		this.sysSchedulerService = sysSchedulerService;
+	public void setSchedulerLogService(ISchedulerLogService schedulerLogService) {
+		this.schedulerLogService = schedulerLogService;
 	}
 
 	@javax.annotation.Resource
-	public void setSchedulerLogService(ISchedulerLogService schedulerLogService) {
-		this.schedulerLogService = schedulerLogService;
+	public void setSysSchedulerService(ISysSchedulerService sysSchedulerService) {
+		this.sysSchedulerService = sysSchedulerService;
 	}
 
 	@RequestMapping("/update")

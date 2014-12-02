@@ -13,13 +13,14 @@
 <title>任务调度管理</title>
 <%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
 <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/scripts/calendar/skins/aqua/theme.css"/>
-<script language="javascript" src='<%=contextPath%>/scripts/main.js'></script>
-<script language="javascript" src='<%=contextPath%>/scripts/verify.js'></script>
-<script language="javascript" src='<%=contextPath%>/scripts/glaf-core.js'></script>
-<script language="javascript" src="<%=request.getContextPath()%>/scripts/calendar/calendar.js" ></script>
-<script language="javascript" src="<%=request.getContextPath()%>/scripts/calendar/lang/calendar-en.js"></script>
-<script language="javascript" src="<%=request.getContextPath()%>/scripts/calendar/calendar-setup.js"></script>
-<script language="javascript">
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/main.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/verify.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-base.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/glaf-core.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/calendar/calendar.js" ></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/calendar/lang/calendar-en.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/scripts/calendar/calendar-setup.js"></script>
+<script type="text/javascript">
 
   String.prototype.trim = function() {
      return this.replace(/(^\s*)|(\s*$)/g, "");
@@ -59,15 +60,33 @@
 
  function openQtz(){
 	var url= '<%=request.getContextPath()%>/quartz.txt';
-    var x=100;
-    var y=100;
+    var x=180;
+    var y=120;
     if(is_ie) {
 	    x=document.body.scrollLeft+event.clientX-event.offsetX-100;
 	    y=document.body.scrollTop+event.clientY-event.offsetY-50;
      }
-	 var f = "height=500,width=600,status=0,toolbar=no,menubar=no,location=no,scrollbars=yes,top="+y+",left="+x+",resizable=no,dialog=yes,minimizable=no";
+	 var f = "height=580,width=780,status=0,toolbar=no,menubar=no,location=no,scrollbars=yes,top="+y+",left="+x+",resizable=no,dialog=yes,minimizable=no";
 	 if(is_ie){
          window.open(url, "Quartz参考", f);
+	 } else {
+		 window.open(url, parent, f, true);
+	 }
+ }
+
+ function openExpr2(){
+	var expression = document.getElementById("expression").value;
+    var url= '<%=request.getContextPath()%>/mx/system/scheduler/choose?elementId=expression&expression='+expression;
+    var x=180;
+    var y=120;
+    if(is_ie) {
+	    x=document.body.scrollLeft+event.clientX-event.offsetX-100;
+	    y=document.body.scrollTop+event.clientY-event.offsetY-50;
+     }
+	 var f = "height=490,width=850,status=0,toolbar=no,menubar=no,location=no,scrollbars=yes,top="+y+",left="+x+",resizable=no,dialog=yes,minimizable=no";
+	 //alert(is_ie);
+	 if(is_ie){
+         window.open(url, "Quartz表达式", f);
 	 } else {
 		 window.open(url, parent, f, true);
 	 }
@@ -137,9 +156,11 @@
 
    <tr>
 		<td width="25%" height="60">时间表达式&nbsp;</td>
-		<td height="60" ><input type="text" name="expression" size="50"
-			 class="input span3 x-text" maxlength="255"
-			value="${scheduler.expression}">
+		<td height="50" >
+		<input type="text" id="expression" name="expression" size="50"
+			   class="input span3 x-text" maxlength="255"
+			   value="${scheduler.expression}">&nbsp;
+			<img src="<%=request.getContextPath()%>/images/expr.png" onclick="javascript:openExpr2();">
 			<br />&nbsp;(可不填,可以参考<a href="#" onclick="javascript:openQtz();">quartz</a>文件)
 			<br>示例：每周一到周五凌晨5点执行一次（ 0 0 5 ? * MON-FRI  ）
 			<br>  每天早上6点、中午1点和下午5点各执行一次（ 0 0 6,13,17 * * ?  ）
@@ -220,7 +241,7 @@
 
 </html:form>
 
-<script language="javascript">
+<script type="text/javascript">
 
  Calendar.setup({
 			inputField     :    "startDate",     // id of the input field
