@@ -11,7 +11,7 @@
 <html>
 <head>
 <title>任务调度管理</title>
-<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
 <link type="text/css" rel="stylesheet" href="<%=request.getContextPath()%>/scripts/calendar/skins/aqua/theme.css"/>
 <script language="javascript" src='<%=contextPath%>/scripts/main.js'></script>
 <script language="javascript" src='<%=contextPath%>/scripts/verify.js'></script>
@@ -77,7 +77,7 @@
 <body id="document" style="padding-left:120px;padding-right:120px">
  
 <br> 
-<html:form action="${contextPath}/sys/scheduler.do?method=saveModify" method="post"  onsubmit="return verifyAll(this);">
+<html:form action="${contextPath}/mx/sys/scheduler/saveModify" method="post"  onsubmit="return verifyAll(this);">
 <input type="hidden" name="status" value="0">
 <c:if test="${not empty scheduler.id}">
 <input type="hidden" name="id" value="${scheduler.id}">

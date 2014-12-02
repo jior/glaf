@@ -11,36 +11,36 @@
 <html>
 <title>任务调度管理</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<%@ include file="/WEB-INF/views/inc/mx_header.jsp"%>
+<%@ include file="/WEB-INF/views/tm/mx_header.jsp"%>
 <script language="javascript" src='<%=contextPath%>/scripts/verify.js'></script>
 <script language="javascript" src='<%=contextPath%>/scripts/main.js'></script>
 <script language="javascript">
 
 function createScheduler() {
-    location.href="<%=request.getContextPath()%>/sys/scheduler.do?method=showModify";
+    location.href="<%=request.getContextPath()%>/mx/sys/scheduler/showModify";
 }
 
 function modifyScheduler(taskId) {
-    location.href="<%=request.getContextPath()%>/sys/scheduler.do?method=showModify&taskId="+taskId;
+    location.href="<%=request.getContextPath()%>/mx/sys/scheduler/showModify?taskId="+taskId;
 }
 
 function lockedScheduler(taskId, locked) {
 	if(locked == "1"){
 		if(confirm("锁定将无法进行任务调度，您真的要锁定吗？")) { 
-			location.href="<%=request.getContextPath()%>/sys/scheduler.do?method=locked&taskId="+taskId+"&locked="+locked;
+			location.href="<%=request.getContextPath()%>/mx/sys/scheduler/locked?taskId="+taskId+"&locked="+locked;
 		}
 	} else {
-			 location.href="<%=request.getContextPath()%>/sys/scheduler.do?method=locked&taskId="+taskId+"&locked="+locked;
+			 location.href="<%=request.getContextPath()%>/mx/sys/scheduler/locked?taskId="+taskId+"&locked="+locked;
 		}
 }
 
 function schedulerXY(taskId, startup) {
 	if(startup == "false"){
 	  if(confirm("您真的要停止任务调度吗？")) { 
-		location.href="<%=request.getContextPath()%>/sys/scheduler.do?method=startup&taskId="+taskId+"&startup=0";
+		location.href="<%=request.getContextPath()%>/mx/sys/scheduler/startup?taskId="+taskId+"&startup=0";
 	  }
 	} else {
-		location.href="<%=request.getContextPath()%>/sys/scheduler.do?method=startup&taskId="+taskId+"&startup=1";
+		location.href="<%=request.getContextPath()%>/mx/sys/scheduler/startup?taskId="+taskId+"&startup=1";
     }
 }
 
@@ -124,7 +124,7 @@ function schedulerXY(taskId, startup) {
 		<tr onmouseover="this.className='x-row-over';"
 			onmouseout="this.className='x-row-out';" class="x-content">
 			<td align="left" noWrap>&nbsp; <a
-				href="<%=request.getContextPath()%>/sys/scheduler.do?method=showModify&taskId=<c:out value="${scheduler.id}"/>">
+				href="<%=request.getContextPath()%>/mx/sys/scheduler/showModify?taskId=<c:out value="${scheduler.id}"/>">
 			<c:out value="${scheduler.taskName}" /> </a></td>
 			<td align="left" noWrap>&nbsp; <c:out value="${scheduler.title}" />
 			</td>
@@ -135,7 +135,7 @@ function schedulerXY(taskId, startup) {
 			<td align="center" noWrap>&nbsp; <b><c:out value="${title}"
 				escapeXml="false" /></b></td>
 			<td align="left" valign="center" noWrap>&nbsp; <a
-				href="<%=request.getContextPath()%>/sys/scheduler.do?method=showModify&taskId=<c:out value="${scheduler.id}"/>">
+				href="<%=request.getContextPath()%>/mx/sys/scheduler/showModify?taskId=<c:out value="${scheduler.id}"/>">
 			<img src="<%=request.getContextPath()%>/images/update.gif"
 				title="修改记录" border="0" style="cursor: hand;">修改</a>  
 			<%
