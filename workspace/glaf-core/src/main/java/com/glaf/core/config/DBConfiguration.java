@@ -221,14 +221,22 @@ public class DBConfiguration {
 		}
 		ConnectionDefinition model = dataSourceProperties.get(systemName);
 		if (model != null) {
-			JSONObject jsonObject = model.toJsonObject();
-			return ConnectionDefinitionJsonFactory.jsonToObject(jsonObject);
+			try {
+				JSONObject jsonObject = model.toJsonObject();
+				return ConnectionDefinitionJsonFactory.jsonToObject(jsonObject);
+			} catch (Exception ex) {
+				// Ignore Error
+			}
 		}
 		String text = ConfigFactory.getString(
 				DBConfiguration.class.getSimpleName(), systemName);
 		if (StringUtils.isNotEmpty(text)) {
-			JSONObject jsonObject = JSON.parseObject(text);
-			return ConnectionDefinitionJsonFactory.jsonToObject(jsonObject);
+			try {
+				JSONObject jsonObject = JSON.parseObject(text);
+				return ConnectionDefinitionJsonFactory.jsonToObject(jsonObject);
+			} catch (Exception ex) {
+				// Ignore Error
+			}
 		}
 		return null;
 	}
@@ -378,7 +386,12 @@ public class DBConfiguration {
 	}
 
 	public static Properties getDefaultDataSourceProperties() {
-		Properties props = getDataSourcePropertiesByName(Environment.DEFAULT_SYSTEM_NAME);
+		ConnectionDefinition conn = getConnectionDefinition(Environment.DEFAULT_SYSTEM_NAME);
+		Properties props = toProperties(conn);
+		if (props == null) {
+			// 如果没有默认的jdbc配置，重装配置文件。
+			reloadDS();
+		}
 		return props;
 	}
 
@@ -617,6 +630,10 @@ public class DBConfiguration {
 								.toJSONString());
 			}
 			logger.info("#datasources:" + dataSourceProperties.keySet());
+			if (!dataSourceProperties
+					.containsKey(Environment.DEFAULT_SYSTEM_NAME)) {
+				logger.warn("default jdbc properties not found!!!");
+			}
 		}
 	}
 
