@@ -177,9 +177,12 @@ public class WebResourceServlet extends HttpServlet {
 					inputStream = WebResourceServlet.class
 							.getResourceAsStream(resPath);
 				}
+
 				logger.debug("load resource:" + resPath);
 				raw = FileUtils.getBytes(inputStream);
-				WebResource.setBytes(resPath, raw);
+				if (!debugMode) {
+					WebResource.setBytes(resPath, raw);
+				}
 
 				GZIPOutputStream gzipStream = null;
 				ByteArrayOutputStream compressedContent = null;
