@@ -57,6 +57,8 @@ public class WebResourceServlet extends HttpServlet {
 
 	protected static ConcurrentMap<String, String> mimeMapping = new ConcurrentHashMap<String, String>();
 
+	protected static boolean debugMode = false;
+
 	protected boolean isGZIPSupported(HttpServletRequest req) {
 		String browserEncodings = req.getHeader("accept-encoding");
 		boolean supported = ((browserEncodings != null) && (browserEncodings
@@ -155,11 +157,13 @@ public class WebResourceServlet extends HttpServlet {
 		byte[] raw = null;
 		try {
 			output = response.getOutputStream();
-			raw = WebResource.getData(resPath);
-			if (requiredZip) {
-				raw = WebResource.getData(resPath + ".gz");
-				if (raw != null) {
-					zipFlag = true;
+			if (!debugMode) {
+				raw = WebResource.getData(resPath);
+				if (requiredZip) {
+					raw = WebResource.getData(resPath + ".gz");
+					if (raw != null) {
+						zipFlag = true;
+					}
 				}
 			}
 			if (raw == null) {
@@ -235,6 +239,10 @@ public class WebResourceServlet extends HttpServlet {
 	public void init(ServletConfig config) {
 		logger.info("--------------WebResourceServlet init----------------");
 		try {
+			if (System.getProperty("debugMode") != null) {
+				debugMode = true;
+				logger.info("---------------WebResource开启调试模式---------------");
+			}
 			MimeMappingReader reader = new MimeMappingReader();
 			Map<String, String> mapping = reader.read();
 			Set<Entry<String, String>> entrySet = mapping.entrySet();
