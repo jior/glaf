@@ -55,6 +55,8 @@ public interface Scheduler {
 
 	int getLocked();
 
+	String getMethodName();
+
 	Date getNextFireTime();
 
 	Date getPreviousFireTime();
@@ -68,6 +70,10 @@ public interface Scheduler {
 	int getRunStatus();
 
 	int getRunType();
+
+	String getSpringBeanId();
+
+	String getSpringClass();
 
 	Date getStartDate();
 
@@ -123,6 +129,8 @@ public interface Scheduler {
 
 	void setLocked(int locked);
 
+	void setMethodName(String methodName);
+
 	void setNextFireTime(Date nextFireTime);
 
 	void setPreviousFireTime(Date previousFireTime);
@@ -136,6 +144,10 @@ public interface Scheduler {
 	void setRunStatus(int runStatus);
 
 	void setRunType(int runType);
+
+	void setSpringBeanId(String springBeanId);
+
+	void setSpringClass(String springClass);
 
 	void setStartDate(Date startDate);
 

@@ -34,11 +34,15 @@ import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 
 import com.glaf.core.base.Scheduler;
+import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.service.ISysSchedulerService;
 
 public class QuartzUtils {
 	protected final static Log logger = LogFactory.getLog(QuartzUtils.class);
+
+	protected static Configuration conf = BaseConfiguration.create();
 
 	protected static volatile org.quartz.Scheduler scheduler;
 
@@ -131,6 +135,13 @@ public class QuartzUtils {
 	public static void restart(String taskId) {
 		Scheduler model = getSysSchedulerService().getSchedulerByTaskId(taskId);
 		if (model != null && model.isValid()) {
+			if (StringUtils.isEmpty(model.getJobClass())
+					&& StringUtils.isNotEmpty(model.getSpringBeanId())) {
+				logger.debug("设置SpringJob");
+				model.setJobClass(conf.get("GeneralSpringJob",
+						"com.glaf.core.job.GeneralSpringJob"));
+				logger.debug("jobClass:" + model.getJobClass());
+			}
 			logger.debug("scheduler:" + model.toJsonObject().toJSONString());
 			try {
 				if (getQuartzScheduler() != null

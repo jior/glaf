@@ -94,6 +94,15 @@ public class SchedulerEntity implements Serializable, Scheduler, JSONable {
 	@Column(name = "JOBCLASS")
 	protected String jobClass;
 
+	@Column(name = "SPRINGCLASS", length = 255)
+	protected String springClass;
+
+	@Column(name = "SPRINGBEANID", length = 100)
+	protected String springBeanId;
+
+	@Column(name = "METHODNAME", length = 100)
+	protected String methodName;
+
 	@javax.persistence.Transient
 	protected Map<String, Parameter> jobDataMap = new java.util.HashMap<String, Parameter>();
 
@@ -232,6 +241,10 @@ public class SchedulerEntity implements Serializable, Scheduler, JSONable {
 		return locked;
 	}
 
+	public String getMethodName() {
+		return methodName;
+	}
+
 	public Date getNextFireTime() {
 		return nextFireTime;
 	}
@@ -262,6 +275,14 @@ public class SchedulerEntity implements Serializable, Scheduler, JSONable {
 
 	public int getRunType() {
 		return runType;
+	}
+
+	public String getSpringBeanId() {
+		return springBeanId;
+	}
+
+	public String getSpringClass() {
+		return springClass;
 	}
 
 	public Date getStartDate() {
@@ -411,6 +432,10 @@ public class SchedulerEntity implements Serializable, Scheduler, JSONable {
 		this.locked = locked;
 	}
 
+	public void setMethodName(String methodName) {
+		this.methodName = methodName;
+	}
+
 	public void setNextFireTime(Date nextFireTime) {
 		this.nextFireTime = nextFireTime;
 	}
@@ -441,6 +466,14 @@ public class SchedulerEntity implements Serializable, Scheduler, JSONable {
 
 	public void setRunType(int runType) {
 		this.runType = runType;
+	}
+
+	public void setSpringBeanId(String springBeanId) {
+		this.springBeanId = springBeanId;
+	}
+
+	public void setSpringClass(String springClass) {
+		this.springClass = springClass;
 	}
 
 	public void setStartDate(Date startDate) {

@@ -425,6 +425,9 @@ public class MxSystemSchedulerController {
 		scheduler.setIntervalType(request.getParameter("intervalType"));
 		scheduler.setIntervalValue(request.getParameter("intervalValue"));
 		scheduler.setJobClass(request.getParameter("jobClass"));
+		scheduler.setSpringClass(request.getParameter("springClass"));
+		scheduler.setSpringBeanId(request.getParameter("springBeanId"));
+		scheduler.setMethodName(request.getParameter("methodName"));
 		scheduler.setLocked(RequestUtils.getInt(request, "locked"));
 		scheduler.setPriority(RequestUtils.getInt(request, "priority"));
 		scheduler.setRepeatCount(RequestUtils.getInt(request, "repeatCount"));
@@ -474,6 +477,9 @@ public class MxSystemSchedulerController {
 			scheduler.setIntervalValue(ParamUtils.getString(model,
 					"intervalValue"));
 			scheduler.setJobClass(ParamUtils.getString(model, "jobClass"));
+			scheduler.setSpringClass(request.getParameter("springClass"));
+			scheduler.setSpringBeanId(request.getParameter("springBeanId"));
+			scheduler.setMethodName(request.getParameter("methodName"));
 			scheduler.setLocked(ParamUtils.getInt(model, "locked"));
 			scheduler.setPriority(ParamUtils.getInt(model, "priority"));
 			scheduler.setRepeatCount(ParamUtils.getInt(model, "repeatCount"));
@@ -525,6 +531,9 @@ public class MxSystemSchedulerController {
 			scheduler.setIntervalType(request.getParameter("intervalType"));
 			scheduler.setIntervalValue(request.getParameter("intervalValue"));
 			scheduler.setJobClass(request.getParameter("jobClass"));
+			scheduler.setSpringClass(request.getParameter("springClass"));
+			scheduler.setSpringBeanId(request.getParameter("springBeanId"));
+			scheduler.setMethodName(request.getParameter("methodName"));
 			scheduler.setLocked(RequestUtils.getInt(request, "locked"));
 			scheduler.setPriority(RequestUtils.getInt(request, "priority"));
 			scheduler.setRepeatCount(RequestUtils
@@ -593,6 +602,9 @@ public class MxSystemSchedulerController {
 			scheduler.setIntervalType(request.getParameter("intervalType"));
 			scheduler.setIntervalValue(request.getParameter("intervalValue"));
 			scheduler.setJobClass(request.getParameter("jobClass"));
+			scheduler.setSpringClass(request.getParameter("springClass"));
+			scheduler.setSpringBeanId(request.getParameter("springBeanId"));
+			scheduler.setMethodName(request.getParameter("methodName"));
 			scheduler.setLocked(RequestUtils.getInt(request, "locked"));
 			scheduler.setPriority(RequestUtils.getInt(request, "priority"));
 			scheduler.setRepeatCount(RequestUtils

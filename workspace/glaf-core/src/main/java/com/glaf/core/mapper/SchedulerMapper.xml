@@ -9,6 +9,9 @@
 		<result property="taskName" column="TASKNAME" jdbcType="VARCHAR" />
 		<result property="taskType" column="TASKTYPE" jdbcType="VARCHAR" />
 		<result property="jobClass" column="JOBCLASS" jdbcType="VARCHAR" />
+		<result property="springClass" column="SPRINGCLASS" jdbcType="VARCHAR" />
+		<result property="springBeanId" column="SPRINGBEANID" jdbcType="VARCHAR" />
+		<result property="methodName" column="METHODNAME" jdbcType="VARCHAR" />
 		<result property="title" column="TITLE" jdbcType="VARCHAR" />
 		<result property="content" column="CONTENT" jdbcType="VARCHAR" />
 		<result property="startDate" column="STARTDATE" jdbcType="TIMESTAMP" />
@@ -51,6 +54,15 @@
 			</if>
 			<if test="jobClass != null">
 				,JOBCLASS
+			</if>
+			<if test="springClass != null">
+				,SPRINGCLASS
+			</if>
+			<if test="springBeanId != null">
+				,SPRINGBEANID
+			</if>
+			<if test="methodName != null">
+				,METHODNAME
 			</if>
 			<if test="title != null">
 				,TITLE
@@ -138,6 +150,15 @@
 			<if test="jobClass != null">
 				,#{jobClass, jdbcType=VARCHAR}
 			</if>
+			<if test="springClass != null">
+				,#{springClass, jdbcType=VARCHAR}
+			</if>
+			<if test="springBeanId != null">
+				,#{springBeanId, jdbcType=VARCHAR}
+			</if>
+			<if test="methodName != null">
+				,#{methodName, jdbcType=VARCHAR}
+			</if>
 			<if test="title != null">
 				,#{title, jdbcType=VARCHAR}
 			</if>
@@ -221,11 +242,17 @@
 			<if test="taskName != null">
 				TASKNAME = #{taskName, jdbcType=VARCHAR},
 			</if>
-			<if test="taskType != null">
-				TASKTYPE = #{taskType, jdbcType=VARCHAR},
-			</if>
 			<if test="jobClass != null">
 				JOBCLASS = #{jobClass, jdbcType=VARCHAR},
+			</if>
+			<if test="springClass != null">
+				SPRINGCLASS = #{springClass, jdbcType=VARCHAR},
+			</if>
+			<if test="springBeanId != null">
+				SPRINGBEANID = #{springBeanId, jdbcType=VARCHAR},
+			</if>
+			<if test="methodName != null">
+				METHODNAME = #{methodName, jdbcType=VARCHAR},
 			</if>
 			<if test="title != null">
 				TITLE = #{title, jdbcType=VARCHAR},

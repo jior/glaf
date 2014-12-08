@@ -76,6 +76,30 @@ public class UserOnlineServiceImpl implements UserOnlineService {
 	/**
 	 * 删除超时的在线用户
 	 * 
+	 */
+	@Transactional
+	public void deleteTimeoutUsers() {
+		int timeoutSeconds = 300;
+		UserOnlineQuery query = new UserOnlineQuery();
+		List<UserOnline> list = this.list(query);
+		if (list != null && !list.isEmpty()) {
+			for (UserOnline bean : list) {
+				if (bean.getCheckDateMs() != null) {
+					long ts = System.currentTimeMillis()
+							- bean.getCheckDateMs();
+					if (ts / 1000 > timeoutSeconds) {// 如果超时，从在线用户列表中删除
+						userOnlineMapper.deleteUserOnlineById(bean.getId());
+						userOnlineLogService.logout(bean.getActorId(),
+								bean.getSessionId());
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * 删除超时的在线用户
+	 * 
 	 * @param timeoutSeconds
 	 */
 	@Transactional
@@ -85,7 +109,8 @@ public class UserOnlineServiceImpl implements UserOnlineService {
 		if (list != null && !list.isEmpty()) {
 			for (UserOnline bean : list) {
 				if (bean.getCheckDateMs() != null) {
-					long ts = System.currentTimeMillis() - bean.getCheckDateMs();
+					long ts = System.currentTimeMillis()
+							- bean.getCheckDateMs();
 					if (ts / 1000 > timeoutSeconds) {// 如果超时，从在线用户列表中删除
 						userOnlineMapper.deleteUserOnlineById(bean.getId());
 						userOnlineLogService.logout(bean.getActorId(),
@@ -159,6 +184,20 @@ public class UserOnlineServiceImpl implements UserOnlineService {
 	}
 
 	/**
+	 * 退出系统
+	 * 
+	 * @param actorId
+	 */
+	@Transactional
+	public void logout(String actorId) {
+		UserOnline userOnline = this.getUserOnline(actorId);
+		if (userOnline != null) {
+			this.deleteById(userOnline.getId());
+			userOnlineLogService.logout(actorId, userOnline.getSessionId());
+		}
+	}
+
+	/**
 	 * 持续在线用户
 	 * 
 	 * @param actorId
@@ -170,20 +209,6 @@ public class UserOnlineServiceImpl implements UserOnlineService {
 			userOnline.setCheckDateMs(System.currentTimeMillis());
 			userOnline.setCheckDate(new Date(userOnline.getCheckDateMs()));
 			userOnlineMapper.updateUserOnlineCheckDate(userOnline);
-		}
-	}
-
-	/**
-	 * 退出系统
-	 * 
-	 * @param actorId
-	 */
-	@Transactional
-	public void logout(String actorId) {
-		UserOnline userOnline = this.getUserOnline(actorId);
-		if (userOnline != null) {
-			this.deleteById(userOnline.getId());
-			userOnlineLogService.logout(actorId, userOnline.getSessionId());
 		}
 	}
 
@@ -213,14 +238,14 @@ public class UserOnlineServiceImpl implements UserOnlineService {
 	}
 
 	@javax.annotation.Resource
-	public void setUserOnlineMapper(UserOnlineMapper userOnlineMapper) {
-		this.userOnlineMapper = userOnlineMapper;
-	}
-
-	@javax.annotation.Resource
 	public void setUserOnlineLogService(
 			UserOnlineLogService userOnlineLogService) {
 		this.userOnlineLogService = userOnlineLogService;
+	}
+
+	@javax.annotation.Resource
+	public void setUserOnlineMapper(UserOnlineMapper userOnlineMapper) {
+		this.userOnlineMapper = userOnlineMapper;
 	}
 
 }

@@ -92,6 +92,17 @@
 	 }
  }
 
+    function changeXDiv(state){
+		if(state=='J'){
+			jQuery("#jobDiv").show();
+			jQuery("#springDiv").hide();
+		}
+		if(state=='S'){
+			jQuery("#jobDiv").hide();
+			jQuery("#springDiv").show();
+		}
+	}
+
 </script>
 <body id="document" style="padding-left:120px;padding-right:120px">
  
@@ -101,6 +112,7 @@
 <c:if test="${not empty scheduler.id}">
 <input type="hidden" name="id" value="${scheduler.id}">
 </c:if>
+<input type="hidden" name="taskType" value="${taskType}">
 
 <div class="x_content_title"><img
 	src="<%=request.getContextPath()%>/images/window.png"
@@ -134,9 +146,14 @@
 	</tr>
 
 	<tr>
-		<td width="25%" height="24">任务类名&nbsp;</td>
-		<td height="24">
+		<td width="25%" height="140">任务类名&nbsp;</td>
+		<td height="140" >
+		    <input name="type" type="radio" value="J" onclick="javascript:changeXDiv('J');" <c:if test="${!empty scheduler.jobClass}">checked</c:if>>Job类
+			<input name="type" type="radio" value="S" onclick="javascript:changeXDiv('S');" >Spring Bean
+			<div id="jobDiv" <c:if test="${empty scheduler.jobClass}">style="display:none;"</c:if>>
+			<br>
 			<select id="jobClass" name="jobClass" nullable="no" chname="任务类名">
+              <option value="">----请选择----</option>
 			<%
 			  JobProperties.reload();
 			  Properties props =  JobProperties.getProperties();
@@ -151,6 +168,30 @@
 			<script type="text/javascript">
 			    document.getElementById("jobClass").value="${scheduler.jobClass}";
 			</script>
+			</div>
+			<div id="springDiv" style="display:none;">
+			  <table width="99%">
+			  <tr>
+				<td width="20%" height="30">Spring组件类名</td>
+				<td><input type="text" id="springClass" name="springClass" size="50"
+			   class="input span3 x-text" maxlength="255"
+			   value="${scheduler.springClass}"></td>
+			  </tr>
+			  <tr>
+				<td  width="20%" height="30">Spring组件BeanId</td>
+				<td><input type="text" id="springBeanId" name="springBeanId" size="50"
+			   class="input span3 x-text" maxlength="255"
+			   value="${scheduler.springBeanId}"></td>
+			  </tr>
+			  <tr>
+				<td  width="20%" height="30">方法名</td>
+				<td><input type="text" id="methodName" name="methodName" size="50"
+			   class="input span3 x-text" maxlength="255"
+			   value="${scheduler.methodName}"></td>
+			  </tr>
+			  </table>
+			  
+			</div>
 		</td>
 	</tr>
 

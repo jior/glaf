@@ -156,7 +156,7 @@
 	function updateRow(){
         var rows = jQuery('#mydatagrid').datagrid('getSelections');
 		if(rows.length ==1){
-		    var taskId = rows[0].taskId;
+		   var taskId = rows[0].taskId;
 		   location.href ='<%=request.getContextPath()%>/mx/system/scheduler/edit?taskType=${taskType}&id='+taskId;
 		} else {
 		    alert("请选择其中一条记录。");

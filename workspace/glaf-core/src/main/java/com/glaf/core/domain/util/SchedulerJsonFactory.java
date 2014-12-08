@@ -52,6 +52,15 @@ public class SchedulerJsonFactory {
 		if (jsonObject.containsKey("jobClass")) {
 			model.setJobClass(jsonObject.getString("jobClass"));
 		}
+		if (jsonObject.containsKey("springClass")) {
+			model.setSpringClass(jsonObject.getString("springClass"));
+		}
+		if (jsonObject.containsKey("springBeanId")) {
+			model.setSpringBeanId(jsonObject.getString("springBeanId"));
+		}
+		if (jsonObject.containsKey("methodName")) {
+			model.setMethodName(jsonObject.getString("methodName"));
+		}
 		if (jsonObject.containsKey("title")) {
 			model.setTitle(jsonObject.getString("title"));
 		}
@@ -146,7 +155,7 @@ public class SchedulerJsonFactory {
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
 		jsonObject.put("taskId", model.getId());
-		
+
 		if (model.getTaskName() != null) {
 			jsonObject.put("taskName", model.getTaskName());
 		}
@@ -155,6 +164,15 @@ public class SchedulerJsonFactory {
 		}
 		if (model.getJobClass() != null) {
 			jsonObject.put("jobClass", model.getJobClass());
+		}
+		if (model.getSpringClass() != null) {
+			jsonObject.put("springClass", model.getSpringClass());
+		}
+		if (model.getSpringBeanId() != null) {
+			jsonObject.put("springBeanId", model.getSpringBeanId());
+		}
+		if (model.getMethodName() != null) {
+			jsonObject.put("methodName", model.getMethodName());
 		}
 		if (model.getTitle() != null) {
 			jsonObject.put("title", model.getTitle());
@@ -242,7 +260,7 @@ public class SchedulerJsonFactory {
 		jsonObject.put("_id_", model.getId());
 		jsonObject.put("_oid_", model.getId());
 		jsonObject.put("taskId", model.getId());
-		
+
 		if (model.getTaskName() != null) {
 			jsonObject.put("taskName", model.getTaskName());
 		}
@@ -251,6 +269,15 @@ public class SchedulerJsonFactory {
 		}
 		if (model.getJobClass() != null) {
 			jsonObject.put("jobClass", model.getJobClass());
+		}
+		if (model.getSpringClass() != null) {
+			jsonObject.put("springClass", model.getSpringClass());
+		}
+		if (model.getSpringBeanId() != null) {
+			jsonObject.put("springBeanId", model.getSpringBeanId());
+		}
+		if (model.getMethodName() != null) {
+			jsonObject.put("methodName", model.getMethodName());
 		}
 		if (model.getTitle() != null) {
 			jsonObject.put("title", model.getTitle());

@@ -593,6 +593,9 @@ public class Configuration implements Iterable<Map.Entry<String, String>> {
 	 */
 	public String get(String name, String defaultValue) {
 		String result = substituteVars(getProps().getProperty(name));
+		if (result == null) {
+			result = defaultValue;
+		}
 		return result;
 	}
 
