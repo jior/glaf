@@ -40,11 +40,14 @@ public class GeneralSpringJob extends BaseJob {
 
 		Scheduler scheduler = sysSchedulerService.getSchedulerByTaskId(taskId);
 		if (scheduler != null) {
+			logger.debug(scheduler.toJsonObject().toJSONString());
 			if (StringUtils.isNotEmpty(scheduler.getSpringClass())
 					&& StringUtils.isNotEmpty(scheduler.getSpringBeanId())
 					&& StringUtils.isNotEmpty(scheduler.getMethodName())) {
 				Object object = ContextFactory.getBean(scheduler
 						.getSpringBeanId());
+				logger.info(object + " call method:"
+						+ scheduler.getMethodName());
 				ReflectUtils.invoke(object, scheduler.getMethodName());
 			}
 		}

@@ -40,6 +40,7 @@ import com.glaf.core.mapper.SchedulerMapper;
 import com.glaf.core.mapper.SchedulerParamMapper;
 import com.glaf.core.query.SchedulerQuery;
 import com.glaf.core.service.ISysSchedulerService;
+import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.UUID32;
 
 @Service("sysSchedulerService")
@@ -180,6 +181,9 @@ public class MxSysSchedulerServiceImpl implements ISysSchedulerService {
 			}
 			if (model.getStartDate() == null) {
 				model.setStartDate(new Date());
+			}
+			if (model.getEndDate() == null) {
+				model.setEndDate(DateUtils.toDate("2099-12-31"));
 			}
 			if (model.getRepeatInterval() <= 0) {
 				model.setRepeatInterval(3600);

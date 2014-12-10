@@ -200,6 +200,7 @@ public class MxSystemSchedulerController {
 									.isSystemAdministrator())) {
 						// QuartzUtils.stop(scheduler.getId());
 						scheduler.setLocked(0);
+						//scheduler.setAutoStartup(1);
 						sysSchedulerService.save(scheduler);
 					}
 				}
@@ -214,6 +215,7 @@ public class MxSystemSchedulerController {
 							.isSystemAdministrator())) {
 				// QuartzUtils.stop(scheduler.getId());
 				scheduler.setLocked(0);
+				//scheduler.setAutoStartup(1);
 				sysSchedulerService.save(scheduler);
 				return ResponseUtils.responseResult(true);
 			}
@@ -380,7 +382,7 @@ public class MxSystemSchedulerController {
 							&& (StringUtils.equals(scheduler.getCreateBy(),
 									loginContext.getActorId()) || loginContext
 									.isSystemAdministrator())) {
-						QuartzUtils.restart(scheduler.getId());
+						QuartzUtils.runJob(scheduler.getId());
 						logger.info("正在运行任务“" + scheduler.getTaskName() + "”");
 						try {
 							Thread.sleep(1000);
@@ -397,7 +399,7 @@ public class MxSystemSchedulerController {
 					&& (StringUtils.equals(scheduler.getCreateBy(),
 							loginContext.getActorId()) || loginContext
 							.isSystemAdministrator())) {
-				QuartzUtils.restart(scheduler.getId());
+				QuartzUtils.runJob(scheduler.getId());
 				logger.info("正在运行任务“" + scheduler.getTaskName() + "”");
 				return ResponseUtils.responseResult(true);
 			}

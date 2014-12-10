@@ -13,6 +13,7 @@
 
 package com.glaf.core.util;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -309,6 +310,104 @@ public class QuartzUtils {
 							}
 						}
 
+					}
+				}
+			} catch (org.quartz.SchedulerException ex) {
+				logger.error(ex);
+				ex.printStackTrace();
+				throw new RuntimeException(ex);
+			} catch (Exception ex) {
+				logger.error(ex);
+				ex.printStackTrace();
+				throw new RuntimeException(ex);
+			}
+		}
+	}
+
+	/**
+	 * 立即执行调度任务
+	 * 
+	 * @param taskId
+	 */
+	@SuppressWarnings("unchecked")
+	public static void runJob(String taskId) {
+		Scheduler model = getSysSchedulerService().getSchedulerByTaskId(taskId);
+		if (model != null && model.isValid()) {
+			if (StringUtils.isEmpty(model.getJobClass())
+					&& StringUtils.isNotEmpty(model.getSpringBeanId())) {
+				logger.debug("设置SpringJob");
+				model.setJobClass(conf.get("GeneralSpringJob",
+						"com.glaf.core.job.GeneralSpringJob"));
+				logger.debug("jobClass:" + model.getJobClass());
+			}
+			logger.debug("scheduler:" + model.toJsonObject().toJSONString());
+			try {
+				if (getQuartzScheduler() != null
+						&& StringUtils.isNotEmpty(model.getJobClass())) {
+					JobDataMap jobDataMap = new JobDataMap();
+					jobDataMap.put("taskId", taskId);
+
+					Class<?> clazz = ClassUtils.loadClass(model.getJobClass());
+
+					Class<Job> jobClass = (Class<Job>) clazz;
+
+					String jobName = "JOB2_" + model.getId();
+					String jobGroup = "MX_JOB_GROUP2";
+					String triggerName = "TRIGGER2_" + model.getId();
+					String triggerGroup = "MX_TRIGGER_GROUP2";
+
+					JobKey jobKey = JobKey.jobKey(jobName, jobGroup);
+					TriggerKey triggerKey = TriggerKey.triggerKey(triggerName,
+							triggerGroup);
+
+					JobDetail jobDetail = JobBuilder.newJob(jobClass)
+							.withIdentity(jobKey).usingJobData(jobDataMap)
+							.build();
+
+					Trigger trigger = null;
+
+					logger.debug("------------jobKey----------- " + jobKey);
+
+					trigger = getQuartzScheduler().getTrigger(triggerKey);
+					if (trigger == null) {
+						logger.info("------------create new SimpleTrigger----------- ");
+						trigger = TriggerBuilder
+								.newTrigger()
+								.startAt(new Date())
+								.endAt(new Date(
+										System.currentTimeMillis() + 60000))
+								.forJob(jobKey)
+								.withIdentity(triggerKey)
+								.withSchedule(
+										SimpleScheduleBuilder.simpleSchedule()
+												.withIntervalInSeconds(1000)
+												.withRepeatCount(1)).build();
+
+						getQuartzScheduler().scheduleJob(jobDetail, trigger);
+						logger.info(model.getTaskName() + " has scheduled.");
+					} else {
+						if (trigger instanceof SimpleTrigger) {
+							logger.info("------------update SimpleTrigger----------- ");
+							SimpleTrigger simpleTrigger = (SimpleTrigger) trigger;
+							simpleTrigger = simpleTrigger
+									.getTriggerBuilder()
+									.startAt(new Date())
+									.endAt(new Date(
+											System.currentTimeMillis() + 60000))
+									.forJob(jobKey)
+									.withIdentity(triggerKey)
+									.withSchedule(
+											SimpleScheduleBuilder
+													.simpleSchedule()
+													.withIntervalInSeconds(1000)
+													.withRepeatCount(1))
+									.build();
+
+							getQuartzScheduler().rescheduleJob(triggerKey,
+									simpleTrigger);
+							logger.info(model.getTaskName()
+									+ " has rescheduled.");
+						}
 					}
 				}
 			} catch (org.quartz.SchedulerException ex) {
