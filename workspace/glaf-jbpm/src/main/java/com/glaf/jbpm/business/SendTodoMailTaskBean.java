@@ -161,9 +161,9 @@ public class SendTodoMailTaskBean {
 					Collection<TodoTotal> values = todoTotalMap.values();
 					if (!values.isEmpty()) {
 						for (TodoTotal t : values) {
-							if (t.getTotalQty() > 0) {
+							if (null !=t.getRowIds() && t.getRowIds().size() > 0) {
 								Todo todo = t.getTodo();
-								todo.setTotalQty(t.getTotalQty());
+								todo.setTotalQty(t.getRowIds().size());
 								userTasks.add(todo);
 							}
 						}
