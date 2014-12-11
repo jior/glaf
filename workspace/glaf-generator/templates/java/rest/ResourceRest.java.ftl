@@ -47,7 +47,7 @@ public class ${entityName}Resource {
 	@POST
 	@Path("/deleteAll")
 	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	@Produces({ MediaType.APPLICATION_JSON })
 	public byte[] deleteAll(@Context HttpServletRequest request)
 			throws IOException {
 		String rowIds = request.getParameter("${idField.name}s");
@@ -75,7 +75,7 @@ public class ${entityName}Resource {
 	@POST
 	@Path("/delete")
 	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	@Produces({ MediaType.APPLICATION_JSON })
 	public byte[] deleteById(@Context HttpServletRequest request) throws IOException {
 		<#if idField.type=='Integer' >
                 ${modelName}Service.deleteById(RequestUtils.getInt(request, "${idField.name}"));
@@ -180,7 +180,7 @@ public class ${entityName}Resource {
 	@POST
 	@Path("/list")
 	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	@Produces({ MediaType.APPLICATION_JSON })
 	public byte[] list(@Context HttpServletRequest request) throws IOException {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		${entityName}Query query = new ${entityName}Query();
@@ -257,7 +257,7 @@ public class ${entityName}Resource {
 	@POST
 	@Path("/save${entityName}")
 	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	@Produces({ MediaType.APPLICATION_JSON })
 	public byte[] save${entityName}(@Context HttpServletRequest request) {
 	        Map<String, Object> params = RequestUtils.getParameterMap(request);
 		${entityName} ${modelName} = new ${entityName}();
@@ -298,7 +298,7 @@ public class ${entityName}Resource {
 	@POST
 	@Path("/view")
 	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	@Produces({ MediaType.APPLICATION_JSON })
 	public byte[] view(@Context HttpServletRequest request) throws IOException {
 		${entityName} ${modelName} = null;
 		if (StringUtils.isNotEmpty(request.getParameter("${idField.name}"))) {
