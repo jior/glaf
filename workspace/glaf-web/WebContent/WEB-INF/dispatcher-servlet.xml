@@ -14,8 +14,7 @@
 
 	<mvc:annotation-driven conversion-service="conversionService"/>
 
-	<bean id="conversionService"  class="org.springframework.format.support.FormattingConversionServiceFactoryBean">        
-	</bean>
+	<bean id="conversionService"  class="org.springframework.format.support.FormattingConversionServiceFactoryBean"/>
 
 
 	<!--权限拦截器 -->

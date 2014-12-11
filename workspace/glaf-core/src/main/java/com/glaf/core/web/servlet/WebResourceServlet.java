@@ -214,13 +214,14 @@ public class WebResourceServlet extends HttpServlet {
 				response.addHeader("Content-Encoding", "gzip");
 			}
 
-			response.setStatus(HttpServletResponse.SC_OK);
-			response.setContentType(contentType);
-			response.setContentLength(raw.length);
-			output.write(raw);
-			output.flush();
-			IOUtils.closeStream(output);
-
+			if (raw != null) {
+				response.setStatus(HttpServletResponse.SC_OK);
+				response.setContentType(contentType);
+				response.setContentLength(raw.length);
+				output.write(raw);
+				output.flush();
+				IOUtils.closeStream(output);
+			}
 		} catch (IOException ex) {
 			// ex.printStackTrace();
 		} finally {
