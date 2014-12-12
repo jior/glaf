@@ -374,10 +374,8 @@ public class MxBlobServiceImpl implements IBlobService {
 
 		if (StringUtils.equals(DBUtils.POSTGRESQL,
 				DBConnectionFactory.getDatabaseType())) {
-			blobItem.setPath(null);
 			blobItemMapper.insertBlobItem_postgres(blobItem);
 		} else {
-			blobItem.setPath(null);
 			blobItemMapper.insertBlobItem(blobItem);
 		}
 

@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 public class BlobItemQuery extends DataQuery {
-	private static final long serialVersionUID = 1L; 
+	private static final long serialVersionUID = 1L;
 	protected String contentType;
 	protected Date createDateGreaterThanOrEqual;
 	protected Date createDateLessThanOrEqual;
@@ -32,6 +32,8 @@ public class BlobItemQuery extends DataQuery {
 	protected String filenameLike;
 	protected Long lastModifiedGreaterThanOrEqual;
 	protected Long lastModifiedLessThanOrEqual;
+	protected String path;
+	protected String pathLike;
 	protected String name;
 	protected String nameLike;
 	protected List<String> names;
@@ -45,8 +47,6 @@ public class BlobItemQuery extends DataQuery {
 	public BlobItemQuery() {
 
 	}
-
-	 
 
 	public BlobItemQuery contentType(String contentType) {
 		if (contentType == null) {
@@ -106,8 +106,6 @@ public class BlobItemQuery extends DataQuery {
 		return this;
 	}
 
-	 
-
 	public String getContentType() {
 		return contentType;
 	}
@@ -162,6 +160,19 @@ public class BlobItemQuery extends DataQuery {
 
 	public List<String> getObjectValues() {
 		return objectValues;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public String getPathLike() {
+		if (pathLike != null && pathLike.trim().length() > 0) {
+			if (!pathLike.endsWith("%")) {
+				pathLike = pathLike + "%";
+			}
+		}
+		return pathLike;
 	}
 
 	public Long getSize() {
@@ -238,6 +249,22 @@ public class BlobItemQuery extends DataQuery {
 		return this;
 	}
 
+	public BlobItemQuery path(String path) {
+		if (path == null) {
+			throw new RuntimeException("path is null");
+		}
+		this.path = path;
+		return this;
+	}
+
+	public BlobItemQuery pathLike(String pathLike) {
+		if (pathLike == null) {
+			throw new RuntimeException("pathLike is null");
+		}
+		this.pathLike = pathLike;
+		return this;
+	}
+
 	public void setBusinessKeys(List<String> businessKeys) {
 		this.businessKeys = businessKeys;
 	}
@@ -298,6 +325,14 @@ public class BlobItemQuery extends DataQuery {
 
 	public void setObjectValues(List<String> objectValues) {
 		this.objectValues = objectValues;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public void setPathLike(String pathLike) {
+		this.pathLike = pathLike;
 	}
 
 	public void setSize(Long size) {

@@ -132,6 +132,14 @@ public interface IBlobService {
 	InputStream getInputStreamById(String id);
 
 	/**
+	 * 通过文件编号获取字节流
+	 * 
+	 * @param fileId
+	 * @return
+	 */
+	byte[] getBytesByFileId(String fileId);
+
+	/**
 	 * 根据参数获取最大数据(不包含字节流)
 	 * 
 	 * @param paramMap
@@ -166,9 +174,12 @@ public interface IBlobService {
 	/**
 	 * 将记录标记为正式
 	 * 
-	 * @param createBy 创建者
-	 * @param serviceKey 服务标识
-	 * @param businessKey 业务标识
+	 * @param createBy
+	 *            创建者
+	 * @param serviceKey
+	 *            服务标识
+	 * @param businessKey
+	 *            业务标识
 	 */
 	@Transactional
 	void makeMark(String createBy, String serviceKey, String businessKey);
