@@ -120,6 +120,7 @@ public class ${entityName}DomainFactory {
 
 
     	public static void processDataRequest(DataRequest dataRequest) {
+	    if (dataRequest != null) {
 		if (dataRequest.getFilter() != null) {
 			if (dataRequest.getFilter().getField() != null) {
 				dataRequest.getFilter().setColumn(
@@ -145,6 +146,7 @@ public class ${entityName}DomainFactory {
 				}
 			}
 		}
+	    }
 	}
 
     private ${entityName}DomainFactory() {
