@@ -174,8 +174,15 @@
 		resultMap="sysDataTableResultMap">
 		select * from SYS_DATA_TABLE where ID_ = #{id}
 	</select>
-	
-	
+
+
+	<select id="getSysDataTableByServiceKey" parameterType="string"
+		resultMap="sysDataTableResultMap">
+		select * from SYS_DATA_TABLE where SERVICEKEY_ =
+		#{serviceKey}
+	</select>
+
+
 	<select id="getSysDataTableByTable" parameterType="string"
 		resultMap="sysDataTableResultMap">
 		select * from SYS_DATA_TABLE where TABLENAME_ = #{table}

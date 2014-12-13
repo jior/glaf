@@ -75,6 +75,13 @@ public interface ISysDataTableService {
 	SysDataTable getDataTableByServiceKey(String serviceKey);
 
 	/**
+	 * 根据tableName获取一条记录
+	 * 
+	 * @return
+	 */
+	SysDataTable getDataTableByTable(String tableName);
+
+	/**
 	 * 根据查询参数获取记录总数
 	 * 
 	 * @return

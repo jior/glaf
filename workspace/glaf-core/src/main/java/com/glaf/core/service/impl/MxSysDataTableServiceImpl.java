@@ -112,12 +112,18 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 	 * @return
 	 */
 	public SysDataTable getDataTableByServiceKey(String serviceKey) {
-		SysDataTableQuery query = new SysDataTableQuery();
-		query.serviceKey(serviceKey);
-		SysDataTable sysDataTable = null;
-		List<SysDataTable> list = sysDataTableMapper.getSysDataTables(query);
-		if (list != null && !list.isEmpty()) {
-			sysDataTable = list.get(0);
+		return sysDataTableMapper.getSysDataTableByServiceKey(serviceKey);
+	}
+
+	/**
+	 * 根据tableName获取一条记录
+	 * 
+	 * @return
+	 */
+	public SysDataTable getDataTableByTable(String tableName) {
+		SysDataTable sysDataTable = sysDataTableMapper
+				.getSysDataTableByTable(tableName);
+		if (sysDataTable != null) {
 			List<SysDataField> fields = sysDataFieldMapper
 					.getSysDataFieldsByTablename(sysDataTable.getTablename());
 			sysDataTable.setFields(fields);
@@ -154,8 +160,8 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 		int total = tableDataMapper.getTableCountByConditions(tableModel);
 		if (total > 0) {
 			result.put("total", total);
-			SysDataTable dataTable = this.getDataTableByServiceKey(query
-					.getServiceKey());
+			SysDataTable dataTable = this.getDataTableByTable(query
+					.getTablename());
 			Map<String, SysDataField> fieldMap = new HashMap<String, SysDataField>();
 			if (dataTable != null && dataTable.getFields() != null) {
 				List<SysDataField> fields = dataTable.getFields();
@@ -166,6 +172,7 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 					}
 				}
 			}
+			//logger.debug("fieldMap:" + fieldMap);
 			List<Map<String, Object>> list = tableDataMapper
 					.getTableDataByConditions(tableModel);
 			if (list != null && !list.isEmpty()) {

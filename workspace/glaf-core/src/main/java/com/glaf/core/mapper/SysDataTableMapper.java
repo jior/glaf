@@ -33,6 +33,8 @@ public interface SysDataTableMapper {
 	SysDataTable getSysDataTableById(String id);
 	
 	SysDataTable getSysDataTableByTable(String table);
+	
+	SysDataTable getSysDataTableByServiceKey(String serviceKey);
 
 	int getSysDataTableCount(SysDataTableQuery query);
 
