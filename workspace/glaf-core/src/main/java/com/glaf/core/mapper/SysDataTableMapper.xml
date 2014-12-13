@@ -174,6 +174,12 @@
 		resultMap="sysDataTableResultMap">
 		select * from SYS_DATA_TABLE where ID_ = #{id}
 	</select>
+	
+	
+	<select id="getSysDataTableByTable" parameterType="string"
+		resultMap="sysDataTableResultMap">
+		select * from SYS_DATA_TABLE where TABLENAME_ = #{table}
+	</select>
 
 
 	<select id="getSysDataTables" parameterType="com.glaf.core.query.SysDataTableQuery"

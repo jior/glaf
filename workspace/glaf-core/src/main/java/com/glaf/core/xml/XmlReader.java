@@ -24,11 +24,137 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import com.glaf.core.domain.ColumnDefinition;
+import com.glaf.core.domain.SysDataField;
+import com.glaf.core.domain.SysDataTable;
 import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.util.FieldType;
 import com.glaf.core.util.Tools;
 
 public class XmlReader {
+
+	public SysDataTable getSysDataTable(java.io.InputStream inputStream) {
+		SysDataTable dataTable = new SysDataTable();
+		SAXReader xmlReader = new SAXReader();
+		try {
+			Document doc = xmlReader.read(inputStream);
+			Element root = doc.getRootElement();
+			Element element = root.element("entity");
+			if (element != null) {
+				dataTable.setServiceKey(element.attributeValue("name"));
+				dataTable.setTablename(element.attributeValue("table"));
+				dataTable.setTitle(element.attributeValue("title"));
+
+				Element idElement = element.element("id");
+				if (idElement != null) {
+					SysDataField idField = new SysDataField();
+
+					List<?> attrs = idElement.attributes();
+					if (attrs != null && !attrs.isEmpty()) {
+						Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
+						Iterator<?> iter = attrs.iterator();
+						while (iter.hasNext()) {
+							Attribute attr = (Attribute) iter.next();
+							dataMap.put(attr.getName(), attr.getStringValue());
+						}
+						Tools.populate(idField, dataMap);
+					}
+
+					idField.setPrimaryKey("Y");
+					idField.setName(idElement.attributeValue("name"));
+					idField.setColumnName(idElement.attributeValue("column"));
+					idField.setTitle(idElement.attributeValue("title"));
+					idField.setDataType(idElement.attributeValue("type"));
+					dataTable.addField(idField);
+				}
+
+				List<?> props = element.elements("property");
+				if (props != null && props.size() > 0) {
+					Iterator<?> iterator = props.iterator();
+					while (iterator.hasNext()) {
+						Element elem = (Element) iterator.next();
+						SysDataField field = new SysDataField();
+
+						List<?> attrs = elem.attributes();
+						if (attrs != null && !attrs.isEmpty()) {
+							Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
+							Iterator<?> iter = attrs.iterator();
+							while (iter.hasNext()) {
+								Attribute attr = (Attribute) iter.next();
+								dataMap.put(attr.getName(),
+										attr.getStringValue());
+							}
+							Tools.populate(field, dataMap);
+						}
+
+						field.setName(elem.attributeValue("name"));
+						field.setColumnName(elem.attributeValue("column"));
+						field.setTitle(elem.attributeValue("title"));
+						field.setDataType(elem.attributeValue("type"));
+						dataTable.addField(field);
+					}
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		}
+		return dataTable;
+	}
+
+	protected void read(Element elem, ColumnDefinition field) {
+		List<?> attrs = elem.attributes();
+		if (attrs != null && !attrs.isEmpty()) {
+			Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
+			Iterator<?> iter = attrs.iterator();
+			while (iter.hasNext()) {
+				Attribute attr = (Attribute) iter.next();
+				dataMap.put(attr.getName(), attr.getStringValue());
+			}
+			Tools.populate(field, dataMap);
+		}
+
+		field.setName(elem.attributeValue("name"));
+		field.setMask(elem.attributeValue("mask"));
+		field.setTitle(elem.attributeValue("title"));
+		field.setEnglishTitle(elem.attributeValue("englishTitle"));
+		field.setType(elem.attributeValue("type"));
+		field.setDataCode(elem.attributeValue("dataCode"));
+		field.setRenderType(elem.attributeValue("renderType"));
+		field.setColumnName(elem.attributeValue("column"));
+		field.setDataType(FieldType.getFieldType(field.getType()));
+		String length = elem.attributeValue("length");
+		if (StringUtils.isNumeric(length)) {
+			field.setLength(Integer.valueOf(length));
+		}
+		String maxLength = elem.attributeValue("maxLength");
+		if (StringUtils.isNumeric(maxLength)) {
+			field.setMaxLength(Integer.valueOf(maxLength));
+		}
+		String minLength = elem.attributeValue("minLength");
+		if (StringUtils.isNumeric(minLength)) {
+			field.setMinLength(Integer.valueOf(minLength));
+		}
+		String displayType = elem.attributeValue("displayType");
+		if (StringUtils.isNumeric(displayType)) {
+			field.setDisplayType(Integer.valueOf(displayType));
+		}
+		String sortNo = elem.attributeValue("sortNo");
+		if (StringUtils.isNumeric(sortNo)) {
+			field.setSortNo(Integer.valueOf(sortNo));
+		}
+		if (StringUtils.equals(elem.attributeValue("updatable"), "false")) {
+			field.setUpdatable(false);
+		}
+		if (StringUtils.equals(elem.attributeValue("nullable"), "false")) {
+			field.setNullable(false);
+		}
+		if (StringUtils.equals(elem.attributeValue("editable"), "true")) {
+			field.setEditable(true);
+		}
+		if (StringUtils.equals(elem.attributeValue("searchable"), "true")) {
+			field.setSearchable(true);
+		}
+	}
 
 	public TableDefinition read(java.io.InputStream inputStream) {
 		TableDefinition tableDefinition = new TableDefinition();
@@ -105,60 +231,5 @@ public class XmlReader {
 		}
 
 		return tableDefinition;
-	}
-
-	protected void read(Element elem, ColumnDefinition field) {
-		List<?> attrs = elem.attributes();
-		if (attrs != null && !attrs.isEmpty()) {
-			Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
-			Iterator<?> iter = attrs.iterator();
-			while (iter.hasNext()) {
-				Attribute attr = (Attribute) iter.next();
-				dataMap.put(attr.getName(), attr.getStringValue());
-			}
-			Tools.populate(field, dataMap);
-		}
-
-		field.setName(elem.attributeValue("name"));
-		field.setMask(elem.attributeValue("mask"));
-		field.setTitle(elem.attributeValue("title"));
-		field.setEnglishTitle(elem.attributeValue("englishTitle"));
-		field.setType(elem.attributeValue("type"));
-		field.setDataCode(elem.attributeValue("dataCode"));
-		field.setRenderType(elem.attributeValue("renderType"));
-		field.setColumnName(elem.attributeValue("column"));
-		field.setDataType(FieldType.getFieldType(field.getType()));
-		String length = elem.attributeValue("length");
-		if (StringUtils.isNumeric(length)) {
-			field.setLength(Integer.valueOf(length));
-		}
-		String maxLength = elem.attributeValue("maxLength");
-		if (StringUtils.isNumeric(maxLength)) {
-			field.setMaxLength(Integer.valueOf(maxLength));
-		}
-		String minLength = elem.attributeValue("minLength");
-		if (StringUtils.isNumeric(minLength)) {
-			field.setMinLength(Integer.valueOf(minLength));
-		}
-		String displayType = elem.attributeValue("displayType");
-		if (StringUtils.isNumeric(displayType)) {
-			field.setDisplayType(Integer.valueOf(displayType));
-		}
-		String sortNo = elem.attributeValue("sortNo");
-		if (StringUtils.isNumeric(sortNo)) {
-			field.setSortNo(Integer.valueOf(sortNo));
-		}
-		if (StringUtils.equals(elem.attributeValue("updatable"), "false")) {
-			field.setUpdatable(false);
-		}
-		if (StringUtils.equals(elem.attributeValue("nullable"), "false")) {
-			field.setNullable(false);
-		}
-		if (StringUtils.equals(elem.attributeValue("editable"), "true")) {
-			field.setEditable(true);
-		}
-		if (StringUtils.equals(elem.attributeValue("searchable"), "true")) {
-			field.setSearchable(true);
-		}
 	}
 }

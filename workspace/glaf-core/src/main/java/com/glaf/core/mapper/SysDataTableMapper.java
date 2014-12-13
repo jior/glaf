@@ -31,6 +31,8 @@ public interface SysDataTableMapper {
 	void deleteSysDataTableById(String id);
 
 	SysDataTable getSysDataTableById(String id);
+	
+	SysDataTable getSysDataTableByTable(String table);
 
 	int getSysDataTableCount(SysDataTableQuery query);
 

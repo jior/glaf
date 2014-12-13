@@ -40,6 +40,7 @@ import com.glaf.core.domain.*;
 import com.glaf.core.query.*;
 import com.glaf.core.service.ISysDataTableService;
 import com.glaf.core.util.ParamUtils;
+import com.glaf.core.util.UUID32;
 
 @Service("sysDataTableService")
 @Transactional(readOnly = true)
@@ -350,37 +351,22 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 	@Transactional
 	public void saveDataField(SysDataField dataField) {
 		String id = dataField.getTablename() + "_" + dataField.getColumnName();
-		if (StringUtils.isEmpty(dataField.getId())) {
+		SysDataField model = this.getDataFieldById(id);
+		if (model == null) {
 			dataField.setId(id);
 			dataField.setCreateTime(new Date());
 			sysDataFieldMapper.insertSysDataField(dataField);
 		} else {
-			if (this.getSysDataField(id) == null) {
-				dataField.setCreateTime(new Date());
-				sysDataFieldMapper.insertSysDataField(dataField);
-			} else {
-				sysDataFieldMapper.updateSysDataField(dataField);
-			}
+			dataField.setId(id);
+			dataField.setUpdateTime(new Date());
+			sysDataFieldMapper.updateSysDataField(dataField);
 		}
 	}
 
 	@Transactional
 	public void saveDataFields(List<SysDataField> fields) {
 		for (SysDataField dataField : fields) {
-			String id = dataField.getTablename() + "_"
-					+ dataField.getColumnName();
-			if (StringUtils.isEmpty(dataField.getId())) {
-				dataField.setId(id);
-				dataField.setCreateTime(new Date());
-				sysDataFieldMapper.insertSysDataField(dataField);
-			} else {
-				if (this.getSysDataField(id) == null) {
-					dataField.setCreateTime(new Date());
-					sysDataFieldMapper.insertSysDataField(dataField);
-				} else {
-					sysDataFieldMapper.updateSysDataField(dataField);
-				}
-			}
+			this.saveDataField(dataField);
 		}
 	}
 
@@ -535,14 +521,20 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 
 	@Transactional
 	public void saveDataTable(SysDataTable dataTable) {
-		if (StringUtils.isEmpty(dataTable.getId())) {
-			dataTable.setId(idGenerator.getNextId());
+		SysDataTable model = sysDataTableMapper
+				.getSysDataTableByTable(dataTable.getTablename());
+		if (model == null) {
+			dataTable.setId(UUID32.getUUID());
+			dataTable.setCreateTime(new Date());
 			sysDataTableMapper.insertSysDataTable(dataTable);
 		} else {
+			dataTable.setId(model.getId());
+			dataTable.setUpdateTime(new Date());
 			sysDataTableMapper.updateSysDataTable(dataTable);
 		}
 		if (dataTable.getFields() != null && !dataTable.getFields().isEmpty()) {
 			for (SysDataField field : dataTable.getFields()) {
+				field.setTablename(dataTable.getTablename());
 				this.saveDataField(field);
 			}
 		}
