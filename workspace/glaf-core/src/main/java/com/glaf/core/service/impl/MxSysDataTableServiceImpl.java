@@ -351,14 +351,17 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 	@Transactional
 	public void saveDataField(SysDataField dataField) {
 		String id = dataField.getTablename() + "_" + dataField.getColumnName();
+		id = id.toLowerCase();
 		SysDataField model = this.getDataFieldById(id);
 		if (model == null) {
 			dataField.setId(id);
 			dataField.setCreateTime(new Date());
+			dataField.setColumnName(dataField.getColumnName().toUpperCase());
 			sysDataFieldMapper.insertSysDataField(dataField);
 		} else {
 			dataField.setId(id);
 			dataField.setUpdateTime(new Date());
+			dataField.setColumnName(dataField.getColumnName().toUpperCase());
 			sysDataFieldMapper.updateSysDataField(dataField);
 		}
 	}
@@ -526,15 +529,17 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 		if (model == null) {
 			dataTable.setId(UUID32.getUUID());
 			dataTable.setCreateTime(new Date());
+			dataTable.setTablename(dataTable.getTablename().toLowerCase());
 			sysDataTableMapper.insertSysDataTable(dataTable);
 		} else {
 			dataTable.setId(model.getId());
 			dataTable.setUpdateTime(new Date());
+			dataTable.setTablename(dataTable.getTablename().toLowerCase());
 			sysDataTableMapper.updateSysDataTable(dataTable);
 		}
 		if (dataTable.getFields() != null && !dataTable.getFields().isEmpty()) {
 			for (SysDataField field : dataTable.getFields()) {
-				field.setTablename(dataTable.getTablename());
+				field.setTablename(dataTable.getTablename().toLowerCase());
 				this.saveDataField(field);
 			}
 		}
