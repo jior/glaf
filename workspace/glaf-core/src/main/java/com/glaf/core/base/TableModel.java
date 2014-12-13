@@ -124,6 +124,8 @@ public class TableModel implements java.io.Serializable {
 	 */
 	protected String title;
 
+	protected DataRequest dataRequest;
+
 	public TableModel() {
 
 	}
@@ -230,6 +232,10 @@ public class TableModel implements java.io.Serializable {
 
 	public List<ColumnModel> getColumns() {
 		return columns;
+	}
+
+	public DataRequest getDataRequest() {
+		return dataRequest;
 	}
 
 	public String getEnglishTitle() {
@@ -340,6 +346,10 @@ public class TableModel implements java.io.Serializable {
 
 	public void setColumns(List<ColumnModel> columns) {
 		this.columns = columns;
+	}
+
+	public void setDataRequest(DataRequest dataRequest) {
+		this.dataRequest = dataRequest;
 	}
 
 	public void setEnglishTitle(String englishTitle) {
