@@ -22,6 +22,7 @@ import java.util.*;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.domain.*;
 import com.glaf.core.query.*;
 
@@ -87,6 +88,16 @@ public interface ISysDataTableService {
 	 */
 	List<SysDataTable> getDataTablesByQueryCriteria(int start, int pageSize,
 			SysDataTableQuery query);
+
+	/**
+	 * 获取一页数据
+	 * 
+	 * @param start
+	 * @param pageSize
+	 * @param query
+	 * @return
+	 */
+	JSONObject getPageTableData(int start, int pageSize, SysDataTableQuery query);
 
 	/**
 	 * 根据查询参数获取记录列表

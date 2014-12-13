@@ -241,14 +241,6 @@
 				and E.CREATEBY_ = #{createBy}
 			</if>
 
-			<if test="createBys != null and createBys.size != 0">
-				and E.CREATEBY_ IN
-				<foreach item="x_createBy" index="index" collection="createBys"
-					open="(" separator="," close=")">
-					#{x_createBy}
-				</foreach>
-			</if>
-
 			<if test="createTimeGreaterThanOrEqual != null">
 				and E.CREATETIME_ &gt;= #{createTimeGreaterThanOrEqual}
 			</if>

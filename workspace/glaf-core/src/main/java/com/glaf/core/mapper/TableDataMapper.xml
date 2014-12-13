@@ -387,7 +387,7 @@
 					</choose>
 				</foreach>
 			</when>
-			<when test=" dataRequest != null and dataRequest.filter != null">
+			<when test=" dataRequest != null ">
 				<include refid="com.glaf.global.GlobalMapper.dataRequestFilterCondition" />
 			</when>
 			<otherwise>
@@ -444,7 +444,7 @@
 					</choose>
 				</foreach>
 			</when>
-			<when test=" dataRequest != null and dataRequest.filter != null">
+			<when test=" dataRequest != null ">
 				<include refid="com.glaf.global.GlobalMapper.dataRequestFilterCondition" />
 			</when>
 			<otherwise>

@@ -29,6 +29,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.id.*;
 import com.glaf.core.base.ColumnModel;
 import com.glaf.core.base.TableModel;
@@ -132,6 +134,63 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 		List<SysDataTable> rows = sqlSessionTemplate.selectList(
 				"getSysDataTables", query, rowBounds);
 		return rows;
+	}
+
+	/**
+	 * 获取一页数据
+	 * 
+	 * @param start
+	 * @param pageSize
+	 * @param query
+	 * @return
+	 */
+	public JSONObject getPageTableData(int start, int pageSize,
+			SysDataTableQuery query) {
+		JSONObject result = new JSONObject();
+		TableModel tableModel = new TableModel();
+		tableModel.setTableName(query.getTablename());
+		tableModel.setDataRequest(query.getDataRequest());
+		int total = tableDataMapper.getTableCountByConditions(tableModel);
+		if (total > 0) {
+			result.put("total", total);
+			SysDataTable dataTable = this.getDataTableByServiceKey(query
+					.getServiceKey());
+			Map<String, SysDataField> fieldMap = new HashMap<String, SysDataField>();
+			if (dataTable != null && dataTable.getFields() != null) {
+				List<SysDataField> fields = dataTable.getFields();
+				for (SysDataField field : fields) {
+					if (field.getName() != null) {
+						fieldMap.put(field.getColumnName(), field);
+						fieldMap.put(field.getColumnName().toLowerCase(), field);
+					}
+				}
+			}
+			List<Map<String, Object>> list = tableDataMapper
+					.getTableDataByConditions(tableModel);
+			if (list != null && !list.isEmpty()) {
+				JSONArray array = new JSONArray();
+				for (Map<String, Object> rowMap : list) {
+					JSONObject json = new JSONObject();
+					Set<Entry<String, Object>> entrySet = rowMap.entrySet();
+					for (Entry<String, Object> entry : entrySet) {
+						String key = entry.getKey();
+						Object value = entry.getValue();
+						if (value != null) {
+							if (fieldMap.get(key.toLowerCase()) != null) {
+								SysDataField field = fieldMap.get(key
+										.toLowerCase());
+								json.put(field.getName(), value);
+							} else {
+								json.put(key.toLowerCase(), value);
+							}
+						}
+					}
+					array.add(json);
+				}
+				result.put("rows", array);
+			}
+		}
+		return result;
 	}
 
 	public SysDataField getSysDataField(String id) {
