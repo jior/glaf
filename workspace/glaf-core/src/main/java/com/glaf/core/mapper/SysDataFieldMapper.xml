@@ -40,6 +40,8 @@
 		<result property="ordinal" column="ORDINAL_" jdbcType="INTEGER" />
 		<result property="createTime" column="CREATETIME_" jdbcType="TIMESTAMP" />
 		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="updateTime" column="UPDATETIME_" jdbcType="TIMESTAMP" />
+		<result property="updateBy" column="UPDATEBY_" jdbcType="VARCHAR" />
 	</resultMap>
 
 
@@ -143,6 +145,12 @@
 			<if test="createBy != null">
 				,CREATEBY_
 			</if>
+			<if test="updateTime != null">
+				,UPDATETIME_
+			</if>
+			<if test="updateBy != null">
+				,UPDATEBY_
+			</if>
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
@@ -244,6 +252,12 @@
 			<if test="createBy != null">
 				,#{createBy, jdbcType=VARCHAR}
 			</if>
+			<if test="updateTime != null">
+				,#{updateTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
 		</trim>
 	</insert>
 
@@ -330,6 +344,12 @@
 			<if test="ordinal != null">
 				ORDINAL_ = #{ordinal, jdbcType=INTEGER},
 			</if>
+			<if test="updateTime != null">
+				UPDATETIME_ = #{updateTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				UPDATEBY_ = #{updateBy, jdbcType=VARCHAR},
+			</if>
 		</trim>
 		where
 		ID_ = #{id, jdbcType=VARCHAR}
@@ -377,7 +397,7 @@
 				order by ${orderBy}
 			</when>
 			<otherwise>
-				order by E.ID_ desc
+				order by E.COLUMNNAME_ asc
 			</otherwise>
 		</choose>
 	</select>

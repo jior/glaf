@@ -138,6 +138,12 @@ public class SysDataFieldJsonFactory {
 		if (jsonObject.containsKey("createBy")) {
 			model.setCreateBy(jsonObject.getString("createBy"));
 		}
+		if (jsonObject.containsKey("updateTime")) {
+			model.setUpdateTime(jsonObject.getDate("updateTime"));
+		}
+		if (jsonObject.containsKey("updateBy")) {
+			model.setUpdateBy(jsonObject.getString("updateBy"));
+		}
 
 		return model;
 	}
@@ -249,6 +255,17 @@ public class SysDataFieldJsonFactory {
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());
 		}
+		if (model.getUpdateTime() != null) {
+			jsonObject.put("updateTime",
+					DateUtils.getDate(model.getUpdateTime()));
+			jsonObject.put("updateTime_date",
+					DateUtils.getDate(model.getUpdateTime()));
+			jsonObject.put("updateTime_datetime",
+					DateUtils.getDateTime(model.getUpdateTime()));
+		}
+		if (model.getUpdateBy() != null) {
+			jsonObject.put("updateBy", model.getUpdateBy());
+		}
 		return jsonObject;
 	}
 
@@ -347,6 +364,17 @@ public class SysDataFieldJsonFactory {
 		}
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());
+		}
+		if (model.getUpdateTime() != null) {
+			jsonObject.put("updateTime",
+					DateUtils.getDate(model.getUpdateTime()));
+			jsonObject.put("updateTime_date",
+					DateUtils.getDate(model.getUpdateTime()));
+			jsonObject.put("updateTime_datetime",
+					DateUtils.getDateTime(model.getUpdateTime()));
+		}
+		if (model.getUpdateBy() != null) {
+			jsonObject.put("updateBy", model.getUpdateBy());
 		}
 		return jsonObject;
 	}

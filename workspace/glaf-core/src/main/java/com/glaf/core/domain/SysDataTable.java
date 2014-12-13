@@ -51,7 +51,8 @@ public class SysDataTable implements Serializable, JSONable {
 	protected String title;
 
 	/**
-	 * 0-系统表 1-扩展表
+	 * 0-系统表<br/>
+	 * 1-扩展表
 	 */
 	@Column(name = "TYPE_")
 	protected Integer type;
@@ -62,18 +63,28 @@ public class SysDataTable implements Serializable, JSONable {
 	@Column(name = "MAXSYS_")
 	protected Integer maxSys;
 
-	@Column(name = "ACTORID_", length = 50)
-	protected String actorId;
+	@Column(name = "CREATEBY_", length = 50)
+	protected String createBy;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATETIME_")
 	protected Date createTime;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "UPDATETIME_")
+	protected Date updateTime;
+
+	@Column(name = "UPDATEBY_", length = 50)
+	protected String updateBy;
 
 	@Column(name = "CONTENT_", length = 250)
 	protected String content;
 
 	@Column(name = "ISSUBTABLE_", length = 1)
 	protected String isSubTable;
+
+	@Column(name = "DELETEFLAG_")
+	protected int deleteFlag;
 
 	@javax.persistence.Transient
 	protected List<SysDataField> fields = new ArrayList<SysDataField>();
@@ -106,16 +117,20 @@ public class SysDataTable implements Serializable, JSONable {
 		return true;
 	}
 
-	public String getActorId() {
-		return this.actorId;
-	}
-
 	public String getContent() {
 		return this.content;
 	}
 
+	public String getCreateBy() {
+		return createBy;
+	}
+
 	public Date getCreateTime() {
 		return this.createTime;
+	}
+
+	public int getDeleteFlag() {
+		return deleteFlag;
 	}
 
 	public List<SysDataField> getFields() {
@@ -154,6 +169,14 @@ public class SysDataTable implements Serializable, JSONable {
 		return this.type;
 	}
 
+	public String getUpdateBy() {
+		return updateBy;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -166,16 +189,20 @@ public class SysDataTable implements Serializable, JSONable {
 		return SysDataTableJsonFactory.jsonToObject(jsonObject);
 	}
 
-	public void setActorId(String actorId) {
-		this.actorId = actorId;
-	}
-
 	public void setContent(String content) {
 		this.content = content;
 	}
 
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public void setDeleteFlag(int deleteFlag) {
+		this.deleteFlag = deleteFlag;
 	}
 
 	public void setFields(List<SysDataField> fields) {
@@ -212,6 +239,14 @@ public class SysDataTable implements Serializable, JSONable {
 
 	public void setType(Integer type) {
 		this.type = type;
+	}
+
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 
 	public JSONObject toJsonObject() {

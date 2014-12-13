@@ -29,20 +29,35 @@ import com.glaf.core.query.*;
 public interface ISysDataTableService {
 
 	/**
-	 * 根据主键删除记录
+	 * 删除字段信息
 	 * 
-	 * @return
+	 * @param id
 	 */
 	@Transactional
-	void deleteById(String id);
+	void deleteDataField(String id);
 
 	/**
-	 * 根据主键删除多条记录
+	 * 根据主键获取一条记录
 	 * 
 	 * @return
 	 */
-	@Transactional
-	void deleteByIds(List<String> ids);
+	SysDataField getDataField(String id);
+
+	/**
+	 * 根据查询参数获取记录总数
+	 * 
+	 * @param tableName
+	 * @return
+	 */
+	int getDataFieldCountByTable(String tableName);
+
+	/**
+	 * 根据查询参数获取一页的数据
+	 * 
+	 * @param tableName
+	 * @return
+	 */
+	List<SysDataField> getDataFieldsByTable(String tableName);
 
 	/**
 	 * 根据主键获取一条记录

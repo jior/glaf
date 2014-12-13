@@ -12,10 +12,13 @@
 		<result property="type" column="TYPE_" jdbcType="INTEGER" />
 		<result property="maxUser" column="MAXUSER_" jdbcType="INTEGER" />
 		<result property="maxSys" column="MAXSYS_" jdbcType="INTEGER" />
-		<result property="actorId" column="ACTORID_" jdbcType="VARCHAR" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
 		<result property="createTime" column="CREATETIME_" jdbcType="TIMESTAMP" />
+		<result property="updateTime" column="UPDATETIME_" jdbcType="TIMESTAMP" />
+		<result property="updateBy" column="UPDATEBY_" jdbcType="VARCHAR" />
 		<result property="content" column="CONTENT_" jdbcType="VARCHAR" />
 		<result property="isSubTable" column="ISSUBTABLE_" jdbcType="VARCHAR" />
+		<result property="deleteFlag" column="DELETEFLAG_" jdbcType="INTEGER" />
 	</resultMap>
 
 
@@ -41,17 +44,26 @@
 			<if test="maxSys != null">
 				,MAXSYS_
 			</if>
-			<if test="actorId != null">
-				,ACTORID_
+			<if test="createBy != null">
+				,CREATEBY_
 			</if>
 			<if test="createTime != null">
 				,CREATETIME_
+			</if>
+			<if test="updateTime != null">
+				,UPDATETIME_
+			</if>
+			<if test="updateBy != null">
+				,UPDATEBY_
 			</if>
 			<if test="content != null">
 				,CONTENT_
 			</if>
 			<if test="isSubTable != null">
 				,ISSUBTABLE_
+			</if>
+			<if test="deleteFlag != null">
+				,DELETEFLAG_
 			</if>
 		</trim>
 
@@ -76,17 +88,26 @@
 			<if test="maxSys != null">
 				,#{maxSys, jdbcType=INTEGER}
 			</if>
-			<if test="actorId != null">
-				,#{actorId, jdbcType=VARCHAR}
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
 			</if>
 			<if test="createTime != null">
 				,#{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateTime != null">
+				,#{updateTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
 			</if>
 			<if test="content != null">
 				,#{content, jdbcType=VARCHAR}
 			</if>
 			<if test="isSubTable != null">
 				,#{isSubTable, jdbcType=VARCHAR}
+			</if>
+			<if test="deleteFlag != null">
+				,#{deleteFlag, jdbcType=INTEGER}
 			</if>
 		</trim>
 	</insert>
@@ -113,6 +134,15 @@
 			</if>
 			<if test="isSubTable != null">
 				ISSUBTABLE_ = #{isSubTable, jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				UPDATETIME_ = #{updateTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				UPDATEBY_ = #{updateBy, jdbcType=VARCHAR},
+			</if>
+			<if test="deleteFlag != null">
+				DELETEFLAG_ = #{deleteFlag, jdbcType=INTEGER},
 			</if>
 		</trim>
 		where
@@ -207,15 +237,15 @@
 				</foreach>
 			</if>
 
-			<if test="actorId != null and actorId != '' ">
-				and E.ACTORID_ = #{actorId}
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
 			</if>
 
-			<if test="actorIds != null and actorIds.size != 0">
-				and E.ACTORID_ IN
-				<foreach item="x_actorId" index="index" collection="actorIds"
+			<if test="createBys != null and createBys.size != 0">
+				and E.CREATEBY_ IN
+				<foreach item="x_createBy" index="index" collection="createBys"
 					open="(" separator="," close=")">
-					#{x_actorId}
+					#{x_createBy}
 				</foreach>
 			</if>
 
@@ -233,6 +263,10 @@
 
 			<if test="isSubTable != null and isSubTable != '' ">
 				and E.ISSUBTABLE_ = #{isSubTable}
+			</if>
+
+			<if test="deleteFlag != null">
+				and E.DELETEFLAG_ = #{deleteFlag}
 			</if>
 
 		</where>

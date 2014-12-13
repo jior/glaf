@@ -50,17 +50,26 @@ public class SysDataTableJsonFactory {
 		if (jsonObject.containsKey("maxSys")) {
 			model.setMaxSys(jsonObject.getInteger("maxSys"));
 		}
-		if (jsonObject.containsKey("actorId")) {
-			model.setActorId(jsonObject.getString("actorId"));
+		if (jsonObject.containsKey("createBy")) {
+			model.setCreateBy(jsonObject.getString("createBy"));
 		}
 		if (jsonObject.containsKey("createTime")) {
 			model.setCreateTime(jsonObject.getDate("createTime"));
+		}
+		if (jsonObject.containsKey("updateTime")) {
+			model.setUpdateTime(jsonObject.getDate("updateTime"));
+		}
+		if (jsonObject.containsKey("updateBy")) {
+			model.setUpdateBy(jsonObject.getString("updateBy"));
 		}
 		if (jsonObject.containsKey("content")) {
 			model.setContent(jsonObject.getString("content"));
 		}
 		if (jsonObject.containsKey("isSubTable")) {
 			model.setIsSubTable(jsonObject.getString("isSubTable"));
+		}
+		if (jsonObject.containsKey("deleteFlag")) {
+			model.setDeleteFlag(jsonObject.getInteger("deleteFlag"));
 		}
 
 		return model;
@@ -83,8 +92,8 @@ public class SysDataTableJsonFactory {
 		jsonObject.put("type", model.getType());
 		jsonObject.put("maxUser", model.getMaxUser());
 		jsonObject.put("maxSys", model.getMaxSys());
-		if (model.getActorId() != null) {
-			jsonObject.put("actorId", model.getActorId());
+		if (model.getCreateBy() != null) {
+			jsonObject.put("createBy", model.getCreateBy());
 		}
 		if (model.getCreateTime() != null) {
 			jsonObject.put("createTime",
@@ -94,12 +103,24 @@ public class SysDataTableJsonFactory {
 			jsonObject.put("createTime_datetime",
 					DateUtils.getDateTime(model.getCreateTime()));
 		}
+		if (model.getUpdateTime() != null) {
+			jsonObject.put("updateTime",
+					DateUtils.getDate(model.getUpdateTime()));
+			jsonObject.put("updateTime_date",
+					DateUtils.getDate(model.getUpdateTime()));
+			jsonObject.put("updateTime_datetime",
+					DateUtils.getDateTime(model.getUpdateTime()));
+		}
+		if (model.getUpdateBy() != null) {
+			jsonObject.put("updateBy", model.getUpdateBy());
+		}
 		if (model.getContent() != null) {
 			jsonObject.put("content", model.getContent());
 		}
 		if (model.getIsSubTable() != null) {
 			jsonObject.put("isSubTable", model.getIsSubTable());
 		}
+		jsonObject.put("deleteFlag", model.getDeleteFlag());
 		return jsonObject;
 	}
 
@@ -120,8 +141,8 @@ public class SysDataTableJsonFactory {
 		jsonObject.put("type", model.getType());
 		jsonObject.put("maxUser", model.getMaxUser());
 		jsonObject.put("maxSys", model.getMaxSys());
-		if (model.getActorId() != null) {
-			jsonObject.put("actorId", model.getActorId());
+		if (model.getCreateBy() != null) {
+			jsonObject.put("createBy", model.getCreateBy());
 		}
 		if (model.getCreateTime() != null) {
 			jsonObject.put("createTime",
@@ -131,12 +152,24 @@ public class SysDataTableJsonFactory {
 			jsonObject.put("createTime_datetime",
 					DateUtils.getDateTime(model.getCreateTime()));
 		}
+		if (model.getUpdateTime() != null) {
+			jsonObject.put("updateTime",
+					DateUtils.getDate(model.getUpdateTime()));
+			jsonObject.put("updateTime_date",
+					DateUtils.getDate(model.getUpdateTime()));
+			jsonObject.put("updateTime_datetime",
+					DateUtils.getDateTime(model.getUpdateTime()));
+		}
+		if (model.getUpdateBy() != null) {
+			jsonObject.put("updateBy", model.getUpdateBy());
+		}
 		if (model.getContent() != null) {
 			jsonObject.put("content", model.getContent());
 		}
 		if (model.getIsSubTable() != null) {
 			jsonObject.put("isSubTable", model.getIsSubTable());
 		}
+		jsonObject.put("deleteFlag", model.getDeleteFlag());
 		return jsonObject;
 	}
 

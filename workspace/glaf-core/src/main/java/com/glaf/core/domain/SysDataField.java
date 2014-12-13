@@ -55,7 +55,7 @@ public class SysDataField implements Serializable, JSONable {
 	@Column(name = "FRMTYPE_", length = 50)
 	protected String frmType;
 
-	@Column(name = "DATATYPE_", length = 20)
+	@Column(name = "DATATYPE_", length = 50)
 	protected String dataType;
 
 	@Column(name = "LENGTH_")
@@ -133,6 +133,13 @@ public class SysDataField implements Serializable, JSONable {
 
 	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "UPDATETIME_")
+	protected Date updateTime;
+
+	@Column(name = "UPDATEBY_", length = 50)
+	protected String updateBy;
 
 	public SysDataField() {
 
@@ -273,6 +280,14 @@ public class SysDataField implements Serializable, JSONable {
 
 	public String getUpdatable() {
 		return this.updatable;
+	}
+
+	public String getUpdateBy() {
+		return updateBy;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
 	}
 
 	public String getValidType() {
@@ -417,6 +432,14 @@ public class SysDataField implements Serializable, JSONable {
 
 	public void setUpdatable(String updatable) {
 		this.updatable = updatable;
+	}
+
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 
 	public void setValidType(String validType) {

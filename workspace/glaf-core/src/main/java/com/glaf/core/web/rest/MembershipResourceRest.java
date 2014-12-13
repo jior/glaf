@@ -181,7 +181,7 @@ public class MembershipResourceRest {
 			membership.setModifyDate(new Date());
 			membership.setType(request.getParameter("type"));
 			membership.setObjectValue(request.getParameter("objectValue"));
-			membership.setRoleId(RequestUtils.getLong(request,"roleId"));
+			membership.setRoleId(RequestUtils.getLong(request, "roleId"));
 
 			this.membershipService.save(membership);
 

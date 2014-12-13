@@ -64,20 +64,30 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 		return sysDataTableMapper.getSysDataTableCount(query);
 	}
 
+	/**
+	 * 删除字段信息
+	 * 
+	 * @param id
+	 */
 	@Transactional
-	public void deleteById(String id) {
-		if (id != null) {
-			sysDataTableMapper.deleteSysDataTableById(id);
-		}
+	public void deleteDataField(String id) {
+		sysDataFieldMapper.deleteSysDataFieldById(id);
 	}
 
-	@Transactional
-	public void deleteByIds(List<String> ids) {
-		if (ids != null && !ids.isEmpty()) {
-			for (String id : ids) {
-				sysDataTableMapper.deleteSysDataTableById(id);
-			}
-		}
+	public SysDataField getDataField(String id) {
+		return sysDataFieldMapper.getSysDataFieldById(id);
+	}
+
+	public int getDataFieldCountByTable(String tableName) {
+		SysDataFieldQuery query = new SysDataFieldQuery();
+		query.setTablename(tableName);
+		return sysDataFieldMapper.getSysDataFieldCount(query);
+	}
+
+	public List<SysDataField> getDataFieldsByTable(String tableName) {
+		SysDataFieldQuery query = new SysDataFieldQuery();
+		query.setTablename(tableName);
+		return sysDataFieldMapper.getSysDataFields(query);
 	}
 
 	public SysDataTable getDataTable(String id) {
