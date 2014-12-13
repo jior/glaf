@@ -294,7 +294,7 @@ public class SysDataTableResource {
 	public byte[] view(@Context HttpServletRequest request) throws IOException {
 		SysDataTable sysDataTable = null;
 		if (StringUtils.isNotEmpty(request.getParameter("id"))) {
-			sysDataTable = sysDataTableService.getDataTable(request
+			sysDataTable = sysDataTableService.getDataTableById(request
 					.getParameter("id"));
 		}
 		JSONObject result = new JSONObject();
@@ -302,7 +302,7 @@ public class SysDataTableResource {
 			result = sysDataTable.toJsonObject();
 			Map<String, User> userMap = IdentityFactory.getUserMap();
 			result.put("id", sysDataTable.getId());
-			result.put("sysDataTableId", sysDataTable.getId());
+			result.put("datatableId", sysDataTable.getId());
 			if (userMap.get(sysDataTable.getCreateBy()) != null) {
 				result.put("createByName",
 						userMap.get(sysDataTable.getCreateBy()).getName());

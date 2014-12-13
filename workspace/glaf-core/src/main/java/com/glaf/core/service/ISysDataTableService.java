@@ -34,37 +34,37 @@ public interface ISysDataTableService {
 	 * @param id
 	 */
 	@Transactional
-	void deleteDataField(String id);
+	void deleteDataFieldById(String id);
 
 	/**
 	 * 根据主键获取一条记录
 	 * 
 	 * @return
 	 */
-	SysDataField getDataField(String id);
+	SysDataField getDataFieldById(String id);
 
 	/**
 	 * 根据查询参数获取记录总数
 	 * 
-	 * @param tableName
+	 * @param serviceKey
 	 * @return
 	 */
-	int getDataFieldCountByTable(String tableName);
+	int getDataFieldCountByServiceKey(String serviceKey);
 
 	/**
 	 * 根据查询参数获取一页的数据
 	 * 
-	 * @param tableName
+	 * @param serviceKey
 	 * @return
 	 */
-	List<SysDataField> getDataFieldsByTable(String tableName);
+	List<SysDataField> getDataFieldsByServiceKey(String serviceKey);
 
 	/**
 	 * 根据主键获取一条记录
 	 * 
 	 * @return
 	 */
-	SysDataTable getDataTable(String id);
+	SysDataTable getDataTableById(String id);
 
 	/**
 	 * 根据服务ID获取一条记录

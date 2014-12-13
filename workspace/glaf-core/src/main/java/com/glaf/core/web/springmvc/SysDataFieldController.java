@@ -71,26 +71,26 @@ public class SysDataFieldController {
 				String x = token.nextToken();
 				if (StringUtils.isNotEmpty(x)) {
 					SysDataField sysDataField = sysDataTableService
-							.getDataField(String.valueOf(x));
+							.getDataFieldById(String.valueOf(x));
 
 					if (sysDataField != null
 							&& (StringUtils.equals(sysDataField.getCreateBy(),
 									loginContext.getActorId()) || loginContext
 									.isSystemAdministrator())) {
-
+						sysDataTableService.deleteDataFieldById(x);
 					}
 				}
 			}
 			return ResponseUtils.responseResult(true);
 		} else if (id != null) {
-			SysDataField sysDataField = sysDataTableService.getDataField(String
-					.valueOf(id));
+			SysDataField sysDataField = sysDataTableService
+					.getDataFieldById(String.valueOf(id));
 
 			if (sysDataField != null
 					&& (StringUtils.equals(sysDataField.getCreateBy(),
 							loginContext.getActorId()) || loginContext
 							.isSystemAdministrator())) {
-
+				sysDataTableService.deleteDataFieldById(id);
 				return ResponseUtils.responseResult(true);
 			}
 		}
@@ -100,8 +100,8 @@ public class SysDataFieldController {
 	@RequestMapping("/edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		SysDataField sysDataField = sysDataTableService.getDataField(request
-				.getParameter("id"));
+		SysDataField sysDataField = sysDataTableService
+				.getDataFieldById(request.getParameter("id"));
 		if (sysDataField != null) {
 			request.setAttribute("sysDataField", sysDataField);
 		}
@@ -123,9 +123,10 @@ public class SysDataFieldController {
 	@ResponseBody
 	public byte[] json(HttpServletRequest request, ModelMap modelMap)
 			throws IOException {
-		String tableName = request.getParameter("tableName");
+		String serviceKey = request.getParameter("serviceKey");
 		JSONObject result = new JSONObject();
-		int total = sysDataTableService.getDataFieldCountByTable(tableName);
+		int total = sysDataTableService
+				.getDataFieldCountByServiceKey(serviceKey);
 		if (total > 0) {
 			result.put("total", total);
 			result.put("totalCount", total);
@@ -137,7 +138,7 @@ public class SysDataFieldController {
 
 			Map<String, User> userMap = IdentityFactory.getUserMap();
 			List<SysDataField> list = sysDataTableService
-					.getDataFieldsByTable(tableName);
+					.getDataFieldsByServiceKey(serviceKey);
 
 			if (list != null && !list.isEmpty()) {
 				JSONArray rowsJSON = new JSONArray();
@@ -222,7 +223,8 @@ public class SysDataFieldController {
 			@RequestBody DataRequest dataRequest) throws IOException {
 		String tableName = request.getParameter("tableName");
 		JSONObject result = new JSONObject();
-		int total = sysDataTableService.getDataFieldCountByTable(tableName);
+		int total = sysDataTableService
+				.getDataFieldCountByServiceKey(tableName);
 		if (total > 0) {
 			result.put("total", total);
 			result.put("totalCount", total);
@@ -234,7 +236,7 @@ public class SysDataFieldController {
 
 			Map<String, User> userMap = IdentityFactory.getUserMap();
 			List<SysDataField> list = sysDataTableService
-					.getDataFieldsByTable(tableName);
+					.getDataFieldsByServiceKey(tableName);
 
 			if (list != null && !list.isEmpty()) {
 				JSONArray rowsJSON = new JSONArray();
@@ -442,8 +444,8 @@ public class SysDataFieldController {
 		params.remove("status");
 		params.remove("wfStatus");
 
-		SysDataField sysDataField = sysDataTableService.getDataField(request
-				.getParameter("id"));
+		SysDataField sysDataField = sysDataTableService
+				.getDataFieldById(request.getParameter("id"));
 
 		Tools.populate(sysDataField, params);
 
@@ -488,8 +490,8 @@ public class SysDataFieldController {
 	@RequestMapping("/view")
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		SysDataField sysDataField = sysDataTableService.getDataField(request
-				.getParameter("id"));
+		SysDataField sysDataField = sysDataTableService
+				.getDataFieldById(request.getParameter("id"));
 		request.setAttribute("sysDataField", sysDataField);
 
 		String view = request.getParameter("view");

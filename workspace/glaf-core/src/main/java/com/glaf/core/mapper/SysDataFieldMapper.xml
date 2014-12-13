@@ -364,15 +364,19 @@
 	</delete>
 
 
-	<delete id="deleteSysDataFields" parameterType="com.glaf.core.query.SysDataFieldQuery">
-		delete from SYS_DATA_FIELD
-		where (
-		ID_ IN
-		<foreach item="x_id" index="index" collection="ids" open="("
-			separator="," close=")">
-			#{x_id}
-		</foreach>
-		)
+	<delete id="deleteSysDataFieldByTablename" parameterType="string">
+		delete
+		from
+		SYS_DATA_FIELD
+		where TABLENAME_ = #{tablename}
+	</delete>
+
+
+	<delete id="deleteSysDataFieldByServiceKey" parameterType="string">
+		delete
+		from
+		SYS_DATA_FIELD
+		where SERVICEKEY_ = #{serviceKey}
 	</delete>
 
 
@@ -385,6 +389,13 @@
 	<select id="getSysDataFieldsByTablename" parameterType="string"
 		resultMap="sysDataFieldResultMap">
 		select * from SYS_DATA_FIELD where TABLENAME_ = #{tablename}
+	</select>
+
+
+	<select id="getSysDataFieldsByServiceKey" parameterType="string"
+		resultMap="sysDataFieldResultMap">
+		select * from SYS_DATA_FIELD where SERVICEKEY_ =
+		#{serviceKey}
 	</select>
 
 

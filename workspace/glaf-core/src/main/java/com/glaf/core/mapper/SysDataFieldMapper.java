@@ -26,17 +26,21 @@ import com.glaf.core.query.*;
 @Component
 public interface SysDataFieldMapper {
 
-	void deleteSysDataFields(SysDataFieldQuery query);
-
 	void deleteSysDataFieldById(String id);
+	
+	void deleteSysDataFieldByTablename(String tablename);
+	
+	void deleteSysDataFieldByServiceKey(String serviceKey);
 
 	SysDataField getSysDataFieldById(String id);
 
 	int getSysDataFieldCount(SysDataFieldQuery query);
 
 	List<SysDataField> getSysDataFields(SysDataFieldQuery query);
-	
+
 	List<SysDataField> getSysDataFieldsByTablename(String tablename);
+
+	List<SysDataField> getSysDataFieldsByServiceKey(String serviceKey);
 
 	void insertSysDataField(SysDataField model);
 

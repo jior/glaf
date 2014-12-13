@@ -64,9 +64,10 @@ public class SysDataFieldResource {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public byte[] data(@Context HttpServletRequest request,
 			@RequestBody DataRequest dataRequest) throws IOException {
-		String tableName = request.getParameter("tableName");
+		String serviceKey = request.getParameter("serviceKey");
 		JSONObject result = new JSONObject();
-		int total = sysDataTableService.getDataFieldCountByTable(tableName);
+		int total = sysDataTableService
+				.getDataFieldCountByServiceKey(serviceKey);
 		if (total > 0) {
 			result.put("total", total);
 			result.put("totalCount", total);
@@ -78,7 +79,7 @@ public class SysDataFieldResource {
 
 			Map<String, User> userMap = IdentityFactory.getUserMap();
 			List<SysDataField> list = sysDataTableService
-					.getDataFieldsByTable(tableName);
+					.getDataFieldsByServiceKey(serviceKey);
 
 			if (list != null && !list.isEmpty()) {
 				JSONArray rowsJSON = new JSONArray();
@@ -117,7 +118,7 @@ public class SysDataFieldResource {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public byte[] deleteById(@Context HttpServletRequest request)
 			throws IOException {
-		sysDataTableService.deleteDataField(request.getParameter("id"));
+		sysDataTableService.deleteDataFieldById(request.getParameter("id"));
 		return ResponseUtils.responseJsonResult(true);
 	}
 
@@ -127,9 +128,10 @@ public class SysDataFieldResource {
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_JSON })
 	public byte[] list(@Context HttpServletRequest request) throws IOException {
-		String tableName = request.getParameter("tableName");
+		String serviceKey = request.getParameter("serviceKey");
 		JSONObject result = new JSONObject();
-		int total = sysDataTableService.getDataFieldCountByTable(tableName);
+		int total = sysDataTableService
+				.getDataFieldCountByServiceKey(serviceKey);
 		if (total > 0) {
 			result.put("total", total);
 			result.put("totalCount", total);
@@ -141,7 +143,7 @@ public class SysDataFieldResource {
 
 			Map<String, User> userMap = IdentityFactory.getUserMap();
 			List<SysDataField> list = sysDataTableService
-					.getDataFieldsByTable(tableName);
+					.getDataFieldsByServiceKey(serviceKey);
 
 			if (list != null && !list.isEmpty()) {
 				JSONArray rowsJSON = new JSONArray();
@@ -248,7 +250,7 @@ public class SysDataFieldResource {
 	public byte[] view(@Context HttpServletRequest request) throws IOException {
 		SysDataField sysDataField = null;
 		if (StringUtils.isNotEmpty(request.getParameter("id"))) {
-			sysDataField = sysDataTableService.getDataField(request
+			sysDataField = sysDataTableService.getDataFieldById(request
 					.getParameter("id"));
 		}
 		JSONObject result = new JSONObject();

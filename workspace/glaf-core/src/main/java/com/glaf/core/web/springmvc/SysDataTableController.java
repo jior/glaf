@@ -73,7 +73,7 @@ public class SysDataTableController {
 				String x = token.nextToken();
 				if (StringUtils.isNotEmpty(x)) {
 					SysDataTable sysDataTable = sysDataTableService
-							.getDataTable(String.valueOf(x));
+							.getDataTableById(String.valueOf(x));
 
 					if (sysDataTable != null
 							&& (StringUtils.equals(sysDataTable.getCreateBy(),
@@ -86,8 +86,8 @@ public class SysDataTableController {
 			}
 			return ResponseUtils.responseResult(true);
 		} else if (id != null) {
-			SysDataTable sysDataTable = sysDataTableService.getDataTable(String
-					.valueOf(id));
+			SysDataTable sysDataTable = sysDataTableService
+					.getDataTableById(String.valueOf(id));
 
 			if (sysDataTable != null
 					&& (StringUtils.equals(sysDataTable.getCreateBy(),
@@ -105,8 +105,8 @@ public class SysDataTableController {
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 
-		SysDataTable sysDataTable = sysDataTableService.getDataTable(request
-				.getParameter("id"));
+		SysDataTable sysDataTable = sysDataTableService
+				.getDataTableById(request.getParameter("id"));
 		if (sysDataTable != null) {
 			request.setAttribute("sysDataTable", sysDataTable);
 		}
@@ -469,8 +469,8 @@ public class SysDataTableController {
 		params.remove("status");
 		params.remove("wfStatus");
 
-		SysDataTable sysDataTable = sysDataTableService.getDataTable(request
-				.getParameter("id"));
+		SysDataTable sysDataTable = sysDataTableService
+				.getDataTableById(request.getParameter("id"));
 
 		Tools.populate(sysDataTable, params);
 
@@ -493,8 +493,8 @@ public class SysDataTableController {
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 
-		SysDataTable sysDataTable = sysDataTableService.getDataTable(request
-				.getParameter("id"));
+		SysDataTable sysDataTable = sysDataTableService
+				.getDataTableById(request.getParameter("id"));
 		request.setAttribute("sysDataTable", sysDataTable);
 
 		String view = request.getParameter("view");
