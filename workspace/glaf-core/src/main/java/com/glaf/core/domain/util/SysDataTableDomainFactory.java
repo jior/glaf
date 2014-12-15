@@ -46,6 +46,7 @@ public class SysDataTableDomainFactory {
 		columnMap.put("tablename", "TABLENAME_");
 		columnMap.put("title", "TITLE_");
 		columnMap.put("type", "TYPE_");
+		columnMap.put("treeType", "TREETYPE_");
 		columnMap.put("maxUser", "MAXUSER_");
 		columnMap.put("maxSys", "MAXSYS_");
 		columnMap.put("createBy", "CREATEBY_");
@@ -61,6 +62,7 @@ public class SysDataTableDomainFactory {
 		javaTypeMap.put("tablename", "String");
 		javaTypeMap.put("title", "String");
 		javaTypeMap.put("type", "Integer");
+		javaTypeMap.put("treeType", "String");
 		javaTypeMap.put("maxUser", "Integer");
 		javaTypeMap.put("maxSys", "Integer");
 		javaTypeMap.put("createBy", "String");
@@ -123,6 +125,13 @@ public class SysDataTableDomainFactory {
 		type.setColumnName("TYPE_");
 		type.setJavaType("Integer");
 		tableDefinition.addColumn(type);
+
+		ColumnDefinition treeType = new ColumnDefinition();
+		treeType.setName("treeType");
+		treeType.setColumnName("TREETYPE_");
+		treeType.setJavaType("String");
+		treeType.setLength(50);
+		tableDefinition.addColumn(treeType);
 
 		ColumnDefinition maxUser = new ColumnDefinition();
 		maxUser.setName("maxUser");

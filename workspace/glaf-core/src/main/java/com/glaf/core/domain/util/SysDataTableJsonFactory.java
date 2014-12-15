@@ -54,6 +54,9 @@ public class SysDataTableJsonFactory {
 		if (jsonObject.containsKey("type")) {
 			model.setType(jsonObject.getInteger("type"));
 		}
+		if (jsonObject.containsKey("treeType")) {
+			model.setTreeType(jsonObject.getString("treeType"));
+		}
 		if (jsonObject.containsKey("maxUser")) {
 			model.setMaxUser(jsonObject.getInteger("maxUser"));
 		}
@@ -135,6 +138,10 @@ public class SysDataTableJsonFactory {
 			}
 		}
 
+		if (model.getTreeType() != null) {
+			jsonObject.put("treeType", model.getTreeType());
+		}
+
 		jsonObject.put("maxUser", model.getMaxUser());
 		jsonObject.put("maxSys", model.getMaxSys());
 		if (model.getCreateBy() != null) {
@@ -213,6 +220,10 @@ public class SysDataTableJsonFactory {
 				jsonObject.put("typeName", "临时数据表");
 				break;
 			}
+		}
+
+		if (model.getTreeType() != null) {
+			jsonObject.put("treeType", model.getTreeType());
 		}
 
 		jsonObject.put("maxUser", model.getMaxUser());

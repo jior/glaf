@@ -57,6 +57,9 @@ public class SysDataTable implements Serializable, JSONable {
 	@Column(name = "TYPE_")
 	protected Integer type;
 
+	@Column(name = "TREETYPE_", length = 50)
+	protected String treeType;
+
 	@Column(name = "MAXUSER_")
 	protected Integer maxUser;
 
@@ -165,6 +168,10 @@ public class SysDataTable implements Serializable, JSONable {
 		return this.title;
 	}
 
+	public String getTreeType() {
+		return treeType;
+	}
+
 	public Integer getType() {
 		return this.type;
 	}
@@ -235,6 +242,10 @@ public class SysDataTable implements Serializable, JSONable {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public void setTreeType(String treeType) {
+		this.treeType = treeType;
 	}
 
 	public void setType(Integer type) {

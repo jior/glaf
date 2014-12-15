@@ -10,6 +10,7 @@
 		<result property="tablename" column="TABLENAME_" jdbcType="VARCHAR" />
 		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
 		<result property="type" column="TYPE_" jdbcType="INTEGER" />
+		<result property="treeType" column="TREETYPE_" jdbcType="VARCHAR" />
 		<result property="maxUser" column="MAXUSER_" jdbcType="INTEGER" />
 		<result property="maxSys" column="MAXSYS_" jdbcType="INTEGER" />
 		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
@@ -37,6 +38,9 @@
 			</if>
 			<if test="type != null">
 				,TYPE_
+			</if>
+			<if test="treeType != null">
+				,TREETYPE_
 			</if>
 			<if test="maxUser != null">
 				,MAXUSER_
@@ -82,6 +86,9 @@
 			<if test="type != null">
 				,#{type, jdbcType=INTEGER}
 			</if>
+			<if test="treeType != null">
+				,#{treeType, jdbcType=VARCHAR}
+			</if>
 			<if test="maxUser != null">
 				,#{maxUser, jdbcType=INTEGER}
 			</if>
@@ -122,6 +129,9 @@
 			</if>
 			<if test="type != null">
 				TYPE_ = #{type, jdbcType=INTEGER},
+			</if>
+			<if test="treeType != null">
+				TREETYPE_ = #{treeType, jdbcType=VARCHAR},
 			</if>
 			<if test="maxUser != null">
 				MAXUSER_ = #{maxUser, jdbcType=INTEGER},
