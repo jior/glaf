@@ -172,7 +172,7 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 					}
 				}
 			}
-			//logger.debug("fieldMap:" + fieldMap);
+			// logger.debug("fieldMap:" + fieldMap);
 			List<Map<String, Object>> list = tableDataMapper
 					.getTableDataByConditions(tableModel);
 			if (list != null && !list.isEmpty()) {
@@ -364,6 +364,9 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 			dataField.setId(id);
 			dataField.setCreateTime(new Date());
 			dataField.setColumnName(dataField.getColumnName().toUpperCase());
+			if (dataField.getServiceKey() == null) {
+				dataField.setServiceKey(dataField.getTablename().toLowerCase());
+			}
 			sysDataFieldMapper.insertSysDataField(dataField);
 		} else {
 			dataField.setId(id);
@@ -537,6 +540,9 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 			dataTable.setId(UUID32.getUUID());
 			dataTable.setCreateTime(new Date());
 			dataTable.setTablename(dataTable.getTablename().toLowerCase());
+			if (dataTable.getServiceKey() == null) {
+				dataTable.setServiceKey(dataTable.getTablename().toLowerCase());
+			}
 			sysDataTableMapper.insertSysDataTable(dataTable);
 		} else {
 			dataTable.setId(model.getId());
@@ -547,6 +553,7 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 		if (dataTable.getFields() != null && !dataTable.getFields().isEmpty()) {
 			for (SysDataField field : dataTable.getFields()) {
 				field.setTablename(dataTable.getTablename().toLowerCase());
+				field.setServiceKey(dataTable.getServiceKey());
 				this.saveDataField(field);
 			}
 		}

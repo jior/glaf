@@ -184,6 +184,17 @@ public class SysDataFieldJsonFactory {
 		}
 		if (model.getDataType() != null) {
 			jsonObject.put("dataType", model.getDataType());
+			if ("Integer".equals(model.getDataType())) {
+				jsonObject.put("dataTypeName", "整数");
+			} else if ("Long".equals(model.getDataType())) {
+				jsonObject.put("dataTypeName", "长整数");
+			} else if ("Double".equals(model.getDataType())) {
+				jsonObject.put("dataTypeName", "数值");
+			} else if ("Date".equals(model.getDataType())) {
+				jsonObject.put("dataTypeName", "日期时间");
+			} else {
+				jsonObject.put("dataTypeName", "字符串");
+			}
 		}
 		jsonObject.put("length", model.getLength());
 		jsonObject.put("listWeigth", model.getListWeigth());
@@ -196,7 +207,20 @@ public class SysDataFieldJsonFactory {
 		if (model.getInputType() != null) {
 			jsonObject.put("inputType", model.getInputType());
 		}
-		jsonObject.put("displayType", model.getDisplayType());
+		if (model.getDisplayType() != null) {
+			jsonObject.put("displayType", model.getDisplayType());
+			switch (model.getDisplayType()) {
+			case 1:
+				jsonObject.put("display", "表单");
+				break;
+			case 4:
+				jsonObject.put("display", "表单及列表");
+				break;
+			default:
+				jsonObject.put("display", "隐藏");
+				break;
+			}
+		}
 		jsonObject.put("importType", model.getImportType());
 		if (model.getFormatter() != null) {
 			jsonObject.put("formatter", model.getFormatter());
@@ -294,6 +318,17 @@ public class SysDataFieldJsonFactory {
 		}
 		if (model.getDataType() != null) {
 			jsonObject.put("dataType", model.getDataType());
+			if ("Integer".equals(model.getDataType())) {
+				jsonObject.put("dataTypeName", "整数");
+			} else if ("Long".equals(model.getDataType())) {
+				jsonObject.put("dataTypeName", "长整数");
+			} else if ("Double".equals(model.getDataType())) {
+				jsonObject.put("dataTypeName", "数值");
+			} else if ("Date".equals(model.getDataType())) {
+				jsonObject.put("dataTypeName", "日期时间");
+			} else {
+				jsonObject.put("dataTypeName", "字符串");
+			}
 		}
 		jsonObject.put("length", model.getLength());
 		jsonObject.put("listWeigth", model.getListWeigth());
@@ -306,7 +341,22 @@ public class SysDataFieldJsonFactory {
 		if (model.getInputType() != null) {
 			jsonObject.put("inputType", model.getInputType());
 		}
-		jsonObject.put("displayType", model.getDisplayType());
+
+		if (model.getDisplayType() != null) {
+			jsonObject.put("displayType", model.getDisplayType());
+			switch (model.getDisplayType()) {
+			case 1:
+				jsonObject.put("display", "表单");
+				break;
+			case 4:
+				jsonObject.put("display", "表单及列表");
+				break;
+			default:
+				jsonObject.put("display", "隐藏");
+				break;
+			}
+		}
+
 		jsonObject.put("importType", model.getImportType());
 		if (model.getFormatter() != null) {
 			jsonObject.put("formatter", model.getFormatter());
