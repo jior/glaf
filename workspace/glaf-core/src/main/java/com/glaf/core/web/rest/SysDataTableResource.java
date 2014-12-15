@@ -42,7 +42,10 @@ import com.glaf.core.base.DataRequest.SortDescriptor;
 import com.glaf.core.identity.*;
 import com.glaf.core.security.*;
 import com.glaf.core.util.*;
+import com.glaf.core.domain.ColumnDefinition;
+import com.glaf.core.domain.SysDataField;
 import com.glaf.core.domain.SysDataTable;
+import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.domain.util.SysDataTableDomainFactory;
 import com.glaf.core.query.SysDataTableQuery;
 import com.glaf.core.service.ISysDataTableService;
@@ -275,6 +278,49 @@ public class SysDataTableResource {
 			this.sysDataTableService.saveDataTable(sysDataTable);
 
 			return ResponseUtils.responseJsonResult(true);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@POST
+	@Path("/updateTableSchema")
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_JSON })
+	public byte[] updateTableSchema(@Context HttpServletRequest request) {
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		try {
+			if (loginContext.isSystemAdministrator()) {
+				SysDataTable sysDataTable = null;
+				if (StringUtils.isNotEmpty(request.getParameter("id"))) {
+					sysDataTable = sysDataTableService.getDataTableById(request
+							.getParameter("id"));
+				}
+
+				if (sysDataTable != null && sysDataTable.getFields() != null) {
+					List<SysDataField> fields = sysDataTable.getFields();
+					TableDefinition tableDefinition = new TableDefinition();
+					tableDefinition.setTableName(sysDataTable.getTablename());
+					for (SysDataField field : fields) {
+						ColumnDefinition column = new ColumnDefinition();
+						column.setColumnName(field.getColumnName());
+						column.setJavaType(field.getDataType());
+						column.setLength(field.getLength());
+						if ("Y".equalsIgnoreCase(field.getPrimaryKey())) {
+							tableDefinition.setIdColumn(column);
+						} else {
+							tableDefinition.addColumn(column);
+						}
+					}
+					if (!DBUtils.tableExists(sysDataTable.getTablename())) {
+						DBUtils.createTable(tableDefinition);
+					} else {
+						DBUtils.alterTable(tableDefinition);
+					}
+					return ResponseUtils.responseJsonResult(true);
+				}
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

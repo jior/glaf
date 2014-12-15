@@ -35,8 +35,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.id.*;
+import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.ColumnModel;
 import com.glaf.core.base.TableModel;
+import com.glaf.core.base.TreeModel;
 import com.glaf.core.config.BaseConfiguration;
 import com.glaf.core.config.Configuration;
 import com.glaf.core.config.SystemProperties;
@@ -45,8 +47,12 @@ import com.glaf.core.mapper.*;
 import com.glaf.core.domain.*;
 import com.glaf.core.query.*;
 import com.glaf.core.service.ISysDataTableService;
+import com.glaf.core.service.ITableDataService;
+import com.glaf.core.util.CaseInsensitiveHashMap;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.ParamUtils;
+import com.glaf.core.util.SearchFilter;
+import com.glaf.core.util.Tools;
 import com.glaf.core.xml.XmlReader;
 
 @Service("sysDataTableService")
@@ -67,6 +73,10 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 	protected SysDataFieldMapper sysDataFieldMapper;
 
 	protected TableDataMapper tableDataMapper;
+
+	protected TablePageMapper tablePageMapper;
+
+	protected ITableDataService tableDataService;
 
 	public MxSysDataTableServiceImpl() {
 
@@ -121,7 +131,14 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 	 * @return
 	 */
 	public SysDataTable getDataTableByServiceKey(String serviceKey) {
-		return sysDataTableMapper.getSysDataTableByServiceKey(serviceKey);
+		SysDataTable sysDataTable = sysDataTableMapper
+				.getSysDataTableByServiceKey(serviceKey);
+		if (sysDataTable != null) {
+			List<SysDataField> fields = sysDataFieldMapper
+					.getSysDataFieldsByTablename(sysDataTable.getTablename());
+			sysDataTable.setFields(fields);
+		}
+		return sysDataTable;
 	}
 
 	/**
@@ -150,6 +167,103 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 		List<SysDataTable> rows = sqlSessionTemplate.selectList(
 				"getSysDataTables", query, rowBounds);
 		return rows;
+	}
+
+	/**
+	 * 获取一页Json数据
+	 * 
+	 * @param serviceKey
+	 * @param start
+	 * @param limit
+	 * @param params
+	 * @return
+	 */
+	public JSONObject getJsonData(String serviceKey, int start, int limit,
+			Map<String, Object> params) {
+		JSONObject result = new JSONObject();
+		SysDataTable dataTable = this.getDataTableByServiceKey(serviceKey);
+		if (dataTable != null && dataTable.getFields() != null) {
+			List<SysDataField> fields = dataTable.getFields();
+			Map<String, String> nameMap = new HashMap<String, String>();
+			TableModel query = new TableModel();
+			for (SysDataField field : fields) {
+				ColumnModel column = new ColumnModel();
+				column.setColumnName(field.getColumnName());
+				column.setJavaType(field.getDataType());
+
+				nameMap.put(field.getColumnName().toLowerCase(),
+						field.getName());
+				query.setTableName(field.getTablename());
+				Object value = params.get(field.getName());
+				if (value == null) {
+					if (StringUtils.equals(field.getDataType(), "String")) {
+						value = params.get(field.getName() + "Like");
+						if (value != null) {
+							column.setOperator(SearchFilter.LIKE);
+							column.setValue(value);
+						}
+						value = params.get(field.getName() + "NotLike");
+						if (value != null) {
+							column.setOperator(SearchFilter.NOT_LIKE);
+							column.setValue(value);
+						}
+					}
+
+					if (StringUtils.equals(field.getDataType(), "Integer")
+							|| StringUtils.equals(field.getDataType(), "Long")) {
+						value = params.get(field.getName() + "GreaterThan");
+						if (value != null) {
+							column.setOperator(SearchFilter.GREATER_THAN_OR_EQUAL);
+							column.setValue(value);
+						}
+
+						value = params.get(field.getName() + "LessThan");
+						if (value != null) {
+							column.setOperator(SearchFilter.LESS_THAN_OR_EQUAL);
+							column.setValue(value);
+						}
+					}
+				}
+				if (column.getValue() != null) {
+					query.addColumn(column);
+				}
+			}
+
+			RowBounds rowBounds = new RowBounds(start, limit);
+
+			int total = tableDataMapper.getTableCountByConditions(query);
+
+			result.put("total", total);
+			result.put("totalCount", total);
+			result.put("totalRecords", total);
+			result.put("start", start);
+			result.put("startIndex", start);
+			result.put("limit", limit);
+			result.put("pageSize", limit);
+
+			if (total > 0) {
+				List<Map<String, Object>> list = sqlSessionTemplate.selectList(
+						"getTableDataByConditions", query, rowBounds);
+				if (list != null && !list.isEmpty()) {
+					JSONArray array = new JSONArray();
+					for (Map<String, Object> rowMap : list) {
+						JSONObject json = new JSONObject();
+						Iterator<Entry<String, Object>> iterator = rowMap
+								.entrySet().iterator();
+						while (iterator.hasNext()) {
+							Entry<String, Object> entry = iterator.next();
+							String key = entry.getKey();
+							Object value = entry.getValue();
+							String name = nameMap.get(key.toLowerCase());
+							json.put(name, value);
+						}
+						array.add(json);
+					}
+					result.put("rows", array);
+				}
+			}
+		}
+		return result;
 	}
 
 	/**
@@ -218,6 +332,117 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 		return sysDataField;
 	}
 
+	public List<TreeModel> getTreeModels(String serviceKey, Object parentId) {
+		List<TreeModel> treeModels = new ArrayList<TreeModel>();
+		SysDataTable dataTable = this.getDataTableByServiceKey(serviceKey);
+		if (dataTable != null && dataTable.getFields() != null) {
+			List<SysDataField> fields = dataTable.getFields();
+			SysDataField idField = null;
+			SysDataField treeField = null;
+			String treeId = null;
+			Map<String, String> nameMap = new HashMap<String, String>();
+			for (SysDataField field : fields) {
+				if ("Y".equals(field.getPrimaryKey())) {
+					idField = field;
+				}
+				if (StringUtils.equalsIgnoreCase(field.getName(), "treeId")) {
+					treeField = field;
+				}
+				nameMap.put(field.getColumnName().toLowerCase(),
+						field.getName());
+			}
+			if (idField != null) {
+				TableModel tableModel = new TableModel();
+				tableModel.setTableName(idField.getTablename());
+				ColumnModel idColumn = new ColumnModel();
+				idColumn.setColumnName(idField.getColumnName());
+				idColumn.setJavaType(idField.getDataType());
+				idColumn.setValue(parentId);
+				if (StringUtils.equals(idField.getDataType(), "Integer")) {
+					idColumn.setValue(parentId);
+				} else if (StringUtils.equals(idField.getDataType(), "Long")) {
+					idColumn.setValue(parentId);
+				}
+				tableModel.setIdColumn(idColumn);
+
+				Map<String, Object> dataMap = tableDataMapper
+						.getTableDataByPrimaryKey(tableModel);
+				Map<String, Object> newDataMap = new CaseInsensitiveHashMap();
+				if (dataMap != null && !dataMap.isEmpty()) {
+					Iterator<Entry<String, Object>> iterator = dataMap
+							.entrySet().iterator();
+					while (iterator.hasNext()) {
+						Entry<String, Object> entry = iterator.next();
+						String name = entry.getKey();
+						Object value = entry.getValue();
+						newDataMap.put(name, value);
+						newDataMap.put(name.toLowerCase(), value);
+					}
+				}
+				if (treeField != null) {
+					treeId = (String) newDataMap.get(treeField.getColumnName()
+							.toLowerCase());
+				}
+				if (treeId != null) {
+					// 通过一条SQL取出查询结果
+					StringBuffer buffer = new StringBuffer();
+					buffer.append(" select * from ")
+							.append(treeField.getTablename()).append(" where ")
+							.append(treeField.getColumnName())
+							.append(" like '").append(treeId).append("%'");
+					Map<String, Object> queryMap = new HashMap<String, Object>();
+					queryMap.put("queryString", buffer.toString());
+					List<Map<String, Object>> list = tablePageMapper
+							.getSqlQueryList(queryMap);
+
+					if (list != null && !list.isEmpty()) {
+						for (Map<String, Object> rowMap : list) {
+							Map<String, Object> newRowMap = new HashMap<String, Object>();
+							Iterator<Entry<String, Object>> iterator = rowMap
+									.entrySet().iterator();
+							while (iterator.hasNext()) {
+								Entry<String, Object> entry = iterator.next();
+								String key = entry.getKey();
+								Object value = entry.getValue();
+								String name = nameMap.get(key.toLowerCase());
+								newRowMap.put(name, value);
+							}
+
+							TreeModel tree = new BaseTree();
+							tree.setDataMap(newRowMap);
+							Tools.populate(tree, newRowMap);
+							tree.setName(ParamUtils
+									.getString(newRowMap, "name"));
+							tree.setCode(ParamUtils
+									.getString(newRowMap, "code"));
+							tree.setIcon(ParamUtils
+									.getString(newRowMap, "icon"));
+							tree.setIconCls(ParamUtils.getString(newRowMap,
+									"iconCls"));
+							tree.setUrl(ParamUtils.getString(newRowMap, "url"));
+							tree.setDescription(ParamUtils.getString(newRowMap,
+									"description"));
+							tree.setTreeId(ParamUtils.getString(newRowMap,
+									"treeId"));
+							tree.setId(ParamUtils.getLong(newRowMap, "id"));
+							tree.setParentId(ParamUtils.getLong(newRowMap,
+									"parentId"));
+							tree.setSortNo(ParamUtils.getInt(newRowMap,
+									"ordinal"));
+							tree.setLevel(ParamUtils.getInt(newRowMap, "level"));
+							tree.setLocked(ParamUtils.getInt(newRowMap,
+									"locked"));
+							treeModels.add(tree);
+						}
+					}
+				} else {
+					// 递归调用取出查询结果
+				}
+			}
+		}
+		return treeModels;
+	}
+
 	public List<SysDataTable> list(SysDataTableQuery query) {
 		List<SysDataTable> list = sysDataTableMapper.getSysDataTables(query);
 		return list;
@@ -241,7 +466,7 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 		if (fields != null && !fields.isEmpty()) {
 			for (SysDataField field : fields) {
 				if (StringUtils.equalsIgnoreCase("1", field.getPrimaryKey())
-						|| StringUtils.equalsIgnoreCase("y",
+						|| StringUtils.equalsIgnoreCase("Y",
 								field.getPrimaryKey())
 						|| StringUtils.equalsIgnoreCase("true",
 								field.getPrimaryKey())) {
@@ -285,6 +510,7 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 				col01.setValue(id);
 			}
 			row.setIdColumn(col01);
+			row.addColumn(col01);
 		} else {
 			if (StringUtils.equalsIgnoreCase(idField.getDataType(), "Integer")) {
 				col01.setJavaType("Long");
@@ -304,6 +530,7 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 				col01.setValue(id);
 			}
 			row.setIdColumn(col01);
+			row.addColumn(col01);
 		}
 
 		if (fields != null && !fields.isEmpty()) {
@@ -600,6 +827,129 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 		}
 	}
 
+	protected void saveJson(String tableName, JSONObject jsonData,
+			SysDataField idField, List<SysDataField> fields) {
+		if (jsonData != null && idField != null) {
+			TableModel tableModel = new TableModel();
+			tableModel.setTableName(tableName);
+			ColumnModel idColumn = new ColumnModel();
+			idColumn.setColumnName(idField.getColumnName());
+			idColumn.setJavaType(idField.getDataType());
+			Object idValue = jsonData
+					.get(idField.getColumnName().toLowerCase());
+			if (idValue == null) {
+				idValue = jsonData.get(idField.getName().toLowerCase());
+			}
+
+			boolean isUpdate = false;
+			if (idValue != null) {
+				isUpdate = true;
+			} else {
+				if (StringUtils.equalsIgnoreCase(idField.getDataType(),
+						"Integer")) {
+					idValue = idGenerator.nextId();
+				} else if (StringUtils.equalsIgnoreCase(idField.getDataType(),
+						"Long")) {
+					idValue = idGenerator.nextId();
+				} else {
+					idValue = idGenerator.getNextId();
+				}
+			}
+			idColumn.setValue(idValue);
+			tableModel.addColumn(idColumn);
+			tableModel.setIdColumn(idColumn);
+
+			for (SysDataField f : fields) {
+				ColumnModel column = new ColumnModel();
+				column.setColumnName(f.getColumnName());
+				column.setJavaType(f.getDataType());
+
+				Object value = jsonData.get(f.getColumnName().toLowerCase());
+				if (value == null) {
+					value = jsonData.get(f.getName().toLowerCase());
+				}
+				if (value == null) {
+					value = jsonData.get(f.getName());
+				}
+
+				column.setValue(value);
+				tableModel.addColumn(column);
+			}
+			if (isUpdate) {
+				tableDataService.updateTableData(tableModel);
+			} else {
+				tableDataService.insertTableData(tableModel);
+			}
+		}
+	}
+
+	/**
+	 * 保存数据
+	 * 
+	 * @param serviceKey
+	 * @param jsonObject
+	 */
+	@Transactional
+	public void saveJsonData(String serviceKey, JSONObject jsonObject) {
+		SysDataTable dataTable = this.getDataTableByServiceKey(serviceKey);
+		if (jsonObject != null && dataTable != null
+				&& dataTable.getFields() != null) {
+			List<SysDataField> fields = dataTable.getFields();
+
+			if (!fields.isEmpty()) {
+				Map<String, SysDataField> tableDefs = new HashMap<String, SysDataField>();
+				Map<String, List<SysDataField>> tableFields = new HashMap<String, List<SysDataField>>();
+				for (SysDataField field : fields) {
+					if (field.getTablename() != null
+							&& "Y".equals(field.getPrimaryKey())) {
+						tableDefs
+								.put(field.getTablename().toLowerCase(), field);
+					}
+					if (field.getTablename() != null
+							&& field.getColumnName() != null) {
+						List<SysDataField> tfields = tableFields.get(field
+								.getTablename().toLowerCase());
+						if (tfields == null) {
+							tfields = new ArrayList<SysDataField>();
+							tableFields.put(field.getTablename().toLowerCase(),
+									tfields);
+						}
+						tfields.add(field);
+					}
+				}
+
+				logger.debug("1--------------------------------------------");
+				logger.debug("tableFields:" + tableFields.size());
+
+				Iterator<Entry<String, List<SysDataField>>> iterator = tableFields
+						.entrySet().iterator();
+				while (iterator.hasNext()) {
+					Entry<String, List<SysDataField>> entry = iterator.next();
+					String tableName = entry.getKey();
+					SysDataField idField = tableDefs.get(tableName);
+					logger.debug("-------------------xxxx-------------------------");
+					Object object = jsonObject.get(tableName.toLowerCase());
+					if (object != null && object instanceof JSONArray) {
+						logger.debug("2--------------------------------------------");
+						JSONArray array = jsonObject.getJSONArray(tableName
+								.toLowerCase());
+						for (int i = 0, len = array.size(); i < len; i++) {
+							JSONObject jsonData = array.getJSONObject(i);
+							this.saveJson(tableName, jsonData, idField,
+									entry.getValue());
+						}
+					} else {
+						logger.debug("3--------------------------------------------");
+						JSONObject jsonData = jsonObject
+								.getJSONObject(tableName.toLowerCase());
+						this.saveJson(tableName, jsonData, idField,
+								entry.getValue());
+					}
+				}
+			}
+		}
+	}
+
 	@javax.annotation.Resource
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
@@ -628,6 +978,16 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 	@javax.annotation.Resource
 	public void setTableDataMapper(TableDataMapper tableDataMapper) {
 		this.tableDataMapper = tableDataMapper;
+	}
+
+	@javax.annotation.Resource
+	public void setTableDataService(ITableDataService tableDataService) {
+		this.tableDataService = tableDataService;
+	}
+
+	@javax.annotation.Resource
+	public void setTablePageMapper(TablePageMapper tablePageMapper) {
+		this.tablePageMapper = tablePageMapper;
 	}
 
 }

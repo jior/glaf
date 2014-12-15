@@ -23,6 +23,7 @@ import java.util.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONObject;
+import com.glaf.core.base.TreeModel;
 import com.glaf.core.domain.*;
 import com.glaf.core.query.*;
 
@@ -97,6 +98,18 @@ public interface ISysDataTableService {
 			SysDataTableQuery query);
 
 	/**
+	 * 获取一页Json数据
+	 * 
+	 * @param serviceKey
+	 * @param start
+	 * @param limit
+	 * @param params
+	 * @return
+	 */
+	JSONObject getJsonData(String serviceKey, int start, int limit,
+			Map<String, Object> params);
+
+	/**
 	 * 获取一页数据
 	 * 
 	 * @param start
@@ -105,6 +118,15 @@ public interface ISysDataTableService {
 	 * @return
 	 */
 	JSONObject getPageTableData(int start, int pageSize, SysDataTableQuery query);
+
+	/**
+	 * 获取某个节点下的全部子节点
+	 * 
+	 * @param serviceKey
+	 * @param parentId
+	 * @return
+	 */
+	List<TreeModel> getTreeModels(String serviceKey, Object parentId);
 
 	/**
 	 * 根据查询参数获取记录列表
@@ -142,5 +164,14 @@ public interface ISysDataTableService {
 	 */
 	@Transactional
 	void saveDataTable(SysDataTable sysDataTable);
+
+	/**
+	 * 保存数据
+	 * 
+	 * @param serviceKey
+	 * @param jsonObject
+	 */
+	@Transactional
+	void saveJsonData(String serviceKey, JSONObject jsonObject);
 
 }

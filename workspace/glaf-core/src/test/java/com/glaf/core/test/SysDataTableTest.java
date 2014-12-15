@@ -20,12 +20,17 @@ package com.glaf.core.test;
 
 import java.io.*;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.DataRequest;
+import com.glaf.core.base.TreeModel;
 import com.glaf.core.domain.SysDataTable;
 import com.glaf.core.query.SysDataTableQuery;
 import com.glaf.core.service.ISysDataTableService;
@@ -49,6 +54,13 @@ public class SysDataTableTest extends AbstractTest {
 	}
 
 	@Test
+	public void testGetTreeModels() {
+		ISysDataTableService svc = super.getBean("sysDataTableService");
+		List<TreeModel> list = svc.getTreeModels("tree_test", 0L);
+		logger.debug(list);
+	}
+
+	@Test
 	public void testImportMappingData() throws IOException {
 		sysDataTableService = super.getBean("sysDataTableService");
 		File path = FileUtils.getFile("mapping");
@@ -65,6 +77,53 @@ public class SysDataTableTest extends AbstractTest {
 				}
 			}
 		}
+	}
+
+	public void testSaveData() {
+		ISysDataTableService svc = super.getBean("sysDataTableService");
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		// dataMap.put("id", 1L);
+		dataMap.put("parentId", 0L);
+		dataMap.put("name", "分类树");
+		dataMap.put("code", "/");
+		dataMap.put("ordinal", 0);
+		dataMap.put("description", "分类树");
+		svc.saveData("tree_test", dataMap);
+	}
+
+	public void testSaveJsonArrayData() {
+		ISysDataTableService svc = super.getBean("sysDataTableService");
+		JSONObject result = new JSONObject();
+		JSONArray array = new JSONArray();
+		for (int i = 0; i < 10; i++) {
+			JSONObject jsonObject = new JSONObject();
+			// jsonObject.put("id", i);
+			jsonObject.put("parentId", 0L);
+			jsonObject.put("name", "分类树");
+			jsonObject.put("code", "/");
+			jsonObject.put("ordinal", 0);
+			jsonObject.put("description", "分类树");
+			array.add(jsonObject);
+		}
+		result.put("tree_test", array);
+		logger.debug(result.toJSONString());
+		svc.saveJsonData("tree_test", result);
+	}
+
+	@Test
+	public void testSaveJsonData() {
+		ISysDataTableService svc = super.getBean("sysDataTableService");
+		JSONObject result = new JSONObject();
+		JSONObject jsonObject = new JSONObject();
+		// jsonObject.put("id", 1L);
+		jsonObject.put("parentId", 0L);
+		jsonObject.put("name", "分类树");
+		jsonObject.put("code", "/");
+		jsonObject.put("ordinal", 0);
+		jsonObject.put("description", "分类树");
+		result.put("tree_test", jsonObject);
+		logger.debug(result.toJSONString());
+		svc.saveJsonData("tree_test", result);
 	}
 
 }
