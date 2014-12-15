@@ -8,6 +8,7 @@
 		<id property="roleId" column="ID" jdbcType="INTEGER" />
 		<result property="code" column="CODE" jdbcType="VARCHAR" />
 		<result property="name" column="NAME" jdbcType="VARCHAR" />
+		<result property="type" column="TYPE" jdbcType="VARCHAR" />
 	</resultMap>
 
 
