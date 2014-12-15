@@ -357,7 +357,10 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 
 	@Transactional
 	public void saveDataField(SysDataField dataField) {
-		String id = dataField.getTablename() + "_" + dataField.getColumnName();
+		String id = dataField.getId();
+		if (id == null) {
+			id = dataField.getTablename() + "_" + dataField.getColumnName();
+		}
 		id = id.toLowerCase();
 		SysDataField model = this.getDataFieldById(id);
 		if (model == null) {
@@ -371,7 +374,6 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 		} else {
 			dataField.setId(id);
 			dataField.setUpdateTime(new Date());
-			dataField.setColumnName(dataField.getColumnName().toUpperCase());
 			sysDataFieldMapper.updateSysDataField(dataField);
 		}
 	}
