@@ -10,7 +10,7 @@
 
 	<property>
 		<name>distributed.config.enabled</name>
-		<value>false</value>
+		<value>true</value>
 	</property>
 
 
