@@ -53,14 +53,6 @@ import com.glaf.core.jdbc.DBConnectionFactory;
 
 public class DBUtils {
 
-	protected final static Log logger = LogFactory.getLog(DBUtils.class);
-
-	public final static String newline = System.getProperty("line.separator");
-
-	public static final String POSTGRESQL = "postgresql";
-
-	public static final String ORACLE = "oracle";
-
 	public static void alterTable(Connection connection,
 			TableDefinition tableDefinition) {
 		List<String> cloumns = new java.util.ArrayList<String>();
@@ -333,13 +325,14 @@ public class DBUtils {
 
 	}
 
-	public static void alterTable(TableDefinition tableDefinition) {
+	public static void alterTable(String systemName,
+			TableDefinition tableDefinition) {
 		List<String> cloumns = new java.util.ArrayList<String>();
 		Connection connection = null;
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
-			connection = DBConnectionFactory.getConnection();
+			connection = DBConnectionFactory.getConnection(systemName);
 			String dbType = DBConnectionFactory.getDatabaseType(connection);
 			stmt = connection.createStatement();
 			rs = stmt.executeQuery("select * from "
@@ -384,14 +377,13 @@ public class DBUtils {
 		}
 	}
 
-	public static void alterTable(String systemName,
-			TableDefinition tableDefinition) {
+	public static void alterTable(TableDefinition tableDefinition) {
 		List<String> cloumns = new java.util.ArrayList<String>();
 		Connection connection = null;
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
-			connection = DBConnectionFactory.getConnection(systemName);
+			connection = DBConnectionFactory.getConnection();
 			String dbType = DBConnectionFactory.getDatabaseType(connection);
 			stmt = connection.createStatement();
 			rs = stmt.executeQuery("select * from "
@@ -470,10 +462,11 @@ public class DBUtils {
 		}
 	}
 
-	public static void createTable(TableDefinition classDefinition) {
+	public static void createTable(String systemName,
+			TableDefinition classDefinition) {
 		Connection connection = null;
 		try {
-			connection = DBConnectionFactory.getConnection();
+			connection = DBConnectionFactory.getConnection(systemName);
 			connection.setAutoCommit(false);
 			String dbType = DBConnectionFactory.getDatabaseType(connection);
 			String sql = getCreateTableSql(dbType, classDefinition);
@@ -493,11 +486,10 @@ public class DBUtils {
 		}
 	}
 
-	public static void createTable(String systemName,
-			TableDefinition classDefinition) {
+	public static void createTable(TableDefinition classDefinition) {
 		Connection connection = null;
 		try {
-			connection = DBConnectionFactory.getConnection(systemName);
+			connection = DBConnectionFactory.getConnection();
 			connection.setAutoCommit(false);
 			String dbType = DBConnectionFactory.getDatabaseType(connection);
 			String sql = getCreateTableSql(dbType, classDefinition);
@@ -2295,6 +2287,30 @@ public class DBUtils {
 		return isLegal;
 	}
 
+	public static boolean isTableColumn(String columnName) {
+		if (columnName == null || columnName.trim().length() < 2
+				|| columnName.trim().length() > 26) {
+			return false;
+		}
+		char[] sourceChrs = columnName.toCharArray();
+		Character chr = Character.valueOf(sourceChrs[0]);
+		if (!((chr.charValue() == 95)
+				|| (65 <= chr.charValue() && chr.charValue() <= 90) || (97 <= chr
+				.charValue() && chr.charValue() <= 122))) {
+			return false;
+		}
+		for (int i = 1; i < sourceChrs.length; i++) {
+			chr = Character.valueOf(sourceChrs[i]);
+			if (!((chr.charValue() == 95)
+					|| (47 <= chr.charValue() && chr.charValue() <= 57)
+					|| (65 <= chr.charValue() && chr.charValue() <= 90) || (97 <= chr
+					.charValue() && chr.charValue() <= 122))) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public static boolean isTableName(String sourceString) {
 		if (sourceString == null || sourceString.trim().length() < 2
 				|| sourceString.trim().length() > 25) {
@@ -2628,5 +2644,13 @@ public class DBUtils {
 			JdbcUtils.close(conn);
 		}
 	}
+
+	protected final static Log logger = LogFactory.getLog(DBUtils.class);
+
+	public final static String newline = System.getProperty("line.separator");
+
+	public static final String POSTGRESQL = "postgresql";
+
+	public static final String ORACLE = "oracle";
 
 }

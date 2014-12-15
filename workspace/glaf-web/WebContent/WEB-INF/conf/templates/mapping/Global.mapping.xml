@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<mapping>
+    <entity name="Global" package="com.glaf.core" moduleName="temp" table="temp" title="Global" englishTitle="Global">
+        <id name="id" column="ID_" type="Long" title="编号" englishTitle="Id" systemFlag="Y" primaryKey="Y"/>
+		<property name="parentId" column="PARENTID_" type="Long" title="父编号" englishTitle="ParentId" 
+		          editable="true" systemFlag="Y"/>
+		<property name="name" column="NAME_" type="String" title="名称" englishTitle="Name" length="100" editable="true"
+		          required="true" displayType="4" systemFlag="Y" ordinal="99" listWeigth="180"/>
+        <property name="code" column="CODE_" type="String" title="代码" englishTitle="Code" length="50" 
+		          editable="true" required="false" displayType="1" systemFlag="Y" ordinal="90" listWeigth="120"/>
+        <property name="description" column="DESCRIPTION_" type="String" title="描述" englishTitle="Description" 
+		          editable="true" length="500" systemFlag="Y"/>
+        <property name="discriminator" column="DISCRIMINATOR_" type="String" title="标识" englishTitle="Discriminator" 
+		          editable="true" length="10" required="false" displayType="0" systemFlag="Y"/>
+        <property name="icon" column="ICON_" type="String" title="图标" englishTitle="Icon" length="50" 
+		          editable="true" required="false" displayType="1" systemFlag="Y" listWeigth="120"/>
+        <property name="iconCls" column="ICONCLS_" type="String" title="图标样式" englishTitle="IconCls"  
+		          editable="true" length="50" required="false" displayType="1" systemFlag="Y"/>
+        <property name="ordinal" column="ORDINAL_" type="Integer" title="顺序号" englishTitle="Ordinal" 
+		          editable="true" required="false" displayType="1" systemFlag="Y" listWeigth="80"/>
+        <property name="treeId" column="TREEID_" type="String" title="TreeId" englishTitle="TreeId" length="500" 
+		          editable="true" required="false" displayType="0" systemFlag="Y"/>
+		<property name="createBy" column="CREATEBY_" type="String" title="创建人" englishTitle="CreateBy" length="50" 
+		          editable="true" required="false" displayType="4" systemFlag="Y" ordinal="2" listWeigth="80"/>
+        <property name="createDate" column="CREATEDATE_" type="Date" title="创建日期" englishTitle="CreateDate" 
+		          editable="true" required="false" displayType="4" systemFlag="Y" ordinal="1" listWeigth="90"/>
+        <property name="updateBy" column="UPDATEBY_" type="String" title="修改人" englishTitle="UpdateBy" length="50" 
+		          editable="true" systemFlag="Y"/>
+        <property name="updateDate" column="UPDATEDATE_" type="Date" title="修改日期" englishTitle="UpdateDate" 
+		          editable="true" systemFlag="Y"/>
+		<property name="deleteFlag" column="DELETEFLAG_" type="Integer" title="删除标记" englishTitle="deleteFlag" 
+		          editable="true" required="false" displayType="0" systemFlag="Y"/>
+    </entity>
+</mapping>

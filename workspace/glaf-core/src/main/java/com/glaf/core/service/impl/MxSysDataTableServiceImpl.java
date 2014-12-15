@@ -18,6 +18,8 @@
 
 package com.glaf.core.service.impl;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -35,17 +37,24 @@ import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.id.*;
 import com.glaf.core.base.ColumnModel;
 import com.glaf.core.base.TableModel;
+import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
+import com.glaf.core.config.SystemProperties;
 import com.glaf.core.dao.*;
 import com.glaf.core.mapper.*;
 import com.glaf.core.domain.*;
 import com.glaf.core.query.*;
 import com.glaf.core.service.ISysDataTableService;
+import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.ParamUtils;
+import com.glaf.core.xml.XmlReader;
 
 @Service("sysDataTableService")
 @Transactional(readOnly = true)
 public class MxSysDataTableServiceImpl implements ISysDataTableService {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
+
+	protected static Configuration conf = BaseConfiguration.create();
 
 	protected EntityDAO entityDAO;
 
@@ -357,6 +366,9 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 
 	@Transactional
 	public void saveDataField(SysDataField dataField) {
+		if (!DBUtils.isTableColumn(dataField.getColumnName())) {
+			throw new RuntimeException("column name is not iegal");
+		}
 		String id = dataField.getId();
 		if (id == null) {
 			id = dataField.getTablename() + "_" + dataField.getColumnName();
@@ -561,6 +573,29 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 				field.setTablename(dataTable.getTablename().toLowerCase());
 				field.setServiceKey(dataTable.getServiceKey());
 				this.saveDataField(field);
+			}
+		} else {
+			String tpl = conf.get("sys_table_template",
+					"/conf/templates/mapping/Global.mapping.xml");
+			String filename = SystemProperties.getConfigRootPath() + tpl;
+			XmlReader reader = new XmlReader();
+			try {
+				File file = new File(filename);
+				if (file.exists() && file.isFile()
+						&& file.getAbsolutePath().endsWith(".mapping.xml")) {
+					SysDataTable bean = reader
+							.getSysDataTable(new FileInputStream(filename));
+					if (bean.getFields() != null && !bean.getFields().isEmpty()) {
+						for (SysDataField field : bean.getFields()) {
+							field.setTablename(dataTable.getTablename()
+									.toLowerCase());
+							field.setServiceKey(dataTable.getServiceKey());
+							this.saveDataField(field);
+						}
+					}
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
 		}
 	}
