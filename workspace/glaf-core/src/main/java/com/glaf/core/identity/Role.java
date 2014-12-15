@@ -34,7 +34,7 @@ public interface Role extends java.io.Serializable {
 
 	int getSort();
 
-	int getType();
+	String getType();
 
 	void setId(int id);
 
@@ -50,5 +50,5 @@ public interface Role extends java.io.Serializable {
 
 	void setSort(int sort);
 
-	void setType(int type);
+	void setType(String type);
 }

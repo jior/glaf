@@ -362,6 +362,10 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 			id = dataField.getTablename() + "_" + dataField.getColumnName();
 		}
 		id = id.toLowerCase();
+		if (dataField.getLength() == 0
+				&& StringUtils.equals(dataField.getDataType(), "String")) {
+			dataField.setLength(250);
+		}
 		SysDataField model = this.getDataFieldById(id);
 		if (model == null) {
 			dataField.setId(id);

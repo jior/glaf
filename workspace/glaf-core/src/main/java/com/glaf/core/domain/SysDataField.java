@@ -64,10 +64,10 @@ public class SysDataField implements java.lang.Comparable<SysDataField>,
 	protected String dataType;
 
 	@Column(name = "LENGTH_")
-	protected Integer length;
+	protected int length;
 
 	@Column(name = "LISTWEIGTH_")
-	protected Integer listWeigth;
+	protected int listWeigth;
 
 	@Column(name = "PRIMARYKEY_", length = 5)
 	protected String primaryKey;
@@ -79,10 +79,10 @@ public class SysDataField implements java.lang.Comparable<SysDataField>,
 	protected String inputType;
 
 	@Column(name = "DISPLAYTYPE_")
-	protected Integer displayType;
+	protected int displayType;
 
 	@Column(name = "IMPORTTYPE_")
-	protected Integer importType;
+	protected int importType;
 
 	@Column(name = "FORMATTER_", length = 50)
 	protected String formatter;
@@ -206,7 +206,7 @@ public class SysDataField implements java.lang.Comparable<SysDataField>,
 		return this.defaultValue;
 	}
 
-	public Integer getDisplayType() {
+	public int getDisplayType() {
 		return this.displayType;
 	}
 
@@ -230,7 +230,7 @@ public class SysDataField implements java.lang.Comparable<SysDataField>,
 		return this.id;
 	}
 
-	public Integer getImportType() {
+	public int getImportType() {
 		return this.importType;
 	}
 
@@ -242,11 +242,11 @@ public class SysDataField implements java.lang.Comparable<SysDataField>,
 		return this.inputType;
 	}
 
-	public Integer getLength() {
+	public int getLength() {
 		return this.length;
 	}
 
-	public Integer getListWeigth() {
+	public int getListWeigth() {
 		return this.listWeigth;
 	}
 
@@ -359,7 +359,7 @@ public class SysDataField implements java.lang.Comparable<SysDataField>,
 		this.defaultValue = defaultValue;
 	}
 
-	public void setDisplayType(Integer displayType) {
+	public void setDisplayType(int displayType) {
 		this.displayType = displayType;
 	}
 
@@ -383,7 +383,7 @@ public class SysDataField implements java.lang.Comparable<SysDataField>,
 		this.id = id;
 	}
 
-	public void setImportType(Integer importType) {
+	public void setImportType(int importType) {
 		this.importType = importType;
 	}
 
@@ -395,11 +395,11 @@ public class SysDataField implements java.lang.Comparable<SysDataField>,
 		this.inputType = inputType;
 	}
 
-	public void setLength(Integer length) {
+	public void setLength(int length) {
 		this.length = length;
 	}
 
-	public void setListWeigth(Integer listWeigth) {
+	public void setListWeigth(int listWeigth) {
 		this.listWeigth = listWeigth;
 	}
 

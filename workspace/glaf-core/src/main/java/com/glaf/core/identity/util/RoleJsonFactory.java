@@ -64,7 +64,7 @@ public class RoleJsonFactory {
 			model.setName(jsonObject.getString("name"));
 		}
 		if (jsonObject.containsKey("type")) {
-			model.setType(jsonObject.getInteger("type"));
+			model.setType(jsonObject.getString("type"));
 		}
 		 
 		return model;

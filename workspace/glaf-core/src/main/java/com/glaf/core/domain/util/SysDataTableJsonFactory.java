@@ -110,7 +110,31 @@ public class SysDataTableJsonFactory {
 		if (model.getTitle() != null) {
 			jsonObject.put("title", model.getTitle());
 		}
-		jsonObject.put("type", model.getType());
+
+		if (model.getType() != -1) {
+			jsonObject.put("type", model.getType());
+			switch (model.getType()) {
+			case 10:
+				jsonObject.put("typeName", "用户自定义表");
+				break;
+			case 20:
+				jsonObject.put("typeName", "中间计量表");
+				break;
+			case 40:
+				jsonObject.put("typeName", "流程审批表");
+				break;
+			case 90:
+				jsonObject.put("typeName", "基础数据表");
+				break;
+			case 99:
+				jsonObject.put("typeName", "系统表");
+				break;
+			default:
+				jsonObject.put("typeName", "临时数据表");
+				break;
+			}
+		}
+
 		jsonObject.put("maxUser", model.getMaxUser());
 		jsonObject.put("maxSys", model.getMaxSys());
 		if (model.getCreateBy() != null) {
@@ -166,7 +190,31 @@ public class SysDataTableJsonFactory {
 		if (model.getTitle() != null) {
 			jsonObject.put("title", model.getTitle());
 		}
-		jsonObject.put("type", model.getType());
+
+		if (model.getType() != -1) {
+			jsonObject.put("type", model.getType());
+			switch (model.getType()) {
+			case 10:
+				jsonObject.put("typeName", "用户自定义表");
+				break;
+			case 20:
+				jsonObject.put("typeName", "中间计量表");
+				break;
+			case 40:
+				jsonObject.put("typeName", "流程审批表");
+				break;
+			case 90:
+				jsonObject.put("typeName", "基础数据表");
+				break;
+			case 99:
+				jsonObject.put("typeName", "系统表");
+				break;
+			default:
+				jsonObject.put("typeName", "临时数据表");
+				break;
+			}
+		}
+
 		jsonObject.put("maxUser", model.getMaxUser());
 		jsonObject.put("maxSys", model.getMaxSys());
 		if (model.getCreateBy() != null) {

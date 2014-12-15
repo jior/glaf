@@ -40,7 +40,7 @@ public class RoleImpl implements Role {
 
 	protected String name;
 
-	protected int type;
+	protected String type;
 
 	protected int sort;
 
@@ -120,7 +120,7 @@ public class RoleImpl implements Role {
 		return sort;
 	}
 
-	public int getType() {
+	public String getType() {
 		return type;
 	}
 
@@ -184,7 +184,7 @@ public class RoleImpl implements Role {
 		this.sort = sort;
 	}
 
-	public void setType(int type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 

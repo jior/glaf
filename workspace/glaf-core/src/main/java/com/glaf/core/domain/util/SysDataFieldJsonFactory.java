@@ -207,7 +207,7 @@ public class SysDataFieldJsonFactory {
 		if (model.getInputType() != null) {
 			jsonObject.put("inputType", model.getInputType());
 		}
-		if (model.getDisplayType() != null) {
+		if (model.getDisplayType() != -1) {
 			jsonObject.put("displayType", model.getDisplayType());
 			switch (model.getDisplayType()) {
 			case 1:
@@ -342,7 +342,7 @@ public class SysDataFieldJsonFactory {
 			jsonObject.put("inputType", model.getInputType());
 		}
 
-		if (model.getDisplayType() != null) {
+		if (model.getDisplayType() != -1) {
 			jsonObject.put("displayType", model.getDisplayType());
 			switch (model.getDisplayType()) {
 			case 1:
