@@ -19,9 +19,9 @@
 package com.glaf.core.test;
 
 import java.io.*;
+import java.util.Collections;
 
 import org.apache.commons.io.FileUtils;
-
 import org.junit.Test;
 
 import com.alibaba.fastjson.JSONObject;
@@ -60,6 +60,8 @@ public class SysDataTableTest extends AbstractTest {
 					SysDataTable dataTable = reader
 							.getSysDataTable(new FileInputStream(file));
 					sysDataTableService.saveDataTable(dataTable);
+					Collections.sort(dataTable.getFields());
+					System.out.println(dataTable.getFields());
 				}
 			}
 		}

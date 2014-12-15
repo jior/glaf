@@ -20,21 +20,26 @@ package com.glaf.core.domain;
 
 import java.io.*;
 import java.util.*;
+
 import javax.persistence.*;
+
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
 import com.glaf.core.base.*;
 import com.glaf.core.domain.util.*;
 
 @Entity
 @Table(name = "SYS_DATA_FIELD")
-public class SysDataField implements Serializable, JSONable {
+public class SysDataField implements java.lang.Comparable<SysDataField>,
+		Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "ID_", length = 80, nullable = false)
+	@Column(name = "ID_", length = 100, nullable = false)
 	protected String id;
 
 	@Column(name = "SERVICEKEY_", length = 50)
@@ -125,7 +130,7 @@ public class SysDataField implements Serializable, JSONable {
 	protected String sortable;
 
 	@Column(name = "ORDINAL_")
-	protected Integer ordinal;
+	protected int ordinal;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATETIME_")
@@ -145,6 +150,25 @@ public class SysDataField implements Serializable, JSONable {
 
 	}
 
+	public int compareTo(SysDataField other) {
+		if (other == null) {
+			return -1;
+		}
+
+		SysDataField field = other;
+
+		int l = this.ordinal - field.getOrdinal();
+
+		int ret = 0;
+
+		if (l > 0) {
+			ret = -1;
+		} else if (l < 0) {
+			ret = 1;
+		}
+		return ret;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -154,10 +178,10 @@ public class SysDataField implements Serializable, JSONable {
 		if (getClass() != obj.getClass())
 			return false;
 		SysDataField other = (SysDataField) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (columnName == null) {
+			if (other.columnName != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!columnName.equals(other.columnName))
 			return false;
 		return true;
 	}
@@ -234,7 +258,7 @@ public class SysDataField implements Serializable, JSONable {
 		return this.name;
 	}
 
-	public Integer getOrdinal() {
+	public int getOrdinal() {
 		return this.ordinal;
 	}
 
@@ -306,7 +330,8 @@ public class SysDataField implements Serializable, JSONable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((columnName == null) ? 0 : columnName.hashCode());
 		return result;
 	}
 
@@ -386,7 +411,7 @@ public class SysDataField implements Serializable, JSONable {
 		this.name = name;
 	}
 
-	public void setOrdinal(Integer ordinal) {
+	public void setOrdinal(int ordinal) {
 		this.ordinal = ordinal;
 	}
 

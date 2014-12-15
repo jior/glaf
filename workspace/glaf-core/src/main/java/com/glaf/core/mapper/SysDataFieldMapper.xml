@@ -408,7 +408,7 @@
 				order by ${orderBy}
 			</when>
 			<otherwise>
-				order by E.COLUMNNAME_ asc
+				order by E.ORDINAL_ desc
 			</otherwise>
 		</choose>
 	</select>

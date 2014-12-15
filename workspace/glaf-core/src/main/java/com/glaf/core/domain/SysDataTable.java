@@ -38,7 +38,7 @@ public class SysDataTable implements Serializable, JSONable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "ID_", nullable = false, length = 50)
+	@Column(name = "ID_", nullable = false, length = 100)
 	protected String id;
 
 	@Column(name = "SERVICEKEY_", length = 50)

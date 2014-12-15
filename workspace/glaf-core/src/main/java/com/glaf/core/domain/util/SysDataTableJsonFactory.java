@@ -20,12 +20,22 @@ package com.glaf.core.domain.util;
 
 import com.alibaba.fastjson.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.domain.*;
 
 public class SysDataTableJsonFactory {
+
+	public static java.util.List<SysDataTable> arrayToList(JSONArray array) {
+		java.util.List<SysDataTable> list = new java.util.ArrayList<SysDataTable>();
+		for (int i = 0, len = array.size(); i < len; i++) {
+			JSONObject jsonObject = array.getJSONObject(i);
+			SysDataTable model = jsonToObject(jsonObject);
+			list.add(model);
+		}
+		return list;
+	}
 
 	public static SysDataTable jsonToObject(JSONObject jsonObject) {
 		SysDataTable model = new SysDataTable();
@@ -75,6 +85,17 @@ public class SysDataTableJsonFactory {
 		return model;
 	}
 
+	public static JSONArray listToArray(java.util.List<SysDataTable> list) {
+		JSONArray array = new JSONArray();
+		if (list != null && !list.isEmpty()) {
+			for (SysDataTable model : list) {
+				JSONObject jsonObject = model.toJsonObject();
+				array.add(jsonObject);
+			}
+		}
+		return array;
+	}
+
 	public static JSONObject toJsonObject(SysDataTable model) {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("id", model.getId());
@@ -121,6 +142,13 @@ public class SysDataTableJsonFactory {
 			jsonObject.put("isSubTable", model.getIsSubTable());
 		}
 		jsonObject.put("deleteFlag", model.getDeleteFlag());
+		if (model.getFields() != null && !model.getFields().isEmpty()) {
+			JSONArray array = new JSONArray();
+			for (SysDataField field : model.getFields()) {
+				array.add(field.toJsonObject());
+			}
+			jsonObject.put("fields", array);
+		}
 		return jsonObject;
 	}
 
@@ -170,28 +198,14 @@ public class SysDataTableJsonFactory {
 			jsonObject.put("isSubTable", model.getIsSubTable());
 		}
 		jsonObject.put("deleteFlag", model.getDeleteFlag());
-		return jsonObject;
-	}
-
-	public static JSONArray listToArray(java.util.List<SysDataTable> list) {
-		JSONArray array = new JSONArray();
-		if (list != null && !list.isEmpty()) {
-			for (SysDataTable model : list) {
-				JSONObject jsonObject = model.toJsonObject();
-				array.add(jsonObject);
+		if (model.getFields() != null && !model.getFields().isEmpty()) {
+			ArrayNode array = new ObjectMapper().createArrayNode();
+			for (SysDataField field : model.getFields()) {
+				array.add(field.toObjectNode());
 			}
+			jsonObject.set("fields", array);
 		}
-		return array;
-	}
-
-	public static java.util.List<SysDataTable> arrayToList(JSONArray array) {
-		java.util.List<SysDataTable> list = new java.util.ArrayList<SysDataTable>();
-		for (int i = 0, len = array.size(); i < len; i++) {
-			JSONObject jsonObject = array.getJSONObject(i);
-			SysDataTable model = jsonToObject(jsonObject);
-			list.add(model);
-		}
-		return list;
+		return jsonObject;
 	}
 
 	private SysDataTableJsonFactory() {

@@ -21,6 +21,7 @@ package com.glaf.core.service.impl;
 import java.util.*;
 import java.util.Map.Entry;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +41,6 @@ import com.glaf.core.domain.*;
 import com.glaf.core.query.*;
 import com.glaf.core.service.ISysDataTableService;
 import com.glaf.core.util.ParamUtils;
-import com.glaf.core.util.UUID32;
 
 @Service("sysDataTableService")
 @Transactional(readOnly = true)
@@ -539,7 +539,7 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 		SysDataTable model = sysDataTableMapper
 				.getSysDataTableByTable(dataTable.getTablename());
 		if (model == null) {
-			dataTable.setId(UUID32.getUUID());
+			dataTable.setId(DigestUtils.md5Hex(dataTable.getTablename()));
 			dataTable.setCreateTime(new Date());
 			dataTable.setTablename(dataTable.getTablename().toLowerCase());
 			if (dataTable.getServiceKey() == null) {
