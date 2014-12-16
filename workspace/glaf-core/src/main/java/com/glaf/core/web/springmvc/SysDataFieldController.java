@@ -32,7 +32,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 
 import com.alibaba.fastjson.*;
-
 import com.glaf.core.base.DataRequest;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.identity.*;
@@ -106,6 +105,24 @@ public class SysDataFieldController {
 			request.setAttribute("sysDataField", sysDataField);
 		}
 
+		SysDataTable sysDataTable = null;
+		if (request.getParameter("datatableId") != null) {
+			sysDataTable = sysDataTableService.getDataTableById(request
+					.getParameter("datatableId"));
+			if (sysDataTable != null) {
+				request.setAttribute("sysDataTable", sysDataTable);
+			}
+		}
+
+		String serviceKey = request.getParameter("serviceKey");
+		if (serviceKey != null) {
+			sysDataTable = sysDataTableService
+					.getDataTableByServiceKey(serviceKey);
+			if (sysDataTable != null) {
+				request.setAttribute("sysDataTable", sysDataTable);
+			}
+		}
+
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
 			return new ModelAndView(view, modelMap);
@@ -174,6 +191,25 @@ public class SysDataFieldController {
 	@RequestMapping
 	public ModelAndView list(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
+
+		SysDataTable sysDataTable = null;
+		if (request.getParameter("datatableId") != null) {
+			sysDataTable = sysDataTableService.getDataTableById(request
+					.getParameter("datatableId"));
+			if (sysDataTable != null) {
+				request.setAttribute("sysDataTable", sysDataTable);
+			}
+		}
+
+		String serviceKey = request.getParameter("serviceKey");
+		if (serviceKey != null) {
+			sysDataTable = sysDataTableService
+					.getDataTableByServiceKey(serviceKey);
+			if (sysDataTable != null) {
+				request.setAttribute("sysDataTable", sysDataTable);
+			}
+		}
+
 		String x_query = request.getParameter("x_query");
 		if (StringUtils.equals(x_query, "true")) {
 			Map<String, Object> paramMap = RequestUtils
