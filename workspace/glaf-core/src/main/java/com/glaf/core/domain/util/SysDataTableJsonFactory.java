@@ -63,6 +63,18 @@ public class SysDataTableJsonFactory {
 		if (jsonObject.containsKey("maxSys")) {
 			model.setMaxSys(jsonObject.getInteger("maxSys"));
 		}
+		if (jsonObject.containsKey("readUrl")) {
+			model.setReadUrl(jsonObject.getString("readUrl"));
+		}
+		if (jsonObject.containsKey("createUrl")) {
+			model.setCreateUrl(jsonObject.getString("createUrl"));
+		}
+		if (jsonObject.containsKey("updateUrl")) {
+			model.setUpdateUrl(jsonObject.getString("updateUrl"));
+		}
+		if (jsonObject.containsKey("destroyUrl")) {
+			model.setDestroyUrl(jsonObject.getString("destroyUrl"));
+		}
 		if (jsonObject.containsKey("createBy")) {
 			model.setCreateBy(jsonObject.getString("createBy"));
 		}
@@ -144,6 +156,20 @@ public class SysDataTableJsonFactory {
 
 		jsonObject.put("maxUser", model.getMaxUser());
 		jsonObject.put("maxSys", model.getMaxSys());
+
+		if (model.getReadUrl() != null) {
+			jsonObject.put("readUrl", model.getReadUrl());
+		}
+		if (model.getCreateUrl() != null) {
+			jsonObject.put("createUrl", model.getCreateUrl());
+		}
+		if (model.getUpdateUrl() != null) {
+			jsonObject.put("updateUrl", model.getUpdateUrl());
+		}
+		if (model.getDestroyUrl() != null) {
+			jsonObject.put("destroyUrl", model.getDestroyUrl());
+		}
+
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());
 		}
@@ -224,6 +250,19 @@ public class SysDataTableJsonFactory {
 
 		if (model.getTreeType() != null) {
 			jsonObject.put("treeType", model.getTreeType());
+		}
+
+		if (model.getReadUrl() != null) {
+			jsonObject.put("readUrl", model.getReadUrl());
+		}
+		if (model.getCreateUrl() != null) {
+			jsonObject.put("createUrl", model.getCreateUrl());
+		}
+		if (model.getUpdateUrl() != null) {
+			jsonObject.put("updateUrl", model.getUpdateUrl());
+		}
+		if (model.getDestroyUrl() != null) {
+			jsonObject.put("destroyUrl", model.getDestroyUrl());
 		}
 
 		jsonObject.put("maxUser", model.getMaxUser());

@@ -457,6 +457,10 @@ public class SysDataTableController {
 		sysDataTable.setType(RequestUtils.getInt(request, "type"));
 		sysDataTable.setMaxUser(RequestUtils.getInt(request, "maxUser"));
 		sysDataTable.setMaxSys(RequestUtils.getInt(request, "maxSys"));
+		sysDataTable.setReadUrl(request.getParameter("readUrl"));
+		sysDataTable.setCreateUrl(request.getParameter("createUrl"));
+		sysDataTable.setUpdateUrl(request.getParameter("updateUrl"));
+		sysDataTable.setDestroyUrl(request.getParameter("destroyUrl"));
 		sysDataTable.setCreateBy(actorId);
 		sysDataTable.setUpdateBy(actorId);
 		sysDataTable.setContent(request.getParameter("content"));
@@ -482,6 +486,10 @@ public class SysDataTableController {
 			sysDataTable.setType(ParamUtils.getInt(model, "type"));
 			sysDataTable.setMaxUser(ParamUtils.getInt(model, "maxUser"));
 			sysDataTable.setMaxSys(ParamUtils.getInt(model, "maxSys"));
+			sysDataTable.setReadUrl(request.getParameter("readUrl"));
+			sysDataTable.setCreateUrl(request.getParameter("createUrl"));
+			sysDataTable.setUpdateUrl(request.getParameter("updateUrl"));
+			sysDataTable.setDestroyUrl(request.getParameter("destroyUrl"));
 			sysDataTable.setCreateBy(actorId);
 			sysDataTable.setUpdateBy(actorId);
 			sysDataTable.setContent(ParamUtils.getString(model, "content"));
@@ -511,6 +519,10 @@ public class SysDataTableController {
 			sysDataTable.setType(RequestUtils.getInt(request, "type"));
 			sysDataTable.setMaxUser(RequestUtils.getInt(request, "maxUser"));
 			sysDataTable.setMaxSys(RequestUtils.getInt(request, "maxSys"));
+			sysDataTable.setReadUrl(request.getParameter("readUrl"));
+			sysDataTable.setCreateUrl(request.getParameter("createUrl"));
+			sysDataTable.setUpdateUrl(request.getParameter("updateUrl"));
+			sysDataTable.setDestroyUrl(request.getParameter("destroyUrl"));
 			sysDataTable.setCreateBy(actorId);
 			sysDataTable.setUpdateBy(actorId);
 			sysDataTable.setContent(request.getParameter("content"));
@@ -566,6 +578,10 @@ public class SysDataTableController {
 		sysDataTable.setType(RequestUtils.getInt(request, "type"));
 		sysDataTable.setMaxUser(RequestUtils.getInt(request, "maxUser"));
 		sysDataTable.setMaxSys(RequestUtils.getInt(request, "maxSys"));
+		sysDataTable.setReadUrl(request.getParameter("readUrl"));
+		sysDataTable.setCreateUrl(request.getParameter("createUrl"));
+		sysDataTable.setUpdateUrl(request.getParameter("updateUrl"));
+		sysDataTable.setDestroyUrl(request.getParameter("destroyUrl"));
 		sysDataTable.setUpdateBy(user.getActorId());
 		sysDataTable.setContent(request.getParameter("content"));
 		sysDataTable.setIsSubTable(request.getParameter("isSubTable"));

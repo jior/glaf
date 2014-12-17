@@ -49,6 +49,10 @@ public class SysDataTableDomainFactory {
 		columnMap.put("treeType", "TREETYPE_");
 		columnMap.put("maxUser", "MAXUSER_");
 		columnMap.put("maxSys", "MAXSYS_");
+		columnMap.put("readUrl", "READURL_");
+		columnMap.put("createUrl", "CREATEURL_");
+		columnMap.put("updateUrl", "UPDATEURL_");
+		columnMap.put("destroyUrl", "DESTROYURL_");
 		columnMap.put("createBy", "CREATEBY_");
 		columnMap.put("createTime", "CREATETIME_");
 		columnMap.put("updateTime", "UPDATETIME_");
@@ -65,6 +69,10 @@ public class SysDataTableDomainFactory {
 		javaTypeMap.put("treeType", "String");
 		javaTypeMap.put("maxUser", "Integer");
 		javaTypeMap.put("maxSys", "Integer");
+		javaTypeMap.put("readUrl", "String");
+		javaTypeMap.put("createUrl", "String");
+		javaTypeMap.put("updateUrl", "String");
+		javaTypeMap.put("destroyUrl", "String");
 		javaTypeMap.put("createBy", "String");
 		javaTypeMap.put("createTime", "Date");
 		javaTypeMap.put("updateTime", "Date");
@@ -132,6 +140,34 @@ public class SysDataTableDomainFactory {
 		treeType.setJavaType("String");
 		treeType.setLength(50);
 		tableDefinition.addColumn(treeType);
+
+		ColumnDefinition readUrl = new ColumnDefinition();
+		readUrl.setName("readUrl");
+		readUrl.setColumnName("READURL_");
+		readUrl.setJavaType("String");
+		readUrl.setLength(200);
+		tableDefinition.addColumn(readUrl);
+
+		ColumnDefinition createUrl = new ColumnDefinition();
+		createUrl.setName("createUrl");
+		createUrl.setColumnName("CREATEURL_");
+		createUrl.setJavaType("String");
+		createUrl.setLength(200);
+		tableDefinition.addColumn(createUrl);
+
+		ColumnDefinition updateUrl = new ColumnDefinition();
+		updateUrl.setName("updateUrl");
+		updateUrl.setColumnName("UPDATEURL_");
+		updateUrl.setJavaType("String");
+		updateUrl.setLength(200);
+		tableDefinition.addColumn(updateUrl);
+
+		ColumnDefinition destroyUrl = new ColumnDefinition();
+		destroyUrl.setName("destroyUrl");
+		destroyUrl.setColumnName("DESTROYURL_");
+		destroyUrl.setJavaType("String");
+		destroyUrl.setLength(200);
+		tableDefinition.addColumn(destroyUrl);
 
 		ColumnDefinition maxUser = new ColumnDefinition();
 		maxUser.setName("maxUser");

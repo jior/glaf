@@ -66,6 +66,18 @@ public class SysDataTable implements Serializable, JSONable {
 	@Column(name = "MAXSYS_")
 	protected Integer maxSys;
 
+	@Column(name = "READURL_", length = 200)
+	protected String readUrl;
+
+	@Column(name = "CREATEURL_", length = 200)
+	protected String createUrl;
+
+	@Column(name = "UPDATEURL_", length = 200)
+	protected String updateUrl;
+
+	@Column(name = "DESTROYURL_", length = 200)
+	protected String destroyUrl;
+
 	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
 
@@ -132,8 +144,16 @@ public class SysDataTable implements Serializable, JSONable {
 		return this.createTime;
 	}
 
+	public String getCreateUrl() {
+		return createUrl;
+	}
+
 	public int getDeleteFlag() {
 		return deleteFlag;
+	}
+
+	public String getDestroyUrl() {
+		return destroyUrl;
 	}
 
 	public List<SysDataField> getFields() {
@@ -154,6 +174,10 @@ public class SysDataTable implements Serializable, JSONable {
 
 	public Integer getMaxUser() {
 		return this.maxUser;
+	}
+
+	public String getReadUrl() {
+		return readUrl;
 	}
 
 	public String getServiceKey() {
@@ -184,6 +208,10 @@ public class SysDataTable implements Serializable, JSONable {
 		return updateTime;
 	}
 
+	public String getUpdateUrl() {
+		return updateUrl;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -208,8 +236,16 @@ public class SysDataTable implements Serializable, JSONable {
 		this.createTime = createTime;
 	}
 
+	public void setCreateUrl(String createUrl) {
+		this.createUrl = createUrl;
+	}
+
 	public void setDeleteFlag(int deleteFlag) {
 		this.deleteFlag = deleteFlag;
+	}
+
+	public void setDestroyUrl(String destroyUrl) {
+		this.destroyUrl = destroyUrl;
 	}
 
 	public void setFields(List<SysDataField> fields) {
@@ -230,6 +266,10 @@ public class SysDataTable implements Serializable, JSONable {
 
 	public void setMaxUser(Integer maxUser) {
 		this.maxUser = maxUser;
+	}
+
+	public void setReadUrl(String readUrl) {
+		this.readUrl = readUrl;
 	}
 
 	public void setServiceKey(String serviceKey) {
@@ -258,6 +298,10 @@ public class SysDataTable implements Serializable, JSONable {
 
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public void setUpdateUrl(String updateUrl) {
+		this.updateUrl = updateUrl;
 	}
 
 	public JSONObject toJsonObject() {

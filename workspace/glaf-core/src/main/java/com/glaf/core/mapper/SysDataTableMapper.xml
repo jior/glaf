@@ -13,6 +13,10 @@
 		<result property="treeType" column="TREETYPE_" jdbcType="VARCHAR" />
 		<result property="maxUser" column="MAXUSER_" jdbcType="INTEGER" />
 		<result property="maxSys" column="MAXSYS_" jdbcType="INTEGER" />
+		<result property="readUrl" column="READURL_" jdbcType="VARCHAR" />
+		<result property="createUrl" column="CREATEURL_" jdbcType="VARCHAR" />
+		<result property="updateUrl" column="UPDATEURL_" jdbcType="VARCHAR" />
+		<result property="destroyUrl" column="DESTROYURL_" jdbcType="VARCHAR" />
 		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
 		<result property="createTime" column="CREATETIME_" jdbcType="TIMESTAMP" />
 		<result property="updateTime" column="UPDATETIME_" jdbcType="TIMESTAMP" />
@@ -47,6 +51,18 @@
 			</if>
 			<if test="maxSys != null">
 				,MAXSYS_
+			</if>
+			<if test="readUrl != null">
+				,READURL_
+			</if>
+			<if test="createUrl != null">
+				,CREATEURL_
+			</if>
+			<if test="updateUrl != null">
+				,UPDATEURL_
+			</if>
+			<if test="destroyUrl != null">
+				,DESTROYURL_
 			</if>
 			<if test="createBy != null">
 				,CREATEBY_
@@ -95,6 +111,18 @@
 			<if test="maxSys != null">
 				,#{maxSys, jdbcType=INTEGER}
 			</if>
+			<if test="readUrl != null">
+				,#{readUrl, jdbcType=VARCHAR}
+			</if>
+			<if test="createUrl != null">
+				,#{createUrl, jdbcType=VARCHAR}
+			</if>
+			<if test="updateUrl != null">
+				,#{updateUrl, jdbcType=VARCHAR}
+			</if>
+			<if test="destroyUrl != null">
+				,#{destroyUrl, jdbcType=VARCHAR}
+			</if>
 			<if test="createBy != null">
 				,#{createBy, jdbcType=VARCHAR}
 			</if>
@@ -132,6 +160,18 @@
 			</if>
 			<if test="treeType != null">
 				TREETYPE_ = #{treeType, jdbcType=VARCHAR},
+			</if>
+			<if test="readUrl != null">
+				READURL_ = #{readUrl, jdbcType=VARCHAR},
+			</if>
+			<if test="createUrl != null">
+				CREATEURL_ = #{createUrl, jdbcType=VARCHAR},
+			</if>
+			<if test="updateUrl != null">
+				UPDATEURL_ = #{updateUrl, jdbcType=VARCHAR},
+			</if>
+			<if test="destroyUrl != null">
+				DESTROYURL_ = #{destroyUrl, jdbcType=VARCHAR},
 			</if>
 			<if test="maxUser != null">
 				MAXUSER_ = #{maxUser, jdbcType=INTEGER},

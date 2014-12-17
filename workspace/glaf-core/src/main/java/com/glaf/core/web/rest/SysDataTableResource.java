@@ -266,6 +266,10 @@ public class SysDataTableResource {
 			sysDataTable.setType(RequestUtils.getInt(request, "type"));
 			sysDataTable.setMaxUser(RequestUtils.getInt(request, "maxUser"));
 			sysDataTable.setMaxSys(RequestUtils.getInt(request, "maxSys"));
+			sysDataTable.setReadUrl(request.getParameter("readUrl"));
+			sysDataTable.setCreateUrl(request.getParameter("createUrl"));
+			sysDataTable.setUpdateUrl(request.getParameter("updateUrl"));
+			sysDataTable.setDestroyUrl(request.getParameter("destroyUrl"));
 			sysDataTable.setCreateBy(loginContext.getActorId());
 			sysDataTable.setCreateTime(RequestUtils.getDate(request,
 					"createTime"));
