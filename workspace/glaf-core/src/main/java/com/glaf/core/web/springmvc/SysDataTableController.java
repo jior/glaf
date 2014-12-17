@@ -18,14 +18,19 @@
 
 package com.glaf.core.web.springmvc;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.*;
+import java.util.Map.Entry;
+import java.util.zip.ZipInputStream;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
@@ -38,6 +43,7 @@ import com.glaf.core.config.ViewProperties;
 import com.glaf.core.identity.*;
 import com.glaf.core.security.*;
 import com.glaf.core.util.*;
+import com.glaf.core.xml.XmlReader;
 import com.glaf.core.domain.*;
 import com.glaf.core.domain.util.SysDataTableDomainFactory;
 import com.glaf.core.query.*;
@@ -122,6 +128,69 @@ public class SysDataTableController {
 		}
 
 		return new ModelAndView("/modules/sys/datatable/edit", modelMap);
+	}
+
+	@RequestMapping(value = "/importMapping", method = RequestMethod.POST)
+	public ModelAndView importMapping(HttpServletRequest request,
+			ModelMap modelMap) {
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		MultipartHttpServletRequest req = (MultipartHttpServletRequest) request;
+		Map<String, MultipartFile> fileMap = req.getFileMap();
+		XmlReader reader = new XmlReader();
+		Set<Entry<String, MultipartFile>> entrySet = fileMap.entrySet();
+		for (Entry<String, MultipartFile> entry : entrySet) {
+			MultipartFile mFile = entry.getValue();
+			if (mFile.getOriginalFilename() != null && mFile.getSize() > 0) {
+				String filename = mFile.getOriginalFilename();
+				if (filename.endsWith(".zip")) {
+					ZipInputStream zipInputStream = null;
+					try {
+						zipInputStream = new ZipInputStream(
+								mFile.getInputStream());
+						Map<String, byte[]> zipMap = ZipUtils
+								.getZipBytesMap(zipInputStream);
+						if (zipMap != null && !zipMap.isEmpty()) {
+							Set<Entry<String, byte[]>> entrySet2 = zipMap
+									.entrySet();
+							for (Entry<String, byte[]> entry2 : entrySet2) {
+								String name = entry2.getKey();
+								if (name.endsWith(".mapping.xml")) {
+									byte[] bytes = entry2.getValue();
+									SysDataTable dataTable = reader
+											.getSysDataTable(new ByteArrayInputStream(
+													bytes));
+									if (sysDataTableService
+											.getDataTableByTable(dataTable
+													.getTablename()) == null) {
+										dataTable.setCreateBy(loginContext
+												.getActorId());
+										sysDataTableService
+												.saveDataTable(dataTable);
+									}
+								}
+							}
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					} finally {
+						IOUtils.closeStream(zipInputStream);
+					}
+				} else if (filename.endsWith(".mapping.xml")) {
+					try {
+						SysDataTable dataTable = reader.getSysDataTable(mFile
+								.getInputStream());
+						if (sysDataTableService.getDataTableByTable(dataTable
+								.getTablename()) == null) {
+							dataTable.setCreateBy(loginContext.getActorId());
+							sysDataTableService.saveDataTable(dataTable);
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		return this.list(request, modelMap);
 	}
 
 	@RequestMapping("/json")
@@ -460,6 +529,23 @@ public class SysDataTableController {
 	@javax.annotation.Resource
 	public void setSysDataTableService(ISysDataTableService sysDataTableService) {
 		this.sysDataTableService = sysDataTableService;
+	}
+
+	@RequestMapping("/showImport")
+	public ModelAndView showImport(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		String view = request.getParameter("view");
+		if (StringUtils.isNotEmpty(view)) {
+			return new ModelAndView(view, modelMap);
+		}
+
+		String x_view = ViewProperties.getString("sysDataTable.showImport");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/modules/sys/datatable/showImport", modelMap);
 	}
 
 	@RequestMapping("/update")

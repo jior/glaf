@@ -593,8 +593,15 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 
 	@Transactional
 	public void saveDataField(SysDataField dataField) {
+		if (dataField.getColumnName() == null
+				|| dataField.getDataType() == null) {
+			return;
+		}
+
 		if (!DBUtils.isTableColumn(dataField.getColumnName())) {
-			throw new RuntimeException("column name is not iegal");
+			logger.debug(dataField.toJsonObject().toJSONString());
+			throw new RuntimeException("column name '"
+					+ dataField.getColumnName() + "' is not iegal");
 		}
 		String id = dataField.getId();
 		if (id == null) {

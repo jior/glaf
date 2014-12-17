@@ -114,7 +114,7 @@ public class SysDataTableJsonFactory {
 			jsonObject.put("title", model.getTitle());
 		}
 
-		if (model.getType() != -1) {
+		if (model.getType() != null && model.getType() != -1) {
 			jsonObject.put("type", model.getType());
 			switch (model.getType()) {
 			case 10:
@@ -198,7 +198,7 @@ public class SysDataTableJsonFactory {
 			jsonObject.put("title", model.getTitle());
 		}
 
-		if (model.getType() != -1) {
+		if (model.getType() != null && model.getType() != -1) {
 			jsonObject.put("type", model.getType());
 			switch (model.getType()) {
 			case 10:
