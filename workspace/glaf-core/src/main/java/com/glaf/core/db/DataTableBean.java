@@ -21,60 +21,52 @@ package com.glaf.core.db;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.dom4j.Document;
 
-import com.glaf.core.config.DBConfiguration;
-import com.glaf.core.config.SystemConfig;
-import com.glaf.core.config.SystemProperties;
+import com.alibaba.fastjson.JSONObject;
+
 import com.glaf.core.context.ContextFactory;
-import com.glaf.core.domain.SysData;
 import com.glaf.core.domain.SysDataLog;
+import com.glaf.core.domain.SysDataTable;
+import com.glaf.core.query.SysDataTableQuery;
 import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.security.LoginContext;
-import com.glaf.core.service.SysDataService;
-import com.glaf.core.util.Dom4jUtils;
-import com.glaf.core.util.FileUtils;
+import com.glaf.core.service.ISysDataTableService;
 import com.glaf.core.util.IOUtils;
-import com.glaf.core.util.JsonUtils;
-import com.glaf.core.util.JacksonUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.SysDataLogFactory;
-import com.glaf.core.xml.XmlBuilder;
 
-public class DataServiceBean {
+public class DataTableBean {
 
-	protected static final Log logger = LogFactory
-			.getLog(DataServiceBean.class);
+	protected static final Log logger = LogFactory.getLog(DataTableBean.class);
 
-	protected SysDataService sysDataService;
+	protected ISysDataTableService sysDataTableService;
 
 	/**
 	 * 权限检查，没有权限抛出异常
 	 * 
-	 * @param sysData
-	 *            数据对象
+	 * @param sysDataTable
+	 *            数据表对象
 	 * @param loginContext
 	 *            用户登录上下文
 	 * @param ipAddress
 	 *            用户客户端的IP地址
 	 */
-	public void checkPermission(SysData sysData, LoginContext loginContext,
-			String ipAddress) {
+	public void checkPermission(SysDataTable sysDataTable,
+			LoginContext loginContext, String ipAddress) {
 		boolean hasPermission = false;
 		/**
 		 * 非公开访问数据都需要检查是否有权限
 		 */
-		if (!StringUtils.equals(sysData.getAccessType(), "PUB")) {
+		if (!StringUtils.equals(sysDataTable.getAccessType(), "PUB")) {
 			/**
 			 * 检查IP地址是否在允许访问列表内
 			 */
-			if (StringUtils.isNotEmpty(sysData.getAddressPerms())) {
-				List<String> addressList = StringTools.split(sysData
+			if (StringUtils.isNotEmpty(sysDataTable.getAddressPerms())) {
+				List<String> addressList = StringTools.split(sysDataTable
 						.getAddressPerms());
 				for (String addr : addressList) {
 					if (StringUtils.equals(ipAddress, addr)) {
@@ -101,15 +93,15 @@ public class DataServiceBean {
 			/**
 			 * 检查权限是否满足
 			 */
-			if (StringUtils.isNotEmpty(sysData.getPerms())
-					&& !StringUtils.equalsIgnoreCase(sysData.getPerms(),
+			if (StringUtils.isNotEmpty(sysDataTable.getPerms())
+					&& !StringUtils.equalsIgnoreCase(sysDataTable.getPerms(),
 							"anyone")) {
 				if (loginContext.hasSystemPermission()
 						|| loginContext.hasAdvancedPermission()) {
 					hasPermission = true;
 				}
-				List<String> permissions = StringTools
-						.split(sysData.getPerms());
+				List<String> permissions = StringTools.split(sysDataTable
+						.getPerms());
 				for (String perm : permissions) {
 					if (loginContext.getPermissions().contains(perm)) {
 						hasPermission = true;
@@ -132,16 +124,16 @@ public class DataServiceBean {
 		}
 	}
 
-	public SysDataService getSysDataService() {
-		if (sysDataService == null) {
-			sysDataService = ContextFactory.getBean("sysDataService");
+	public ISysDataTableService getSysDataTableService() {
+		if (sysDataTableService == null) {
+			sysDataTableService = ContextFactory.getBean("sysDataTableService");
 		}
-		return sysDataService;
+		return sysDataTableService;
 	}
 
 	/**
 	 * 
-	 * @param id
+	 * @param datatableId
 	 *            数据服务编号
 	 * @param actorId
 	 *            用户编号
@@ -153,67 +145,53 @@ public class DataServiceBean {
 	 *            参数
 	 * @return
 	 */
-	private byte[] response(String systemName, String id, String actorId,
-			String ipAddress, String dataType, Map<String, Object> contextMap) {
+	private byte[] response(String systemName, String datatableId,
+			String actorId, String ipAddress, String dataType,
+			SysDataTableQuery query) {
 		LoginContext loginContext = IdentityFactory.getLoginContext(actorId);
 
 		if (dataType == null) {
-			dataType = "xml";
+			dataType = "json";
 		}
-
-		contextMap.put("id", id);
-		contextMap.put("dataType", dataType);
-		contextMap.put("actorId", loginContext.getActorId());
-		contextMap.put("serviceUrl", SystemConfig.getServiceUrl());
-		contextMap.put("dbType",
-				DBConfiguration.getDatabaseTypeByName(systemName));
-		contextMap.put("databaseType",
-				DBConfiguration.getDatabaseTypeByName(systemName));
 
 		InputStream inputStream = null;
 
-		SysData sysData = null;
+		SysDataTable sysDataTable = null;
 		try {
-			sysData = getSysDataService().getSysData(id);
+			sysDataTable = getSysDataTableService().getDataTableById(
+					datatableId);
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		}
 
-		if (sysData == null || sysData.getLocked() == 1) {
-			throw new RuntimeException(" data service '" + id
+		if (sysDataTable == null || sysDataTable.getLocked() == 1) {
+			throw new RuntimeException(" data service '" + datatableId
 					+ "' not available.");
 		}
 
-		this.checkPermission(sysData, loginContext, ipAddress);
+		this.checkPermission(sysDataTable, loginContext, ipAddress);
 
 		long start = System.currentTimeMillis();
 		SysDataLog log = new SysDataLog();
 		try {
-			String filename = SystemProperties.getConfigRootPath()
-					+ sysData.getPath();
-			inputStream = FileUtils.getInputStream(filename);
+
 			log.setAccountId(loginContext.getUser().getId());
 			log.setActorId(loginContext.getActorId());
 			log.setCreateTime(new Date());
 			log.setIp(ipAddress);
-			log.setOperate(id);
-			log.setContent(JsonUtils.encode(contextMap));
-			contextMap.put("loginContext", loginContext);
-			contextMap.put("loginUser", loginContext.getUser());
-			XmlBuilder builder = new XmlBuilder();
-			Document doc = builder.process(systemName, inputStream, contextMap);
+			log.setOperate("read");
+			log.setContent(datatableId);
 			log.setFlag(9);
-			log.setModuleId("DS");
+			log.setModuleId("DT");
+
+			JSONObject json = getSysDataTableService().getPageTableData(0,
+					50000, query);
 
 			int timeMS = (int) (System.currentTimeMillis() - start);
 			logger.debug("用时（毫秒）:" + timeMS);
 			log.setTimeMS(timeMS);
 
-			if (StringUtils.equals(dataType, "json")) {
-				return JacksonUtils.xml2json(doc.asXML()).getBytes("UTF-8");
-			}
-
-			return Dom4jUtils.getBytesFromPrettyDocument(doc, "UTF-8");
+			return json.toJSONString().getBytes("UTF-8");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			log.setFlag(-1);
@@ -225,8 +203,9 @@ public class DataServiceBean {
 	}
 
 	/**
-	 * 
-	 * @param id
+	 * @param systemName
+	 *            系统名
+	 * @param datatableId
 	 *            数据服务编号
 	 * @param actorId
 	 *            用户编号
@@ -236,17 +215,15 @@ public class DataServiceBean {
 	 *            参数
 	 * @return 返回JSON格式数据
 	 */
-	public byte[] responseJson(String id, String actorId, String ipAddress,
-			Map<String, Object> contextMap) {
-		String systemName = com.glaf.core.config.Environment.DEFAULT_SYSTEM_NAME;
-		return this.response(systemName, id, actorId, ipAddress, "json",
-				contextMap);
+	public byte[] responseJson(String systemName, String datatableId,
+			String actorId, String ipAddress, SysDataTableQuery query) {
+		return this.response(systemName, datatableId, actorId, ipAddress,
+				"json", query);
 	}
 
 	/**
-	 * @param systemName
-	 *            系统名
-	 * @param id
+	 * 
+	 * @param datatableId
 	 *            数据服务编号
 	 * @param actorId
 	 *            用户编号
@@ -256,57 +233,15 @@ public class DataServiceBean {
 	 *            参数
 	 * @return 返回JSON格式数据
 	 */
-	public byte[] responseJson(String systemName, String id, String actorId,
-			String ipAddress, Map<String, Object> contextMap) {
-		return this.response(systemName, id, actorId, ipAddress, "json",
-				contextMap);
-	}
-
-	/**
-	 * 
-	 * @param id
-	 *            数据服务编号
-	 * @param actorId
-	 *            用户编号
-	 * @param ipAddress
-	 *            IP地址
-	 * @param dataType
-	 *            数据类型
-	 * @param contextMap
-	 *            参数
-	 * @return 返回XML格式数据
-	 */
-	public byte[] responseXml(String id, String actorId, String ipAddress,
-			Map<String, Object> contextMap) {
+	public byte[] responseJson(String datatableId, String actorId,
+			String ipAddress, SysDataTableQuery query) {
 		String systemName = com.glaf.core.config.Environment.DEFAULT_SYSTEM_NAME;
-		return this.response(systemName, id, actorId, ipAddress, "xml",
-				contextMap);
+		return this.response(systemName, datatableId, actorId, ipAddress,
+				"json", query);
 	}
 
-	/**
-	 * 
-	 * @param systemName
-	 *            系统名
-	 * @param id
-	 *            数据服务编号
-	 * @param actorId
-	 *            用户编号
-	 * @param ipAddress
-	 *            IP地址
-	 * @param dataType
-	 *            数据类型
-	 * @param contextMap
-	 *            参数
-	 * @return 返回XML格式数据
-	 */
-	public byte[] responseXml(String systemName, String id, String actorId,
-			String ipAddress, Map<String, Object> contextMap) {
-		return this.response(systemName, id, actorId, ipAddress, "xml",
-				contextMap);
-	}
-
-	public void setSysDataService(SysDataService sysDataService) {
-		this.sysDataService = sysDataService;
+	public void setSysDataTableService(ISysDataTableService sysDataTableService) {
+		this.sysDataTableService = sysDataTableService;
 	}
 
 }

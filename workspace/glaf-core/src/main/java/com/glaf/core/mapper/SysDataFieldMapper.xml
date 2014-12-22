@@ -31,9 +31,14 @@
 		<result property="textField" column="TEXTFIELD_" jdbcType="VARCHAR" />
 		<result property="validType" column="VALIDTYPE_" jdbcType="VARCHAR" />
 		<result property="required" column="REQUIRED_" jdbcType="VARCHAR" />
+		<result property="dataItemId" column="DATAITEMID_" jdbcType="BIGINT" />
 		<result property="initValue" column="INITVALUE_" jdbcType="VARCHAR" />
 		<result property="defaultValue" column="DEFAULTVALUE_"
 			jdbcType="VARCHAR" />
+		<result property="maxValue" column="MAXVALUE_" jdbcType="DOUBLE" />
+		<result property="minValue" column="MINVALUE_" jdbcType="DOUBLE" />
+		<result property="stepValue" column="STEPVALUE_" jdbcType="DOUBLE" />
+		<result property="placeholder" column="PLACEHOLDER_" jdbcType="VARCHAR" />
 		<result property="valueExpression" column="VALUEEXPRESSION_"
 			jdbcType="VARCHAR" />
 		<result property="sortable" column="SORTABLE_" jdbcType="VARCHAR" />
@@ -124,11 +129,26 @@
 			<if test="required != null">
 				,REQUIRED_
 			</if>
+			<if test="dataItemId != null">
+				,DATAITEMID_
+			</if>
 			<if test="initValue != null">
 				,INITVALUE_
 			</if>
 			<if test="defaultValue != null">
 				,DEFAULTVALUE_
+			</if>
+			<if test="maxValue != null">
+				,MAXVALUE_
+			</if>
+			<if test="minValue != null">
+				,MINVALUE_
+			</if>
+			<if test="stepValue != null">
+				,STEPVALUE_
+			</if>
+			<if test="placeholder != null">
+				,PLACEHOLDER_
 			</if>
 			<if test="valueExpression != null">
 				,VALUEEXPRESSION_
@@ -231,11 +251,26 @@
 			<if test="required != null">
 				,#{required, jdbcType=VARCHAR}
 			</if>
+			<if test="dataItemId != null">
+				,#{dataItemId, jdbcType=BIGINT}
+			</if>
 			<if test="initValue != null">
 				,#{initValue, jdbcType=VARCHAR}
 			</if>
 			<if test="defaultValue != null">
 				,#{defaultValue, jdbcType=VARCHAR}
+			</if>
+			<if test="maxValue != null">
+				,#{maxValue, jdbcType=DOUBLE}
+			</if>
+			<if test="minValue != null">
+				,#{minValue, jdbcType=DOUBLE}
+			</if>
+			<if test="stepValue != null">
+				,#{stepValue, jdbcType=DOUBLE}
+			</if>
+			<if test="placeholder != null">
+				,#{placeholder, jdbcType=VARCHAR}
 			</if>
 			<if test="valueExpression != null">
 				,#{valueExpression, jdbcType=VARCHAR}
@@ -329,11 +364,26 @@
 			<if test="required != null">
 				REQUIRED_ = #{required, jdbcType=VARCHAR},
 			</if>
+			<if test="dataItemId != null">
+				DATAITEMID_ = #{dataItemId, jdbcType=BIGINT},
+			</if>
 			<if test="initValue != null">
 				INITVALUE_ = #{initValue, jdbcType=VARCHAR},
 			</if>
 			<if test="defaultValue != null">
 				DEFAULTVALUE_ = #{defaultValue, jdbcType=VARCHAR},
+			</if>
+			<if test="maxValue != null">
+				MAXVALUE_ = #{maxValue, jdbcType=DOUBLE},
+			</if>
+			<if test="minValue != null">
+				MINVALUE_ = #{minValue, jdbcType=DOUBLE},
+			</if>
+			<if test="stepValue != null">
+				STEPVALUE_ = #{stepValue, jdbcType=DOUBLE},
+			</if>
+			<if test="placeholder != null">
+				PLACEHOLDER_ = #{placeholder, jdbcType=VARCHAR},
 			</if>
 			<if test="valueExpression != null">
 				VALUEEXPRESSION_ = #{valueExpression, jdbcType=VARCHAR},

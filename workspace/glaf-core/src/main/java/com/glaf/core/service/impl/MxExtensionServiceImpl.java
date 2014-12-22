@@ -71,7 +71,7 @@ public class MxExtensionServiceImpl implements IExtensionService {
 
 	public Map<String, Object> getDataMap(String serviceKey, String businessKey) {
 		SysDataTable sysDataTable = sysDataTableService
-				.getDataTableByServiceKey(serviceKey);
+				.getDataTableById(serviceKey);
 		List<InputDefinition> inputs = this.getExtensionFields(serviceKey);
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		String tableName = sysDataTable.getTablename();
@@ -141,7 +141,7 @@ public class MxExtensionServiceImpl implements IExtensionService {
 	public void saveAll(String serviceKey, String businessKey,
 			Map<String, Object> dataMap) {
 		SysDataTable sysDataTable = sysDataTableService
-				.getDataTableByServiceKey(serviceKey);
+				.getDataTableById(serviceKey);
 		List<InputDefinition> inputs = this.getExtensionFields(serviceKey);
 		Map<String, InputDefinition> inputMap = new HashMap<String, InputDefinition>();
 		if (inputs != null && !inputs.isEmpty()) {

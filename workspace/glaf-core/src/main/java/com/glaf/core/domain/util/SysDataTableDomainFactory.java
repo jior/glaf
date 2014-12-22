@@ -44,6 +44,8 @@ public class SysDataTableDomainFactory {
 		columnMap.put("id", "ID_");
 		columnMap.put("serviceKey", "SERVICEKEY_");
 		columnMap.put("tablename", "TABLENAME_");
+		columnMap.put("sortColumnName", "SORTCOLUMNNAME_");
+		columnMap.put("sortOrder", "SORTORDER_");
 		columnMap.put("title", "TITLE_");
 		columnMap.put("type", "TYPE_");
 		columnMap.put("treeType", "TREETYPE_");
@@ -53,17 +55,23 @@ public class SysDataTableDomainFactory {
 		columnMap.put("createUrl", "CREATEURL_");
 		columnMap.put("updateUrl", "UPDATEURL_");
 		columnMap.put("destroyUrl", "DESTROYURL_");
+		columnMap.put("accessType", "ACCESSTYPE_");
+		columnMap.put("perms", "PERMS_");
+		columnMap.put("addressPerms", "ADDRESSPERMS_");
 		columnMap.put("createBy", "CREATEBY_");
 		columnMap.put("createTime", "CREATETIME_");
 		columnMap.put("updateTime", "UPDATETIME_");
 		columnMap.put("updateBy", "UPDATEBY_");
 		columnMap.put("content", "CONTENT_");
 		columnMap.put("isSubTable", "ISSUBTABLE_");
+		columnMap.put("locked", "LOCKED_");
 		columnMap.put("deleteFlag", "DELETEFLAG_");
 
 		javaTypeMap.put("id", "String");
 		javaTypeMap.put("serviceKey", "String");
 		javaTypeMap.put("tablename", "String");
+		javaTypeMap.put("sortColumnName", "String");
+		javaTypeMap.put("sortOrder", "String");
 		javaTypeMap.put("title", "String");
 		javaTypeMap.put("type", "Integer");
 		javaTypeMap.put("treeType", "String");
@@ -73,12 +81,16 @@ public class SysDataTableDomainFactory {
 		javaTypeMap.put("createUrl", "String");
 		javaTypeMap.put("updateUrl", "String");
 		javaTypeMap.put("destroyUrl", "String");
+		javaTypeMap.put("accessType", "String");
+		javaTypeMap.put("perms", "String");
+		javaTypeMap.put("addressPerms", "String");
 		javaTypeMap.put("createBy", "String");
 		javaTypeMap.put("createTime", "Date");
 		javaTypeMap.put("updateTime", "Date");
 		javaTypeMap.put("updateBy", "String");
 		javaTypeMap.put("content", "String");
 		javaTypeMap.put("isSubTable", "String");
+		javaTypeMap.put("locked", "Integer");
 		javaTypeMap.put("deleteFlag", "Integer");
 	}
 
@@ -120,6 +132,20 @@ public class SysDataTableDomainFactory {
 		tablename.setJavaType("String");
 		tablename.setLength(50);
 		tableDefinition.addColumn(tablename);
+
+		ColumnDefinition sortColumnName = new ColumnDefinition();
+		sortColumnName.setName("sortColumnName");
+		sortColumnName.setColumnName("SORTCOLUMNNAME_");
+		sortColumnName.setJavaType("String");
+		sortColumnName.setLength(50);
+		tableDefinition.addColumn(sortColumnName);
+
+		ColumnDefinition sortOrder = new ColumnDefinition();
+		sortOrder.setName("sortOrder");
+		sortOrder.setColumnName("SORTORDER_");
+		sortOrder.setJavaType("String");
+		sortOrder.setLength(5);
+		tableDefinition.addColumn(sortOrder);
 
 		ColumnDefinition title = new ColumnDefinition();
 		title.setName("title");
@@ -168,6 +194,27 @@ public class SysDataTableDomainFactory {
 		destroyUrl.setJavaType("String");
 		destroyUrl.setLength(200);
 		tableDefinition.addColumn(destroyUrl);
+
+		ColumnDefinition accessType = new ColumnDefinition();
+		accessType.setName("accessType");
+		accessType.setColumnName("ACCESSTYPE_");
+		accessType.setJavaType("String");
+		accessType.setLength(20);
+		tableDefinition.addColumn(accessType);
+
+		ColumnDefinition perms = new ColumnDefinition();
+		perms.setName("perms");
+		perms.setColumnName("PERMS_");
+		perms.setJavaType("String");
+		perms.setLength(500);
+		tableDefinition.addColumn(perms);
+
+		ColumnDefinition addressPerms = new ColumnDefinition();
+		addressPerms.setName("addressPerms");
+		addressPerms.setColumnName("ADDRESSPERMS_");
+		addressPerms.setJavaType("String");
+		addressPerms.setLength(2000);
+		tableDefinition.addColumn(addressPerms);
 
 		ColumnDefinition maxUser = new ColumnDefinition();
 		maxUser.setName("maxUser");
@@ -226,6 +273,12 @@ public class SysDataTableDomainFactory {
 		deleteFlag.setColumnName("DELETEFLAG_");
 		deleteFlag.setJavaType("Integer");
 		tableDefinition.addColumn(deleteFlag);
+
+		ColumnDefinition locked = new ColumnDefinition();
+		locked.setName("locked");
+		locked.setColumnName("LOCKED_");
+		locked.setJavaType("Integer");
+		tableDefinition.addColumn(locked);
 
 		return tableDefinition;
 	}

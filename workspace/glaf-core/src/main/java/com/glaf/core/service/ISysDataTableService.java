@@ -33,33 +33,33 @@ public interface ISysDataTableService {
 	/**
 	 * 删除字段信息
 	 * 
-	 * @param id
+	 * @param fieldId
 	 */
 	@Transactional
-	void deleteDataFieldById(String id);
+	void deleteDataFieldById(String fieldId);
 
 	/**
 	 * 根据主键获取一条记录
 	 * 
 	 * @return
 	 */
-	SysDataField getDataFieldById(String id);
+	SysDataField getDataFieldById(String fieldId);
 
 	/**
 	 * 根据查询参数获取记录总数
 	 * 
-	 * @param serviceKey
+	 * @param tableName
 	 * @return
 	 */
-	int getDataFieldCountByServiceKey(String serviceKey);
+	int getDataFieldCountByTablename(String tableName);
 
 	/**
 	 * 根据查询参数获取一页的数据
 	 * 
-	 * @param serviceKey
+	 * @param tableName
 	 * @return
 	 */
-	List<SysDataField> getDataFieldsByServiceKey(String serviceKey);
+	List<SysDataField> getDataFieldsByTablename(String tableName);
 
 	/**
 	 * 根据主键获取一条记录
@@ -69,18 +69,23 @@ public interface ISysDataTableService {
 	SysDataTable getDataTableById(String id);
 
 	/**
-	 * 根据服务ID获取一条记录
-	 * 
-	 * @return
-	 */
-	SysDataTable getDataTableByServiceKey(String serviceKey);
-
-	/**
 	 * 根据tableName获取一条记录
 	 * 
 	 * @return
 	 */
-	SysDataTable getDataTableByTable(String tableName);
+	SysDataTable getDataTableByName(String tableName);
+
+	/**
+	 * 根据tableName获取一条业务数据
+	 * 
+	 * @param tableName
+	 *            表名
+	 * @param businessKey
+	 *            业务主键
+	 * 
+	 * @return
+	 */
+	SysDataTable getDataTableWithData(String tableName, String businessKey);
 
 	/**
 	 * 根据查询参数获取记录总数
@@ -98,18 +103,6 @@ public interface ISysDataTableService {
 			SysDataTableQuery query);
 
 	/**
-	 * 获取一页Json数据
-	 * 
-	 * @param serviceKey
-	 * @param start
-	 * @param limit
-	 * @param params
-	 * @return
-	 */
-	JSONObject getJsonData(String serviceKey, int start, int limit,
-			Map<String, Object> params);
-
-	/**
 	 * 获取一页数据
 	 * 
 	 * @param start
@@ -120,13 +113,21 @@ public interface ISysDataTableService {
 	JSONObject getPageTableData(int start, int pageSize, SysDataTableQuery query);
 
 	/**
+	 * 获取某个表满足条件的记录总数
+	 * 
+	 * @param query
+	 * @return
+	 */
+	int getTableDataCount(SysDataTableQuery query);
+
+	/**
 	 * 获取某个节点下的全部子节点
 	 * 
-	 * @param serviceKey
+	 * @param datatableId
 	 * @param parentId
 	 * @return
 	 */
-	List<TreeModel> getTreeModels(String serviceKey, Object parentId);
+	List<TreeModel> getTreeModels(String datatableId, Object parentId);
 
 	/**
 	 * 根据查询参数获取记录列表
@@ -136,7 +137,7 @@ public interface ISysDataTableService {
 	List<SysDataTable> list(SysDataTableQuery query);
 
 	@Transactional
-	void saveData(String serviceKey, Map<String, Object> dataMap);
+	void saveData(String datatableId, Map<String, Object> dataMap);
 
 	/**
 	 * 保存字段定义
@@ -155,7 +156,7 @@ public interface ISysDataTableService {
 	void saveDataFields(List<SysDataField> fields);
 
 	@Transactional
-	void saveDataList(String serviceKey, List<Map<String, Object>> dataList);
+	void saveDataList(String datatableId, List<Map<String, Object>> dataList);
 
 	/**
 	 * 保存一条记录
@@ -168,10 +169,10 @@ public interface ISysDataTableService {
 	/**
 	 * 保存数据
 	 * 
-	 * @param serviceKey
+	 * @param datatableId
 	 * @param jsonObject
 	 */
 	@Transactional
-	void saveJsonData(String serviceKey, JSONObject jsonObject);
+	void saveJsonData(String datatableId, JSONObject jsonObject);
 
 }

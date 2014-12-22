@@ -23,6 +23,7 @@ import com.glaf.core.query.DataQuery;
 
 public class SysDataFieldQuery extends DataQuery {
 	private static final long serialVersionUID = 1L;
+	protected String datatableId;
 	protected String tablename;
 	protected List<String> tablenames;
 	protected String titleLike;
@@ -53,6 +54,14 @@ public class SysDataFieldQuery extends DataQuery {
 		return this;
 	}
 
+	public SysDataFieldQuery datatableId(String datatableId) {
+		if (datatableId == null) {
+			throw new RuntimeException("datatableId is null");
+		}
+		this.datatableId = datatableId;
+		return this;
+	}
+
 	public SysDataFieldQuery frmType(String frmType) {
 		if (frmType == null) {
 			throw new RuntimeException("frmType is null");
@@ -71,6 +80,10 @@ public class SysDataFieldQuery extends DataQuery {
 
 	public Date getCreateTimeLessThanOrEqual() {
 		return createTimeLessThanOrEqual;
+	}
+
+	public String getDatatableId() {
+		return datatableId;
 	}
 
 	public String getFrmType() {
@@ -285,6 +298,10 @@ public class SysDataFieldQuery extends DataQuery {
 
 	public void setCreateTimeLessThanOrEqual(Date createTimeLessThanOrEqual) {
 		this.createTimeLessThanOrEqual = createTimeLessThanOrEqual;
+	}
+
+	public void setDatatableId(String datatableId) {
+		this.datatableId = datatableId;
 	}
 
 	public void setFrmType(String frmType) {

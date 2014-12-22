@@ -117,6 +117,9 @@ public class SysDataFieldJsonFactory {
 		if (jsonObject.containsKey("required")) {
 			model.setRequired(jsonObject.getString("required"));
 		}
+		if (jsonObject.containsKey("dataItemId")) {
+			model.setDataItemId(jsonObject.getLong("dataItemId"));
+		}
 		if (jsonObject.containsKey("initValue")) {
 			model.setInitValue(jsonObject.getString("initValue"));
 		}
@@ -267,6 +270,7 @@ public class SysDataFieldJsonFactory {
 		if (model.getSortable() != null) {
 			jsonObject.put("sortable", model.getSortable());
 		}
+		jsonObject.put("dataItemId", model.getDataItemId());
 		jsonObject.put("ordinal", model.getOrdinal());
 		if (model.getCreateTime() != null) {
 			jsonObject.put("createTime",
@@ -403,6 +407,7 @@ public class SysDataFieldJsonFactory {
 		if (model.getSortable() != null) {
 			jsonObject.put("sortable", model.getSortable());
 		}
+		jsonObject.put("dataItemId", model.getDataItemId());
 		jsonObject.put("ordinal", model.getOrdinal());
 		if (model.getCreateTime() != null) {
 			jsonObject.put("createTime",

@@ -76,10 +76,6 @@ public class SysDataTableResource {
 		query.setDataRequest(dataRequest);
 		SysDataTableDomainFactory.processDataRequest(dataRequest);
 
-		String gridType = ParamUtils.getString(params, "gridType");
-		if (gridType == null) {
-			gridType = "kendoui";
-		}
 		int start = 0;
 		int limit = PageResult.DEFAULT_PAGE_SIZE;
 
@@ -260,8 +256,26 @@ public class SysDataTableResource {
 		try {
 			Tools.populate(sysDataTable, params);
 
+			String perm = request.getParameter("perms");
+			List<String> perms = StringTools.split(perm);
+			StringBuffer buffer = new StringBuffer();
+			List<Role> roles = IdentityFactory.getRoles();
+			if (roles != null && !roles.isEmpty()) {
+				for (Role role : roles) {
+					if (perms.contains(String.valueOf(role.getId()))) {
+						buffer.append(role.getId()).append(",");
+					}
+				}
+			}
+
+			sysDataTable.setPerms(buffer.toString());
+			sysDataTable.setAddressPerms(request.getParameter("addressPerms"));
+			sysDataTable.setAccessType(request.getParameter("accessType"));
 			sysDataTable.setServiceKey(request.getParameter("serviceKey"));
 			sysDataTable.setTablename(request.getParameter("tablename"));
+			sysDataTable.setSortColumnName(request
+					.getParameter("sortColumnName"));
+			sysDataTable.setSortOrder(request.getParameter("sortOrder"));
 			sysDataTable.setTitle(request.getParameter("title"));
 			sysDataTable.setType(RequestUtils.getInt(request, "type"));
 			sysDataTable.setMaxUser(RequestUtils.getInt(request, "maxUser"));
@@ -278,6 +292,7 @@ public class SysDataTableResource {
 			sysDataTable.setUpdateBy(loginContext.getActorId());
 			sysDataTable.setContent(request.getParameter("content"));
 			sysDataTable.setIsSubTable(request.getParameter("isSubTable"));
+			sysDataTable.setLocked(RequestUtils.getInt(request, "locked"));
 
 			this.sysDataTableService.saveDataTable(sysDataTable);
 

@@ -120,10 +120,8 @@ public class MxSysDataController {
 
 			if (roles != null && !roles.isEmpty()) {
 				for (Role role : roles) {
-					if (perms.contains(String.valueOf(role.getId()))
-							|| perms.contains(role.getCode())) {
-						buffer.append(role.getName()).append("[")
-								.append(role.getCode()).append("] ");
+					if (perms.contains(String.valueOf(role.getId()))) {
+						buffer.append(role.getName());
 						buffer.append(FileUtils.newline);
 					}
 				}
@@ -329,9 +327,8 @@ public class MxSysDataController {
 		List<Role> roles = IdentityFactory.getRoles();
 		if (roles != null && !roles.isEmpty()) {
 			for (Role role : roles) {
-				if (perms.contains(String.valueOf(role.getId()))
-						|| perms.contains(role.getCode())) {
-					buffer.append(role.getCode()).append(",");
+				if (perms.contains(String.valueOf(role.getId()))) {
+					buffer.append(role.getId()).append(",");
 				}
 			}
 		}
@@ -364,9 +361,8 @@ public class MxSysDataController {
 		List<Role> roles = IdentityFactory.getRoles();
 		if (roles != null && !roles.isEmpty()) {
 			for (Role role : roles) {
-				if (perms.contains(String.valueOf(role.getId()))
-						|| perms.contains(role.getCode())) {
-					buffer.append(role.getCode()).append(",");
+				if (perms.contains(String.valueOf(role.getId()))) {
+					buffer.append(role.getId()).append(",");
 				}
 			}
 		}
@@ -411,9 +407,8 @@ public class MxSysDataController {
 		List<Role> roles = IdentityFactory.getRoles();
 		if (roles != null && !roles.isEmpty()) {
 			for (Role role : roles) {
-				if (perms.contains(String.valueOf(role.getId()))
-						|| perms.contains(role.getCode())) {
-					buffer.append(role.getCode()).append(",");
+				if (perms.contains(String.valueOf(role.getId()))) {
+					buffer.append(role.getId()).append(",");
 				}
 			}
 		}

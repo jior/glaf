@@ -50,6 +50,7 @@ import com.glaf.core.service.ISysDataTableService;
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.util.CaseInsensitiveHashMap;
 import com.glaf.core.util.DBUtils;
+import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.SearchFilter;
 import com.glaf.core.util.Tools;
@@ -89,50 +90,35 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 	/**
 	 * 删除字段信息
 	 * 
-	 * @param id
+	 * @param fieldId
 	 */
 	@Transactional
-	public void deleteDataFieldById(String id) {
-		sysDataFieldMapper.deleteSysDataFieldById(id);
+	public void deleteDataFieldById(String fieldId) {
+		sysDataFieldMapper.deleteSysDataFieldById(fieldId);
 	}
 
-	public SysDataField getDataFieldById(String id) {
-		return sysDataFieldMapper.getSysDataFieldById(id);
+	public SysDataField getDataFieldById(String fieldId) {
+		return sysDataFieldMapper.getSysDataFieldById(fieldId);
 	}
 
-	public int getDataFieldCountByServiceKey(String serviceKey) {
+	public int getDataFieldCountByTablename(String tableName) {
 		SysDataFieldQuery query = new SysDataFieldQuery();
-		query.serviceKey(serviceKey);
+		query.tablename(tableName);
 		return sysDataFieldMapper.getSysDataFieldCount(query);
 	}
 
-	public List<SysDataField> getDataFieldsByServiceKey(String serviceKey) {
+	public List<SysDataField> getDataFieldsByTablename(String tableName) {
 		SysDataFieldQuery query = new SysDataFieldQuery();
-		query.serviceKey(serviceKey);
+		query.tablename(tableName);
 		return sysDataFieldMapper.getSysDataFields(query);
 	}
 
-	public SysDataTable getDataTableById(String id) {
-		if (id == null) {
+	public SysDataTable getDataTableById(String datatableId) {
+		if (datatableId == null) {
 			return null;
 		}
-		SysDataTable sysDataTable = sysDataTableMapper.getSysDataTableById(id);
-		if (sysDataTable != null) {
-			List<SysDataField> fields = sysDataFieldMapper
-					.getSysDataFieldsByTablename(sysDataTable.getTablename());
-			sysDataTable.setFields(fields);
-		}
-		return sysDataTable;
-	}
-
-	/**
-	 * 根据服务ID获取一条记录
-	 * 
-	 * @return
-	 */
-	public SysDataTable getDataTableByServiceKey(String serviceKey) {
 		SysDataTable sysDataTable = sysDataTableMapper
-				.getSysDataTableByServiceKey(serviceKey);
+				.getSysDataTableById(datatableId);
 		if (sysDataTable != null) {
 			List<SysDataField> fields = sysDataFieldMapper
 					.getSysDataFieldsByTablename(sysDataTable.getTablename());
@@ -146,7 +132,7 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 	 * 
 	 * @return
 	 */
-	public SysDataTable getDataTableByTable(String tableName) {
+	public SysDataTable getDataTableByName(String tableName) {
 		SysDataTable sysDataTable = sysDataTableMapper
 				.getSysDataTableByTable(tableName);
 		if (sysDataTable != null) {
@@ -155,6 +141,63 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 			sysDataTable.setFields(fields);
 		}
 		return sysDataTable;
+	}
+
+	/**
+	 * 根据tableName获取一条业务数据
+	 * 
+	 * @param tableName
+	 *            表名
+	 * @param businessKey
+	 *            业务主键
+	 * 
+	 * @return
+	 */
+	public SysDataTable getDataTableWithData(String tableName,
+			String businessKey) {
+		SysDataTable dataTable = this.getDataTableByName(tableName);
+		if (dataTable != null && dataTable.getFields() != null) {
+			TableModel tableModel = new TableModel();
+			tableModel.setTableName(tableName);
+			for (SysDataField field : dataTable.getFields()) {
+				if (StringUtils.equals(field.getPrimaryKey(), "Y")) {
+					ColumnModel idColumn = new ColumnModel();
+					idColumn.setColumnName(field.getColumnName());
+					if (StringUtils.equals("Integer", field.getDataType())) {
+						idColumn.setValue(Integer.parseInt(businessKey));
+					} else if (StringUtils.equals("Long", field.getDataType())) {
+						idColumn.setValue(Long.parseLong(businessKey));
+					} else {
+						idColumn.setValue(businessKey);
+					}
+					tableModel.setIdColumn(idColumn);
+					break;
+				}
+			}
+			if (tableModel.getIdColumn() != null) {
+				Map<String, Object> dataMap = tableDataMapper
+						.getTableDataByPrimaryKey(tableModel);
+				Map<String, Object> newDataMap = new CaseInsensitiveHashMap();
+				if (dataMap != null && !dataMap.isEmpty()) {
+					Iterator<Entry<String, Object>> iterator = dataMap
+							.entrySet().iterator();
+					while (iterator.hasNext()) {
+						Entry<String, Object> entry = iterator.next();
+						String name = entry.getKey();
+						Object value = entry.getValue();
+						newDataMap.put(name, value);
+						newDataMap.put(name.toLowerCase(), value);
+					}
+				}
+				for (SysDataField field : dataTable.getFields()) {
+					if (field.getColumnName() != null) {
+						field.setValue(newDataMap.get(field.getColumnName()
+								.toLowerCase()));
+					}
+				}
+			}
+		}
+		return dataTable;
 	}
 
 	public int getDataTableCountByQueryCriteria(SysDataTableQuery query) {
@@ -170,22 +213,123 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 	}
 
 	/**
-	 * 获取一页Json数据
+	 * 获取一页数据
 	 * 
-	 * @param serviceKey
 	 * @param start
-	 * @param limit
-	 * @param params
+	 * @param pageSize
+	 * @param query
 	 * @return
 	 */
-	public JSONObject getJsonData(String serviceKey, int start, int limit,
-			Map<String, Object> params) {
+	public JSONObject getPageTableData(int start, int pageSize,
+			SysDataTableQuery query) {
 		JSONObject result = new JSONObject();
-		SysDataTable dataTable = this.getDataTableByServiceKey(serviceKey);
+		SysDataTable dataTable = this.getDataTableByName(query.getTablename());
+		if (dataTable == null) {
+			return result;
+		}
+
+		TableModel tableModel = new TableModel();
+		tableModel.setTableName(query.getTablename());
+		tableModel.setDataRequest(query.getDataRequest());
+		int total = tableDataMapper.getTableCountByConditions(tableModel);
+		if (total > 0) {
+			result.put("total", total);
+			Map<String, SysDataField> fieldMap = new HashMap<String, SysDataField>();
+			if (dataTable.getFields() != null) {
+				List<SysDataField> fields = dataTable.getFields();
+				for (SysDataField field : fields) {
+					if (field.getName() != null) {
+						fieldMap.put(field.getColumnName(), field);
+						fieldMap.put(field.getColumnName().toLowerCase(), field);
+					}
+				}
+			}
+
+			if (StringUtils.isNotEmpty(dataTable.getSortColumnName())) {
+				String orderBy = " order by E." + dataTable.getSortColumnName();
+				if (StringUtils.equals(dataTable.getSortOrder(), "desc")) {
+					orderBy = orderBy + " desc";
+				} else {
+					orderBy = orderBy + " asc";
+				}
+				tableModel.setOrderBy(orderBy);
+			}
+
+			RowBounds rowBounds = new RowBounds(start, pageSize);
+			List<Map<String, Object>> list = sqlSessionTemplate.selectList(
+					"getTableDataByConditions", tableModel, rowBounds);
+			if (list != null && !list.isEmpty()) {
+				JSONArray array = new JSONArray();
+				for (Map<String, Object> rowMap : list) {
+					JSONObject json = new JSONObject();
+					Set<Entry<String, Object>> entrySet = rowMap.entrySet();
+					for (Entry<String, Object> entry : entrySet) {
+						String key = entry.getKey();
+						Object value = entry.getValue();
+						if (value != null) {
+							if (fieldMap.get(key.toLowerCase()) != null) {
+								SysDataField field = fieldMap.get(key
+										.toLowerCase());
+								if ("Date".equals(field.getDataType())) {
+									if (value instanceof Date) {
+										Date date = (Date) value;
+										json.put(field.getName(),
+												DateUtils.getDate(date));
+										json.put(field.getName() + "_date",
+												DateUtils.getDate(date));
+										json.put(field.getName() + "_datetime",
+												DateUtils.getDateTime(date));
+									} else if (value instanceof Long) {
+										Date date = new Date((Long) value);
+										json.put(field.getName(),
+												DateUtils.getDate(date));
+										json.put(field.getName() + "_date",
+												DateUtils.getDate(date));
+										json.put(field.getName() + "_datetime",
+												DateUtils.getDateTime(date));
+									} else {
+										json.put(field.getName(), value);
+									}
+								} else {
+									json.put(field.getName(), value);
+								}
+							} else {
+								json.put(key.toLowerCase(), value);
+							}
+						}
+					}
+					array.add(json);
+				}
+				result.put("rows", array);
+			}
+		}
+		return result;
+	}
+
+	public SysDataField getSysDataField(String id) {
+		if (id == null) {
+			return null;
+		}
+		SysDataField sysDataField = sysDataFieldMapper.getSysDataFieldById(id);
+		return sysDataField;
+	}
+
+	/**
+	 * 获取某个表满足条件的记录总数
+	 * 
+	 * @param query
+	 * @return
+	 */
+	public int getTableDataCount(SysDataTableQuery query) {
+		TableModel q = new TableModel();
+		q.setTableName(query.getTablename());
+		q.setDataRequest(query.getDataRequest());
+
+		SysDataTable dataTable = this.getDataTableByName(query.getTablename());
 		if (dataTable != null && dataTable.getFields() != null) {
 			List<SysDataField> fields = dataTable.getFields();
 			Map<String, String> nameMap = new HashMap<String, String>();
-			TableModel query = new TableModel();
+			Map<String, Object> params = query.getParameters();
 			for (SysDataField field : fields) {
 				ColumnModel column = new ColumnModel();
 				column.setColumnName(field.getColumnName());
@@ -193,7 +337,7 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 
 				nameMap.put(field.getColumnName().toLowerCase(),
 						field.getName());
-				query.setTableName(field.getTablename());
+				q.setTableName(field.getTablename());
 				Object value = params.get(field.getName());
 				if (value == null) {
 					if (StringUtils.equals(field.getDataType(), "String")) {
@@ -225,116 +369,18 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 					}
 				}
 				if (column.getValue() != null) {
-					query.addColumn(column);
-				}
-			}
-
-			RowBounds rowBounds = new RowBounds(start, limit);
-
-			int total = tableDataMapper.getTableCountByConditions(query);
-
-			result.put("total", total);
-			result.put("totalCount", total);
-			result.put("totalRecords", total);
-			result.put("start", start);
-			result.put("startIndex", start);
-			result.put("limit", limit);
-			result.put("pageSize", limit);
-
-			if (total > 0) {
-				List<Map<String, Object>> list = sqlSessionTemplate.selectList(
-						"getTableDataByConditions", query, rowBounds);
-				if (list != null && !list.isEmpty()) {
-					JSONArray array = new JSONArray();
-					for (Map<String, Object> rowMap : list) {
-						JSONObject json = new JSONObject();
-						Iterator<Entry<String, Object>> iterator = rowMap
-								.entrySet().iterator();
-						while (iterator.hasNext()) {
-							Entry<String, Object> entry = iterator.next();
-							String key = entry.getKey();
-							Object value = entry.getValue();
-							String name = nameMap.get(key.toLowerCase());
-							json.put(name, value);
-						}
-						array.add(json);
-					}
-					result.put("rows", array);
+					q.addColumn(column);
 				}
 			}
 		}
-		return result;
+
+		int total = tableDataMapper.getTableCountByConditions(q);
+		return total;
 	}
 
-	/**
-	 * 获取一页数据
-	 * 
-	 * @param start
-	 * @param pageSize
-	 * @param query
-	 * @return
-	 */
-	public JSONObject getPageTableData(int start, int pageSize,
-			SysDataTableQuery query) {
-		JSONObject result = new JSONObject();
-		TableModel tableModel = new TableModel();
-		tableModel.setTableName(query.getTablename());
-		tableModel.setDataRequest(query.getDataRequest());
-		int total = tableDataMapper.getTableCountByConditions(tableModel);
-		if (total > 0) {
-			result.put("total", total);
-			SysDataTable dataTable = this.getDataTableByTable(query
-					.getTablename());
-			Map<String, SysDataField> fieldMap = new HashMap<String, SysDataField>();
-			if (dataTable != null && dataTable.getFields() != null) {
-				List<SysDataField> fields = dataTable.getFields();
-				for (SysDataField field : fields) {
-					if (field.getName() != null) {
-						fieldMap.put(field.getColumnName(), field);
-						fieldMap.put(field.getColumnName().toLowerCase(), field);
-					}
-				}
-			}
-			// logger.debug("fieldMap:" + fieldMap);
-			List<Map<String, Object>> list = tableDataMapper
-					.getTableDataByConditions(tableModel);
-			if (list != null && !list.isEmpty()) {
-				JSONArray array = new JSONArray();
-				for (Map<String, Object> rowMap : list) {
-					JSONObject json = new JSONObject();
-					Set<Entry<String, Object>> entrySet = rowMap.entrySet();
-					for (Entry<String, Object> entry : entrySet) {
-						String key = entry.getKey();
-						Object value = entry.getValue();
-						if (value != null) {
-							if (fieldMap.get(key.toLowerCase()) != null) {
-								SysDataField field = fieldMap.get(key
-										.toLowerCase());
-								json.put(field.getName(), value);
-							} else {
-								json.put(key.toLowerCase(), value);
-							}
-						}
-					}
-					array.add(json);
-				}
-				result.put("rows", array);
-			}
-		}
-		return result;
-	}
-
-	public SysDataField getSysDataField(String id) {
-		if (id == null) {
-			return null;
-		}
-		SysDataField sysDataField = sysDataFieldMapper.getSysDataFieldById(id);
-		return sysDataField;
-	}
-
-	public List<TreeModel> getTreeModels(String serviceKey, Object parentId) {
+	public List<TreeModel> getTreeModels(String datatableId, Object parentId) {
 		List<TreeModel> treeModels = new ArrayList<TreeModel>();
-		SysDataTable dataTable = this.getDataTableByServiceKey(serviceKey);
+		SysDataTable dataTable = this.getDataTableById(datatableId);
 		if (dataTable != null && dataTable.getFields() != null) {
 			List<SysDataField> fields = dataTable.getFields();
 			SysDataField idField = null;
@@ -449,8 +495,8 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 	}
 
 	@Transactional
-	public void saveData(String serviceKey, Map<String, Object> dataMap) {
-		SysDataTable dataTable = this.getDataTableByServiceKey(serviceKey);
+	public void saveData(String datatableId, Map<String, Object> dataMap) {
+		SysDataTable dataTable = this.getDataTableById(datatableId);
 		Map<String, Object> newData = new HashMap<String, Object>();
 		Set<Entry<String, Object>> entrySet = dataMap.entrySet();
 		for (Entry<String, Object> entry : entrySet) {
@@ -636,9 +682,9 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 	}
 
 	@Transactional
-	public void saveDataList(String serviceKey,
+	public void saveDataList(String datatableId,
 			List<Map<String, Object>> dataList) {
-		SysDataTable dataTable = this.getDataTableByServiceKey(serviceKey);
+		SysDataTable dataTable = this.getDataTableById(datatableId);
 		Map<String, Object> newData = new HashMap<String, Object>();
 
 		SysDataField idField = null;
@@ -893,12 +939,12 @@ public class MxSysDataTableServiceImpl implements ISysDataTableService {
 	/**
 	 * 保存数据
 	 * 
-	 * @param serviceKey
+	 * @param datatableId
 	 * @param jsonObject
 	 */
 	@Transactional
-	public void saveJsonData(String serviceKey, JSONObject jsonObject) {
-		SysDataTable dataTable = this.getDataTableByServiceKey(serviceKey);
+	public void saveJsonData(String datatableId, JSONObject jsonObject) {
+		SysDataTable dataTable = this.getDataTableById(datatableId);
 		if (jsonObject != null && dataTable != null
 				&& dataTable.getFields() != null) {
 			List<SysDataField> fields = dataTable.getFields();

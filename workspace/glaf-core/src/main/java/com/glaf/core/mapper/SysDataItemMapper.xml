@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.mapper.SysDataItemMapper">
+
+	<resultMap id="sysDataItemResultMap" type="com.glaf.core.domain.SysDataItem">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="queryId" column="QUERYID_" jdbcType="VARCHAR" />
+		<result property="querySQL" column="QUERYSQL_" jdbcType="VARCHAR" />
+		<result property="parameter" column="PARAMETER_" jdbcType="VARCHAR" />
+		<result property="textField" column="TEXTFIELD_" jdbcType="VARCHAR" />
+		<result property="valueField" column="VALUEFIELD_" jdbcType="VARCHAR" />
+		<result property="treeIdField" column="TREEIDFIELD_" jdbcType="VARCHAR" />
+		<result property="treeParentIdField" column="TREEPARENTIDFIELD_"
+			jdbcType="VARCHAR" />
+		<result property="treeTreeIdField" column="TREETREEIDFIELD_"
+			jdbcType="VARCHAR" />
+		<result property="treeNameField" column="TREENAMEFIELD_"
+			jdbcType="VARCHAR" />
+		<result property="treeListNoField" column="TREELISTNOFIELD_"
+			jdbcType="VARCHAR" />
+		<result property="url" column="URL_" jdbcType="VARCHAR" />
+		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="createTime" column="CREATETIME_" jdbcType="TIMESTAMP" />
+		<result property="updateBy" column="UPDATEBY_" jdbcType="VARCHAR" />
+		<result property="updateTime" column="UPDATETIME_" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+
+	<insert id="insertSysDataItem" parameterType="com.glaf.core.domain.SysDataItem">
+		insert into SYS_DATA_ITEM
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="name != null">
+				,NAME_
+			</if>
+			<if test="title != null">
+				,TITLE_
+			</if>
+			<if test="queryId != null">
+				,QUERYID_
+			</if>
+			<if test="querySQL != null">
+				,QUERYSQL_
+			</if>
+			<if test="parameter != null">
+				,PARAMETER_
+			</if>
+			<if test="textField != null">
+				,TEXTFIELD_
+			</if>
+			<if test="valueField != null">
+				,VALUEFIELD_
+			</if>
+			<if test="treeIdField != null">
+				,TREEIDFIELD_
+			</if>
+			<if test="treeParentIdField != null">
+				,TREEPARENTIDFIELD_
+			</if>
+			<if test="treeTreeIdField != null">
+				,TREETREEIDFIELD_
+			</if>
+			<if test="treeNameField != null">
+				,TREENAMEFIELD_
+			</if>
+			<if test="treeListNoField != null">
+				,TREELISTNOFIELD_
+			</if>
+			<if test="url != null">
+				,URL_
+			</if>
+			<if test="locked != null">
+				,LOCKED_
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_
+			</if>
+			<if test="createTime != null">
+				,CREATETIME_
+			</if>
+			<if test="updateBy != null">
+				,UPDATEBY_
+			</if>
+			<if test="updateTime != null">
+				,UPDATETIME_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="title != null">
+				,#{title, jdbcType=VARCHAR}
+			</if>
+			<if test="queryId != null">
+				,#{queryId, jdbcType=VARCHAR}
+			</if>
+			<if test="querySQL != null">
+				,#{querySQL, jdbcType=VARCHAR}
+			</if>
+			<if test="parameter != null">
+				,#{parameter, jdbcType=VARCHAR}
+			</if>
+			<if test="textField != null">
+				,#{textField, jdbcType=VARCHAR}
+			</if>
+			<if test="valueField != null">
+				,#{valueField, jdbcType=VARCHAR}
+			</if>
+			<if test="treeIdField != null">
+				,#{treeIdField, jdbcType=VARCHAR}
+			</if>
+			<if test="treeParentIdField != null">
+				,#{treeParentIdField, jdbcType=VARCHAR}
+			</if>
+			<if test="treeTreeIdField != null">
+				,#{treeTreeIdField, jdbcType=VARCHAR}
+			</if>
+			<if test="treeNameField != null">
+				,#{treeNameField, jdbcType=VARCHAR}
+			</if>
+			<if test="treeListNoField != null">
+				,#{treeListNoField, jdbcType=VARCHAR}
+			</if>
+			<if test="url != null">
+				,#{url, jdbcType=VARCHAR}
+			</if>
+			<if test="locked != null">
+				,#{locked, jdbcType=INTEGER}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null">
+				,#{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+			<if test="updateTime != null">
+				,#{updateTime, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateSysDataItem" parameterType="com.glaf.core.domain.SysDataItem">
+		update SYS_DATA_ITEM
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="name != null">
+				NAME_ = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				TITLE_ = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test="queryId != null">
+				QUERYID_ = #{queryId, jdbcType=VARCHAR},
+			</if>
+			<if test="querySQL != null">
+				QUERYSQL_ = #{querySQL, jdbcType=VARCHAR},
+			</if>
+			<if test="parameter != null">
+				PARAMETER_ = #{parameter, jdbcType=VARCHAR},
+			</if>
+			<if test="textField != null">
+				TEXTFIELD_ = #{textField, jdbcType=VARCHAR},
+			</if>
+			<if test="valueField != null">
+				VALUEFIELD_ = #{valueField, jdbcType=VARCHAR},
+			</if>
+			<if test="treeIdField != null">
+				TREEIDFIELD_ = #{treeIdField, jdbcType=VARCHAR},
+			</if>
+			<if test="treeParentIdField != null">
+				TREEPARENTIDFIELD_ = #{treeParentIdField,
+				jdbcType=VARCHAR},
+			</if>
+			<if test="treeTreeIdField != null">
+				TREETREEIDFIELD_ = #{treeTreeIdField, jdbcType=VARCHAR},
+			</if>
+			<if test="treeNameField != null">
+				TREENAMEFIELD_ = #{treeNameField, jdbcType=VARCHAR},
+			</if>
+			<if test="treeListNoField != null">
+				TREELISTNOFIELD_ = #{treeListNoField, jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				URL_ = #{url, jdbcType=VARCHAR},
+			</if>
+			<if test="locked != null">
+				LOCKED_ = #{locked, jdbcType=INTEGER},
+			</if>
+			<if test="createBy != null">
+				CREATEBY_ = #{createBy, jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				CREATETIME_ = #{createTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateBy != null">
+				UPDATEBY_ = #{updateBy, jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				UPDATETIME_ = #{updateTime, jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteSysDataItemById" parameterType="long">
+		delete from
+		SYS_DATA_ITEM
+		where ID_ = #{id}
+	</delete>
+
+
+	<delete id="deleteSysDataItems" parameterType="com.glaf.core.query.SysDataItemQuery">
+		delete from SYS_DATA_ITEM
+		where (
+		ID_ IN
+		<foreach item="x_id" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{x_id}
+		</foreach>
+		)
+	</delete>
+
+
+	<select id="getSysDataItemById" parameterType="long"
+		resultMap="sysDataItemResultMap">
+		select * from SYS_DATA_ITEM where ID_ = #{id}
+	</select>
+
+
+	<select id="getSysDataItems" parameterType="com.glaf.core.query.SysDataItemQuery"
+		resultMap="sysDataItemResultMap">
+		select distinct E.*
+		<include refid="selectSysDataItemsSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.ID_ desc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getSysDataItemCount" parameterType="com.glaf.core.query.SysDataItemQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectSysDataItemsSql" />
+	</select>
+
+
+	<sql id="selectSysDataItemsSql">
+
+		from SYS_DATA_ITEM E
+
+		<where>
+			1 = 1
+
+			<if test="name != null and name != '' ">
+				and E.NAME_ = #{name}
+			</if>
+
+			<if test="nameLike != null and nameLike != '' ">
+				and E.NAME_ like #{nameLike}
+			</if>
+
+			<if test="titleLike != null and titleLike != '' ">
+				and E.TITLE_ like #{titleLike}
+			</if>
+
+			<if test="queryId != null and queryId != '' ">
+				and E.QUERYID_ = #{queryId}
+			</if>
+
+			<if test="queryIds != null and queryIds.size() &gt; 0">
+				and E.QUERYID_ IN
+				<foreach item="x_queryId" index="index" collection="queryIds"
+					open="(" separator="," close=")">
+					#{x_queryId}
+				</foreach>
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="createBys != null and createBys.size() &gt; 0">
+				and E.CREATEBY_ IN
+				<foreach item="x_createBy" index="index" collection="createBys"
+					open="(" separator="," close=")">
+					#{x_createBy}
+				</foreach>
+			</if>
+
+			<if test="createTimeGreaterThanOrEqual != null">
+				and E.CREATETIME_ &gt;= #{createTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="createTimeLessThanOrEqual != null">
+				and E.CREATETIME_ &lt;= #{createTimeLessThanOrEqual}
+			</if>
+
+			<if test="updateTimeGreaterThanOrEqual != null">
+				and E.UPDATETIME_ &gt;= #{updateTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="updateTimeLessThanOrEqual != null">
+				and E.UPDATETIME_ &lt;= #{updateTimeLessThanOrEqual}
+			</if>
+
+			<if test="locked != null">
+				and E.LOCKED_ = #{locked, jdbcType=INTEGER}
+			</if>
+
+			<if test="dataRequest != null and dataRequest.filter != null ">
+				<include refid="com.glaf.global.GlobalMapper.dataRequestFilterCondition" />
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

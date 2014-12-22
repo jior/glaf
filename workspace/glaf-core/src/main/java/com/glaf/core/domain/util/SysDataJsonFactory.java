@@ -51,6 +51,9 @@ public class SysDataJsonFactory {
 		if (jsonObject.containsKey("path")) {
 			model.setPath(jsonObject.getString("path"));
 		}
+		if (jsonObject.containsKey("accessType")) {
+			model.setAccessType(jsonObject.getString("accessType"));
+		}
 		if (jsonObject.containsKey("perms")) {
 			model.setPerms(jsonObject.getString("perms"));
 		}
@@ -104,6 +107,9 @@ public class SysDataJsonFactory {
 		if (model.getPath() != null) {
 			jsonObject.put("path", model.getPath());
 		}
+		if (model.getAccessType() != null) {
+			jsonObject.put("accessType", model.getAccessType());
+		}
 		if (model.getPerms() != null) {
 			jsonObject.put("perms", model.getPerms());
 		}
@@ -152,6 +158,9 @@ public class SysDataJsonFactory {
 		}
 		if (model.getPath() != null) {
 			jsonObject.put("path", model.getPath());
+		}
+		if (model.getAccessType() != null) {
+			jsonObject.put("accessType", model.getAccessType());
 		}
 		if (model.getPerms() != null) {
 			jsonObject.put("perms", model.getPerms());

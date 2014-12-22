@@ -67,8 +67,13 @@ public class SysDataFieldDomainFactory {
 		columnMap.put("textField", "TEXTFIELD_");
 		columnMap.put("validType", "VALIDTYPE_");
 		columnMap.put("required", "REQUIRED_");
+		columnMap.put("dataItemId", "DATAITEMID_");
 		columnMap.put("initValue", "INITVALUE_");
 		columnMap.put("defaultValue", "DEFAULTVALUE_");
+		columnMap.put("maxValue", "MAXVALUE_");
+		columnMap.put("minValue", "MINVALUE_");
+		columnMap.put("stepValue", "STEPVALUE_");
+		columnMap.put("placeholder", "PLACEHOLDER_");
 		columnMap.put("valueExpression", "VALUEEXPRESSION_");
 		columnMap.put("sortable", "SORTABLE_");
 		columnMap.put("ordinal", "ORDINAL_");
@@ -103,8 +108,13 @@ public class SysDataFieldDomainFactory {
 		javaTypeMap.put("textField", "String");
 		javaTypeMap.put("validType", "String");
 		javaTypeMap.put("required", "String");
+		javaTypeMap.put("dataItemId", "Long");
 		javaTypeMap.put("initValue", "String");
 		javaTypeMap.put("defaultValue", "String");
+		javaTypeMap.put("maxValue", "Double");
+		javaTypeMap.put("minValue", "Double");
+		javaTypeMap.put("stepValue", "Double");
+		javaTypeMap.put("placeholder", "String");
 		javaTypeMap.put("valueExpression", "String");
 		javaTypeMap.put("sortable", "String");
 		javaTypeMap.put("ordinal", "Integer");
@@ -310,6 +320,12 @@ public class SysDataFieldDomainFactory {
 		required.setLength(5);
 		tableDefinition.addColumn(required);
 
+		ColumnDefinition dataItemId = new ColumnDefinition();
+		dataItemId.setName("dataItemId");
+		dataItemId.setColumnName("DATAITEMID_");
+		dataItemId.setJavaType("Long");
+		tableDefinition.addColumn(dataItemId);
+
 		ColumnDefinition initValue = new ColumnDefinition();
 		initValue.setName("initValue");
 		initValue.setColumnName("INITVALUE_");
@@ -323,6 +339,31 @@ public class SysDataFieldDomainFactory {
 		defaultValue.setJavaType("String");
 		defaultValue.setLength(100);
 		tableDefinition.addColumn(defaultValue);
+
+		ColumnDefinition maxValue = new ColumnDefinition();
+		maxValue.setName("maxValue");
+		maxValue.setColumnName("MAXVALUE_");
+		maxValue.setJavaType("Double");
+		tableDefinition.addColumn(maxValue);
+
+		ColumnDefinition minValue = new ColumnDefinition();
+		minValue.setName("minValue");
+		minValue.setColumnName("MINVALUE_");
+		minValue.setJavaType("Double");
+		tableDefinition.addColumn(minValue);
+
+		ColumnDefinition stepValue = new ColumnDefinition();
+		stepValue.setName("stepValue");
+		stepValue.setColumnName("STEPVALUE_");
+		stepValue.setJavaType("Double");
+		tableDefinition.addColumn(stepValue);
+
+		ColumnDefinition placeholder = new ColumnDefinition();
+		placeholder.setName("placeholder");
+		placeholder.setColumnName("PLACEHOLDER_");
+		placeholder.setJavaType("String");
+		placeholder.setLength(200);
+		tableDefinition.addColumn(placeholder);
 
 		ColumnDefinition valueExpression = new ColumnDefinition();
 		valueExpression.setName("valueExpression");

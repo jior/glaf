@@ -17,6 +17,14 @@
 		<result property="createUrl" column="CREATEURL_" jdbcType="VARCHAR" />
 		<result property="updateUrl" column="UPDATEURL_" jdbcType="VARCHAR" />
 		<result property="destroyUrl" column="DESTROYURL_" jdbcType="VARCHAR" />
+		<result property="sortColumnName" column="SORTCOLUMNNAME_"
+			jdbcType="VARCHAR" />
+		<result property="sortOrder" column="SORTORDER_" jdbcType="VARCHAR" />
+		<result property="accessType" column="ACCESSTYPE_" jdbcType="VARCHAR" />
+		<result property="perms" column="PERMS_" jdbcType="VARCHAR" />
+		<result property="addressPerms" column="ADDRESSPERMS_"
+			jdbcType="VARCHAR" />
+		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
 		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
 		<result property="createTime" column="CREATETIME_" jdbcType="TIMESTAMP" />
 		<result property="updateTime" column="UPDATETIME_" jdbcType="TIMESTAMP" />
@@ -63,6 +71,24 @@
 			</if>
 			<if test="destroyUrl != null">
 				,DESTROYURL_
+			</if>
+			<if test="sortColumnName != null">
+				,SORTCOLUMNNAME_
+			</if>
+			<if test="sortOrder != null">
+				,SORTORDER_
+			</if>
+			<if test="accessType != null">
+				,ACCESSTYPE_
+			</if>
+			<if test="perms != null">
+				,PERMS_
+			</if>
+			<if test="addressPerms != null">
+				,ADDRESSPERMS_
+			</if>
+			<if test="locked != null">
+				,LOCKED_
 			</if>
 			<if test="createBy != null">
 				,CREATEBY_
@@ -123,6 +149,24 @@
 			<if test="destroyUrl != null">
 				,#{destroyUrl, jdbcType=VARCHAR}
 			</if>
+			<if test="sortColumnName != null">
+				,#{sortColumnName, jdbcType=VARCHAR}
+			</if>
+			<if test="sortOrder != null">
+				,#{sortOrder, jdbcType=VARCHAR}
+			</if>
+			<if test="accessType != null">
+				,#{accessType, jdbcType=VARCHAR}
+			</if>
+			<if test="perms != null">
+				,#{perms, jdbcType=VARCHAR}
+			</if>
+			<if test="addressPerms != null">
+				,#{addressPerms, jdbcType=VARCHAR}
+			</if>
+			<if test="locked != null">
+				,#{locked, jdbcType=INTEGER}
+			</if>
 			<if test="createBy != null">
 				,#{createBy, jdbcType=VARCHAR}
 			</if>
@@ -173,6 +217,21 @@
 			<if test="destroyUrl != null">
 				DESTROYURL_ = #{destroyUrl, jdbcType=VARCHAR},
 			</if>
+			<if test="sortColumnName != null">
+				SORTCOLUMNNAME_ = #{sortColumnName, jdbcType=VARCHAR},
+			</if>
+			<if test="sortOrder != null">
+				SORTORDER_ = #{sortOrder, jdbcType=VARCHAR},
+			</if>
+			<if test="accessType != null">
+				ACCESSTYPE_ = #{accessType, jdbcType=VARCHAR},
+			</if>
+			<if test="addressPerms != null">
+				ADDRESSPERMS_ = #{addressPerms, jdbcType=VARCHAR},
+			</if>
+			<if test="perms != null">
+				PERMS_ = #{perms, jdbcType=VARCHAR},
+			</if>
 			<if test="maxUser != null">
 				MAXUSER_ = #{maxUser, jdbcType=INTEGER},
 			</if>
@@ -190,6 +249,9 @@
 			</if>
 			<if test="updateBy != null">
 				UPDATEBY_ = #{updateBy, jdbcType=VARCHAR},
+			</if>
+			<if test="locked != null">
+				LOCKED_ = #{locked, jdbcType=INTEGER},
 			</if>
 			<if test="deleteFlag != null">
 				DELETEFLAG_ = #{deleteFlag, jdbcType=INTEGER},
@@ -322,6 +384,10 @@
 
 			<if test="deleteFlag != null">
 				and E.DELETEFLAG_ = #{deleteFlag}
+			</if>
+
+			<if test="locked != null">
+				and E.LOCKED_ = #{locked}
 			</if>
 
 			<if test="dataRequest != null and dataRequest.filter != null ">

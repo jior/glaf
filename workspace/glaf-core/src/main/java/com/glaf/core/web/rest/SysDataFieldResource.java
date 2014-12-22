@@ -42,6 +42,7 @@ import com.glaf.core.identity.*;
 import com.glaf.core.security.*;
 import com.glaf.core.util.*;
 import com.glaf.core.domain.SysDataField;
+import com.glaf.core.domain.SysDataTable;
 import com.glaf.core.service.ISysDataTableService;
 
 /**
@@ -64,10 +65,17 @@ public class SysDataFieldResource {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public byte[] data(@Context HttpServletRequest request,
 			@RequestBody DataRequest dataRequest) throws IOException {
-		String serviceKey = request.getParameter("serviceKey");
+		String tableName = request.getParameter("tableName");
+		SysDataTable sysDataTable = null;
+		if (request.getParameter("datatableId") != null) {
+			sysDataTable = sysDataTableService.getDataTableById(request
+					.getParameter("datatableId"));
+			if (sysDataTable != null) {
+				tableName = sysDataTable.getTablename();
+			}
+		}
 		JSONObject result = new JSONObject();
-		int total = sysDataTableService
-				.getDataFieldCountByServiceKey(serviceKey);
+		int total = sysDataTableService.getDataFieldCountByTablename(tableName);
 		if (total > 0) {
 			result.put("total", total);
 			result.put("totalCount", total);
@@ -79,7 +87,7 @@ public class SysDataFieldResource {
 
 			Map<String, User> userMap = IdentityFactory.getUserMap();
 			List<SysDataField> list = sysDataTableService
-					.getDataFieldsByServiceKey(serviceKey);
+					.getDataFieldsByTablename(tableName);
 
 			if (list != null && !list.isEmpty()) {
 				JSONArray rowsJSON = new JSONArray();
@@ -128,10 +136,9 @@ public class SysDataFieldResource {
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_JSON })
 	public byte[] list(@Context HttpServletRequest request) throws IOException {
-		String serviceKey = request.getParameter("serviceKey");
+		String tableName = request.getParameter("tableName");
 		JSONObject result = new JSONObject();
-		int total = sysDataTableService
-				.getDataFieldCountByServiceKey(serviceKey);
+		int total = sysDataTableService.getDataFieldCountByTablename(tableName);
 		if (total > 0) {
 			result.put("total", total);
 			result.put("totalCount", total);
@@ -143,7 +150,7 @@ public class SysDataFieldResource {
 
 			Map<String, User> userMap = IdentityFactory.getUserMap();
 			List<SysDataField> list = sysDataTableService
-					.getDataFieldsByServiceKey(serviceKey);
+					.getDataFieldsByTablename(tableName);
 
 			if (list != null && !list.isEmpty()) {
 				JSONArray rowsJSON = new JSONArray();
@@ -219,13 +226,18 @@ public class SysDataFieldResource {
 			sysDataField.setDefaultValue(request.getParameter("defaultValue"));
 			sysDataField.setValueExpression(request
 					.getParameter("valueExpression"));
+			sysDataField.setMaxValue(RequestUtils
+					.getDouble(request, "maxValue"));
+			sysDataField.setMinValue(RequestUtils
+					.getDouble(request, "minValue"));
+			sysDataField.setStepValue(RequestUtils.getDouble(request,
+					"stepValue"));
+			sysDataField.setPlaceholder(request.getParameter("placeholder"));
 			sysDataField.setSortable(request.getParameter("sortable"));
 			sysDataField.setOrdinal(RequestUtils.getInt(request, "ordinal"));
-			sysDataField.setCreateTime(RequestUtils.getDate(request,
-					"createTime"));
+			sysDataField.setDataItemId(RequestUtils.getLong(request,
+					"dataItemId"));
 			sysDataField.setCreateBy(loginContext.getActorId());
-			sysDataField.setUpdateTime(RequestUtils.getDate(request,
-					"updateTime"));
 			sysDataField.setUpdateBy(loginContext.getActorId());
 
 			this.sysDataTableService.saveDataField(sysDataField);

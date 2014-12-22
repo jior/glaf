@@ -48,6 +48,14 @@ public class SysDataTableJsonFactory {
 		if (jsonObject.containsKey("tablename")) {
 			model.setTablename(jsonObject.getString("tablename"));
 		}
+		if (model.getSortColumnName() != null) {
+			jsonObject.put("sortColumnName", model.getSortColumnName());
+		}
+
+		if (jsonObject.containsKey("sortOrder")) {
+			model.setSortOrder(jsonObject.getString("sortOrder"));
+		}
+
 		if (jsonObject.containsKey("title")) {
 			model.setTitle(jsonObject.getString("title"));
 		}
@@ -74,6 +82,18 @@ public class SysDataTableJsonFactory {
 		}
 		if (jsonObject.containsKey("destroyUrl")) {
 			model.setDestroyUrl(jsonObject.getString("destroyUrl"));
+		}
+		if (jsonObject.containsKey("accessType")) {
+			model.setAccessType(jsonObject.getString("accessType"));
+		}
+		if (jsonObject.containsKey("perms")) {
+			model.setPerms(jsonObject.getString("perms"));
+		}
+		if (jsonObject.containsKey("addressPerms")) {
+			model.setAddressPerms(jsonObject.getString("addressPerms"));
+		}
+		if (jsonObject.containsKey("locked")) {
+			model.setLocked(jsonObject.getInteger("locked"));
 		}
 		if (jsonObject.containsKey("createBy")) {
 			model.setCreateBy(jsonObject.getString("createBy"));
@@ -122,6 +142,12 @@ public class SysDataTableJsonFactory {
 		if (model.getTablename() != null) {
 			jsonObject.put("tablename", model.getTablename());
 		}
+		if (model.getSortColumnName() != null) {
+			jsonObject.put("sortColumnName", model.getSortColumnName());
+		}
+		if (model.getSortOrder() != null) {
+			jsonObject.put("sortOrder", model.getSortOrder());
+		}
 		if (model.getTitle() != null) {
 			jsonObject.put("title", model.getTitle());
 		}
@@ -169,6 +195,19 @@ public class SysDataTableJsonFactory {
 		if (model.getDestroyUrl() != null) {
 			jsonObject.put("destroyUrl", model.getDestroyUrl());
 		}
+
+		if (model.getAccessType() != null) {
+			jsonObject.put("accessType", model.getAccessType());
+		}
+
+		if (model.getPerms() != null) {
+			jsonObject.put("perms", model.getPerms());
+		}
+		if (model.getAddressPerms() != null) {
+			jsonObject.put("addressPerms", model.getAddressPerms());
+		}
+
+		jsonObject.put("locked", model.getLocked());
 
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());
@@ -220,6 +259,12 @@ public class SysDataTableJsonFactory {
 		if (model.getTablename() != null) {
 			jsonObject.put("tablename", model.getTablename());
 		}
+		if (model.getSortColumnName() != null) {
+			jsonObject.put("sortColumnName", model.getSortColumnName());
+		}
+		if (model.getSortOrder() != null) {
+			jsonObject.put("sortOrder", model.getSortOrder());
+		}
 		if (model.getTitle() != null) {
 			jsonObject.put("title", model.getTitle());
 		}
@@ -264,6 +309,19 @@ public class SysDataTableJsonFactory {
 		if (model.getDestroyUrl() != null) {
 			jsonObject.put("destroyUrl", model.getDestroyUrl());
 		}
+
+		if (model.getAccessType() != null) {
+			jsonObject.put("accessType", model.getAccessType());
+		}
+
+		if (model.getPerms() != null) {
+			jsonObject.put("perms", model.getPerms());
+		}
+		if (model.getAddressPerms() != null) {
+			jsonObject.put("addressPerms", model.getAddressPerms());
+		}
+
+		jsonObject.put("locked", model.getLocked());
 
 		jsonObject.put("maxUser", model.getMaxUser());
 		jsonObject.put("maxSys", model.getMaxSys());

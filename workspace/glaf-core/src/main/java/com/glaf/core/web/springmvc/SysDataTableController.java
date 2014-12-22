@@ -63,6 +63,8 @@ public class SysDataTableController {
 
 	protected ISysDataTableService sysDataTableService;
 
+	protected ISysDataItemService sysDataItemService;
+
 	public SysDataTableController() {
 
 	}
@@ -115,6 +117,21 @@ public class SysDataTableController {
 				.getDataTableById(request.getParameter("id"));
 		if (sysDataTable != null) {
 			request.setAttribute("sysDataTable", sysDataTable);
+
+			List<String> perms = StringTools.split(sysDataTable.getPerms());
+			StringBuffer buffer = new StringBuffer();
+			List<Role> roles = IdentityFactory.getRoles();
+
+			if (roles != null && !roles.isEmpty()) {
+				for (Role role : roles) {
+					if (perms.contains(String.valueOf(role.getId()))) {
+						buffer.append(role.getName());
+						buffer.append(FileUtils.newline);
+					}
+				}
+			}
+
+			request.setAttribute("x_role_names", buffer.toString());
 		}
 
 		String view = request.getParameter("view");
@@ -160,7 +177,7 @@ public class SysDataTableController {
 											.getSysDataTable(new ByteArrayInputStream(
 													bytes));
 									if (sysDataTableService
-											.getDataTableByTable(dataTable
+											.getDataTableByName(dataTable
 													.getTablename()) == null) {
 										dataTable.setCreateBy(loginContext
 												.getActorId());
@@ -179,7 +196,7 @@ public class SysDataTableController {
 					try {
 						SysDataTable dataTable = reader.getSysDataTable(mFile
 								.getInputStream());
-						if (sysDataTableService.getDataTableByTable(dataTable
+						if (sysDataTableService.getDataTableByName(dataTable
 								.getTablename()) == null) {
 							dataTable.setCreateBy(loginContext.getActorId());
 							sysDataTableService.saveDataTable(dataTable);
@@ -451,8 +468,25 @@ public class SysDataTableController {
 		SysDataTable sysDataTable = new SysDataTable();
 		Tools.populate(sysDataTable, params);
 
+		String perm = request.getParameter("perms");
+		List<String> perms = StringTools.split(perm);
+		StringBuffer buffer = new StringBuffer();
+		List<Role> roles = IdentityFactory.getRoles();
+		if (roles != null && !roles.isEmpty()) {
+			for (Role role : roles) {
+				if (perms.contains(String.valueOf(role.getId()))) {
+					buffer.append(role.getId()).append(",");
+				}
+			}
+		}
+
+		sysDataTable.setPerms(buffer.toString());
+		sysDataTable.setAddressPerms(request.getParameter("addressPerms"));
+		sysDataTable.setAccessType(request.getParameter("accessType"));
 		sysDataTable.setServiceKey(request.getParameter("serviceKey"));
 		sysDataTable.setTablename(request.getParameter("tablename"));
+		sysDataTable.setSortColumnName(request.getParameter("sortColumnName"));
+		sysDataTable.setSortOrder(request.getParameter("sortOrder"));
 		sysDataTable.setTitle(request.getParameter("title"));
 		sysDataTable.setType(RequestUtils.getInt(request, "type"));
 		sysDataTable.setMaxUser(RequestUtils.getInt(request, "maxUser"));
@@ -465,6 +499,7 @@ public class SysDataTableController {
 		sysDataTable.setUpdateBy(actorId);
 		sysDataTable.setContent(request.getParameter("content"));
 		sysDataTable.setIsSubTable(request.getParameter("isSubTable"));
+		sysDataTable.setLocked(RequestUtils.getInt(request, "locked"));
 
 		sysDataTableService.saveDataTable(sysDataTable);
 
@@ -479,9 +514,28 @@ public class SysDataTableController {
 		SysDataTable sysDataTable = new SysDataTable();
 		try {
 			Tools.populate(sysDataTable, model);
+
+			String perm = request.getParameter("perms");
+			List<String> perms = StringTools.split(perm);
+			StringBuffer buffer = new StringBuffer();
+			List<Role> roles = IdentityFactory.getRoles();
+			if (roles != null && !roles.isEmpty()) {
+				for (Role role : roles) {
+					if (perms.contains(String.valueOf(role.getId()))) {
+						buffer.append(role.getId()).append(",");
+					}
+				}
+			}
+
+			sysDataTable.setPerms(buffer.toString());
+			sysDataTable.setAddressPerms(request.getParameter("addressPerms"));
+			sysDataTable.setAccessType(request.getParameter("accessType"));
 			sysDataTable.setServiceKey(ParamUtils
 					.getString(model, "serviceKey"));
 			sysDataTable.setTablename(ParamUtils.getString(model, "tablename"));
+			sysDataTable.setSortColumnName(request
+					.getParameter("sortColumnName"));
+			sysDataTable.setSortOrder(request.getParameter("sortOrder"));
 			sysDataTable.setTitle(ParamUtils.getString(model, "title"));
 			sysDataTable.setType(ParamUtils.getInt(model, "type"));
 			sysDataTable.setMaxUser(ParamUtils.getInt(model, "maxUser"));
@@ -495,6 +549,7 @@ public class SysDataTableController {
 			sysDataTable.setContent(ParamUtils.getString(model, "content"));
 			sysDataTable.setIsSubTable(ParamUtils
 					.getString(model, "isSubTable"));
+			sysDataTable.setLocked(RequestUtils.getInt(request, "locked"));
 
 			this.sysDataTableService.saveDataTable(sysDataTable);
 		} catch (Exception ex) {
@@ -513,8 +568,27 @@ public class SysDataTableController {
 		SysDataTable sysDataTable = new SysDataTable();
 		try {
 			Tools.populate(sysDataTable, params);
+
+			String perm = request.getParameter("perms");
+			List<String> perms = StringTools.split(perm);
+			StringBuffer buffer = new StringBuffer();
+			List<Role> roles = IdentityFactory.getRoles();
+			if (roles != null && !roles.isEmpty()) {
+				for (Role role : roles) {
+					if (perms.contains(String.valueOf(role.getId()))) {
+						buffer.append(role.getId()).append(",");
+					}
+				}
+			}
+
+			sysDataTable.setPerms(buffer.toString());
+			sysDataTable.setAddressPerms(request.getParameter("addressPerms"));
+			sysDataTable.setAccessType(request.getParameter("accessType"));
 			sysDataTable.setServiceKey(request.getParameter("serviceKey"));
 			sysDataTable.setTablename(request.getParameter("tablename"));
+			sysDataTable.setSortColumnName(request
+					.getParameter("sortColumnName"));
+			sysDataTable.setSortOrder(request.getParameter("sortOrder"));
 			sysDataTable.setTitle(request.getParameter("title"));
 			sysDataTable.setType(RequestUtils.getInt(request, "type"));
 			sysDataTable.setMaxUser(RequestUtils.getInt(request, "maxUser"));
@@ -527,6 +601,7 @@ public class SysDataTableController {
 			sysDataTable.setUpdateBy(actorId);
 			sysDataTable.setContent(request.getParameter("content"));
 			sysDataTable.setIsSubTable(request.getParameter("isSubTable"));
+			sysDataTable.setLocked(RequestUtils.getInt(request, "locked"));
 
 			this.sysDataTableService.saveDataTable(sysDataTable);
 
@@ -541,6 +616,11 @@ public class SysDataTableController {
 	@javax.annotation.Resource
 	public void setSysDataTableService(ISysDataTableService sysDataTableService) {
 		this.sysDataTableService = sysDataTableService;
+	}
+
+	@javax.annotation.Resource
+	public void setSysDataItemService(ISysDataItemService sysDataItemService) {
+		this.sysDataItemService = sysDataItemService;
 	}
 
 	@RequestMapping("/showImport")
@@ -572,8 +652,25 @@ public class SysDataTableController {
 
 		Tools.populate(sysDataTable, params);
 
+		String perm = request.getParameter("perms");
+		List<String> perms = StringTools.split(perm);
+		StringBuffer buffer = new StringBuffer();
+		List<Role> roles = IdentityFactory.getRoles();
+		if (roles != null && !roles.isEmpty()) {
+			for (Role role : roles) {
+				if (perms.contains(String.valueOf(role.getId()))) {
+					buffer.append(role.getId()).append(",");
+				}
+			}
+		}
+
+		sysDataTable.setPerms(buffer.toString());
+		sysDataTable.setAddressPerms(request.getParameter("addressPerms"));
+		sysDataTable.setAccessType(request.getParameter("accessType"));
 		sysDataTable.setServiceKey(request.getParameter("serviceKey"));
 		sysDataTable.setTablename(request.getParameter("tablename"));
+		sysDataTable.setSortColumnName(request.getParameter("sortColumnName"));
+		sysDataTable.setSortOrder(request.getParameter("sortOrder"));
 		sysDataTable.setTitle(request.getParameter("title"));
 		sysDataTable.setType(RequestUtils.getInt(request, "type"));
 		sysDataTable.setMaxUser(RequestUtils.getInt(request, "maxUser"));
@@ -585,6 +682,7 @@ public class SysDataTableController {
 		sysDataTable.setUpdateBy(user.getActorId());
 		sysDataTable.setContent(request.getParameter("content"));
 		sysDataTable.setIsSubTable(request.getParameter("isSubTable"));
+		sysDataTable.setLocked(RequestUtils.getInt(request, "locked"));
 
 		sysDataTableService.saveDataTable(sysDataTable);
 

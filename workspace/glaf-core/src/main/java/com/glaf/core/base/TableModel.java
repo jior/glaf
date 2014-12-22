@@ -124,6 +124,12 @@ public class TableModel implements java.io.Serializable {
 	 */
 	protected String title;
 
+	protected String sortColumnName;
+
+	protected String sortOrder;
+
+	protected String orderBy;
+
 	protected DataRequest dataRequest;
 
 	public TableModel() {
@@ -265,6 +271,10 @@ public class TableModel implements java.io.Serializable {
 		return minLength;
 	}
 
+	public String getOrderBy() {
+		return orderBy;
+	}
+
 	public String getPackageName() {
 		return packageName;
 	}
@@ -279,6 +289,14 @@ public class TableModel implements java.io.Serializable {
 
 	public String getPrimaryKey() {
 		return primaryKey;
+	}
+
+	public String getSortColumnName() {
+		return sortColumnName;
+	}
+
+	public String getSortOrder() {
+		return sortOrder;
 	}
 
 	public String getSplit() {
@@ -380,6 +398,10 @@ public class TableModel implements java.io.Serializable {
 		this.minLength = minLength;
 	}
 
+	public void setOrderBy(String orderBy) {
+		this.orderBy = orderBy;
+	}
+
 	public void setPackageName(String packageName) {
 		this.packageName = packageName;
 	}
@@ -394,6 +416,14 @@ public class TableModel implements java.io.Serializable {
 
 	public void setPrimaryKey(String primaryKey) {
 		this.primaryKey = primaryKey;
+	}
+
+	public void setSortColumnName(String sortColumnName) {
+		this.sortColumnName = sortColumnName;
+	}
+
+	public void setSortOrder(String sortOrder) {
+		this.sortOrder = sortOrder;
 	}
 
 	public void setSplit(String split) {

@@ -35,6 +35,7 @@ import com.alibaba.fastjson.*;
 import com.glaf.core.base.DataRequest;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.identity.*;
+import com.glaf.core.query.SysDataItemQuery;
 import com.glaf.core.security.*;
 import com.glaf.core.util.*;
 import com.glaf.core.domain.*;
@@ -53,6 +54,8 @@ public class SysDataFieldController {
 			.getLog(SysDataFieldController.class);
 
 	protected ISysDataTableService sysDataTableService;
+
+	protected ISysDataItemService sysDataItemService;
 
 	public SysDataFieldController() {
 
@@ -113,15 +116,11 @@ public class SysDataFieldController {
 				request.setAttribute("sysDataTable", sysDataTable);
 			}
 		}
-
-		String serviceKey = request.getParameter("serviceKey");
-		if (serviceKey != null) {
-			sysDataTable = sysDataTableService
-					.getDataTableByServiceKey(serviceKey);
-			if (sysDataTable != null) {
-				request.setAttribute("sysDataTable", sysDataTable);
-			}
-		}
+		
+		SysDataItemQuery query = new SysDataItemQuery();
+		query.locked(0);
+		List<SysDataItem> dataItems = sysDataItemService.list(query);
+		request.setAttribute("dataItems", dataItems);
 
 		String view = request.getParameter("view");
 		if (StringUtils.isNotEmpty(view)) {
@@ -140,10 +139,18 @@ public class SysDataFieldController {
 	@ResponseBody
 	public byte[] json(HttpServletRequest request, ModelMap modelMap)
 			throws IOException {
-		String serviceKey = request.getParameter("serviceKey");
+		String tableName = request.getParameter("tableName");
+		SysDataTable sysDataTable = null;
+		if (request.getParameter("datatableId") != null) {
+			sysDataTable = sysDataTableService.getDataTableById(request
+					.getParameter("datatableId"));
+			if (sysDataTable != null) {
+				tableName = sysDataTable.getTablename();
+			}
+		}
+
 		JSONObject result = new JSONObject();
-		int total = sysDataTableService
-				.getDataFieldCountByServiceKey(serviceKey);
+		int total = sysDataTableService.getDataFieldCountByTablename(tableName);
 		if (total > 0) {
 			result.put("total", total);
 			result.put("totalCount", total);
@@ -155,7 +162,7 @@ public class SysDataFieldController {
 
 			Map<String, User> userMap = IdentityFactory.getUserMap();
 			List<SysDataField> list = sysDataTableService
-					.getDataFieldsByServiceKey(serviceKey);
+					.getDataFieldsByTablename(tableName);
 
 			if (list != null && !list.isEmpty()) {
 				JSONArray rowsJSON = new JSONArray();
@@ -196,15 +203,6 @@ public class SysDataFieldController {
 		if (request.getParameter("datatableId") != null) {
 			sysDataTable = sysDataTableService.getDataTableById(request
 					.getParameter("datatableId"));
-			if (sysDataTable != null) {
-				request.setAttribute("sysDataTable", sysDataTable);
-			}
-		}
-
-		String serviceKey = request.getParameter("serviceKey");
-		if (serviceKey != null) {
-			sysDataTable = sysDataTableService
-					.getDataTableByServiceKey(serviceKey);
 			if (sysDataTable != null) {
 				request.setAttribute("sysDataTable", sysDataTable);
 			}
@@ -258,9 +256,16 @@ public class SysDataFieldController {
 	public byte[] read(HttpServletRequest request,
 			@RequestBody DataRequest dataRequest) throws IOException {
 		String tableName = request.getParameter("tableName");
+		SysDataTable sysDataTable = null;
+		if (request.getParameter("datatableId") != null) {
+			sysDataTable = sysDataTableService.getDataTableById(request
+					.getParameter("datatableId"));
+			if (sysDataTable != null) {
+				tableName = sysDataTable.getTablename();
+			}
+		}
 		JSONObject result = new JSONObject();
-		int total = sysDataTableService
-				.getDataFieldCountByServiceKey(tableName);
+		int total = sysDataTableService.getDataFieldCountByTablename(tableName);
 		if (total > 0) {
 			result.put("total", total);
 			result.put("totalCount", total);
@@ -272,7 +277,7 @@ public class SysDataFieldController {
 
 			Map<String, User> userMap = IdentityFactory.getUserMap();
 			List<SysDataField> list = sysDataTableService
-					.getDataFieldsByServiceKey(tableName);
+					.getDataFieldsByTablename(tableName);
 
 			if (list != null && !list.isEmpty()) {
 				JSONArray rowsJSON = new JSONArray();
@@ -346,9 +351,13 @@ public class SysDataFieldController {
 		sysDataField.setDefaultValue(request.getParameter("defaultValue"));
 		sysDataField
 				.setValueExpression(request.getParameter("valueExpression"));
+		sysDataField.setMaxValue(RequestUtils.getDouble(request, "maxValue"));
+		sysDataField.setMinValue(RequestUtils.getDouble(request, "minValue"));
+		sysDataField.setStepValue(RequestUtils.getDouble(request, "stepValue"));
+		sysDataField.setPlaceholder(request.getParameter("placeholder"));
 		sysDataField.setSortable(request.getParameter("sortable"));
 		sysDataField.setOrdinal(RequestUtils.getInt(request, "ordinal"));
-
+		sysDataField.setDataItemId(RequestUtils.getLong(request, "dataItemId"));
 		sysDataField.setCreateBy(actorId);
 
 		sysDataTableService.saveDataField(sysDataField);
@@ -401,8 +410,17 @@ public class SysDataFieldController {
 					"defaultValue"));
 			sysDataField.setValueExpression(ParamUtils.getString(model,
 					"valueExpression"));
+			sysDataField.setMaxValue(RequestUtils
+					.getDouble(request, "maxValue"));
+			sysDataField.setMinValue(RequestUtils
+					.getDouble(request, "minValue"));
+			sysDataField.setStepValue(RequestUtils.getDouble(request,
+					"stepValue"));
+			sysDataField.setPlaceholder(request.getParameter("placeholder"));
 			sysDataField.setSortable(ParamUtils.getString(model, "sortable"));
 			sysDataField.setOrdinal(ParamUtils.getInt(model, "ordinal"));
+			sysDataField.setDataItemId(RequestUtils.getLong(request,
+					"dataItemId"));
 			sysDataField.setUpdateBy(actorId);
 			sysDataField.setCreateBy(actorId);
 			this.sysDataTableService.saveDataField(sysDataField);
@@ -419,6 +437,7 @@ public class SysDataFieldController {
 		User user = RequestUtils.getUser(request);
 		String actorId = user.getActorId();
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		logger.debug(params);
 		SysDataField sysDataField = new SysDataField();
 		try {
 			Tools.populate(sysDataField, params);
@@ -454,8 +473,17 @@ public class SysDataFieldController {
 			sysDataField.setDefaultValue(request.getParameter("defaultValue"));
 			sysDataField.setValueExpression(request
 					.getParameter("valueExpression"));
+			sysDataField.setMaxValue(RequestUtils
+					.getDouble(request, "maxValue"));
+			sysDataField.setMinValue(RequestUtils
+					.getDouble(request, "minValue"));
+			sysDataField.setStepValue(RequestUtils.getDouble(request,
+					"stepValue"));
+			sysDataField.setPlaceholder(request.getParameter("placeholder"));
 			sysDataField.setSortable(request.getParameter("sortable"));
 			sysDataField.setOrdinal(RequestUtils.getInt(request, "ordinal"));
+			sysDataField.setDataItemId(RequestUtils.getLong(request,
+					"dataItemId"));
 			sysDataField.setUpdateBy(actorId);
 			sysDataField.setCreateBy(actorId);
 			this.sysDataTableService.saveDataField(sysDataField);
@@ -471,6 +499,11 @@ public class SysDataFieldController {
 	@javax.annotation.Resource
 	public void setSysDataTableService(ISysDataTableService sysDataTableService) {
 		this.sysDataTableService = sysDataTableService;
+	}
+
+	@javax.annotation.Resource
+	public void setSysDataItemService(ISysDataItemService sysDataItemService) {
+		this.sysDataItemService = sysDataItemService;
 	}
 
 	@RequestMapping("/update")
@@ -515,8 +548,13 @@ public class SysDataFieldController {
 		sysDataField.setDefaultValue(request.getParameter("defaultValue"));
 		sysDataField
 				.setValueExpression(request.getParameter("valueExpression"));
+		sysDataField.setMaxValue(RequestUtils.getDouble(request, "maxValue"));
+		sysDataField.setMinValue(RequestUtils.getDouble(request, "minValue"));
+		sysDataField.setStepValue(RequestUtils.getDouble(request, "stepValue"));
+		sysDataField.setPlaceholder(request.getParameter("placeholder"));
 		sysDataField.setSortable(request.getParameter("sortable"));
 		sysDataField.setOrdinal(RequestUtils.getInt(request, "ordinal"));
+		sysDataField.setDataItemId(RequestUtils.getLong(request, "dataItemId"));
 		sysDataField.setUpdateBy(user.getActorId());
 		sysDataTableService.saveDataField(sysDataField);
 

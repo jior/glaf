@@ -12,6 +12,7 @@
 		<result property="perms" column="PERMS_" jdbcType="VARCHAR" />
 		<result property="addressPerms" column="ADDRESSPERMS_"
 			jdbcType="VARCHAR" />
+		<result property="accessType" column="ACCESSTYPE_" jdbcType="VARCHAR" />
 		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
 		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
 		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
@@ -39,6 +40,9 @@
 			</if>
 			<if test="addressPerms != null">
 				,ADDRESSPERMS_
+			</if>
+			<if test="accessType != null">
+				,ACCESSTYPE_
 			</if>
 			<if test="type != null">
 				,TYPE_
@@ -78,6 +82,9 @@
 			<if test="addressPerms != null">
 				,#{addressPerms, jdbcType=VARCHAR}
 			</if>
+			<if test="accessType != null">
+				,#{accessType, jdbcType=VARCHAR}
+			</if>
 			<if test="type != null">
 				,#{type, jdbcType=VARCHAR}
 			</if>
@@ -115,6 +122,9 @@
 			</if>
 			<if test="perms != null">
 				PERMS_ = #{perms, jdbcType=VARCHAR},
+			</if>
+			<if test="accessType != null">
+				ACCESSTYPE_ = #{accessType, jdbcType=VARCHAR},
 			</if>
 			<if test="type != null">
 				TYPE_ = #{type, jdbcType=VARCHAR},
@@ -189,7 +199,7 @@
 			1 = 1
 
 			<if test="titleLike != null and titleLike != '' ">
-	and E.TITLE_ like #{titleLike}
+				and E.TITLE_ like #{titleLike}
 			</if>
 
 			<if test="pathLike != null and pathLike != '' ">

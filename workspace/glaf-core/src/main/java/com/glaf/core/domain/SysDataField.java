@@ -67,7 +67,7 @@ public class SysDataField implements java.lang.Comparable<SysDataField>,
 	protected int length;
 
 	@Column(name = "LISTWEIGTH_")
-	protected int listWeigth;
+	protected int listWeigth = 120;
 
 	@Column(name = "PRIMARYKEY_", length = 5)
 	protected String primaryKey;
@@ -83,6 +83,9 @@ public class SysDataField implements java.lang.Comparable<SysDataField>,
 
 	@Column(name = "IMPORTTYPE_")
 	protected int importType;
+
+	@Column(name = "DATAITEMID_")
+	protected Long dataItemId;
 
 	@Column(name = "FORMATTER_", length = 50)
 	protected String formatter;
@@ -123,6 +126,18 @@ public class SysDataField implements java.lang.Comparable<SysDataField>,
 	@Column(name = "DEFAULTVALUE_", length = 100)
 	protected String defaultValue;
 
+	@Column(name = "MAXVALUE_")
+	protected Double maxValue;
+
+	@Column(name = "MINVALUE_")
+	protected Double minValue;
+
+	@Column(name = "STEPVALUE_")
+	protected Double stepValue;
+
+	@Column(name = "PLACEHOLDER_", length = 200)
+	protected String placeholder;
+
 	@Column(name = "VALUEEXPRESSION_", length = 100)
 	protected String valueExpression;
 
@@ -145,6 +160,12 @@ public class SysDataField implements java.lang.Comparable<SysDataField>,
 
 	@Column(name = "UPDATEBY_", length = 50)
 	protected String updateBy;
+
+	@javax.persistence.Transient
+	protected SysDataItem dataItem;
+
+	@javax.persistence.Transient
+	protected Object value;
 
 	public SysDataField() {
 
@@ -198,6 +219,14 @@ public class SysDataField implements java.lang.Comparable<SysDataField>,
 		return this.createTime;
 	}
 
+	public SysDataItem getDataItem() {
+		return dataItem;
+	}
+
+	public Long getDataItemId() {
+		return dataItemId;
+	}
+
 	public String getDataType() {
 		return this.dataType;
 	}
@@ -247,11 +276,22 @@ public class SysDataField implements java.lang.Comparable<SysDataField>,
 	}
 
 	public int getListWeigth() {
+		if (listWeigth <= 0) {
+			listWeigth = 120;
+		}
 		return this.listWeigth;
 	}
 
 	public String getMask() {
 		return this.mask;
+	}
+
+	public Double getMaxValue() {
+		return maxValue;
+	}
+
+	public Double getMinValue() {
+		return minValue;
 	}
 
 	public String getName() {
@@ -260,6 +300,10 @@ public class SysDataField implements java.lang.Comparable<SysDataField>,
 
 	public int getOrdinal() {
 		return this.ordinal;
+	}
+
+	public String getPlaceholder() {
+		return placeholder;
 	}
 
 	public String getPrimaryKey() {
@@ -284,6 +328,10 @@ public class SysDataField implements java.lang.Comparable<SysDataField>,
 
 	public String getSortable() {
 		return this.sortable;
+	}
+
+	public Double getStepValue() {
+		return stepValue;
 	}
 
 	public String getSystemFlag() {
@@ -318,6 +366,10 @@ public class SysDataField implements java.lang.Comparable<SysDataField>,
 		return this.validType;
 	}
 
+	public Object getValue() {
+		return value;
+	}
+
 	public String getValueExpression() {
 		return this.valueExpression;
 	}
@@ -349,6 +401,14 @@ public class SysDataField implements java.lang.Comparable<SysDataField>,
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public void setDataItem(SysDataItem dataItem) {
+		this.dataItem = dataItem;
+	}
+
+	public void setDataItemId(Long dataItemId) {
+		this.dataItemId = dataItemId;
 	}
 
 	public void setDataType(String dataType) {
@@ -407,12 +467,24 @@ public class SysDataField implements java.lang.Comparable<SysDataField>,
 		this.mask = mask;
 	}
 
+	public void setMaxValue(Double maxValue) {
+		this.maxValue = maxValue;
+	}
+
+	public void setMinValue(Double minValue) {
+		this.minValue = minValue;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	public void setOrdinal(int ordinal) {
 		this.ordinal = ordinal;
+	}
+
+	public void setPlaceholder(String placeholder) {
+		this.placeholder = placeholder;
 	}
 
 	public void setPrimaryKey(String primaryKey) {
@@ -437,6 +509,10 @@ public class SysDataField implements java.lang.Comparable<SysDataField>,
 
 	public void setSortable(String sortable) {
 		this.sortable = sortable;
+	}
+
+	public void setStepValue(Double stepValue) {
+		this.stepValue = stepValue;
 	}
 
 	public void setSystemFlag(String systemFlag) {
@@ -469,6 +545,10 @@ public class SysDataField implements java.lang.Comparable<SysDataField>,
 
 	public void setValidType(String validType) {
 		this.validType = validType;
+	}
+
+	public void setValue(Object value) {
+		this.value = value;
 	}
 
 	public void setValueExpression(String valueExpression) {

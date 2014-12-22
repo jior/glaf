@@ -78,6 +78,21 @@ public class SysDataTable implements Serializable, JSONable {
 	@Column(name = "DESTROYURL_", length = 200)
 	protected String destroyUrl;
 
+	@Column(name = "ACCESSTYPE_", length = 20)
+	protected String accessType;
+
+	@Column(name = "PERMS_", length = 500)
+	protected String perms;
+
+	@Column(name = "ADDRESSPERMS_", length = 2000)
+	protected String addressPerms;
+
+	@Column(name = "SORTCOLUMNNAME_", length = 50)
+	protected String sortColumnName;
+
+	@Column(name = "SORTORDER_", length = 5)
+	protected String sortOrder;
+
 	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
 
@@ -97,6 +112,9 @@ public class SysDataTable implements Serializable, JSONable {
 
 	@Column(name = "ISSUBTABLE_", length = 1)
 	protected String isSubTable;
+
+	@Column(name = "LOCKED_")
+	protected Integer locked = 0;
 
 	@Column(name = "DELETEFLAG_")
 	protected int deleteFlag;
@@ -130,6 +148,14 @@ public class SysDataTable implements Serializable, JSONable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public String getAccessType() {
+		return accessType;
+	}
+
+	public String getAddressPerms() {
+		return addressPerms;
 	}
 
 	public String getContent() {
@@ -168,6 +194,10 @@ public class SysDataTable implements Serializable, JSONable {
 		return this.isSubTable;
 	}
 
+	public Integer getLocked() {
+		return locked;
+	}
+
 	public Integer getMaxSys() {
 		return this.maxSys;
 	}
@@ -176,12 +206,24 @@ public class SysDataTable implements Serializable, JSONable {
 		return this.maxUser;
 	}
 
+	public String getPerms() {
+		return perms;
+	}
+
 	public String getReadUrl() {
 		return readUrl;
 	}
 
 	public String getServiceKey() {
 		return serviceKey;
+	}
+
+	public String getSortColumnName() {
+		return sortColumnName;
+	}
+
+	public String getSortOrder() {
+		return sortOrder;
 	}
 
 	public String getTablename() {
@@ -224,6 +266,14 @@ public class SysDataTable implements Serializable, JSONable {
 		return SysDataTableJsonFactory.jsonToObject(jsonObject);
 	}
 
+	public void setAccessType(String accessType) {
+		this.accessType = accessType;
+	}
+
+	public void setAddressPerms(String addressPerms) {
+		this.addressPerms = addressPerms;
+	}
+
 	public void setContent(String content) {
 		this.content = content;
 	}
@@ -260,6 +310,10 @@ public class SysDataTable implements Serializable, JSONable {
 		this.isSubTable = isSubTable;
 	}
 
+	public void setLocked(Integer locked) {
+		this.locked = locked;
+	}
+
 	public void setMaxSys(Integer maxSys) {
 		this.maxSys = maxSys;
 	}
@@ -268,12 +322,24 @@ public class SysDataTable implements Serializable, JSONable {
 		this.maxUser = maxUser;
 	}
 
+	public void setPerms(String perms) {
+		this.perms = perms;
+	}
+
 	public void setReadUrl(String readUrl) {
 		this.readUrl = readUrl;
 	}
 
 	public void setServiceKey(String serviceKey) {
 		this.serviceKey = serviceKey;
+	}
+
+	public void setSortColumnName(String sortColumnName) {
+		this.sortColumnName = sortColumnName;
+	}
+
+	public void setSortOrder(String sortOrder) {
+		this.sortOrder = sortOrder;
 	}
 
 	public void setTablename(String tablename) {

@@ -49,11 +49,6 @@ public class DataServiceResource {
 
 	protected SysDataService sysDataService;
 
-	@javax.annotation.Resource
-	public void setSysDataService(SysDataService sysDataService) {
-		this.sysDataService = sysDataService;
-	}
-
 	@GET
 	@POST
 	@Path("/response/{id}")
@@ -81,6 +76,11 @@ public class DataServiceResource {
 		}
 		return bean.responseXml(systemName, id, loginContext.getActorId(),
 				ipAddress, contextMap);
+	}
+
+	@javax.annotation.Resource
+	public void setSysDataService(SysDataService sysDataService) {
+		this.sysDataService = sysDataService;
 	}
 
 }

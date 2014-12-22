@@ -50,6 +50,9 @@ public class SysData implements Serializable, JSONable {
 	@Column(name = "PATH_", length = 200)
 	protected String path;
 
+	@Column(name = "ACCESSTYPE_", length = 20)
+	protected String accessType;
+
 	@Column(name = "PERMS_", length = 500)
 	protected String perms;
 
@@ -95,6 +98,10 @@ public class SysData implements Serializable, JSONable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public String getAccessType() {
+		return accessType;
 	}
 
 	public String getAddressPerms() {
@@ -155,6 +162,10 @@ public class SysData implements Serializable, JSONable {
 
 	public SysData jsonToObject(JSONObject jsonObject) {
 		return SysDataJsonFactory.jsonToObject(jsonObject);
+	}
+
+	public void setAccessType(String accessType) {
+		this.accessType = accessType;
 	}
 
 	public void setAddressPerms(String addressPerms) {
