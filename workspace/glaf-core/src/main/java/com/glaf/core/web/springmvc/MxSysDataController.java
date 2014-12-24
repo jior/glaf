@@ -220,7 +220,6 @@ public class MxSysDataController {
 					rowJSON.put("startIndex", ++start);
 					rowsJSON.add(rowJSON);
 				}
-
 			}
 		} else {
 			JSONArray rowsJSON = new JSONArray();
@@ -335,11 +334,15 @@ public class MxSysDataController {
 
 		sysData.setTitle(request.getParameter("title"));
 		sysData.setDescription(request.getParameter("description"));
+		sysData.setQueryId(request.getParameter("queryId"));
+		sysData.setQuerySQL(request.getParameter("querySQL"));
+		sysData.setParameter(request.getParameter("parameter"));
 		sysData.setPath(request.getParameter("path"));
 		sysData.setPerms(buffer.toString());
 		sysData.setAddressPerms(request.getParameter("addressPerms"));
 		sysData.setType(request.getParameter("type"));
 		sysData.setLocked(RequestUtils.getInt(request, "locked"));
+		sysData.setCacheFlag(request.getParameter("cacheFlag"));
 		sysData.setCreateBy(actorId);
 		sysData.setUpdateBy(actorId);
 
@@ -372,11 +375,15 @@ public class MxSysDataController {
 			Tools.populate(sysData, params);
 			sysData.setTitle(request.getParameter("title"));
 			sysData.setDescription(request.getParameter("description"));
+			sysData.setQueryId(request.getParameter("queryId"));
+			sysData.setQuerySQL(request.getParameter("querySQL"));
+			sysData.setParameter(request.getParameter("parameter"));
 			sysData.setPath(request.getParameter("path"));
 			sysData.setPerms(buffer.toString());
 			sysData.setAddressPerms(request.getParameter("addressPerms"));
 			sysData.setType(request.getParameter("type"));
 			sysData.setLocked(RequestUtils.getInt(request, "locked"));
+			sysData.setCacheFlag(request.getParameter("cacheFlag"));
 			sysData.setCreateBy(actorId);
 			sysData.setUpdateBy(actorId);
 			this.sysDataService.save(sysData);
@@ -415,11 +422,15 @@ public class MxSysDataController {
 
 		sysData.setTitle(request.getParameter("title"));
 		sysData.setDescription(request.getParameter("description"));
+		sysData.setQueryId(request.getParameter("queryId"));
+		sysData.setQuerySQL(request.getParameter("querySQL"));
+		sysData.setParameter(request.getParameter("parameter"));
 		sysData.setPath(request.getParameter("path"));
 		sysData.setPerms(perm.toString());
 		sysData.setAddressPerms(request.getParameter("addressPerms"));
 		sysData.setType(request.getParameter("type"));
 		sysData.setLocked(RequestUtils.getInt(request, "locked"));
+		sysData.setCacheFlag(request.getParameter("cacheFlag"));
 		sysData.setCreateBy(actorId);
 		sysData.setUpdateBy(actorId);
 

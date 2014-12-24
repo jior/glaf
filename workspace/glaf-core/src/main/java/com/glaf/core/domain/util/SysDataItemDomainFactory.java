@@ -55,6 +55,7 @@ public class SysDataItemDomainFactory {
 		columnMap.put("treeNameField", "TREENAMEFIELD_");
 		columnMap.put("treeListNoField", "TREELISTNOFIELD_");
 		columnMap.put("url", "URL_");
+		columnMap.put("cacheFlag", "CACHEFLAG_");
 		columnMap.put("createBy", "CREATEBY_");
 		columnMap.put("createTime", "CREATETIME_");
 		columnMap.put("updateBy", "UPDATEBY_");
@@ -74,6 +75,7 @@ public class SysDataItemDomainFactory {
 		javaTypeMap.put("treeNameField", "String");
 		javaTypeMap.put("treeListNoField", "String");
 		javaTypeMap.put("url", "String");
+		javaTypeMap.put("cacheFlag", "String");
 		javaTypeMap.put("createBy", "String");
 		javaTypeMap.put("createTime", "Date");
 		javaTypeMap.put("updateBy", "String");
@@ -194,6 +196,13 @@ public class SysDataItemDomainFactory {
 		url.setJavaType("String");
 		url.setLength(500);
 		tableDefinition.addColumn(url);
+
+		ColumnDefinition cacheFlag = new ColumnDefinition();
+		cacheFlag.setName("cacheFlag");
+		cacheFlag.setColumnName("CACHEFLAG_");
+		cacheFlag.setJavaType("String");
+		cacheFlag.setLength(5);
+		tableDefinition.addColumn(cacheFlag);
 
 		ColumnDefinition createBy = new ColumnDefinition();
 		createBy.setName("createBy");

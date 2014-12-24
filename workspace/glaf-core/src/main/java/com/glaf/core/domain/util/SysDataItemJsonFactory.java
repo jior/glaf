@@ -77,6 +77,9 @@ public class SysDataItemJsonFactory {
 		if (jsonObject.containsKey("url")) {
 			model.setUrl(jsonObject.getString("url"));
 		}
+		if (jsonObject.containsKey("cacheFlag")) {
+			model.setCacheFlag(jsonObject.getString("cacheFlag"));
+		}
 		if (jsonObject.containsKey("createBy")) {
 			model.setCreateBy(jsonObject.getString("createBy"));
 		}
@@ -136,6 +139,9 @@ public class SysDataItemJsonFactory {
 		}
 		if (model.getUrl() != null) {
 			jsonObject.put("url", model.getUrl());
+		}
+		if (model.getCacheFlag() != null) {
+			jsonObject.put("cacheFlag", model.getCacheFlag());
 		}
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());
@@ -205,6 +211,9 @@ public class SysDataItemJsonFactory {
 		}
 		if (model.getUrl() != null) {
 			jsonObject.put("url", model.getUrl());
+		}
+		if (model.getCacheFlag() != null) {
+			jsonObject.put("cacheFlag", model.getCacheFlag());
 		}
 		if (model.getCreateBy() != null) {
 			jsonObject.put("createBy", model.getCreateBy());

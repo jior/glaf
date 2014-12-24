@@ -23,6 +23,7 @@
 		<result property="treeListNoField" column="TREELISTNOFIELD_"
 			jdbcType="VARCHAR" />
 		<result property="url" column="URL_" jdbcType="VARCHAR" />
+		<result property="cacheFlag" column="CACHEFLAG_" jdbcType="VARCHAR" />
 		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
 		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
 		<result property="createTime" column="CREATETIME_" jdbcType="TIMESTAMP" />
@@ -73,6 +74,9 @@
 			</if>
 			<if test="url != null">
 				,URL_
+			</if>
+			<if test="cacheFlag != null">
+				,CACHEFLAG_
 			</if>
 			<if test="locked != null">
 				,LOCKED_
@@ -132,6 +136,9 @@
 			</if>
 			<if test="url != null">
 				,#{url, jdbcType=VARCHAR}
+			</if>
+			<if test="cacheFlag != null">
+				,#{cacheFlag, jdbcType=VARCHAR}
 			</if>
 			<if test="locked != null">
 				,#{locked, jdbcType=INTEGER}
@@ -195,6 +202,9 @@
 			</if>
 			<if test="url != null">
 				URL_ = #{url, jdbcType=VARCHAR},
+			</if>
+			<if test="cacheFlag != null">
+				CACHEFLAG_ = #{cacheFlag, jdbcType=VARCHAR},
 			</if>
 			<if test="locked != null">
 				LOCKED_ = #{locked, jdbcType=INTEGER},

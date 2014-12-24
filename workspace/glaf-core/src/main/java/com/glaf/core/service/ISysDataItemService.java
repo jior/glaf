@@ -67,6 +67,13 @@ public interface ISysDataItemService {
 	 * @return
 	 */
 	SysDataItem getSysDataItemById(long id);
+	
+	/**
+	 * 根据名称获取一条记录
+	 * 
+	 * @return
+	 */
+	SysDataItem getSysDataItemByName(String name);
 
 	/**
 	 * 保存一条记录

@@ -48,6 +48,15 @@ public class SysDataJsonFactory {
 		if (jsonObject.containsKey("description")) {
 			model.setDescription(jsonObject.getString("description"));
 		}
+		if (jsonObject.containsKey("queryId")) {
+			model.setQueryId(jsonObject.getString("queryId"));
+		}
+		if (jsonObject.containsKey("querySQL")) {
+			model.setQuerySQL(jsonObject.getString("querySQL"));
+		}
+		if (jsonObject.containsKey("parameter")) {
+			model.setParameter(jsonObject.getString("parameter"));
+		}
 		if (jsonObject.containsKey("path")) {
 			model.setPath(jsonObject.getString("path"));
 		}
@@ -62,6 +71,9 @@ public class SysDataJsonFactory {
 		}
 		if (jsonObject.containsKey("type")) {
 			model.setType(jsonObject.getString("type"));
+		}
+		if (jsonObject.containsKey("cacheFlag")) {
+			model.setCacheFlag(jsonObject.getString("cacheFlag"));
 		}
 		if (jsonObject.containsKey("locked")) {
 			model.setLocked(jsonObject.getInteger("locked"));
@@ -104,6 +116,15 @@ public class SysDataJsonFactory {
 		if (model.getDescription() != null) {
 			jsonObject.put("description", model.getDescription());
 		}
+		if (model.getQueryId() != null) {
+			jsonObject.put("queryId", model.getQueryId());
+		}
+		if (model.getQuerySQL() != null) {
+			jsonObject.put("querySQL", model.getQuerySQL());
+		}
+		if (model.getParameter() != null) {
+			jsonObject.put("parameter", model.getParameter());
+		}
 		if (model.getPath() != null) {
 			jsonObject.put("path", model.getPath());
 		}
@@ -118,6 +139,9 @@ public class SysDataJsonFactory {
 		}
 		if (model.getType() != null) {
 			jsonObject.put("type", model.getType());
+		}
+		if (model.getCacheFlag() != null) {
+			jsonObject.put("cacheFlag", model.getCacheFlag());
 		}
 		jsonObject.put("locked", model.getLocked());
 		if (model.getCreateDate() != null) {
@@ -156,6 +180,15 @@ public class SysDataJsonFactory {
 		if (model.getDescription() != null) {
 			jsonObject.put("description", model.getDescription());
 		}
+		if (model.getQueryId() != null) {
+			jsonObject.put("queryId", model.getQueryId());
+		}
+		if (model.getQuerySQL() != null) {
+			jsonObject.put("querySQL", model.getQuerySQL());
+		}
+		if (model.getParameter() != null) {
+			jsonObject.put("parameter", model.getParameter());
+		}
 		if (model.getPath() != null) {
 			jsonObject.put("path", model.getPath());
 		}
@@ -170,6 +203,9 @@ public class SysDataJsonFactory {
 		}
 		if (model.getType() != null) {
 			jsonObject.put("type", model.getType());
+		}
+		if (model.getCacheFlag() != null) {
+			jsonObject.put("cacheFlag", model.getCacheFlag());
 		}
 		jsonObject.put("locked", model.getLocked());
 		if (model.getCreateDate() != null) {

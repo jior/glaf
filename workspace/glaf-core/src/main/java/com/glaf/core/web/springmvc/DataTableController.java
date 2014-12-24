@@ -19,6 +19,7 @@
 package com.glaf.core.web.springmvc;
 
 import java.util.Collections;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,6 +31,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSONArray;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.domain.SysDataField;
 import com.glaf.core.domain.SysDataItem;
@@ -60,6 +62,7 @@ public class DataTableController {
 
 	@RequestMapping("/edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		RequestUtils.setRequestParameterToAttribute(request);
 		String tableName = request.getParameter("tableName");
 		String businessKey = request.getParameter("id");
@@ -77,7 +80,12 @@ public class DataTableController {
 							SysDataItem item = sysDataItemService
 									.getSysDataItemById(field.getDataItemId());
 							field.setDataItem(item);
-							logger.debug(item.getTextField()+"->"+item.getValueField());
+							logger.debug(item.getTextField() + "->"
+									+ item.getValueField());
+							JSONArray result = sysDataItemService.getJsonData(
+									item.getId(), params);
+							item.setJsonArray(result);
+							item.setJson(result.toJSONString());
 						}
 					}
 					request.setAttribute("sysDataTable", sysDataTable);
@@ -93,7 +101,12 @@ public class DataTableController {
 							SysDataItem item = sysDataItemService
 									.getSysDataItemById(field.getDataItemId());
 							field.setDataItem(item);
-							logger.debug(item.getTextField()+"->"+item.getValueField());
+							logger.debug(item.getTextField() + "->"
+									+ item.getValueField());
+							JSONArray result = sysDataItemService.getJsonData(
+									item.getId(), params);
+							item.setJsonArray(result);
+							item.setJson(result.toJSONString());
 						}
 					}
 

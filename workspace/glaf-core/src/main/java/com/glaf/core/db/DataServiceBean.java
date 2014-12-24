@@ -28,6 +28,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
 
+import com.glaf.core.cache.CacheFactory;
 import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.config.SystemConfig;
 import com.glaf.core.config.SystemProperties;
@@ -200,8 +201,25 @@ public class DataServiceBean {
 			log.setContent(JsonUtils.encode(contextMap));
 			contextMap.put("loginContext", loginContext);
 			contextMap.put("loginUser", loginContext.getUser());
-			XmlBuilder builder = new XmlBuilder();
-			Document doc = builder.process(systemName, inputStream, contextMap);
+			Document doc = null;
+			String cacheKey = "x_sys_data_" + sysData.getId();
+			if (StringUtils.equals("Y", sysData.getCacheFlag())) {
+				try {
+					String text = CacheFactory.getString(cacheKey);
+					doc = Dom4jUtils.toDocument(text.getBytes());
+				} catch (Exception ex) {
+					// Ignore Exception
+				}
+			}
+			if (doc == null) {
+				XmlBuilder builder = new XmlBuilder();
+				doc = builder.process(systemName, inputStream, contextMap);
+				if (doc != null
+						&& StringUtils.equals("Y", sysData.getCacheFlag())) {
+					CacheFactory.put(cacheKey, doc.asXML());
+				}
+			}
+
 			log.setFlag(9);
 			log.setModuleId("DS");
 

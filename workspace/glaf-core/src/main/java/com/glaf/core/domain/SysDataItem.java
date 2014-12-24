@@ -89,6 +89,9 @@ public class SysDataItem implements Serializable, JSONable {
 	@Column(name = "URL_", length = 500)
 	protected String url;
 
+	@Column(name = "CACHEFLAG_", length = 5)
+	protected String cacheFlag;
+
 	@Column(name = "CREATEBY_", length = 50)
 	protected String createBy;
 
@@ -105,6 +108,12 @@ public class SysDataItem implements Serializable, JSONable {
 
 	@Column(name = "LOCKED_")
 	protected int locked = 0;
+
+	@javax.persistence.Transient
+	protected JSONArray jsonArray;
+
+	@javax.persistence.Transient
+	protected String json;
 
 	public SysDataItem() {
 
@@ -124,6 +133,10 @@ public class SysDataItem implements Serializable, JSONable {
 		return true;
 	}
 
+	public String getCacheFlag() {
+		return cacheFlag;
+	}
+
 	public String getCreateBy() {
 		return this.createBy;
 	}
@@ -141,6 +154,14 @@ public class SysDataItem implements Serializable, JSONable {
 
 	public long getId() {
 		return this.id;
+	}
+
+	public String getJson() {
+		return json;
+	}
+
+	public JSONArray getJsonArray() {
+		return jsonArray;
 	}
 
 	public int getLocked() {
@@ -226,6 +247,10 @@ public class SysDataItem implements Serializable, JSONable {
 		return SysDataItemJsonFactory.jsonToObject(jsonObject);
 	}
 
+	public void setCacheFlag(String cacheFlag) {
+		this.cacheFlag = cacheFlag;
+	}
+
 	public void setCreateBy(String createBy) {
 		this.createBy = createBy;
 	}
@@ -236,6 +261,14 @@ public class SysDataItem implements Serializable, JSONable {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public void setJson(String json) {
+		this.json = json;
+	}
+
+	public void setJsonArray(JSONArray jsonArray) {
+		this.jsonArray = jsonArray;
 	}
 
 	public void setLocked(int locked) {

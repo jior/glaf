@@ -45,7 +45,7 @@ import com.glaf.core.domain.*;
 import com.glaf.core.domain.util.SysDataItemJsonFactory;
 import com.glaf.core.query.*;
 
-@Service
+@Service("sysDataItemService")
 @Transactional(readOnly = true)
 public class MxSysDataItemServiceImpl implements ISysDataItemService {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
@@ -77,6 +77,8 @@ public class MxSysDataItemServiceImpl implements ISysDataItemService {
 		if (id != 0) {
 			String cacheKey = "sys_dataitem_" + id;
 			CacheFactory.remove(cacheKey);
+			cacheKey = "sys_dataitem_data_" + id;
+			CacheFactory.remove(cacheKey);
 			sysDataItemMapper.deleteSysDataItemById(id);
 		}
 	}
@@ -95,6 +97,18 @@ public class MxSysDataItemServiceImpl implements ISysDataItemService {
 		JSONArray result = new JSONArray();
 		SysDataItem sysDataItem = this.getSysDataItemById(id);
 		if (sysDataItem != null) {
+			String cacheKey = "sys_dataitem_data_" + id;
+			if (StringUtils.equals("Y", sysDataItem.getCacheFlag())) {
+				String text = CacheFactory.getString(cacheKey);
+				if (StringUtils.isNotEmpty(text)) {
+					try {
+						result = JSON.parseArray(text);
+						return result;
+					} catch (Exception ex) {
+						// Ignore error
+					}
+				}
+			}
 			if (StringUtils.isNotEmpty(sysDataItem.getQueryId())) {
 				List<Object> list = sqlSessionTemplate.selectList(
 						sysDataItem.getQueryId(), parameter);
@@ -223,7 +237,14 @@ public class MxSysDataItemServiceImpl implements ISysDataItemService {
 					}
 				}
 			}
+
+			if (StringUtils.equals("Y", sysDataItem.getCacheFlag())) {
+				if (!result.isEmpty()) {
+					CacheFactory.put(cacheKey, result.toJSONString());
+				}
+			}
 		}
+
 		return result;
 	}
 
@@ -242,6 +263,21 @@ public class MxSysDataItemServiceImpl implements ISysDataItemService {
 		JSONObject json = SysDataItemJsonFactory.toJsonObject(sysDataItem);
 		CacheFactory.put(cacheKey, json.toJSONString());
 		return sysDataItem;
+	}
+
+	/**
+	 * 根据名称获取一条记录
+	 * 
+	 * @return
+	 */
+	public SysDataItem getSysDataItemByName(String name) {
+		SysDataItemQuery query = new SysDataItemQuery();
+		query.name(name);
+		List<SysDataItem> list = sysDataItemMapper.getSysDataItems(query);
+		if (list != null && !list.isEmpty()) {
+			return list.get(0);
+		}
+		return null;
 	}
 
 	/**
@@ -279,6 +315,8 @@ public class MxSysDataItemServiceImpl implements ISysDataItemService {
 			sysDataItemMapper.insertSysDataItem(sysDataItem);
 		} else {
 			String cacheKey = "sys_dataitem_" + sysDataItem.getId();
+			CacheFactory.remove(cacheKey);
+			cacheKey = "sys_dataitem_data_" + sysDataItem.getId();
 			CacheFactory.remove(cacheKey);
 			sysDataItem.setUpdateTime(new Date());
 			sysDataItemMapper.updateSysDataItem(sysDataItem);

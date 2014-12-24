@@ -286,6 +286,7 @@ public class SysDataItemResource {
 			sysDataItem.setTreeListNoField(request
 					.getParameter("treeListNoField"));
 			sysDataItem.setUrl(request.getParameter("url"));
+			sysDataItem.setCacheFlag(request.getParameter("cacheFlag"));
 			sysDataItem.setCreateBy(actorId);
 			sysDataItem.setUpdateBy(actorId);
 			sysDataItem.setLocked(RequestUtils.getInt(request, "locked"));

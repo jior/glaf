@@ -428,6 +428,7 @@ public class SysDataItemController {
 		sysDataItem.setTreeNameField(request.getParameter("treeNameField"));
 		sysDataItem.setTreeListNoField(request.getParameter("treeListNoField"));
 		sysDataItem.setUrl(request.getParameter("url"));
+		sysDataItem.setCacheFlag(request.getParameter("cacheFlag"));
 		sysDataItem.setLocked(RequestUtils.getInt(request, "locked"));
 		sysDataItem.setCreateBy(actorId);
 		sysDataItem.setUpdateBy(actorId);
@@ -464,6 +465,7 @@ public class SysDataItemController {
 			sysDataItem.setTreeListNoField(ParamUtils.getString(model,
 					"treeListNoField"));
 			sysDataItem.setUrl(ParamUtils.getString(model, "url"));
+			sysDataItem.setCacheFlag(request.getParameter("cacheFlag"));
 			sysDataItem.setCreateBy(actorId);
 			sysDataItem.setUpdateBy(actorId);
 			sysDataItem.setLocked(RequestUtils.getInt(request, "locked"));
@@ -502,6 +504,7 @@ public class SysDataItemController {
 					.getParameter("treeListNoField"));
 			sysDataItem.setUrl(request.getParameter("url"));
 			sysDataItem.setLocked(RequestUtils.getInt(request, "locked"));
+			sysDataItem.setCacheFlag(request.getParameter("cacheFlag"));
 			sysDataItem.setCreateBy(actorId);
 			sysDataItem.setUpdateBy(actorId);
 			this.sysDataItemService.save(sysDataItem);
@@ -547,6 +550,7 @@ public class SysDataItemController {
 		sysDataItem.setUrl(request.getParameter("url"));
 		sysDataItem.setUpdateBy(user.getActorId());
 		sysDataItem.setLocked(RequestUtils.getInt(request, "locked"));
+		sysDataItem.setCacheFlag(request.getParameter("cacheFlag"));
 		sysDataItemService.save(sysDataItem);
 
 		return this.list(request, modelMap);

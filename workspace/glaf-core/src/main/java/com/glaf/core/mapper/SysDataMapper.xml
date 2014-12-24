@@ -8,12 +8,16 @@
 		<id property="id" column="ID_" jdbcType="VARCHAR" />
 		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
 		<result property="description" column="DESCRIPTION_" jdbcType="VARCHAR" />
+		<result property="queryId" column="QUERYID_" jdbcType="VARCHAR" />
+		<result property="querySQL" column="QUERYSQL_" jdbcType="VARCHAR" />
+		<result property="parameter" column="PARAMETER_" jdbcType="VARCHAR" />
 		<result property="path" column="PATH_" jdbcType="VARCHAR" />
 		<result property="perms" column="PERMS_" jdbcType="VARCHAR" />
 		<result property="addressPerms" column="ADDRESSPERMS_"
 			jdbcType="VARCHAR" />
 		<result property="accessType" column="ACCESSTYPE_" jdbcType="VARCHAR" />
 		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
+		<result property="cacheFlag" column="CACHEFLAG_" jdbcType="VARCHAR" />
 		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
 		<result property="createDate" column="CREATEDATE_" jdbcType="TIMESTAMP" />
 		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
@@ -32,6 +36,15 @@
 			<if test="description != null">
 				,DESCRIPTION_
 			</if>
+			<if test="queryId != null">
+				,QUERYID_
+			</if>
+			<if test="querySQL != null">
+				,QUERYSQL_
+			</if>
+			<if test="parameter != null">
+				,PARAMETER_
+			</if>
 			<if test="path != null">
 				,PATH_
 			</if>
@@ -46,6 +59,9 @@
 			</if>
 			<if test="type != null">
 				,TYPE_
+			</if>
+			<if test="cacheFlag != null">
+				,CACHEFLAG_
 			</if>
 			<if test="locked != null">
 				,LOCKED_
@@ -73,6 +89,15 @@
 			<if test="description != null">
 				,#{description, jdbcType=VARCHAR}
 			</if>
+			<if test="queryId != null">
+				,#{queryId, jdbcType=VARCHAR}
+			</if>
+			<if test="querySQL != null">
+				,#{querySQL, jdbcType=VARCHAR}
+			</if>
+			<if test="parameter != null">
+				,#{parameter, jdbcType=VARCHAR}
+			</if>
 			<if test="path != null">
 				,#{path, jdbcType=VARCHAR}
 			</if>
@@ -87,6 +112,9 @@
 			</if>
 			<if test="type != null">
 				,#{type, jdbcType=VARCHAR}
+			</if>
+			<if test="cacheFlag != null">
+				,#{cacheFlag, jdbcType=VARCHAR}
 			</if>
 			<if test="locked != null">
 				,#{locked, jdbcType=INTEGER}
@@ -117,6 +145,15 @@
 			<if test="description != null">
 				DESCRIPTION_ = #{description, jdbcType=VARCHAR},
 			</if>
+			<if test="queryId != null">
+				QUERYID_ = #{queryId, jdbcType=VARCHAR},
+			</if>
+			<if test="querySQL != null">
+				QUERYSQL_ = #{querySQL, jdbcType=VARCHAR},
+			</if>
+			<if test="parameter != null">
+				PARAMETER_ = #{parameter, jdbcType=VARCHAR},
+			</if>
 			<if test="addressPerms != null">
 				ADDRESSPERMS_ = #{addressPerms, jdbcType=VARCHAR},
 			</if>
@@ -128,6 +165,9 @@
 			</if>
 			<if test="type != null">
 				TYPE_ = #{type, jdbcType=VARCHAR},
+			</if>
+			<if test="cacheFlag != null">
+				CACHEFLAG_ = #{cacheFlag, jdbcType=VARCHAR},
 			</if>
 			<if test="locked != null">
 				LOCKED_ = #{locked, jdbcType=INTEGER},

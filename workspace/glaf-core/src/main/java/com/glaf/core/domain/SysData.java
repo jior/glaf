@@ -47,6 +47,17 @@ public class SysData implements Serializable, JSONable {
 	@Column(name = "DESCRIPTION_", length = 500)
 	protected String description;
 
+	@Column(name = "QUERYID_", length = 100)
+	protected String queryId;
+
+	@Lob
+	@Column(name = "QUERYSQL_", length = 2000)
+	protected String querySQL;
+
+	@Lob
+	@Column(name = "PARAMETER_", length = 2000)
+	protected String parameter;
+
 	@Column(name = "PATH_", length = 200)
 	protected String path;
 
@@ -61,6 +72,9 @@ public class SysData implements Serializable, JSONable {
 
 	@Column(name = "TYPE_", length = 50)
 	protected String type;
+
+	@Column(name = "CACHEFLAG_", length = 5)
+	protected String cacheFlag;
 
 	@Column(name = "LOCKED_")
 	protected Integer locked = 0;
@@ -108,6 +122,10 @@ public class SysData implements Serializable, JSONable {
 		return this.addressPerms;
 	}
 
+	public String getCacheFlag() {
+		return cacheFlag;
+	}
+
 	public String getCreateBy() {
 		return this.createBy;
 	}
@@ -128,12 +146,24 @@ public class SysData implements Serializable, JSONable {
 		return this.locked;
 	}
 
+	public String getParameter() {
+		return parameter;
+	}
+
 	public String getPath() {
 		return this.path;
 	}
 
 	public String getPerms() {
 		return this.perms;
+	}
+
+	public String getQueryId() {
+		return queryId;
+	}
+
+	public String getQuerySQL() {
+		return querySQL;
 	}
 
 	public String getTitle() {
@@ -172,6 +202,10 @@ public class SysData implements Serializable, JSONable {
 		this.addressPerms = addressPerms;
 	}
 
+	public void setCacheFlag(String cacheFlag) {
+		this.cacheFlag = cacheFlag;
+	}
+
 	public void setCreateBy(String createBy) {
 		this.createBy = createBy;
 	}
@@ -192,12 +226,24 @@ public class SysData implements Serializable, JSONable {
 		this.locked = locked;
 	}
 
+	public void setParameter(String parameter) {
+		this.parameter = parameter;
+	}
+
 	public void setPath(String path) {
 		this.path = path;
 	}
 
 	public void setPerms(String perms) {
 		this.perms = perms;
+	}
+
+	public void setQueryId(String queryId) {
+		this.queryId = queryId;
+	}
+
+	public void setQuerySQL(String querySQL) {
+		this.querySQL = querySQL;
 	}
 
 	public void setTitle(String title) {

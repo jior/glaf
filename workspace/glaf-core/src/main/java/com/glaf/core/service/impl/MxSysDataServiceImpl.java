@@ -23,6 +23,7 @@ import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.id.*;
+import com.glaf.core.cache.CacheFactory;
+import com.glaf.core.config.SystemConfig;
 import com.glaf.core.dao.*;
 import com.glaf.core.mapper.*;
 import com.glaf.core.domain.*;
@@ -57,7 +60,6 @@ public class MxSysDataServiceImpl implements SysDataService {
 	}
 
 	public int count(SysDataQuery query) {
-		query.ensureInitialized();
 		return sysDataMapper.getSysDataCount(query);
 	}
 
@@ -81,7 +83,22 @@ public class MxSysDataServiceImpl implements SysDataService {
 		if (id == null) {
 			return null;
 		}
+		String cacheKey = "sys_data_" + id;
+		if (SystemConfig.getBoolean("use_query_cache")) {
+			String text = CacheFactory.getString(cacheKey);
+			if (StringUtils.isNotEmpty(text)) {
+				try {
+					JSONObject json = JSON.parseObject(text);
+					return SysDataJsonFactory.jsonToObject(json);
+				} catch (Exception ex) {
+
+				}
+			}
+		}
 		SysData sysData = sysDataMapper.getSysDataById(id);
+		if (sysData != null && SystemConfig.getBoolean("use_query_cache")) {
+			CacheFactory.put(cacheKey, sysData.toJsonObject().toJSONString());
+		}
 		return sysData;
 	}
 
@@ -98,7 +115,6 @@ public class MxSysDataServiceImpl implements SysDataService {
 	}
 
 	public List<SysData> list(SysDataQuery query) {
-		query.ensureInitialized();
 		List<SysData> list = sysDataMapper.getSysDatas(query);
 		return list;
 	}
@@ -146,13 +162,14 @@ public class MxSysDataServiceImpl implements SysDataService {
 	@Transactional
 	public void save(SysData sysData) {
 		SysData model = this.getSysData(sysData.getId());
-
 		if (model == null) {
 			sysData.setCreateDate(new Date());
 			sysData.setUpdateDate(new Date());
 			sysData.setUpdateBy(sysData.getCreateBy());
 			sysDataMapper.insertSysData(sysData);
 		} else {
+			String cacheKey = "sys_data_" + sysData.getId();
+			CacheFactory.remove(cacheKey);
 			sysData.setUpdateDate(new Date());
 			sysDataMapper.updateSysData(sysData);
 		}
