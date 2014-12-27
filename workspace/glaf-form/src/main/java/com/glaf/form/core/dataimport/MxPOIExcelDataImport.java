@@ -18,8 +18,14 @@
 package com.glaf.form.core.dataimport;
 
 import java.awt.Color;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.Map;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.Marshaller;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -38,14 +44,38 @@ import com.glaf.core.util.FieldType;
 import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.Tools;
+
 import com.glaf.form.core.model.FormDefinitionType;
 import com.glaf.form.core.model.NodeType;
+import com.glaf.form.core.model.ObjectFactory;
 
 public class MxPOIExcelDataImport implements FormDataImport {
 	protected final static Log logger = LogFactory
 			.getLog(MxPOIExcelDataImport.class);
 
 	public static final int COLOR_MASK = Integer.parseInt("FFFFFF", 16);
+
+	public static void main(String[] args) throws Exception {
+		MxPOIExcelDataImport imp = new MxPOIExcelDataImport();
+		FormDefinitionType formDefinition = imp
+				.read(new java.io.FileInputStream("./data/TripApply.xls"));
+		ObjectFactory of = new ObjectFactory();
+		JAXBContext jc = JAXBContext.newInstance("com.glaf.form.core.model");
+
+		// System.out.println(jc.createBinder().getXMLNode());
+		Marshaller marshaller = jc.createMarshaller();
+		JAXBElement<?> jaxbElement = of.createFormDefinition(formDefinition);
+		marshaller.setProperty(Marshaller.JAXB_ENCODING, "GBK");
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+		File f = new File("./test.fdl.xml");
+		if (!f.exists()) {
+			if (!f.createNewFile()) {
+				throw new RuntimeException();
+			}
+		}
+		marshaller.marshal(jaxbElement, new FileOutputStream(f));
+	}
 
 	public Color getBackgroundColor(HSSFPalette palette, HSSFCell cell) {
 		short index = cell.getCellStyle().getFillForegroundColor();
@@ -208,11 +238,15 @@ public class MxPOIExcelDataImport implements FormDataImport {
 						}
 					} else if (cellValue.startsWith("$")
 							&& cellValue.endsWith("}")) {
-						Map<String, Object> dataMap = JsonUtils
-								.decode(cellValue.substring(2,
-										cellValue.length()));
-						if (dataMap != null) {
-							propertyMap.putAll(dataMap);
+						try {
+							Map<String, Object> dataMap = JsonUtils
+									.decode(cellValue.substring(2,
+											cellValue.length()));
+							if (dataMap != null) {
+								propertyMap.putAll(dataMap);
+							}
+						} catch (Exception ex) {
+							logger.error(cellValue);
 						}
 					}
 
