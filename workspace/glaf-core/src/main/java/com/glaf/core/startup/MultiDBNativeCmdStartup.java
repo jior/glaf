@@ -35,6 +35,7 @@ import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.config.Environment;
 import com.glaf.core.el.ExpressionTools;
 import com.glaf.core.jdbc.DBConnectionFactory;
+import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.threads.ThreadFactory;
 import com.glaf.core.util.JdbcUtils;
@@ -52,6 +53,9 @@ public class MultiDBNativeCmdStartup implements Bootstrap {
 			String sql = json.getString("sql");
 			String dbName = json.getString("dbName");
 			String cmd = json.getString("cmd");
+			if (DBUtils.isLegalQuerySql(sql)) {
+				throw new RuntimeException(" SQL statement illegal ");
+			}
 			if (StringUtils.isNotEmpty(sql) && StringUtils.isNotEmpty(dbName)
 					&& StringUtils.isNotEmpty(cmd)) {
 				Properties defaultProps = DBConfiguration

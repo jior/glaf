@@ -74,6 +74,9 @@ public class JsonQueryHelper {
 	 */
 	@SuppressWarnings("unchecked")
 	public JSONArray getJSONArray(Connection conn, SqlExecutor sqlExecutor) {
+		if (DBUtils.isLegalQuerySql(sqlExecutor.getSql())) {
+			throw new RuntimeException(" SQL statement illegal ");
+		}
 		JSONArray result = new JSONArray();
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
@@ -271,6 +274,9 @@ public class JsonQueryHelper {
 	@SuppressWarnings("unchecked")
 	public JSONArray getJSONArray(Connection conn, SqlExecutor sqlExecutor,
 			int start, int pageSize) {
+		if (DBUtils.isLegalQuerySql(sqlExecutor.getSql())) {
+			throw new RuntimeException(" SQL statement illegal ");
+		}
 		JSONArray result = new JSONArray();
 		String sql = sqlExecutor.getSql();
 		PreparedStatement psmt = null;
@@ -499,6 +505,9 @@ public class JsonQueryHelper {
 	@SuppressWarnings("unchecked")
 	public JSONArray getJSONArray(Connection conn, String sql,
 			Map<String, Object> paramMap, int start, int pageSize) {
+		if (DBUtils.isLegalQuerySql(sql)) {
+			throw new RuntimeException(" SQL statement illegal ");
+		}
 		JSONArray result = new JSONArray();
 		boolean supportsPhysicalPage = false;
 		PreparedStatement psmt = null;
@@ -563,7 +572,7 @@ public class JsonQueryHelper {
 				int index = 0;
 				while (rs.next()) {
 					index++;
-					//logger.debug("---------------------row index:" + index);
+					// logger.debug("---------------------row index:" + index);
 					JSONObject rowJson = new JSONObject();
 					Iterator<ColumnDefinition> iterator = columns.iterator();
 					while (iterator.hasNext()) {
@@ -577,7 +586,7 @@ public class JsonQueryHelper {
 							columnName = column.getColumnLabel();
 						}
 						String javaType = column.getJavaType();
-						 
+
 						if ("String".equals(javaType)) {
 							String value = rs.getString(column.getIndex());
 							c.setValue(value);
@@ -864,6 +873,9 @@ public class JsonQueryHelper {
 
 	@SuppressWarnings("unchecked")
 	public int getTotal(Connection conn, SqlExecutor sqlExecutor) {
+		if (DBUtils.isLegalQuerySql(sqlExecutor.getSql())) {
+			throw new RuntimeException(" SQL statement illegal ");
+		}
 		int total = 0;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
@@ -910,6 +922,9 @@ public class JsonQueryHelper {
 	@SuppressWarnings("unchecked")
 	public int getTotal(Connection conn, String sql,
 			Map<String, Object> paramMap) {
+		if (DBUtils.isLegalQuerySql(sql)) {
+			throw new RuntimeException(" SQL statement illegal ");
+		}
 		int total = -1;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
@@ -996,6 +1011,9 @@ public class JsonQueryHelper {
 
 	@SuppressWarnings("unchecked")
 	public JSONObject selectOne(Connection conn, SqlExecutor sqlExecutor) {
+		if (DBUtils.isLegalQuerySql(sqlExecutor.getSql())) {
+			throw new RuntimeException(" SQL statement illegal ");
+		}
 		JSONObject result = new JSONObject();
 		String sql = sqlExecutor.getSql();
 		PreparedStatement psmt = null;

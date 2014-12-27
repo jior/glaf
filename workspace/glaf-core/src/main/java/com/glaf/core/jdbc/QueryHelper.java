@@ -77,6 +77,9 @@ public class QueryHelper {
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> getResultList(Connection conn,
 			SqlExecutor sqlExecutor) {
+		if (DBUtils.isLegalQuerySql(sqlExecutor.getSql())) {
+			throw new RuntimeException(" SQL statement illegal ");
+		}
 		List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
@@ -275,6 +278,9 @@ public class QueryHelper {
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> getResultList(Connection conn,
 			SqlExecutor sqlExecutor, int start, int pageSize) {
+		if (DBUtils.isLegalQuerySql(sqlExecutor.getSql())) {
+			throw new RuntimeException(" SQL statement illegal ");
+		}
 		List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
 		String sql = sqlExecutor.getSql();
 		PreparedStatement psmt = null;
@@ -332,10 +338,10 @@ public class QueryHelper {
 				logger.debug("---------------------columns:" + columns.size());
 				logger.debug("---------------------start:" + start);
 				logger.debug("---------------------pageSize:" + pageSize);
-				//int index = 0;
+				// int index = 0;
 				while (rs.next()) {
-					//index++;
-					//logger.debug("---------------------row index:" + index);
+					// index++;
+					// logger.debug("---------------------row index:" + index);
 
 					Map<String, Object> rowMap = new HashMap<String, Object>();
 					Iterator<ColumnDefinition> iterator = columns.iterator();
@@ -512,6 +518,9 @@ public class QueryHelper {
 	@SuppressWarnings("unchecked")
 	public ResultModel getResultList(Connection conn, String sql,
 			Map<String, Object> paramMap, int start, int pageSize) {
+		if (DBUtils.isLegalQuerySql(sql)) {
+			throw new RuntimeException(" SQL statement illegal ");
+		}
 		ResultModel resultModel = new ResultModel();
 		boolean supportsPhysicalPage = false;
 		PreparedStatement psmt = null;
@@ -909,6 +918,9 @@ public class QueryHelper {
 	@SuppressWarnings("unchecked")
 	public int getTotal(Connection conn, String sql,
 			Map<String, Object> paramMap) {
+		if (DBUtils.isLegalQuerySql(sql)) {
+			throw new RuntimeException(" SQL statement illegal ");
+		}
 		int total = -1;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;

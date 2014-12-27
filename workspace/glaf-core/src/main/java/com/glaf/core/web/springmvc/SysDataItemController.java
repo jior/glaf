@@ -111,6 +111,9 @@ public class SysDataItemController {
 		if (sysDataItem != null) {
 			request.setAttribute("sysDataItem", sysDataItem);
 			if (StringUtils.isNotEmpty(sysDataItem.getQuerySQL())) {
+				if (DBUtils.isLegalQuerySql(sysDataItem.getQuerySQL())) {
+					throw new RuntimeException(" SQL statement illegal ");
+				}
 				List<ColumnDefinition> cloumns = new ArrayList<ColumnDefinition>();
 				Connection conn = null;
 				PreparedStatement psmt = null;
@@ -433,6 +436,10 @@ public class SysDataItemController {
 		sysDataItem.setCreateBy(actorId);
 		sysDataItem.setUpdateBy(actorId);
 
+		if (DBUtils.isLegalQuerySql(sysDataItem.getQuerySQL())) {
+			throw new RuntimeException(" SQL statement illegal ");
+		}
+
 		sysDataItemService.save(sysDataItem);
 
 		return this.list(request, modelMap);
@@ -469,6 +476,10 @@ public class SysDataItemController {
 			sysDataItem.setCreateBy(actorId);
 			sysDataItem.setUpdateBy(actorId);
 			sysDataItem.setLocked(RequestUtils.getInt(request, "locked"));
+
+			if (DBUtils.isLegalQuerySql(sysDataItem.getQuerySQL())) {
+				throw new RuntimeException(" SQL statement illegal ");
+			}
 
 			this.sysDataItemService.save(sysDataItem);
 		} catch (Exception ex) {
@@ -507,6 +518,11 @@ public class SysDataItemController {
 			sysDataItem.setCacheFlag(request.getParameter("cacheFlag"));
 			sysDataItem.setCreateBy(actorId);
 			sysDataItem.setUpdateBy(actorId);
+
+			if (DBUtils.isLegalQuerySql(sysDataItem.getQuerySQL())) {
+				throw new RuntimeException(" SQL statement illegal ");
+			}
+
 			this.sysDataItemService.save(sysDataItem);
 
 			return ResponseUtils.responseJsonResult(true);
@@ -551,6 +567,11 @@ public class SysDataItemController {
 		sysDataItem.setUpdateBy(user.getActorId());
 		sysDataItem.setLocked(RequestUtils.getInt(request, "locked"));
 		sysDataItem.setCacheFlag(request.getParameter("cacheFlag"));
+
+		if (DBUtils.isLegalQuerySql(sysDataItem.getQuerySQL())) {
+			throw new RuntimeException(" SQL statement illegal ");
+		}
+
 		sysDataItemService.save(sysDataItem);
 
 		return this.list(request, modelMap);

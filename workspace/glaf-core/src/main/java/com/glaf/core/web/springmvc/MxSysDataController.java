@@ -48,6 +48,7 @@ import com.glaf.core.query.SysDataQuery;
 import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.SysDataService;
+import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.JsonUtils;
@@ -346,6 +347,11 @@ public class MxSysDataController {
 		sysData.setCreateBy(actorId);
 		sysData.setUpdateBy(actorId);
 
+		if (StringUtils.isNotEmpty(sysData.getQuerySQL())
+				&& DBUtils.isLegalQuerySql(sysData.getQuerySQL())) {
+			throw new RuntimeException(" SQL statement illegal ");
+		}
+
 		sysDataService.save(sysData);
 
 		return this.list(request, modelMap);
@@ -386,6 +392,12 @@ public class MxSysDataController {
 			sysData.setCacheFlag(request.getParameter("cacheFlag"));
 			sysData.setCreateBy(actorId);
 			sysData.setUpdateBy(actorId);
+
+			if (StringUtils.isNotEmpty(sysData.getQuerySQL())
+					&& DBUtils.isLegalQuerySql(sysData.getQuerySQL())) {
+				throw new RuntimeException(" SQL statement illegal ");
+			}
+
 			this.sysDataService.save(sysData);
 
 			return ResponseUtils.responseJsonResult(true);
@@ -433,6 +445,11 @@ public class MxSysDataController {
 		sysData.setCacheFlag(request.getParameter("cacheFlag"));
 		sysData.setCreateBy(actorId);
 		sysData.setUpdateBy(actorId);
+
+		if (StringUtils.isNotEmpty(sysData.getQuerySQL())
+				&& DBUtils.isLegalQuerySql(sysData.getQuerySQL())) {
+			throw new RuntimeException(" SQL statement illegal ");
+		}
 
 		sysDataService.save(sysData);
 

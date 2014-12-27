@@ -39,6 +39,7 @@ import com.glaf.core.config.SystemConfig;
 import com.glaf.core.dao.*;
 import com.glaf.core.service.ISysDataItemService;
 import com.glaf.core.util.CaseInsensitiveHashMap;
+import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.Tools;
 import com.glaf.core.mapper.*;
 import com.glaf.core.domain.*;
@@ -180,6 +181,9 @@ public class MxSysDataItemServiceImpl implements ISysDataItemService {
 					}
 				}
 			} else if (StringUtils.isNotEmpty(sysDataItem.getQuerySQL())) {
+				if (DBUtils.isLegalQuerySql(sysDataItem.getQuerySQL())) {
+					throw new RuntimeException(" SQL statement illegal ");
+				}
 				Map<String, Object> params = new HashMap<String, Object>();
 				params.put("queryString", sysDataItem.getQuerySQL());
 				params.put("parameter", parameter);
