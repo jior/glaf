@@ -348,7 +348,7 @@ public class MxSysDataController {
 		sysData.setUpdateBy(actorId);
 
 		if (StringUtils.isNotEmpty(sysData.getQuerySQL())
-				&& DBUtils.isLegalQuerySql(sysData.getQuerySQL())) {
+				&& !DBUtils.isLegalQuerySql(sysData.getQuerySQL())) {
 			throw new RuntimeException(" SQL statement illegal ");
 		}
 
@@ -394,7 +394,7 @@ public class MxSysDataController {
 			sysData.setUpdateBy(actorId);
 
 			if (StringUtils.isNotEmpty(sysData.getQuerySQL())
-					&& DBUtils.isLegalQuerySql(sysData.getQuerySQL())) {
+					&& !DBUtils.isLegalQuerySql(sysData.getQuerySQL())) {
 				throw new RuntimeException(" SQL statement illegal ");
 			}
 
@@ -447,7 +447,7 @@ public class MxSysDataController {
 		sysData.setUpdateBy(actorId);
 
 		if (StringUtils.isNotEmpty(sysData.getQuerySQL())
-				&& DBUtils.isLegalQuerySql(sysData.getQuerySQL())) {
+				&& !DBUtils.isLegalQuerySql(sysData.getQuerySQL())) {
 			throw new RuntimeException(" SQL statement illegal ");
 		}
 

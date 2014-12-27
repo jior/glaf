@@ -181,7 +181,7 @@ public class MxSysDataItemServiceImpl implements ISysDataItemService {
 					}
 				}
 			} else if (StringUtils.isNotEmpty(sysDataItem.getQuerySQL())) {
-				if (DBUtils.isLegalQuerySql(sysDataItem.getQuerySQL())) {
+				if (!DBUtils.isLegalQuerySql(sysDataItem.getQuerySQL())) {
 					throw new RuntimeException(" SQL statement illegal ");
 				}
 				Map<String, Object> params = new HashMap<String, Object>();

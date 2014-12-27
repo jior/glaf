@@ -74,7 +74,7 @@ public class JsonQueryHelper {
 	 */
 	@SuppressWarnings("unchecked")
 	public JSONArray getJSONArray(Connection conn, SqlExecutor sqlExecutor) {
-		if (DBUtils.isLegalQuerySql(sqlExecutor.getSql())) {
+		if (!DBUtils.isLegalQuerySql(sqlExecutor.getSql())) {
 			throw new RuntimeException(" SQL statement illegal ");
 		}
 		JSONArray result = new JSONArray();
@@ -274,7 +274,7 @@ public class JsonQueryHelper {
 	@SuppressWarnings("unchecked")
 	public JSONArray getJSONArray(Connection conn, SqlExecutor sqlExecutor,
 			int start, int pageSize) {
-		if (DBUtils.isLegalQuerySql(sqlExecutor.getSql())) {
+		if (!DBUtils.isLegalQuerySql(sqlExecutor.getSql())) {
 			throw new RuntimeException(" SQL statement illegal ");
 		}
 		JSONArray result = new JSONArray();
@@ -505,7 +505,7 @@ public class JsonQueryHelper {
 	@SuppressWarnings("unchecked")
 	public JSONArray getJSONArray(Connection conn, String sql,
 			Map<String, Object> paramMap, int start, int pageSize) {
-		if (DBUtils.isLegalQuerySql(sql)) {
+		if (!DBUtils.isLegalQuerySql(sql)) {
 			throw new RuntimeException(" SQL statement illegal ");
 		}
 		JSONArray result = new JSONArray();
@@ -873,7 +873,7 @@ public class JsonQueryHelper {
 
 	@SuppressWarnings("unchecked")
 	public int getTotal(Connection conn, SqlExecutor sqlExecutor) {
-		if (DBUtils.isLegalQuerySql(sqlExecutor.getSql())) {
+		if (!DBUtils.isLegalQuerySql(sqlExecutor.getSql())) {
 			throw new RuntimeException(" SQL statement illegal ");
 		}
 		int total = 0;
@@ -922,7 +922,7 @@ public class JsonQueryHelper {
 	@SuppressWarnings("unchecked")
 	public int getTotal(Connection conn, String sql,
 			Map<String, Object> paramMap) {
-		if (DBUtils.isLegalQuerySql(sql)) {
+		if (!DBUtils.isLegalQuerySql(sql)) {
 			throw new RuntimeException(" SQL statement illegal ");
 		}
 		int total = -1;
@@ -1011,7 +1011,7 @@ public class JsonQueryHelper {
 
 	@SuppressWarnings("unchecked")
 	public JSONObject selectOne(Connection conn, SqlExecutor sqlExecutor) {
-		if (DBUtils.isLegalQuerySql(sqlExecutor.getSql())) {
+		if (!DBUtils.isLegalQuerySql(sqlExecutor.getSql())) {
 			throw new RuntimeException(" SQL statement illegal ");
 		}
 		JSONObject result = new JSONObject();

@@ -1084,7 +1084,7 @@ public class DBUtils {
 	@SuppressWarnings("unchecked")
 	public static List<ColumnDefinition> getColumns(Connection conn,
 			String sql, Map<String, Object> paramMap) {
-		if (DBUtils.isLegalQuerySql(sql)) {
+		if (!DBUtils.isLegalQuerySql(sql)) {
 			throw new RuntimeException(" SQL statement illegal ");
 		}
 		List<ColumnDefinition> columns = new java.util.ArrayList<ColumnDefinition>();

@@ -53,7 +53,8 @@ public class MultiDBNativeCmdStartup implements Bootstrap {
 			String sql = json.getString("sql");
 			String dbName = json.getString("dbName");
 			String cmd = json.getString("cmd");
-			if (DBUtils.isLegalQuerySql(sql)) {
+			if (StringUtils.isNotEmpty(sql) && !DBUtils.isLegalQuerySql(sql)) {
+				logger.error(sql);
 				throw new RuntimeException(" SQL statement illegal ");
 			}
 			if (StringUtils.isNotEmpty(sql) && StringUtils.isNotEmpty(dbName)

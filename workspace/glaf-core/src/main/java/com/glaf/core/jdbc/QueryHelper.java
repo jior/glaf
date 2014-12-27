@@ -77,7 +77,7 @@ public class QueryHelper {
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> getResultList(Connection conn,
 			SqlExecutor sqlExecutor) {
-		if (DBUtils.isLegalQuerySql(sqlExecutor.getSql())) {
+		if (!DBUtils.isLegalQuerySql(sqlExecutor.getSql())) {
 			throw new RuntimeException(" SQL statement illegal ");
 		}
 		List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
@@ -278,7 +278,7 @@ public class QueryHelper {
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> getResultList(Connection conn,
 			SqlExecutor sqlExecutor, int start, int pageSize) {
-		if (DBUtils.isLegalQuerySql(sqlExecutor.getSql())) {
+		if (!DBUtils.isLegalQuerySql(sqlExecutor.getSql())) {
 			throw new RuntimeException(" SQL statement illegal ");
 		}
 		List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
@@ -518,7 +518,7 @@ public class QueryHelper {
 	@SuppressWarnings("unchecked")
 	public ResultModel getResultList(Connection conn, String sql,
 			Map<String, Object> paramMap, int start, int pageSize) {
-		if (DBUtils.isLegalQuerySql(sql)) {
+		if (!DBUtils.isLegalQuerySql(sql)) {
 			throw new RuntimeException(" SQL statement illegal ");
 		}
 		ResultModel resultModel = new ResultModel();
@@ -918,7 +918,7 @@ public class QueryHelper {
 	@SuppressWarnings("unchecked")
 	public int getTotal(Connection conn, String sql,
 			Map<String, Object> paramMap) {
-		if (DBUtils.isLegalQuerySql(sql)) {
+		if (!DBUtils.isLegalQuerySql(sql)) {
 			throw new RuntimeException(" SQL statement illegal ");
 		}
 		int total = -1;
