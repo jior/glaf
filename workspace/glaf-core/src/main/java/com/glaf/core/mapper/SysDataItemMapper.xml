@@ -8,6 +8,7 @@
 		<id property="id" column="ID_" jdbcType="BIGINT" />
 		<result property="name" column="NAME_" jdbcType="VARCHAR" />
 		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
 		<result property="queryId" column="QUERYID_" jdbcType="VARCHAR" />
 		<result property="querySQL" column="QUERYSQL_" jdbcType="VARCHAR" />
 		<result property="parameter" column="PARAMETER_" jdbcType="VARCHAR" />
@@ -41,6 +42,9 @@
 			</if>
 			<if test="title != null">
 				,TITLE_
+			</if>
+			<if test="type != null">
+				,TYPE_
 			</if>
 			<if test="queryId != null">
 				,QUERYID_
@@ -103,6 +107,9 @@
 			</if>
 			<if test="title != null">
 				,#{title, jdbcType=VARCHAR}
+			</if>
+			<if test="type != null">
+				,#{type, jdbcType=VARCHAR}
 			</if>
 			<if test="queryId != null">
 				,#{queryId, jdbcType=VARCHAR}

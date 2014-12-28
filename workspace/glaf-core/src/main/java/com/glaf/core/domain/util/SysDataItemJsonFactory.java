@@ -43,6 +43,9 @@ public class SysDataItemJsonFactory {
 		if (jsonObject.containsKey("title")) {
 			model.setTitle(jsonObject.getString("title"));
 		}
+		if (jsonObject.containsKey("type")) {
+			model.setType(jsonObject.getString("type"));
+		}
 		if (jsonObject.containsKey("queryId")) {
 			model.setQueryId(jsonObject.getString("queryId"));
 		}
@@ -106,6 +109,14 @@ public class SysDataItemJsonFactory {
 		}
 		if (model.getTitle() != null) {
 			jsonObject.put("title", model.getTitle());
+		}
+		if (model.getType() != null) {
+			jsonObject.put("type", model.getType());
+			if ("SYS".equals(model.getType())) {
+				jsonObject.put("typeName", "系统内置");
+			} else {
+				jsonObject.put("typeName", "用户定义");
+			}
 		}
 		if (model.getQueryId() != null) {
 			jsonObject.put("queryId", model.getQueryId());
@@ -178,6 +189,14 @@ public class SysDataItemJsonFactory {
 		}
 		if (model.getTitle() != null) {
 			jsonObject.put("title", model.getTitle());
+		}
+		if (model.getType() != null) {
+			jsonObject.put("type", model.getType());
+			if ("SYS".equals(model.getType())) {
+				jsonObject.put("typeName", "系统内置");
+			} else {
+				jsonObject.put("typeName", "用户定义");
+			}
 		}
 		if (model.getQueryId() != null) {
 			jsonObject.put("queryId", model.getQueryId());

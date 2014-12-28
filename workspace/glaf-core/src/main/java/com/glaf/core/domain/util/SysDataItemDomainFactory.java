@@ -44,6 +44,7 @@ public class SysDataItemDomainFactory {
 		columnMap.put("id", "ID_");
 		columnMap.put("name", "NAME_");
 		columnMap.put("title", "TITLE_");
+		columnMap.put("type", "TYPE_");
 		columnMap.put("queryId", "QUERYID_");
 		columnMap.put("querySQL", "QUERYSQL_");
 		columnMap.put("parameter", "PARAMETER_");
@@ -64,6 +65,7 @@ public class SysDataItemDomainFactory {
 		javaTypeMap.put("id", "Long");
 		javaTypeMap.put("name", "String");
 		javaTypeMap.put("title", "String");
+		javaTypeMap.put("type", "String");
 		javaTypeMap.put("queryId", "String");
 		javaTypeMap.put("querySQL", "String");
 		javaTypeMap.put("parameter", "String");
@@ -119,6 +121,13 @@ public class SysDataItemDomainFactory {
 		title.setJavaType("String");
 		title.setLength(100);
 		tableDefinition.addColumn(title);
+
+		ColumnDefinition type = new ColumnDefinition();
+		type.setName("type");
+		type.setColumnName("TYPE_");
+		type.setJavaType("String");
+		type.setLength(50);
+		tableDefinition.addColumn(type);
 
 		ColumnDefinition queryId = new ColumnDefinition();
 		queryId.setName("queryId");

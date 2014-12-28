@@ -111,7 +111,7 @@ public class SysDataItemController {
 		if (sysDataItem != null) {
 			request.setAttribute("sysDataItem", sysDataItem);
 			if (StringUtils.isNotEmpty(sysDataItem.getQuerySQL())) {
-				if (DBUtils.isLegalQuerySql(sysDataItem.getQuerySQL())) {
+				if (!DBUtils.isLegalQuerySql(sysDataItem.getQuerySQL())) {
 					throw new RuntimeException(" SQL statement illegal ");
 				}
 				List<ColumnDefinition> cloumns = new ArrayList<ColumnDefinition>();
@@ -435,8 +435,8 @@ public class SysDataItemController {
 		sysDataItem.setLocked(RequestUtils.getInt(request, "locked"));
 		sysDataItem.setCreateBy(actorId);
 		sysDataItem.setUpdateBy(actorId);
-
-		if (DBUtils.isLegalQuerySql(sysDataItem.getQuerySQL())) {
+		sysDataItem.setType("USER");
+		if (!DBUtils.isLegalQuerySql(sysDataItem.getQuerySQL())) {
 			throw new RuntimeException(" SQL statement illegal ");
 		}
 
@@ -476,8 +476,9 @@ public class SysDataItemController {
 			sysDataItem.setCreateBy(actorId);
 			sysDataItem.setUpdateBy(actorId);
 			sysDataItem.setLocked(RequestUtils.getInt(request, "locked"));
+			sysDataItem.setType("USER");
 
-			if (DBUtils.isLegalQuerySql(sysDataItem.getQuerySQL())) {
+			if (!DBUtils.isLegalQuerySql(sysDataItem.getQuerySQL())) {
 				throw new RuntimeException(" SQL statement illegal ");
 			}
 
@@ -518,8 +519,9 @@ public class SysDataItemController {
 			sysDataItem.setCacheFlag(request.getParameter("cacheFlag"));
 			sysDataItem.setCreateBy(actorId);
 			sysDataItem.setUpdateBy(actorId);
+			sysDataItem.setType("USER");
 
-			if (DBUtils.isLegalQuerySql(sysDataItem.getQuerySQL())) {
+			if (!DBUtils.isLegalQuerySql(sysDataItem.getQuerySQL())) {
 				throw new RuntimeException(" SQL statement illegal ");
 			}
 
@@ -568,7 +570,7 @@ public class SysDataItemController {
 		sysDataItem.setLocked(RequestUtils.getInt(request, "locked"));
 		sysDataItem.setCacheFlag(request.getParameter("cacheFlag"));
 
-		if (DBUtils.isLegalQuerySql(sysDataItem.getQuerySQL())) {
+		if (!DBUtils.isLegalQuerySql(sysDataItem.getQuerySQL())) {
 			throw new RuntimeException(" SQL statement illegal ");
 		}
 

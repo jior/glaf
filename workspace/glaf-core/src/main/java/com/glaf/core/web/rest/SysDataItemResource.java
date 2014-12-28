@@ -290,6 +290,7 @@ public class SysDataItemResource {
 			sysDataItem.setCreateBy(actorId);
 			sysDataItem.setUpdateBy(actorId);
 			sysDataItem.setLocked(RequestUtils.getInt(request, "locked"));
+			sysDataItem.setType("USER");
 
 			if (!DBUtils.isLegalQuerySql(sysDataItem.getQuerySQL())) {
 				throw new RuntimeException(" SQL statement illegal ");

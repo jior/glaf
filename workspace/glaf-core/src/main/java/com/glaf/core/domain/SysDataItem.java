@@ -54,6 +54,9 @@ public class SysDataItem implements Serializable, JSONable {
 	@Column(name = "TITLE_", length = 100)
 	protected String title;
 
+	@Column(name = "TYPE_", length = 50)
+	protected String type;
+
 	@Column(name = "QUERYID_", length = 100)
 	protected String queryId;
 
@@ -212,6 +215,10 @@ public class SysDataItem implements Serializable, JSONable {
 		return this.treeTreeIdField;
 	}
 
+	public String getType() {
+		return type;
+	}
+
 	public String getUpdateBy() {
 		return this.updateBy;
 	}
@@ -317,6 +324,10 @@ public class SysDataItem implements Serializable, JSONable {
 
 	public void setTreeTreeIdField(String treeTreeIdField) {
 		this.treeTreeIdField = treeTreeIdField;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public void setUpdateBy(String updateBy) {
