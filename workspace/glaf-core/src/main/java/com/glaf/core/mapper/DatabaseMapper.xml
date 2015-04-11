@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.mapper.DatabaseMapper">
+
+	<resultMap id="databaseResultMap" type="com.glaf.core.domain.Database">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="nodeId" column="NODEID_" jdbcType="BIGINT" />
+		<result property="name" column="NAME_" jdbcType="VARCHAR" />
+		<result property="code" column="CODE_" jdbcType="VARCHAR" />
+		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
+		<result property="host" column="HOST_" jdbcType="VARCHAR" />
+		<result property="port" column="PORT_" jdbcType="INTEGER" />
+		<result property="user" column="USER_" jdbcType="VARCHAR" />
+		<result property="password" column="PASSWORD_" jdbcType="VARCHAR" />
+		<result property="key" column="KEY_" jdbcType="VARCHAR" />
+		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
+		<result property="level" column="LEVEL_" jdbcType="INTEGER" />
+		<result property="priority" column="PRIORITY_" jdbcType="INTEGER" />
+		<result property="operation" column="OPERATION_" jdbcType="INTEGER" />
+		<result property="dbname" column="DBNAME_" jdbcType="VARCHAR" />
+		<result property="active" column="ACTIVE_" jdbcType="VARCHAR" />
+		<result property="verify" column="VERIFY_" jdbcType="VARCHAR" />
+		<result property="initFlag" column="INITFLAG_" jdbcType="VARCHAR" />
+		<result property="providerClass" column="PROVIDERCLASS_"
+			jdbcType="VARCHAR" />
+		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="createTime" column="CREATETIME_" jdbcType="TIMESTAMP" />
+		<result property="updateBy" column="UPDATEBY_" jdbcType="VARCHAR" />
+		<result property="updateTime" column="UPDATETIME_" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+
+	<insert id="insertDatabase" parameterType="com.glaf.core.domain.Database">
+		insert into SYS_DATABASE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			ID_
+			<if test="nodeId != null">
+				,NODEID_
+			</if>
+			<if test="name != null">
+				,NAME_
+			</if>
+			<if test="code != null">
+				,CODE_
+			</if>
+			<if test="title != null">
+				,TITLE_
+			</if>
+			<if test="host != null">
+				,HOST_
+			</if>
+			<if test="port != null">
+				,PORT_
+			</if>
+			<if test="user != null">
+				,USER_
+			</if>
+			<if test="password != null">
+				,PASSWORD_
+			</if>
+			<if test="key != null">
+				,KEY_
+			</if>
+			<if test="type != null">
+				,TYPE_
+			</if>
+			<if test="level != null">
+				,LEVEL_
+			</if>
+			<if test="priority != null">
+				,PRIORITY_
+			</if>
+			<if test="operation != null">
+				,OPERATION_
+			</if>
+			<if test="dbname != null">
+				,DBNAME_
+			</if>
+			<if test="providerClass != null">
+				,PROVIDERCLASS_
+			</if>
+			<if test="active != null">
+				,ACTIVE_
+			</if>
+			<if test="verify != null">
+				,VERIFY_
+			</if>
+			<if test="initFlag != null">
+				,INITFLAG_
+			</if>
+			<if test="createBy != null">
+				,CREATEBY_
+			</if>
+			<if test="createTime != null">
+				,CREATETIME_
+			</if>
+			<if test="updateBy != null">
+				,UPDATEBY_
+			</if>
+			<if test="updateTime != null">
+				,UPDATETIME_
+			</if>
+		</trim>
+
+		<trim prefix=" values (" suffix=")" suffixOverrides=",">
+			#{id, jdbcType=BIGINT}
+
+			<if test="nodeId != null">
+				,#{nodeId, jdbcType=BIGINT}
+			</if>
+			<if test="name != null">
+				,#{name, jdbcType=VARCHAR}
+			</if>
+			<if test="code != null">
+				,#{code, jdbcType=VARCHAR}
+			</if>
+			<if test="title != null">
+				,#{title, jdbcType=VARCHAR}
+			</if>
+			<if test="host != null">
+				,#{host, jdbcType=VARCHAR}
+			</if>
+			<if test="port != null">
+				,#{port, jdbcType=INTEGER}
+			</if>
+			<if test="user != null">
+				,#{user, jdbcType=VARCHAR}
+			</if>
+			<if test="password != null">
+				,#{password, jdbcType=VARCHAR}
+			</if>
+			<if test="key != null">
+				,#{key, jdbcType=VARCHAR}
+			</if>
+			<if test="type != null">
+				,#{type, jdbcType=VARCHAR}
+			</if>
+			<if test="level != null">
+				,#{level, jdbcType=INTEGER}
+			</if>
+			<if test="priority != null">
+				,#{priority, jdbcType=INTEGER}
+			</if>
+			<if test="operation != null">
+				,#{operation, jdbcType=INTEGER}
+			</if>
+			<if test="dbname != null">
+				,#{dbname, jdbcType=VARCHAR}
+			</if>
+			<if test="providerClass != null">
+				,#{providerClass, jdbcType=VARCHAR}
+			</if>
+			<if test="active != null">
+				,#{active, jdbcType=VARCHAR}
+			</if>
+			<if test="verify != null">
+				,#{verify, jdbcType=VARCHAR}
+			</if>
+			<if test="initFlag != null">
+				,#{initFlag, jdbcType=VARCHAR}
+			</if>
+			<if test="createBy != null">
+				,#{createBy, jdbcType=VARCHAR}
+			</if>
+			<if test="createTime != null">
+				,#{createTime, jdbcType=TIMESTAMP}
+			</if>
+			<if test="updateBy != null">
+				,#{updateBy, jdbcType=VARCHAR}
+			</if>
+			<if test="updateTime != null">
+				,#{updateTime, jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</insert>
+
+
+	<update id="updateDatabase" parameterType="com.glaf.core.domain.Database">
+		update SYS_DATABASE
+		set
+		<trim prefix="" suffix="" suffixOverrides=",">
+			<if test="host != null">
+				HOST_ = #{host, jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				NAME_ = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				CODE_ = #{code, jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				TITLE_ = #{title, jdbcType=VARCHAR},
+			</if>
+			<if test="port != null">
+				PORT_ = #{port, jdbcType=INTEGER},
+			</if>
+			<if test="user != null">
+				USER_ = #{user, jdbcType=VARCHAR},
+			</if>
+			<if test="key != null">
+				KEY_ = #{key, jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				PASSWORD_ = #{password, jdbcType=VARCHAR},
+			</if>
+			<if test="providerClass != null">
+				PROVIDERCLASS_ = #{providerClass, jdbcType=VARCHAR},
+			</if>
+			<if test="level != null">
+				LEVEL_ = #{level, jdbcType=INTEGER},
+			</if>
+			<if test="priority != null">
+				PRIORITY_ = #{priority, jdbcType=INTEGER},
+			</if>
+			<if test="operation != null">
+				OPERATION_ = #{operation, jdbcType=INTEGER},
+			</if>
+			<if test="dbname != null">
+				DBNAME_ = #{dbname, jdbcType=VARCHAR},
+			</if>
+			<if test="active != null">
+				ACTIVE_ = #{active, jdbcType=VARCHAR},
+			</if>
+			<if test="verify != null">
+				VERIFY_ = #{verify, jdbcType=VARCHAR},
+			</if>
+			<if test="initFlag != null">
+				INITFLAG_ = #{initFlag, jdbcType=VARCHAR},
+			</if>
+			<if test="updateBy != null">
+				UPDATEBY_ = #{updateBy, jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				UPDATETIME_ = #{updateTime, jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+		where
+		ID_ = #{id, jdbcType=BIGINT}
+
+	</update>
+
+
+	<delete id="deleteDatabaseById" parameterType="long">
+		delete from
+		SYS_DATABASE
+		where ID_ = #{id}
+	</delete>
+
+
+	<select id="getDatabaseById" parameterType="long" resultMap="databaseResultMap">
+		select * from SYS_DATABASE where ID_ = #{id}
+	</select>
+
+
+	<select id="getDatabases" parameterType="com.glaf.core.query.DatabaseQuery"
+		resultMap="databaseResultMap">
+		select distinct E.*
+		<include refid="selectDatabasesSql" />
+		<choose>
+			<when test="orderBy != null">
+				order by ${orderBy}
+			</when>
+			<otherwise>
+				order by E.TITLE_ asc
+			</otherwise>
+		</choose>
+	</select>
+
+
+	<select id="getDatabaseCount" parameterType="com.glaf.core.query.DatabaseQuery"
+		resultType="int">
+		select count(*)
+		<include refid="selectDatabasesSql" />
+	</select>
+
+
+	<sql id="selectDatabasesSql">
+
+		from SYS_DATABASE E
+
+		<where>
+			1 = 1
+
+			<if test="databaseIds != null and databaseIds.size() &gt; 0">
+				and E.ID_ IN
+				<foreach item="x_databaseId" index="index" collection="databaseIds"
+					open="(" separator="," close=")">
+					#{x_databaseId}
+				</foreach>
+			</if>
+
+			<if test="nodeId != null">
+				and E.NODEID_ = #{nodeId}
+			</if>
+
+			<if test="nodeIds != null and nodeIds.size() &gt; 0">
+				and E.NODEID_ IN
+				<foreach item="x_nodeId" index="index" collection="nodeIds"
+					open="(" separator="," close=")">
+					#{x_nodeId}
+				</foreach>
+			</if>
+
+			<if test="code != null and code != '' ">
+				and E.CODE_ = #{code}
+			</if>
+
+			<if test="host != null and host != '' ">
+				and E.HOST_ = #{host}
+			</if>
+
+			<if test="hostLike != null and hostLike != '' ">
+				and E.HOST_ like #{hostLike}
+			</if>
+
+			<if test="type != null and type != '' ">
+				and E.TYPE_ = #{type}
+			</if>
+
+			<if test="types != null and types.size() &gt; 0">
+				and E.TYPE_ IN
+				<foreach item="x_type" index="index" collection="types"
+					open="(" separator="," close=")">
+					#{x_type}
+				</foreach>
+			</if>
+
+			<if test="active != null and active != '' ">
+				and E.ACTIVE_ = #{active}
+			</if>
+
+			<if test="initFlag != null and initFlag != '' ">
+				and E.INITFLAG_ = #{initFlag}
+			</if>
+
+			<if test="createBy != null and createBy != '' ">
+				and E.CREATEBY_ = #{createBy}
+			</if>
+
+			<if test="createTimeGreaterThanOrEqual != null">
+				and E.CREATETIME_ &gt;= #{createTimeGreaterThanOrEqual}
+			</if>
+
+			<if test="createTimeLessThanOrEqual != null">
+				and E.CREATETIME_ &lt;= #{createTimeLessThanOrEqual}
+			</if>
+
+		</where>
+	</sql>
+
+</mapper>

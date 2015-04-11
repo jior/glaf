@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.glaf.core.mapper.DatabaseAccessMapper">
+
+	<resultMap id="databaseAccessResultMap" type="com.glaf.core.domain.DatabaseAccess">
+		<id property="id" column="ID_" jdbcType="BIGINT" />
+		<result property="databaseId" column="DATABASEID_" jdbcType="BIGINT" />
+		<result property="actorId" column="ACTORID_" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="insertDatabaseAccess" parameterType="com.glaf.core.domain.DatabaseAccess">
+
+		insert into
+		SYS_DATABASE_ACCESS ( ID_,DATABASEID_,ACTORID_ )
+		values
+		(#{id,jdbcType=BIGINT},
+		#{databaseId, jdbcType=BIGINT},
+		#{actorId,jdbcType=VARCHAR}
+		)
+
+	</insert>
+
+
+	<delete id="deleteAccessor" parameterType="com.glaf.core.domain.DatabaseAccess">
+		delete from
+		SYS_DATABASE_ACCESS
+		where DATABASEID_ = #{databaseId}
+		and ACTORID_ =
+		#{actorId}
+	</delete>
+
+
+	<delete id="deleteDatabaseAccessByDatabaseId" parameterType="long">
+		delete from SYS_DATABASE_ACCESS
+		where DATABASEID_ = #{databaseId}
+	</delete>
+
+
+	<delete id="deleteDatabaseAccessByActorId" parameterType="string">
+		delete
+		from SYS_DATABASE_ACCESS
+		where ACTORID_ = #{actorId}
+	</delete>
+
+
+	<select id="getDatabaseAccessesByDatabaseId" parameterType="long"
+		resultMap="databaseAccessResultMap">
+		select * from SYS_DATABASE_ACCESS
+		where DATABASEID_ =
+		#{databaseId}
+	</select>
+
+
+	<select id="getDatabaseAccessesByActorId" parameterType="string"
+		resultMap="databaseAccessResultMap">
+		select *
+		from SYS_DATABASE_ACCESS
+		where ACTORID_ = #{actorId}
+	</select>
+
+	<select id="getAllDatabaseAccesses" resultMap="databaseAccessResultMap">
+		select *
+		from
+		SYS_DATABASE_ACCESS
+	</select>
+
+</mapper>
