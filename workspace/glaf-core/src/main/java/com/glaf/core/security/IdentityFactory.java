@@ -37,7 +37,9 @@ import com.glaf.core.context.ContextFactory;
 import com.glaf.core.identity.Agent;
 import com.glaf.core.identity.Role;
 import com.glaf.core.identity.User;
+import com.glaf.core.identity.util.UserJsonFactory;
 import com.glaf.core.query.MembershipQuery;
+import com.glaf.core.query.UserQuery;
 import com.glaf.core.service.EntityService;
 import com.glaf.core.util.Constants;
 
@@ -312,7 +314,19 @@ public class IdentityFactory {
 	 * @return
 	 */
 	public static User getUser(String actorId) {
+		String cacheKey = "cache_sys_user_" + actorId;
+		String text = CacheFactory.getString(cacheKey);
+		if (text != null) {
+			try {
+				JSONObject jsonObject = JSON.parseObject(text);
+				return UserJsonFactory.jsonToObject(jsonObject);
+			} catch (Exception ex) {
+			}
+		}
 		User user = (User) getEntityService().getById("getUserById", actorId);
+		if (user != null) {
+			CacheFactory.put(cacheKey, user.toJsonObject().toJSONString());
+		}
 		return user;
 	}
 
@@ -347,6 +361,20 @@ public class IdentityFactory {
 		return userMap;
 	}
 
+	public static List<String> getUserRoleCodes(String actorId) {
+		MembershipQuery query = new MembershipQuery();
+		query.actorId(actorId);
+		List<Object> list = getEntityService().getList("getUserRoleCodes",
+				query);
+		List<String> roles = new java.util.ArrayList<String>();
+		if (list != null && !list.isEmpty()) {
+			for (Object object : list) {
+				roles.add(object.toString());
+			}
+		}
+		return roles;
+	}
+
 	public static List<User> getUsers() {
 		List<User> users = new ArrayList<User>();
 		List<Object> list = getEntityService().getList("getUsers", null);
@@ -361,18 +389,33 @@ public class IdentityFactory {
 		return users;
 	}
 
-	public static List<String> getUserRoleCodes(String actorId) {
-		MembershipQuery query = new MembershipQuery();
-		query.actorId(actorId);
-		List<Object> list = getEntityService().getList("getUserRoleCodes",
-				query);
-		List<String> roles = new java.util.ArrayList<String>();
+	public static List<User> getUsers(UserQuery query) {
+		List<User> users = new ArrayList<User>();
+		List<Object> list = getEntityService().getList("getUsers", query);
 		if (list != null && !list.isEmpty()) {
-			for (Object object : list) {
-				roles.add(object.toString());
+			for (Object obj : list) {
+				if (obj instanceof User) {
+					User u = (User) obj;
+					users.add(u);
+				}
 			}
 		}
-		return roles;
+		return users;
+	}
+
+	public static List<User> searchUsers(String searchWord) {
+		List<User> users = new ArrayList<User>();
+		List<Object> list = getEntityService().getList("searchUsers",
+				searchWord);
+		if (list != null && !list.isEmpty()) {
+			for (Object obj : list) {
+				if (obj instanceof User) {
+					User u = (User) obj;
+					users.add(u);
+				}
+			}
+		}
+		return users;
 	}
 
 	public static void setEntityService(EntityService entityService) {

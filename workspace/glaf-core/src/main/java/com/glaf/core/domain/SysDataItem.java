@@ -113,6 +113,9 @@ public class SysDataItem implements Serializable, JSONable {
 	protected int locked = 0;
 
 	@javax.persistence.Transient
+	protected List<ColumnDefinition> columns = new java.util.ArrayList<ColumnDefinition>();
+
+	@javax.persistence.Transient
 	protected JSONArray jsonArray;
 
 	@javax.persistence.Transient
@@ -138,6 +141,10 @@ public class SysDataItem implements Serializable, JSONable {
 
 	public String getCacheFlag() {
 		return cacheFlag;
+	}
+
+	public List<ColumnDefinition> getColumns() {
+		return columns;
 	}
 
 	public String getCreateBy() {
@@ -256,6 +263,10 @@ public class SysDataItem implements Serializable, JSONable {
 
 	public void setCacheFlag(String cacheFlag) {
 		this.cacheFlag = cacheFlag;
+	}
+
+	public void setColumns(List<ColumnDefinition> columns) {
+		this.columns = columns;
 	}
 
 	public void setCreateBy(String createBy) {

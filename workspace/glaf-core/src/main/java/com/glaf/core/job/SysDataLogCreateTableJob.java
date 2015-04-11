@@ -23,12 +23,11 @@ import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
+import com.glaf.core.domain.util.SysDataLogTableUtils;
 import com.glaf.core.util.DateUtils;
-import com.glaf.core.util.SysDataLogTableUtils;
 
 public class SysDataLogCreateTableJob extends BaseJob {
 	protected final static Log logger = LogFactory

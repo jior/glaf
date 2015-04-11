@@ -60,32 +60,28 @@ public class ConnectionDefinition implements java.io.Serializable, JSONable {
 
 	}
 
-	public String getDatabase() {
-		return database;
-	}
-
-	public void setDatabase(String database) {
-		this.database = database;
-	}
-
-	public String getHost() {
-		return host;
-	}
-
-	public void setHost(String host) {
-		this.host = host;
-	}
-
-	public int getPort() {
-		return port;
-	}
-
-	public void setPort(int port) {
-		this.port = port;
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ConnectionDefinition other = (ConnectionDefinition) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
 	}
 
 	public String getAttribute() {
 		return attribute;
+	}
+
+	public String getDatabase() {
+		return database;
 	}
 
 	public String getDatasource() {
@@ -96,12 +92,20 @@ public class ConnectionDefinition implements java.io.Serializable, JSONable {
 		return driver;
 	}
 
+	public String getHost() {
+		return host;
+	}
+
 	public String getName() {
 		return name;
 	}
 
 	public String getPassword() {
 		return password;
+	}
+
+	public int getPort() {
+		return port;
 	}
 
 	public java.util.Properties getProperties() {
@@ -128,6 +132,13 @@ public class ConnectionDefinition implements java.io.Serializable, JSONable {
 		return user;
 	}
 
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
 	public boolean isAutoCommit() {
 		return autoCommit;
 	}
@@ -144,6 +155,10 @@ public class ConnectionDefinition implements java.io.Serializable, JSONable {
 		this.autoCommit = autoCommit;
 	}
 
+	public void setDatabase(String database) {
+		this.database = database;
+	}
+
 	public void setDatasource(String datasource) {
 		this.datasource = datasource;
 	}
@@ -152,12 +167,20 @@ public class ConnectionDefinition implements java.io.Serializable, JSONable {
 		this.driver = driver;
 	}
 
+	public void setHost(String host) {
+		this.host = host;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
 	}
 
 	public void setProperties(java.util.Properties properties) {
@@ -190,6 +213,11 @@ public class ConnectionDefinition implements java.io.Serializable, JSONable {
 
 	public ObjectNode toObjectNode() {
 		return ConnectionDefinitionJsonFactory.toObjectNode(this);
+	}
+
+	public String toString() {
+		return "ConnectionDefinition [name=" + name + ", driver=" + driver
+				+ ", url=" + url + ", user=" + user + "]";
 	}
 
 }

@@ -20,9 +20,6 @@ package com.glaf.core.util.hash;
 
 import com.glaf.core.config.Configuration;
 
-/**
- * This class represents a common API for hashing functions.
- */
 public abstract class Hash {
 	/** Constant to denote invalid hash type. */
 	public static final int INVALID_HASH = -1;
@@ -59,7 +56,7 @@ public abstract class Hash {
 	 * @return one of the predefined constants
 	 */
 	public static int getHashType(Configuration conf) {
-		String name = conf.get("glaf.core.util.hash.type", "murmur");
+		String name = conf.get("hadoop.util.hash.type", "murmur");
 		return parseHashType(name);
 	}
 

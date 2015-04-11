@@ -20,12 +20,14 @@ package com.glaf.core.util;
 
 import java.text.BreakIterator;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -45,6 +47,185 @@ public final class StringTools {
 	private static final char[] GT_ENCODE = "&gt;".toCharArray();
 	private static final String[] emptyStringArray = {};
 	private static final char SEPARATOR = '_';
+	private static String[] _emptyStringArray = new String[0];
+
+	/**
+	 * Converts all of the characters in the string to lower case, based on the
+	 * portal instance's default locale.
+	 *
+	 * @param s
+	 *            the string to convert
+	 * @return the string, converted to lower case, or <code>null</code> if the
+	 *         string is <code>null</code>
+	 */
+	public static String toLowerCase(String s) {
+		return toLowerCase(s, null);
+	}
+
+	/**
+	 * Converts all of the characters in the string to lower case, based on the
+	 * locale.
+	 *
+	 * @param s
+	 *            the string to convert
+	 * @param locale
+	 *            apply this locale's rules
+	 * @return the string, converted to lower case, or <code>null</code> if the
+	 *         string is <code>null</code>
+	 */
+	public static String toLowerCase(String s, Locale locale) {
+		if (s == null) {
+			return null;
+		}
+
+		StringBuilder sb = null;
+
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+
+			if (c > 127) {
+
+				if (locale == null) {
+					locale = Locale.getDefault();
+				}
+
+				return s.toLowerCase(locale);
+			}
+
+			if ((c >= 'A') && (c <= 'Z')) {
+				if (sb == null) {
+					sb = new StringBuilder(s);
+				}
+
+				sb.setCharAt(i, (char) (c + 32));
+			}
+		}
+
+		if (sb == null) {
+			return s;
+		}
+
+		return sb.toString();
+	}
+
+	public static String[] splitLines(String s) {
+		if (StringUtils.isEmpty(s)) {
+			return _emptyStringArray;
+		}
+
+		s = s.trim();
+
+		List<String> lines = new ArrayList<String>();
+
+		int lastIndex = 0;
+
+		while (true) {
+			int returnIndex = s.indexOf(StringPool.RETURN, lastIndex);
+			int newLineIndex = s.indexOf(StringPool.NEW_LINE, lastIndex);
+
+			if ((returnIndex == -1) && (newLineIndex == -1)) {
+				break;
+			}
+
+			if (returnIndex == -1) {
+				lines.add(s.substring(lastIndex, newLineIndex));
+
+				lastIndex = newLineIndex + 1;
+			} else if (newLineIndex == -1) {
+				lines.add(s.substring(lastIndex, returnIndex));
+
+				lastIndex = returnIndex + 1;
+			} else if (newLineIndex < returnIndex) {
+				lines.add(s.substring(lastIndex, newLineIndex));
+
+				lastIndex = newLineIndex + 1;
+			} else {
+				lines.add(s.substring(lastIndex, returnIndex));
+
+				lastIndex = returnIndex + 1;
+
+				if (lastIndex == newLineIndex) {
+					lastIndex++;
+				}
+			}
+		}
+
+		if (lastIndex < s.length()) {
+			lines.add(s.substring(lastIndex));
+		}
+
+		return lines.toArray(new String[lines.size()]);
+	}
+
+	public static String[] split(String s, char delimiter) {
+		if (StringUtils.isEmpty(s)) {
+			return _emptyStringArray;
+		}
+
+		s = s.trim();
+
+		if (s.length() == 0) {
+			return _emptyStringArray;
+		}
+
+		if ((delimiter == CharPool.RETURN) || (delimiter == CharPool.NEW_LINE)) {
+
+			return splitLines(s);
+		}
+
+		List<String> nodeValues = new ArrayList<String>();
+
+		int offset = 0;
+		int pos = s.indexOf(delimiter, offset);
+
+		while (pos != -1) {
+			nodeValues.add(s.substring(offset, pos));
+
+			offset = pos + 1;
+			pos = s.indexOf(delimiter, offset);
+		}
+
+		if (offset < s.length()) {
+			nodeValues.add(s.substring(offset));
+		}
+
+		return nodeValues.toArray(new String[nodeValues.size()]);
+	}
+
+	public static String[] splitToStringArray(String s, String delimiter) {
+		if (StringUtils.isEmpty(s) || (delimiter == null)
+				|| delimiter.equals(StringPool.BLANK)) {
+			return _emptyStringArray;
+		}
+
+		s = s.trim();
+
+		if (s.equals(delimiter)) {
+			return _emptyStringArray;
+		}
+
+		if (delimiter.length() == 1) {
+			return split(s, delimiter.charAt(0));
+		}
+
+		List<String> nodeValues = new ArrayList<String>();
+
+		int offset = 0;
+		int pos = s.indexOf(delimiter, offset);
+
+		while (pos != -1) {
+			nodeValues.add(s.substring(offset, pos));
+
+			offset = pos + delimiter.length();
+			pos = s.indexOf(delimiter, offset);
+		}
+
+		if (offset < s.length()) {
+			nodeValues.add(s.substring(offset));
+		}
+
+		return nodeValues.toArray(new String[nodeValues.size()]);
+	}
 
 	public static String arrayToString(String[] strs) {
 		if (strs.length == 0) {

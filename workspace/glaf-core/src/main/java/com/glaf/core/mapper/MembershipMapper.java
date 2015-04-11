@@ -26,9 +26,11 @@ import com.glaf.core.query.*;
 @Component
 public interface MembershipMapper {
 
-	void deleteMemberships(MembershipQuery query);
-
+	void deleteActorMemberships(MembershipQuery query);
+	
 	void deleteMembershipById(Long id);
+
+	void deleteMemberships(MembershipQuery query);
 
 	Membership getMembershipById(Long id);
 

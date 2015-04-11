@@ -41,6 +41,7 @@ import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.domain.QueryDefinition;
 import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.jdbc.DBConnectionFactory;
+import com.glaf.core.jdbc.QueryHelper;
 import com.glaf.core.query.QueryDefinitionQuery;
 import com.glaf.core.query.TableDefinitionQuery;
 import com.glaf.core.security.LoginContext;
@@ -65,6 +66,47 @@ public class MxDtsTableController {
 	protected IQueryDefinitionService queryDefinitionService;
 
 	protected ITableDefinitionService tableDefinitionService;
+
+	@RequestMapping("/editColumn")
+	public ModelAndView editColumn(HttpServletRequest request, ModelMap modelMap) {
+		String jx_view = request.getParameter("jx_view");
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		String tableName = request.getParameter("tableName");
+		String tableName_enc = request.getParameter("tableName_enc");
+		if (StringUtils.isNotEmpty(tableName_enc)) {
+			tableName = RequestUtils.decodeString(tableName_enc);
+		}
+
+		if (StringUtils.isNotEmpty(tableName)) {
+			TableDefinition table = tableDefinitionService
+					.getTableDefinition(tableName);
+			request.setAttribute("table", table);
+		}
+
+		String columnId = request.getParameter("columnId");
+		String columnId_enc = request.getParameter("columnId_enc");
+		if (StringUtils.isNotEmpty(columnId_enc)) {
+			columnId = RequestUtils.decodeString(columnId_enc);
+		}
+
+		if (StringUtils.isNotEmpty(columnId)) {
+			ColumnDefinition column = tableDefinitionService
+					.getColumnDefinition(columnId);
+			request.setAttribute("column", column);
+		}
+
+		if (StringUtils.isNotEmpty(jx_view)) {
+			return new ModelAndView(jx_view, modelMap);
+		}
+
+		String x_view = ViewProperties.getString("dts_table.editColumn");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+		return new ModelAndView("/bi/dts/table/editColumn", modelMap);
+
+	}
 
 	@RequestMapping("/edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
@@ -102,6 +144,37 @@ public class MxDtsTableController {
 				}
 				request.setAttribute("queryIds", sb01.toString());
 				request.setAttribute("queryNames", sb02.toString());
+			}
+
+			if (table != null
+					&& StringUtils.isNotEmpty(table.getAggregationQueryIds())) {
+				QueryDefinitionQuery query = new QueryDefinitionQuery();
+				List<String> queryIds = StringTools.split(table
+						.getAggregationQueryIds());
+				query.queryIds(queryIds);
+				List<QueryDefinition> list = queryDefinitionService.list(query);
+				StringBuffer sb01 = new StringBuffer();
+				StringBuffer sb02 = new StringBuffer();
+				for (QueryDefinition queryDefinition : list) {
+					if (queryDefinition != null) {
+						sb01.append(queryDefinition.getId()).append(",");
+						sb02.append(queryDefinition.getTitle()).append("[")
+								.append(queryDefinition.getId()).append("],");
+					}
+				}
+				if (sb01.toString().endsWith(",")) {
+					sb01.delete(sb01.length() - 1, sb01.length());
+				}
+				if (sb02.toString().endsWith(",")) {
+					sb02.delete(sb02.length() - 1, sb02.length());
+				}
+				request.setAttribute("aggregationQueryIds", sb01.toString());
+				request.setAttribute("queryNames2", sb02.toString());
+			}
+
+			if (table != null) {
+				request.setAttribute("table", table);
+				request.setAttribute("nodeId", table.getNodeId());
 			}
 		}
 
@@ -233,13 +306,14 @@ public class MxDtsTableController {
 		if (StringUtils.isNotEmpty(tableName_enc)) {
 			tableName = RequestUtils.decodeString(tableName_enc);
 		}
+		QueryHelper helper = new QueryHelper();
 		Connection connection = null;
 		List<ColumnDefinition> columns = null;
 		try {
 			if (StringUtils.isNotEmpty(tableName)) {
 				connection = DBConnectionFactory.getConnection();
 				String sql = "select * from " + tableName + " where 1=0 ";
-				columns = DBUtils.getColumns(connection, sql, params);
+				columns = helper.getColumns(connection, sql, params);
 				modelMap.put("tableName_enc",
 						RequestUtils.encodeString(tableName));
 			}

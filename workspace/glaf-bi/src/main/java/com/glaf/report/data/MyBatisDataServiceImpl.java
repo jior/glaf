@@ -41,4 +41,10 @@ public class MyBatisDataServiceImpl implements DataManager {
 		return entityService.getList(query, paramMap);
 	}
 
+	public List<?> getResultList(Connection connection, String query,
+			Object parameter) {
+		EntityService entityService = ContextFactory.getBean("entityService");
+		return entityService.getList(query, parameter);
+	}
+
 }

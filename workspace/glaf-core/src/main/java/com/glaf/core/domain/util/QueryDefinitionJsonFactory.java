@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.domain.QueryDefinition;
 import com.glaf.core.util.DateUtils;
+import com.glaf.core.util.RequestUtils;
 
 public class QueryDefinitionJsonFactory {
 
@@ -44,6 +45,9 @@ public class QueryDefinitionJsonFactory {
 		}
 		if (jsonObject.containsKey("parentId")) {
 			model.setParentId(jsonObject.getString("parentId"));
+		}
+		if (jsonObject.containsKey("databaseId")) {
+			model.setDatabaseId(jsonObject.getLong("databaseId"));
 		}
 		if (jsonObject.containsKey("nodeId")) {
 			model.setNodeId(jsonObject.getLong("nodeId"));
@@ -68,9 +72,6 @@ public class QueryDefinitionJsonFactory {
 		}
 		if (jsonObject.containsKey("description")) {
 			model.setDescription(jsonObject.getString("description"));
-		}
-		if (jsonObject.containsKey("dsName")) {
-			model.setDsName(jsonObject.getString("dsName"));
 		}
 
 		if (jsonObject.containsKey("idField")) {
@@ -110,6 +111,13 @@ public class QueryDefinitionJsonFactory {
 			model.setDetailUrl(jsonObject.getString("detailUrl"));
 		}
 
+		if (jsonObject.containsKey("rotatingFlag")) {
+			model.setRotatingFlag(jsonObject.getString("rotatingFlag"));
+		}
+		if (jsonObject.containsKey("rotatingColumn")) {
+			model.setRotatingColumn(jsonObject.getString("rotatingColumn"));
+		}
+
 		return model;
 	}
 
@@ -135,8 +143,13 @@ public class QueryDefinitionJsonFactory {
 		if (model.getNodeId() != null) {
 			jsonObject.put("nodeId", model.getNodeId());
 		}
+		if (model.getDatabaseId() != null) {
+			jsonObject.put("databaseId", model.getDatabaseId());
+		}
 		if (model.getTargetTableName() != null) {
 			jsonObject.put("targetTableName", model.getTargetTableName());
+			jsonObject.put("targetTableName_enc",
+					RequestUtils.encodeString(model.getTargetTableName()));
 		}
 		if (model.getServiceKey() != null) {
 			jsonObject.put("serviceKey", model.getServiceKey());
@@ -155,9 +168,6 @@ public class QueryDefinitionJsonFactory {
 		}
 		if (model.getDescription() != null) {
 			jsonObject.put("description", model.getDescription());
-		}
-		if (model.getDsName() != null) {
-			jsonObject.put("dsName", model.getDsName());
 		}
 
 		if (model.getIdField() != null) {
@@ -194,6 +204,13 @@ public class QueryDefinitionJsonFactory {
 		}
 		if (model.getDetailUrl() != null) {
 			jsonObject.put("detailUrl", model.getDetailUrl());
+		}
+
+		if (model.getRotatingFlag() != null) {
+			jsonObject.put("rotatingFlag", model.getRotatingFlag());
+		}
+		if (model.getRotatingColumn() != null) {
+			jsonObject.put("rotatingColumn", model.getRotatingColumn());
 		}
 		return jsonObject;
 	}
@@ -206,11 +223,16 @@ public class QueryDefinitionJsonFactory {
 		if (model.getParentId() != null) {
 			jsonObject.put("parentId", model.getParentId());
 		}
+		if (model.getDatabaseId() != null) {
+			jsonObject.put("databaseId", model.getDatabaseId());
+		}
 		if (model.getNodeId() != null) {
 			jsonObject.put("nodeId", model.getNodeId());
 		}
 		if (model.getTargetTableName() != null) {
 			jsonObject.put("targetTableName", model.getTargetTableName());
+			jsonObject.put("targetTableName_enc",
+					RequestUtils.encodeString(model.getTargetTableName()));
 		}
 		if (model.getServiceKey() != null) {
 			jsonObject.put("serviceKey", model.getServiceKey());
@@ -229,9 +251,6 @@ public class QueryDefinitionJsonFactory {
 		}
 		if (model.getDescription() != null) {
 			jsonObject.put("description", model.getDescription());
-		}
-		if (model.getDsName() != null) {
-			jsonObject.put("dsName", model.getDsName());
 		}
 
 		if (model.getIdField() != null) {
@@ -268,6 +287,13 @@ public class QueryDefinitionJsonFactory {
 		}
 		if (model.getDetailUrl() != null) {
 			jsonObject.put("detailUrl", model.getDetailUrl());
+		}
+
+		if (model.getRotatingFlag() != null) {
+			jsonObject.put("rotatingFlag", model.getRotatingFlag());
+		}
+		if (model.getRotatingColumn() != null) {
+			jsonObject.put("rotatingColumn", model.getRotatingColumn());
 		}
 		return jsonObject;
 	}

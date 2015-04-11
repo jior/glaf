@@ -21,6 +21,9 @@ package com.glaf.core.base;
 import java.util.Collection;
 import java.util.Date;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import com.glaf.core.util.SearchFilter;
 
 public class ColumnModel implements java.io.Serializable,
@@ -418,6 +421,11 @@ public class ColumnModel implements java.io.Serializable,
 
 	public void setValueExpression(String valueExpression) {
 		this.valueExpression = valueExpression;
+	}
+
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.MULTI_LINE_STYLE);
 	}
 
 }

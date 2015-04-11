@@ -25,6 +25,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
@@ -38,10 +39,12 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.db.TransformTable;
 import com.glaf.core.domain.ColumnDefinition;
+import com.glaf.core.domain.Database;
 import com.glaf.core.domain.QueryDefinition;
 import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.jdbc.DBConnectionFactory;
+import com.glaf.core.service.IDatabaseService;
 import com.glaf.core.service.IQueryDefinitionService;
 import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.core.util.FieldType;
@@ -56,6 +59,8 @@ public class MxTransformManager {
 	protected static final Log logger = LogFactory
 			.getLog(MxTransformManager.class);
 
+	protected IDatabaseService databaseService;
+
 	protected IQueryDefinitionService queryDefinitionService;
 
 	protected ITableDefinitionService tableDefinitionService;
@@ -65,6 +70,7 @@ public class MxTransformManager {
 	protected ITransformTaskService transformTaskService;
 
 	public MxTransformManager() {
+		databaseService = ContextFactory.getBean("databaseService");
 		queryDefinitionService = ContextFactory
 				.getBean("queryDefinitionService");
 		tableDefinitionService = ContextFactory
@@ -123,13 +129,18 @@ public class MxTransformManager {
 	protected List<Map<String, Object>> prepare(QueryDefinition query) {
 		logger.debug("-------------------------1 start------------------------");
 		List<Map<String, Object>> resultList = new java.util.ArrayList<Map<String, Object>>();
-
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		ResultSetMetaData rsmd = null;
 		try {
-			conn = DBConnectionFactory.getConnection();
+			Database database = databaseService.getDatabaseById(query
+					.getDatabaseId());
+			if (database != null) {
+				conn = DBConnectionFactory.getConnection(database.getName());
+			} else {
+				conn = DBConnectionFactory.getConnection();
+			}
 			logger.debug("-------------------------1 connection------------------------");
 
 			String sql = QueryUtils.replaceSQLVars(query.getSql());
@@ -183,7 +194,13 @@ public class MxTransformManager {
 		ResultSet rs = null;
 		ResultSetMetaData rsmd = null;
 		try {
-			conn = DBConnectionFactory.getConnection();
+			Database database = databaseService.getDatabaseById(query
+					.getDatabaseId());
+			if (database != null) {
+				conn = DBConnectionFactory.getConnection(database.getName());
+			} else {
+				conn = DBConnectionFactory.getConnection();
+			}
 			logger.debug("-------------------------3 connection------------------------");
 			for (Map<String, Object> paramMap : paramList) {
 				logger.debug("sql:" + query.getSql());
@@ -250,7 +267,13 @@ public class MxTransformManager {
 		ResultSet rs = null;
 		ResultSetMetaData rsmd = null;
 		try {
-			conn = DBConnectionFactory.getConnection();
+			Database database = databaseService.getDatabaseById(query
+					.getDatabaseId());
+			if (database != null) {
+				conn = DBConnectionFactory.getConnection(database.getName());
+			} else {
+				conn = DBConnectionFactory.getConnection();
+			}
 			logger.debug("-------------------------2 connection------------------------");
 			SqlExecutor sqlExecutor = JdbcUtils.rebuildSQL(query.getSql(),
 					paramMap);
@@ -307,7 +330,7 @@ public class MxTransformManager {
 	public TableDefinition toTableDefinition(QueryDefinition query,
 			String currentSql) {
 
-		if (query.getId() != null) {
+		if (query.getId() != null && query.getParentId() != null) {
 			query = this.fill(query.getId(), currentSql);
 		}
 
@@ -359,7 +382,13 @@ public class MxTransformManager {
 		ResultSet rs = null;
 		ResultSetMetaData rsmd = null;
 		try {
-			conn = DBConnectionFactory.getConnection();
+			Database database = databaseService.getDatabaseById(query
+					.getDatabaseId());
+			if (database != null) {
+				conn = DBConnectionFactory.getConnection(database.getName());
+			} else {
+				conn = DBConnectionFactory.getConnection();
+			}
 
 			sql = QueryUtils.replaceSQLVars(sql);
 			psmt = conn.prepareStatement(sql);
@@ -515,7 +544,7 @@ public class MxTransformManager {
 	protected void transformSingle(QueryDefinition query,
 			TableDefinition target, Map<String, Object> paramMap) {
 		logger.debug("------------------------------transformSingle--------------");
-		if (!StringUtils.equals(query.getTargetTableName(),
+		if (!StringUtils.equalsIgnoreCase(query.getTargetTableName(),
 				target.getTableName())) {
 			return;
 		}
@@ -570,13 +599,17 @@ public class MxTransformManager {
 			 */
 			if (tableDefinition != null
 					&& StringUtils.isNotEmpty(tableDefinition
-							.getAggregationKeys())
-					&& !tableDefinition.getQueries().isEmpty()) {
+							.getAggregationKeys()) && !queries.isEmpty()) {
 				TransformTable tt = new TransformTable();
 				tt.transform(tableName);
 			} else {
-				for (QueryDefinition query : queries) {
-					this.transform(query, tableDefinition);
+				queries = queryDefinitionService
+						.getQueryDefinitionByTableName(tableName);
+				if (queries != null && !queries.isEmpty()) {
+					Collections.sort(queries);
+					for (QueryDefinition query : queries) {
+						this.transform(query, tableDefinition);
+					}
 				}
 			}
 		}

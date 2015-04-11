@@ -38,10 +38,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.glaf.core.base.JSONable;
 import com.glaf.core.domain.util.QueryDefinitionJsonFactory;
+import com.glaf.core.util.RequestUtils;
 
 @Entity
 @Table(name = "SYS_QUERY")
-public class QueryDefinition implements java.io.Serializable, JSONable {
+public class QueryDefinition implements java.io.Serializable,
+		java.lang.Comparable<QueryDefinition>, JSONable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -101,12 +103,6 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 	 */
 	@Column(name = "DETAILURL_", length = 250)
 	protected String detailUrl;
-
-	/**
-	 * 数据源名称
-	 */
-	@Column(name = "DSNAME_")
-	protected String dsName;
 
 	/**
 	 * ListUrl
@@ -208,6 +204,18 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 	@Column(name = "NODEID_")
 	protected Long nodeId;
 
+	@Column(name = "DATABASEID_")
+	protected Long databaseId;
+
+	@Column(name = "SORTNO_")
+	private int sortNo;
+
+	@Column(name = "ROTATINGFLAG_", length = 10)
+	protected String rotatingFlag;
+
+	@Column(name = "ROTATINGCOLUMN_", length = 50)
+	protected String rotatingColumn;
+
 	public QueryDefinition() {
 
 	}
@@ -240,6 +248,25 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 			paramList = new java.util.ArrayList<Object>();
 		}
 		paramList.add(parameter);
+	}
+
+	public int compareTo(QueryDefinition o) {
+		if (o == null) {
+			return -1;
+		}
+
+		QueryDefinition field = o;
+
+		int l = this.sortNo - field.getSortNo();
+
+		int ret = 0;
+
+		if (l > 0) {
+			ret = 1;
+		} else if (l < 0) {
+			ret = -1;
+		}
+		return ret;
 	}
 
 	@Override
@@ -283,6 +310,10 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 		return createTime;
 	}
 
+	public Long getDatabaseId() {
+		return databaseId;
+	}
+
 	public int getDeleteFlag() {
 		return deleteFlag;
 	}
@@ -293,10 +324,6 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 
 	public String getDetailUrl() {
 		return detailUrl;
-	}
-
-	public String getDsName() {
-		return dsName;
 	}
 
 	public String getId() {
@@ -359,8 +386,20 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 		return revision;
 	}
 
+	public String getRotatingColumn() {
+		return rotatingColumn;
+	}
+
+	public String getRotatingFlag() {
+		return rotatingFlag;
+	}
+
 	public String getServiceKey() {
 		return serviceKey;
+	}
+
+	public int getSortNo() {
+		return sortNo;
 	}
 
 	public String getSql() {
@@ -372,6 +411,13 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 	}
 
 	public String getTargetTableName() {
+		return targetTableName;
+	}
+
+	public String getTargetTableName_enc() {
+		if (targetTableName != null) {
+			return RequestUtils.encodeString(targetTableName);
+		}
 		return targetTableName;
 	}
 
@@ -419,6 +465,10 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 		this.createTime = createTime;
 	}
 
+	public void setDatabaseId(Long databaseId) {
+		this.databaseId = databaseId;
+	}
+
 	public void setDeleteFlag(int deleteFlag) {
 		this.deleteFlag = deleteFlag;
 	}
@@ -429,10 +479,6 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 
 	public void setDetailUrl(String detailUrl) {
 		this.detailUrl = detailUrl;
-	}
-
-	public void setDsName(String dsName) {
-		this.dsName = dsName;
 	}
 
 	public void setId(String id) {
@@ -495,8 +541,20 @@ public class QueryDefinition implements java.io.Serializable, JSONable {
 		this.revision = revision;
 	}
 
+	public void setRotatingColumn(String rotatingColumn) {
+		this.rotatingColumn = rotatingColumn;
+	}
+
+	public void setRotatingFlag(String rotatingFlag) {
+		this.rotatingFlag = rotatingFlag;
+	}
+
 	public void setServiceKey(String serviceKey) {
 		this.serviceKey = serviceKey;
+	}
+
+	public void setSortNo(int sortNo) {
+		this.sortNo = sortNo;
 	}
 
 	public void setSql(String sql) {

@@ -87,6 +87,16 @@ public interface IQueryDefinitionService {
 	 */
 	List<QueryDefinition> getQueryDefinitionsByQueryCriteria(int start,
 			int pageSize, QueryDefinitionQuery query);
+	
+	
+	ColumnDefinition getColumnDefinitionById(String id);
+
+	/**
+	 * 获取某个对象的列信息
+	 * @param targetId
+	 * @return
+	 */
+	List<ColumnDefinition> getColumnDefinitions(String targetId);
 
 	/**
 	 * 获取某个查询的全部祖先查询,查询子节点先入栈，查询父节点后入栈

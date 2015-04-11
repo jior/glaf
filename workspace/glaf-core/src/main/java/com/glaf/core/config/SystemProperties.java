@@ -78,6 +78,9 @@ public class SystemProperties {
 		if (ROOT_CONF_PATH == null) {
 			reload();
 		}
+		if (ROOT_CONF_PATH == null) {
+			ROOT_CONF_PATH = System.getProperty("config.path");
+		}
 		return ROOT_CONF_PATH;
 	}
 

@@ -52,7 +52,7 @@ public class AntUtils {
 			return null;
 		}
 		array = file.list();
-		if (array.length > 0) {
+		if (array !=null && array.length > 0) {
 			for (int i = 0; i < array.length; i++) {
 				temp = path + array[i];
 				file = new File(temp);

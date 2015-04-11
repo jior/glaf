@@ -207,31 +207,33 @@ public class SysTodoServiceImpl implements ISysTodoService {
 		File file = new File(configPath);
 		if (file.isDirectory()) {
 			String[] filelist = file.list();
-			for (int i = 0; i < filelist.length; i++) {
-				String filename = filelist[i];
-				if (filename.toLowerCase().endsWith(".xml")) {
-					Resource resource = new FileSystemResource(configPath
-							+ filename);
+			if (filelist != null) {
+				for (int i = 0, len = filelist.length; i < len; i++) {
+					String filename = filelist[i];
+					if (filename.toLowerCase().endsWith(".xml")) {
+						Resource resource = new FileSystemResource(configPath
+								+ filename);
 
-					List<Todo> todos = reader.read(resource.getInputStream());
-					Iterator<Todo> iterator = todos.iterator();
-					while (iterator.hasNext()) {
-						Todo todo = iterator.next();
-						Todo model = todoMap.get(todo.getId());
-						if (model != null) {
-							if (model.getConfigFlag() != 1) {
-								this.deleteById(model.getId());
-								if (todo.getId() == null) {
-									todo.setId(idGenerator.nextId());
+						List<Todo> todos = reader.read(resource
+								.getInputStream());
+						Iterator<Todo> iterator = todos.iterator();
+						while (iterator.hasNext()) {
+							Todo todo = iterator.next();
+							Todo model = todoMap.get(todo.getId());
+							if (model != null) {
+								if (model.getConfigFlag() != 1) {
+									this.deleteById(model.getId());
+									if (todo.getId() == null) {
+										todo.setId(idGenerator.nextId());
+									}
+									this.save(todo);
 								}
+							} else {
+
 								this.save(todo);
 							}
-						} else {
-
-							this.save(todo);
 						}
 					}
-
 				}
 			}
 		}

@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -34,16 +35,21 @@ import org.jfree.chart.JFreeChart;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.glaf.chart.bean.ChartDataManager;
 import com.glaf.chart.domain.Chart;
-import com.glaf.chart.gen.ChartFactory;
+import com.glaf.chart.gen.JFreeChartFactory;
 import com.glaf.chart.gen.ChartGen;
 import com.glaf.chart.query.ChartQuery;
 import com.glaf.chart.service.IChartService;
 import com.glaf.chart.util.ChartUtils;
+import com.glaf.core.config.DatabaseConnectionConfig;
 import com.glaf.core.config.ViewProperties;
+import com.glaf.core.domain.Database;
 import com.glaf.core.domain.QueryDefinition;
+import com.glaf.core.query.DatabaseQuery;
 import com.glaf.core.query.QueryDefinitionQuery;
 import com.glaf.core.security.LoginContext;
+import com.glaf.core.service.IDatabaseService;
 import com.glaf.core.service.IQueryDefinitionService;
 import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.JsonUtils;
@@ -51,6 +57,7 @@ import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
+import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.Tools;
 
@@ -62,6 +69,8 @@ public class ChartController {
 
 	protected IChartService chartService;
 
+	protected IDatabaseService databaseService;
+
 	protected IQueryDefinitionService queryDefinitionService;
 
 	public ChartController() {
@@ -70,28 +79,41 @@ public class ChartController {
 
 	@ResponseBody
 	@RequestMapping("/chart")
-	public byte[] chart(HttpServletRequest request, ModelMap modelMap) {
+	public byte[] chart(HttpServletRequest request, HttpServletResponse response) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String rowId = ParamUtils.getString(params, "chartId");
+		String chartId = ParamUtils.getString(params, "chartId");
+		String mapping = ParamUtils.getString(params, "mapping");
+		String mapping_enc = ParamUtils.getString(params, "mapping_enc");
 		String name = ParamUtils.getString(params, "name");
+		String name_enc = ParamUtils.getString(params, "name_enc");
 		Chart chart = null;
-		if (StringUtils.isNotEmpty(rowId)) {
-			chart = chartService.getChart(rowId);
+		if (StringUtils.isNotEmpty(chartId)) {
+			chart = chartService.getChart(chartId);
 		} else if (StringUtils.isNotEmpty(name)) {
 			chart = chartService.getChartByName(name);
+		} else if (StringUtils.isNotEmpty(name_enc)) {
+			String str = RequestUtils.decodeString(name_enc);
+			chart = chartService.getChartByName(str);
+		} else if (StringUtils.isNotEmpty(mapping)) {
+			chart = chartService.getChartByMapping(mapping);
+		} else if (StringUtils.isNotEmpty(mapping_enc)) {
+			String str = RequestUtils.decodeString(mapping_enc);
+			chart = chartService.getChartByMapping(str);
 		}
 		if (chart != null) {
-			chart = chartService
-					.getChartAndFetchDataById(chart.getId(), params);
+			ChartDataManager manager = new ChartDataManager();
+			chart = manager.getChartAndFetchDataById(chart.getId(), params,
+					RequestUtils.getActorId(request));
 			logger.debug("chart rows size:" + chart.getColumns().size());
-			ChartGen chartGen = ChartFactory.getChartGen(chart.getChartType());
+			ChartGen chartGen = JFreeChartFactory.getChartGen(chart
+					.getChartType());
 			if (chartGen != null) {
 				JFreeChart jchart = chartGen.createChart(chart);
-				return ChartUtils.createChart(chart, jchart);
+				byte[] bytes = ChartUtils.createChart(chart, jchart);
+				return bytes;
 			}
 		}
-
 		return null;
 	}
 
@@ -179,15 +201,95 @@ public class ChartController {
 		return this.list(request, modelMap);
 	}
 
+	@ResponseBody
+	@RequestMapping("/download")
+	public void download(HttpServletRequest request,
+			HttpServletResponse response) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		String chartId = ParamUtils.getString(params, "chartId");
+		String mapping = ParamUtils.getString(params, "mapping");
+		String mapping_enc = ParamUtils.getString(params, "mapping_enc");
+		String name = ParamUtils.getString(params, "name");
+		String name_enc = ParamUtils.getString(params, "name_enc");
+		Chart chart = null;
+		if (StringUtils.isNotEmpty(chartId)) {
+			chart = chartService.getChart(chartId);
+		} else if (StringUtils.isNotEmpty(name)) {
+			chart = chartService.getChartByName(name);
+		} else if (StringUtils.isNotEmpty(name_enc)) {
+			String str = RequestUtils.decodeString(name_enc);
+			chart = chartService.getChartByName(str);
+		} else if (StringUtils.isNotEmpty(mapping)) {
+			chart = chartService.getChartByMapping(mapping);
+		} else if (StringUtils.isNotEmpty(mapping_enc)) {
+			String str = RequestUtils.decodeString(mapping_enc);
+			chart = chartService.getChartByMapping(str);
+		}
+		if (chart != null) {
+			ChartDataManager manager = new ChartDataManager();
+			chart = manager.getChartAndFetchDataById(chart.getId(), params,
+					RequestUtils.getActorId(request));
+			logger.debug("chart rows size:" + chart.getColumns().size());
+			String filename = "chart.png";
+			String contentType = "image/png";
+			if (StringUtils.equalsIgnoreCase(chart.getChartType(), "jpeg")) {
+				filename = "chart.jpg";
+				contentType = "image/jpeg";
+			}
+			ChartGen chartGen = JFreeChartFactory.getChartGen(chart
+					.getChartType());
+			if (chartGen != null) {
+				JFreeChart jchart = chartGen.createChart(chart);
+				byte[] bytes = ChartUtils.createChart(chart, jchart);
+				try {
+					ResponseUtils.output(request, response, bytes, filename,
+							contentType);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		}
+	}
+
 	@RequestMapping("/edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
-		request.removeAttribute("canSubmit");
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+
+		DatabaseQuery query = new DatabaseQuery();
+		query.active("1");
+		List<Database> activeDatabases = new ArrayList<Database>();
+
+		List<Database> databases = null;
+		if (loginContext.isSystemAdministrator()) {
+			databases = databaseService.list(query);
+		} else {
+			databases = databaseService.getDatabases(loginContext.getActorId());
+		}
+
+		if (databases != null && !databases.isEmpty()) {
+			for (Database database : databases) {
+				if ("1".equals(database.getActive())) {
+					DatabaseConnectionConfig config = new DatabaseConnectionConfig();
+					if (config.checkConfig(database)) {
+						activeDatabases.add(database);
+						logger.debug(database.getName()
+								+ " check connection ok.");
+					}
+				}
+			}
+		}
+
+		if (!activeDatabases.isEmpty()) {
+			request.setAttribute("databases", activeDatabases);
+		}
+
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String rowId = ParamUtils.getString(params, "chartId");
+		String chartId = ParamUtils.getString(params, "chartId");
 		Chart chart = null;
-		if (StringUtils.isNotEmpty(rowId)) {
-			chart = chartService.getChart(rowId);
+		if (StringUtils.isNotEmpty(chartId)) {
+			chart = chartService.getChart(chartId);
 			request.setAttribute("chart", chart);
 			if (StringUtils.isNotEmpty(chart.getQueryIds())) {
 				List<String> queryIds = StringTools.split(chart.getQueryIds());
@@ -348,6 +450,9 @@ public class ChartController {
 			if (!DBUtils.isLegalQuerySql(querySQL)) {
 				throw new RuntimeException("SQL查询不合法！");
 			}
+			if (!DBUtils.isAllowedSql(querySQL)) {
+				throw new RuntimeException("SQL查询不合法！");
+			}
 		}
 
 		chartService.save(chart);
@@ -361,19 +466,43 @@ public class ChartController {
 	}
 
 	@javax.annotation.Resource
+	public void setDatabaseService(IDatabaseService databaseService) {
+		this.databaseService = databaseService;
+	}
+
+	@javax.annotation.Resource
 	public void setQueryDefinitionService(
 			IQueryDefinitionService queryDefinitionService) {
 		this.queryDefinitionService = queryDefinitionService;
+	}
+
+	@RequestMapping("/showChart")
+	public ModelAndView showChart(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		String chartId = ParamUtils.getString(params, "chartId");
+		Chart chart = null;
+		if (StringUtils.isNotEmpty(chartId)) {
+			chart = chartService.getChart(chartId);
+			request.setAttribute("chart", chart);
+		}
+
+		String x_view = ViewProperties.getString("chart.showChart");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/bi/chart/showChart", modelMap);
 	}
 
 	@RequestMapping("/update")
 	public ModelAndView update(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 
-		String rowId = ParamUtils.getString(params, "chartId");
+		String chartId = ParamUtils.getString(params, "chartId");
 		Chart chart = null;
-		if (StringUtils.isNotEmpty(rowId)) {
-			chart = chartService.getChart(rowId);
+		if (StringUtils.isNotEmpty(chartId)) {
+			chart = chartService.getChart(chartId);
 		}
 
 		if (chart != null) {
@@ -382,6 +511,9 @@ public class ChartController {
 			String querySQL = request.getParameter("querySQL");
 			if (StringUtils.isNotEmpty(querySQL)) {
 				if (!DBUtils.isLegalQuerySql(querySQL)) {
+					throw new RuntimeException("SQL查询不合法！");
+				}
+				if (!DBUtils.isAllowedSql(querySQL)) {
 					throw new RuntimeException("SQL查询不合法！");
 				}
 			}
@@ -396,10 +528,10 @@ public class ChartController {
 	public ModelAndView view(HttpServletRequest request, ModelMap modelMap) {
 		RequestUtils.setRequestParameterToAttribute(request);
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
-		String rowId = ParamUtils.getString(params, "chartId");
+		String chartId = ParamUtils.getString(params, "chartId");
 		Chart chart = null;
-		if (StringUtils.isNotEmpty(rowId)) {
-			chart = chartService.getChart(rowId);
+		if (StringUtils.isNotEmpty(chartId)) {
+			chart = chartService.getChart(chartId);
 			request.setAttribute("chart", chart);
 		}
 

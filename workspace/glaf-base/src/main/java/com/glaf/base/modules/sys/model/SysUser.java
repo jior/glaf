@@ -19,6 +19,7 @@
 package com.glaf.base.modules.sys.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -235,8 +236,28 @@ public class SysUser implements Serializable, User, JSONable {
 	@javax.persistence.Transient
 	protected String deptName;
 
+	@javax.persistence.Transient
+	private Collection<String> rowKeys = new HashSet<String>();
+
+	@javax.persistence.Transient
+	private Collection<Object> objectIds = new HashSet<Object>();
+
 	public SysUser() {
 
+	}
+
+	public void addObjectId(Object rowId) {
+		if (objectIds == null) {
+			objectIds = new HashSet<Object>();
+		}
+		objectIds.add(rowId);
+	}
+
+	public void addRowKey(String rowKey) {
+		if (rowKeys == null) {
+			rowKeys = new HashSet<String>();
+		}
+		rowKeys.add(rowKey);
 	}
 
 	public String getAccount() {
@@ -384,6 +405,10 @@ public class SysUser implements Serializable, User, JSONable {
 		return nestingDepartment;
 	}
 
+	public Collection<Object> getObjectIds() {
+		return objectIds;
+	}
+
 	public String getPassword() {
 		return password;
 	}
@@ -404,6 +429,10 @@ public class SysUser implements Serializable, User, JSONable {
 			roles = new HashSet<SysDeptRole>();
 		}
 		return roles;
+	}
+
+	public Collection<String> getRowKeys() {
+		return rowKeys;
 	}
 
 	public String getSuperiorIds() {
@@ -661,6 +690,10 @@ public class SysUser implements Serializable, User, JSONable {
 		this.nestingDepartment = nestingDepartment;
 	}
 
+	public void setObjectIds(Collection<Object> objectIds) {
+		this.objectIds = objectIds;
+	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -675,6 +708,10 @@ public class SysUser implements Serializable, User, JSONable {
 
 	public void setRoles(Set<SysDeptRole> roles) {
 		this.roles = roles;
+	}
+
+	public void setRowKeys(Collection<String> rowKeys) {
+		this.rowKeys = rowKeys;
 	}
 
 	public void setSuperiorIds(String superiorIds) {

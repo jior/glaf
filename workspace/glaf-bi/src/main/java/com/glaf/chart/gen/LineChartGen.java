@@ -22,6 +22,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.geom.Ellipse2D;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
@@ -29,6 +30,7 @@ import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
+import org.jfree.chart.renderer.category.LineRenderer3D;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
@@ -89,40 +91,59 @@ public class LineChartGen implements ChartGen {
 	public JFreeChart createChart(Chart chartModel) {
 		ChartUtils.setChartTheme(chartModel);
 		CategoryDataset categoryDataset = this.createDataset(chartModel);
-		JFreeChart localJFreeChart = ChartFactory.createLineChart(
-				chartModel.getChartTitle(), chartModel.getCoordinateX(),
-				chartModel.getCoordinateY(), categoryDataset,
-				PlotOrientation.VERTICAL, true, true, false);
+		JFreeChart localJFreeChart = null;
+		if (StringUtils.equals(chartModel.getEnable3DFlag(), "1")) {
+			localJFreeChart = ChartFactory.createLineChart3D(
+					chartModel.getChartTitle(), chartModel.getCoordinateX(),
+					chartModel.getCoordinateY(), categoryDataset,
+					PlotOrientation.VERTICAL, true, true, false);
+		} else {
+			localJFreeChart = ChartFactory.createLineChart(
+					chartModel.getChartTitle(), chartModel.getCoordinateX(),
+					chartModel.getCoordinateY(), categoryDataset,
+					PlotOrientation.VERTICAL, true, true, false);
+		}
 		CategoryPlot localCategoryPlot = (CategoryPlot) localJFreeChart
 				.getPlot();
 		NumberAxis localNumberAxis = (NumberAxis) localCategoryPlot
 				.getRangeAxis();
 		localNumberAxis.setStandardTickUnits(NumberAxis
 				.createIntegerTickUnits());
-		LineAndShapeRenderer localLineAndShapeRenderer = (LineAndShapeRenderer) localCategoryPlot
-				.getRenderer();
-
-		localLineAndShapeRenderer.setBaseShapesVisible(true);
-		localLineAndShapeRenderer.setDrawOutlines(true);
-		localLineAndShapeRenderer.setUseFillPaint(true);
-		localLineAndShapeRenderer.setBaseItemLabelsVisible(true);// 显示数值
-		localLineAndShapeRenderer.setBaseFillPaint(Color.white);
-
-		for (int i = 0; i < 10; i++) {
-			localLineAndShapeRenderer.setSeriesStroke(i, new BasicStroke(4.0F));
-			localLineAndShapeRenderer.setSeriesOutlineStroke(i,
-					new BasicStroke(4.0F));
-			localLineAndShapeRenderer.setSeriesShape(i, new Ellipse2D.Double(
-					-5.0D, -5.0D, 10.0D, 10.0D));
-		}
-
-		localLineAndShapeRenderer
-				.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
-
 		localNumberAxis.setStandardTickUnits(NumberAxis
 				.createIntegerTickUnits());
 		localNumberAxis.setAutoRangeIncludesZero(false);
 		localNumberAxis.setUpperMargin(0.12D);
+
+		if (StringUtils.equals(chartModel.getEnable3DFlag(), "1")) {
+			LineRenderer3D lineRenderer = (LineRenderer3D) localCategoryPlot
+					.getRenderer();
+			lineRenderer.setBaseShapesVisible(true);
+			lineRenderer.setDrawOutlines(true);
+			lineRenderer.setUseFillPaint(true);
+			lineRenderer.setBaseItemLabelsVisible(true);// 显示数值
+			lineRenderer.setBaseFillPaint(Color.white);
+			lineRenderer
+					.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+		} else {
+			LineAndShapeRenderer localLineAndShapeRenderer = (LineAndShapeRenderer) localCategoryPlot
+					.getRenderer();
+			localLineAndShapeRenderer.setBaseShapesVisible(true);
+			localLineAndShapeRenderer.setDrawOutlines(true);
+			localLineAndShapeRenderer.setUseFillPaint(true);
+			localLineAndShapeRenderer.setBaseItemLabelsVisible(true);// 显示数值
+			localLineAndShapeRenderer.setBaseFillPaint(Color.white);
+
+			for (int i = 0; i < 10; i++) {
+				localLineAndShapeRenderer.setSeriesStroke(i, new BasicStroke(
+						4.0F));
+				localLineAndShapeRenderer.setSeriesOutlineStroke(i,
+						new BasicStroke(4.0F));
+				localLineAndShapeRenderer.setSeriesShape(i,
+						new Ellipse2D.Double(-5.0D, -5.0D, 10.0D, 10.0D));
+			}
+			localLineAndShapeRenderer
+					.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+		}
 
 		return localJFreeChart;
 	}

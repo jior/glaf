@@ -87,6 +87,10 @@ public class UserJsonFactory {
 		if (jsonObject.containsKey("domainIndex")) {
 			model.setDomainIndex(jsonObject.getInteger("domainIndex"));
 		}
+		
+		if (jsonObject.containsKey("token")) {
+			model.setToken(jsonObject.getString("token"));
+		}
 
 		return model;
 	}
@@ -117,6 +121,9 @@ public class UserJsonFactory {
 		}
 		if (user.getLoginIP() != null) {
 			jsonObject.put("loginIP", user.getLoginIP());
+		}
+		if (user.getToken() != null) {
+			jsonObject.put("token", user.getToken());
 		}
 
 		return jsonObject;
@@ -149,6 +156,9 @@ public class UserJsonFactory {
 		}
 		if (user.getLoginIP() != null) {
 			jsonObject.put("loginIP", user.getLoginIP());
+		}
+		if (user.getToken() != null) {
+			jsonObject.put("token", user.getToken());
 		}
 		return jsonObject;
 	}

@@ -18,22 +18,17 @@
 
 package com.glaf.core.config.mongodb;
 
-import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.glaf.core.util.StringTools;
+import com.glaf.core.container.MongodbContainer;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import com.mongodb.MongoClient;
-import com.mongodb.ServerAddress;
 
 public class MongodbConfig implements com.glaf.core.config.Config {
-
-	protected MongoClient mongoClient;
 
 	protected DBCollection dbCollection;
 
@@ -53,21 +48,7 @@ public class MongodbConfig implements com.glaf.core.config.Config {
 	}
 
 	protected void buildClient() {
-		List<String> list = StringTools.split(servers, ",");
-		List<ServerAddress> addrList = new ArrayList<ServerAddress>();
-		for (String server : list) {
-			String host = server.substring(0, server.indexOf(":"));
-			int port = Integer.parseInt(server.substring(
-					server.indexOf(":") + 1, server.length()));
-			try {
-				ServerAddress addr = new ServerAddress(host, port);
-				addrList.add(addr);
-			} catch (UnknownHostException ex) {
-				ex.printStackTrace();
-			}
-		}
-		mongoClient = new MongoClient(addrList);
-		db = mongoClient.getDB("cachedb");
+		db = MongodbContainer.getInstance().getDB("cachedb");
 		dbCollection = db.getCollection("collection");
 	}
 
@@ -78,7 +59,6 @@ public class MongodbConfig implements com.glaf.core.config.Config {
 	public void destroy() {
 		dbCollection.drop();
 		db.dropDatabase();
-		mongoClient.close();
 	}
 
 	@SuppressWarnings("rawtypes")

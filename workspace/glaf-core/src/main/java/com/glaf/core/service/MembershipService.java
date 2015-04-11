@@ -44,12 +44,24 @@ public interface MembershipService {
 	@Transactional
 	void deleteByIds(List<Long> rowIds);
 
+	@Transactional
+	void deleteMemberships(String actorId, String type);
+
 	/**
 	 * 根据查询参数获取记录列表
 	 * 
 	 * @return
 	 */
 	List<Membership> list(MembershipQuery query);
+
+	/**
+	 * 获取用户的成员
+	 * 
+	 * @param actorId
+	 * @param type
+	 * @return
+	 */
+	List<Membership> getMemberships(String actorId, String type);
 
 	/**
 	 * 根据查询参数获取记录总数

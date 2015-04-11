@@ -45,7 +45,7 @@ public class ConfigFactory {
 
 	protected static List<String> regions = new java.util.concurrent.CopyOnWriteArrayList<String>();
 
-	protected static ExecutorService pool = Executors.newCachedThreadPool();
+	protected static ExecutorService pool = Executors.newFixedThreadPool(50);
 
 	public static void clear(String region) {
 		if (conf.getBoolean(DISTRIBUTED_ENABLED, false)) {

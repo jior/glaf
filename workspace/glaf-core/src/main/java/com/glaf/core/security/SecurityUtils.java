@@ -195,6 +195,22 @@ public class SecurityUtils {
 		}
 	}
 
+	public static String genKey() {
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i < 31; i++) {
+			buffer.append(UUID32.getUUID());
+		}
+		return buffer.toString();
+	}
+
+	public static String genKey2048() {
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i < 64; i++) {
+			buffer.append(UUID32.getUUID());
+		}
+		return buffer.toString();
+	}
+
 	/**
 	 * 从客户端的keystore得到证书
 	 * 
@@ -283,6 +299,7 @@ public class SecurityUtils {
 		System.out.println("总共耗时(毫秒):" + times);
 		System.out.println(SecurityUtils.hash("12345678"));
 		System.out.println(SecurityUtils.hash("111111"));
+		System.out.println(SecurityUtils.genKey2048());
 	}
 
 	/**

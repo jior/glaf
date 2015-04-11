@@ -23,8 +23,10 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class DateUtils {
@@ -266,6 +268,57 @@ public class DateUtils {
 		return Integer.parseInt(returnStr);
 	}
 
+	public static String getNowYearMonthDayHHmmss() {
+		String returnStr = null;
+		SimpleDateFormat f = new SimpleDateFormat("yyyyMMddHHmmss");
+		Date date = new Date();
+		returnStr = f.format(date);
+		return returnStr;
+	}
+
+	public static List<Integer> getYearDays(int year) {
+		List<Integer> list = new ArrayList<Integer>();
+		StringBuilder buff = new StringBuilder();
+		for (int i = 1; i <= 12; i++) {
+			int day = 30;
+			switch (i) {
+			case 1:
+			case 3:
+			case 5:
+			case 7:
+			case 8:
+			case 10:
+			case 12:
+				day = 31;
+				break;
+			case 2:
+				if (year % 4 == 0 || year % 400 == 0) {
+					day = 29;
+				} else {
+					day = 28;
+				}
+				break;
+			default:
+				day = 30;
+				break;
+			}
+			for (int j = 1; j <= day; j++) {
+				buff.delete(0, buff.length());
+				buff.append(year);
+				if (i < 10) {
+					buff.append("0");
+				}
+				buff.append(i);
+				if (j < 10) {
+					buff.append("0");
+				}
+				buff.append(j);
+				list.add(Integer.valueOf(buff.toString()));
+			}
+		}
+		return list;
+	}
+
 	/**
 	 * 计算两个日期之间的工作天数
 	 * 
@@ -367,29 +420,31 @@ public class DateUtils {
 		}
 		return days;
 	}
-	
-	 /**
-	   * Current system time.  Do not use this to calculate a duration or interval
-	   * to sleep, because it will be broken by settimeofday.  Instead, use
-	   * monotonicNow.
-	   * @return current time in msec.
-	   */
-	  public static long now() {
-	    return System.currentTimeMillis();
-	  }
-	  
-	  /**
-	   * Current time from some arbitrary time base in the past, counting in
-	   * milliseconds, and not affected by settimeofday or similar system clock
-	   * changes.  This is appropriate to use when computing how much longer to
-	   * wait for an interval to expire.
-	   * @return a monotonic clock that counts in milliseconds.
-	   */
-	  public static long monotonicNow() {
-	    final long NANOSECONDS_PER_MILLISECOND = 1000000;
 
-	    return System.nanoTime() / NANOSECONDS_PER_MILLISECOND;
-	  }
+	/**
+	 * Current system time. Do not use this to calculate a duration or interval
+	 * to sleep, because it will be broken by settimeofday. Instead, use
+	 * monotonicNow.
+	 * 
+	 * @return current time in msec.
+	 */
+	public static long now() {
+		return System.currentTimeMillis();
+	}
+
+	/**
+	 * Current time from some arbitrary time base in the past, counting in
+	 * milliseconds, and not affected by settimeofday or similar system clock
+	 * changes. This is appropriate to use when computing how much longer to
+	 * wait for an interval to expire.
+	 * 
+	 * @return a monotonic clock that counts in milliseconds.
+	 */
+	public static long monotonicNow() {
+		final long NANOSECONDS_PER_MILLISECOND = 1000000;
+
+		return System.nanoTime() / NANOSECONDS_PER_MILLISECOND;
+	}
 
 	public static void main(String[] args) {
 		System.out.println(DateUtils.getDate(new Date()));
@@ -443,6 +498,8 @@ public class DateUtils {
 		long daysDiff = DateUtils.dateDiff(new Date(), toDate);
 		System.out.println(daysDiff);
 
+		System.out.println(DateUtils.getYearDays(2015));
+
 	}
 
 	public static Date parseDate(String str, String[] parsePatterns) {
@@ -494,7 +551,11 @@ public class DateUtils {
 				parsePatterns[0] = MONTH_FORMAT;
 				return org.apache.commons.lang3.time.DateUtils.parseDate(
 						dateString, parsePatterns);
-			} else if (dateString.length() == 10) {
+			} else if (dateString.length() == 8) {
+				parsePatterns[0] = YEAR_MONTH_DAY_FORMAT;
+				return org.apache.commons.lang3.time.DateUtils.parseDate(
+						dateString, parsePatterns);
+			}else if (dateString.length() == 10) {
 				parsePatterns[0] = DAY_FORMAT;
 				try {
 					return org.apache.commons.lang3.time.DateUtils.parseDate(

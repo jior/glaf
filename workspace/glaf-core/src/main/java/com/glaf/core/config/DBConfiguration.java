@@ -23,6 +23,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.util.*;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -40,10 +41,12 @@ import com.glaf.core.dialect.H2Dialect;
 import com.glaf.core.dialect.MySQLDialect;
 import com.glaf.core.dialect.OracleDialect;
 import com.glaf.core.dialect.PostgreSQLDialect;
-import com.glaf.core.dialect.SQLServerDialect;
+import com.glaf.core.dialect.SQLServer2008Dialect;
 import com.glaf.core.dialect.SQLiteDialect;
 import com.glaf.core.domain.util.ConnectionDefinitionJsonFactory;
 import com.glaf.core.jdbc.DBConnectionFactory;
+import com.glaf.core.jdbc.connection.ConnectionConstants;
+import com.glaf.core.jdbc.datasource.MultiRoutingDataSource;
 import com.glaf.core.security.SecurityUtils;
 import com.glaf.core.util.Constants;
 import com.glaf.core.util.PropertiesUtils;
@@ -152,6 +155,47 @@ public class DBConfiguration {
 	 * 
 	 * @param name
 	 *            名称
+	 * @param dbType
+	 *            数据库类型
+	 * @param host
+	 *            主机
+	 * @param port
+	 *            端口
+	 * @param databaseName
+	 *            数据库名称
+	 * @param user
+	 *            用户名
+	 * @param password
+	 *            密码
+	 */
+	public static void addDataSourceProperties(String name, String dbType,
+			String host, int port, String databaseName, String user,
+			String password) {
+		Properties props = getTemplateProperties(dbType);
+		if (props != null && !props.isEmpty()) {
+			Map<String, Object> context = new HashMap<String, Object>();
+			context.put("host", host);
+			if (port > 0) {
+				context.put("port", port);
+			} else {
+				context.put("port", props.getProperty(PORT));
+			}
+			context.put("databaseName", databaseName);
+			String driver = props.getProperty(JDBC_DRIVER);
+			String url = props.getProperty(JDBC_URL);
+			url = com.glaf.core.el.ExpressionTools.evaluate(url, context);
+			logger.debug("name:" + name);
+			logger.debug("driver:" + driver);
+			logger.debug("url:" + url);
+			addDataSourceProperties(name, driver, url, user, password);
+		}
+	}
+
+	/**
+	 * 添加数据源
+	 * 
+	 * @param name
+	 *            名称
 	 * @param driver
 	 *            驱动
 	 * @param url
@@ -170,10 +214,26 @@ public class DBConfiguration {
 			props.put(JDBC_URL, url);
 			props.put(JDBC_USER, user);
 			props.put(JDBC_PASSWORD, password);
+
+			String dbType = getDatabaseType(url);
+			if (StringUtils.equals(dbType, "postgresql")) {
+				props.put(ConnectionConstants.PROP_VALIDATIONQUERY,
+						" SELECT 'X' ");
+			} else if (StringUtils.equals(dbType, "sqlserver")) {
+				props.put(ConnectionConstants.PROP_VALIDATIONQUERY,
+						" SELECT 'X' ");
+			} else if (StringUtils.equals(dbType, "mysql")) {
+				props.put(ConnectionConstants.PROP_VALIDATIONQUERY,
+						" SELECT 'X' ");
+			} else if (StringUtils.equals(dbType, "oracle")) {
+				props.put(ConnectionConstants.PROP_VALIDATIONQUERY,
+						" SELECT 'x' FROM dual  ");
+			}
+
 			try {
 				if (DBConnectionFactory.checkConnection(props)) {
+					MultiRoutingDataSource.addDataSource(name, props);
 					ConnectionDefinition conn = toConnectionDefinition(props);
-					String dbType = getDatabaseType(url);
 					conn.setUrl(url);
 					conn.setType(dbType);
 					dbTypes.put(name, dbType);
@@ -225,7 +285,7 @@ public class DBConfiguration {
 				JSONObject jsonObject = model.toJsonObject();
 				return ConnectionDefinitionJsonFactory.jsonToObject(jsonObject);
 			} catch (Exception ex) {
-				// Ignore Error
+				// Ignore Exception
 			}
 		}
 		String text = ConfigFactory.getString(
@@ -235,7 +295,7 @@ public class DBConfiguration {
 				JSONObject jsonObject = JSON.parseObject(text);
 				return ConnectionDefinitionJsonFactory.jsonToObject(jsonObject);
 			} catch (Exception ex) {
-				// Ignore Error
+				// Ignore Exception
 			}
 		}
 		return null;
@@ -243,14 +303,14 @@ public class DBConfiguration {
 
 	public static List<ConnectionDefinition> getConnectionDefinitions() {
 		List<ConnectionDefinition> rows = new java.util.ArrayList<ConnectionDefinition>();
-		Collection<ConnectionDefinition> list = dataSourceProperties.values();
-		if (list != null && !list.isEmpty()) {
-			for (ConnectionDefinition conn : list) {
-				String name = conn.getName();
-				ConnectionDefinition model = getConnectionDefinition(name);
-				if (model != null && model.getName() != null) {
-					rows.add(model);
-				}
+		Iterator<Entry<String, ConnectionDefinition>> iterator = dataSourceProperties
+				.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Entry<String, ConnectionDefinition> entry = iterator.next();
+			String name = (String) entry.getKey();
+			ConnectionDefinition model = getConnectionDefinition(name);
+			if (model != null && model.getName() != null) {
+				rows.add(model);
 			}
 		}
 		return rows;
@@ -362,11 +422,13 @@ public class DBConfiguration {
 	public static Map<String, Properties> getDataSourceProperties() {
 		Map<String, Properties> dsMap = new HashMap<String, Properties>();
 		if (dataSourceProperties != null && !dataSourceProperties.isEmpty()) {
-			Iterator<ConnectionDefinition> iterator = dataSourceProperties
-					.values().iterator();
+			Iterator<Entry<String, ConnectionDefinition>> iterator = dataSourceProperties
+					.entrySet().iterator();
 			while (iterator.hasNext()) {
-				ConnectionDefinition conn = iterator.next();
-				dsMap.put(conn.getName(), toProperties(conn));
+				Entry<String, ConnectionDefinition> entry = iterator.next();
+				String name = (String) entry.getKey();
+				ConnectionDefinition conn = entry.getValue();
+				dsMap.put(name, toProperties(conn));
 			}
 		}
 		return dsMap;
@@ -380,7 +442,7 @@ public class DBConfiguration {
 		ConnectionDefinition conn = getConnectionDefinition(name);
 		Properties props = toProperties(conn);
 		if (props == null || props.isEmpty()) {
-			props = getDefaultDataSourceProperties();
+			// props = getDefaultDataSourceProperties();
 		}
 		return props;
 	}
@@ -416,7 +478,7 @@ public class DBConfiguration {
 		dialectMappings.setProperty("postgresql",
 				"com.glaf.core.dialect.PostgreSQLDialect");
 		dialectMappings.setProperty("sqlserver",
-				"com.glaf.core.dialect.SQLServerDialect");
+				"com.glaf.core.dialect.SQLServer2008Dialect");
 		dialectMappings.setProperty("sqlite",
 				"com.glaf.core.dialect.SQLiteDialect");
 		dialectMappings.setProperty("db2", "com.glaf.core.dialect.DB2Dialect");
@@ -427,11 +489,45 @@ public class DBConfiguration {
 		Map<String, Dialect> dialects = new java.util.HashMap<String, Dialect>();
 		dialects.put("h2", new H2Dialect());
 		dialects.put("mysql", new MySQLDialect());
-		dialects.put("sqlserver", new SQLServerDialect());
+		dialects.put("sqlserver", new SQLServer2008Dialect());
 		dialects.put("sqlite", new SQLiteDialect());
 		dialects.put("oracle", new OracleDialect());
 		dialects.put("postgresql", new PostgreSQLDialect());
 		dialects.put("db2", new DB2Dialect());
+		return dialects;
+	}
+
+	public static Map<String, Dialect> getDatabaseDialects() {
+		Map<String, Dialect> dialects = new java.util.HashMap<String, Dialect>();
+		logger.debug("dataSourceProperties:" + dataSourceProperties);
+		if (dataSourceProperties != null && !dataSourceProperties.isEmpty()) {
+			Iterator<Entry<String, ConnectionDefinition>> iterator = dataSourceProperties
+					.entrySet().iterator();
+			while (iterator.hasNext()) {
+				Entry<String, ConnectionDefinition> entry = iterator.next();
+				String key = (String) entry.getKey();
+				ConnectionDefinition conn = entry.getValue();
+				String url = conn.getUrl();
+				String dbType = getDatabaseType(url);
+				logger.debug(dbType + "->" + url);
+				if (StringUtils.equals(dbType, "h2")) {
+					dialects.put(key, new H2Dialect());
+				} else if (StringUtils.equals(dbType, "mysql")) {
+					dialects.put(key, new MySQLDialect());
+				} else if (StringUtils.equals(dbType, "sqlserver")) {
+					dialects.put(key, new SQLServer2008Dialect());
+				} else if (StringUtils.equals(dbType, "sqlite")) {
+					dialects.put(key, new SQLiteDialect());
+				} else if (StringUtils.equals(dbType, "oracle")) {
+					dialects.put(key, new OracleDialect());
+				} else if (StringUtils.equals(dbType, "postgresql")) {
+					dialects.put(key, new PostgreSQLDialect());
+				} else if (StringUtils.equals(dbType, "db2")) {
+					dialects.put(key, new DB2Dialect());
+				}
+			}
+		}
+		logger.debug("dialects->" + dialects);
 		return dialects;
 	}
 
@@ -502,17 +598,21 @@ public class DBConfiguration {
 				File directory = new File(config);
 				if (directory.exists() && directory.isDirectory()) {
 					String[] filelist = directory.list();
-					for (int i = 0; i < filelist.length; i++) {
-						String filename = config + "/" + filelist[i];
-						File file = new File(filename);
-						if (file.isFile()
-								&& file.getName().endsWith(".properties")) {
-							InputStream inputStream = new FileInputStream(file);
-							Properties props = PropertiesUtils
-									.loadProperties(inputStream);
-							if (props != null) {
-								jdbcTemplateProperties.put(
-										props.getProperty(JDBC_NAME), props);
+					if (filelist != null) {
+						for (int i = 0, len = filelist.length; i < len; i++) {
+							String filename = config + "/" + filelist[i];
+							File file = new File(filename);
+							if (file.isFile()
+									&& file.getName().endsWith(".properties")) {
+								InputStream inputStream = new FileInputStream(
+										file);
+								Properties props = PropertiesUtils
+										.loadProperties(inputStream);
+								if (props != null) {
+									jdbcTemplateProperties
+											.put(props.getProperty(JDBC_NAME),
+													props);
+								}
 							}
 						}
 					}
@@ -558,37 +658,45 @@ public class DBConfiguration {
 				logger.info("datasource path:" + path);
 				File dir = new File(path);
 				if (dir.exists() && dir.isDirectory()) {
-					File[] entries = dir.listFiles();
-					for (int i = 0; i < entries.length; i++) {
-						File file = entries[i];
-						if (file.getName().endsWith(".properties")) {
-							logger.info("load jdbc properties:"
-									+ file.getAbsolutePath());
-							try {
-								Properties props = PropertiesUtils
-										.loadProperties(new FileInputStream(
-												file));
-								if (DBConnectionFactory.checkConnection(props)) {
-									String name = props.getProperty(JDBC_NAME);
-									if (StringUtils.isNotEmpty(name)) {
-										String dbType = props
-												.getProperty(JDBC_TYPE);
-										if (StringUtils.isEmpty(dbType)) {
-											dbType = getDatabaseType(props
-													.getProperty(JDBC_URL));
-											props.setProperty(JDBC_TYPE, dbType);
+					File[] filelist = dir.listFiles();
+					if (filelist != null) {
+						for (int i = 0, len = filelist.length; i < len; i++) {
+							File file = filelist[i];
+							if (file.getName().endsWith(".properties")) {
+								logger.info("load jdbc properties:"
+										+ file.getAbsolutePath());
+								try {
+									Properties props = PropertiesUtils
+											.loadProperties(new FileInputStream(
+													file));
+									if (DBConnectionFactory
+											.checkConnection(props)) {
+										String name = props
+												.getProperty(JDBC_NAME);
+										if (StringUtils.isNotEmpty(name)) {
+											String dbType = props
+													.getProperty(JDBC_TYPE);
+											if (StringUtils.isEmpty(dbType)) {
+												dbType = getDatabaseType(props
+														.getProperty(JDBC_URL));
+												props.setProperty(JDBC_TYPE,
+														dbType);
+											}
+											ConnectionDefinition conn = toConnectionDefinition(props);
+											dbTypes.put(name, dbType);
+											dataSourceProperties
+													.put(name, conn);
+											ConfigFactory.put(
+													DBConfiguration.class
+															.getSimpleName(),
+													name, conn.toJsonObject()
+															.toJSONString());
 										}
-										ConnectionDefinition conn = toConnectionDefinition(props);
-										dbTypes.put(name, dbType);
-										dataSourceProperties.put(name, conn);
-										ConfigFactory.put(DBConfiguration.class
-												.getSimpleName(), name, conn
-												.toJsonObject().toJSONString());
 									}
+								} catch (Exception ex) {
+									ex.printStackTrace();
+									logger.error(ex);
 								}
-							} catch (Exception ex) {
-								ex.printStackTrace();
-								logger.error(ex);
 							}
 						}
 					}

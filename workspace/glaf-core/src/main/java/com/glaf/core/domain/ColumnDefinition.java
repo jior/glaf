@@ -48,6 +48,13 @@ public class ColumnDefinition implements
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * 主键
+	 */
+	@Id
+	@Column(name = "ID_", length = 100, nullable = false)
+	protected String id;
+
+	/**
 	 * 数据库中表的别名
 	 */
 	@Column(name = "ALIAS_", length = 50)
@@ -141,17 +148,13 @@ public class ColumnDefinition implements
 	protected String hiddenField;
 
 	/**
-	 * 主键
-	 */
-	@Id
-	@Column(name = "ID_", length = 100, nullable = false)
-	protected String id;
-
-	/**
 	 * 输入类型（文本框、数值输入、日期输入、下拉列表、复选框）
 	 */
 	@Column(name = "INPUTTYPE_", length = 50)
 	protected String inputType;
+
+	@Column(name = "INITVALUE_", length = 250)
+	protected String initValue;
 
 	@javax.persistence.Transient
 	protected int intValue;
@@ -343,7 +346,10 @@ public class ColumnDefinition implements
 	@javax.persistence.Transient
 	protected Object value;
 
-	@Column(name = "VALUEEXPRESSION_", length = 200)
+	@Column(name = "PLACEHOLDER_", length = 200)
+	protected String placeholder;
+
+	@Column(name = "VALUEEXPRESSION_", length = 100)
 	protected String valueExpression;
 
 	/**
@@ -403,7 +409,7 @@ public class ColumnDefinition implements
 		if (columnName == null) {
 			if (other.columnName != null)
 				return false;
-		} else if (!columnName.equals(other.columnName))
+		} else if (!getColumnName().equals(other.getColumnName()))
 			return false;
 		return true;
 	}
@@ -503,6 +509,10 @@ public class ColumnDefinition implements
 		return index;
 	}
 
+	public String getInitValue() {
+		return initValue;
+	}
+
 	public String getInputType() {
 		return inputType;
 	}
@@ -561,6 +571,10 @@ public class ColumnDefinition implements
 
 	public int getOrdinal() {
 		return ordinal;
+	}
+
+	public String getPlaceholder() {
+		return placeholder;
 	}
 
 	public Integer getPosition() {
@@ -704,7 +718,7 @@ public class ColumnDefinition implements
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((columnName == null) ? 0 : columnName.hashCode());
+				+ ((getColumnName() == null) ? 0 : getColumnName().hashCode());
 		return result;
 	}
 
@@ -943,6 +957,10 @@ public class ColumnDefinition implements
 		this.index = index;
 	}
 
+	public void setInitValue(String initValue) {
+		this.initValue = initValue;
+	}
+
 	public void setInputType(String inputType) {
 		this.inputType = inputType;
 	}
@@ -1005,6 +1023,10 @@ public class ColumnDefinition implements
 
 	public void setOrdinal(int ordinal) {
 		this.ordinal = ordinal;
+	}
+
+	public void setPlaceholder(String placeholder) {
+		this.placeholder = placeholder;
 	}
 
 	public void setPosition(Integer position) {

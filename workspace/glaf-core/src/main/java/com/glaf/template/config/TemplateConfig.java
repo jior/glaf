@@ -74,28 +74,32 @@ public class TemplateConfig {
 				if (directory.exists() && directory.isDirectory()) {
 					TemplateReader reader = new TemplateReader();
 					String[] filelist = directory.list();
-					for (int i = 0; i < filelist.length; i++) {
-						String filename = config + filelist[i];
-						File file = new File(filename);
-						if (file.isFile() && file.getName().endsWith(".xml")) {
-							logger.debug("read config:" + filename);
-							inputStream = new FileInputStream(file);
-							List<Template> templates = reader
-									.readTemplates(inputStream);
-							if (templates != null && !templates.isEmpty()) {
-								for (Template template : templates) {
-									if (template.getName() != null) {
-										concurrentMap.put(template.getName()
-												.toLowerCase(), template);
-									}
-									if (template.getTemplateId() != null) {
-										concurrentMap.put(template
-												.getTemplateId().toLowerCase(),
-												template);
+					if (filelist != null) {
+						for (int i = 0, len = filelist.length; i < len; i++) {
+							String filename = config + filelist[i];
+							File file = new File(filename);
+							if (file.isFile()
+									&& file.getName().endsWith(".xml")) {
+								logger.debug("read config:" + filename);
+								inputStream = new FileInputStream(file);
+								List<Template> templates = reader
+										.readTemplates(inputStream);
+								if (templates != null && !templates.isEmpty()) {
+									for (Template template : templates) {
+										if (template.getName() != null) {
+											concurrentMap.put(template
+													.getName().toLowerCase(),
+													template);
+										}
+										if (template.getTemplateId() != null) {
+											concurrentMap.put(template
+													.getTemplateId()
+													.toLowerCase(), template);
+										}
 									}
 								}
+								IOUtils.closeStream(inputStream);
 							}
-							IOUtils.closeStream(inputStream);
 						}
 					}
 				}

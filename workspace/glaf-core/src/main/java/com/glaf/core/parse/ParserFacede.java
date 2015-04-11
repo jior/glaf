@@ -405,21 +405,24 @@ public class ParserFacede {
 		Map<String, TableModel> tplMap = new java.util.HashMap<String, TableModel>();
 		java.io.File directory = new java.io.File(mappingDir);
 		if (directory.exists()) {
-			File[] entries = directory.listFiles();
-			for (int i = 0; i < entries.length; i++) {
-				File file = entries[i];
-				try {
-					if (file.getName().endsWith(".xml")) {
-						TableModel tableModel = reader
-								.read(new FileInputStream(file));
-						// System.out.println("tableModel="+tableModel.toString());
-						if (tableModel.getFilePrefix() != null) {
-							tplMap.put(tableModel.getFilePrefix(), tableModel);
-							prefixs.add(tableModel.getFilePrefix());
+			File[] filelist = directory.listFiles();
+			if (filelist != null) {
+				for (int i = 0, len = filelist.length; i < len; i++) {
+					File file = filelist[i];
+					try {
+						if (file.getName().endsWith(".xml")) {
+							TableModel tableModel = reader
+									.read(new FileInputStream(file));
+							// System.out.println("tableModel="+tableModel.toString());
+							if (tableModel.getFilePrefix() != null) {
+								tplMap.put(tableModel.getFilePrefix(),
+										tableModel);
+								prefixs.add(tableModel.getFilePrefix());
+							}
 						}
+					} catch (Exception ex) {
+						ex.printStackTrace();
 					}
-				} catch (Exception ex) {
-					ex.printStackTrace();
 				}
 			}
 		}
@@ -429,35 +432,39 @@ public class ParserFacede {
 		 */
 		java.io.File directory2 = new java.io.File(dataDir);
 		if (directory2.exists()) {
-			File[] entries = directory2.listFiles();
-			for (int i = 0; i < entries.length; i++) {
-				File file = entries[i];
-				if (file.isFile()) {
-					boolean success = false;
-					int retry = 0;
-					while (retry < 2 && !success) {
-						try {
-							retry++;
-							this.parse(file, prefixs, tplMap);
-							success = true;
-						} catch (Exception ex) {
-							ex.printStackTrace();
+			File[] filelist = directory2.listFiles();
+			if (filelist != null) {
+				for (int i = 0, len = filelist.length; i < len; i++) {
+					File file = filelist[i];
+					if (file.isFile()) {
+						boolean success = false;
+						int retry = 0;
+						while (retry < 2 && !success) {
+							try {
+								retry++;
+								this.parse(file, prefixs, tplMap);
+								success = true;
+							} catch (Exception ex) {
+								ex.printStackTrace();
+							}
 						}
-					}
-				} else {
-					File[] entries02 = file.listFiles();
-					for (int ii = 0; ii < entries02.length; ii++) {
-						File f = entries02[ii];
-						if (f.isFile()) {
-							boolean success = false;
-							int retry = 0;
-							while (retry < 2 && !success) {
-								try {
-									retry++;
-									this.parse(f, prefixs, tplMap);
-									success = true;
-								} catch (Exception ex) {
-									ex.printStackTrace();
+					} else {
+						File[] filelist2 = file.listFiles();
+						if (filelist2 != null) {
+							for (int ii = 0, len2 = filelist2.length; ii < len2; ii++) {
+								File f = filelist2[ii];
+								if (f.isFile()) {
+									boolean success = false;
+									int retry = 0;
+									while (retry < 2 && !success) {
+										try {
+											retry++;
+											this.parse(f, prefixs, tplMap);
+											success = true;
+										} catch (Exception ex) {
+											ex.printStackTrace();
+										}
+									}
 								}
 							}
 						}

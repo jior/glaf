@@ -81,6 +81,14 @@
 			<fileset dir="static/dojo" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
 		</jar>
 
+		<jar jarfile="glaf-easyui-resource.jar">
+			<fileset dir="static/easyui" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
+		</jar>
+
+		<jar jarfile="glaf-easyui13-resource.jar">
+			<fileset dir="static/easyui1.3" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
+		</jar>
+
 		<jar jarfile="glaf-echarts-resource.jar">
 			<fileset dir="static/echarts" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
 		</jar>
@@ -111,6 +119,26 @@
 
 		<jar jarfile="glaf-kendoui-resource.jar">
 			<fileset dir="static/kendoui" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
+		</jar>
+
+		<jar jarfile="glaf-kindeditor-resource.jar">
+			<fileset dir="static/kindeditor" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
+		</jar>
+
+		<jar jarfile="glaf-ueditor-resource.jar">
+			<fileset dir="static/ueditor" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
+		</jar>
+
+		<jar jarfile="glaf-webuploader-resource.jar">
+			<fileset dir="static/webuploader" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
+		</jar>
+
+		<jar jarfile="glaf-jqueryui-resource.jar">
+			<fileset dir="static/jqueryui" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
+		</jar>
+
+		<jar jarfile="glaf-jqgrid-resource.jar">
+			<fileset dir="static/jqgrid" includes="**/*.*" excludes="**/*.jsp,**/*.tmp,**/*.svn,**/*.lib,**/*.dll,**/*.so" casesensitive="yes" />
 		</jar>
 
 		<jar jarfile="glaf-min-web.zip">

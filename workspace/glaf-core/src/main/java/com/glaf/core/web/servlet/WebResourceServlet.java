@@ -112,9 +112,12 @@ public class WebResourceServlet extends HttpServlet {
 		if (StringUtils.equalsIgnoreCase(ext, "jpg")
 				|| StringUtils.equalsIgnoreCase(ext, "jpeg")
 				|| StringUtils.equalsIgnoreCase(ext, "gif")
-				|| StringUtils.equalsIgnoreCase(ext, "png")
-				|| StringUtils.equalsIgnoreCase(ext, "bmp")) {
+				|| StringUtils.equalsIgnoreCase(ext, "png")) {
 			contentType = "image/" + ext;
+			requiredZip = false;
+		} else if (StringUtils.equalsIgnoreCase(ext, "bmp")) {
+			contentType = "image/bmp";
+			requiredZip = true;
 		} else if (StringUtils.equalsIgnoreCase(ext, "svg")) {
 			contentType = "image/svg+xml";
 			requiredZip = true;

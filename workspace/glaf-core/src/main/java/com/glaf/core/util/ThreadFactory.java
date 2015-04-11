@@ -33,7 +33,8 @@ public final class ThreadFactory {
 		int numberOfProcessors = Runtime.getRuntime().availableProcessors();
 		pool.setName("ThreadPool");
 		pool.setMinThreads(conf.getInt("ThreadPool.minThreads", 1));
-		pool.setMaxThreads(conf.getInt("ThreadPool.maxThreads", numberOfProcessors));
+		pool.setMaxThreads(conf.getInt("ThreadPool.maxThreads",
+				numberOfProcessors));
 		pool.setThreadsPriority(Thread.NORM_PRIORITY - 1);
 
 		try {
@@ -43,8 +44,12 @@ public final class ThreadFactory {
 		}
 	}
 
-	public static void run(java.lang.Runnable r) {
-		pool.execute(r);
+	public static void execute(Runnable command) {
+		pool.execute(command);
+	}
+
+	public static void run(java.lang.Runnable command) {
+		pool.execute(command);
 	}
 
 	private ThreadFactory() {

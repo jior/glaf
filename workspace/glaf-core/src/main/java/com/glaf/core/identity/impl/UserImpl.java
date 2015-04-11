@@ -18,13 +18,14 @@
 
 package com.glaf.core.identity.impl;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.alibaba.fastjson.JSONObject;
-
 import com.glaf.core.identity.User;
 import com.glaf.core.identity.util.UserJsonFactory;
 
@@ -92,8 +93,17 @@ public class UserImpl implements User {
 
 	protected String token;
 
+	private Collection<String> rowKeys = new HashSet<String>();
+
 	public UserImpl() {
 
+	}
+
+	public void addRowKey(String rowKey) {
+		if (rowKeys == null) {
+			rowKeys = new HashSet<String>();
+		}
+		rowKeys.add(rowKey);
 	}
 
 	@Override
@@ -215,6 +225,10 @@ public class UserImpl implements User {
 
 	public Integer getRemoteAttr() {
 		return remoteAttr;
+	}
+
+	public Collection<String> getRowKeys() {
+		return rowKeys;
 	}
 
 	public String getStatus() {
@@ -354,6 +368,10 @@ public class UserImpl implements User {
 
 	public void setRemoteAttr(Integer remoteAttr) {
 		this.remoteAttr = remoteAttr;
+	}
+
+	public void setRowKeys(Collection<String> rowKeys) {
+		this.rowKeys = rowKeys;
 	}
 
 	public void setStatus(String status) {

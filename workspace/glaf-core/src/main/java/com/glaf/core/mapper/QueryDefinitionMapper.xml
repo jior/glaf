@@ -7,6 +7,7 @@
 	<resultMap id="queryDefinitionResultMap" type="com.glaf.core.domain.QueryDefinition">
 		<id property="id" column="ID_" jdbcType="VARCHAR" />
 		<result property="parentId" column="PARENTID_" jdbcType="VARCHAR" />
+		<result property="databaseId" column="DATABASEID_" jdbcType="BIGINT" />
 		<result property="nodeId" column="NODEID_" jdbcType="BIGINT" />
 		<result property="targetTableName" column="TARGETTABLENAME_"
 			jdbcType="VARCHAR" />
@@ -16,7 +17,6 @@
 		<result property="title" column="TITLE_" jdbcType="VARCHAR" />
 		<result property="type" column="TYPE_" jdbcType="VARCHAR" />
 		<result property="description" column="DESCRIPTION_" jdbcType="VARCHAR" />
-		<result property="dsName" column="DSNAME_" jdbcType="VARCHAR" />
 		<result property="sql" column="SQL_" jdbcType="VARCHAR" />
 		<result property="countSql" column="COUNTSQL_" jdbcType="VARCHAR" />
 		<result property="idField" column="IDFIELD_" jdbcType="VARCHAR" />
@@ -28,11 +28,16 @@
 		<result property="resultType" column="RESULTTYPE_" jdbcType="VARCHAR" />
 		<result property="createTime" column="CREATETIME_" jdbcType="TIMESTAMP" />
 		<result property="createBy" column="CREATEBY_" jdbcType="VARCHAR" />
+		<result property="sortNo" column="SORTNO_" jdbcType="INTEGER" />
 		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
 		<result property="deleteFlag" column="DELETEFLAG_" jdbcType="INTEGER" />
 		<result property="revision" column="REVISION_" jdbcType="INTEGER" />
 		<result property="listUrl" column="LISTURL_" jdbcType="VARCHAR" />
 		<result property="detailUrl" column="DETAILURL_" jdbcType="VARCHAR" />
+		<result property="rotatingFlag" column="ROTATINGFLAG_"
+			jdbcType="VARCHAR" />
+		<result property="rotatingColumn" column="ROTATINGCOLUMN_"
+			jdbcType="VARCHAR" />
 	</resultMap>
 
 
@@ -42,6 +47,9 @@
 			ID_
 			<if test="parentId != null">
 				,PARENTID_
+			</if>
+			<if test="databaseId != null">
+				,DATABASEID_
 			</if>
 			<if test="nodeId != null">
 				,NODEID_
@@ -66,9 +74,6 @@
 			</if>
 			<if test="description != null">
 				,DESCRIPTION_
-			</if>
-			<if test="dsName != null">
-				,DSNAME_
 			</if>
 			<if test="sql != null">
 				,SQL_
@@ -97,6 +102,9 @@
 			<if test="createBy != null">
 				,CREATEBY_
 			</if>
+			<if test="sortNo != null">
+				,SORTNO_
+			</if>
 			<if test="locked != null">
 				,LOCKED_
 			</if>
@@ -112,6 +120,12 @@
 			<if test="detailUrl != null">
 				,DETAILURL_
 			</if>
+			<if test="rotatingFlag != null">
+				,ROTATINGFLAG_
+			</if>
+			<if test="rotatingColumn != null">
+				,ROTATINGCOLUMN_
+			</if>
 		</trim>
 
 		<trim prefix=" values (" suffix=")" suffixOverrides=",">
@@ -119,6 +133,9 @@
 
 			<if test="parentId != null">
 				,#{parentId, jdbcType=VARCHAR}
+			</if>
+			<if test="databaseId != null">
+				,#{databaseId, jdbcType=BIGINT}
 			</if>
 			<if test="nodeId != null">
 				,#{nodeId, jdbcType=BIGINT}
@@ -143,9 +160,6 @@
 			</if>
 			<if test="description != null">
 				,#{description, jdbcType=VARCHAR}
-			</if>
-			<if test="dsName != null">
-				,#{dsName, jdbcType=VARCHAR}
 			</if>
 			<if test="sql != null">
 				,#{sql, jdbcType=VARCHAR}
@@ -174,6 +188,9 @@
 			<if test="createBy != null">
 				,#{createBy, jdbcType=VARCHAR}
 			</if>
+			<if test="sortNo != null">
+				,#{sortNo, jdbcType=INTEGER}
+			</if>
 			<if test="locked != null">
 				,#{locked, jdbcType=INTEGER}
 			</if>
@@ -189,6 +206,12 @@
 			<if test="detailUrl != null">
 				,#{detailUrl, jdbcType=VARCHAR}
 			</if>
+			<if test="rotatingFlag != null">
+				,#{rotatingFlag, jdbcType=VARCHAR}
+			</if>
+			<if test="rotatingColumn != null">
+				,#{rotatingColumn, jdbcType=VARCHAR}
+			</if>
 		</trim>
 	</insert>
 
@@ -200,6 +223,9 @@
 		<trim prefix="" suffix="" suffixOverrides=",">
 			<if test="parentId != null">
 				PARENTID_ = #{parentId, jdbcType=VARCHAR},
+			</if>
+			<if test="databaseId != null">
+				DATABASEID_ = #{databaseId, jdbcType=VARCHAR},
 			</if>
 			<if test="targetTableName != null">
 				TARGETTABLENAME_ = #{targetTableName, jdbcType=VARCHAR},
@@ -221,9 +247,6 @@
 			</if>
 			<if test="description != null">
 				DESCRIPTION_ = #{description, jdbcType=VARCHAR},
-			</if>
-			<if test="dsName != null">
-				DSNAME_ = #{dsName, jdbcType=VARCHAR},
 			</if>
 			<if test="sql != null">
 				SQL_ = #{sql, jdbcType=VARCHAR},
@@ -247,11 +270,8 @@
 			<if test="resultType != null">
 				RESULTTYPE_ = #{resultType, jdbcType=VARCHAR},
 			</if>
-			<if test="createTime != null">
-				CREATETIME_ = #{createTime, jdbcType=TIMESTAMP},
-			</if>
-			<if test="createBy != null">
-				CREATEBY_ = #{createBy, jdbcType=VARCHAR},
+			<if test="sortNo != null">
+				SORTNO_ = #{sortNo, jdbcType=INTEGER},
 			</if>
 			<if test="locked != null">
 				LOCKED_ = #{locked, jdbcType=INTEGER},
@@ -268,17 +288,25 @@
 			<if test="detailUrl != null">
 				DETAILURL_ = #{detailUrl, jdbcType=VARCHAR},
 			</if>
+			<if test="rotatingFlag != null">
+				ROTATINGFLAG_ = #{rotatingFlag, jdbcType=VARCHAR},
+			</if>
+			<if test="rotatingColumn != null">
+				ROTATINGCOLUMN_ = #{rotatingColumn, jdbcType=VARCHAR},
+			</if>
 		</trim>
 		where
 		ID_ = #{id, jdbcType=VARCHAR}
 
 	</update>
 
+
 	<delete id="deleteQueryDefinitionById" parameterType="string">
 		delete from
 		SYS_QUERY
 		where ID_ = #{id}
 	</delete>
+
 
 	<delete id="deleteQueryDefinitions" parameterType="com.glaf.core.query.QueryDefinitionQuery">
 		delete from SYS_QUERY
@@ -291,10 +319,12 @@
 		)
 	</delete>
 
+
 	<select id="getQueryDefinitionById" parameterType="string"
 		resultMap="queryDefinitionResultMap">
 		select * from SYS_QUERY where ID_ = #{id}
 	</select>
+
 
 	<select id="getQueryDefinitionByTableName" parameterType="string"
 		resultMap="queryDefinitionResultMap">
@@ -312,11 +342,13 @@
 		</if>
 	</select>
 
+
 	<select id="getQueryDefinitionCount" parameterType="com.glaf.core.query.QueryDefinitionQuery"
 		resultType="int">
 		select count(*)
 		<include refid="selectQueryDefinitionsSql" />
 	</select>
+
 
 	<sql id="selectQueryDefinitionsSql">
 
@@ -351,10 +383,6 @@
 
 			<if test="descriptionLike != null and descriptionLike != '' ">
 				and E.DESCRIPTION_ like #{descriptionLike}
-			</if>
-
-			<if test="dsName != null and dsName != '' ">
-				and E.DSNAME_ = #{dsName}
 			</if>
 
 			<if test="type != null and type != '' ">

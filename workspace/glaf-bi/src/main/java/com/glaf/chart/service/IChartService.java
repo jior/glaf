@@ -81,13 +81,12 @@ public interface IChartService {
 	Chart getChartByName(String name);
 
 	/**
-	 * 获取图表定义并取数
+	 * 根据别名获取图表定义
 	 * 
-	 * @param id
-	 * @param paramMap
+	 * @param mapping
 	 * @return
 	 */
-	Chart getChartAndFetchDataById(String id, Map<String, Object> paramMap);
+	Chart getChartByMapping(String mapping);
 
 	/**
 	 * 保存一条记录

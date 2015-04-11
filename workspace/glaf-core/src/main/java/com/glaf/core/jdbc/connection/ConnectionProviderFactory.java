@@ -118,6 +118,9 @@ public final class ConnectionProviderFactory {
 	}
 
 	public static ConnectionProvider createProvider(Properties properties) {
+		if (properties == null || properties.isEmpty()) {
+			return null;
+		}
 		String jdbcUrl = properties.getProperty(DBConfiguration.JDBC_URL);
 		String cacheKey = DigestUtils.md5Hex(jdbcUrl);
 		if (providerCache.get(cacheKey) != null) {
@@ -131,6 +134,9 @@ public final class ConnectionProviderFactory {
 	@SuppressWarnings("rawtypes")
 	private static ConnectionProvider createProvider(Properties properties,
 			Map connectionProviderInjectionData) {
+		if (properties == null || properties.isEmpty()) {
+			return null;
+		}
 		log.debug("---------------------------ConnectionProvider create----------------");
 		ConnectionProvider provider = null;
 		String providerClass = properties
@@ -190,6 +196,8 @@ public final class ConnectionProviderFactory {
 	public static ConnectionProvider createProvider(String systemName) {
 		Properties props = DBConfiguration
 				.getDataSourcePropertiesByName(systemName);
+		log.debug("ConnectionProvider@name=" + systemName);
+		// log.debug("ConnectionProvider@props=" + props);
 		ConnectionProvider model = createProvider(props);
 		return model;
 	}

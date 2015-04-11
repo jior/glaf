@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 
 public class ParamUtils {
@@ -88,7 +89,7 @@ public class ParamUtils {
 	}
 
 	public static double getDouble(Map<String, Object> dataMap, String key) {
-		double result = 0;
+		double result = 0.0D;
 		Object value = dataMap.get(key);
 		if (value == null) {
 			value = dataMap.get(key.toLowerCase());
@@ -96,6 +97,7 @@ public class ParamUtils {
 		if (value == null) {
 			value = dataMap.get(key.toUpperCase());
 		}
+
 		if (value != null && StringUtils.isNotEmpty(value.toString())) {
 			if (value instanceof String) {
 				String tmp = (String) value;
@@ -109,8 +111,14 @@ public class ParamUtils {
 			} else if (value instanceof Double) {
 				Double x = (Double) value;
 				result = x.doubleValue();
+			} else {
+				String tmp = value.toString();
+				result = Double.parseDouble(tmp);
 			}
+		} else {
+			result = MapUtils.getDoubleValue(dataMap, key);
 		}
+
 		return result;
 	}
 
@@ -136,7 +144,12 @@ public class ParamUtils {
 			} else if (value instanceof Double) {
 				Double x = (Double) value;
 				result = x.doubleValue();
+			} else {
+				String tmp = value.toString();
+				result = Double.parseDouble(tmp);
 			}
+		} else {
+			result = MapUtils.getDouble(dataMap, key);
 		}
 		return result;
 	}
@@ -163,6 +176,9 @@ public class ParamUtils {
 			} else if (value instanceof Double) {
 				Double x = (Double) value;
 				result = x.intValue();
+			} else {
+				String tmp = value.toString();
+				result = Integer.parseInt(tmp);
 			}
 		}
 		return result;
@@ -190,6 +206,9 @@ public class ParamUtils {
 			} else if (value instanceof Double) {
 				Double x = (Double) value;
 				result = x.intValue();
+			} else {
+				String tmp = value.toString();
+				result = Integer.parseInt(tmp);
 			}
 		}
 		return result;
@@ -217,6 +236,9 @@ public class ParamUtils {
 			} else if (value instanceof Double) {
 				Double x = (Double) value;
 				result = x.longValue();
+			} else {
+				String tmp = value.toString();
+				result = Long.parseLong(tmp);
 			}
 		}
 		return result;
@@ -244,7 +266,24 @@ public class ParamUtils {
 			} else if (value instanceof Double) {
 				Double x = (Double) value;
 				result = x.longValue();
+			} else {
+				String tmp = value.toString();
+				result = Long.parseLong(tmp);
 			}
+		}
+		return result;
+	}
+
+	public static Object getObject(Map<String, Object> dataMap, String key) {
+		if (dataMap == null || key == null) {
+			return null;
+		}
+		Object result = dataMap.get(key);
+		if (result == null) {
+			result = dataMap.get(key.toLowerCase());
+		}
+		if (result == null) {
+			result = dataMap.get(key.toUpperCase());
 		}
 		return result;
 	}
@@ -269,20 +308,6 @@ public class ParamUtils {
 			} else {
 				result = value.toString();
 			}
-		}
-		return result;
-	}
-
-	public static Object getObject(Map<String, Object> dataMap, String key) {
-		if (dataMap == null || key == null) {
-			return null;
-		}
-		Object result = dataMap.get(key);
-		if (result == null) {
-			result = dataMap.get(key.toLowerCase());
-		}
-		if (result == null) {
-			result = dataMap.get(key.toUpperCase());
 		}
 		return result;
 	}

@@ -18,11 +18,14 @@
 
 package com.glaf.core.identity;
 
+import java.util.Collection;
 import java.util.Date;
 
 import com.alibaba.fastjson.JSONObject;
 
 public interface User extends java.io.Serializable {
+
+	void addRowKey(String rowKey);
 
 	int getAccountType();
 
@@ -53,6 +56,8 @@ public interface User extends java.io.Serializable {
 	String getPassword();
 
 	String getRemark();
+
+	Collection<String> getRowKeys();
 
 	String getToken();
 

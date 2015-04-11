@@ -36,6 +36,7 @@ import com.glaf.core.config.BaseConfiguration;
 import com.glaf.core.config.Configuration;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.execution.ExecutionManager;
+import com.glaf.core.factory.DatabaseFactory;
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.startup.BootstrapManager;
 import com.glaf.core.util.Constants;
@@ -92,6 +93,7 @@ public class StartupListener extends ContextLoaderListener implements
 		System.setProperty("config.path", SystemProperties.getAppPath()
 				+ "/WEB-INF");
 		if (DBConnectionFactory.checkConnection()) {
+			DatabaseFactory.getInstance().reload();
 			this.beforeContextInitialized(context);
 			super.contextInitialized(event);
 			this.setupContext(context);

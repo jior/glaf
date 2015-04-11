@@ -36,6 +36,7 @@ import com.glaf.core.context.ContextFactory;
 import com.glaf.core.domain.QueryDefinition;
 import com.glaf.core.el.ExpressionTools;
 import com.glaf.core.el.Mvel2ExpressionEvaluator;
+import com.glaf.core.security.Authentication;
 import com.glaf.core.service.IQueryDefinitionService;
 import com.glaf.core.service.ITablePageService;
 import com.glaf.core.util.DateUtils;
@@ -43,13 +44,11 @@ import com.glaf.core.util.FileUtils;
 import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.QueryUtils;
 import com.glaf.core.util.StringTools;
-
+import com.glaf.chart.bean.ChartDataManager;
 import com.glaf.chart.domain.Chart;
-import com.glaf.chart.gen.ChartFactory;
+import com.glaf.chart.gen.JFreeChartFactory;
 import com.glaf.chart.gen.ChartGen;
-import com.glaf.chart.service.IChartService;
 import com.glaf.chart.util.ChartUtils;
-
 import com.glaf.report.domain.Report;
 import com.glaf.report.domain.ReportFile;
 import com.glaf.report.query.ReportQuery;
@@ -80,7 +79,7 @@ public class ReportFactory {
 	public static void createChart(Chart chartDefinition,
 			Map<String, Object> params) {
 		if (chartDefinition != null) {
-			ChartGen chartGen = ChartFactory.getChartGen(chartDefinition
+			ChartGen chartGen = JFreeChartFactory.getChartGen(chartDefinition
 					.getChartType());
 			if (chartGen != null) {
 				JFreeChart chart = chartGen.createChart(chartDefinition);
@@ -212,8 +211,6 @@ public class ReportFactory {
 
 			ITablePageService tablePageService = ContextFactory
 					.getBean("tablePageService");
-			IChartService chartDefinitionService = ContextFactory
-					.getBean("chartService");
 			IQueryDefinitionService queryDefinitionService = ContextFactory
 					.getBean("queryDefinitionService");
 
@@ -312,10 +309,11 @@ public class ReportFactory {
 						while (retry < 2 && !success) {
 							try {
 								retry++;
-								Chart chartDefinition = chartDefinitionService
-										.getChartAndFetchDataById(chartId,
-												params);
-								createChart(chartDefinition, params);
+								ChartDataManager manager = new ChartDataManager();
+								Chart chart = manager.getChartAndFetchDataById(
+										chartId, params, Authentication
+												.getAuthenticatedActorId());
+								createChart(chart, params);
 								success = true;
 							} catch (Exception ex) {
 								ex.printStackTrace();

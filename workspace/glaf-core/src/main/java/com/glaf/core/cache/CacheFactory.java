@@ -46,7 +46,7 @@ public class CacheFactory {
 	protected static final ConcurrentMap<String, Cache> cacheMap = new ConcurrentHashMap<String, Cache>();
 	protected static final List<CacheItem> items = new CopyOnWriteArrayList<CacheItem>();
 	protected static Configuration conf = BaseConfiguration.create();
-	protected static ExecutorService pool = Executors.newCachedThreadPool();
+	protected static ExecutorService pool = Executors.newFixedThreadPool(50);
 	private static volatile ApplicationContext ctx;
 	private static String CACHE_PREFIX = "GLAF_";
 

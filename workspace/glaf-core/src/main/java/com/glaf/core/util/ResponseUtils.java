@@ -25,6 +25,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -60,6 +62,30 @@ public class ResponseUtils {
 	public static void download(HttpServletRequest request,
 			HttpServletResponse response, InputStream inputStream,
 			String filename) {
+		output(request, response, inputStream, filename, null);
+	}
+
+	public static void output(HttpServletRequest request,
+			HttpServletResponse response, byte[] bytes, String filename,
+			String contentType) throws IOException, ServletException {
+		InputStream inputStream = null;
+		try {
+			inputStream = new ByteArrayInputStream(bytes);
+			output(request, response, inputStream, filename, contentType);
+		} catch (Exception ex) {
+		} finally {
+			try {
+				if (inputStream != null) {
+					inputStream.close();
+				}
+			} catch (IOException ex) {
+			}
+		}
+	}
+
+	public static void output(HttpServletRequest request,
+			HttpServletResponse response, InputStream inputStream,
+			String filename, String contentType) {
 		BufferedInputStream bis = null;
 		OutputStream outputStream = null;
 		String contentDisposition = null;
@@ -110,7 +136,11 @@ public class ResponseUtils {
 
 		response.setHeader("Content-Transfer-Encoding", "base64");
 		response.setHeader("Content-Disposition", contentDisposition);
-		response.setContentType("application/octet-stream");
+		if (contentType != null) {
+			response.setContentType(contentType);
+		} else {
+			response.setContentType("application/octet-stream");
+		}
 
 		String encoding = request.getHeader("Accept-Encoding");
 
@@ -163,36 +193,6 @@ public class ResponseUtils {
 		}
 	}
 
-	/**
-	 * 返回响应的结果，根据系统默认配置返回
-	 * 
-	 * @param success
-	 * @return
-	 */
-	public static byte[] responseResult(boolean success) {
-		String responseDataType = MessageProperties
-				.getString("responseDataType");
-		if ("xml".equalsIgnoreCase(responseDataType)) {
-			responseXmlResult(success);
-		}
-		return responseJsonResult(success);
-	}
-
-	/**
-	 * 返回响应的结果
-	 * 
-	 * @param responseDataType
-	 *            json或xml，默认是json格式
-	 * @param success
-	 * @return
-	 */
-	public static byte[] responseResult(String responseDataType, boolean success) {
-		if ("xml".equalsIgnoreCase(responseDataType)) {
-			responseXmlResult(success);
-		}
-		return responseJsonResult(success);
-	}
-
 	public static byte[] responseJsonResult(boolean success) {
 		if (success) {
 			Map<String, Object> jsonMap = new java.util.HashMap<String, Object>();
@@ -209,6 +209,43 @@ public class ResponseUtils {
 			jsonMap.put("statusCode", 500);
 			jsonMap.put("msg", MessageProperties.getString("res_op_error"));
 			jsonMap.put("message", MessageProperties.getString("res_op_error"));
+			JSONObject object = new JSONObject(jsonMap);
+			try {
+				return object.toString().getBytes("UTF-8");
+			} catch (UnsupportedEncodingException e) {
+			}
+		}
+		return null;
+	}
+
+	public static byte[] responseJsonResult(boolean success,
+			Map<String, Object> dataMap) {
+		if (success) {
+			Map<String, Object> jsonMap = new java.util.HashMap<String, Object>();
+			jsonMap.put("statusCode", 200);
+
+			Set<Entry<String, Object>> entrySet = dataMap.entrySet();
+			for (Entry<String, Object> entry : entrySet) {
+				String key = entry.getKey();
+				Object value = entry.getValue();
+				jsonMap.put(key, value);
+			}
+
+			JSONObject object = new JSONObject(jsonMap);
+			try {
+				return object.toString().getBytes("UTF-8");
+			} catch (UnsupportedEncodingException e) {
+			}
+		} else {
+			Map<String, Object> jsonMap = new java.util.HashMap<String, Object>();
+			jsonMap.put("statusCode", 500);
+
+			Set<Entry<String, Object>> entrySet = dataMap.entrySet();
+			for (Entry<String, Object> entry : entrySet) {
+				String key = entry.getKey();
+				Object value = entry.getValue();
+				jsonMap.put(key, value);
+			}
 			JSONObject object = new JSONObject(jsonMap);
 			try {
 				return object.toString().getBytes("UTF-8");
@@ -241,6 +278,36 @@ public class ResponseUtils {
 		return null;
 	}
 
+	/**
+	 * 返回响应的结果，根据系统默认配置返回
+	 * 
+	 * @param success
+	 * @return
+	 */
+	public static byte[] responseResult(boolean success) {
+		String responseDataType = MessageProperties
+				.getString("responseDataType");
+		if ("xml".equalsIgnoreCase(responseDataType)) {
+			responseXmlResult(success);
+		}
+		return responseJsonResult(success);
+	}
+
+	/**
+	 * 返回响应的结果
+	 * 
+	 * @param responseDataType
+	 *            json或xml，默认是json格式
+	 * @param success
+	 * @return
+	 */
+	public static byte[] responseResult(String responseDataType, boolean success) {
+		if ("xml".equalsIgnoreCase(responseDataType)) {
+			responseXmlResult(success);
+		}
+		return responseJsonResult(success);
+	}
+
 	public static byte[] responseXmlResult(boolean success) {
 		if (success) {
 			StringBuffer buffer = new StringBuffer(500);
@@ -262,6 +329,75 @@ public class ResponseUtils {
 			buffer.append("\n    <statusCode>500</statusCode>");
 			buffer.append("\n    <message>")
 					.append(MessageProperties.getString("res_op_error"))
+					.append("</message>");
+			buffer.append("\n</response>");
+			try {
+				return buffer.toString().getBytes("UTF-8");
+			} catch (UnsupportedEncodingException e) {
+			}
+		}
+		return null;
+	}
+
+	public static byte[] responseXmlResult(boolean success,
+			Map<String, Object> dataMap) {
+		if (success) {
+			StringBuffer buffer = new StringBuffer(500);
+			buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+			buffer.append("<response>");
+			buffer.append("\n    <statusCode>200</statusCode>");
+			Set<Entry<String, Object>> entrySet = dataMap.entrySet();
+			for (Entry<String, Object> entry : entrySet) {
+				String key = entry.getKey();
+				Object value = entry.getValue();
+				buffer.append("\n    <").append(key).append(">").append(value)
+						.append("</").append(key).append(">");
+			}
+			buffer.append("\n</response>");
+			try {
+				return buffer.toString().getBytes("UTF-8");
+			} catch (UnsupportedEncodingException e) {
+			}
+		} else {
+			StringBuffer buffer = new StringBuffer(500);
+			buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+			buffer.append("<response>");
+			buffer.append("\n    <statusCode>500</statusCode>");
+			Set<Entry<String, Object>> entrySet = dataMap.entrySet();
+			for (Entry<String, Object> entry : entrySet) {
+				String key = entry.getKey();
+				Object value = entry.getValue();
+				buffer.append("\n    <").append(key).append(">").append(value)
+						.append("</").append(key).append(">");
+			}
+			buffer.append("\n</response>");
+			try {
+				return buffer.toString().getBytes("UTF-8");
+			} catch (UnsupportedEncodingException e) {
+			}
+		}
+		return null;
+	}
+
+	public static byte[] responseXmlResult(boolean success, String message) {
+		if (success) {
+			StringBuffer buffer = new StringBuffer(500);
+			buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+			buffer.append("<response>");
+			buffer.append("\n    <statusCode>200</statusCode>");
+			buffer.append("\n    <message>").append(message)
+					.append("</message>");
+			buffer.append("\n</response>");
+			try {
+				return buffer.toString().getBytes("UTF-8");
+			} catch (UnsupportedEncodingException e) {
+			}
+		} else {
+			StringBuffer buffer = new StringBuffer(500);
+			buffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+			buffer.append("<response>");
+			buffer.append("\n    <statusCode>500</statusCode>");
+			buffer.append("\n    <message>").append(message)
 					.append("</message>");
 			buffer.append("\n</response>");
 			try {

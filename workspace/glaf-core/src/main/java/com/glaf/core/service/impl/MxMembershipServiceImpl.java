@@ -73,12 +73,34 @@ public class MxMembershipServiceImpl implements MembershipService {
 		}
 	}
 
+	@Transactional
+	public void deleteMemberships(String actorId, String type) {
+		MembershipQuery query = new MembershipQuery();
+		query.actorId(actorId);
+		query.type(type);
+		membershipMapper.deleteActorMemberships(query);
+	}
+
 	public Membership getMembership(Long id) {
 		if (id == null) {
 			return null;
 		}
 		Membership membership = membershipMapper.getMembershipById(id);
 		return membership;
+	}
+
+	/**
+	 * 获取用户的成员
+	 * 
+	 * @param actorId
+	 * @param type
+	 * @return
+	 */
+	public List<Membership> getMemberships(String actorId, String type) {
+		MembershipQuery query = new MembershipQuery();
+		query.actorId(actorId);
+		query.type(type);
+		return membershipMapper.getMemberships(query);
 	}
 
 	public int getMembershipCountByQueryCriteria(MembershipQuery query) {

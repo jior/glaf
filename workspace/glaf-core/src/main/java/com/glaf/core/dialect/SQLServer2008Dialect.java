@@ -49,7 +49,6 @@ public class SQLServer2008Dialect implements Dialect {
 	 *            Maximum number of rows to be returned by the query
 	 * @return A new SQL statement with the LIMIT clause applied.
 	 */
-	@Override
 	public String getLimitString(String querySelect, int offset, int limit) {
 		StringBuffer pagingBuilder = new StringBuffer();
 		String orderby = getOrderByPart(querySelect);

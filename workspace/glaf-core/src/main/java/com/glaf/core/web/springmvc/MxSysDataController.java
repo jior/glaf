@@ -42,6 +42,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.config.SystemProperties;
 import com.glaf.core.config.ViewProperties;
 import com.glaf.core.domain.SysData;
+import com.glaf.core.domain.util.SysDataLogTableUtils;
 import com.glaf.core.identity.Role;
 import com.glaf.core.identity.User;
 import com.glaf.core.query.SysDataQuery;
@@ -57,7 +58,6 @@ import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.StringTools;
-import com.glaf.core.util.SysDataLogTableUtils;
 import com.glaf.core.util.Tools;
 
 @Controller("/sys/data/service")
@@ -297,11 +297,14 @@ public class MxSysDataController {
 
 		for (int i = begin; i <= end; i++) {
 			try {
-				SysDataLogTableUtils.createTable("SYS_DATA_LOG_" + i);
+				// SysDataLogTableUtils.createTable("SYS_DATA_LOG_" + i);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
 		}
+
+		SysDataLogTableUtils.createTable(year);
+		SysDataLogTableUtils.createTable(year + 1);
 		return ResponseUtils.responseJsonResult(true);
 	}
 

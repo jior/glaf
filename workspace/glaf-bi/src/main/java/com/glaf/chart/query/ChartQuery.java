@@ -38,6 +38,7 @@ public class ChartQuery extends DataQuery {
 	protected String imageType;
 	protected String imageTypeLike;
 	protected List<String> imageTypes;
+	protected String mapping;
 	protected String enableFlag;
 	protected Date createDateGreaterThanOrEqual;
 	protected Date createDateLessThanOrEqual;
@@ -268,6 +269,10 @@ public class ChartQuery extends DataQuery {
 		return imageTypes;
 	}
 
+	public String getMapping() {
+		return mapping;
+	}
+
 	public Long getNodeId() {
 		return nodeId;
 	}
@@ -486,6 +491,10 @@ public class ChartQuery extends DataQuery {
 
 	public void setImageTypes(List<String> imageTypes) {
 		this.imageTypes = imageTypes;
+	}
+
+	public void setMapping(String mapping) {
+		this.mapping = mapping;
 	}
 
 	public void setNodeId(Long nodeId) {

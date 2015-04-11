@@ -66,14 +66,17 @@ public class SysDataTableTest extends AbstractTest {
 		File path = FileUtils.getFile("mapping");
 		if (path.exists() && path.isDirectory()) {
 			XmlReader reader = new XmlReader();
-			File[] files = path.listFiles();
-			for (File file : files) {
-				if (file.getAbsolutePath().endsWith(".mapping.xml")) {
-					SysDataTable dataTable = reader
-							.getSysDataTable(new FileInputStream(file));
-					sysDataTableService.saveDataTable(dataTable);
-					Collections.sort(dataTable.getFields());
-					System.out.println(dataTable.getFields());
+			File[] filelist = path.listFiles();
+			if (filelist != null) {
+				for (int i = 0, len = filelist.length; i < len; i++) {
+					File file = filelist[i];
+					if (file.getAbsolutePath().endsWith(".mapping.xml")) {
+						SysDataTable dataTable = reader
+								.getSysDataTable(new FileInputStream(file));
+						sysDataTableService.saveDataTable(dataTable);
+						Collections.sort(dataTable.getFields());
+						System.out.println(dataTable.getFields());
+					}
 				}
 			}
 		}

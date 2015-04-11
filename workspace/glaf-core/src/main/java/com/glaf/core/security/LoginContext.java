@@ -103,6 +103,8 @@ public class LoginContext implements java.io.Serializable, Cloneable, JSONable {
 	 */
 	protected int systemType;
 
+	protected int domainIndex;
+
 	/**
 	 * 登录用户
 	 */
@@ -228,6 +230,10 @@ public class LoginContext implements java.io.Serializable, Cloneable, JSONable {
 
 	public Long getDeptId() {
 		return deptId;
+	}
+
+	public int getDomainIndex() {
+		return domainIndex;
 	}
 
 	public Collection<String> getFunctions() {
@@ -380,6 +386,10 @@ public class LoginContext implements java.io.Serializable, Cloneable, JSONable {
 
 	public void setDeptId(Long deptId) {
 		this.deptId = deptId;
+	}
+
+	public void setDomainIndex(int domainIndex) {
+		this.domainIndex = domainIndex;
 	}
 
 	public void setFunctions(Collection<String> functions) {

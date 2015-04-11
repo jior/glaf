@@ -67,7 +67,7 @@ public interface ISysDataItemService {
 	 * @return
 	 */
 	SysDataItem getSysDataItemById(long id);
-	
+
 	/**
 	 * 根据名称获取一条记录
 	 * 
@@ -82,5 +82,20 @@ public interface ISysDataItemService {
 	 */
 	@Transactional
 	void save(SysDataItem sysDataItem);
+
+	/**
+	 * 
+	 * @param name
+	 * @param columnDefinition
+	 */
+	@Transactional
+	void saveColumn(String name, ColumnDefinition columnDefinition);
+	
+	/**
+	 * 
+	 * @param columnDefinition
+	 */
+	@Transactional
+	void updateColumn(ColumnDefinition columnDefinition);
 
 }

@@ -89,6 +89,10 @@ public class LoginContextUtils {
 			loginContext.setSystemType(jsonObject.getInteger("systemType"));
 		}
 
+		if (jsonObject.containsKey("domainIndex")) {
+			loginContext.setDomainIndex(jsonObject.getInteger("domainIndex"));
+		}
+
 		if (jsonObject.containsKey("skin")) {
 			loginContext.setSkin(jsonObject.getString("skin"));
 		}
@@ -167,6 +171,7 @@ public class LoginContextUtils {
 		jsonObject.put("deptId", loginContext.getDeptId());
 		jsonObject.put("skin", loginContext.getSkin());
 		jsonObject.put("systemType", loginContext.getSystemType());
+		jsonObject.put("domainIndex", loginContext.getDomainIndex());
 
 		if (loginContext.getUser() != null) {
 			jsonObject.put("user", loginContext.getUser().toJsonObject());

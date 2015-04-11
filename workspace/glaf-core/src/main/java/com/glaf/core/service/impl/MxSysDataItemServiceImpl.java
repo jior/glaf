@@ -65,6 +65,8 @@ public class MxSysDataItemServiceImpl implements ISysDataItemService {
 
 	protected TablePageMapper tablePageMapper;
 
+	protected ColumnDefinitionMapper columnDefinitionMapper;
+
 	public MxSysDataItemServiceImpl() {
 
 	}
@@ -325,6 +327,44 @@ public class MxSysDataItemServiceImpl implements ISysDataItemService {
 			sysDataItem.setUpdateTime(new Date());
 			sysDataItemMapper.updateSysDataItem(sysDataItem);
 		}
+
+		if (sysDataItem.getColumns() != null
+				&& !sysDataItem.getColumns().isEmpty()) {
+			for (ColumnDefinition col : sysDataItem.getColumns()) {
+				this.saveColumn(sysDataItem.getName(), col);
+			}
+		}
+	}
+
+	@Transactional
+	public void saveColumn(String name, ColumnDefinition columnDefinition) {
+		String id = "sys_dataitem_" + name.toLowerCase() + "_"
+				+ columnDefinition.getColumnName().toLowerCase();
+		ColumnDefinition col = columnDefinitionMapper
+				.getColumnDefinitionById(id);
+		if (col == null) {
+			columnDefinition.setId(id);
+			columnDefinition.setTargetId("sys_dataitem_" + name.toLowerCase());
+			columnDefinitionMapper.insertColumnDefinition(columnDefinition);
+		} else {
+			columnDefinitionMapper.updateColumnDefinition(columnDefinition);
+		}
+	}
+	
+	@Transactional
+	public void updateColumn( ColumnDefinition columnDefinition) {
+		String id = columnDefinition.getId();
+		ColumnDefinition col = columnDefinitionMapper
+				.getColumnDefinitionById(id);
+		if (col != null) {
+			columnDefinitionMapper.updateColumnDefinition(columnDefinition);
+		}
+	}
+
+	@javax.annotation.Resource
+	public void setColumnDefinitionMapper(
+			ColumnDefinitionMapper columnDefinitionMapper) {
+		this.columnDefinitionMapper = columnDefinitionMapper;
 	}
 
 	@javax.annotation.Resource

@@ -26,7 +26,6 @@ public class QueryDefinitionQuery extends BaseQuery {
 	protected Date createTimeGreaterThanOrEqual;
 	protected Date createTimeLessThanOrEqual;
 	protected String descriptionLike;
-	protected String dsName;
 	protected Integer lockedGreaterThanOrEqual;
 	protected Integer lockedLessThanOrEqual;
 	protected String name;
@@ -69,14 +68,6 @@ public class QueryDefinitionQuery extends BaseQuery {
 		return this;
 	}
 
-	public QueryDefinitionQuery dsName(String dsName) {
-		if (dsName == null) {
-			throw new RuntimeException("dsName is null");
-		}
-		this.dsName = dsName;
-		return this;
-	}
-
 	public Date getCreateTimeGreaterThanOrEqual() {
 		return createTimeGreaterThanOrEqual;
 	}
@@ -95,10 +86,6 @@ public class QueryDefinitionQuery extends BaseQuery {
 			}
 		}
 		return descriptionLike;
-	}
-
-	public String getDsName() {
-		return dsName;
 	}
 
 	public Integer getLocked() {
@@ -253,7 +240,7 @@ public class QueryDefinitionQuery extends BaseQuery {
 		this.name = name;
 		return this;
 	}
-	
+
 	public QueryDefinitionQuery nodeId(Long nodeId) {
 		if (nodeId == null) {
 			throw new RuntimeException("nodeId is null");
@@ -323,10 +310,6 @@ public class QueryDefinitionQuery extends BaseQuery {
 
 	public void setDescriptionLike(String descriptionLike) {
 		this.descriptionLike = descriptionLike;
-	}
-
-	public void setDsName(String dsName) {
-		this.dsName = dsName;
 	}
 
 	public void setLockedGreaterThanOrEqual(Integer lockedGreaterThanOrEqual) {

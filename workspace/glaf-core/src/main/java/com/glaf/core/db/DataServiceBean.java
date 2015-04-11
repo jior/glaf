@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Semaphore;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -35,6 +36,7 @@ import com.glaf.core.config.SystemProperties;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.domain.SysData;
 import com.glaf.core.domain.SysDataLog;
+import com.glaf.core.domain.util.SysDataLogFactory;
 import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.SysDataService;
@@ -44,13 +46,14 @@ import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.JsonUtils;
 import com.glaf.core.util.JacksonUtils;
 import com.glaf.core.util.StringTools;
-import com.glaf.core.util.SysDataLogFactory;
 import com.glaf.core.xml.XmlBuilder;
 
 public class DataServiceBean {
 
 	protected static final Log logger = LogFactory
 			.getLog(DataServiceBean.class);
+
+	protected static Semaphore semaphore = new Semaphore(50, true);
 
 	protected SysDataService sysDataService;
 
@@ -161,15 +164,13 @@ public class DataServiceBean {
 		if (dataType == null) {
 			dataType = "xml";
 		}
-
+		String databaseType = DBConfiguration.getDatabaseTypeByName(systemName);
 		contextMap.put("id", id);
 		contextMap.put("dataType", dataType);
-		contextMap.put("actorId", loginContext.getActorId());
+		contextMap.put("actorId", actorId);
 		contextMap.put("serviceUrl", SystemConfig.getServiceUrl());
-		contextMap.put("dbType",
-				DBConfiguration.getDatabaseTypeByName(systemName));
-		contextMap.put("databaseType",
-				DBConfiguration.getDatabaseTypeByName(systemName));
+		contextMap.put("dbType", databaseType);
+		contextMap.put("databaseType", databaseType);
 
 		InputStream inputStream = null;
 
@@ -190,17 +191,22 @@ public class DataServiceBean {
 		long start = System.currentTimeMillis();
 		SysDataLog log = new SysDataLog();
 		try {
+			logger.debug("semaphore available size:"
+					+ semaphore.availablePermits());
+			semaphore.acquire();
 			String filename = SystemProperties.getConfigRootPath()
 					+ sysData.getPath();
 			inputStream = FileUtils.getInputStream(filename);
-			log.setAccountId(loginContext.getUser().getId());
-			log.setActorId(loginContext.getActorId());
 			log.setCreateTime(new Date());
 			log.setIp(ipAddress);
 			log.setOperate(id);
 			log.setContent(JsonUtils.encode(contextMap));
-			contextMap.put("loginContext", loginContext);
-			contextMap.put("loginUser", loginContext.getUser());
+			if (loginContext != null) {
+				contextMap.put("loginContext", loginContext);
+				contextMap.put("loginUser", loginContext.getUser());
+				log.setActorId(loginContext.getActorId());
+				log.setAccountId(loginContext.getUser().getId());
+			}
 			Document doc = null;
 			String cacheKey = "x_sys_data_" + sysData.getId();
 			if (StringUtils.equals("Y", sysData.getCacheFlag())) {
@@ -237,6 +243,7 @@ public class DataServiceBean {
 			log.setFlag(-1);
 			throw new RuntimeException(ex);
 		} finally {
+			semaphore.release();
 			IOUtils.closeStream(inputStream);
 			SysDataLogFactory.create(log);
 		}

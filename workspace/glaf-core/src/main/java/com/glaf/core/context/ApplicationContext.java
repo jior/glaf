@@ -45,10 +45,12 @@ public class ApplicationContext {
 			java.io.File file = new java.io.File(path);
 			if (file.isDirectory()) {
 				String[] filelist = file.list();
-				for (int i = 0; i < filelist.length; i++) {
-					if (filelist[i].endsWith(".jar")) {
-						String filename = path + sp + filelist[i];
-						buffer.append(filename).append(';');
+				if (filelist != null) {
+					for (int i = 0, len = filelist.length; i < len; i++) {
+						if (filelist[i].endsWith(".jar")) {
+							String filename = path + sp + filelist[i];
+							buffer.append(filename).append(';');
+						}
 					}
 				}
 			}

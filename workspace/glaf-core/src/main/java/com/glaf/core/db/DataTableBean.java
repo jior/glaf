@@ -21,27 +21,29 @@ package com.glaf.core.db;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.alibaba.fastjson.JSONObject;
-
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.domain.SysDataLog;
 import com.glaf.core.domain.SysDataTable;
+import com.glaf.core.domain.util.SysDataLogFactory;
 import com.glaf.core.query.SysDataTableQuery;
 import com.glaf.core.security.IdentityFactory;
 import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.ISysDataTableService;
 import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.StringTools;
-import com.glaf.core.util.SysDataLogFactory;
 
 public class DataTableBean {
 
 	protected static final Log logger = LogFactory.getLog(DataTableBean.class);
+
+	protected static Semaphore semaphore = new Semaphore(50, true);
 
 	protected ISysDataTableService sysDataTableService;
 
@@ -174,9 +176,11 @@ public class DataTableBean {
 		long start = System.currentTimeMillis();
 		SysDataLog log = new SysDataLog();
 		try {
-
-			log.setAccountId(loginContext.getUser().getId());
-			log.setActorId(loginContext.getActorId());
+			semaphore.acquire();
+			if (loginContext != null) {
+				log.setAccountId(loginContext.getUser().getId());
+				log.setActorId(loginContext.getActorId());
+			}
 			log.setCreateTime(new Date());
 			log.setIp(ipAddress);
 			log.setOperate("read");
@@ -197,6 +201,7 @@ public class DataTableBean {
 			log.setFlag(-1);
 			throw new RuntimeException(ex);
 		} finally {
+			semaphore.release();
 			IOUtils.closeStream(inputStream);
 			SysDataLogFactory.create(log);
 		}

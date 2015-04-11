@@ -138,6 +138,16 @@ public class MxSystemTableResource {
 			tableName = request.getParameter("tableName");
 		}
 
+		JSONObject responseJSON = new JSONObject();
+
+		if (!DBUtils.isAllowedTable(tableName)) {
+			try {
+				return responseJSON.toString().getBytes("UTF-8");
+			} catch (IOException e) {
+				return responseJSON.toString().getBytes();
+			}
+		}
+
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
 			gridType = "easyui";
@@ -217,7 +227,6 @@ public class MxSystemTableResource {
 			}
 		}
 
-		JSONObject responseJSON = new JSONObject();
 		responseJSON.put("total", 0);
 		JSONArray rowsJSON = new JSONArray();
 		if (tablePage != null && tablePage.getRows() != null) {

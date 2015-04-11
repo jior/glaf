@@ -19,6 +19,7 @@
 package com.glaf.core.startup;
 
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -27,6 +28,9 @@ import javax.servlet.ServletContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.glaf.core.base.ConnectionDefinition;
+import com.glaf.core.config.DBConfiguration;
+import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.util.ClassUtils;
 
 public class BootstrapManager {
@@ -70,6 +74,50 @@ public class BootstrapManager {
 						}
 					}
 				}
+
+				ConnectionConfigProperties.reload();
+				Properties p = ConnectionConfigProperties.getProperties();
+				if (p != null && p.keys().hasMoreElements()) {
+					Enumeration<?> e = p.keys();
+					while (e.hasMoreElements()) {
+						String className = (String) e.nextElement();
+						try {
+							Object object = ClassUtils
+									.instantiateObject(className);
+							if (object instanceof ConnectionConfig) {
+								ConnectionConfig model = (ConnectionConfig) object;
+								List<ConnectionDefinition> rows = model
+										.getConnectionDefinitions();
+								if (rows != null && !rows.isEmpty()) {
+									for (ConnectionDefinition conn : rows) {
+										if (DBConnectionFactory
+												.checkConnection(conn.getName())) {
+											continue;
+										}
+										String dbType = conn.getType();
+										String host = conn.getHost();
+
+										int port = conn.getPort();
+										String databaseName = conn
+												.getDatabase();
+										String user = conn.getUser();
+										String password = conn.getPassword();
+
+										DBConfiguration
+												.addDataSourceProperties(
+														conn.getName(), dbType,
+														host, port,
+														databaseName, user,
+														password);
+									}
+								}
+							}
+						} catch (Exception ex) {
+							ex.printStackTrace();
+							logger.error(ex);
+						}
+					}
+				}
 			} catch (Exception ex) {
 				throw new RuntimeException(ex);
 			} finally {
@@ -77,8 +125,8 @@ public class BootstrapManager {
 			}
 		}
 	}
-	
-	public static void main(String[] args){
+
+	public static void main(String[] args) {
 		BootstrapManager.getInstance().startup(null);
 	}
 

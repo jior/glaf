@@ -37,9 +37,6 @@
     <jar jarfile="glaf-template.jar"> 
       <fileset dir="bin" includes="com/glaf/template/**/*.class,com/glaf/template/**/*.xml,com/glaf/template/**/*.properties"/> 
     </jar>  
-	<jar jarfile="glaf-transport.jar"> 
-      <fileset dir="bin" includes="com/glaf/transport/**/*.class,com/glaf/transport/**/*.xml,com/glaf/transport/**/*.properties"/> 
-    </jar> 
 	<jar jarfile="glaf-j2cache.jar"> 
       <fileset dir="bin" includes="com/glaf/j2cache/**/*.class,com/glaf/j2cache/**/*.xml,com/glaf/j2cache/**/*.properties"/> 
     </jar>  

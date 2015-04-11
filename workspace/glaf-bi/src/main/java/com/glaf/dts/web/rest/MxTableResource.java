@@ -20,6 +20,7 @@ package com.glaf.dts.web.rest;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -31,12 +32,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.lang3.StringUtils;
@@ -48,13 +46,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.core.config.Environment;
 import com.glaf.core.db.TransformTable;
 import com.glaf.core.domain.ColumnDefinition;
+import com.glaf.core.domain.Database;
 import com.glaf.core.domain.QueryDefinition;
 import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.jdbc.DBConnectionFactory;
+import com.glaf.core.jdbc.QueryHelper;
 import com.glaf.core.query.TableDefinitionQuery;
 import com.glaf.core.query.TablePageQuery;
+import com.glaf.core.service.IDatabaseService;
 import com.glaf.core.service.IQueryDefinitionService;
 import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.core.service.ITablePageService;
@@ -66,6 +68,7 @@ import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.RequestUtils;
 import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.Tools;
+import com.glaf.dts.bean.TransformBean;
 import com.glaf.dts.transform.MxTransformManager;
 import com.glaf.dts.util.Constants;
 
@@ -76,6 +79,8 @@ public class MxTableResource {
 	protected static final Log logger = LogFactory
 			.getLog(MxTableResource.class);
 
+	protected IDatabaseService databaseService;
+
 	protected IQueryDefinitionService queryDefinitionService;
 
 	protected ITableDefinitionService tableDefinitionService;
@@ -83,38 +88,73 @@ public class MxTableResource {
 	protected ITablePageService tablePageService;
 
 	@POST
-	@Path("/delete/{tableName}")
-	public void delete(@PathParam("tableName") String tableName,
+	@Path("/delete")
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] delete(@Context HttpServletRequest request,
 			@Context UriInfo uriInfo) {
+		String tableName = request.getParameter("tableName");
+		String tableName_enc = request.getParameter("tableName_enc");
+		if (StringUtils.isNotEmpty(tableName_enc)) {
+			tableName = RequestUtils.decodeString(tableName_enc);
+		}
 		if (StringUtils.isNotEmpty(tableName)) {
 			tableName = tableName.toLowerCase();
 			if (StringUtils.startsWith(tableName, "mx_")
 					|| StringUtils.startsWith(tableName, "sys_")
 					|| StringUtils.startsWith(tableName, "jbpm_")
 					|| StringUtils.startsWith(tableName, "act_")) {
-				throw new WebApplicationException(
-						Response.Status.INTERNAL_SERVER_ERROR);
+				return ResponseUtils.responseJsonResult(false);
 			}
 			tableDefinitionService.deleteTable(tableName);
+			return ResponseUtils.responseJsonResult(true);
 		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@POST
+	@Path("/deleteColumn")
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] deleteColumn(@Context HttpServletRequest request,
+			@Context UriInfo uriInfo) {
+		String columnId = request.getParameter("columnId");
+		if (StringUtils.isNotEmpty(columnId)) {
+			columnId = RequestUtils.decodeString(columnId);
+			columnId = columnId.toLowerCase();
+			if (StringUtils.equalsIgnoreCase("ID", columnId)
+					|| StringUtils.equalsIgnoreCase("AGGREGATIONKEY", columnId)) {
+				return ResponseUtils.responseJsonResult(false);
+			}
+			tableDefinitionService.deleteColumn(columnId);
+			return ResponseUtils.responseJsonResult(true);
+		}
+		return ResponseUtils.responseJsonResult(false);
 	}
 
 	@POST
 	@Path("/deleteTable")
-	public void deleteTable(@Context HttpServletRequest request,
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] deleteTable(@Context HttpServletRequest request,
 			@Context UriInfo uriInfo) {
 		String tableName = request.getParameter("tableName");
+		String tableName_enc = request.getParameter("tableName_enc");
+		if (StringUtils.isNotEmpty(tableName_enc)) {
+			tableName = RequestUtils.decodeString(tableName_enc);
+		}
 		if (StringUtils.isNotEmpty(tableName)) {
 			tableName = tableName.toLowerCase();
 			if (StringUtils.startsWith(tableName, "mx_")
 					|| StringUtils.startsWith(tableName, "sys_")
 					|| StringUtils.startsWith(tableName, "jbpm_")
 					|| StringUtils.startsWith(tableName, "act_")) {
-				throw new WebApplicationException(
-						Response.Status.INTERNAL_SERVER_ERROR);
+				return ResponseUtils.responseJsonResult(false);
 			}
 			tableDefinitionService.deleteTable(tableName);
+			return ResponseUtils.responseJsonResult(true);
 		}
+		return ResponseUtils.responseJsonResult(false);
 	}
 
 	@GET
@@ -130,12 +170,13 @@ public class MxTableResource {
 		if (StringUtils.isNotEmpty(tableName_enc)) {
 			tableName = RequestUtils.decodeString(tableName_enc);
 		}
+		QueryHelper helper = new QueryHelper();
 		Connection connection = null;
 		List<ColumnDefinition> columns = null;
 		try {
 			connection = DBConnectionFactory.getConnection();
 			String sql = "select * from " + tableName + " where 1=0 ";
-			columns = DBUtils.getColumns(connection, sql, params);
+			columns = helper.getColumns(connection, sql, params);
 		} catch (Exception ex) {
 			logger.error(ex);
 		} finally {
@@ -193,6 +234,8 @@ public class MxTableResource {
 		for (TableDefinition table : tables) {
 			ObjectNode tableJSON = new ObjectMapper().createObjectNode();
 			tableJSON.put("tableName", table.getTableName());
+			tableJSON.put("tableName_enc",
+					RequestUtils.encodeString(table.getTableName()));
 			tableJSON.put("title", table.getTitle());
 			if (table.getDescription() != null) {
 				tableJSON.put("description", table.getDescription());
@@ -281,8 +324,39 @@ public class MxTableResource {
 	}
 
 	@POST
+	@Path("/saveColumn")
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] saveColumn(@Context HttpServletRequest request,
+			@Context UriInfo uriInfo) {
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
+		String tableName = request.getParameter("tableName");
+		String tableName_enc = request.getParameter("tableName_enc");
+		if (StringUtils.isNotEmpty(tableName_enc)) {
+			tableName = RequestUtils.decodeString(tableName_enc);
+		}
+
+		if (StringUtils.isNotEmpty(tableName)) {
+			List<String> columnNames = new ArrayList<String>();
+			TableDefinition tableDefinition = tableDefinitionService
+					.getTableDefinition(tableName);
+			for (ColumnDefinition column : tableDefinition.getColumns()) {
+				String col = column.getColumnName();
+				columnNames.add(col.toUpperCase());
+			}
+			ColumnDefinition columnDefinition = new ColumnDefinition();
+			Tools.populate(columnDefinition, params);
+			tableDefinitionService.saveColumn(tableName, columnDefinition);
+			return ResponseUtils.responseJsonResult(true);
+		}
+		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@POST
 	@Path("/saveTable")
-	public void saveTable(@Context HttpServletRequest request,
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] saveTable(@Context HttpServletRequest request,
 			@Context UriInfo uriInfo) {
 		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		String tableName = request.getParameter("tableName");
@@ -296,6 +370,7 @@ public class MxTableResource {
 		Tools.populate(tableDefinition, params);
 		tableDefinition.setTitle(request.getParameter("title"));
 		tableDefinition.setDescription(request.getParameter("description"));
+		tableDefinition.setPrimaryKey(request.getParameter("primaryKey"));
 		for (ColumnDefinition column : tableDefinition.getColumns()) {
 			String columnName = column.getColumnName();
 			String param = columnName + "_length";
@@ -321,7 +396,12 @@ public class MxTableResource {
 			tbl.createOrAlterTable(tableDefinition);
 			manager.transformTable(tableName);
 		}
+		return ResponseUtils.responseJsonResult(true);
+	}
 
+	@javax.annotation.Resource
+	public void setDatabaseService(IDatabaseService databaseService) {
+		this.databaseService = databaseService;
 	}
 
 	@javax.annotation.Resource
@@ -356,12 +436,20 @@ public class MxTableResource {
 		if (StringUtils.isNotEmpty(tableName_enc)) {
 			tableName = RequestUtils.decodeString(tableName_enc);
 		}
+
+		ObjectNode responseJSON = new ObjectMapper().createObjectNode();
+
+		if (!DBUtils.isAllowedTable(tableName)) {
+			try {
+				return responseJSON.toString().getBytes("UTF-8");
+			} catch (IOException e) {
+				return responseJSON.toString().getBytes();
+			}
+		}
+
 		String gridType = ParamUtils.getString(params, "gridType");
 		if (gridType == null) {
 			gridType = "easyui";
-		}
-		if (StringUtils.isNotEmpty(tableName)) {
-			tableName = RequestUtils.decodeString(tableName);
 		}
 
 		int start = 0;
@@ -417,8 +505,6 @@ public class MxTableResource {
 		} catch (Exception ex) {
 			logger.error(ex);
 		}
-
-		ObjectNode responseJSON = new ObjectMapper().createObjectNode();
 
 		ArrayNode rowsJSON = new ObjectMapper().createArrayNode();
 		if (rows != null && !rows.isEmpty()) {
@@ -499,6 +585,16 @@ public class MxTableResource {
 	}
 
 	@POST
+	@Path("/transformAllQueryToTable")
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] transformAllQueryToTable(@Context HttpServletRequest request) {
+		TransformBean bean = new TransformBean();
+		boolean result = bean.transformAllQueryToTable();
+		return ResponseUtils.responseJsonResult(result);
+	}
+
+	@POST
 	@Path("/transformQueryToTable")
 	@ResponseBody
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
@@ -506,6 +602,7 @@ public class MxTableResource {
 		String queryId = request.getParameter("queryId");
 		String tableName = request.getParameter("tableName");
 		String tableName_enc = request.getParameter("tableName_enc");
+
 		if (StringUtils.isNotEmpty(tableName_enc)) {
 			tableName = RequestUtils.decodeString(tableName_enc);
 		}
@@ -521,28 +618,32 @@ public class MxTableResource {
 			MxTransformManager manager = new MxTransformManager();
 			TableDefinition tableDefinition = null;
 			try {
-				QueryDefinition query = null;
+				QueryDefinition queryDefinition = null;
 
 				if (StringUtils.isNotEmpty(queryId)) {
-					query = queryDefinitionService.getQueryDefinition(queryId);
+					queryDefinition = queryDefinitionService
+							.getQueryDefinition(queryId);
 				}
 
-				if (query == null) {
-					query = new QueryDefinition();
+				if (queryDefinition == null) {
+					queryDefinition = new QueryDefinition();
 				}
 
 				Map<String, Object> params = RequestUtils
 						.getParameterMap(request);
-				Tools.populate(query, params);
-				query.setTargetTableName(tableName);
+				Tools.populate(queryDefinition, params);
+				queryDefinition.setTargetTableName(tableName);
 
-				tableDefinition = manager.toTableDefinition(query);
+				tableDefinition = manager.toTableDefinition(queryDefinition);
 				tableDefinition.setTableName(tableName);
 				tableDefinition.setType("DTS");
-				tableDefinition.setNodeId(query.getNodeId());
+				tableDefinition.setNodeId(queryDefinition.getNodeId());
 
-				TransformTable tbl = new TransformTable();
-				tbl.createOrAlterTable(tableDefinition);
+				if (!StringUtils.equalsIgnoreCase(
+						queryDefinition.getRotatingFlag(), "R2C")) {
+					TransformTable tbl = new TransformTable();
+					tbl.createOrAlterTable(tableDefinition);
+				}
 
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -550,10 +651,17 @@ public class MxTableResource {
 						.responseJsonResult(false, "查询失败，SQL语句不正确！");
 			}
 
+			Long databaseId = RequestUtils.getLong(request, "databaseId");
 			TransformTable transformTable = new TransformTable();
 			try {
-
-				transformTable.transformQueryToTable(tableName, queryId);
+				Database db = databaseService.getDatabaseById(databaseId);
+				if (db != null) {
+					transformTable.transformQueryToTable(tableName, queryId,
+							db.getName());
+				} else {
+					transformTable.transformQueryToTable(tableName, queryId,
+							Environment.DEFAULT_SYSTEM_NAME);
+				}
 				return ResponseUtils.responseJsonResult(true);
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -575,6 +683,7 @@ public class MxTableResource {
 		if (StringUtils.isNotEmpty(tableName_enc)) {
 			tableName = RequestUtils.decodeString(tableName_enc);
 		}
+		logger.debug("->tableName:" + tableName);
 		if (StringUtils.isNotEmpty(tableName)) {
 			MxTransformManager manager = new MxTransformManager();
 			try {
@@ -586,6 +695,18 @@ public class MxTableResource {
 			}
 		}
 		return ResponseUtils.responseJsonResult(false);
+	}
+
+	@POST
+	@Path("/transformToTable")
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] transformToTable(@Context HttpServletRequest request) {
+		TransformBean bean = new TransformBean();
+		String queryId = request.getParameter("queryId");
+		logger.debug("queryId:" + queryId);
+		boolean result = bean.transformQueryToTable(queryId);
+		return ResponseUtils.responseJsonResult(result);
 	}
 
 	@GET

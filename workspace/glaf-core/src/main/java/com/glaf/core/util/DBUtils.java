@@ -26,7 +26,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Types;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -53,6 +52,14 @@ import com.glaf.core.jdbc.DBConnectionFactory;
 
 public class DBUtils {
 
+	protected final static Log logger = LogFactory.getLog(DBUtils.class);
+
+	public final static String newline = System.getProperty("line.separator");
+
+	public static final String POSTGRESQL = "postgresql";
+
+	public static final String ORACLE = "oracle";
+
 	public static void alterTable(Connection connection,
 			TableDefinition tableDefinition) {
 		List<String> cloumns = new java.util.ArrayList<String>();
@@ -63,10 +70,10 @@ public class DBUtils {
 			stmt = connection.createStatement();
 			rs = stmt.executeQuery("select * from "
 					+ tableDefinition.getTableName() + " where 1=0 ");
-			ResultSetMetaData rss = rs.getMetaData();
-			int columnCount = rss.getColumnCount();
+			ResultSetMetaData rsmd = rs.getMetaData();
+			int columnCount = rsmd.getColumnCount();
 			for (int i = 1; i <= columnCount; i++) {
-				String column = rss.getColumnName(i);
+				String column = rsmd.getColumnName(i);
 				cloumns.add(column.toUpperCase());
 			}
 
@@ -111,6 +118,7 @@ public class DBUtils {
 		List<String> columnNames = new java.util.ArrayList<String>();
 		try {
 			conn = DBConnectionFactory.getConnection();
+			conn.setAutoCommit(false);
 			pstmt = conn.prepareStatement(" select * from " + tableName
 					+ " where 1=0 ");
 			rs = pstmt.executeQuery();
@@ -316,6 +324,7 @@ public class DBUtils {
 
 			pstmt.close();
 			pstmt = null;
+			conn.commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
@@ -333,14 +342,15 @@ public class DBUtils {
 		ResultSet rs = null;
 		try {
 			connection = DBConnectionFactory.getConnection(systemName);
+			connection.setAutoCommit(false);
 			String dbType = DBConnectionFactory.getDatabaseType(connection);
 			stmt = connection.createStatement();
 			rs = stmt.executeQuery("select * from "
 					+ tableDefinition.getTableName() + " where 1=0 ");
-			ResultSetMetaData rss = rs.getMetaData();
-			int columnCount = rss.getColumnCount();
+			ResultSetMetaData rsmd = rs.getMetaData();
+			int columnCount = rsmd.getColumnCount();
 			for (int i = 1; i <= columnCount; i++) {
-				String column = rss.getColumnName(i);
+				String column = rsmd.getColumnName(i);
 				cloumns.add(column.toUpperCase());
 			}
 
@@ -368,7 +378,7 @@ public class DBUtils {
 					}
 				}
 			}
-
+			connection.commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
@@ -384,14 +394,15 @@ public class DBUtils {
 		ResultSet rs = null;
 		try {
 			connection = DBConnectionFactory.getConnection();
+			connection.setAutoCommit(false);
 			String dbType = DBConnectionFactory.getDatabaseType(connection);
 			stmt = connection.createStatement();
 			rs = stmt.executeQuery("select * from "
 					+ tableDefinition.getTableName() + " where 1=0 ");
-			ResultSetMetaData rss = rs.getMetaData();
-			int columnCount = rss.getColumnCount();
+			ResultSetMetaData rsmd = rs.getMetaData();
+			int columnCount = rsmd.getColumnCount();
 			for (int i = 1; i <= columnCount; i++) {
-				String column = rss.getColumnName(i);
+				String column = rsmd.getColumnName(i);
 				cloumns.add(column.toUpperCase());
 			}
 
@@ -419,12 +430,88 @@ public class DBUtils {
 					}
 				}
 			}
-
+			connection.commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
 			JdbcUtils.close(connection);
+		}
+	}
+
+	public static void createIndex(String systemName, String tableName,
+			String columnName, String indexName) {
+		Connection connection = null;
+		DatabaseMetaData dbmd = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		boolean hasIndex = false;
+		try {
+			connection = DBConnectionFactory.getConnection(systemName);
+			dbmd = connection.getMetaData();
+			rs = dbmd.getIndexInfo(null, null, tableName, false, false);
+			while (rs.next()) {
+				String col = rs.getString("COLUMN_NAME");
+				if (StringUtils.equalsIgnoreCase(columnName, col)) {
+					hasIndex = true;
+					break;
+				}
+			}
+			rs.close();
+			rs = null;
+
+			if (!hasIndex) {
+				String sql = " create index " + indexName.toUpperCase()
+						+ " on " + tableName + " (" + columnName + ") ";
+				connection.setAutoCommit(false);
+				stmt = connection.createStatement();
+				stmt.executeUpdate(sql);
+				connection.commit();
+			}
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			JdbcUtils.close(rs);
+			JdbcUtils.close(stmt);
+			JdbcUtils.close(connection);
+		}
+	}
+
+	public static void createIndex(Connection connection, String tableName,
+			String columnName, String indexName) {
+		DatabaseMetaData dbmd = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		boolean hasIndex = false;
+		boolean autoCommit = false;
+		try {
+			autoCommit = connection.getAutoCommit();
+			dbmd = connection.getMetaData();
+			rs = dbmd.getIndexInfo(null, null, tableName, false, false);
+			while (rs.next()) {
+				String col = rs.getString("COLUMN_NAME");
+				if (StringUtils.equalsIgnoreCase(columnName, col)) {
+					hasIndex = true;
+					break;
+				}
+			}
+			rs.close();
+			rs = null;
+
+			if (!hasIndex) {
+				String sql = " create index " + indexName.toUpperCase()
+						+ " on " + tableName + " (" + columnName + ") ";
+				connection.setAutoCommit(false);
+				stmt = connection.createStatement();
+				stmt.executeUpdate(sql);
+				connection.commit();
+				connection.setAutoCommit(autoCommit);
+			}
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			JdbcUtils.close(rs);
+			JdbcUtils.close(stmt);
 		}
 	}
 
@@ -612,6 +699,7 @@ public class DBUtils {
 		String sqlStatement = null;
 		try {
 			connection = DBConnectionFactory.getConnection();
+			connection.setAutoCommit(false);
 			byte[] bytes = FileUtils.getBytes(inputStream);
 			String ddlStatements = new String(bytes);
 			StringTokenizer tokenizer = new StringTokenizer(ddlStatements, ";");
@@ -637,6 +725,8 @@ public class DBUtils {
 			if (exception != null) {
 				throw exception;
 			}
+
+			connection.commit();
 
 			logger.info("extension db schema " + operation + " successful");
 
@@ -865,10 +955,10 @@ public class DBUtils {
 			stmt = connection.createStatement();
 			rs = stmt.executeQuery("select * from "
 					+ classDefinition.getTableName() + " where 1=0 ");
-			ResultSetMetaData rss = rs.getMetaData();
-			int columnCount = rss.getColumnCount();
+			ResultSetMetaData rsmd = rs.getMetaData();
+			int columnCount = rsmd.getColumnCount();
 			for (int i = 1; i <= columnCount; i++) {
-				String column = rss.getColumnName(i);
+				String column = rsmd.getColumnName(i);
 				cloumns.add(column.toUpperCase());
 			}
 
@@ -926,12 +1016,12 @@ public class DBUtils {
 				int length = rs.getInt("COLUMN_SIZE");
 				int ordinal = rs.getInt("ORDINAL_POSITION");
 				ColumnDefinition column = new ColumnDefinition();
-				column.setName(StringTools.lower(StringTools
-						.camelStyle(columnName)));
 				column.setColumnName(columnName.toLowerCase());
 				column.setTitle(column.getName());
 				column.setEnglishTitle(column.getName());
 				column.setJavaType(FieldType.getJavaType(dataType));
+				column.setName(StringTools.camelStyle(column.getColumnName()
+						.toLowerCase()));
 				if (nullable == 1) {
 					column.setNullable(true);
 				} else {
@@ -1021,6 +1111,8 @@ public class DBUtils {
 				}
 				column.setLength(length);
 				column.setOrdinal(ordinal);
+				column.setName(StringTools.camelStyle(column.getColumnName()
+						.toLowerCase()));
 
 				logger.debug(name + " typeName:" + typeName + "[" + dataType
 						+ "] " + FieldType.getJavaType(dataType));
@@ -1079,63 +1171,6 @@ public class DBUtils {
 		} finally {
 			JdbcUtils.close(conn);
 		}
-	}
-
-	@SuppressWarnings("unchecked")
-	public static List<ColumnDefinition> getColumns(Connection conn,
-			String sql, Map<String, Object> paramMap) {
-		if (!DBUtils.isLegalQuerySql(sql)) {
-			throw new RuntimeException(" SQL statement illegal ");
-		}
-		List<ColumnDefinition> columns = new java.util.ArrayList<ColumnDefinition>();
-		PreparedStatement psmt = null;
-		ResultSetMetaData rsmd = null;
-		ResultSet rs = null;
-		try {
-			List<Object> values = null;
-			if (paramMap != null) {
-				SqlExecutor sqlExecutor = DBUtils.replaceSQL(sql, paramMap);
-				sql = sqlExecutor.getSql();
-				values = (List<Object>) sqlExecutor.getParameter();
-			}
-
-			logger.debug("sql:\n" + sql);
-			logger.debug("values:" + values);
-
-			psmt = conn.prepareStatement(sql);
-
-			if (values != null && !values.isEmpty()) {
-				JdbcUtils.fillStatement(psmt, values);
-			}
-
-			rs = psmt.executeQuery();
-			rsmd = rs.getMetaData();
-			int count = rsmd.getColumnCount();
-			for (int i = 1; i <= count; i++) {
-				int sqlType = rsmd.getColumnType(i);
-				ColumnDefinition column = new ColumnDefinition();
-				column.setColumnName(rsmd.getColumnName(i));
-				column.setJavaType(FieldType.getJavaType(sqlType));
-				column.setPrecision(rsmd.getPrecision(i));
-				column.setScale(rsmd.getScale(i));
-				if (column.getScale() == 0 && sqlType == Types.NUMERIC) {
-					column.setJavaType("Long");
-				}
-				if (!columns.contains(column)) {
-					columns.add(column);
-				}
-				logger.debug(column.getColumnName() + " sqlType:" + sqlType
-						+ " precision:" + column.getPrecision() + " scale:"
-						+ column.getScale());
-			}
-
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		} finally {
-			JdbcUtils.close(psmt);
-			JdbcUtils.close(rs);
-		}
-		return columns;
 	}
 
 	public static String getCreateTableDDL() {
@@ -1526,7 +1561,11 @@ public class DBUtils {
 					.append(idField.getColumnName().toUpperCase()).append(") ");
 		}
 		buffer.append(newline);
-		buffer.append(");");
+		if ("mysql".equalsIgnoreCase(dbType)) {
+			buffer.append(") ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;");
+		} else {
+			buffer.append(");");
+		}
 
 		return buffer.toString();
 	}
@@ -2294,6 +2333,51 @@ public class DBUtils {
 		return isLegal;
 	}
 
+	public static boolean isAllowedTable(String tableName) {
+		if (StringUtils.equalsIgnoreCase(tableName, "userinfo")) {
+			return false;
+		} else if (StringUtils.equalsIgnoreCase(tableName, "sys_user")) {
+			return false;
+		} else if (StringUtils.equalsIgnoreCase(tableName, "sys_database")) {
+			return false;
+		} else if (StringUtils.equalsIgnoreCase(tableName, "sys_key")) {
+			return false;
+		} else if (StringUtils.equalsIgnoreCase(tableName, "proj_muiprojlist")) {
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean isAllowedSql(String sql) {
+		if (StringUtils.isEmpty(sql)) {
+			return false;
+		}
+
+		boolean isLegal = true;
+
+		sql = sql.toLowerCase();
+		if (sql.indexOf("userinfo") != -1) {
+			isLegal = false;
+		}
+		if (sql.indexOf("sys_user") != -1) {
+			isLegal = false;
+		}
+		if (sql.indexOf("sys_database") != -1) {
+			isLegal = false;
+		}
+		if (sql.indexOf("proj_muiprojlist") != -1) {
+			isLegal = false;
+		}
+		if (sql.indexOf("sys_key") != -1) {
+			isLegal = false;
+		}
+		if (sql.indexOf("sys_property") != -1) {
+			isLegal = false;
+		}
+
+		return isLegal;
+	}
+
 	public static boolean isTableColumn(String columnName) {
 		if (columnName == null || columnName.trim().length() < 2
 				|| columnName.trim().length() > 26) {
@@ -2349,6 +2433,9 @@ public class DBUtils {
 			return true;
 		}
 		if (tableName.startsWith("temp_")) {
+			return true;
+		}
+		if (tableName.startsWith("_log_")) {
 			return true;
 		}
 		if (tableName.startsWith("demo_")) {
@@ -2446,6 +2533,7 @@ public class DBUtils {
 	}
 
 	public static void main(String[] args) {
+		System.out.println(DBUtils.isAllowedSql(" select * from  userinfo"));
 		List<ColumnDefinition> columns = new java.util.ArrayList<ColumnDefinition>();
 		ColumnDefinition c1 = new ColumnDefinition();
 		c1.setColumnName("choosepublishflag");
@@ -2651,13 +2739,7 @@ public class DBUtils {
 			JdbcUtils.close(conn);
 		}
 	}
-
-	protected final static Log logger = LogFactory.getLog(DBUtils.class);
-
-	public final static String newline = System.getProperty("line.separator");
-
-	public static final String POSTGRESQL = "postgresql";
-
-	public static final String ORACLE = "oracle";
+	
+ 
 
 }

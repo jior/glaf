@@ -157,14 +157,26 @@ public class TableDefinition implements java.io.Serializable,
 	@Column(name = "PARENTTABLENAME_", length = 50)
 	protected String parentTableName;
 
+	@Column(name = "PRIMARYKEY_", length = 200)
+	protected String primaryKey;
+
 	@Transient
 	protected List<QueryDefinition> queries = new java.util.ArrayList<QueryDefinition>();
+
+	@Transient
+	protected List<QueryDefinition> aggregationQueries = new java.util.ArrayList<QueryDefinition>();
 
 	/**
 	 * 组合查询的查询编号
 	 */
 	@Column(name = "QUERYIDS_", length = 500)
 	protected String queryIds;
+
+	/**
+	 * 聚合查询的查询编号
+	 */
+	@Column(name = "AGGR_QUERYIDS_", length = 500)
+	protected String aggregationQueryIds;
 
 	/**
 	 * 修订版本
@@ -231,11 +243,20 @@ public class TableDefinition implements java.io.Serializable,
 
 	}
 
+	public void addAggregationQuery(QueryDefinition query) {
+		if (aggregationQueries == null) {
+			aggregationQueries = new java.util.ArrayList<QueryDefinition>();
+		}
+		aggregationQueries.add(query);
+	}
+
 	public void addColumn(ColumnDefinition column) {
 		if (columns == null) {
 			columns = new java.util.ArrayList<ColumnDefinition>();
 		}
-		columns.add(column);
+		if (!columns.contains(column)) {
+			columns.add(column);
+		}
 	}
 
 	public void addField(FieldDefinition field) {
@@ -297,6 +318,14 @@ public class TableDefinition implements java.io.Serializable,
 
 	public String getAggregationKeys() {
 		return aggregationKeys;
+	}
+
+	public List<QueryDefinition> getAggregationQueries() {
+		return aggregationQueries;
+	}
+
+	public String getAggregationQueryIds() {
+		return aggregationQueryIds;
 	}
 
 	public String getClassName() {
@@ -406,6 +435,10 @@ public class TableDefinition implements java.io.Serializable,
 		return parentTableName;
 	}
 
+	public String getPrimaryKey() {
+		return primaryKey;
+	}
+
 	public List<QueryDefinition> getQueries() {
 		return queries;
 	}
@@ -485,6 +518,14 @@ public class TableDefinition implements java.io.Serializable,
 
 	public void setAggregationKeys(String aggregationKeys) {
 		this.aggregationKeys = aggregationKeys;
+	}
+
+	public void setAggregationQueries(List<QueryDefinition> aggregationQueries) {
+		this.aggregationQueries = aggregationQueries;
+	}
+
+	public void setAggregationQueryIds(String aggregationQueryIds) {
+		this.aggregationQueryIds = aggregationQueryIds;
 	}
 
 	public void setClassName(String className) {
@@ -587,6 +628,10 @@ public class TableDefinition implements java.io.Serializable,
 
 	public void setParentTableName(String parentTableName) {
 		this.parentTableName = parentTableName;
+	}
+
+	public void setPrimaryKey(String primaryKey) {
+		this.primaryKey = primaryKey;
 	}
 
 	public void setQueries(List<QueryDefinition> queries) {

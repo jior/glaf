@@ -175,31 +175,34 @@ public class MxDiskFileManagerJsonController {
 
 		// 遍历目录取的文件信息
 		List<Hashtable<String, Object>> fileList = new java.util.ArrayList<Hashtable<String, Object>>();
-		if (currentPathFile.listFiles() != null) {
-			for (File file : currentPathFile.listFiles()) {
-				Hashtable<String, Object> hash = new Hashtable<String, Object>();
-				String fileName = file.getName();
-				if (file.isDirectory()) {
-					hash.put("is_dir", true);
-					hash.put("has_file", (file.listFiles() != null));
-					hash.put("filesize", 0L);
-					hash.put("is_photo", false);
-					hash.put("filetype", "");
-				} else if (file.isFile()) {
-					String fileExt = fileName.substring(
-							fileName.lastIndexOf(".") + 1).toLowerCase();
-					hash.put("is_dir", false);
-					hash.put("has_file", false);
-					hash.put("filesize", file.length());
-					hash.put("is_photo", Arrays.<String> asList(fileTypes)
-							.contains(fileExt));
-					hash.put("filetype", fileExt);
+		if (currentPathFile != null && currentPathFile.listFiles() != null) {
+			File[] filelist = currentPathFile.listFiles();
+			if (filelist != null) {
+				for (int i = 0, len = filelist.length; i < len; i++) {
+					File file = filelist[i];
+					Hashtable<String, Object> hash = new Hashtable<String, Object>();
+					String fileName = file.getName();
+					if (file.isDirectory()) {
+						hash.put("is_dir", true);
+						hash.put("has_file", (file.listFiles() != null));
+						hash.put("filesize", 0L);
+						hash.put("is_photo", false);
+						hash.put("filetype", "");
+					} else if (file.isFile()) {
+						String fileExt = fileName.substring(
+								fileName.lastIndexOf(".") + 1).toLowerCase();
+						hash.put("is_dir", false);
+						hash.put("has_file", false);
+						hash.put("filesize", file.length());
+						hash.put("is_photo", Arrays.<String> asList(fileTypes)
+								.contains(fileExt));
+						hash.put("filetype", fileExt);
+					}
+					hash.put("filename", fileName);
+					hash.put("datetime", new SimpleDateFormat(
+							"yyyy-MM-dd HH:mm:ss").format(file.lastModified()));
+					fileList.add(hash);
 				}
-				hash.put("filename", fileName);
-				hash.put("datetime",
-						new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(file
-								.lastModified()));
-				fileList.add(hash);
 			}
 		}
 

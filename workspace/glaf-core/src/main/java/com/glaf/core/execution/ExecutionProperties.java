@@ -111,23 +111,25 @@ public class ExecutionProperties {
 				File directory = new File(config);
 				if (directory.exists() && directory.isDirectory()) {
 					String[] filelist = directory.list();
-					for (int i = 0; i < filelist.length; i++) {
-						String filename = config + "/" + filelist[i];
-						File file = new File(filename);
-						if (file.isFile()
-								&& file.getName().endsWith(".properties")) {
-							inputStream = new FileInputStream(file);
-							Properties p = PropertiesUtils
-									.loadProperties(inputStream);
-							if (p != null) {
-								Enumeration<?> e = p.keys();
-								while (e.hasMoreElements()) {
-									String key = (String) e.nextElement();
-									String value = p.getProperty(key);
-									properties.setProperty(key, value);
+					if (filelist != null) {
+						for (int i = 0, len = filelist.length; i < len; i++) {
+							String filename = config + "/" + filelist[i];
+							File file = new File(filename);
+							if (file.isFile()
+									&& file.getName().endsWith(".properties")) {
+								inputStream = new FileInputStream(file);
+								Properties p = PropertiesUtils
+										.loadProperties(inputStream);
+								if (p != null) {
+									Enumeration<?> e = p.keys();
+									while (e.hasMoreElements()) {
+										String key = (String) e.nextElement();
+										String value = p.getProperty(key);
+										properties.setProperty(key, value);
+									}
 								}
+								IOUtils.closeStream(inputStream);
 							}
-							IOUtils.closeStream(inputStream);
 						}
 					}
 				}

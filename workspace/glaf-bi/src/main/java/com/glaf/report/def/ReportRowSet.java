@@ -66,6 +66,11 @@ public class ReportRowSet implements java.io.Serializable {
 	protected String query;
 
 	/**
+	 * 查询语句参数类型
+	 */
+	protected String parameterType;
+
+	/**
 	 * 是否唯一结果集
 	 */
 	protected boolean singleResult;
@@ -100,6 +105,10 @@ public class ReportRowSet implements java.io.Serializable {
 
 	public String getMapping() {
 		return mapping;
+	}
+
+	public String getParameterType() {
+		return parameterType;
 	}
 
 	public Map<String, Object> getProperties() {
@@ -148,6 +157,10 @@ public class ReportRowSet implements java.io.Serializable {
 
 	public void setMapping(String mapping) {
 		this.mapping = mapping;
+	}
+
+	public void setParameterType(String parameterType) {
+		this.parameterType = parameterType;
 	}
 
 	public void setProperties(Map<String, Object> properties) {

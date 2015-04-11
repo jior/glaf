@@ -179,28 +179,57 @@ public class MxTemplateServiceImpl implements ITemplateService {
 				return;
 			}
 			String[] filelist = file.list();
-			for (int i = 0; i < filelist.length; i++) {
-				String name = filelist[i];
-				if (!name.toLowerCase().endsWith(".xml")) {
-					continue;
-				}
-				String filename = configPath + name;
-				Resource resource = new FileSystemResource(filename);
-				Map<String, Template> templates = reader.getTemplates(resource
-						.getInputStream());
-				Set<Entry<String, Template>> entrySet = templates.entrySet();
-				for (Entry<String, Template> entry : entrySet) {
-					Template template = entry.getValue();
-					if (template.getData() == null
-							|| template.getFileSize() < 0) {
+			if (filelist != null) {
+				for (int i = 0, len = filelist.length; i < len; i++) {
+					String name = filelist[i];
+					if (!name.toLowerCase().endsWith(".xml")) {
 						continue;
 					}
-					if (templateMap.get(template.getTemplateId()) != null) {
-						Template model = templateMap.get(template
-								.getTemplateId());
-						if (template.getLastModified() > model
-								.getLastModified()) {
-							logger.debug("reload template config:" + filename);
+					String filename = configPath + name;
+					Resource resource = new FileSystemResource(filename);
+					Map<String, Template> templates = reader
+							.getTemplates(resource.getInputStream());
+					Set<Entry<String, Template>> entrySet = templates
+							.entrySet();
+					for (Entry<String, Template> entry : entrySet) {
+						Template template = entry.getValue();
+						if (template.getData() == null
+								|| template.getFileSize() < 0) {
+							continue;
+						}
+						if (templateMap.get(template.getTemplateId()) != null) {
+							Template model = templateMap.get(template
+									.getTemplateId());
+							if (template.getLastModified() > model
+									.getLastModified()) {
+								logger.debug("reload template config:"
+										+ filename);
+								BlobItem blob = new BlobItemEntity();
+								blob.setData(template.getData());
+								blob.setFileId(template.getTemplateId());
+								blob.setBusinessKey(template.getTemplateId());
+								blob.setLastModified(template.getLastModified());
+								blob.setFilename(FileUtils.getFileName(template
+										.getDataFile()));
+								blob.setStatus(1);
+								model.setLastModified(template
+										.getLastModified());
+								model.setFileSize(template.getFileSize());
+								model.setDataFile(template.getDataFile());
+								model.setName(template.getName());
+								model.setTitle(template.getTitle());
+								model.setDescription(template.getDescription());
+								model.setLocked(template.getLocked());
+
+								templateMapper.updateTemplate(model);
+								blobService.insertBlob(blob);
+								String cacheKey = "x_tpl_"
+										+ model.getTemplateId();
+								CacheFactory.remove(cacheKey);
+							}
+						} else {
+							template.setCreateDate(new Date());
+							template.setCreateBy("system");
 							BlobItem blob = new BlobItemEntity();
 							blob.setData(template.getData());
 							blob.setFileId(template.getTemplateId());
@@ -209,42 +238,20 @@ public class MxTemplateServiceImpl implements ITemplateService {
 							blob.setFilename(FileUtils.getFileName(template
 									.getDataFile()));
 							blob.setStatus(1);
-							model.setLastModified(template.getLastModified());
-							model.setFileSize(template.getFileSize());
-							model.setDataFile(template.getDataFile());
-							model.setName(template.getName());
-							model.setTitle(template.getTitle());
-							model.setDescription(template.getDescription());
-							model.setLocked(template.getLocked());
+							if (template.getNodeId() == 0
+									&& StringUtils.isNotEmpty(template
+											.getModuleId())) {
 
-							templateMapper.updateTemplate(model);
+							}
+							if (StringUtils.isEmpty(template.getTemplateId())) {
+								template.setTemplateId(idGenerator.getNextId());
+							}
+							templateMapper.insertTemplate(template);
 							blobService.insertBlob(blob);
-							String cacheKey = "x_tpl_" + model.getTemplateId();
+							String cacheKey = "x_tpl_"
+									+ template.getTemplateId();
 							CacheFactory.remove(cacheKey);
 						}
-					} else {
-						template.setCreateDate(new Date());
-						template.setCreateBy("system");
-						BlobItem blob = new BlobItemEntity();
-						blob.setData(template.getData());
-						blob.setFileId(template.getTemplateId());
-						blob.setBusinessKey(template.getTemplateId());
-						blob.setLastModified(template.getLastModified());
-						blob.setFilename(FileUtils.getFileName(template
-								.getDataFile()));
-						blob.setStatus(1);
-						if (template.getNodeId() == 0
-								&& StringUtils.isNotEmpty(template
-										.getModuleId())) {
-
-						}
-						if (StringUtils.isEmpty(template.getTemplateId())) {
-							template.setTemplateId(idGenerator.getNextId());
-						}
-						templateMapper.insertTemplate(template);
-						blobService.insertBlob(blob);
-						String cacheKey = "x_tpl_" + template.getTemplateId();
-						CacheFactory.remove(cacheKey);
 					}
 				}
 			}

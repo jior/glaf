@@ -23,6 +23,7 @@ import java.awt.Color;
 import java.awt.geom.Ellipse2D;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
@@ -30,6 +31,7 @@ import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
+import org.jfree.chart.renderer.category.LineRenderer3D;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
@@ -128,10 +130,18 @@ public class SummationLineChartGen implements ChartGen {
 	public JFreeChart createChart(Chart chartModel) {
 		ChartUtils.setChartTheme(chartModel);
 		CategoryDataset categoryDataset = this.createDataset(chartModel);
-		JFreeChart localJFreeChart = ChartFactory.createLineChart(
-				chartModel.getChartTitle(), chartModel.getCoordinateX(),
-				chartModel.getCoordinateY(), categoryDataset,
-				PlotOrientation.VERTICAL, true, true, false);
+		JFreeChart localJFreeChart = null;
+		if (StringUtils.equals(chartModel.getEnable3DFlag(), "1")) {
+			localJFreeChart = ChartFactory.createLineChart3D(
+					chartModel.getChartTitle(), chartModel.getCoordinateX(),
+					chartModel.getCoordinateY(), categoryDataset,
+					PlotOrientation.VERTICAL, true, true, false);
+		} else {
+			localJFreeChart = ChartFactory.createLineChart(
+					chartModel.getChartTitle(), chartModel.getCoordinateX(),
+					chartModel.getCoordinateY(), categoryDataset,
+					PlotOrientation.VERTICAL, true, true, false);
+		}
 		CategoryPlot localCategoryPlot = (CategoryPlot) localJFreeChart
 				.getPlot();
 		localCategoryPlot.setRangeZeroBaselineVisible(false);
@@ -139,49 +149,62 @@ public class SummationLineChartGen implements ChartGen {
 				.getRangeAxis();
 		localNumberAxis.setStandardTickUnits(NumberAxis
 				.createIntegerTickUnits());
-		LineAndShapeRenderer localLineAndShapeRenderer = (LineAndShapeRenderer) localCategoryPlot
-				.getRenderer();
-
-		localLineAndShapeRenderer.setBaseShapesVisible(true);
-		localLineAndShapeRenderer.setDrawOutlines(true);
-		localLineAndShapeRenderer.setUseFillPaint(true);
-		localLineAndShapeRenderer.setBaseItemLabelsVisible(true);// 显示数值
-		localLineAndShapeRenderer.setBaseFillPaint(Color.white);
-
-		Color[] color = new Color[8];
-		color[0] = Color.red;
-		color[1] = Color.red;
-		color[2] = Color.blue;
-		color[3] = Color.blue;
-		color[4] = Color.yellow;
-		color[5] = Color.yellow;
-		color[6] = Color.green;
-		color[7] = Color.green;
-		float dashes[] = { 8.0f };
-		for (int i = 0; i < 8; i++) {
-			BasicStroke brokenLine = new BasicStroke(6f,
-					BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 10.f,
-					dashes, 0.0f);
-			if (chartType == 0)
-				brokenLine = new BasicStroke(8.0F);
-			else {
-				if (i % 2 == 0)
-					brokenLine = new BasicStroke(8.0F);
-				localLineAndShapeRenderer.setSeriesPaint(i, color[i]);
-			}
-			localLineAndShapeRenderer.setSeriesStroke(i, brokenLine);
-			localLineAndShapeRenderer.setSeriesOutlineStroke(i,
-					new BasicStroke(5.0F));
-			localLineAndShapeRenderer.setSeriesShape(i, new Ellipse2D.Double(
-					-5.0D, -5.0D, 10.0D, 10.0D));
-		}
-		localLineAndShapeRenderer
-				.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
-
 		localNumberAxis.setStandardTickUnits(NumberAxis
 				.createIntegerTickUnits());
 		localNumberAxis.setAutoRangeIncludesZero(false);
 		localNumberAxis.setUpperMargin(0.12D);
+
+		if (StringUtils.equals(chartModel.getEnable3DFlag(), "1")) {
+			LineRenderer3D lineRenderer = (LineRenderer3D) localCategoryPlot
+					.getRenderer();
+			lineRenderer.setBaseShapesVisible(true);
+			lineRenderer.setDrawOutlines(true);
+			lineRenderer.setUseFillPaint(true);
+			lineRenderer.setBaseItemLabelsVisible(true);// 显示数值
+			lineRenderer.setBaseFillPaint(Color.white);
+			lineRenderer
+					.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+		} else {
+			LineAndShapeRenderer localLineAndShapeRenderer = (LineAndShapeRenderer) localCategoryPlot
+					.getRenderer();
+
+			localLineAndShapeRenderer.setBaseShapesVisible(true);
+			localLineAndShapeRenderer.setDrawOutlines(true);
+			localLineAndShapeRenderer.setUseFillPaint(true);
+			localLineAndShapeRenderer.setBaseItemLabelsVisible(true);// 显示数值
+			localLineAndShapeRenderer.setBaseFillPaint(Color.white);
+
+			Color[] color = new Color[8];
+			color[0] = Color.red;
+			color[1] = Color.red;
+			color[2] = Color.blue;
+			color[3] = Color.blue;
+			color[4] = Color.yellow;
+			color[5] = Color.yellow;
+			color[6] = Color.green;
+			color[7] = Color.green;
+			float dashes[] = { 8.0f };
+			for (int i = 0; i < 8; i++) {
+				BasicStroke brokenLine = new BasicStroke(6f,
+						BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 10.f,
+						dashes, 0.0f);
+				if (chartType == 0) {
+					brokenLine = new BasicStroke(8.0F);
+				} else {
+					if (i % 2 == 0) {
+						brokenLine = new BasicStroke(8.0F);
+					}
+					localLineAndShapeRenderer.setSeriesPaint(i, color[i]);
+				}
+				localLineAndShapeRenderer.setSeriesStroke(i, brokenLine);
+				localLineAndShapeRenderer.setSeriesOutlineStroke(i,
+						new BasicStroke(5.0F));
+				localLineAndShapeRenderer.setSeriesShape(i,
+						new Ellipse2D.Double(-5.0D, -5.0D, 10.0D, 10.0D));
+			}
+			localLineAndShapeRenderer
+					.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+		}
 
 		return localJFreeChart;
 	}

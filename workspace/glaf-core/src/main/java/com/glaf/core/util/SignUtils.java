@@ -67,15 +67,17 @@ public class SignUtils {
 	 * 验证签名
 	 * 
 	 * @param signature
+	 *            签名字符串
 	 * @param timestamp
+	 *            时间戳
 	 * @param nonce
+	 *            随机字符串
 	 * @return
 	 */
 	public static boolean checkSignature(String userId, String signature,
 			String timestamp, String nonce) {
 		User user = IdentityFactory.getUser(userId);
 		String token = user.getToken();
-
 		String[] arr = new String[] { token, timestamp, nonce };
 		// 将token、timestamp、nonce三个参数进行字典序排序
 		Arrays.sort(arr);
@@ -85,18 +87,75 @@ public class SignUtils {
 		}
 		MessageDigest md = null;
 		String tmpStr = null;
-
 		try {
 			md = MessageDigest.getInstance("SHA-1");
 			// 将三个参数字符串拼接成一个字符串进行sha1加密
 			byte[] digest = md.digest(content.toString().getBytes());
 			tmpStr = byteToStr(digest);
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
+		} catch (NoSuchAlgorithmException ex) {
+			ex.printStackTrace();
 		}
-
 		content = null;
 		// 将sha1加密后的字符串可与signature对比，标识该请求来源于微信
 		return tmpStr != null ? tmpStr.equals(signature.toUpperCase()) : false;
+	}
+
+	/**
+	 * 验证签名
+	 * 
+	 * @param token
+	 *            用户令牌
+	 * @param signature
+	 *            签名字符串
+	 * @param timestamp
+	 *            时间戳
+	 * @param nonce
+	 *            随机字符串
+	 * @return
+	 */
+	public static boolean checkToken(String token, String signature,
+			String timestamp, String nonce) {
+		String[] arr = new String[] { token, timestamp, nonce };
+		// 将token、timestamp、nonce三个参数进行字典序排序
+		Arrays.sort(arr);
+		StringBuilder content = new StringBuilder();
+		for (int i = 0; i < arr.length; i++) {
+			content.append(arr[i]);
+		}
+		MessageDigest md = null;
+		String tmpStr = null;
+		try {
+			md = MessageDigest.getInstance("SHA-1");
+			// 将三个参数字符串拼接成一个字符串进行sha1加密
+			byte[] digest = md.digest(content.toString().getBytes());
+			tmpStr = byteToStr(digest);
+		} catch (NoSuchAlgorithmException ex) {
+			ex.printStackTrace();
+		}
+		content = null;
+		// 将sha1加密后的字符串可与signature对比，标识该请求来源于微信
+		return tmpStr != null ? tmpStr.equals(signature.toUpperCase()) : false;
+	}
+
+	public static String getSignature(String token, String timestamp,
+			String nonce) {
+		String[] arr = new String[] { token, timestamp, nonce };
+		// 将token、timestamp、nonce三个参数进行字典序排序
+		Arrays.sort(arr);
+		StringBuilder content = new StringBuilder();
+		for (int i = 0; i < arr.length; i++) {
+			content.append(arr[i]);
+		}
+		MessageDigest md = null;
+		String signature = null;
+		try {
+			md = MessageDigest.getInstance("SHA-1");
+			// 将三个参数字符串拼接成一个字符串进行sha1加密
+			byte[] digest = md.digest(content.toString().getBytes());
+			signature = byteToStr(digest);
+		} catch (NoSuchAlgorithmException ex) {
+			ex.printStackTrace();
+		}
+		return signature;
 	}
 }

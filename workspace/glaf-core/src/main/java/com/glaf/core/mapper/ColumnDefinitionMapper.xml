@@ -33,6 +33,7 @@
 		<result property="resizableField" column="RESIZABLE_" jdbcType="VARCHAR" />
 		<result property="hiddenField" column="HIDDEN_" jdbcType="VARCHAR" />
 		<result property="tooltip" column="TOOLTIP_" jdbcType="VARCHAR" />
+		<result property="placeholder" column="PLACEHOLDER_" jdbcType="VARCHAR" />
 		<result property="ordinal" column="ORDINAL_" jdbcType="INTEGER" />
 		<result property="javaType" column="JAVATYPE_" jdbcType="VARCHAR" />
 		<result property="inputType" column="INPUTTYPE_" jdbcType="VARCHAR" />
@@ -41,6 +42,7 @@
 		<result property="url" column="URL_" jdbcType="VARCHAR" />
 		<result property="validType" column="VALIDTYPE_" jdbcType="VARCHAR" />
 		<result property="regex" column="REGEX_" jdbcType="VARCHAR" />
+		<result property="initValue" column="INITVALUE_" jdbcType="VARCHAR" />
 		<result property="defaultValue" column="DEFAULTVALUE_"
 			jdbcType="VARCHAR" />
 		<result property="discriminator" column="DISCRIMINATOR_"
@@ -97,6 +99,7 @@
 		<result property="resizableField" column="RESIZABLE_" jdbcType="VARCHAR" />
 		<result property="hiddenField" column="HIDDEN_" jdbcType="VARCHAR" />
 		<result property="tooltip" column="TOOLTIP_" jdbcType="VARCHAR" />
+		<result property="placeholder" column="PLACEHOLDER_" jdbcType="VARCHAR" />
 		<result property="ordinal" column="ORDINAL_" jdbcType="INTEGER" />
 		<result property="javaType" column="JAVATYPE_" jdbcType="VARCHAR" />
 		<result property="inputType" column="INPUTTYPE_" jdbcType="VARCHAR" />
@@ -105,6 +108,7 @@
 		<result property="url" column="URL_" jdbcType="VARCHAR" />
 		<result property="validType" column="VALIDTYPE_" jdbcType="VARCHAR" />
 		<result property="regex" column="REGEX_" jdbcType="VARCHAR" />
+		<result property="initValue" column="INITVALUE_" jdbcType="VARCHAR" />
 		<result property="defaultValue" column="DEFAULTVALUE_"
 			jdbcType="VARCHAR" />
 		<result property="discriminator" column="DISCRIMINATOR_"
@@ -205,6 +209,9 @@
 			<if test="tooltip != null">
 				,TOOLTIP_
 			</if>
+			<if test="placeholder != null">
+				,PLACEHOLDER_
+			</if>
 			<if test="ordinal != null">
 				,ORDINAL_
 			</if>
@@ -228,6 +235,9 @@
 			</if>
 			<if test="regex != null">
 				,REGEX_
+			</if>
+			<if test="initValue != null">
+				,INITVALUE_
 			</if>
 			<if test="defaultValue != null">
 				,DEFAULTVALUE_
@@ -366,6 +376,9 @@
 			<if test="tooltip != null">
 				,#{tooltip, jdbcType=VARCHAR}
 			</if>
+			<if test="placeholder != null">
+				,#{placeholder, jdbcType=VARCHAR}
+			</if>
 			<if test="ordinal != null">
 				,#{ordinal, jdbcType=INTEGER}
 			</if>
@@ -389,6 +402,9 @@
 			</if>
 			<if test="regex != null">
 				,#{regex, jdbcType=VARCHAR}
+			</if>
+			<if test="initValue != null">
+				,#{initValue, jdbcType=VARCHAR}
 			</if>
 			<if test="defaultValue != null">
 				,#{defaultValue, jdbcType=VARCHAR}
@@ -530,6 +546,9 @@
 			<if test="tooltip != null">
 				TOOLTIP_ = #{tooltip, jdbcType=VARCHAR},
 			</if>
+			<if test="placeholder != null">
+				PLACEHOLDER_ = #{placeholder, jdbcType=VARCHAR},
+			</if>
 			<if test="ordinal != null">
 				ORDINAL_ = #{ordinal, jdbcType=INTEGER},
 			</if>
@@ -553,6 +572,9 @@
 			</if>
 			<if test="regex != null">
 				REGEX_ = #{regex, jdbcType=VARCHAR},
+			</if>
+			<if test="initValue != null">
+				INITVALUE_ = #{initValue, jdbcType=VARCHAR},
 			</if>
 			<if test="defaultValue != null">
 				DEFAULTVALUE_ = #{defaultValue, jdbcType=VARCHAR},

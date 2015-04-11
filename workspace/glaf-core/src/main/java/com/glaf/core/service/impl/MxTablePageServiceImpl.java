@@ -40,6 +40,7 @@ import com.glaf.core.mapper.TablePageMapper;
 import com.glaf.core.query.QueryCondition;
 import com.glaf.core.query.TablePageQuery;
 import com.glaf.core.service.ITablePageService;
+import com.glaf.core.util.DBUtils;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.QueryUtils;
 
@@ -57,6 +58,9 @@ public class MxTablePageServiceImpl implements ITablePageService {
 
 	public List<Map<String, Object>> getListData(String sql,
 			Map<String, Object> params) {
+		if (!DBUtils.isLegalQuerySql(sql)) {
+			throw new RuntimeException(" SQL statement illegal ");
+		}
 		Map<String, Object> queryMap = new HashMap<String, Object>();
 		if (params != null && !params.isEmpty()) {
 			queryMap.putAll(params);
@@ -65,27 +69,44 @@ public class MxTablePageServiceImpl implements ITablePageService {
 		return tablePageMapper.getSqlQueryList(queryMap);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public int getQueryCount(String querySql, List<QueryCondition> conditions) {
-		SqlExecutor sqlExecutor = QueryUtils
-				.getMyBatisAndConditionSql(conditions);
-		StringBuilder buffer = new StringBuilder();
-		buffer.append(querySql);
-		if (querySql.toUpperCase().indexOf(" WHERE ") == -1) {
-			buffer.append(" where 1=1 ");
+	public List<Map<String, Object>> getListData(String sql,
+			Map<String, Object> params, int begin, int limit) {
+		if (!DBUtils.isLegalQuerySql(sql)) {
+			throw new RuntimeException(" SQL statement illegal ");
 		}
-		String sql = buffer.toString() + sqlExecutor.getSql();
-
-		Map<String, Object> params = new java.util.HashMap<String, Object>();
-		if (sqlExecutor.getParameter() instanceof Map) {
-			params.putAll((Map) sqlExecutor.getParameter());
+		Map<String, Object> queryMap = new HashMap<String, Object>();
+		if (params != null && !params.isEmpty()) {
+			queryMap.putAll(params);
 		}
+		queryMap.put("queryString", sql);
+		RowBounds rowBounds = new RowBounds(begin, limit);
+		List<Map<String, Object>> dataList = sqlSession.selectList(
+				"getSqlQueryList", queryMap, rowBounds);
+		return dataList;
+	}
 
-		logger.debug("countSql:\n" + sql);
-		logger.debug("params:" + params);
+	public Map<String, Object> getOne(String sql, Map<String, Object> params) {
+		if (!DBUtils.isLegalQuerySql(sql)) {
+			throw new RuntimeException(" SQL statement illegal ");
+		}
+		Map<String, Object> queryMap = new HashMap<String, Object>();
+		if (params != null && !params.isEmpty()) {
+			queryMap.putAll(params);
+		}
+		queryMap.put("queryString", sql);
+		List<Map<String, Object>> dataList = sqlSession.selectList(
+				"getSqlQueryList", queryMap);
+		if (dataList != null && !dataList.isEmpty()) {
+			return dataList.get(0);
+		}
+		return null;
+	}
 
-		params.put("queryString", sql);
-
+	public int getQueryCount(String querySql, Map<String, Object> params) {
+		if (!DBUtils.isLegalQuerySql(querySql)) {
+			throw new RuntimeException(" SQL statement illegal ");
+		}
+		params.put("queryString", querySql);
 		int total = tablePageMapper.getSqlQueryCount(params);
 		return total;
 	}
@@ -93,6 +114,9 @@ public class MxTablePageServiceImpl implements ITablePageService {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<Object> getQueryList(String querySql, int begin, int pageSize,
 			List<QueryCondition> conditions) {
+		if (!DBUtils.isLegalQuerySql(querySql)) {
+			throw new RuntimeException(" SQL statement illegal ");
+		}
 		SqlExecutor sqlExecutor = QueryUtils
 				.getMyBatisAndConditionSql(conditions);
 

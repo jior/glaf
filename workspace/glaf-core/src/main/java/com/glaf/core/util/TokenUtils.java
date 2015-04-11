@@ -28,6 +28,7 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.glaf.core.base.AccessToken;
 import com.glaf.core.cache.CacheFactory;
+import com.glaf.core.util.http.HttpUtils;
 
 /**
  * 公众平台通用接口工具类

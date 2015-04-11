@@ -186,10 +186,11 @@ public class MyBatisSessionFactory {
 							configuration.getSqlFragments());
 					xmlMapperBuilder.parse();
 					mappers.add(mapperLocation.getFilename());
-				} catch (Exception e) {
+				} catch (Exception ex) {
+					ex.printStackTrace();
 					throw new NestedIOException(
 							"Failed to parse mapping resource: '"
-									+ mapperLocation + "'", e);
+									+ mapperLocation + "'", ex);
 				} finally {
 					ErrorContext.instance().reset();
 				}
@@ -214,10 +215,11 @@ public class MyBatisSessionFactory {
 										mapperLocation.toString(),
 										configuration.getSqlFragments());
 								xmlMapperBuilder.parse();
-							} catch (Exception e) {
+							} catch (Exception ex) {
+								ex.printStackTrace();
 								throw new NestedIOException(
 										"Failed to parse mapping resource: '"
-												+ mapperLocation + "'", e);
+												+ mapperLocation + "'", ex);
 							} finally {
 								ErrorContext.instance().reset();
 							}

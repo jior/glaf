@@ -60,7 +60,7 @@ public class ThreadFactory {
 
 	private static ExecutorService getExecutorService() {
 		if (executorService == null) {
-			executorService = Executors.newCachedThreadPool();
+			executorService = Executors.newFixedThreadPool(50);
 		}
 		return executorService;
 	}

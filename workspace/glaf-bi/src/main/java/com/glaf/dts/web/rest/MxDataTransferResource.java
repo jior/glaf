@@ -51,6 +51,8 @@ public class MxDataTransferResource {
 					text = c.getColumnName();
 				}
 				rowJSON.put("text", text);
+				rowJSON.put("column", c.getColumnName());
+				rowJSON.put("columnName", c.getColumnName().toLowerCase());
 				array.add(rowJSON);
 			}
 		}

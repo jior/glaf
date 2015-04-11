@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <reports>
 
-	<report id="jxls_OverTimeTotal">
-		<templateFile>conf\templates\report\OverTimeTotal.xls</templateFile>
-		<dataset datasourceName="datasource">
-			<rowset mapping="rows" dataMgr="mybatis">
-				<query>dynamicSelectOverTime</query>
+	<report id="rpt_sqlresult">
+		<templateFile>conf/report/templates/sqlresult.xls</templateFile>
+		<dataset datasourceName="dataSource">
+			<rowset mapping="rows" dataMgr="mybatis3">
+				<query>selectSqlResults</query>
+				<parameterType>com.glaf.datamgr.query.SqlResultQuery</parameterType>
 			</rowset>
 		</dataset>
 	</report>

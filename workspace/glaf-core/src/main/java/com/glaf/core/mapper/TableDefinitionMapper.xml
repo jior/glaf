@@ -19,9 +19,12 @@
 		<result property="sysnum" column="SYSNUM_" jdbcType="VARCHAR" />
 		<result property="isSubTable" column="ISSUBTABLE_" jdbcType="VARCHAR" />
 		<result property="topId" column="TOPID_" jdbcType="VARCHAR" />
+		<result property="primaryKey" column="PRIMARYKEY_" jdbcType="VARCHAR" />
 		<result property="aggregationKeys" column="AGGREGATIONKEYS_"
 			jdbcType="VARCHAR" />
 		<result property="queryIds" column="QUERYIDS_" jdbcType="VARCHAR" />
+		<result property="aggregationQueryIds" column="AGGR_QUERYIDS_"
+			jdbcType="VARCHAR" />
 		<result property="temporaryFlag" column="TEMPORARYFLAG_"
 			jdbcType="VARCHAR" />
 		<result property="deleteFetch" column="DELETEFETCH_" jdbcType="VARCHAR" />
@@ -36,6 +39,7 @@
 			jdbcType="INTEGER" />
 		<result property="deleteCascade" column="DELETECASCADE_"
 			jdbcType="INTEGER" />
+		<result property="sortNo" column="SORTNO_" jdbcType="INTEGER" />
 		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
 		<result property="deleteFlag" column="DELETEFLAG_" jdbcType="INTEGER" />
 		<result property="systemFlag" column="SYSTEMFLAG_" jdbcType="VARCHAR" />
@@ -62,6 +66,8 @@
 		<result property="aggregationKeys" column="AGGREGATIONKEYS_"
 			jdbcType="VARCHAR" />
 		<result property="queryIds" column="QUERYIDS_" jdbcType="VARCHAR" />
+		<result property="aggregationQueryIds" column="AGGR_QUERYIDS_"
+			jdbcType="VARCHAR" />
 		<result property="temporaryFlag" column="TEMPORARYFLAG_"
 			jdbcType="VARCHAR" />
 		<result property="deleteFetch" column="DELETEFETCH_" jdbcType="VARCHAR" />
@@ -76,6 +82,7 @@
 			jdbcType="INTEGER" />
 		<result property="deleteCascade" column="DELETECASCADE_"
 			jdbcType="INTEGER" />
+		<result property="sortNo" column="SORTNO_" jdbcType="INTEGER" />
 		<result property="locked" column="LOCKED_" jdbcType="INTEGER" />
 		<result property="deleteFlag" column="DELETEFLAG_" jdbcType="INTEGER" />
 		<result property="systemFlag" column="SYSTEMFLAG_" jdbcType="VARCHAR" />
@@ -123,8 +130,14 @@
 			<if test="aggregationKeys != null">
 				,AGGREGATIONKEYS_
 			</if>
+			<if test="primaryKey != null">
+				,PRIMARYKEY_
+			</if>
 			<if test="queryIds != null">
 				,QUERYIDS_
+			</if>
+			<if test="aggregationQueryIds != null">
+				,AGGR_QUERYIDS_
 			</if>
 			<if test="temporaryFlag != null">
 				,TEMPORARYFLAG_
@@ -155,6 +168,9 @@
 			</if>
 			<if test="deleteCascade != null">
 				,DELETECASCADE_
+			</if>
+			<if test="sortNo != null">
+				,SORTNO_
 			</if>
 			<if test="locked != null">
 				,LOCKED_
@@ -212,8 +228,14 @@
 			<if test="aggregationKeys != null">
 				,#{aggregationKeys, jdbcType=VARCHAR}
 			</if>
+			<if test="primaryKey != null">
+				,#{primaryKey, jdbcType=VARCHAR}
+			</if>
 			<if test="queryIds != null">
 				,#{queryIds, jdbcType=VARCHAR}
+			</if>
+			<if test="aggregationQueryIds != null">
+				,#{aggregationQueryIds, jdbcType=VARCHAR}
 			</if>
 			<if test="temporaryFlag != null">
 				,#{temporaryFlag, jdbcType=VARCHAR}
@@ -244,6 +266,9 @@
 			</if>
 			<if test="deleteCascade != null">
 				,#{deleteCascade, jdbcType=INTEGER}
+			</if>
+			<if test="sortNo != null">
+				,#{sortNo, jdbcType=INTEGER}
 			</if>
 			<if test="locked != null">
 				,#{locked, jdbcType=INTEGER}
@@ -304,20 +329,21 @@
 			<if test="aggregationKeys != null">
 				AGGREGATIONKEYS_ = #{aggregationKeys, jdbcType=VARCHAR},
 			</if>
+			<if test="primaryKey != null">
+				PRIMARYKEY_ = #{primaryKey, jdbcType=VARCHAR},
+			</if>
 			<if test="queryIds != null">
 				QUERYIDS_ = #{queryIds, jdbcType=VARCHAR},
+			</if>
+			<if test="aggregationQueryIds != null">
+				AGGR_QUERYIDS_ = #{aggregationQueryIds,
+				jdbcType=VARCHAR},
 			</if>
 			<if test="temporaryFlag != null">
 				TEMPORARYFLAG_ = #{temporaryFlag, jdbcType=VARCHAR},
 			</if>
 			<if test="deleteFetch != null">
 				DELETEFETCH_ = #{deleteFetch, jdbcType=VARCHAR},
-			</if>
-			<if test="createTime != null">
-				CREATETIME_ = #{createTime, jdbcType=TIMESTAMP},
-			</if>
-			<if test="createBy != null">
-				CREATEBY_ = #{createBy, jdbcType=VARCHAR},
 			</if>
 			<if test="description != null">
 				DESCRIPTION_ = #{description, jdbcType=VARCHAR},
@@ -336,6 +362,9 @@
 			</if>
 			<if test="deleteCascade != null">
 				DELETECASCADE_ = #{deleteCascade, jdbcType=INTEGER},
+			</if>
+			<if test="sortNo != null">
+				SORTNO_ = #{sortNo, jdbcType=INTEGER},
 			</if>
 			<if test="locked != null">
 				LOCKED_ = #{locked, jdbcType=INTEGER},

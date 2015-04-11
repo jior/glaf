@@ -34,7 +34,12 @@ public interface ITablePageService {
 
 	List<Map<String, Object>> getListData(String sql, Map<String, Object> params);
 
-	int getQueryCount(String querySql, List<QueryCondition> conditions);
+	List<Map<String, Object>> getListData(String sql,
+			Map<String, Object> params, int begin, int limit);
+
+	Map<String, Object> getOne(String sql, Map<String, Object> params);
+
+	int getQueryCount(String querySql, Map<String, Object> params);
 
 	List<Object> getQueryList(String querySql, int begin, int pageSize,
 			List<QueryCondition> conditions);

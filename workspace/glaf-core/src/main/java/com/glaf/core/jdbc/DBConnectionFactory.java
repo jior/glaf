@@ -59,7 +59,6 @@ public class DBConnectionFactory {
 				ds = ContextFactory.getBean("dataSource");
 				connection = ds.getConnection();
 			}
-
 			if (connection != null) {
 				return true;
 			}
@@ -84,19 +83,64 @@ public class DBConnectionFactory {
 			} else {
 				ConnectionProvider provider = ConnectionProviderFactory
 						.createProvider(props);
-				connection = provider.getConnection();
+				if (provider != null) {
+					connection = provider.getConnection();
+				}
 			}
 			if (connection != null) {
 				return true;
 			}
-			return false;
 		} catch (Exception ex) {
 			logger.error(ex);
 			ex.printStackTrace();
-			throw new RuntimeException(ex);
 		} finally {
 			JdbcUtils.close(connection);
 		}
+		return false;
+	}
+
+	public static boolean checkConnection(String systemName) {
+		if (systemName == null) {
+			throw new RuntimeException("systemName is required.");
+		}
+		logger.debug("systemName:" + systemName);
+		Connection connection = null;
+		try {
+			Properties props = DBConfiguration
+					.getDataSourcePropertiesByName(systemName);
+			logger.debug("props:" + props);
+			if (props != null) {
+				if (StringUtils.isNotEmpty(props
+						.getProperty(DBConfiguration.JDBC_DATASOURCE))) {
+					InitialContext ctx = new InitialContext();
+					DataSource ds = (DataSource) ctx.lookup(props
+							.getProperty(DBConfiguration.JDBC_DATASOURCE));
+					connection = ds.getConnection();
+				} else {
+					ConnectionProvider provider = ConnectionProviderFactory
+							.createProvider(systemName);
+					if (provider != null) {
+						connection = provider.getConnection();
+					}
+				}
+			} else {
+				// DataSource ds = ContextFactory.getBean("dataSource");
+				// connection = ds.getConnection();
+			}
+			if (connection != null) {
+				ConnectionThreadHolder.addConnection(connection);
+			}
+			if (connection != null) {
+				return true;
+			}
+
+		} catch (Exception ex) {
+			logger.error(ex);
+			ex.printStackTrace();
+		} finally {
+			JdbcUtils.close(connection);
+		}
+		return false;
 	}
 
 	public static Connection getConnection() {
@@ -119,11 +163,15 @@ public class DBConnectionFactory {
 					if (StringUtils.isNotEmpty(systemName)) {
 						ConnectionProvider provider = ConnectionProviderFactory
 								.createProvider(systemName);
-						connection = provider.getConnection();
+						if (provider != null) {
+							connection = provider.getConnection();
+						}
 					} else {
 						ConnectionProvider provider = ConnectionProviderFactory
 								.createProvider(props);
-						connection = provider.getConnection();
+						if (provider != null) {
+							connection = provider.getConnection();
+						}
 					}
 				}
 			}
@@ -157,11 +205,13 @@ public class DBConnectionFactory {
 				} else {
 					ConnectionProvider provider = ConnectionProviderFactory
 							.createProvider(systemName);
-					connection = provider.getConnection();
+					if (provider != null) {
+						connection = provider.getConnection();
+					}
 				}
 			} else {
-				DataSource ds = ContextFactory.getBean("dataSource");
-				connection = ds.getConnection();
+				// DataSource ds = ContextFactory.getBean("dataSource");
+				// connection = ds.getConnection();
 			}
 			if (connection != null) {
 				ConnectionThreadHolder.addConnection(connection);

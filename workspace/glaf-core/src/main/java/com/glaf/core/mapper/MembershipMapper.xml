@@ -153,6 +153,14 @@
 	</delete>
 
 
+	<delete id="deleteActorMemberships" parameterType="com.glaf.core.query.MembershipQuery">
+		delete from
+		SYS_MEMBERSHIP
+		where ACTORID_ = #{actorId}
+		and TYPE_ = #{type}
+	</delete>
+
+
 	<select id="getMembershipById" parameterType="long"
 		resultMap="membershipResultMap">
 		select * from SYS_MEMBERSHIP where ID_ = #{id}

@@ -27,7 +27,6 @@ import org.apache.commons.logging.LogFactory;
 
 import com.glaf.core.config.DBConfiguration;
 import com.glaf.core.config.SystemProperties;
-import com.glaf.core.db.dataimport.XmlToDbImporter;
 import com.glaf.core.execution.FileExecutionHelper;
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.util.DBUtils;
@@ -85,28 +84,7 @@ public class DBUpdateThread extends Thread {
 								ex.printStackTrace();
 								logger.error(ex);
 							}
-						} else if (contents[i].isFile()
-								&& StringUtils.endsWith(contents[i].getName(),
-										".xml")) {
-							XmlToDbImporter imp = new XmlToDbImporter();
-							try {
-								if (!helper.exists(conn, "import_xml",
-										contents[i])) {
-									long lastModified = helper.lastModified(
-											conn, "import_xml", contents[i]);
-									if (contents[i].lastModified() > lastModified) {
-										conn.setAutoCommit(false);
-										imp.doImport(contents[i], conn);
-										helper.save(conn, "import_xml",
-												contents[i]);
-										conn.commit();
-									}
-								}
-							} catch (Exception ex) {
-								ex.printStackTrace();
-								logger.error(ex);
-							}
-						}
+						}  
 					}
 				}
 			}

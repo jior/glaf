@@ -23,6 +23,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -30,7 +31,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.JsonFactory;
@@ -41,10 +44,12 @@ import com.glaf.core.base.TableModel;
 import com.glaf.core.context.ContextFactory;
 import com.glaf.core.db.TransformTable;
 import com.glaf.core.domain.ColumnDefinition;
+import com.glaf.core.domain.Database;
 import com.glaf.core.domain.QueryDefinition;
 import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.entity.SqlExecutor;
 import com.glaf.core.jdbc.DBConnectionFactory;
+import com.glaf.core.service.IDatabaseService;
 import com.glaf.core.service.IQueryDefinitionService;
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.service.ITableDefinitionService;
@@ -53,6 +58,7 @@ import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.FieldType;
 import com.glaf.core.util.JdbcUtils;
 import com.glaf.core.util.JsonUtils;
+import com.glaf.core.util.ParamUtils;
 import com.glaf.core.util.QueryUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.dts.domain.TransformTask;
@@ -68,9 +74,11 @@ public class MxTransformThread implements java.lang.Runnable {
 
 	protected Map<String, Object> paramMap;
 
-	protected QueryDefinition query;
+	protected QueryDefinition queryDefinition;
 
 	protected TableDefinition tableDefinition;
+
+	protected IDatabaseService databaseService;
 
 	protected ITransformTaskService transformTaskService;
 
@@ -80,8 +88,17 @@ public class MxTransformThread implements java.lang.Runnable {
 
 	protected ITableDataService tableDataService;
 
+	protected Map<String, ColumnDefinition> columnMap = new java.util.HashMap<String, ColumnDefinition>();
+
 	public MxTransformThread(String taskId) {
 		this.init(taskId);
+	}
+
+	public IDatabaseService getDatabaseService() {
+		if (databaseService == null) {
+			databaseService = ContextFactory.getBean("databaseService");
+		}
+		return databaseService;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -95,9 +112,15 @@ public class MxTransformThread implements java.lang.Runnable {
 		this.taskId = taskId;
 		TransformTask task = transformTaskService.getTransformTask(taskId);
 		String queryId = task.getQueryId();
-		query = queryDefinitionService.getQueryDefinition(queryId);
-		String tableName = query.getTargetTableName();
+		queryDefinition = queryDefinitionService.getQueryDefinition(queryId);
+		String tableName = queryDefinition.getTargetTableName();
 		tableDefinition = tableDefinitionService.getTableDefinition(tableName);
+		if (tableDefinition.getColumns() != null) {
+			for (ColumnDefinition column : tableDefinition.getColumns()) {
+				columnMap.put(column.getColumnName(), column);
+				columnMap.put(column.getColumnName().toLowerCase(), column);
+			}
+		}
 		String parameter = task.getParameter();
 		if (parameter != null) {
 			JsonFactory f = new JsonFactory();
@@ -128,7 +151,7 @@ public class MxTransformThread implements java.lang.Runnable {
 		}
 
 		List<TableModel> resultList = new java.util.ArrayList<TableModel>();
-
+		Map<String, Object> singleDataMap = new HashMap<String, Object>();
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
@@ -137,11 +160,17 @@ public class MxTransformThread implements java.lang.Runnable {
 		long start = System.currentTimeMillis();
 		logger.debug("start:" + DateUtils.getDateTime(new java.util.Date()));
 		try {
+			Database database = getDatabaseService().getDatabaseById(
+					queryDefinition.getDatabaseId());
+			if (database != null) {
+				conn = DBConnectionFactory.getConnection(database.getName());
+			} else {
+				conn = DBConnectionFactory.getConnection();
+			}
 
-			conn = DBConnectionFactory.getConnection();
 			logger.debug("conn:" + conn.toString());
 
-			String sql = query.getSql();
+			String sql = queryDefinition.getSql();
 			sql = QueryUtils.replaceSQLVars(sql);
 			List<Object> values = null;
 			if (paramMap != null) {
@@ -151,7 +180,7 @@ public class MxTransformThread implements java.lang.Runnable {
 			}
 
 			logger.debug("--------------execute query----------------------");
-			logger.debug(query.getTitle());
+			logger.debug(queryDefinition.getTitle());
 
 			logger.debug("::sql::" + sql);
 			psmt = conn.prepareStatement(sql);
@@ -160,8 +189,6 @@ public class MxTransformThread implements java.lang.Runnable {
 				JdbcUtils.fillStatement(psmt, values);
 				logger.debug("::values::" + values);
 			}
-
-			logger.debug("--------------------------------");
 
 			List<ColumnDefinition> columns = new java.util.ArrayList<ColumnDefinition>();
 
@@ -280,9 +307,16 @@ public class MxTransformThread implements java.lang.Runnable {
 						cell.setValue(value);
 					}
 					rowModel.addColumn(cell);
+					if (resultList.isEmpty()) {
+						singleDataMap.put(column.getColumnLabel(),
+								cell.getValue());
+					}
 				}
 				resultList.add(rowModel);
 			}
+
+			logger.debug("--------------------resultList size:"
+					+ resultList.size());
 
 		} catch (Exception ex) {
 			success = false;
@@ -305,18 +339,103 @@ public class MxTransformThread implements java.lang.Runnable {
 
 		try {
 
-			TransformTable tbl = new TransformTable();
-			tbl.createOrAlterTable(tableDefinition);
+			if (!StringUtils.equalsIgnoreCase(
+					queryDefinition.getRotatingFlag(), "R2C")) {
+				TransformTable tbl = new TransformTable();
+				tbl.createOrAlterTable(tableDefinition);
+			}
 
 			List<ColumnDefinition> columns = DBUtils
 					.getColumnDefinitions(tableDefinition.getTableName());
 			if (columns != null && !columns.isEmpty()) {
 				tableDefinition.setColumns(columns);
 			}
+
 			if (resultList != null && !resultList.isEmpty()
 					&& tableDefinition.getTableName() != null
 					&& tableDefinition.getAggregationKeys() != null) {
-				tableDataService.saveAll(tableDefinition, null, resultList);
+				logger.debug("RotatingFlag:"
+						+ queryDefinition.getRotatingFlag());
+				logger.debug("RotatingColumn:"
+						+ queryDefinition.getRotatingColumn());
+				/**
+				 * 处理一条行记录转成多条列记录
+				 */
+				if (StringUtils.equalsIgnoreCase(
+						queryDefinition.getRotatingFlag(), "R2C")
+						&& StringUtils.isNotEmpty(queryDefinition
+								.getRotatingColumn()) && resultList.size() == 1) {
+
+					logger.debug("待转换的dataMap数据:" + singleDataMap);
+					logger.debug("AggregationKeys:"
+							+ tableDefinition.getAggregationKeys());
+					ColumnDefinition idField = columnMap.get(tableDefinition
+							.getAggregationKeys().toLowerCase());
+					ColumnDefinition field = columnMap.get(queryDefinition
+							.getRotatingColumn().toLowerCase());
+					logger.debug("idField:" + idField);
+					logger.debug("field:" + field);
+					if (idField != null && field != null) {
+						String javaType = field.getJavaType();
+						List<TableModel> list = new ArrayList<TableModel>();
+						Set<Entry<String, Object>> entrySet = singleDataMap
+								.entrySet();
+						for (Entry<String, Object> entry : entrySet) {
+							String key = entry.getKey();
+							Object value = entry.getValue();
+							if (key == null || value == null) {
+								continue;
+							}
+							TableModel tableModel = new TableModel();
+							tableModel.setTableName(queryDefinition
+									.getTargetTableName());
+							ColumnModel cell = new ColumnModel();
+							cell.setColumnName(queryDefinition
+									.getRotatingColumn());
+							cell.setType(javaType);
+
+							// logger.debug(cell.getColumnName()+"->"+javaType);
+
+							if ("String".equals(javaType)) {
+								cell.setStringValue(ParamUtils.getString(
+										singleDataMap, key));
+								cell.setValue(cell.getStringValue());
+							} else if ("Integer".equals(javaType)) {
+								cell.setIntValue(ParamUtils.getInt(
+										singleDataMap, key));
+								cell.setValue(cell.getIntValue());
+							} else if ("Long".equals(javaType)) {
+								cell.setLongValue(ParamUtils.getLong(
+										singleDataMap, key));
+								cell.setValue(cell.getLongValue());
+							} else if ("Double".equals(javaType)) {
+								cell.setDoubleValue(ParamUtils.getDouble(
+										singleDataMap, key));
+								cell.setValue(cell.getDoubleValue());
+							} else if ("Date".equals(javaType)) {
+								cell.setDateValue(ParamUtils.getDate(
+										singleDataMap, key));
+								cell.setValue(cell.getDateValue());
+							} else {
+								cell.setValue(value);
+							}
+
+							tableModel.addColumn(cell);
+
+							ColumnModel idColumn = new ColumnModel();
+							idColumn.setColumnName(tableDefinition
+									.getAggregationKeys());
+							idColumn.setJavaType(idField.getJavaType());
+							idColumn.setValue(key);
+							tableModel.setIdColumn(idColumn);
+							list.add(tableModel);
+						}
+						logger.debug("update datalist:" + list);
+						tableDataService.updateTableData(list);
+					}
+				} else {
+					tableDataService.saveAll(tableDefinition, null, resultList);
+				}
 			}
 
 			resultList.clear();

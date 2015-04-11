@@ -30,6 +30,7 @@ import com.glaf.core.context.ContextFactory;
 import com.glaf.core.jdbc.DBConnectionFactory;
 import com.glaf.core.util.ClassUtils;
 import com.glaf.core.util.JdbcUtils;
+import com.glaf.core.util.Tools;
 import com.glaf.report.data.DataManager;
 import com.glaf.report.data.MyBatisDataServiceImpl;
 import com.glaf.report.def.ReportDataSet;
@@ -66,11 +67,12 @@ public class ReportBean {
 						for (ReportRowSet rs : rowSetList) {
 							String dataMgr = rs.getDataMgr();
 							String query = rs.getQuery();
+							String parameterType = rs.getParameterType();
 							String mapping = rs.getMapping();
 							String rptMgrMapping = rs.getRptMgrMapping();
 							DataManager dataManager = null;
 							List<?> rows = null;
-							if ("mybatis3x".equals(dataMgr)) {
+							if ("mybatis3".equals(dataMgr)) {
 								dataManager = new MyBatisDataServiceImpl();
 							} else {
 								String dataMgrClassName = rs
@@ -99,8 +101,23 @@ public class ReportBean {
 											+ clazz.substring(1);
 									dataMap.put(clazz, dataManager);
 								}
-								rows = dataManager.getResultList(connection,
-										query, context);
+								if ("mybatis3".equals(dataMgr)) {
+									if (StringUtils.isNotEmpty(parameterType)) {
+										MyBatisDataServiceImpl mybatis = new MyBatisDataServiceImpl();
+										Object parameter = com.glaf.core.util.ReflectUtils
+												.instantiate(parameterType);
+										Tools.populate(parameter, context);
+										rows = mybatis.getResultList(
+												connection, query, parameter);
+									} else {
+										rows = dataManager.getResultList(
+												connection, query, context);
+									}
+								} else {
+									rows = dataManager.getResultList(
+											connection, query, context);
+								}
+
 								logger.debug(rows);
 								boolean singleResult = rs.isSingleResult();
 								if (rows != null && rows.size() > 0) {

@@ -18,10 +18,14 @@
 
 package com.glaf.core.domain.util;
 
+import java.util.List;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.glaf.core.domain.ColumnDefinition;
 import com.glaf.core.domain.TableDefinition;
 import com.glaf.core.util.DateUtils;
 import com.glaf.core.util.RequestUtils;
@@ -82,8 +86,15 @@ public class TableDefinitionJsonFactory {
 		if (jsonObject.containsKey("aggregationKeys")) {
 			model.setAggregationKeys(jsonObject.getString("aggregationKeys"));
 		}
+		if (jsonObject.containsKey("primaryKey")) {
+			model.setPrimaryKey(jsonObject.getString("primaryKey"));
+		}
 		if (jsonObject.containsKey("queryIds")) {
 			model.setQueryIds(jsonObject.getString("queryIds"));
+		}
+		if (jsonObject.containsKey("aggregationQueryIds")) {
+			model.setAggregationQueryIds(jsonObject
+					.getString("aggregationQueryIds"));
 		}
 		if (jsonObject.containsKey("temporaryFlag")) {
 			model.setTemporaryFlag(jsonObject.getString("temporaryFlag"));
@@ -126,6 +137,13 @@ public class TableDefinitionJsonFactory {
 		}
 		if (jsonObject.containsKey("revision")) {
 			model.setRevision(jsonObject.getInteger("revision"));
+		}
+
+		if (jsonObject.containsKey("columns")) {
+			JSONArray array = jsonObject.getJSONArray("columns");
+			List<ColumnDefinition> columns = ColumnDefinitionJsonFactory
+					.arrayToList(array);
+			model.setColumns(columns);
 		}
 
 		return model;
@@ -186,8 +204,15 @@ public class TableDefinitionJsonFactory {
 		if (model.getAggregationKeys() != null) {
 			jsonObject.put("aggregationKeys", model.getAggregationKeys());
 		}
+		if (model.getPrimaryKey() != null) {
+			jsonObject.put("primaryKey", model.getPrimaryKey());
+		}
 		if (model.getQueryIds() != null) {
 			jsonObject.put("queryIds", model.getQueryIds());
+		}
+		if (model.getAggregationQueryIds() != null) {
+			jsonObject.put("aggregationQueryIds",
+					model.getAggregationQueryIds());
 		}
 		if (model.getTemporaryFlag() != null) {
 			jsonObject.put("temporaryFlag", model.getTemporaryFlag());
@@ -224,6 +249,16 @@ public class TableDefinitionJsonFactory {
 			jsonObject.put("systemFlag", model.getSystemFlag());
 		}
 		jsonObject.put("revision", model.getRevision());
+
+		if (model.getColumns() != null && !model.getColumns().isEmpty()) {
+			JSONArray array = new JSONArray();
+			for (ColumnDefinition col : model.getColumns()) {
+				JSONObject json = ColumnDefinitionJsonFactory.toJsonObject(col);
+				array.add(json);
+			}
+			jsonObject.put("columns", array);
+		}
+
 		return jsonObject;
 	}
 
@@ -270,8 +305,15 @@ public class TableDefinitionJsonFactory {
 		if (model.getAggregationKeys() != null) {
 			jsonObject.put("aggregationKeys", model.getAggregationKeys());
 		}
+		if (model.getPrimaryKey() != null) {
+			jsonObject.put("primaryKey", model.getPrimaryKey());
+		}
 		if (model.getQueryIds() != null) {
 			jsonObject.put("queryIds", model.getQueryIds());
+		}
+		if (model.getAggregationQueryIds() != null) {
+			jsonObject.put("aggregationQueryIds",
+					model.getAggregationQueryIds());
 		}
 		if (model.getTemporaryFlag() != null) {
 			jsonObject.put("temporaryFlag", model.getTemporaryFlag());
@@ -308,6 +350,16 @@ public class TableDefinitionJsonFactory {
 			jsonObject.put("systemFlag", model.getSystemFlag());
 		}
 		jsonObject.put("revision", model.getRevision());
+
+		if (model.getColumns() != null && !model.getColumns().isEmpty()) {
+			ArrayNode array = new ObjectMapper().createArrayNode();
+			for (ColumnDefinition col : model.getColumns()) {
+				ObjectNode json = ColumnDefinitionJsonFactory.toObjectNode(col);
+				array.add(json);
+			}
+			jsonObject.set("columns", array);
+		}
+
 		return jsonObject;
 	}
 

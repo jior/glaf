@@ -64,7 +64,6 @@ public class MxTableDefinitionServiceImpl implements ITableDefinitionService {
 	}
 
 	public int count(TableDefinitionQuery query) {
-		query.ensureInitialized();
 		if (StringUtils.isEmpty(query.getType())) {
 			throw new RuntimeException(" type is null ");
 		}
@@ -131,6 +130,21 @@ public class MxTableDefinitionServiceImpl implements ITableDefinitionService {
 				}
 			}
 
+			if (StringUtils
+					.isNotEmpty(tableDefinition.getAggregationQueryIds())) {
+				QueryDefinitionQuery query = new QueryDefinitionQuery();
+				List<String> queryIds = StringTools.split(tableDefinition
+						.getAggregationQueryIds());
+				query.queryIds(queryIds);
+				List<QueryDefinition> list = queryDefinitionMapper
+						.getQueryDefinitions(query);
+				if (list != null && !list.isEmpty()) {
+					for (QueryDefinition q : list) {
+						tableDefinition.addAggregationQuery(q);
+					}
+				}
+			}
+
 			List<ColumnDefinition> columns = columnDefinitionMapper
 					.getColumnDefinitionsByTableName(tableName);
 			if (columns != null && !columns.isEmpty()) {
@@ -179,7 +193,6 @@ public class MxTableDefinitionServiceImpl implements ITableDefinitionService {
 	}
 
 	public List<TableDefinition> list(TableDefinitionQuery query) {
-		query.ensureInitialized();
 		if (StringUtils.isEmpty(query.getType())) {
 			throw new RuntimeException(" type is null ");
 		}

@@ -45,7 +45,10 @@ import com.glaf.chart.service.IChartService;
 import com.glaf.core.base.BaseTree;
 import com.glaf.core.base.TableModel;
 import com.glaf.core.base.TreeModel;
-
+import com.glaf.core.config.DatabaseConnectionConfig;
+import com.glaf.core.config.Environment;
+import com.glaf.core.domain.Database;
+import com.glaf.core.security.LoginContext;
 import com.glaf.core.service.ITableDataService;
 import com.glaf.core.service.ITablePageService;
 import com.glaf.core.service.ITreeModelService;
@@ -80,51 +83,74 @@ public class ChartResource {
 	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
 	public byte[] checkSQL(@Context HttpServletRequest request)
 			throws IOException {
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
 		JSONObject result = new JSONObject();
 		String querySQL = request.getParameter("querySQL");
 		if (StringUtils.isNotEmpty(querySQL)) {
 			if (!DBUtils.isLegalQuerySql(querySQL)) {
 				return ResponseUtils.responseJsonResult(false, "SQL查询不合法！");
 			}
+
+			if (!DBUtils.isAllowedSql(querySQL)) {
+				return ResponseUtils.responseJsonResult(false, "SQL查询不合法！");
+			}
+
 			Map<String, Object> paramMap = new java.util.HashMap<String, Object>();
 
 			querySQL = QueryUtils.replaceSQLVars(querySQL);
 			querySQL = QueryUtils.replaceSQLParas(querySQL, paramMap);
 			TableModel rowMode = new TableModel();
 			rowMode.setSql(querySQL);
-			List<Map<String, Object>> rows = tablePageService.getListData(
-					querySQL, paramMap);
-			if (rows != null && !rows.isEmpty()) {
-				logger.debug("chart rows size:" + rows.size());
-				JSONArray arrayJSON = new JSONArray();
 
-				for (Map<String, Object> dataMap : rows) {
-					JSONObject row = new JSONObject();
-					Set<Entry<String, Object>> entrySet = dataMap.entrySet();
-					for (Entry<String, Object> entry : entrySet) {
-						String name = entry.getKey();
-						Object value = entry.getValue();
-						if (value != null) {
-							if (value instanceof Date) {
-								Date d = (Date) value;
-								row.put(name, DateUtils.getDate(d));
-							} else if (value instanceof Boolean) {
-								row.put(name, (Boolean) value);
-							} else if (value instanceof Integer) {
-								row.put(name, (Integer) value);
-							} else if (value instanceof Long) {
-								row.put(name, (Long) value);
-							} else if (value instanceof Double) {
-								row.put(name, (Double) value);
-							} else {
-								row.put(name, value.toString());
+			DatabaseConnectionConfig config = new DatabaseConnectionConfig();
+			long databaseId = RequestUtils.getLong(request, "databaseId");
+			Database currentDB = config.getDatabase(loginContext, databaseId);
+			String systemName = Environment.getCurrentSystemName();
+			try {
+				if (currentDB != null) {
+					Environment.setCurrentSystemName(currentDB.getName());
+				}
+				List<Map<String, Object>> rows = tablePageService.getListData(
+						querySQL, paramMap);
+				if (rows != null && !rows.isEmpty()) {
+					logger.debug("chart rows size:" + rows.size());
+					JSONArray arrayJSON = new JSONArray();
+
+					for (Map<String, Object> dataMap : rows) {
+						JSONObject row = new JSONObject();
+						Set<Entry<String, Object>> entrySet = dataMap
+								.entrySet();
+						for (Entry<String, Object> entry : entrySet) {
+							String name = entry.getKey();
+							Object value = entry.getValue();
+							if (value != null) {
+								if (value instanceof Date) {
+									Date d = (Date) value;
+									row.put(name, DateUtils.getDate(d));
+								} else if (value instanceof Boolean) {
+									row.put(name, (Boolean) value);
+								} else if (value instanceof Integer) {
+									row.put(name, (Integer) value);
+								} else if (value instanceof Long) {
+									row.put(name, (Long) value);
+								} else if (value instanceof Double) {
+									row.put(name, (Double) value);
+								} else {
+									row.put(name, value.toString());
+								}
 							}
 						}
+						arrayJSON.add(row);
 					}
-					arrayJSON.add(row);
+					result.put("rows", arrayJSON);
+					result.put("total", rows.size());
 				}
-				result.put("rows", arrayJSON);
-				result.put("total", rows.size());
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				logger.error(ex);
+			} finally {
+				com.glaf.core.config.Environment
+						.setCurrentSystemName(systemName);
 			}
 		} else {
 			return ResponseUtils.responseJsonResult(false, "SQL查询不合法！");
@@ -267,13 +293,53 @@ public class ChartResource {
 		if (StringUtils.isEmpty(chartId)) {
 			chartId = request.getParameter("id");
 		}
+		String name = request.getParameter("chartName");
+		String mapping = request.getParameter("mapping");
 		Chart chart = null;
 		if (StringUtils.isNotEmpty(chartId)) {
 			chart = chartService.getChart(chartId);
+			if (chart != null) {
+				if (StringUtils.isNotEmpty(name)) {
+					Chart model = chartService.getChartByName(name);
+					if (model != null
+							&& !StringUtils
+									.equals(chart.getId(), model.getId())) {
+						return ResponseUtils.responseJsonResult(false,
+								"图表名称已经存在，请换个名称！");
+					}
+				}
+
+				if (StringUtils.isNotEmpty(mapping)) {
+					Chart model = chartService.getChartByMapping(mapping);
+					if (model != null
+							&& !StringUtils
+									.equals(chart.getId(), model.getId())) {
+						return ResponseUtils.responseJsonResult(false,
+								"图表别名已经存在，请换个别名！");
+					}
+				}
+			}
 		}
 
 		if (chart == null) {
 			chart = new Chart();
+
+			if (StringUtils.isNotEmpty(name)) {
+				Chart model = chartService.getChartByName(name);
+				if (model != null) {
+					return ResponseUtils.responseJsonResult(false,
+							"图表名称已经存在，请换个名称！");
+				}
+			}
+
+			if (StringUtils.isNotEmpty(mapping)) {
+				Chart model = chartService.getChartByMapping(mapping);
+				if (model != null) {
+					return ResponseUtils.responseJsonResult(false,
+							"图表别名已经存在，请换个别名！");
+				}
+			}
+
 		}
 
 		Map<String, Object> params = RequestUtils.getParameterMap(request);

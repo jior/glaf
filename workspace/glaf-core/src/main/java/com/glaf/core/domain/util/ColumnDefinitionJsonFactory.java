@@ -200,6 +200,12 @@ public class ColumnDefinitionJsonFactory {
 		if (jsonObject.containsKey("renderer")) {
 			model.setRenderer(jsonObject.getString("renderer"));
 		}
+		if (jsonObject.containsKey("initValue")) {
+			model.setInitValue(jsonObject.getString("initValue"));
+		}
+		if (jsonObject.containsKey("placeholder")) {
+			model.setPlaceholder(jsonObject.getString("placeholder"));
+		}
 
 		return model;
 	}
@@ -284,6 +290,17 @@ public class ColumnDefinitionJsonFactory {
 		jsonObject.put("ordinal", model.getOrdinal());
 		if (model.getJavaType() != null) {
 			jsonObject.put("javaType", model.getJavaType());
+			if ("Integer".equals(model.getJavaType())) {
+				jsonObject.put("dataTypeName", "整数");
+			} else if ("Long".equals(model.getJavaType())) {
+				jsonObject.put("dataTypeName", "长整数");
+			} else if ("Double".equals(model.getJavaType())) {
+				jsonObject.put("dataTypeName", "数值");
+			} else if ("Date".equals(model.getJavaType())) {
+				jsonObject.put("dataTypeName", "日期时间");
+			} else {
+				jsonObject.put("dataTypeName", "字符串");
+			}
 		}
 		if (model.getInputType() != null) {
 			jsonObject.put("inputType", model.getInputType());
@@ -308,6 +325,9 @@ public class ColumnDefinitionJsonFactory {
 		}
 		if (model.getDefaultValue() != null) {
 			jsonObject.put("defaultValue", model.getDefaultValue());
+		}
+		if (model.getInitValue() != null) {
+			jsonObject.put("initValue", model.getInitValue());
 		}
 		if (model.getDiscriminator() != null) {
 			jsonObject.put("discriminator", model.getDiscriminator());
@@ -366,6 +386,9 @@ public class ColumnDefinitionJsonFactory {
 		}
 		if (model.getRenderer() != null) {
 			jsonObject.put("renderer", model.getRenderer());
+		}
+		if (model.getPlaceholder() != null) {
+			jsonObject.put("placeholder", model.getPlaceholder());
 		}
 		return jsonObject;
 	}
@@ -439,6 +462,17 @@ public class ColumnDefinitionJsonFactory {
 		jsonObject.put("ordinal", model.getOrdinal());
 		if (model.getJavaType() != null) {
 			jsonObject.put("javaType", model.getJavaType());
+			if ("Integer".equals(model.getJavaType())) {
+				jsonObject.put("dataTypeName", "整数");
+			} else if ("Long".equals(model.getJavaType())) {
+				jsonObject.put("dataTypeName", "长整数");
+			} else if ("Double".equals(model.getJavaType())) {
+				jsonObject.put("dataTypeName", "数值");
+			} else if ("Date".equals(model.getJavaType())) {
+				jsonObject.put("dataTypeName", "日期时间");
+			} else {
+				jsonObject.put("dataTypeName", "字符串");
+			}
 		}
 		if (model.getInputType() != null) {
 			jsonObject.put("inputType", model.getInputType());
@@ -460,6 +494,9 @@ public class ColumnDefinitionJsonFactory {
 		}
 		if (model.getRegex() != null) {
 			jsonObject.put("regex", model.getRegex());
+		}
+		if (model.getInitValue() != null) {
+			jsonObject.put("initValue", model.getInitValue());
 		}
 		if (model.getDefaultValue() != null) {
 			jsonObject.put("defaultValue", model.getDefaultValue());
@@ -521,6 +558,9 @@ public class ColumnDefinitionJsonFactory {
 		}
 		if (model.getRenderer() != null) {
 			jsonObject.put("renderer", model.getRenderer());
+		}
+		if (model.getPlaceholder() != null) {
+			jsonObject.put("placeholder", model.getPlaceholder());
 		}
 		return jsonObject;
 	}

@@ -76,7 +76,9 @@ public class MxQueryResource {
 
 	@POST
 	@Path("/delete")
-	public void delete(@Context HttpServletRequest request,
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] delete(@Context HttpServletRequest request,
 			@Context UriInfo uriInfo) {
 		String queryIds = request.getParameter("queryIds");
 		if (StringUtils.isNotEmpty(queryIds)) {
@@ -85,85 +87,24 @@ public class MxQueryResource {
 				for (String queryId : ids) {
 					queryDefinitionService.deleteById(queryId);
 				}
+				return ResponseUtils.responseJsonResult(true);
 			}
 		}
+		return ResponseUtils.responseJsonResult(false);
 	}
 
 	@POST
 	@Path("/delete/{queryId}")
-	public void delete(@PathParam("queryId") String queryId,
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] delete(@PathParam("queryId") String queryId,
 			@Context UriInfo uriInfo) {
 		if (queryDefinitionService.hasChildren(queryId)) {
 			throw new WebApplicationException(
 					Response.Status.INTERNAL_SERVER_ERROR);
 		}
 		queryDefinitionService.deleteById(queryId);
-	}
-
-	@GET
-	@POST
-	@Path("/treeJson")
-	@ResponseBody
-	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
-	public byte[] treeJson(@Context HttpServletRequest request)
-			throws IOException {
-		JSONArray array = new JSONArray();
-		Long nodeId = RequestUtils.getLong(request, "nodeId");
-		String nodeCode = request.getParameter("nodeCode");
-		String selected = request.getParameter("selected");
-
-		logger.debug(RequestUtils.getParameterMap(request));
-		List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
-		List<String> chooseList = new java.util.ArrayList<String>();
-		if (StringUtils.isNotEmpty(selected)) {
-			chooseList = StringTools.split(selected);
-		}
-
-		TreeModel treeNode = null;
-
-		if (nodeId != null && nodeId > 0) {
-			treeNode = treeModelService.getTreeModel(nodeId);
-		} else if (StringUtils.isNotEmpty(nodeCode)) {
-			treeNode = treeModelService.getTreeModelByCode(nodeCode);
-		}
-		if (treeNode != null) {
-			QueryDefinitionQuery query = new QueryDefinitionQuery();
-			List<TreeModel> subTrees = treeModelService
-					.getSubTreeModels(treeNode.getId());
-			if (subTrees != null && !subTrees.isEmpty()) {
-				for (TreeModel tree : subTrees) {
-					tree.getDataMap().put("nocheck", "true");
-					tree.getDataMap().put("iconSkin", "tree_folder");
-					tree.getDataMap().put("isParent", "true");
-					tree.setIconCls("folder");
-					tree.setLevel(0);
-					treeModels.add(tree);
-					query.nodeId(tree.getId());
-					List<QueryDefinition> queries = queryDefinitionService
-							.list(query);
-					for (QueryDefinition q : queries) {
-						if (StringUtils.isNumeric(q.getId())) {
-							TreeModel t = new BaseTree();
-							t.setId(Long.parseLong(q.getId()));
-							t.setParentId(tree.getId());
-							t.setName(q.getTitle());
-							t.setCode(q.getId());
-							t.setTreeId(q.getId());
-							t.setIconCls("leaf");
-							t.getDataMap().put("iconSkin", "tree_leaf");
-							if (chooseList.contains(q.getId())) {
-								t.setChecked(true);
-							}
-							treeModels.add(t);
-						}
-					}
-				}
-			}
-			TreeHelper treeHelper = new TreeHelper();
-			array = treeHelper.getTreeJSONArray(treeModels);
-		}
-
-		return array.toJSONString().getBytes("UTF-8");
+		return ResponseUtils.responseJsonResult(true);
 	}
 
 	@GET
@@ -230,9 +171,7 @@ public class MxQueryResource {
 				return ResponseUtils.responseJsonResult(false,
 						"SQL查询非法，包含不合法指令！");
 			}
-			if (StringUtils.containsIgnoreCase(query.getSql(), "UserInfo")
-					|| StringUtils
-							.containsIgnoreCase(query.getSql(), "MX_USER")) {
+			if (!DBUtils.isAllowedSql(query.getSql())) {
 				return ResponseUtils.responseJsonResult(false,
 						"SQL查询非法，不允许访问用户信息表！");
 			}
@@ -304,6 +243,72 @@ public class MxQueryResource {
 	@javax.annotation.Resource
 	public void setTreeModelService(ITreeModelService treeModelService) {
 		this.treeModelService = treeModelService;
+	}
+
+	@GET
+	@POST
+	@Path("/treeJson")
+	@ResponseBody
+	@Produces({ MediaType.APPLICATION_OCTET_STREAM })
+	public byte[] treeJson(@Context HttpServletRequest request)
+			throws IOException {
+		JSONArray array = new JSONArray();
+		Long nodeId = RequestUtils.getLong(request, "nodeId");
+		String nodeCode = request.getParameter("nodeCode");
+		String selected = request.getParameter("selected");
+
+		logger.debug(RequestUtils.getParameterMap(request));
+		List<TreeModel> treeModels = new java.util.ArrayList<TreeModel>();
+		List<String> chooseList = new java.util.ArrayList<String>();
+		if (StringUtils.isNotEmpty(selected)) {
+			chooseList = StringTools.split(selected);
+		}
+
+		TreeModel treeNode = null;
+
+		if (nodeId != null && nodeId > 0) {
+			treeNode = treeModelService.getTreeModel(nodeId);
+		} else if (StringUtils.isNotEmpty(nodeCode)) {
+			treeNode = treeModelService.getTreeModelByCode(nodeCode);
+		}
+		if (treeNode != null) {
+			QueryDefinitionQuery query = new QueryDefinitionQuery();
+			List<TreeModel> subTrees = treeModelService
+					.getSubTreeModels(treeNode.getId());
+			if (subTrees != null && !subTrees.isEmpty()) {
+				for (TreeModel tree : subTrees) {
+					tree.getDataMap().put("nocheck", "true");
+					tree.getDataMap().put("iconSkin", "tree_folder");
+					tree.getDataMap().put("isParent", "true");
+					tree.setIconCls("folder");
+					tree.setLevel(0);
+					treeModels.add(tree);
+					query.nodeId(tree.getId());
+					List<QueryDefinition> queries = queryDefinitionService
+							.list(query);
+					for (QueryDefinition q : queries) {
+						if (StringUtils.isNumeric(q.getId())) {
+							TreeModel t = new BaseTree();
+							t.setId(Long.parseLong(q.getId()));
+							t.setParentId(tree.getId());
+							t.setName(q.getTitle());
+							t.setCode(q.getId());
+							t.setTreeId(q.getId());
+							t.setIconCls("leaf");
+							t.getDataMap().put("iconSkin", "tree_leaf");
+							if (chooseList.contains(q.getId())) {
+								t.setChecked(true);
+							}
+							treeModels.add(t);
+						}
+					}
+				}
+			}
+			TreeHelper treeHelper = new TreeHelper();
+			array = treeHelper.getTreeJSONArray(treeModels);
+		}
+
+		return array.toJSONString().getBytes("UTF-8");
 	}
 
 	@GET

@@ -22,6 +22,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.text.DecimalFormat;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
@@ -31,6 +32,7 @@ import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.TextAnchor;
@@ -103,21 +105,36 @@ public class StackedBarChartGen implements ChartGen {
 	public JFreeChart createChart(Chart chartModel) {
 		ChartUtils.setChartTheme(chartModel);
 		CategoryDataset categoryDataset = this.createDataset(chartModel);
-		JFreeChart localJFreeChart = ChartFactory.createStackedBarChart(
-				chartModel.getChartTitle(), chartModel.getCoordinateX(),
-				chartModel.getCoordinateY(), categoryDataset,
-				PlotOrientation.VERTICAL, true, true, false);
+		JFreeChart localJFreeChart = null;
+		if (StringUtils.equals(chartModel.getEnable3DFlag(), "1")) {
+			localJFreeChart = ChartFactory.createStackedBarChart3D(
+					chartModel.getChartTitle(), chartModel.getCoordinateX(),
+					chartModel.getCoordinateY(), categoryDataset,
+					PlotOrientation.VERTICAL, true, true, false);
+		} else {
+			localJFreeChart = ChartFactory.createStackedBarChart(
+					chartModel.getChartTitle(), chartModel.getCoordinateX(),
+					chartModel.getCoordinateY(), categoryDataset,
+					PlotOrientation.VERTICAL, true, true, false);
+		}
 
 		DecimalFormat localDecimalFormat1 = new DecimalFormat("####");
 		localDecimalFormat1.setNegativePrefix("");
 		localDecimalFormat1.setNegativeSuffix("");
 		CategoryPlot localCategoryPlot = (CategoryPlot) localJFreeChart
 				.getPlot();
+
 		NumberAxis localNumberAxis = (NumberAxis) localCategoryPlot
 				.getRangeAxis();
 		localNumberAxis.setNumberFormatOverride(localDecimalFormat1);
 
-		ExtendedStackedBarRenderer localExtendedStackedBarRenderer = new ExtendedStackedBarRenderer();
+		BarRenderer localExtendedStackedBarRenderer = null;
+		if (StringUtils.equals(chartModel.getEnable3DFlag(), "1")) {
+			localExtendedStackedBarRenderer = (BarRenderer) localCategoryPlot
+					.getRenderer();
+		} else {
+			localExtendedStackedBarRenderer = new ExtendedStackedBarRenderer();
+		}
 		localExtendedStackedBarRenderer.setBaseItemLabelsVisible(true);
 		localExtendedStackedBarRenderer
 				.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
@@ -202,7 +219,8 @@ public class StackedBarChartGen implements ChartGen {
 		DefaultCategoryDataset localDefaultCategoryDataset = new DefaultCategoryDataset();
 		for (ColumnModel cell : chartModel.columns) {
 			if (cell.getSeries() != null && cell.getCategory() != null) {
-				if (cell.getDoubleValue() != 0D)
+				if (cell.getDoubleValue() != null
+						&& cell.getDoubleValue() != 0D)
 					localDefaultCategoryDataset.addValue(cell.getDoubleValue(),
 							cell.getSeries(), cell.getCategory());
 				else

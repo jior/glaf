@@ -97,19 +97,22 @@ public class ReportContainer {
 			File directory = new File(configPath);
 			if (directory.isDirectory()) {
 				String[] filelist = directory.list();
-				for (int i = 0; i < filelist.length; i++) {
-					String filename = configPath + sp + filelist[i];
-					File file = new File(filename);
-					if (file.isFile() && file.getName().endsWith(".report.xml")) {
-						logger.debug(file.getAbsolutePath());
-						inputStream = new FileInputStream(file);
-						List<ReportDefinition> reports = reader
-								.read(inputStream);
-						for (ReportDefinition rdf : reports) {
-							reportMap.put(rdf.getReportId(), rdf);
+				if (filelist != null) {
+					for (int i = 0, len = filelist.length; i < len; i++) {
+						String filename = configPath + sp + filelist[i];
+						File file = new File(filename);
+						if (file.isFile()
+								&& file.getName().endsWith(".report.xml")) {
+							logger.debug(file.getAbsolutePath());
+							inputStream = new FileInputStream(file);
+							List<ReportDefinition> reports = reader
+									.read(inputStream);
+							for (ReportDefinition rdf : reports) {
+								reportMap.put(rdf.getReportId(), rdf);
+							}
+							inputStream.close();
+							inputStream = null;
 						}
-						inputStream.close();
-						inputStream = null;
 					}
 				}
 			}

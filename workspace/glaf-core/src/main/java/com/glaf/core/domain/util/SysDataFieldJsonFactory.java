@@ -147,6 +147,9 @@ public class SysDataFieldJsonFactory {
 		if (jsonObject.containsKey("updateBy")) {
 			model.setUpdateBy(jsonObject.getString("updateBy"));
 		}
+		if (jsonObject.containsKey("placeholder")) {
+			model.setPlaceholder(jsonObject.getString("placeholder"));
+		}
 
 		return model;
 	}
@@ -294,6 +297,9 @@ public class SysDataFieldJsonFactory {
 		if (model.getUpdateBy() != null) {
 			jsonObject.put("updateBy", model.getUpdateBy());
 		}
+		if (model.getPlaceholder() != null) {
+			jsonObject.put("placeholder", model.getPlaceholder());
+		}
 		return jsonObject;
 	}
 
@@ -430,6 +436,9 @@ public class SysDataFieldJsonFactory {
 		}
 		if (model.getUpdateBy() != null) {
 			jsonObject.put("updateBy", model.getUpdateBy());
+		}
+		if (model.getPlaceholder() != null) {
+			jsonObject.put("placeholder", model.getPlaceholder());
 		}
 		return jsonObject;
 	}

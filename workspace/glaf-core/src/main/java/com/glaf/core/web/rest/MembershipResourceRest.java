@@ -50,7 +50,7 @@ import com.glaf.core.util.ResponseUtils;
 import com.glaf.core.util.StringTools;
 import com.glaf.core.util.Tools;
 
-@Controller
+@Controller("/rs/membership")
 @Path("/rs/membership")
 public class MembershipResourceRest {
 	protected static final Log logger = LogFactory

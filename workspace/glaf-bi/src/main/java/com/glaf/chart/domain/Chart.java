@@ -70,12 +70,6 @@ public class Chart implements Serializable, JSONable {
 	protected String chartName;
 
 	/**
-	 * 图表主题
-	 */
-	@Column(name = "CHARTTITLE_")
-	protected String chartTitle;
-
-	/**
 	 * 图表类型
 	 */
 	@Column(name = "CHARTTYPE_")
@@ -94,6 +88,18 @@ public class Chart implements Serializable, JSONable {
 	protected Integer chartFontSize;
 
 	/**
+	 * 图表主题
+	 */
+	@Column(name = "CHARTTITLE_")
+	protected String chartTitle;
+
+	/**
+	 * 图表次主题
+	 */
+	@Column(name = "CHARTSUBTITLE_")
+	protected String chartSubTitle;
+
+	/**
 	 * 图表标题栏字体
 	 */
 	@Column(name = "CHARTTITLEFONT_")
@@ -104,6 +110,12 @@ public class Chart implements Serializable, JSONable {
 	 */
 	@Column(name = "CHARTTITLEFONTSIZE_")
 	protected Integer chartTitleFontSize;
+
+	/**
+	 * 图表次标题栏字体大小
+	 */
+	@Column(name = "CHARTSUBTITLEFONTSIZE_")
+	protected Integer chartSubTitleFontSize;
 
 	/**
 	 * 图表宽带
@@ -160,10 +172,22 @@ public class Chart implements Serializable, JSONable {
 	protected String imageType;
 
 	/**
+	 * 是否启用3D效果
+	 */
+	@Column(name = "ENABLE3DFLAG_", length = 1)
+	protected String enable3DFlag;
+
+	/**
 	 * 是否启用
 	 */
 	@Column(name = "ENABLEFLAG_", length = 1)
 	protected String enableFlag;
+
+	@Column(name = "DATABASEID_")
+	protected Long databaseId;
+
+	@Column(name = "MAXROWCOUNT_")
+	protected Integer maxRowCount;
 
 	/**
 	 * 创建日期
@@ -217,6 +241,14 @@ public class Chart implements Serializable, JSONable {
 		return this.chartName;
 	}
 
+	public String getChartSubTitle() {
+		return chartSubTitle;
+	}
+
+	public Integer getChartSubTitleFontSize() {
+		return chartSubTitleFontSize;
+	}
+
 	public String getChartTitle() {
 		return this.chartTitle;
 	}
@@ -260,6 +292,14 @@ public class Chart implements Serializable, JSONable {
 		return this.createDate;
 	}
 
+	public Long getDatabaseId() {
+		return databaseId;
+	}
+
+	public String getEnable3DFlag() {
+		return enable3DFlag;
+	}
+
 	public String getEnableFlag() {
 		return enableFlag;
 	}
@@ -278,6 +318,10 @@ public class Chart implements Serializable, JSONable {
 
 	public String getMapping() {
 		return mapping;
+	}
+
+	public Integer getMaxRowCount() {
+		return maxRowCount;
 	}
 
 	public Long getNodeId() {
@@ -332,6 +376,14 @@ public class Chart implements Serializable, JSONable {
 		this.chartName = chartName;
 	}
 
+	public void setChartSubTitle(String chartSubTitle) {
+		this.chartSubTitle = chartSubTitle;
+	}
+
+	public void setChartSubTitleFontSize(Integer chartSubTitleFontSize) {
+		this.chartSubTitleFontSize = chartSubTitleFontSize;
+	}
+
 	public void setChartTitle(String chartTitle) {
 		this.chartTitle = chartTitle;
 	}
@@ -372,6 +424,14 @@ public class Chart implements Serializable, JSONable {
 		this.createDate = createDate;
 	}
 
+	public void setDatabaseId(Long databaseId) {
+		this.databaseId = databaseId;
+	}
+
+	public void setEnable3DFlag(String enable3dFlag) {
+		enable3DFlag = enable3dFlag;
+	}
+
 	public void setEnableFlag(String enableFlag) {
 		this.enableFlag = enableFlag;
 	}
@@ -390,6 +450,10 @@ public class Chart implements Serializable, JSONable {
 
 	public void setMapping(String mapping) {
 		this.mapping = mapping;
+	}
+
+	public void setMaxRowCount(Integer maxRowCount) {
+		this.maxRowCount = maxRowCount;
 	}
 
 	public void setNodeId(Long nodeId) {

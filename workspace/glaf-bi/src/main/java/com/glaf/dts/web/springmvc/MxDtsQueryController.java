@@ -19,12 +19,15 @@
 package com.glaf.dts.web.springmvc;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,11 +36,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.glaf.core.config.DatabaseConnectionConfig;
 import com.glaf.core.config.ViewProperties;
+import com.glaf.core.domain.ColumnDefinition;
+import com.glaf.core.domain.Database;
 import com.glaf.core.domain.QueryDefinition;
+import com.glaf.core.query.DatabaseQuery;
 import com.glaf.core.query.QueryDefinitionQuery;
 import com.glaf.core.security.LoginContext;
+import com.glaf.core.service.IDatabaseService;
 import com.glaf.core.service.IQueryDefinitionService;
+import com.glaf.core.service.ITableDefinitionService;
 import com.glaf.core.util.LogUtils;
 import com.glaf.core.util.Paging;
 import com.glaf.core.util.ParamUtils;
@@ -47,20 +56,14 @@ import com.glaf.core.util.Tools;
 @Controller("/dts/query")
 @RequestMapping("/dts/query")
 public class MxDtsQueryController {
+	protected static final Log logger = LogFactory
+			.getLog(MxDtsQueryController.class);
+
+	protected IDatabaseService databaseService;
 
 	protected IQueryDefinitionService queryDefinitionService;
 
-	@RequestMapping("/queryTree")
-	public ModelAndView queryTree(HttpServletRequest request, ModelMap modelMap) {
-		RequestUtils.setRequestParameterToAttribute(request);
-
-		String x_view = ViewProperties.getString("dts.queryTree");
-		if (StringUtils.isNotEmpty(x_view)) {
-			return new ModelAndView(x_view, modelMap);
-		}
-
-		return new ModelAndView("/bi/dts/query/query_tree", modelMap);
-	}
+	protected ITableDefinitionService tableDefinitionService;
 
 	@RequestMapping("/chooseQuery")
 	public ModelAndView chooseQuery(HttpServletRequest request,
@@ -104,9 +107,80 @@ public class MxDtsQueryController {
 
 	@RequestMapping("/edit")
 	public ModelAndView edit(HttpServletRequest request, ModelMap modelMap) {
-		String jx_view = request.getParameter("jx_view");
-
+		LoginContext loginContext = RequestUtils.getLoginContext(request);
+		Map<String, Object> params = RequestUtils.getParameterMap(request);
 		RequestUtils.setRequestParameterToAttribute(request);
+		logger.debug(params);
+
+		DatabaseQuery query = new DatabaseQuery();
+		query.active("1");
+		List<Database> activeDatabases = new ArrayList<Database>();
+
+		List<Database> databases = null;
+		if (loginContext.isSystemAdministrator()) {
+			databases = databaseService.list(query);
+		} else {
+			databases = databaseService.getDatabases(loginContext.getActorId());
+		}
+
+		if (databases != null && !databases.isEmpty()) {
+			for (Database database : databases) {
+				if ("1".equals(database.getActive())) {
+					DatabaseConnectionConfig config = new DatabaseConnectionConfig();
+					if (config.checkConfig(database)) {
+						activeDatabases.add(database);
+						logger.debug(database.getName()
+								+ " check connection ok.");
+					}
+				}
+			}
+		}
+
+		if (!activeDatabases.isEmpty()) {
+			request.setAttribute("databases", databases);
+		}
+
+		String queryId = request.getParameter("queryId");
+
+		QueryDefinition queryDefinition = null;
+		if (queryId != null) {
+			queryDefinition = queryDefinitionService
+					.getQueryDefinition(queryId);
+		}
+
+		if (queryDefinition != null) {
+			request.setAttribute("nodeId", queryDefinition.getNodeId());
+			if (StringUtils.isNotEmpty(queryDefinition.getTargetTableName())) {
+				List<ColumnDefinition> columns = tableDefinitionService
+						.getColumnDefinitionsByTableName(queryDefinition
+								.getTargetTableName());
+				request.setAttribute("columns", columns);
+			}
+		}
+
+		if (queryDefinition == null) {
+			queryDefinition = new QueryDefinition();
+		}
+
+		Tools.populate(queryDefinition, params);
+
+		request.setAttribute("query", queryDefinition);
+
+		QueryDefinitionQuery q = new QueryDefinitionQuery();
+		List<QueryDefinition> queries = queryDefinitionService.list(q);
+		request.setAttribute("queries", queries);
+
+		String actionType = request.getParameter("actionType");
+		if ("query".equals(actionType)) {
+			Long databaseId = RequestUtils.getLong(request, "databaseId");
+			Database db = databaseService.getDatabaseById(databaseId);
+			if (db != null) {
+				request.setAttribute("dbName", db.getName());
+				request.setAttribute("database", db);
+			}
+		}
+
+		String jx_view = request.getParameter("jx_view");
 
 		if (StringUtils.isNotEmpty(jx_view)) {
 			return new ModelAndView(jx_view, modelMap);
@@ -226,10 +300,33 @@ public class MxDtsQueryController {
 		return new ModelAndView("/bi/dts/query/list", modelMap);
 	}
 
+	@RequestMapping("/queryTree")
+	public ModelAndView queryTree(HttpServletRequest request, ModelMap modelMap) {
+		RequestUtils.setRequestParameterToAttribute(request);
+
+		String x_view = ViewProperties.getString("dts.queryTree");
+		if (StringUtils.isNotEmpty(x_view)) {
+			return new ModelAndView(x_view, modelMap);
+		}
+
+		return new ModelAndView("/bi/dts/query/query_tree", modelMap);
+	}
+
+	@javax.annotation.Resource
+	public void setDatabaseService(IDatabaseService databaseService) {
+		this.databaseService = databaseService;
+	}
+
 	@javax.annotation.Resource
 	public void setQueryDefinitionService(
 			IQueryDefinitionService queryDefinitionService) {
 		this.queryDefinitionService = queryDefinitionService;
+	}
+
+	@javax.annotation.Resource
+	public void setTableDefinitionService(
+			ITableDefinitionService tableDefinitionService) {
+		this.tableDefinitionService = tableDefinitionService;
 	}
 
 	@RequestMapping("/sqleditor")

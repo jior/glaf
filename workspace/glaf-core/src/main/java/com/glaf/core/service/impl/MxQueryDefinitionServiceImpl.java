@@ -58,7 +58,6 @@ public class MxQueryDefinitionServiceImpl implements IQueryDefinitionService {
 	}
 
 	public int count(QueryDefinitionQuery query) {
-		query.ensureInitialized();
 		return queryDefinitionMapper.getQueryDefinitionCount(query);
 	}
 
@@ -70,6 +69,20 @@ public class MxQueryDefinitionServiceImpl implements IQueryDefinitionService {
 			}
 			queryDefinitionMapper.deleteQueryDefinitionById(id);
 		}
+	}
+	
+	public ColumnDefinition getColumnDefinitionById(String id){
+		return columnDefinitionMapper.getColumnDefinitionById(id);
+	}
+
+	/**
+	 * 获取某个对象的列信息
+	 * 
+	 * @param targetId
+	 * @return
+	 */
+	public List<ColumnDefinition> getColumnDefinitions(String targetId) {
+		return columnDefinitionMapper.getColumnDefinitionsByTargetId(targetId);
 	}
 
 	public QueryDefinition getQueryDefinition(String queryId) {

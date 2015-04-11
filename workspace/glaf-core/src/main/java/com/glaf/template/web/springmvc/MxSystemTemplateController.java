@@ -362,7 +362,7 @@ public class MxSystemTemplateController {
 				ColumnModel idColumn = new ColumnModel();
 				idColumn.setColumnName("ID");
 				idColumn.setJavaType("Long");
-				idColumn.setValue(19L);
+				idColumn.setValue(10000001L);
 				tableModel.setIdColumn(idColumn);
 				tableModel.addColumn(idColumn);
 
@@ -390,7 +390,10 @@ public class MxSystemTemplateController {
 				column3.setValue(19);
 				tableModel.addColumn(column3);
 
-				tableDataService.insertTableData(tableModel);
+				try {
+					tableDataService.insertTableData(tableModel);
+				} catch (Exception ex) {
+				}
 
 				treeModel = IdentityFactory.getTreeModelByCode("template");
 				modelMap.put("treeModel", treeModel);

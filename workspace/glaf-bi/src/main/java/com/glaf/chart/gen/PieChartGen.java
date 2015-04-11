@@ -24,13 +24,16 @@ import java.awt.RenderingHints;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.util.Rotation;
 
 import com.glaf.chart.domain.Chart;
 import com.glaf.chart.util.ChartUtils;
@@ -66,22 +69,40 @@ public class PieChartGen implements ChartGen {
 	public JFreeChart createChart(Chart chartModel) {
 		ChartUtils.setChartTheme(chartModel);
 		// 用工厂类创建饼图
-		JFreeChart chart = ChartFactory.createPieChart(
-				chartModel.getChartTitle(), createDataset(chartModel), true,
-				true, false);
-		chart.setBackgroundPaint(Color.white);
+		JFreeChart localJFreeChart = null;
+		if (StringUtils.equals(chartModel.getEnable3DFlag(), "1")) {
+			localJFreeChart = ChartFactory.createPieChart3D(
+					chartModel.getChartTitle(), createDataset(chartModel),
+					true, true, false);
+		} else {
+			localJFreeChart = ChartFactory.createPieChart(
+					chartModel.getChartTitle(), createDataset(chartModel),
+					true, true, false);
+		}
+		localJFreeChart.setBackgroundPaint(Color.white);
 		// RenderingHints做文字渲染参数的修改
 		// VALUE_TEXT_ANTIALIAS_OFF表示将文字的抗锯齿关闭.
-		chart.getRenderingHints().put(RenderingHints.KEY_TEXT_ANTIALIASING,
+		localJFreeChart.getRenderingHints().put(
+				RenderingHints.KEY_TEXT_ANTIALIASING,
 				RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
 		// 得到饼图的Plot对象
-		PiePlot piePlot = (PiePlot) chart.getPlot();
-		setSection(piePlot, chartModel);
-		setLabel(piePlot, chartModel);
-		piePlot.setLabelGap(0.02D);
-		setNoDataMessage(piePlot, chartModel);
-		setNullAndZeroValue(piePlot, chartModel);
-		return chart;
+		if (StringUtils.equals(chartModel.getEnable3DFlag(), "1")) {
+			PiePlot3D piePlot = (PiePlot3D) localJFreeChart.getPlot();
+			piePlot.setDarkerSides(true);
+			piePlot.setStartAngle(290.0D);
+			piePlot.setDirection(Rotation.ANTICLOCKWISE);
+			piePlot.setForegroundAlpha(0.6F);
+			piePlot.setLabelGap(0.02D);
+			set3DLabel(piePlot, chartModel);
+		} else {
+			PiePlot piePlot = (PiePlot) localJFreeChart.getPlot();
+			setSection(piePlot, chartModel);
+			setLabel(piePlot, chartModel);
+			piePlot.setLabelGap(0.02D);
+			setNoDataMessage(piePlot, chartModel);
+			setNullAndZeroValue(piePlot, chartModel);
+		}
+		return localJFreeChart;
 	}
 
 	public DefaultPieDataset createDataset(Chart chartModel) {
@@ -148,6 +169,33 @@ public class PieChartGen implements ChartGen {
 	}
 
 	public void setNoDataMessage(PiePlot pieplot, Chart chartModel) {
+		// 设置没有数据时显示的信息
+		pieplot.setNoDataMessage("无数据");
+		// 设置没有数据时显示的信息的字体
+		pieplot.setNoDataMessageFont(new Font(chartModel.getChartFont(),
+				Font.BOLD, chartModel.getChartFontSize()));
+		// 设置没有数据时显示的信息的颜色
+		pieplot.setNoDataMessagePaint(Color.red);
+	}
+
+	public void set3DNullAndZeroValue(PiePlot3D piePlot, Chart chartModel) {
+		// 设置是否忽略0和null值
+		piePlot.setIgnoreNullValues(true);
+		piePlot.setIgnoreZeroValues(true);
+	}
+
+	public void set3DLabel(PiePlot3D pieplot, Chart chartModel) {
+		// 设置扇区标签显示格式：关键字：值(百分比)
+		pieplot.setLabelGenerator(new StandardPieSectionLabelGenerator(
+				"{0}:{1}({2})"));
+		// 设置扇区标签颜色
+		pieplot.setLabelBackgroundPaint(new Color(255, 255, 255));
+		pieplot.setLabelFont((new Font(chartModel.getChartFont(), Font.PLAIN,
+				chartModel.getChartFontSize())));
+
+	}
+
+	public void set3DNoDataMessage(PiePlot3D pieplot, Chart chartModel) {
 		// 设置没有数据时显示的信息
 		pieplot.setNoDataMessage("无数据");
 		// 设置没有数据时显示的信息的字体

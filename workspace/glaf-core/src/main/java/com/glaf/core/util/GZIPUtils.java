@@ -18,6 +18,8 @@
 
 package com.glaf.core.util;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -31,6 +33,45 @@ public class GZIPUtils {
 
 	private static final int EXPECTED_COMPRESSION_RATIO = 5;
 	private static final int BUF_SIZE = 65536;
+
+	/**
+	 * Returns an gunzipped copy of the input array.
+	 * 
+	 * @throws IOException
+	 *             if the input cannot be properly decompressed
+	 */
+	public static final byte[] unzip(byte[] bytes) {
+		// decompress using GZIPInputStream
+		ByteArrayOutputStream outStream = null;
+		GZIPInputStream zis = null;
+		ByteArrayInputStream bais = null;
+		BufferedInputStream bis = null;
+		try {
+			outStream = new ByteArrayOutputStream(EXPECTED_COMPRESSION_RATIO
+					* bytes.length);
+			bais = new ByteArrayInputStream(bytes);
+			bis = new BufferedInputStream(bais);
+			zis = new GZIPInputStream(bis);
+
+			byte[] buff = new byte[BUF_SIZE];
+			while (true) {
+				int size = zis.read(buff);
+				if (size <= 0) {
+					break;
+				}
+				outStream.write(buff, 0, size);
+			}
+			outStream.close();
+			return outStream.toByteArray();
+		} catch (IOException ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			IOUtils.closeStream(bais);
+			IOUtils.closeStream(bis);
+			IOUtils.closeStream(zis);
+			IOUtils.closeStream(outStream);
+		}
+	}
 
 	/**
 	 * Returns an gunzipped copy of the input array. If the gzipped input has
@@ -87,59 +128,26 @@ public class GZIPUtils {
 	}
 
 	/**
-	 * Returns an gunzipped copy of the input array.
-	 * 
-	 * @throws IOException
-	 *             if the input cannot be properly decompressed
-	 */
-	public static final byte[] unzip(byte[] in) throws IOException {
-		// decompress using GZIPInputStream
-		ByteArrayOutputStream outStream = new ByteArrayOutputStream(
-				EXPECTED_COMPRESSION_RATIO * in.length);
-
-		GZIPInputStream inStream = new GZIPInputStream(
-				new ByteArrayInputStream(in));
-
-		byte[] buf = new byte[BUF_SIZE];
-		while (true) {
-			int size = inStream.read(buf);
-			if (size <= 0)
-				break;
-			outStream.write(buf, 0, size);
-		}
-		outStream.close();
-
-		return outStream.toByteArray();
-	}
-
-	/**
 	 * Returns an gzipped copy of the input array.
 	 */
-	public static final byte[] zip(byte[] in) {
+	public static final byte[] zip(byte[] bytes) {
+		ByteArrayOutputStream baos = null;
+		BufferedOutputStream bos = null;
+		GZIPOutputStream outStream = null;
 		try {
-			// compress using GZIPOutputStream
-			ByteArrayOutputStream byteOut = new ByteArrayOutputStream(in.length
+			baos = new ByteArrayOutputStream(bytes.length
 					/ EXPECTED_COMPRESSION_RATIO);
-
-			GZIPOutputStream outStream = new GZIPOutputStream(byteOut);
-
-			try {
-				outStream.write(in);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			try {
-				outStream.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			return byteOut.toByteArray();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
+			bos = new BufferedOutputStream(baos);
+			outStream = new GZIPOutputStream(bos);
+			outStream.write(bytes);
+			outStream.close();
+			return baos.toByteArray();
+		} catch (IOException ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			IOUtils.closeStream(bos);
+			IOUtils.closeStream(baos);
+			IOUtils.closeStream(outStream);
 		}
 	}
 

@@ -49,7 +49,7 @@ import com.glaf.core.util.*;
  *
  */
 
-@Controller
+@Controller("/rs/system/schedulerLog")
 @Path("/rs/system/schedulerLog")
 public class MxSchedulerLogResource {
 	protected static final Log logger = LogFactory

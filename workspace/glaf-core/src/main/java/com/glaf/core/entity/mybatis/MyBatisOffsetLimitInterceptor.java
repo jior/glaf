@@ -18,7 +18,12 @@
 
 package com.glaf.core.entity.mybatis;
 
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -36,6 +41,10 @@ import org.apache.ibatis.plugin.Signature;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 
+import com.glaf.core.config.BaseConfiguration;
+import com.glaf.core.config.Configuration;
+import com.glaf.core.config.DBConfiguration;
+import com.glaf.core.config.Environment;
 import com.glaf.core.dialect.Dialect;
 import com.glaf.core.util.SQLFormatter;
 
@@ -43,6 +52,19 @@ import com.glaf.core.util.SQLFormatter;
 		MappedStatement.class, Object.class, RowBounds.class,
 		ResultHandler.class }) })
 public class MyBatisOffsetLimitInterceptor implements Interceptor {
+	protected final static Log logger = LogFactory
+			.getLog(MyBatisOffsetLimitInterceptor.class);
+
+	protected static Configuration conf = BaseConfiguration.create();
+
+	protected static ConcurrentMap<String, Dialect> dialects = new ConcurrentHashMap<String, Dialect>();
+
+	static int MAPPED_STATEMENT_INDEX = 0;
+	static int PARAMETER_INDEX = 1;
+	static int ROWBOUNDS_INDEX = 2;
+
+	static int RESULT_HANDLER_INDEX = 3;
+
 	public static class BoundSqlSqlSource implements SqlSource {
 		BoundSql boundSql;
 
@@ -54,17 +76,6 @@ public class MyBatisOffsetLimitInterceptor implements Interceptor {
 			return boundSql;
 		}
 	}
-
-	protected final static Log logger = LogFactory
-			.getLog(MyBatisOffsetLimitInterceptor.class);
-
-	static int MAPPED_STATEMENT_INDEX = 0;
-	static int PARAMETER_INDEX = 1;
-	static int ROWBOUNDS_INDEX = 2;
-
-	static int RESULT_HANDLER_INDEX = 3;
-
-	Dialect dialect;
 
 	private BoundSql copyFromBoundSql(MappedStatement ms, BoundSql boundSql,
 			String sql) {
@@ -127,6 +138,24 @@ public class MyBatisOffsetLimitInterceptor implements Interceptor {
 		int offset = rowBounds.getOffset();
 		int limit = rowBounds.getLimit();
 
+		String currentSystemName = Environment.getCurrentSystemName();
+		Dialect dialect = null;
+		if (conf.getBoolean("useDatabaseDialect", true)) {
+			if (dialects.isEmpty()) {
+				Map<String, Dialect> rows = DBConfiguration
+						.getDatabaseDialects();
+				Iterator<Entry<String, Dialect>> iterator = rows.entrySet()
+						.iterator();
+				while (iterator.hasNext()) {
+					Entry<String, Dialect> entry = iterator.next();
+					String key = (String) entry.getKey();
+					Dialect d = entry.getValue();
+					dialects.put(key, d);
+				}
+			}
+			logger.debug("currentSystemName:" + currentSystemName);
+			dialect = dialects.get(currentSystemName);
+		}
 		if (dialect != null
 				&& dialect.supportsLimit()
 				&& (offset != RowBounds.NO_ROW_OFFSET || limit != RowBounds.NO_ROW_LIMIT)) {
@@ -161,7 +190,9 @@ public class MyBatisOffsetLimitInterceptor implements Interceptor {
 		String dialectClass = properties.getProperty("dialectClass");
 		if (dialectClass != null) {
 			try {
-				dialect = (Dialect) Class.forName(dialectClass).newInstance();
+				Dialect dialect = (Dialect) Class.forName(dialectClass)
+						.newInstance();
+				dialects.put(Environment.DEFAULT_SYSTEM_NAME, dialect);
 			} catch (Exception ex) {
 				throw new RuntimeException(
 						"cannot create dialect instance by dialect:"
@@ -169,6 +200,18 @@ public class MyBatisOffsetLimitInterceptor implements Interceptor {
 			}
 			logger.info(MyBatisOffsetLimitInterceptor.class.getSimpleName()
 					+ ".dialect=" + dialectClass);
+		}
+
+		if (conf.getBoolean("useDatabaseDialect", true)) {
+			Map<String, Dialect> rows = DBConfiguration.getDatabaseDialects();
+			Iterator<Entry<String, Dialect>> iterator = rows.entrySet()
+					.iterator();
+			while (iterator.hasNext()) {
+				Entry<String, Dialect> entry = iterator.next();
+				String key = (String) entry.getKey();
+				Dialect dialect = entry.getValue();
+				dialects.put(key, dialect);
+			}
 		}
 	}
 

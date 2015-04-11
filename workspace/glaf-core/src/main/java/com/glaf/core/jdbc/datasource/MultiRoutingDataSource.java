@@ -47,7 +47,20 @@ public class MultiRoutingDataSource extends AbstractRoutingDataSource implements
 
 	private static volatile AtomicBoolean loading = new AtomicBoolean(false);
 
+	private static volatile AtomicBoolean reload = new AtomicBoolean(false);
+
 	private static volatile Object defaultTargetDataSource;
+
+	public static void addDataSource(String name, Properties props) {
+		if (!targetDataSources.containsKey(name)) {
+			ConnectionProvider provider = ConnectionProviderFactory
+					.createProvider(name, props);
+			if (provider != null && provider.getDataSource() != null) {
+				targetDataSources.put(name, provider.getDataSource());
+				reload.set(true);
+			}
+		}
+	}
 
 	private static void reloadDS() {
 		if (!loading.get()) {
@@ -66,12 +79,14 @@ public class MultiRoutingDataSource extends AbstractRoutingDataSource implements
 						try {
 							ConnectionProvider provider = ConnectionProviderFactory
 									.createProvider(name);
-							dataSourceMap.put(name, provider.getDataSource());
-
-							if (StringUtils.equals(name,
-									Environment.DEFAULT_SYSTEM_NAME)) {
-								defaultTargetDataSource = provider
-										.getDataSource();
+							if (provider != null) {
+								dataSourceMap.put(name,
+										provider.getDataSource());
+								if (StringUtils.equals(name,
+										Environment.DEFAULT_SYSTEM_NAME)) {
+									defaultTargetDataSource = provider
+											.getDataSource();
+								}
 							}
 						} catch (Exception ex) {
 							ex.printStackTrace();
@@ -92,7 +107,6 @@ public class MultiRoutingDataSource extends AbstractRoutingDataSource implements
 					}
 				}
 
-				targetDataSources.clear();
 				targetDataSources.putAll(dataSourceMap);
 
 				logger.info("##datasources:" + targetDataSources.keySet());
@@ -121,6 +135,12 @@ public class MultiRoutingDataSource extends AbstractRoutingDataSource implements
 
 	@Override
 	protected synchronized Object determineCurrentLookupKey() {
+		if (reload.get()) {
+			setTargetDataSources(targetDataSources);
+			super.afterPropertiesSet();
+			reload.set(false);
+			logger.info("#reload datasources:" + targetDataSources.keySet());
+		}
 		logger.debug("currentSystemName:" + Environment.getCurrentSystemName());
 		return Environment.getCurrentSystemName();
 	}
