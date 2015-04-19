@@ -24,7 +24,6 @@ import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
 import java.util.Date;
@@ -63,6 +62,7 @@ public class DBUtils {
 	public static void alterTable(Connection connection,
 			TableDefinition tableDefinition) {
 		List<String> cloumns = new java.util.ArrayList<String>();
+		Statement statement = null;
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
@@ -79,32 +79,32 @@ public class DBUtils {
 
 			logger.debug(tableDefinition.getTableName() + " cloumns:" + cloumns);
 
-			stmt.close();
-			rs.close();
-			stmt = null;
-			rs = null;
+			JdbcUtils.close(stmt);
+			JdbcUtils.close(rs);
 
 			Collection<ColumnDefinition> fields = tableDefinition.getColumns();
 			for (ColumnDefinition field : fields) {
 				if (field.getColumnName() != null
 						&& !cloumns.contains(field.getColumnName()
 								.toUpperCase())) {
-					String sql = getMyAddColumnSql(dbType,
+					String sql = getAddColumnSql(dbType,
 							tableDefinition.getTableName(), field);
 					if (sql != null && sql.length() > 0) {
-						Statement statement = connection.createStatement();
+						statement = connection.createStatement();
 						logger.info("alter table "
 								+ tableDefinition.getTableName() + ":\n" + sql);
 						statement.execute(sql);
-						statement.close();
-						statement = null;
+						JdbcUtils.close(statement);
 					}
 				}
 			}
-
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
+		} finally {
+			JdbcUtils.close(rs);
+			JdbcUtils.close(stmt);
+			JdbcUtils.close(statement);
 		}
 	}
 
@@ -314,30 +314,29 @@ public class DBUtils {
 						}
 					}
 					logger.info("execute alter:" + sql);
-
 					stmt = conn.createStatement();
 					stmt.executeUpdate(sql);
-					stmt.close();
-					stmt = null;
+					JdbcUtils.close(stmt);
 				}
 			}
-
-			pstmt.close();
-			pstmt = null;
+			JdbcUtils.close(pstmt);
 			conn.commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
+			JdbcUtils.close(rs);
+			JdbcUtils.close(stmt);
+			JdbcUtils.close(pstmt);
 			JdbcUtils.close(conn);
 		}
-
 	}
 
 	public static void alterTable(String systemName,
 			TableDefinition tableDefinition) {
 		List<String> cloumns = new java.util.ArrayList<String>();
 		Connection connection = null;
+		Statement statement = null;
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
@@ -356,25 +355,22 @@ public class DBUtils {
 
 			logger.debug(tableDefinition.getTableName() + " cloumns:" + cloumns);
 
-			stmt.close();
-			rs.close();
-			stmt = null;
-			rs = null;
+			JdbcUtils.close(stmt);
+			JdbcUtils.close(rs);
 
 			Collection<ColumnDefinition> fields = tableDefinition.getColumns();
 			for (ColumnDefinition field : fields) {
 				if (field.getColumnName() != null
 						&& !cloumns.contains(field.getColumnName()
 								.toUpperCase())) {
-					String sql = getMyAddColumnSql(dbType,
+					String sql = getAddColumnSql(dbType,
 							tableDefinition.getTableName(), field);
 					if (sql != null && sql.length() > 0) {
-						Statement statement = connection.createStatement();
+						statement = connection.createStatement();
 						logger.info("alter table "
 								+ tableDefinition.getTableName() + ":\n" + sql);
 						statement.execute(sql);
-						statement.close();
-						statement = null;
+						JdbcUtils.close(statement);
 					}
 				}
 			}
@@ -383,6 +379,9 @@ public class DBUtils {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
+			JdbcUtils.close(stmt);
+			JdbcUtils.close(rs);
+			JdbcUtils.close(statement);
 			JdbcUtils.close(connection);
 		}
 	}
@@ -390,6 +389,7 @@ public class DBUtils {
 	public static void alterTable(TableDefinition tableDefinition) {
 		List<String> cloumns = new java.util.ArrayList<String>();
 		Connection connection = null;
+		Statement statement = null;
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
@@ -408,25 +408,19 @@ public class DBUtils {
 
 			logger.debug(tableDefinition.getTableName() + " cloumns:" + cloumns);
 
-			stmt.close();
-			rs.close();
-			stmt = null;
-			rs = null;
-
 			Collection<ColumnDefinition> fields = tableDefinition.getColumns();
 			for (ColumnDefinition field : fields) {
 				if (field.getColumnName() != null
 						&& !cloumns.contains(field.getColumnName()
 								.toUpperCase())) {
-					String sql = getMyAddColumnSql(dbType,
+					String sql = getAddColumnSql(dbType,
 							tableDefinition.getTableName(), field);
 					if (sql != null && sql.length() > 0) {
-						Statement statement = connection.createStatement();
+						statement = connection.createStatement();
 						logger.info("alter table "
 								+ tableDefinition.getTableName() + ":\n" + sql);
 						statement.execute(sql);
-						statement.close();
-						statement = null;
+						JdbcUtils.close(statement);
 					}
 				}
 			}
@@ -435,44 +429,9 @@ public class DBUtils {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
-			JdbcUtils.close(connection);
-		}
-	}
-
-	public static void createIndex(String systemName, String tableName,
-			String columnName, String indexName) {
-		Connection connection = null;
-		DatabaseMetaData dbmd = null;
-		Statement stmt = null;
-		ResultSet rs = null;
-		boolean hasIndex = false;
-		try {
-			connection = DBConnectionFactory.getConnection(systemName);
-			dbmd = connection.getMetaData();
-			rs = dbmd.getIndexInfo(null, null, tableName, false, false);
-			while (rs.next()) {
-				String col = rs.getString("COLUMN_NAME");
-				if (StringUtils.equalsIgnoreCase(columnName, col)) {
-					hasIndex = true;
-					break;
-				}
-			}
-			rs.close();
-			rs = null;
-
-			if (!hasIndex) {
-				String sql = " create index " + indexName.toUpperCase()
-						+ " on " + tableName + " (" + columnName + ") ";
-				connection.setAutoCommit(false);
-				stmt = connection.createStatement();
-				stmt.executeUpdate(sql);
-				connection.commit();
-			}
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		} finally {
-			JdbcUtils.close(rs);
 			JdbcUtils.close(stmt);
+			JdbcUtils.close(rs);
+			JdbcUtils.close(statement);
 			JdbcUtils.close(connection);
 		}
 	}
@@ -495,8 +454,7 @@ public class DBUtils {
 					break;
 				}
 			}
-			rs.close();
-			rs = null;
+			JdbcUtils.close(rs);
 
 			if (!hasIndex) {
 				String sql = " create index " + indexName.toUpperCase()
@@ -504,6 +462,7 @@ public class DBUtils {
 				connection.setAutoCommit(false);
 				stmt = connection.createStatement();
 				stmt.executeUpdate(sql);
+				JdbcUtils.close(stmt);
 				connection.commit();
 				connection.setAutoCommit(autoCommit);
 			}
@@ -515,6 +474,44 @@ public class DBUtils {
 		}
 	}
 
+	public static void createIndex(String systemName, String tableName,
+			String columnName, String indexName) {
+		Connection connection = null;
+		DatabaseMetaData dbmd = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		boolean hasIndex = false;
+		try {
+			connection = DBConnectionFactory.getConnection(systemName);
+			dbmd = connection.getMetaData();
+			rs = dbmd.getIndexInfo(null, null, tableName, false, false);
+			while (rs.next()) {
+				String col = rs.getString("COLUMN_NAME");
+				if (StringUtils.equalsIgnoreCase(columnName, col)) {
+					hasIndex = true;
+					break;
+				}
+			}
+			JdbcUtils.close(rs);
+
+			if (!hasIndex) {
+				String sql = " create index " + indexName.toUpperCase()
+						+ " on " + tableName + " (" + columnName + ") ";
+				connection.setAutoCommit(false);
+				stmt = connection.createStatement();
+				stmt.executeUpdate(sql);
+				JdbcUtils.close(stmt);
+				connection.commit();
+			}
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			JdbcUtils.close(rs);
+			JdbcUtils.close(stmt);
+			JdbcUtils.close(connection);
+		}
+	}
+
 	/**
 	 * 创建数据库表，如果已经存在，则不重建
 	 * 
@@ -523,75 +520,85 @@ public class DBUtils {
 	 * @param tableDefinition
 	 *            表定义
 	 */
-	public static void createTable(Connection connection,
+	public static String createTable(Connection connection,
 			TableDefinition tableDefinition) {
+		Statement statement = null;
 		try {
 			String tableName = tableDefinition.getTableName();
 			if (tableExists(connection, tableName)) {
-				return;
+				return null;
 			}
 			String dbType = DBConnectionFactory.getDatabaseType(connection);
 			logger.info("dbType:" + dbType);
 			String sql = getCreateTableScript(dbType, tableDefinition);
 			if (sql != null && sql.length() > 0) {
 				connection.setAutoCommit(false);
-				Statement statement = connection.createStatement();
+				statement = connection.createStatement();
 				logger.info("create table " + tableDefinition.getTableName()
 						+ ":\n" + sql);
 				statement.execute(sql);
-				statement.close();
+				JdbcUtils.close(statement);
 				connection.commit();
-				statement = null;
+				return sql;
 			}
+			return null;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
+		} finally {
+			JdbcUtils.close(statement);
 		}
 	}
 
-	public static void createTable(String systemName,
+	public static String createTable(String systemName,
 			TableDefinition classDefinition) {
 		Connection connection = null;
+		Statement statement = null;
 		try {
 			connection = DBConnectionFactory.getConnection(systemName);
 			connection.setAutoCommit(false);
 			String dbType = DBConnectionFactory.getDatabaseType(connection);
-			String sql = getCreateTableSql(dbType, classDefinition);
+			String sql = getCreateTableScript(dbType, classDefinition);
 			if (sql != null && sql.length() > 0) {
-				Statement statement = connection.createStatement();
+				statement = connection.createStatement();
 				logger.info("create table " + classDefinition.getTableName()
 						+ ":\n" + sql);
 				statement.execute(sql);
-				statement.close();
+				JdbcUtils.close(statement);
 				connection.commit();
-				statement = null;
+				return sql;
 			}
+			return null;
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		} finally {
+			JdbcUtils.close(statement);
 			JdbcUtils.close(connection);
 		}
 	}
 
-	public static void createTable(TableDefinition classDefinition) {
+	public static String createTable(TableDefinition classDefinition) {
 		Connection connection = null;
+		Statement statement = null;
 		try {
 			connection = DBConnectionFactory.getConnection();
 			connection.setAutoCommit(false);
 			String dbType = DBConnectionFactory.getDatabaseType(connection);
-			String sql = getCreateTableSql(dbType, classDefinition);
+			String sql = getCreateTableScript(dbType, classDefinition);
 			if (sql != null && sql.length() > 0) {
-				Statement statement = connection.createStatement();
+				statement = connection.createStatement();
 				logger.info("create table " + classDefinition.getTableName()
 						+ ":\n" + sql);
 				statement.execute(sql);
-				statement.close();
+				JdbcUtils.close(statement);
 				connection.commit();
-				statement = null;
+				return sql;
 			}
+			return null;
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		} finally {
+			JdbcUtils.close(statement);
 			JdbcUtils.close(connection);
 		}
 	}
@@ -634,15 +641,17 @@ public class DBUtils {
 			if (System.getProperty("devMode") != null
 					|| StringUtils.equalsIgnoreCase(dbType, "sqlite")
 					|| StringUtils.equalsIgnoreCase(dbType, "h2")) {
+				Statement statement = null;
 				try {
-					Statement statement = connection.createStatement();
+					statement = connection.createStatement();
 					logger.info("drop table " + tableName);
 					statement.executeUpdate(" drop table " + tableName);
-					statement.close();
-					statement = null;
+					JdbcUtils.close(statement);
 				} catch (Exception ex) {
 					ex.printStackTrace();
 					throw new RuntimeException(ex);
+				} finally {
+					JdbcUtils.close(statement);
 				}
 			}
 		}
@@ -656,14 +665,14 @@ public class DBUtils {
 		try {
 			StringTokenizer tokenizer = new StringTokenizer(ddlStatements, ";");
 			while (tokenizer.hasMoreTokens()) {
-				sqlStatement = tokenizer.nextToken().trim();
-				if (!sqlStatement.startsWith("#") && !"".equals(sqlStatement)) {
+				sqlStatement = tokenizer.nextToken();
+				if (StringUtils.isNotEmpty(sqlStatement)
+						&& !sqlStatement.startsWith("#")) {
 					logger.debug(sqlStatement);
-					statement = conn.createStatement();
 					try {
+						statement = conn.createStatement();
 						statement.executeUpdate(sqlStatement);
-						statement.close();
-						statement = null;
+						JdbcUtils.close(statement);
 					} catch (Exception ex) {
 						if (exception == null) {
 							exception = ex;
@@ -671,9 +680,7 @@ public class DBUtils {
 						logger.debug(" execute statement error: "
 								+ sqlStatement, ex);
 					} finally {
-						if (statement != null) {
-							statement.close();
-						}
+						JdbcUtils.close(statement);
 					}
 				}
 			}
@@ -688,6 +695,50 @@ public class DBUtils {
 		} catch (Exception ex) {
 			throw new RuntimeException("couldn't execute db schema: "
 					+ sqlStatement, ex);
+		} finally {
+			JdbcUtils.close(statement);
+		}
+	}
+
+	public static String executeSchemaResource(String systemName,
+			String ddlStatements) {
+		StringBuilder buffer = new StringBuilder();
+		Connection connection = null;
+		Statement statement = null;
+		String sqlStatement = null;
+		try {
+			connection = DBConnectionFactory.getConnection(systemName);
+			connection.setAutoCommit(false);
+			StringTokenizer tokenizer = new StringTokenizer(ddlStatements, ";");
+			while (tokenizer.hasMoreTokens()) {
+				sqlStatement = tokenizer.nextToken();
+				if (StringUtils.isNotEmpty(sqlStatement)
+						&& !sqlStatement.startsWith("#")) {
+					// logger.debug(sqlStatement);
+					try {
+						statement = connection.createStatement();
+						statement.executeUpdate(sqlStatement);
+						JdbcUtils.close(statement);
+					} catch (Exception ex) {
+						buffer.append(FileUtils.newline);
+						buffer.append(sqlStatement).append(";");
+						buffer.append(FileUtils.newline);
+					} finally {
+						JdbcUtils.close(statement);
+					}
+				}
+			}
+			if (buffer.length() == 0) {
+				// 如果没有异常就提交事务
+				connection.commit();
+			}
+			return buffer.toString();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		} finally {
+			JdbcUtils.close(statement);
+			JdbcUtils.close(connection);
 		}
 	}
 
@@ -696,6 +747,7 @@ public class DBUtils {
 			Map<String, Object> context) {
 		Exception exception = null;
 		Connection connection = null;
+		Statement statement = null;
 		String sqlStatement = null;
 		try {
 			connection = DBConnectionFactory.getConnection();
@@ -704,20 +756,22 @@ public class DBUtils {
 			String ddlStatements = new String(bytes);
 			StringTokenizer tokenizer = new StringTokenizer(ddlStatements, ";");
 			while (tokenizer.hasMoreTokens()) {
-				sqlStatement = tokenizer.nextToken().trim();
-				if (!sqlStatement.startsWith("#") && !"".equals(sqlStatement)) {
+				sqlStatement = tokenizer.nextToken();
+				if (StringUtils.isNotEmpty(sqlStatement)
+						&& !sqlStatement.startsWith("#")) {
 					sqlStatement = ExpressionTools.evaluate(sqlStatement,
 							context);
-					Statement statement = connection.createStatement();
 					try {
+						statement = connection.createStatement();
 						statement.execute(sqlStatement);
-						statement.close();
 					} catch (Exception e) {
 						if (exception == null) {
 							exception = e;
 						}
 						logger.debug("problem during schema " + operation
 								+ ", statement '" + sqlStatement, e);
+					} finally {
+						JdbcUtils.close(statement);
 					}
 				}
 			}
@@ -734,6 +788,7 @@ public class DBUtils {
 			throw new RuntimeException("couldn't " + operation + " db schema: "
 					+ sqlStatement, e);
 		} finally {
+			JdbcUtils.close(statement);
 			JdbcUtils.close(connection);
 		}
 	}
@@ -745,27 +800,64 @@ public class DBUtils {
 		try {
 			StringTokenizer tokenizer = new StringTokenizer(ddlStatements, ";");
 			while (tokenizer.hasMoreTokens()) {
-				sqlStatement = tokenizer.nextToken().trim();
-				if (!sqlStatement.startsWith("#") && !"".equals(sqlStatement)) {
+				sqlStatement = tokenizer.nextToken();
+				if (StringUtils.isNotEmpty(sqlStatement)
+						&& !sqlStatement.startsWith("#")) {
 					logger.debug(sqlStatement);
 					statement = conn.createStatement();
 					try {
 						statement.executeUpdate(sqlStatement);
-						statement.close();
-						statement = null;
 					} catch (Exception ex) {
 						logger.error(" execute statement error: "
 								+ sqlStatement, ex);
 					} finally {
-						if (statement != null) {
-							statement.close();
-						}
+						JdbcUtils.close(statement);
 					}
 				}
 			}
 		} catch (Exception ex) {
 			throw new RuntimeException("couldn't execute db schema: "
 					+ sqlStatement, ex);
+		} finally {
+			JdbcUtils.close(statement);
+		}
+	}
+
+	public static String executeSchemaResourceIgnoreException(
+			String systemName, String ddlStatements) {
+		StringBuilder buffer = new StringBuilder();
+		Connection connection = null;
+		Statement statement = null;
+		String sqlStatement = null;
+		try {
+			connection = DBConnectionFactory.getConnection(systemName);
+			connection.setAutoCommit(false);
+			StringTokenizer tokenizer = new StringTokenizer(ddlStatements, ";");
+			while (tokenizer.hasMoreTokens()) {
+				sqlStatement = tokenizer.nextToken().trim();
+				if (StringUtils.isNotEmpty(sqlStatement)
+						&& !sqlStatement.startsWith("#")) {
+					// logger.debug(sqlStatement);
+					try {
+						statement = connection.createStatement();
+						statement.executeUpdate(sqlStatement);
+						connection.commit();
+					} catch (Exception ex) {
+						buffer.append(FileUtils.newline);
+						buffer.append(sqlStatement).append(";");
+						buffer.append(FileUtils.newline);
+					} finally {
+						JdbcUtils.close(statement);
+					}
+				}
+			}
+			return buffer.toString();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException("can't get connection: ", ex);
+		} finally {
+			JdbcUtils.close(statement);
+			JdbcUtils.close(connection);
 		}
 	}
 
@@ -786,6 +878,8 @@ public class DBUtils {
 			} else if ("Clob".equals(field.getJavaType())) {
 				buffer.append(" clob ");
 			} else if ("Blob".equals(field.getJavaType())) {
+				buffer.append(" longvarbinary ");
+			} else if ("byte[]".equals(field.getJavaType())) {
 				buffer.append(" longvarbinary ");
 			} else if ("Boolean".equals(field.getJavaType())) {
 				buffer.append(" boolean ");
@@ -810,6 +904,8 @@ public class DBUtils {
 				buffer.append(" clob (10240000) ");
 			} else if ("Blob".equals(field.getJavaType())) {
 				buffer.append(" blob ");
+			} else if ("byte[]".equals(field.getJavaType())) {
+				buffer.append(" blob ");
 			} else if ("Boolean".equals(field.getJavaType())) {
 				buffer.append(" smallint ");
 			} else if ("String".equals(field.getJavaType())) {
@@ -832,6 +928,8 @@ public class DBUtils {
 			} else if ("Clob".equals(field.getJavaType())) {
 				buffer.append(" CLOB ");
 			} else if ("Blob".equals(field.getJavaType())) {
+				buffer.append(" BLOB ");
+			} else if ("byte[]".equals(field.getJavaType())) {
 				buffer.append(" BLOB ");
 			} else if ("Boolean".equals(field.getJavaType())) {
 				buffer.append(" NUMBER(1,0) ");
@@ -856,6 +954,8 @@ public class DBUtils {
 				buffer.append(" longtext ");
 			} else if ("Blob".equals(field.getJavaType())) {
 				buffer.append(" longblob ");
+			} else if ("byte[]".equals(field.getJavaType())) {
+				buffer.append(" longblob ");
 			} else if ("Boolean".equals(field.getJavaType())) {
 				buffer.append(" tinyint ");
 			} else if ("String".equals(field.getJavaType())) {
@@ -878,6 +978,8 @@ public class DBUtils {
 			} else if ("Clob".equals(field.getJavaType())) {
 				buffer.append(" text ");
 			} else if ("Blob".equals(field.getJavaType())) {
+				buffer.append(" image ");
+			} else if ("byte[]".equals(field.getJavaType())) {
 				buffer.append(" image ");
 			} else if ("Boolean".equals(field.getJavaType())) {
 				buffer.append(" tinyint ");
@@ -902,6 +1004,8 @@ public class DBUtils {
 				buffer.append(" text ");
 			} else if ("Blob".equals(field.getJavaType())) {
 				buffer.append(" bytea ");
+			} else if ("byte[]".equals(field.getJavaType())) {
+				buffer.append(" bytea ");
 			} else if ("Boolean".equals(field.getJavaType())) {
 				buffer.append(" boolean ");
 			} else if ("String".equals(field.getJavaType())) {
@@ -924,6 +1028,8 @@ public class DBUtils {
 			} else if ("Clob".equals(field.getJavaType())) {
 				buffer.append(" TEXT ");
 			} else if ("Blob".equals(field.getJavaType())) {
+				buffer.append(" BLOB ");
+			} else if ("byte[]".equals(field.getJavaType())) {
 				buffer.append(" BLOB ");
 			} else if ("String".equals(field.getJavaType())) {
 				buffer.append(" TEXT ");
@@ -962,11 +1068,6 @@ public class DBUtils {
 				cloumns.add(column.toUpperCase());
 			}
 
-			stmt.close();
-			rs.close();
-			stmt = null;
-			rs = null;
-
 			Collection<ColumnDefinition> fields = classDefinition.getColumns();
 			for (ColumnDefinition field : fields) {
 				if (field.getColumnName() != null
@@ -982,6 +1083,8 @@ public class DBUtils {
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		} finally {
+			JdbcUtils.close(rs);
+			JdbcUtils.close(stmt);
 			JdbcUtils.close(connection);
 		}
 
@@ -1059,8 +1162,7 @@ public class DBUtils {
 					columns.add(column);
 				}
 			}
-			rs.close();
-			rs = null;
+
 			return columns;
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -1147,8 +1249,7 @@ public class DBUtils {
 					columns.add(column);
 				}
 			}
-			rs.close();
-			rs = null;
+
 			return columns;
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -1399,6 +1500,8 @@ public class DBUtils {
 					buffer.append(" clob (10240000) ");
 				} else if ("Blob".equals(column.getJavaType())) {
 					buffer.append(" blob ");
+				} else if ("byte[]".equals(column.getJavaType())) {
+					buffer.append(" blob ");
 				} else if ("Boolean".equals(column.getJavaType())) {
 					buffer.append(" smallint ");
 				} else if ("String".equals(column.getJavaType())) {
@@ -1422,6 +1525,8 @@ public class DBUtils {
 				} else if ("Clob".equals(column.getJavaType())) {
 					buffer.append(" CLOB ");
 				} else if ("Blob".equals(column.getJavaType())) {
+					buffer.append(" BLOB ");
+				} else if ("byte[]".equals(column.getJavaType())) {
 					buffer.append(" BLOB ");
 				} else if ("Boolean".equals(column.getJavaType())) {
 					buffer.append(" NUMBER(1,0) ");
@@ -1447,6 +1552,8 @@ public class DBUtils {
 					buffer.append(" longtext ");
 				} else if ("Blob".equals(column.getJavaType())) {
 					buffer.append(" longblob ");
+				} else if ("byte[]".equals(column.getJavaType())) {
+					buffer.append(" longblob ");
 				} else if ("Boolean".equals(column.getJavaType())) {
 					buffer.append(" tinyint ");
 				} else if ("String".equals(column.getJavaType())) {
@@ -1470,6 +1577,8 @@ public class DBUtils {
 				} else if ("Clob".equals(column.getJavaType())) {
 					buffer.append(" text ");
 				} else if ("Blob".equals(column.getJavaType())) {
+					buffer.append(" image ");
+				} else if ("byte[]".equals(column.getJavaType())) {
 					buffer.append(" image ");
 				} else if ("Boolean".equals(column.getJavaType())) {
 					buffer.append(" tinyint ");
@@ -1497,6 +1606,8 @@ public class DBUtils {
 					buffer.append(" text ");
 				} else if ("Blob".equals(column.getJavaType())) {
 					buffer.append(" bytea ");
+				} else if ("byte[]".equals(column.getJavaType())) {
+					buffer.append(" bytea ");
 				} else if ("Boolean".equals(column.getJavaType())) {
 					buffer.append(" boolean ");
 				} else if ("String".equals(column.getJavaType())) {
@@ -1521,6 +1632,8 @@ public class DBUtils {
 					buffer.append(" clob ");
 				} else if ("Blob".equals(column.getJavaType())) {
 					buffer.append(" longvarbinary ");
+				} else if ("byte[]".equals(column.getJavaType())) {
+					buffer.append(" longvarbinary ");
 				} else if ("Boolean".equals(column.getJavaType())) {
 					buffer.append(" boolean ");
 				} else if ("String".equals(column.getJavaType())) {
@@ -1547,6 +1660,8 @@ public class DBUtils {
 					buffer.append(" TEXT ");
 				} else if ("Blob".equals(column.getJavaType())) {
 					buffer.append(" BLOB ");
+				} else if ("byte[]".equals(column.getJavaType())) {
+					buffer.append(" BLOB ");
 				} else if ("String".equals(column.getJavaType())) {
 					buffer.append(" TEXT ");
 				}
@@ -1561,326 +1676,6 @@ public class DBUtils {
 					.append(idField.getColumnName().toUpperCase()).append(") ");
 		}
 		buffer.append(newline);
-		if ("mysql".equalsIgnoreCase(dbType)) {
-			buffer.append(") ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;");
-		} else {
-			buffer.append(");");
-		}
-
-		return buffer.toString();
-	}
-
-	public static String getCreateTableSql(String dbType,
-			TableDefinition classDefinition) {
-		StringBuffer buffer = new StringBuffer();
-		Collection<ColumnDefinition> fields = classDefinition.getColumns();
-		buffer.append(" create table ").append(
-				classDefinition.getTableName().toUpperCase());
-		buffer.append(" ( ");
-		Collection<String> cols = new HashSet<String>();
-		ColumnDefinition idField = classDefinition.getIdColumn();
-		if (idField != null) {
-			buffer.append(newline);
-			buffer.append("    ").append(idField.getColumnName().toUpperCase());
-			if ("h2".equalsIgnoreCase(dbType)) {
-				if ("Integer".equals(idField.getJavaType())) {
-					buffer.append(" integer ");
-				} else if ("Long".equals(idField.getJavaType())) {
-					buffer.append(" bigint ");
-				} else if ("String".equals(idField.getJavaType())) {
-					buffer.append(" varchar ");
-					if (idField.getLength() > 0) {
-						buffer.append(" (").append(idField.getLength())
-								.append(") ");
-					} else {
-						buffer.append(" (50) ");
-					}
-				}
-			} else if ("db2".equalsIgnoreCase(dbType)) {
-				if ("Integer".equals(idField.getJavaType())) {
-					buffer.append(" integer ");
-				} else if ("Long".equals(idField.getJavaType())) {
-					buffer.append(" bigint ");
-				} else if ("String".equals(idField.getJavaType())) {
-					buffer.append(" varchar ");
-					if (idField.getLength() > 0) {
-						buffer.append(" (").append(idField.getLength())
-								.append(") ");
-					} else {
-						buffer.append(" (50) ");
-					}
-				}
-			} else if ("oracle".equalsIgnoreCase(dbType)) {
-				if ("Integer".equals(idField.getJavaType())) {
-					buffer.append(" INTEGER ");
-				} else if ("Long".equals(idField.getJavaType())) {
-					buffer.append(" NUMBER(19,0) ");
-				} else if ("String".equals(idField.getJavaType())) {
-					buffer.append(" NVARCHAR2 ");
-					if (idField.getLength() > 0) {
-						buffer.append(" (").append(idField.getLength())
-								.append(") ");
-					} else {
-						buffer.append(" (50) ");
-					}
-				}
-			} else if ("mysql".equalsIgnoreCase(dbType)) {
-				if ("Integer".equals(idField.getJavaType())) {
-					buffer.append(" integer ");
-				} else if ("Long".equals(idField.getJavaType())) {
-					buffer.append(" bigint ");
-				} else if ("String".equals(idField.getJavaType())) {
-					buffer.append(" varchar ");
-					if (idField.getLength() > 0) {
-						buffer.append(" (").append(idField.getLength())
-								.append(") ");
-					} else {
-						buffer.append(" (50) ");
-					}
-				}
-			} else if ("sqlserver".equalsIgnoreCase(dbType)) {
-				if ("Integer".equals(idField.getJavaType())) {
-					buffer.append(" integer ");
-				} else if ("Long".equals(idField.getJavaType())) {
-					buffer.append(" bigint ");
-				} else if ("String".equals(idField.getJavaType())) {
-					buffer.append(" nvarchar ");
-					if (idField.getLength() > 0) {
-						buffer.append(" (").append(idField.getLength())
-								.append(") ");
-					} else {
-						buffer.append(" (50) ");
-					}
-				}
-			} else if (POSTGRESQL.equalsIgnoreCase(dbType)) {
-				if ("Integer".equals(idField.getJavaType())) {
-					buffer.append(" integer ");
-				} else if ("Long".equals(idField.getJavaType())) {
-					buffer.append(" bigint ");
-				} else if ("String".equals(idField.getJavaType())) {
-					buffer.append(" varchar ");
-					if (idField.getLength() > 0) {
-						buffer.append(" (").append(idField.getLength())
-								.append(") ");
-					} else {
-						buffer.append(" (50) ");
-					}
-				}
-			} else if ("sqlite".equalsIgnoreCase(dbType)) {
-				if ("Integer".equals(idField.getJavaType())) {
-					buffer.append(" INTEGER ");
-				} else if ("Long".equals(idField.getJavaType())) {
-					buffer.append(" INTEGER ");
-				} else if ("String".equals(idField.getJavaType())) {
-					buffer.append(" TEXT ");
-					if (idField.getLength() > 0) {
-						buffer.append(" (").append(idField.getLength())
-								.append(") ");
-					} else {
-						buffer.append(" (50) ");
-					}
-				}
-			}
-			buffer.append(" not null ");
-		}
-		int index = 0;
-		for (ColumnDefinition field : fields) {
-			if (StringUtils.isEmpty(field.getColumnName())
-					|| (idField != null && StringUtils.equalsIgnoreCase(
-							idField.getColumnName(), field.getColumnName()))) {
-				continue;
-			}
-			if (cols.contains(field.getColumnName().toLowerCase())) {
-				continue;
-			}
-			if (idField != null) {
-				buffer.append(",");
-			} else {
-				if (index > 0) {
-					buffer.append(",");
-				}
-			}
-			index++;
-			buffer.append(newline);
-			buffer.append("    ").append(field.getColumnName());
-			if ("h2".equalsIgnoreCase(dbType)) {
-				if ("Integer".equals(field.getJavaType())) {
-					buffer.append(" integer ");
-				} else if ("Long".equals(field.getJavaType())) {
-					buffer.append(" bigint ");
-				} else if ("Double".equals(field.getJavaType())) {
-					buffer.append(" double ");
-				} else if ("Date".equals(field.getJavaType())) {
-					buffer.append(" timestamp ");
-				} else if ("Boolean".equals(field.getJavaType())) {
-					buffer.append(" boolean ");
-				} else if ("Clob".equals(field.getJavaType())) {
-					buffer.append(" clob ");
-				} else if ("Blob".equals(field.getJavaType())) {
-					buffer.append(" longvarbinary ");
-				} else if ("String".equals(field.getJavaType())) {
-					buffer.append(" varchar ");
-					if (field.getLength() > 0) {
-						buffer.append(" (").append(field.getLength())
-								.append(") ");
-					} else {
-						buffer.append(" (50) ");
-					}
-				}
-			} else if ("db2".equalsIgnoreCase(dbType)) {
-				if ("Integer".equals(field.getJavaType())) {
-					buffer.append(" integer ");
-				} else if ("Long".equals(field.getJavaType())) {
-					buffer.append(" bigint ");
-				} else if ("Double".equals(field.getJavaType())) {
-					buffer.append(" double precision ");
-				} else if ("Date".equals(field.getJavaType())) {
-					buffer.append(" timestamp ");
-				} else if ("Clob".equals(field.getJavaType())) {
-					buffer.append(" clob (10240000) ");
-				} else if ("Blob".equals(field.getJavaType())) {
-					buffer.append(" blob ");
-				} else if ("Boolean".equals(field.getJavaType())) {
-					buffer.append(" smallint ");
-				} else if ("String".equals(field.getJavaType())) {
-					buffer.append(" varchar ");
-					if (field.getLength() > 0) {
-						buffer.append(" (").append(field.getLength())
-								.append(") ");
-					} else {
-						buffer.append(" (50) ");
-					}
-				}
-			} else if ("oracle".equalsIgnoreCase(dbType)) {
-				if ("Integer".equals(field.getJavaType())) {
-					buffer.append(" INTEGER ");
-				} else if ("Long".equals(field.getJavaType())) {
-					buffer.append(" NUMBER(19,0) ");
-				} else if ("Double".equals(field.getJavaType())) {
-					buffer.append(" NUMBER(*,10) ");
-				} else if ("Date".equals(field.getJavaType())) {
-					buffer.append(" TIMESTAMP(6) ");
-				} else if ("Clob".equals(field.getJavaType())) {
-					buffer.append(" CLOB ");
-				} else if ("Blob".equals(field.getJavaType())) {
-					buffer.append(" BLOB ");
-				} else if ("Boolean".equals(field.getJavaType())) {
-					buffer.append(" NUMBER(1,0) ");
-				} else if ("String".equals(field.getJavaType())) {
-					buffer.append(" NVARCHAR2 ");
-					if (field.getLength() > 0) {
-						buffer.append(" (").append(field.getLength())
-								.append(") ");
-					} else {
-						buffer.append(" (50) ");
-					}
-				}
-			} else if ("mysql".equalsIgnoreCase(dbType)) {
-				if ("Integer".equals(field.getJavaType())) {
-					buffer.append(" integer ");
-				} else if ("Long".equals(field.getJavaType())) {
-					buffer.append(" bigint ");
-				} else if ("Double".equals(field.getJavaType())) {
-					buffer.append(" double ");
-				} else if ("Date".equals(field.getJavaType())) {
-					buffer.append(" datetime ");
-				} else if ("Clob".equals(field.getJavaType())) {
-					buffer.append(" longtext ");
-				} else if ("Blob".equals(field.getJavaType())) {
-					buffer.append(" longblob ");
-				} else if ("Boolean".equals(field.getJavaType())) {
-					buffer.append(" tinyint ");
-				} else if ("String".equals(field.getJavaType())) {
-					buffer.append(" varchar ");
-					if (field.getLength() > 0) {
-						buffer.append(" (").append(field.getLength())
-								.append(") ");
-					} else {
-						buffer.append(" (50) ");
-					}
-				}
-			} else if ("sqlserver".equalsIgnoreCase(dbType)) {
-				if ("Integer".equals(field.getJavaType())) {
-					buffer.append(" integer ");
-				} else if ("Long".equals(field.getJavaType())) {
-					buffer.append(" bigint ");
-				} else if ("Double".equals(field.getJavaType())) {
-					buffer.append(" double precision ");
-				} else if ("Date".equals(field.getJavaType())) {
-					buffer.append(" datetime ");
-				} else if ("Clob".equals(field.getJavaType())) {
-					buffer.append(" text ");
-				} else if ("Blob".equals(field.getJavaType())) {
-					buffer.append(" image ");
-				} else if ("Boolean".equals(field.getJavaType())) {
-					buffer.append(" tinyint ");
-				} else if ("String".equals(field.getJavaType())) {
-					buffer.append(" nvarchar ");
-					if (field.getLength() > 0) {
-						buffer.append(" (").append(field.getLength())
-								.append(") ");
-					} else {
-						buffer.append(" (50) ");
-					}
-				}
-			} else if (POSTGRESQL.equalsIgnoreCase(dbType)) {
-				if ("Integer".equals(field.getJavaType())) {
-					buffer.append(" integer ");
-				} else if ("Long".equals(field.getJavaType())) {
-					buffer.append(" bigint ");
-				} else if ("Double".equals(field.getJavaType())) {
-					buffer.append(" double precision ");
-				} else if ("Date".equals(field.getJavaType())) {
-					buffer.append(" timestamp ");
-				} else if ("Clob".equals(field.getJavaType())) {
-					buffer.append(" text ");
-				} else if ("Blob".equals(field.getJavaType())) {
-					buffer.append(" bytea ");
-				} else if ("Boolean".equals(field.getJavaType())) {
-					buffer.append(" boolean ");
-				} else if ("String".equals(field.getJavaType())) {
-					buffer.append(" varchar ");
-					if (field.getLength() > 0) {
-						buffer.append(" (").append(field.getLength())
-								.append(") ");
-					} else {
-						buffer.append(" (50) ");
-					}
-				}
-			} else if ("sqlite".equalsIgnoreCase(dbType)) {
-				if ("Integer".equals(field.getJavaType())) {
-					buffer.append(" INTEGER ");
-				} else if ("Long".equals(field.getJavaType())) {
-					buffer.append(" INTEGER ");
-				} else if ("Double".equals(field.getJavaType())) {
-					buffer.append(" REAL ");
-				} else if ("Date".equals(field.getJavaType())) {
-					buffer.append(" TEXT ");
-				} else if ("Clob".equals(field.getJavaType())) {
-					buffer.append(" TEXT ");
-				} else if ("Blob".equals(field.getJavaType())) {
-					buffer.append(" BLOB ");
-				} else if ("String".equals(field.getJavaType())) {
-					buffer.append(" TEXT ");
-					if (field.getLength() > 0) {
-						buffer.append(" (").append(field.getLength())
-								.append(") ");
-					} else {
-						buffer.append(" (50) ");
-					}
-				}
-			}
-			cols.add(field.getColumnName().toLowerCase());
-		}
-
-		if (idField != null) {
-			buffer.append(",");
-			buffer.append(newline);
-			buffer.append("    primary key (").append(idField.getColumnName())
-					.append(") ");
-		}
-		buffer.append(newline);
-
 		if ("mysql".equalsIgnoreCase(dbType)) {
 			buffer.append(") ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin;");
 		} else {
@@ -1944,9 +1739,6 @@ public class DBUtils {
 
 				columns.add(column);
 			}
-			rs.close();
-			rs = null;
-
 			return columns;
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -1957,182 +1749,9 @@ public class DBUtils {
 		}
 	}
 
-	public static String getMyAddColumnSql(String dbType, String tableName,
-			ColumnDefinition field) {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append(" alter table ").append(tableName);
-		buffer.append(" add ").append(field.getColumnName());
-		if ("h2".equalsIgnoreCase(dbType)) {
-			if ("Integer".equals(field.getJavaType())) {
-				buffer.append(" integer ");
-			} else if ("Long".equals(field.getJavaType())) {
-				buffer.append(" bigint ");
-			} else if ("Double".equals(field.getJavaType())) {
-				buffer.append(" double ");
-			} else if ("Date".equals(field.getJavaType())) {
-				buffer.append(" timestamp ");
-			} else if ("Boolean".equals(field.getJavaType())) {
-				buffer.append(" boolean ");
-			} else if ("Clob".equals(field.getJavaType())) {
-				buffer.append(" clob ");
-			} else if ("Blob".equals(field.getJavaType())) {
-				buffer.append(" longvarbinary ");
-			} else if ("String".equals(field.getJavaType())) {
-				buffer.append(" varchar ");
-				if (field.getLength() > 0) {
-					buffer.append(" (").append(field.getLength()).append(") ");
-				} else {
-					buffer.append(" (50) ");
-				}
-			}
-		} else if ("db2".equalsIgnoreCase(dbType)) {
-			if ("Integer".equals(field.getJavaType())) {
-				buffer.append(" integer ");
-			} else if ("Long".equals(field.getJavaType())) {
-				buffer.append(" bigint ");
-			} else if ("Double".equals(field.getJavaType())) {
-				buffer.append(" double precision ");
-			} else if ("Date".equals(field.getJavaType())) {
-				buffer.append(" timestamp ");
-			} else if ("Clob".equals(field.getJavaType())) {
-				buffer.append(" clob (10240000) ");
-			} else if ("Blob".equals(field.getJavaType())) {
-				buffer.append(" blob ");
-			} else if ("Boolean".equals(field.getJavaType())) {
-				buffer.append(" smallint ");
-			} else if ("String".equals(field.getJavaType())) {
-				buffer.append(" varchar ");
-				if (field.getLength() > 0) {
-					buffer.append(" (").append(field.getLength()).append(") ");
-				} else {
-					buffer.append(" (50) ");
-				}
-			}
-		} else if ("oracle".equalsIgnoreCase(dbType)) {
-			if ("Integer".equals(field.getJavaType())) {
-				buffer.append(" INTEGER ");
-			} else if ("Long".equals(field.getJavaType())) {
-				buffer.append(" NUMBER(19,0) ");
-			} else if ("Double".equals(field.getJavaType())) {
-				buffer.append(" NUMBER(*,10) ");
-			} else if ("Date".equals(field.getJavaType())) {
-				buffer.append(" TIMESTAMP(6) ");
-			} else if ("Clob".equals(field.getJavaType())) {
-				buffer.append(" CLOB ");
-			} else if ("Blob".equals(field.getJavaType())) {
-				buffer.append(" BLOB ");
-			} else if ("Boolean".equals(field.getJavaType())) {
-				buffer.append(" NUMBER(1,0) ");
-			} else if ("String".equals(field.getJavaType())) {
-				buffer.append(" NVARCHAR2 ");
-				if (field.getLength() > 0) {
-					buffer.append(" (").append(field.getLength()).append(") ");
-				} else {
-					buffer.append(" (50) ");
-				}
-			}
-		} else if ("mysql".equalsIgnoreCase(dbType)) {
-			if ("Integer".equals(field.getJavaType())) {
-				buffer.append(" integer ");
-			} else if ("Long".equals(field.getJavaType())) {
-				buffer.append(" bigint ");
-			} else if ("Double".equals(field.getJavaType())) {
-				buffer.append(" double ");
-			} else if ("Date".equals(field.getJavaType())) {
-				buffer.append(" datetime ");
-			} else if ("Clob".equals(field.getJavaType())) {
-				buffer.append(" longtext ");
-			} else if ("Blob".equals(field.getJavaType())) {
-				buffer.append(" longblob ");
-			} else if ("Boolean".equals(field.getJavaType())) {
-				buffer.append(" tinyint ");
-			} else if ("String".equals(field.getJavaType())) {
-				buffer.append(" varchar");
-				if (field.getLength() > 0) {
-					buffer.append("(").append(field.getLength()).append(") ");
-				} else {
-					buffer.append("(50) ");
-				}
-			}
-		} else if ("sqlserver".equalsIgnoreCase(dbType)) {
-			if ("Integer".equals(field.getJavaType())) {
-				buffer.append(" integer ");
-			} else if ("Long".equals(field.getJavaType())) {
-				buffer.append(" bigint ");
-			} else if ("Double".equals(field.getJavaType())) {
-				buffer.append(" double precision ");
-			} else if ("Date".equals(field.getJavaType())) {
-				buffer.append(" datetime ");
-			} else if ("Clob".equals(field.getJavaType())) {
-				buffer.append(" text ");
-			} else if ("Blob".equals(field.getJavaType())) {
-				buffer.append(" image ");
-			} else if ("Boolean".equals(field.getJavaType())) {
-				buffer.append(" tinyint ");
-			} else if ("String".equals(field.getJavaType())) {
-				buffer.append(" nvarchar ");
-				if (field.getLength() > 0) {
-					buffer.append(" (").append(field.getLength()).append(") ");
-				} else {
-					buffer.append(" (50) ");
-				}
-			}
-		} else if (POSTGRESQL.equalsIgnoreCase(dbType)) {
-			if ("Integer".equals(field.getJavaType())) {
-				buffer.append(" integer ");
-			} else if ("Long".equals(field.getJavaType())) {
-				buffer.append(" bigint ");
-			} else if ("Double".equals(field.getJavaType())) {
-				buffer.append(" double precision ");
-			} else if ("Date".equals(field.getJavaType())) {
-				buffer.append(" timestamp ");
-			} else if ("Clob".equals(field.getJavaType())) {
-				buffer.append(" text ");
-			} else if ("Blob".equals(field.getJavaType())) {
-				buffer.append(" bytea ");
-			} else if ("Boolean".equals(field.getJavaType())) {
-				buffer.append(" boolean ");
-			} else if ("String".equals(field.getJavaType())) {
-				buffer.append(" varchar ");
-				if (field.getLength() > 0) {
-					buffer.append(" (").append(field.getLength()).append(") ");
-				} else {
-					buffer.append(" (50) ");
-				}
-			}
-		} else if ("sqlite".equalsIgnoreCase(dbType)) {
-			if ("Integer".equals(field.getJavaType())) {
-				buffer.append(" INTEGER ");
-			} else if ("Long".equals(field.getJavaType())) {
-				buffer.append(" INTEGER ");
-			} else if ("Double".equals(field.getJavaType())) {
-				buffer.append(" REAL ");
-			} else if ("Date".equals(field.getJavaType())) {
-				buffer.append(" TEXT ");
-			} else if ("Clob".equals(field.getJavaType())) {
-				buffer.append(" TEXT ");
-			} else if ("Blob".equals(field.getJavaType())) {
-				buffer.append(" BLOB ");
-			} else if ("String".equals(field.getJavaType())) {
-				buffer.append(" TEXT ");
-				if (field.getLength() > 0) {
-					buffer.append(" (").append(field.getLength()).append(") ");
-				} else {
-					buffer.append(" (50) ");
-				}
-			}
-		} else {
-			throw new RuntimeException(dbType
-					+ " is not support database type.");
-		}
-
-		buffer.append(";");
-
-		return buffer.toString();
-	}
-
 	public static List<String> getPrimaryKeys(Connection connection,
 			String tableName) {
+		ResultSet rs = null;
 		List<String> primaryKeys = new java.util.ArrayList<String>();
 		try {
 			String dbType = DBConnectionFactory.getDatabaseType(connection);
@@ -2150,13 +1769,16 @@ public class DBUtils {
 				tableName = tableName.toLowerCase();
 			}
 
-			ResultSet rs = metaData.getPrimaryKeys(null, null, tableName);
+			rs = metaData.getPrimaryKeys(null, null, tableName);
 			while (rs.next()) {
 				primaryKeys.add(rs.getString("column_name").toLowerCase());
 			}
+
 			// logger.debug(tableName + " primaryKeys:" + primaryKeys);
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
+		} finally {
+			JdbcUtils.close(rs);
 		}
 		return primaryKeys;
 	}
@@ -2164,6 +1786,7 @@ public class DBUtils {
 	public static List<String> getPrimaryKeys(String tableName) {
 		List<String> primaryKeys = new java.util.ArrayList<String>();
 		Connection connection = null;
+		ResultSet rs = null;
 		try {
 			connection = DBConnectionFactory.getConnection();
 			String dbType = DBConnectionFactory.getDatabaseType(connection);
@@ -2181,15 +1804,17 @@ public class DBUtils {
 				tableName = tableName.toLowerCase();
 			}
 
-			ResultSet rs = metaData.getPrimaryKeys(null, null, tableName);
+			rs = metaData.getPrimaryKeys(null, null, tableName);
 			while (rs.next()) {
 				primaryKeys.add(rs.getString("column_name"));
 			}
+
 			// logger.debug(tableName + " primaryKeys:" + primaryKeys);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
+			JdbcUtils.close(rs);
 			JdbcUtils.close(connection);
 		}
 		return primaryKeys;
@@ -2199,6 +1824,7 @@ public class DBUtils {
 			String tableName) {
 		List<String> primaryKeys = new java.util.ArrayList<String>();
 		Connection connection = null;
+		ResultSet rs = null;
 		try {
 			connection = DBConnectionFactory.getConnection(systemName);
 			String dbType = DBConnectionFactory.getDatabaseType(connection);
@@ -2216,7 +1842,7 @@ public class DBUtils {
 				tableName = tableName.toLowerCase();
 			}
 
-			ResultSet rs = metaData.getPrimaryKeys(null, null, tableName);
+			rs = metaData.getPrimaryKeys(null, null, tableName);
 			while (rs.next()) {
 				primaryKeys.add(rs.getString("column_name"));
 			}
@@ -2224,6 +1850,7 @@ public class DBUtils {
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		} finally {
+			JdbcUtils.close(rs);
 			JdbcUtils.close(connection);
 		}
 		return primaryKeys;
@@ -2255,7 +1882,6 @@ public class DBUtils {
 			connection = DBConnectionFactory.getConnection();
 			stmt = connection.createStatement();
 			rs = stmt.executeQuery(" select count(*) from " + tableName);
-
 			if (rs.next()) {
 				return rs.getInt(1);
 			}
@@ -2303,51 +1929,6 @@ public class DBUtils {
 		return tables;
 	}
 
-	public static boolean isLegalQuerySql(String sql) {
-		if (StringUtils.isEmpty(sql)) {
-			return false;
-		}
-
-		boolean isLegal = true;
-
-		sql = sql.toLowerCase();
-		if (sql.indexOf(" insert ") != -1) {
-			isLegal = false;
-		}
-		if (sql.indexOf(" update ") != -1) {
-			isLegal = false;
-		}
-		if (sql.indexOf(" delete ") != -1) {
-			isLegal = false;
-		}
-		if (sql.indexOf(" create ") != -1) {
-			isLegal = false;
-		}
-		if (sql.indexOf(" alter ") != -1) {
-			isLegal = false;
-		}
-		if (sql.indexOf(" drop ") != -1) {
-			isLegal = false;
-		}
-
-		return isLegal;
-	}
-
-	public static boolean isAllowedTable(String tableName) {
-		if (StringUtils.equalsIgnoreCase(tableName, "userinfo")) {
-			return false;
-		} else if (StringUtils.equalsIgnoreCase(tableName, "sys_user")) {
-			return false;
-		} else if (StringUtils.equalsIgnoreCase(tableName, "sys_database")) {
-			return false;
-		} else if (StringUtils.equalsIgnoreCase(tableName, "sys_key")) {
-			return false;
-		} else if (StringUtils.equalsIgnoreCase(tableName, "proj_muiprojlist")) {
-			return false;
-		}
-		return true;
-	}
-
 	public static boolean isAllowedSql(String sql) {
 		if (StringUtils.isEmpty(sql)) {
 			return false;
@@ -2372,6 +1953,51 @@ public class DBUtils {
 			isLegal = false;
 		}
 		if (sql.indexOf("sys_property") != -1) {
+			isLegal = false;
+		}
+
+		return isLegal;
+	}
+
+	public static boolean isAllowedTable(String tableName) {
+		if (StringUtils.equalsIgnoreCase(tableName, "userinfo")) {
+			return false;
+		} else if (StringUtils.equalsIgnoreCase(tableName, "sys_user")) {
+			return false;
+		} else if (StringUtils.equalsIgnoreCase(tableName, "sys_database")) {
+			return false;
+		} else if (StringUtils.equalsIgnoreCase(tableName, "sys_key")) {
+			return false;
+		} else if (StringUtils.equalsIgnoreCase(tableName, "proj_muiprojlist")) {
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean isLegalQuerySql(String sql) {
+		if (StringUtils.isEmpty(sql)) {
+			return false;
+		}
+
+		boolean isLegal = true;
+
+		sql = sql.toLowerCase();
+		if (sql.indexOf(" insert ") != -1) {
+			isLegal = false;
+		}
+		if (sql.indexOf(" update ") != -1) {
+			isLegal = false;
+		}
+		if (sql.indexOf(" delete ") != -1) {
+			isLegal = false;
+		}
+		if (sql.indexOf(" create ") != -1) {
+			isLegal = false;
+		}
+		if (sql.indexOf(" alter ") != -1) {
+			isLegal = false;
+		}
+		if (sql.indexOf(" drop ") != -1) {
 			isLegal = false;
 		}
 
@@ -2672,6 +2298,7 @@ public class DBUtils {
 		return sb.toString();
 	}
 
+	@SuppressWarnings("resource")
 	public static boolean tableExists(Connection connection, String tableName) {
 		DatabaseMetaData dbmd = null;
 		ResultSet rs = null;
@@ -2684,20 +2311,14 @@ public class DBUtils {
 					return true;
 				}
 			}
+			logger.info(tableName + " not exist.");
+			return false;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-					rs = null;
-				} catch (SQLException ex) {
-				}
-			}
+			JdbcUtils.close(rs);
 		}
-		logger.info(tableName + " not exist.");
-		return false;
 	}
 
 	/**
@@ -2739,7 +2360,5 @@ public class DBUtils {
 			JdbcUtils.close(conn);
 		}
 	}
-	
- 
 
 }

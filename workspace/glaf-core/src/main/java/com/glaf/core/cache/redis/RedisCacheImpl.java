@@ -103,10 +103,10 @@ public class RedisCacheImpl implements Cache {
 			return;
 		}
 		if (isBrokenResource) {
-			redisPool.returnBrokenResource(jedis);
+			redisPool.returnResourceObject(jedis);
 			jedis = null;
 		} else {
-			redisPool.returnResource(jedis);
+			redisPool.returnResourceObject(jedis);
 		}
 	}
 

@@ -48,8 +48,14 @@ public class SysDataLog implements Serializable, JSONable {
 	@Column(name = "ACTORID_", length = 50)
 	private String actorId;
 
-	@Column(name = "OPENID_", length = 200)
-	private String openId;
+	/**
+	 * 服务标识
+	 */
+	@Column(name = "SERVICEKEY_", length = 50)
+	protected String serviceKey;
+
+	@Column(name = "BUSINESSKEY_", length = 500)
+	private String businessKey;
 
 	@Column(name = "IP_", length = 100)
 	private String ip;
@@ -102,6 +108,10 @@ public class SysDataLog implements Serializable, JSONable {
 		return actorId;
 	}
 
+	public String getBusinessKey() {
+		return businessKey;
+	}
+
 	public String getContent() {
 		return content;
 	}
@@ -126,12 +136,12 @@ public class SysDataLog implements Serializable, JSONable {
 		return moduleId;
 	}
 
-	public String getOpenId() {
-		return openId;
-	}
-
 	public String getOperate() {
 		return operate;
+	}
+
+	public String getServiceKey() {
+		return serviceKey;
 	}
 
 	public String getSuffix() {
@@ -162,6 +172,10 @@ public class SysDataLog implements Serializable, JSONable {
 		this.actorId = actorId;
 	}
 
+	public void setBusinessKey(String businessKey) {
+		this.businessKey = businessKey;
+	}
+
 	public void setContent(String content) {
 		this.content = content;
 	}
@@ -186,12 +200,12 @@ public class SysDataLog implements Serializable, JSONable {
 		this.moduleId = moduleId;
 	}
 
-	public void setOpenId(String openId) {
-		this.openId = openId;
-	}
-
 	public void setOperate(String operate) {
 		this.operate = operate;
+	}
+
+	public void setServiceKey(String serviceKey) {
+		this.serviceKey = serviceKey;
 	}
 
 	public void setSuffix(String suffix) {

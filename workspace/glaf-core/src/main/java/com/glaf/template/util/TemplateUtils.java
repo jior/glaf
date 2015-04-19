@@ -52,7 +52,11 @@ public class TemplateUtils {
 					}
 				}
 			}
-			TemplateUtils.process(context, template.getContent());
+			String text = TemplateUtils.process(context, template.getContent());
+			try {
+				writer.write(text);
+			} catch (IOException e) {
+			}
 		}
 	}
 
@@ -73,7 +77,11 @@ public class TemplateUtils {
 					}
 				}
 			}
-			TemplateUtils.process(context, template.getContent());
+			String text = TemplateUtils.process(context, template.getContent());
+			try {
+				writer.write(text);
+			} catch (IOException e) {
+			}
 		}
 	}
 
@@ -96,6 +104,24 @@ public class TemplateUtils {
 			ex.printStackTrace();
 		}
 		return result;
+	}
+
+	public static void process(Map<String, Object> context, String content,
+			Writer writer) {
+		if (content == null) {
+			return;
+		}
+		try {
+			cfg.setTemplateLoader(new StringTemplateLoader(content));
+			cfg.setDefaultEncoding("UTF-8");
+			Template template = cfg.getTemplate("");
+			template.process(context, writer);
+			writer.flush();
+		} catch (TemplateException ex) {
+			ex.printStackTrace();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 }

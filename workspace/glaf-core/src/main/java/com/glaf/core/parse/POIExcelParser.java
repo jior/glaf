@@ -1,5 +1,6 @@
 package com.glaf.core.parse;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -68,163 +69,176 @@ public class POIExcelParser implements Parser {
 		HSSFWorkbook wb = null;
 		try {
 			wb = new HSSFWorkbook(data);
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		}
 
-		int sheetCount = wb.getNumberOfSheets();
-		SimpleDateFormat formatter = null;
-		for (int r = 0; r < sheetCount; r++) {
-			HSSFSheet sheet = wb.getSheetAt(r);
-			int rowCount = sheet.getPhysicalNumberOfRows();
-			for (int i = 0; i < rowCount; i++) {
-				int startRow = metadata.getStartRow();// 从1开始
-				if (startRow > 0 && i < startRow - 1) {
-					continue;// 跳过开始行
-				}
-				HSSFRow row = sheet.getRow(i);
-				TableModel model = new TableModel();
+			int sheetCount = wb.getNumberOfSheets();
+			SimpleDateFormat formatter = null;
+			for (int r = 0; r < sheetCount; r++) {
+				HSSFSheet sheet = wb.getSheetAt(r);
+				int rowCount = sheet.getPhysicalNumberOfRows();
+				for (int i = 0; i < rowCount; i++) {
+					int startRow = metadata.getStartRow();// 从1开始
+					if (startRow > 0 && i < startRow - 1) {
+						continue;// 跳过开始行
+					}
+					HSSFRow row = sheet.getRow(i);
+					TableModel model = new TableModel();
 
-				model.setIdColumn(metadata.getIdColumn());
-				model.setTableName(metadata.getTableName());
-				model.setAggregationKeys(metadata.getAggregationKeys());
+					model.setIdColumn(metadata.getIdColumn());
+					model.setTableName(metadata.getTableName());
+					model.setAggregationKeys(metadata.getAggregationKeys());
 
-				int colCount = row.getPhysicalNumberOfCells();
-				// logger.info("column count="+colCount);
-				int colIndex = 0;
-				for (ColumnModel cell : metadata.getColumns()) {
-					if (cell.getPosition() > 0
-							&& cell.getPosition() <= colCount) {
-						colIndex++;
-						HSSFCell hssfCell = row.getCell(cell.getPosition() - 1);
-						if (hssfCell == null) {
-							continue;
-						}
-						ColumnModel col = new ColumnModel();
-						col.setName(cell.getName());
-						col.setColumnName(cell.getColumnName());
-						col.setValueExpression(cell.getValueExpression());
-						String javaType = cell.getType();
+					int colCount = row.getPhysicalNumberOfCells();
+					// logger.info("column count="+colCount);
+					int colIndex = 0;
+					for (ColumnModel cell : metadata.getColumns()) {
+						if (cell.getPosition() > 0
+								&& cell.getPosition() <= colCount) {
+							colIndex++;
+							HSSFCell hssfCell = row
+									.getCell(cell.getPosition() - 1);
+							if (hssfCell == null) {
+								continue;
+							}
+							ColumnModel col = new ColumnModel();
+							col.setName(cell.getName());
+							col.setColumnName(cell.getColumnName());
+							col.setValueExpression(cell.getValueExpression());
+							String javaType = cell.getType();
 
-						String value = null;
+							String value = null;
 
-						switch (hssfCell.getCellType()) {
-						case HSSFCell.CELL_TYPE_FORMULA:
-							break;
-						case HSSFCell.CELL_TYPE_BOOLEAN:
-							value = String.valueOf(hssfCell
-									.getBooleanCellValue());
-							break;
-						case HSSFCell.CELL_TYPE_NUMERIC:
-							if ("Date".equals(javaType)) {
-								Date date = hssfCell.getDateCellValue();
-								if (date != null) {
-									col.setDateValue(date);
-									col.setValue(date);
-								}
-							} else {
+							switch (hssfCell.getCellType()) {
+							case HSSFCell.CELL_TYPE_FORMULA:
+								break;
+							case HSSFCell.CELL_TYPE_BOOLEAN:
 								value = String.valueOf(hssfCell
-										.getNumericCellValue());
-							}
-							break;
-						case HSSFCell.CELL_TYPE_STRING:
-							if (hssfCell.getRichStringCellValue() != null) {
-								value = hssfCell.getRichStringCellValue()
-										.getString();
-							} else {
-								value = hssfCell.getStringCellValue();
-							}
-							break;
-						default:
-							if (StringUtils.isNotEmpty(hssfCell
-									.getStringCellValue())) {
-								value = hssfCell.getStringCellValue();
-							}
-							break;
-						}
-
-						if (StringUtils.isNotEmpty(value)) {
-							value = value.trim();
-							if (value.endsWith(".0")) {
-								value = value.substring(0, value.length() - 2);
-							}
-							col.setStringValue(value);
-							col.setValue(value);
-
-							if ("Boolean".equals(javaType)) {
-								col.setBooleanValue(Boolean.valueOf(value));
-								col.setValue(Boolean.valueOf(value));
-							} else if ("Integer".equals(javaType)) {
-								if (value.indexOf(".") != -1) {
-									value = value.substring(0,
-											value.indexOf("."));
-								}
-								col.setIntValue(Integer.parseInt(value));
-								col.setValue(Integer.parseInt(value));
-							} else if ("Long".equals(javaType)) {
-								if (value.indexOf(".") != -1) {
-									value = value.substring(0,
-											value.indexOf("."));
-								}
-								col.setLongValue(Long.parseLong(value));
-								col.setValue(Long.parseLong(value));
-							} else if ("Double".equals(javaType)) {
-								col.setDoubleValue(Double.parseDouble(value));
-								col.setValue(Double.parseDouble(value));
-							} else if ("Date".equals(javaType)) {
-								if (cell.getFormat() != null) {
-									try {
-										formatter = new SimpleDateFormat(
-												cell.getFormat());
-										Date date = formatter.parse(value);
+										.getBooleanCellValue());
+								break;
+							case HSSFCell.CELL_TYPE_NUMERIC:
+								if ("Date".equals(javaType)) {
+									Date date = hssfCell.getDateCellValue();
+									if (date != null) {
 										col.setDateValue(date);
 										col.setValue(date);
-									} catch (ParseException ex) {
-										logger.debug("error date format: row("
-												+ startRow + ") col("
-												+ colIndex + ")");
-										ex.printStackTrace();
 									}
 								} else {
-									try {
-										value = StringTools.replace(value, "/",
-												"-");
-										Date date = DateUtils.toDate(value);
-										col.setDateValue(date);
-										col.setValue(date);
-									} catch (Exception ex) {
-										logger.debug("error date format: row("
-												+ startRow + ") col("
-												+ colIndex + ")");
-										ex.printStackTrace();
+									value = String.valueOf(hssfCell
+											.getNumericCellValue());
+								}
+								break;
+							case HSSFCell.CELL_TYPE_STRING:
+								if (hssfCell.getRichStringCellValue() != null) {
+									value = hssfCell.getRichStringCellValue()
+											.getString();
+								} else {
+									value = hssfCell.getStringCellValue();
+								}
+								break;
+							default:
+								if (StringUtils.isNotEmpty(hssfCell
+										.getStringCellValue())) {
+									value = hssfCell.getStringCellValue();
+								}
+								break;
+							}
+
+							if (StringUtils.isNotEmpty(value)) {
+								value = value.trim();
+								if (value.endsWith(".0")) {
+									value = value.substring(0,
+											value.length() - 2);
+								}
+								col.setStringValue(value);
+								col.setValue(value);
+
+								if ("Boolean".equals(javaType)) {
+									col.setBooleanValue(Boolean.valueOf(value));
+									col.setValue(Boolean.valueOf(value));
+								} else if ("Integer".equals(javaType)) {
+									if (value.indexOf(".") != -1) {
+										value = value.substring(0,
+												value.indexOf("."));
+									}
+									col.setIntValue(Integer.parseInt(value));
+									col.setValue(Integer.parseInt(value));
+								} else if ("Long".equals(javaType)) {
+									if (value.indexOf(".") != -1) {
+										value = value.substring(0,
+												value.indexOf("."));
+									}
+									col.setLongValue(Long.parseLong(value));
+									col.setValue(Long.parseLong(value));
+								} else if ("Double".equals(javaType)) {
+									col.setDoubleValue(Double
+											.parseDouble(value));
+									col.setValue(Double.parseDouble(value));
+								} else if ("Date".equals(javaType)) {
+									if (cell.getFormat() != null) {
+										try {
+											formatter = new SimpleDateFormat(
+													cell.getFormat());
+											Date date = formatter.parse(value);
+											col.setDateValue(date);
+											col.setValue(date);
+										} catch (ParseException ex) {
+											logger.debug("error date format: row("
+													+ startRow
+													+ ") col("
+													+ colIndex + ")");
+											ex.printStackTrace();
+										}
+									} else {
+										try {
+											value = StringTools.replace(value,
+													"/", "-");
+											Date date = DateUtils.toDate(value);
+											col.setDateValue(date);
+											col.setValue(date);
+										} catch (Exception ex) {
+											logger.debug("error date format: row("
+													+ startRow
+													+ ") col("
+													+ colIndex + ")");
+											ex.printStackTrace();
+										}
 									}
 								}
 							}
-						}
-						if (metadata.getIdColumn() != null) {
-							if (StringUtils.equals(col.getColumnName(),
-									metadata.getIdColumn().getColumnName())) {
-								ColumnModel idColumn = new ColumnModel();
-								idColumn.setName(metadata.getIdColumn()
-										.getName());
-								idColumn.setType(metadata.getIdColumn()
-										.getType());
-								idColumn.setColumnName(metadata.getIdColumn()
-										.getColumnName());
-								idColumn.setValue(col.getValue());
-								model.setIdColumn(idColumn);
+							if (metadata.getIdColumn() != null) {
+								if (StringUtils.equals(col.getColumnName(),
+										metadata.getIdColumn().getColumnName())) {
+									ColumnModel idColumn = new ColumnModel();
+									idColumn.setName(metadata.getIdColumn()
+											.getName());
+									idColumn.setType(metadata.getIdColumn()
+											.getType());
+									idColumn.setColumnName(metadata
+											.getIdColumn().getColumnName());
+									idColumn.setValue(col.getValue());
+									model.setIdColumn(idColumn);
+								}
 							}
+							model.addColumn(col);
 						}
-						model.addColumn(col);
 					}
-				}
-				if (metadata.getIdColumn() != null
-						&& metadata.getIdColumn().isRequired()) {
-					if (model.getIdColumn().getValue() != null) {
+					if (metadata.getIdColumn() != null
+							&& metadata.getIdColumn().isRequired()) {
+						if (model.getIdColumn().getValue() != null) {
+							rows.add(model);
+						}
+					} else {
 						rows.add(model);
 					}
-				} else {
-					rows.add(model);
+				}
+			}
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			if (wb != null) {
+				try {
+					wb.close();
+					wb = null;
+				} catch (IOException e) {
 				}
 			}
 		}

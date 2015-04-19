@@ -8,7 +8,8 @@
 		<id property="id" column="ID_" jdbcType="BIGINT" />
 		<result property="accountId" column="ACCOUNTID_" jdbcType="BIGINT" />
 		<result property="actorId" column="ACTORID_" jdbcType="VARCHAR" />
-		<result property="openId" column="OPENID_" jdbcType="VARCHAR" />
+		<result property="serviceKey" column="SERVICEKEY_" jdbcType="VARCHAR" />
+		<result property="businessKey" column="BUSINESSKEY_" jdbcType="VARCHAR" />
 		<result property="ip" column="IP_" jdbcType="VARCHAR" />
 		<result property="createTime" column="CREATETIME_" jdbcType="TIMESTAMP" />
 		<result property="moduleId" column="MODULEID_" jdbcType="VARCHAR" />
@@ -29,8 +30,11 @@
 			<if test="actorId != null">
 				,ACTORID_
 			</if>
-			<if test="openId != null">
-				,OPENID_
+			<if test="serviceKey != null">
+				,SERVICEKEY_
+			</if>
+			<if test="businessKey != null">
+				,BUSINESSKEY_
 			</if>
 			<if test="ip != null">
 				,IP_
@@ -63,8 +67,11 @@
 			<if test="actorId != null">
 				,#{actorId, jdbcType=VARCHAR}
 			</if>
-			<if test="openId != null">
-				,#{openId, jdbcType=VARCHAR}
+			<if test="serviceKey != null">
+				,#{serviceKey, jdbcType=VARCHAR}
+			</if>
+			<if test="businessKey != null">
+				,#{businessKey, jdbcType=VARCHAR}
 			</if>
 			<if test="ip != null">
 				,#{ip, jdbcType=VARCHAR}
@@ -169,8 +176,12 @@
 				</foreach>
 			</if>
 
-			<if test="openId != null and openId != '' ">
-				and E.OPENID_ = #{openId}
+			<if test="serviceKey != null and serviceKey != '' ">
+				and E.SERVICEKEY_ = #{serviceKey}
+			</if>
+
+			<if test="businessKey != null and businessKey != '' ">
+				and E.BUSINESSKEY_ = #{businessKey}
 			</if>
 
 			<if test="ip != null and ip != '' ">

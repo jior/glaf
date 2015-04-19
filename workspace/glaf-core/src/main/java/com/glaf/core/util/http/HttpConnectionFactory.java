@@ -23,27 +23,27 @@ import javax.net.ssl.TrustManager;
 import com.glaf.core.util.MyX509TrustManager;
 import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.AsyncHttpClientConfig;
+import com.ning.http.client.providers.netty.NettyAsyncHttpProvider;
+import com.ning.http.client.providers.netty.NettyAsyncHttpProviderConfig;
 
 public class HttpConnectionFactory {
 
-	private static class HttpConnectionFactoryHolder {
-		public static HttpConnectionFactory instance = new HttpConnectionFactory();
+	private static volatile AsyncHttpClient httpClient;
+
+	private static volatile AsyncHttpClient httpsClient;
+
+	public static void close() {
+		if (httpClient != null && !httpClient.isClosed()) {
+			httpClient.close();
+		}
+		if (httpsClient != null && !httpsClient.isClosed()) {
+			httpsClient.close();
+		}
 	}
 
-	private static AsyncHttpClient httpClient;
-
-	private static AsyncHttpClient httpsClient;
-
-	public static HttpConnectionFactory getInstance() {
-		return HttpConnectionFactoryHolder.instance;
-	}
-
-	private HttpConnectionFactory() {
-
-	}
-
-	public AsyncHttpClient getHttpClient() {
+	public static AsyncHttpClient getHttpClient() {
 		if (httpClient == null || httpClient.isClosed()) {
+			NettyAsyncHttpProviderConfig providerConfig = new NettyAsyncHttpProviderConfig();
 			AsyncHttpClientConfig.Builder builder = new AsyncHttpClientConfig.Builder();
 			builder.setMaxRequestRetry(3);
 			builder.setConnectTimeout(1000 * 10);
@@ -51,15 +51,20 @@ public class HttpConnectionFactory {
 			builder.setAllowPoolingSslConnections(false);
 			builder.setAllowPoolingConnections(true);
 			builder.setFollowRedirect(true);
+			builder.setMaxRedirects(3);
 			builder.setMaxConnectionsPerHost(500);
 			builder.setMaxConnections(5000);
-			httpClient = new AsyncHttpClient(builder.build());
+			builder.setAsyncHttpClientProviderConfig(providerConfig);
+			AsyncHttpClientConfig config = builder.build();
+			httpClient = new AsyncHttpClient(
+					new NettyAsyncHttpProvider(config), config);
 		}
 		return httpClient;
 	}
 
-	public AsyncHttpClient getHttpsClient() {
+	public static AsyncHttpClient getHttpsClient() {
 		if (httpsClient == null || httpsClient.isClosed()) {
+			NettyAsyncHttpProviderConfig providerConfig = new NettyAsyncHttpProviderConfig();
 			AsyncHttpClientConfig.Builder builder = new AsyncHttpClientConfig.Builder();
 			builder.setMaxRequestRetry(3);
 			builder.setConnectTimeout(1000 * 10);
@@ -67,8 +72,11 @@ public class HttpConnectionFactory {
 			builder.setAllowPoolingSslConnections(false);
 			builder.setAllowPoolingConnections(true);
 			builder.setFollowRedirect(true);
+			builder.setMaxRedirects(3);
 			builder.setMaxConnectionsPerHost(500);
 			builder.setMaxConnections(5000);
+			builder.setAsyncHttpClientProviderConfig(providerConfig);
+			AsyncHttpClientConfig config = builder.build();
 			try {
 				// 创建SSLContext对象，并使用我们指定的信任管理器初始化
 				TrustManager[] tm = { new MyX509TrustManager() };
@@ -80,9 +88,14 @@ public class HttpConnectionFactory {
 				builder.setAllowPoolingSslConnections(true);
 			} catch (Exception ex) {
 			}
-			httpsClient = new AsyncHttpClient(builder.build());
+			httpsClient = new AsyncHttpClient(
+					new NettyAsyncHttpProvider(config), config);
 		}
 		return httpsClient;
+	}
+
+	private HttpConnectionFactory() {
+
 	}
 
 }

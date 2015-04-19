@@ -20,8 +20,7 @@ package com.glaf.core.test;
 
 import java.io.*;
 
-import com.glaf.core.container.MongodbContainer;
-import com.mongodb.DB;
+ 
 import com.mongodb.gridfs.GridFS;
 
 public class MongoDBGridFSTest {
@@ -46,13 +45,13 @@ public class MongoDBGridFSTest {
 	}
 
 	public static void main(String[] args) throws Exception {
-		long start = System.currentTimeMillis();
-		String dbname = "gridfs_svn2";
-		DB db = MongodbContainer.getInstance().getDB(dbname);
-		GridFS gridFS = new GridFS(db, "mongo");
-		save(new File(args[0]), gridFS);
-		long time = System.currentTimeMillis() - start;
-		System.out.println("times:" + time);
+		//long start = System.currentTimeMillis();
+		//String dbname = "gridfs_svn2";
+		//MongoDatabase db = MongodbContainer.getInstance().getDatabase(dbname);
+		//GridFS gridFS = new GridFS(db, "mongo");
+		//save(new File(args[0]), gridFS);
+		//long time = System.currentTimeMillis() - start;
+		//System.out.println("times:" + time);
 	}
 
 }

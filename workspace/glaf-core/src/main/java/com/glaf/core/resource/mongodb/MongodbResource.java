@@ -20,19 +20,20 @@ package com.glaf.core.resource.mongodb;
 
 import java.util.List;
 
+import org.bson.Document;
+
 import com.glaf.core.container.MongodbContainer;
+
 import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
- 
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
 
 public class MongodbResource implements com.glaf.core.resource.Resource {
 
-	protected DBCollection dbCollection;
+	protected MongoCollection<Document> dbCollection;
 
-	protected DB db;
+	protected MongoDatabase db;
 
 	protected String servers;
 
@@ -48,7 +49,7 @@ public class MongodbResource implements com.glaf.core.resource.Resource {
 	}
 
 	protected void buildClient() {
-		db = MongodbContainer.getInstance().getDB("resourcedb");
+		db = MongodbContainer.getInstance().getDatabase("resourcedb");
 		dbCollection = db.getCollection("collection");
 	}
 
@@ -58,42 +59,46 @@ public class MongodbResource implements com.glaf.core.resource.Resource {
 
 	public void destroy() {
 		dbCollection.drop();
-		db.dropDatabase();
+		db.drop();
 	}
 
 	@SuppressWarnings("rawtypes")
 	public void evict(List keys) {
 		if (keys != null && !keys.isEmpty()) {
-			BasicDBObject query = new BasicDBObject();
+			BasicDBObject filter = new BasicDBObject();
 			for (Object key : keys) {
-				query.put("key", key);
-				dbCollection.remove(query);
+				filter.put("key", key);
+				dbCollection.deleteOne(filter);
 			}
 		}
 	}
 
 	public void evict(Object key) {
-		BasicDBObject query = new BasicDBObject();
-		query.put("key", key);
-		dbCollection.remove(query);
+		BasicDBObject filter = new BasicDBObject();
+		filter.put("key", key);
+		dbCollection.deleteOne(filter);
 	}
 
 	public Object getObject(Object key) {
-		BasicDBObject query = new BasicDBObject();
-		query.put("key", key);
-		DBCursor cur = dbCollection.find(query);
+		BasicDBObject filter = new BasicDBObject();
+		filter.put("key", key);
+		MongoCursor<Document> cur = dbCollection.find(filter).iterator();
 		long now = System.currentTimeMillis();
 		Object value = null;
-		while (cur.hasNext()) {
-			DBObject dbObject = cur.next();
-			value = dbObject.get(key.toString());
-			long saveTime = (Long) dbObject.get("time");
-			if ((now - saveTime) > expireMinutes * 60000) {
-				/**
-				 * 如果已经过期，就删除分布式配置对象
-				 */
-				dbCollection.remove(query);
+		try {
+			while (cur.hasNext()) {
+				Document doc = cur.next();
+				value = doc.get(key.toString());
+				long saveTime = (Long) doc.get("time");
+				if ((now - saveTime) > expireMinutes * 60000) {
+					/**
+					 * 如果已经过期，就删除分布式配置对象
+					 */
+					dbCollection.deleteOne(filter);
+				}
 			}
+		} finally {
+			cur.close();
 		}
 		return value;
 	}
@@ -111,11 +116,11 @@ public class MongodbResource implements com.glaf.core.resource.Resource {
 	}
 
 	public void put(Object key, byte[] value) {
-		BasicDBObject doc = new BasicDBObject();
+		Document doc = new Document();
 		doc.put("key", key);
 		doc.put(key.toString(), value);
 		doc.put("time", System.currentTimeMillis());
-		dbCollection.insert(doc);
+		dbCollection.insertOne(doc);
 	}
 
 	public void setResourceSize(int cacheSize) {
@@ -127,11 +132,11 @@ public class MongodbResource implements com.glaf.core.resource.Resource {
 	}
 
 	public void update(Object key, Object value) {
-		BasicDBObject doc = new BasicDBObject();
+		Document doc = new Document();
 		doc.put("key", key);
 		doc.put(key.toString(), value);
 		doc.put("time", System.currentTimeMillis());
-		dbCollection.insert(doc);
+		dbCollection.insertOne(doc);
 	}
 
 	public byte[] getData(String key) {
@@ -139,11 +144,11 @@ public class MongodbResource implements com.glaf.core.resource.Resource {
 	}
 
 	public void put(String key, byte[] value) {
-		BasicDBObject doc = new BasicDBObject();
+		Document doc = new Document();
 		doc.put("key", key);
 		doc.put(key, value);
 		doc.put("time", System.currentTimeMillis());
-		dbCollection.insert(doc);
+		dbCollection.insertOne(doc);
 	}
 
 	public void remove(String key) {

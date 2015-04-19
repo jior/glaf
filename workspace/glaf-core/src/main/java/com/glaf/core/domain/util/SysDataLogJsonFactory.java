@@ -54,6 +54,15 @@ public class SysDataLogJsonFactory {
 		if (jsonObject.containsKey("createTime")) {
 			model.setCreateTime(jsonObject.getDate("createTime"));
 		}
+
+		if (jsonObject.containsKey("serviceKey")) {
+			model.setServiceKey(jsonObject.getString("serviceKey"));
+		}
+
+		if (jsonObject.containsKey("businessKey")) {
+			model.setBusinessKey(jsonObject.getString("businessKey"));
+		}
+
 		if (jsonObject.containsKey("moduleId")) {
 			model.setModuleId(jsonObject.getString("moduleId"));
 		}
@@ -106,6 +115,12 @@ public class SysDataLogJsonFactory {
 			jsonObject.put("createTime_datetime",
 					DateUtils.getDateTime(model.getCreateTime()));
 		}
+		if (model.getServiceKey() != null) {
+			jsonObject.put("serviceKey", model.getServiceKey());
+		}
+		if (model.getBusinessKey() != null) {
+			jsonObject.put("businessKey", model.getBusinessKey());
+		}
 		if (model.getModuleId() != null) {
 			jsonObject.put("moduleId", model.getModuleId());
 		}
@@ -141,6 +156,12 @@ public class SysDataLogJsonFactory {
 					DateUtils.getDate(model.getCreateTime()));
 			jsonObject.put("createTime_datetime",
 					DateUtils.getDateTime(model.getCreateTime()));
+		}
+		if (model.getServiceKey() != null) {
+			jsonObject.put("serviceKey", model.getServiceKey());
+		}
+		if (model.getBusinessKey() != null) {
+			jsonObject.put("businessKey", model.getBusinessKey());
 		}
 		if (model.getModuleId() != null) {
 			jsonObject.put("moduleId", model.getModuleId());

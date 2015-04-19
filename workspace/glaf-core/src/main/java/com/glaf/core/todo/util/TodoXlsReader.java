@@ -18,6 +18,7 @@
 
 package com.glaf.core.todo.util;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -40,78 +41,88 @@ public class TodoXlsReader {
 		HSSFWorkbook wb = null;
 		try {
 			wb = new HSSFWorkbook(inputStream);
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		}
-		HSSFSheet sheet = wb.getSheetAt(0);
-		HSSFRow row = sheet.getRow(1);
-		Map<Integer, String> keyMap = new java.util.HashMap<Integer, String>();
-		Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
-		int cells = row.getPhysicalNumberOfCells();
-		for (int colIndex = 0; colIndex < cells; colIndex++) {
-			HSSFCell cell = row.getCell(colIndex);
-			keyMap.put(colIndex, cell.getStringCellValue());
-		}
-		int sortNo = 1;
-		Set<String> keys = new HashSet<String>();
-		for (int rowIndex = 2; rowIndex < sheet.getPhysicalNumberOfRows(); rowIndex++) {
-			HSSFRow rowx = sheet.getRow(rowIndex);
-			if (rowx == null) {
-				continue;
-			}
-			// System.out.println();
-			dataMap.clear();
+
+			HSSFSheet sheet = wb.getSheetAt(0);
+			HSSFRow row = sheet.getRow(1);
+			Map<Integer, String> keyMap = new java.util.HashMap<Integer, String>();
+			Map<String, Object> dataMap = new java.util.HashMap<String, Object>();
+			int cells = row.getPhysicalNumberOfCells();
 			for (int colIndex = 0; colIndex < cells; colIndex++) {
-				String fieldName = keyMap.get(colIndex);
-				HSSFCell cell = rowx.getCell(colIndex);
-				if (cell == null) {
+				HSSFCell cell = row.getCell(colIndex);
+				keyMap.put(colIndex, cell.getStringCellValue());
+			}
+			int sortNo = 1;
+			Set<String> keys = new HashSet<String>();
+			for (int rowIndex = 2; rowIndex < sheet.getPhysicalNumberOfRows(); rowIndex++) {
+				HSSFRow rowx = sheet.getRow(rowIndex);
+				if (rowx == null) {
 					continue;
 				}
-				Object cellValue = null;
-				switch (cell.getCellType()) {
-				case HSSFCell.CELL_TYPE_FORMULA:
-					break;
-				case HSSFCell.CELL_TYPE_BOOLEAN:
-					cellValue = cell.getBooleanCellValue();
-					break;
-				case HSSFCell.CELL_TYPE_NUMERIC:
-					cellValue = cell.getNumericCellValue();
-					break;
-				case HSSFCell.CELL_TYPE_STRING:
-					if (StringUtils.isNotEmpty(cell.getRichStringCellValue()
-							.getString())) {
-						cellValue = cell.getRichStringCellValue().getString();
+				// System.out.println();
+				dataMap.clear();
+				for (int colIndex = 0; colIndex < cells; colIndex++) {
+					String fieldName = keyMap.get(colIndex);
+					HSSFCell cell = rowx.getCell(colIndex);
+					if (cell == null) {
+						continue;
 					}
-					break;
-				default:
-					if (StringUtils.isNotEmpty(cell.getStringCellValue())) {
-						cellValue = cell.getStringCellValue();
+					Object cellValue = null;
+					switch (cell.getCellType()) {
+					case HSSFCell.CELL_TYPE_FORMULA:
+						break;
+					case HSSFCell.CELL_TYPE_BOOLEAN:
+						cellValue = cell.getBooleanCellValue();
+						break;
+					case HSSFCell.CELL_TYPE_NUMERIC:
+						cellValue = cell.getNumericCellValue();
+						break;
+					case HSSFCell.CELL_TYPE_STRING:
+						if (StringUtils.isNotEmpty(cell
+								.getRichStringCellValue().getString())) {
+							cellValue = cell.getRichStringCellValue()
+									.getString();
+						}
+						break;
+					default:
+						if (StringUtils.isNotEmpty(cell.getStringCellValue())) {
+							cellValue = cell.getStringCellValue();
+						}
+						break;
 					}
-					break;
+					if (cellValue != null) {
+						dataMap.put(fieldName, cellValue);
+						// System.out.print("\t" + fieldName + "=" + cellValue);
+					}
 				}
-				if (cellValue != null) {
-					dataMap.put(fieldName, cellValue);
-					// System.out.print("\t" + fieldName + "=" + cellValue);
+
+				if (dataMap.get("code") != null) {
+					String id = ParamUtils.getString(dataMap, "id");
+					Todo model = new Todo();
+					dataMap.remove("id");
+					Tools.populate(model, dataMap);
+
+					if (!keys.contains(model.getCode())) {
+						model.setSortNo(sortNo++);
+						if (id != null) {
+							model.setId(Long.parseLong(id));
+						}
+						if (ParamUtils.getDouble(dataMap, "limitDay") > 0) {
+							model.setLimitDay(ParamUtils.getInt(dataMap,
+									"limitDay"));
+						}
+						todos.add(model);
+						keys.add(model.getCode());
+					}
 				}
 			}
-
-			if (dataMap.get("code") != null) {
-				String id = ParamUtils.getString(dataMap, "id");
-				Todo model = new Todo();
-				dataMap.remove("id");
-				Tools.populate(model, dataMap);
-
-				if (!keys.contains(model.getCode())) {
-					model.setSortNo(sortNo++);
-					if (id != null) {
-						model.setId(Long.parseLong(id));
-					}
-					if (ParamUtils.getDouble(dataMap, "limitDay") > 0) {
-						model.setLimitDay(ParamUtils
-								.getInt(dataMap, "limitDay"));
-					}
-					todos.add(model);
-					keys.add(model.getCode());
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		} finally {
+			if (wb != null) {
+				try {
+					wb.close();
+					wb = null;
+				} catch (IOException e) {
 				}
 			}
 		}

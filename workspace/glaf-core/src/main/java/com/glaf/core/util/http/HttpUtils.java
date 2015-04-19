@@ -215,9 +215,9 @@ public class HttpUtils {
 		InputStream inputStream = null;
 		try {
 			if (isSSL) {
-				client = HttpConnectionFactory.getInstance().getHttpClient();
+				client = HttpConnectionFactory.getHttpClient();
 			} else {
-				client = HttpConnectionFactory.getInstance().getHttpsClient();
+				client = HttpConnectionFactory.getHttpsClient();
 			}
 			Future<Response> future = null;
 			if ("GET".equalsIgnoreCase(requestMethod)) {
@@ -307,9 +307,9 @@ public class HttpUtils {
 		InputStreamReader inputStreamReader = null;
 		try {
 			if (isSSL) {
-				client = HttpConnectionFactory.getInstance().getHttpClient();
+				client = HttpConnectionFactory.getHttpClient();
 			} else {
-				client = HttpConnectionFactory.getInstance().getHttpsClient();
+				client = HttpConnectionFactory.getHttpsClient();
 			}
 
 			Future<Response> future = null;

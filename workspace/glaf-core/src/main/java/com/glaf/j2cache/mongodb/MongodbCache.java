@@ -20,20 +20,21 @@ package com.glaf.j2cache.mongodb;
 
 import java.util.List;
 
-import com.glaf.j2cache.CacheException;
-import com.glaf.core.container.MongodbContainer;
+import org.bson.Document;
 
+import com.glaf.j2cache.CacheException;
+
+import com.glaf.core.container.MongodbContainer;
 import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
 
 public class MongodbCache implements com.glaf.j2cache.Cache {
 
-	protected DBCollection dbCollection;
+	protected MongoCollection<Document> dbCollection;
 
-	protected DB db;
+	protected MongoDatabase db;
 
 	protected String servers;
 
@@ -49,7 +50,7 @@ public class MongodbCache implements com.glaf.j2cache.Cache {
 	}
 
 	protected void buildClient() {
-		db = MongodbContainer.getInstance().getDB("cachedb");
+		db = MongodbContainer.getInstance().getDatabase("cachedb");
 		dbCollection = db.getCollection("collection");
 	}
 
@@ -59,42 +60,46 @@ public class MongodbCache implements com.glaf.j2cache.Cache {
 
 	public void destroy() throws CacheException {
 		dbCollection.drop();
-		db.dropDatabase();
+		db.drop();
 	}
 
 	@SuppressWarnings("rawtypes")
 	public void evict(List keys) throws CacheException {
 		if (keys != null && !keys.isEmpty()) {
-			BasicDBObject query = new BasicDBObject();
+			BasicDBObject filter = new BasicDBObject();
 			for (Object key : keys) {
-				query.put("key", key);
-				dbCollection.remove(query);
+				filter.put("key", key);
+				dbCollection.deleteOne(filter);
 			}
 		}
 	}
 
 	public void evict(Object key) throws CacheException {
-		BasicDBObject query = new BasicDBObject();
-		query.put("key", key);
-		dbCollection.remove(query);
+		BasicDBObject filter = new BasicDBObject();
+		filter.put("key", key);
+		dbCollection.deleteOne(filter);
 	}
 
 	public Object get(Object key) throws CacheException {
-		BasicDBObject query = new BasicDBObject();
-		query.put("key", key);
-		DBCursor cur = dbCollection.find(query);
+		BasicDBObject filter = new BasicDBObject();
+		filter.put("key", key);
+		MongoCursor<Document> cur = dbCollection.find(filter).iterator();
 		long now = System.currentTimeMillis();
 		Object value = null;
-		while (cur.hasNext()) {
-			DBObject dbObject = cur.next();
-			value = dbObject.get(key.toString());
-			long saveTime = (Long) dbObject.get("time");
-			if ((now - saveTime) > expireMinutes * 60000) {
-				/**
-				 * 如果已经过期，就删除缓存对象
-				 */
-				dbCollection.remove(query);
+		try {
+			while (cur.hasNext()) {
+				Document doc = cur.next();
+				value = doc.get(key.toString());
+				long saveTime = (Long) doc.get("time");
+				if ((now - saveTime) > expireMinutes * 60000) {
+					/**
+					 * 如果已经过期，就删除缓存对象
+					 */
+					dbCollection.deleteOne(filter);
+				}
 			}
+		} finally {
+			cur.close();
 		}
 		return value;
 	}
@@ -112,11 +117,11 @@ public class MongodbCache implements com.glaf.j2cache.Cache {
 	}
 
 	public void put(Object key, Object value) throws CacheException {
-		BasicDBObject doc = new BasicDBObject();
+		Document doc = new Document();
 		doc.put("key", key);
 		doc.put(key.toString(), value);
 		doc.put("time", System.currentTimeMillis());
-		dbCollection.insert(doc);
+		dbCollection.insertOne(doc);
 	}
 
 	public void setCacheSize(int cacheSize) {
@@ -128,11 +133,11 @@ public class MongodbCache implements com.glaf.j2cache.Cache {
 	}
 
 	public void update(Object key, Object value) throws CacheException {
-		BasicDBObject doc = new BasicDBObject();
+		Document doc = new Document();
 		doc.put("key", key);
 		doc.put(key.toString(), value);
 		doc.put("time", System.currentTimeMillis());
-		dbCollection.insert(doc);
+		dbCollection.insertOne(doc);
 	}
 
 }

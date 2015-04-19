@@ -101,9 +101,12 @@ public class MxSysDataLogServiceImpl implements SysDataLogService {
 			SysDataLog bean = null;
 			while (!dataLogs.isEmpty()) {
 				bean = dataLogs.poll();
-				sysLogMapper.insertSysDataLog(bean);// 写历史表
-				bean.setSuffix("");
-				sysLogMapper.insertSysDataLog(bean);// 写当前表
+				try {
+					sysLogMapper.insertSysDataLog(bean);// 写历史表
+					bean.setSuffix("");
+					sysLogMapper.insertSysDataLog(bean);// 写当前表
+				} catch (Exception ex) {
+				}
 			}
 			lastUpdate = System.currentTimeMillis();
 			logger.debug("dataLogs.size:" + dataLogs.size());
@@ -117,10 +120,12 @@ public class MxSysDataLogServiceImpl implements SysDataLogService {
 			SysDataLog bean = null;
 			while (!dataLogs.isEmpty()) {
 				bean = dataLogs.poll();
-				sysLogMapper.insertSysDataLog(bean);// 写历史表
-
-				bean.setSuffix("");
-				sysLogMapper.insertSysDataLog(bean);// 写当前表
+				try {
+					sysLogMapper.insertSysDataLog(bean);// 写历史表
+					bean.setSuffix("");
+					sysLogMapper.insertSysDataLog(bean);// 写当前表
+				} catch (Exception ex) {
+				}
 			}
 			lastUpdate = System.currentTimeMillis();
 			logger.debug("dataLogs.size:" + dataLogs.size());

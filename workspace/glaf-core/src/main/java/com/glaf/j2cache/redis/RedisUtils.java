@@ -51,10 +51,10 @@ public class RedisUtils {
 			return;
 		}
 		if (isBrokenResource) {
-			pool.returnBrokenResource(jedis);
+			pool.returnResourceObject(jedis);
 			jedis = null;
 		} else {
-			pool.returnResource(jedis);
+			pool.returnResourceObject(jedis);
 		}
 	}
 

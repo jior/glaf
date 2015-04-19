@@ -292,19 +292,34 @@ public class MxSystemTemplateController {
 
 				if (filename.endsWith(".java")) {
 					fileType = 50;
+					template.setContent(new String(mFile.getBytes()));
 				} else if (filename.endsWith(".jsp")) {
 					fileType = 51;
+					template.setContent(new String(mFile.getBytes()));
 				} else if (filename.endsWith(".ftl")) {
 					fileType = 52;
 					template.setLanguage("freemarker");
+					template.setContent(new String(mFile.getBytes()));
 				} else if (filename.endsWith(".vm")) {
 					fileType = 54;
 					template.setLanguage("velocity");
+					template.setContent(new String(mFile.getBytes()));
 				} else if (filename.endsWith(".xml")) {
 					fileType = 60;
+					template.setContent(new String(mFile.getBytes()));
 				} else if (filename.endsWith(".htm")
 						|| filename.endsWith(".html")) {
 					fileType = 80;
+					template.setContent(new String(mFile.getBytes()));
+				} else if (filename.endsWith(".js")) {
+					fileType = 82;
+					template.setContent(new String(mFile.getBytes()));
+				} else if (filename.endsWith(".css")) {
+					fileType = 84;
+					template.setContent(new String(mFile.getBytes()));
+				} else if (filename.endsWith(".txt")) {
+					fileType = 85;
+					template.setContent(new String(mFile.getBytes()));
 				}
 
 				template.setDataFile(filename);

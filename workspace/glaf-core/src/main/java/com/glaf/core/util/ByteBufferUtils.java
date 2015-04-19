@@ -377,4 +377,220 @@ public class ByteBufferUtils {
 		}
 		return 0;
 	}
+
+	/**
+	 * 分配flush模式的ByteBuffer，limit和position都为0,在写入数据时，必须先翻为fill模式
+	 * 
+	 * @param capacity
+	 * @return
+	 */
+	public static ByteBuffer allocate(int capacity) {
+		ByteBuffer buff = ByteBuffer.allocate(capacity);
+		buff.limit(0);
+		return buff;
+	}
+
+	public static ByteBuffer allocateDirect(int capacity) {
+		ByteBuffer buff = ByteBuffer.allocateDirect(capacity);
+		buff.limit(0);
+		return buff;
+	}
+
+	/**
+	 * 清空buffer, 只需把positoin 和limit 同时置为0
+	 * 
+	 * @param buffer
+	 */
+	public static void clear(ByteBuffer buffer) {
+		if (buffer != null) {
+			buffer.position(0);
+			buffer.limit(0);
+		}
+	}
+
+	/**
+	 * 清空buffer, 置为fill模式
+	 * 
+	 * @param buffer
+	 */
+	public static void clearToFill(ByteBuffer buffer) {
+		if (buffer != null) {
+			buffer.position(0);
+			buffer.limit(buffer.capacity());
+		}
+	}
+
+	/**
+	 * 翻转为fill模式
+	 * 
+	 * @param buffer
+	 * @return
+	 */
+	public static int flipToFill(ByteBuffer buffer) {
+		int position = buffer.position();
+		int limit = buffer.limit();
+		// 说明正好flush完，可以完全转换未fill模式
+		if (position == limit) {
+			buffer.position(0);
+			buffer.limit(buffer.capacity());
+			return 0;
+		}
+		// 当前limit equal capacity,另申请空间
+		int capacity = buffer.capacity();
+		if (limit == capacity) {
+			buffer.compact();
+			return 0;
+		}
+		// 一般情况，剩余的容量，可写的空间
+		buffer.position(limit);
+		buffer.limit(capacity);
+		return position;
+	}
+
+	/**
+	 * 转为flush模式，即读模式，把当前写到的位置至为limit,动态传入读开始位置position, 如果position未0 ,该方法的作用和
+	 * ByteBuffer.flip()的作用等价
+	 * 
+	 * @param buffer
+	 * @param position
+	 */
+	public static void flipToFlush(ByteBuffer buffer, int position) {
+		buffer.limit(buffer.position());
+		buffer.position(position);
+	}
+
+	/**
+	 * 把buffer转换为数组。
+	 * 
+	 * @param buffer
+	 * @return
+	 */
+	public static byte[] toArray(ByteBuffer buffer) {
+		// 主要针对heap buffer
+		if (buffer.hasArray()) {
+			byte[] array = buffer.array();
+			int from = buffer.arrayOffset() + buffer.position();
+			return Arrays.copyOfRange(array, from, from + buffer.remaining());
+		}
+		// 针对 direct buffer
+		else {
+			byte[] to = new byte[buffer.remaining()];
+			buffer.slice().get(to);
+			return to;
+		}
+	}
+
+	/**
+	 * 是否为空 ，remaining() 主要是 limit - position
+	 * 
+	 * @param buff
+	 * @return
+	 */
+	public static boolean isEmpty(ByteBuffer buff) {
+		return buff == null || buff.remaining() == 0;
+	}
+
+	public static boolean hasContent(ByteBuffer buff) {
+		return buff != null && buff.remaining() > 0;
+	}
+
+	public static boolean isFull(ByteBuffer buff) {
+		return buff != null && buff.limit() == buff.capacity();
+	}
+
+	public static int length(ByteBuffer buffer) {
+		return buffer == null ? 0 : buffer.remaining();
+	}
+
+	public static int space(ByteBuffer buffer) {
+		if (buffer == null) {
+			return 0;
+		}
+		return buffer.capacity() - buffer.limit();
+	}
+
+	public static boolean compact(ByteBuffer buffer) {
+		if (buffer.position() == 0) {
+			return false;
+		}
+		boolean full = buffer.limit() == buffer.capacity();
+		buffer.compact().flip();
+		return full && buffer.limit() < buffer.capacity();
+	}
+
+	/**
+	 * 把from中未读的，写到 to 中
+	 * 
+	 * @param fromBuffer
+	 *            Buffer 读模式 flush
+	 * @param toBuffer
+	 *            Buffer 写模式 fill
+	 * @return number of bytes moved
+	 */
+	public static int put(ByteBuffer fromBuffer, ByteBuffer toBuffer) {
+		int put;
+		int remaining = fromBuffer.remaining();
+		if (remaining > 0) { // 如果空间足够，直接写入
+			if (remaining <= toBuffer.remaining()) {
+				toBuffer.put(fromBuffer);
+				put = remaining;
+				// 把from 读完
+				fromBuffer.position(fromBuffer.limit());
+			}
+			// heap buffer
+			else if (fromBuffer.hasArray()) {
+				put = toBuffer.remaining();
+				// 只读部分数据
+				toBuffer.put(fromBuffer.array(), fromBuffer.arrayOffset()
+						+ fromBuffer.position(), put);
+				fromBuffer.position(fromBuffer.position() + put);
+			}
+			// direct buffer
+			else {
+				// 只读部分数据
+				put = toBuffer.remaining();
+				ByteBuffer slice = fromBuffer.slice();
+				slice.limit(put);
+				toBuffer.put(slice);
+				fromBuffer.position(fromBuffer.position() + put);
+			}
+		} else {
+			put = 0;
+		}
+		return put;
+	}
+
+	/**
+	 * 添加 byte[] 到buffer中
+	 * 
+	 * @param toBuffer
+	 * @param bytes
+	 * @param offset
+	 * @param len
+	 */
+	public static void append(ByteBuffer toBuffer, byte[] bytes, int offset,
+			int len) { // 置为写模式
+		int pos = flipToFill(toBuffer);
+		try {
+			toBuffer.put(bytes, offset, len);
+		} finally {
+			// 置为读模式
+			flipToFlush(toBuffer, pos);
+		}
+	}
+
+	public static void readFrom(InputStream is, int needed, ByteBuffer buffer)
+			throws IOException {
+		ByteBuffer tmp = allocate(8192);
+		while (needed > 0 && buffer.hasRemaining()) {
+			int l = is.read(tmp.array(), 0, 8192);
+			if (l < 0) {
+				break;
+			}
+			tmp.position(0);
+			tmp.limit(l);
+			buffer.put(tmp);
+		}
+	}
+
 }

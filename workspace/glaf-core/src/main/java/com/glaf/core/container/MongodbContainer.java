@@ -20,7 +20,6 @@ package com.glaf.core.container;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -32,6 +31,7 @@ import com.glaf.core.util.IOUtils;
 import com.glaf.core.util.PropertiesUtils;
 import com.glaf.core.util.ShutdownHookManager;
 import com.glaf.core.util.StringTools;
+import com.mongodb.client.MongoDatabase;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
@@ -71,7 +71,7 @@ public class MongodbContainer {
 				try {
 					ServerAddress addr = new ServerAddress(host, port);
 					addrList.add(addr);
-				} catch (UnknownHostException ex) {
+				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
 			}
@@ -83,8 +83,13 @@ public class MongodbContainer {
 		}
 	}
 
-	public DB getDB(String dbname) {
-		return getMongoClient().getDB(dbname);
+	public MongoDatabase getDatabase(String dbname) {
+		return getMongoClient().getDatabase(dbname);
+	}
+
+	@SuppressWarnings("deprecation")
+	public DB getDB(String dbName) {
+		return getMongoClient().getDB(dbName);
 	}
 
 	private MongoClient getMongoClient() {

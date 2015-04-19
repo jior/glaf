@@ -76,10 +76,16 @@ public class SysDataLogTableUtils {
 		tableDefinition.addColumn(column11);
 
 		ColumnDefinition column12 = new ColumnDefinition();
-		column12.setColumnName("OPENID_");
+		column12.setColumnName("SERVICEKEY_");
 		column12.setJavaType("String");
-		column12.setLength(200);
+		column12.setLength(50);
 		tableDefinition.addColumn(column12);
+
+		ColumnDefinition column13 = new ColumnDefinition();
+		column13.setColumnName("BUSINESSKEY_");
+		column13.setJavaType("String");
+		column13.setLength(500);
+		tableDefinition.addColumn(column13);
 
 		ColumnDefinition column2 = new ColumnDefinition();
 		column2.setColumnName("IP_");
